@@ -1,13 +1,14 @@
 #labels Phase-Requirements,analogs,tendentions
 Win-32
     * non-oss freeware win32-example
+      http://www.msolt.chat.ru/
 Java
     * yet another incubating python analog
     * incubating java web-based analog
     * yet another incubating java analog
 Python
-    * [incubating python fb2 organizer]
-http://code.google.com/p/pybookshelf/
+    *  incubating python fb2 organizer
+       http://code.google.com/p/pybookshelf/
     * yet another incubating python analog
     * yet another incubating python analog
     * incubating python analog
@@ -17,11 +18,16 @@ Ruby
     * incubating ruby analog
 Delphi
     * incubating delphi analog
+      http://code.google.com/p/ebookcollection/
 WxWidget
     * incubating wxWidget analog
+      http://code.google.com/p/wxbookshelf/
 C#
     * incubating c# analog
+      http://code.google.com/p/ebookman/
 Mac
     * incubating mac analog
+      http://code.google.com/p/audacious-books/
 Google API
     * incubating google api analog
+      http://code.google.com/p/ecataloger/
