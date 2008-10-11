@@ -3,19 +3,28 @@ Win-32
     * non-oss freeware win32-example
       http://www.msolt.chat.ru/
 Java
-    * yet another incubating python analog
     * incubating java web-based analog
+      http://code.google.com/p/bookswarm/
     * yet another incubating java analog
+      http://code.google.com/p/books-library/
+    * http://code.google.com/p/bsglib/
 Python
-    *  incubating python fb2 organizer
-       http://code.google.com/p/pybookshelf/
+    * incubating python fb2 organizer
+      http://code.google.com/p/pybookshelf/
     * yet another incubating python analog
+      http://code.google.com/p/shelfr/
     * yet another incubating python analog
+      http://code.google.com/p/bookmaster/
+    * yet another incubating python analog
+      http://code.google.com/p/pymylib/
     * incubating python analog
+      http://code.google.com/p/booktagg/
     * another incubating python analog
 Ruby
     * another incubating ruby analog
+      http://code.google.com/p/ruby-books/
     * incubating ruby analog
+      http://code.google.com/p/mybookinfo/
 Delphi
     * incubating delphi analog
       http://code.google.com/p/ebookcollection/
