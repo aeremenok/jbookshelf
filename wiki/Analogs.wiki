@@ -1,22 +1,23 @@
 #labels Phase-Requirements,analogs,tendentions
-win-32
+Win-32
     * non-oss freeware win32-example
-java
+Java
     * yet another incubating python analog
     * incubating java web-based analog
     * yet another incubating java analog
-python
-    * incubating python fb2 organizer
+Python
+    * [incubating python fb2 organizer]
+http://code.google.com/p/pybookshelf/
     * yet another incubating python analog
     * yet another incubating python analog
     * incubating python analog
     * another incubating python analog
-ruby
+Ruby
     * another incubating ruby analog
     * incubating ruby analog
-delphi
+Delphi
     * incubating delphi analog
-wxWidget
+WxWidget
     * incubating wxWidget analog
 C#
     * incubating c# analog
