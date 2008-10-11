@@ -26,3 +26,10 @@ Mac
     * http://code.google.com/p/audacious-books/
 Google API
     * http://code.google.com/p/ecataloger/
+
+----
+Some interesting related projects (incubating too):
+    * java book reader
+      http://code.google.com/p/bookjar/
+    * last.fm for books
+      http://code.google.com/p/lastlib/
