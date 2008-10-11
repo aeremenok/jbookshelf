@@ -1,42 +1,27 @@
-#labels Phase-Requirements,analogs,tendentions
+#labels Phase-Requirements,analogs,tendentions,related
 Win-32
-    * non-oss freeware win32-example
-      http://www.msolt.chat.ru/
+    * http://www.msolt.chat.ru/ The only known completed project. Written a long time ago by a coding fan. Non-oss but free.
+The rest are yet incubating:
 Java
-    * incubating java web-based analog
-      http://code.google.com/p/bookswarm/
-    * yet another incubating java analog
-      http://code.google.com/p/books-library/
+    * http://code.google.com/p/bookswarm/ (web-based)
+    * http://code.google.com/p/books-library/
     * http://code.google.com/p/bsglib/
 Python
-    * incubating python fb2 organizer
-      http://code.google.com/p/pybookshelf/
-    * yet another incubating python analog
-      http://code.google.com/p/shelfr/
-    * yet another incubating python analog
-      http://code.google.com/p/bookmaster/
-    * yet another incubating python analog
-      http://code.google.com/p/pymylib/
-    * incubating python analog
-      http://code.google.com/p/booktagg/
-    * another incubating python analog
+    * http://code.google.com/p/pybookshelf/ (fb2)
+    * http://code.google.com/p/shelfr/
+    * http://code.google.com/p/bookmaster/
+    * http://code.google.com/p/pymylib/
+    * http://code.google.com/p/booktagg/
 Ruby
-    * another incubating ruby analog
-      http://code.google.com/p/ruby-books/
-    * incubating ruby analog
-      http://code.google.com/p/mybookinfo/
+    * http://code.google.com/p/ruby-books/
+    * http://code.google.com/p/mybookinfo/
 Delphi
-    * incubating delphi analog
-      http://code.google.com/p/ebookcollection/
+    * http://code.google.com/p/ebookcollection/
 WxWidget
-    * incubating wxWidget analog
-      http://code.google.com/p/wxbookshelf/
+    * http://code.google.com/p/wxbookshelf/
 C#
-    * incubating c# analog
-      http://code.google.com/p/ebookman/
+    * http://code.google.com/p/ebookman/
 Mac
-    * incubating mac analog
-      http://code.google.com/p/audacious-books/
+    * http://code.google.com/p/audacious-books/
 Google API
-    * incubating google api analog
-      http://code.google.com/p/ecataloger/
+    * http://code.google.com/p/ecataloger/
