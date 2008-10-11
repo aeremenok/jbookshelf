@@ -2,6 +2,7 @@
 Win-32
     * http://www.msolt.chat.ru/ The only known completed project. Written a long time ago by a coding fan. Non-oss but free.
 The rest are yet incubating:
+
 Java
     * http://code.google.com/p/bookswarm/ (web-based)
     * http://code.google.com/p/books-library/
