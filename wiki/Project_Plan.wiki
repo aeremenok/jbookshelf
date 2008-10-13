@@ -14,8 +14,14 @@ So, it's clear, that a useful GNU GPL digital text organizer is needed today and
 
 == Stage 1 ==
 
+Develop a desktop gui-application, satisfying mean requirements.
+
 == Stage 2 ==
 
+Integrating it with a related free desktop applications (readers, openoffice, etc). Probably integrating with web.
+
 == Stage 3 ==
+
+Porting it to pda
 
 == Stage 4 ==
