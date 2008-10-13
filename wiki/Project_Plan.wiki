@@ -14,14 +14,20 @@ So, it's clear, that a useful GNU GPL digital text organizer is needed today and
 
 == Stage 1 ==
 
-Develop a desktop gui-application, satisfying mean requirements.
+Elaborting mean requirements.
 
 == Stage 2 ==
 
-Integrating it with a related free desktop applications (readers, openoffice, etc). Probably integrating with web.
+Developing a desktop gui-application, satisfying those requirements.
 
 == Stage 3 ==
 
-Porting it to pda
+Integrating it with a related free desktop applications (readers, openoffice, etc). Probably integrating with web.
 
 == Stage 4 ==
+
+Porting it to pda. Rise of linux and google andriod communicators requires a cross-platform application. If development of java-midlet fails, consider porting to .NET CF or PyCE.
+
+== Stage 5 ==
+
+Developing a simple pda-bookreader. Target feature: making notes on books, that could be read by other programs. Odt-format suits for that.
