@@ -14,7 +14,7 @@ So, it's clear, that a useful GNU GPL digital text organizer is needed today and
 
 == Stage 1 ==
 
-Elaborting mean requirements.
+Elaborating mean requirements.
 
 == Stage 2 ==
 
