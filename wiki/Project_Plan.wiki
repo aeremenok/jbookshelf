@@ -22,7 +22,7 @@ Developing a desktop gui-application, satisfying those requirements.
 
 == Stage 3 ==
 
-Integrating it with a related free desktop applications (readers, openoffice, etc). Probably integrating with web.
+Integrating it with related free desktop applications (readers, openoffice, etc). Probably integrating with web.
 
 == Stage 4 ==
 
@@ -30,4 +30,4 @@ Porting it to pda. Rise of linux and google andriod communicators requires a cro
 
 == Stage 5 ==
 
-Developing a simple pda-bookreader. Target feature: making notes on books, that could be read by other programs. Odt-format suits for that.
+Developing a simple pda-bookreader. Target feature: making notes on books, available for other programs. Odt-format suits for that.
