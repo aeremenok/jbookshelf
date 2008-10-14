@@ -11,7 +11,6 @@ Java
     * http://code.google.com/p/books-library/
     * http://code.google.com/p/bsglib/
     * http://sourceforge.net/projects/ebook-library/
-
     * http://sourceforge.net/projects/eblib/
 Python
     * http://code.google.com/p/pybookshelf/ (fb2)
