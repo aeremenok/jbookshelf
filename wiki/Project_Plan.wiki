@@ -1,33 +1,24 @@
 #labels Featured,Phase-Requirements
-#goals of the project
-
 = Abstract =
 
 Digital books are spreading more rapidly every day. With a transition from an old media to the new - appear the new ways of structuring (and that means - of understanding) the information contained by those media. The computers with their developing organization are attracting us to elaborate those ways. Such a demand is clearly seen today. 
 
 Look at this [http://code.google.com/p/jbookshelf/wiki/Analogs list]: many OO-coders had an idea of developing a digital texts organizing program last year. The work is slow for some reasons. However at least one such program is accomplished couple of years ago. The result showed that such projects are effective and can be further developed. It also provided examples how to do and how not to do.
 
-No doubt, such a project could be quite simple and wouldn't ever require a commercial basis.
-So, it's clear, that a useful GNU GPL digital text organizer is needed today and could be developed. It could help people to read faster and understand more clearly.
+No doubt, such a project could be quite simple and wouldn't ever require a commercial basis. So, it's clear, that a useful GNU GPL digital text organizer is needed today and could be developed. It could help people to read faster and understand more clearly.
+
+= Goals =
+
+ * develop a model of book-organizing process, that could be implemented in various OO-languages. Result: requirements, specifications, CASE-program models (Rational Rose/StarUML, EMF, Netbeans, etc).
+
+ * implement a desktop book organizer
+
+ * implement a mobile book reader
 
 = Stages =
 
-== Stage 1 ==
-
-Elaborating mean requirements and specification.
-
-== Stage 2 ==
-
-Developing a desktop gui-application, satisfying this specification.
-
-== Stage 3 ==
-
-Integrating it with related free desktop applications (readers, openoffice, etc). Probably integrating with web.
-
-== Stage 4 ==
-
-Porting it to pda. Rise of linux and google andriod communicators requires a cross-platform application. If development of java-midlet fails, consider porting to .NET CF or PyCE.
-
-== Stage 5 ==
-
-Developing a simple pda-bookreader. Target feature: making notes on books, available for other programs. Odt-format suits for that.
+ # Elaborating mean requirements and specification.
+ # Developing a desktop gui-application, satisfying this specification.
+ # Integrating it with related free desktop applications (readers, openoffice, etc). Probably integrating with web.
+ # Porting it to pda. Rise of linux and google andriod communicators requires a cross-platform application. If development of java-midlet fails, consider porting to .NET CF or PyCE.
+ # Developing a simple pda-bookreader. Target feature: making notes on books, available for other programs. Odt-format suits for that.
