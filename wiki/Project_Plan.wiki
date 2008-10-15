@@ -9,11 +9,11 @@ No doubt, such a project could be quite simple and wouldn't ever require a comme
 
 = Goals =
 
- * develop a model of book-organizing process, that could be implemented in various OO-languages. Result: requirements, specifications, CASE-program models (Rational Rose/StarUML, EMF, Netbeans, etc).
+ * develop a model of book-organizing process, that could be implemented in various OO-languages. *Result:* requirements, specifications, CASE-program models (Rational Rose/StarUML, EMF, Netbeans, etc).
 
- * implement a desktop book organizer
+ * implement an extensible desktop book organizer. *Result:* desktop gui-application
 
- * implement a mobile book reader
+ * implement an extensible mobile book reader. *Result:* mobile application
 
 = Stages =
 
