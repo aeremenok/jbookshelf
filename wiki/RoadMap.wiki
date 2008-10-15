@@ -3,3 +3,5 @@
 
 || *Stage* || *Substage* || *Status* || *Begin Date* || *Possible End Date* ||
 || Requirements || Vision || Started || 13.10.2008 || ? ||
+|| || Feature List || Not Started || ? || ? ||
+|| || Use Cases || Not Started || ? || ? ||
