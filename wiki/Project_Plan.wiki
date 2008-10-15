@@ -1,12 +1,4 @@
 #labels Featured,Phase-Requirements
-= Abstract =
-
-Digital books are spreading more rapidly every day. With a transition from an old media to the new - appear the new ways of structuring (and that means - of understanding) the information contained by those media. The computers with their developing organization are attracting us to elaborate those ways. Such a demand is clearly seen today. 
-
-Look at this [http://code.google.com/p/jbookshelf/wiki/Analogs list]: many OO-coders had an idea of developing a digital texts organizing program last year. The work is slow for some reasons. However at least one such program is accomplished couple of years ago. The result showed that such projects are effective and can be further developed. It also provided examples how to do and how not to do.
-
-No doubt, such a project could be quite simple and wouldn't ever require a commercial basis. So, it's clear, that a useful GNU GPL digital text organizer is needed today and could be developed. It could help people to read faster and understand more clearly.
-
 = Goals =
 
  * develop a model of book-organizing process, that could be implemented in various OO-languages. *Result:* requirements, specifications, CASE-program models (Rational Rose/StarUML, EMF, Netbeans, etc).
