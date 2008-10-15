@@ -1,7 +1,7 @@
 #labels Featured,Phase-Requirements
 = Goals =
 
- * develop a model of book-organizing process, that could be implemented in various OO-languages. *Result:* requirements, specifications, CASE-program models (Rational Rose/StarUML, EMF, Netbeans, etc).
+ * develop a model of book-organizing process, that could be implemented in various OO-languages. *Result:* requirements, specifications, open CASE-program models (Rational Rose/StarUML, EMF, Netbeans, etc).
 
  * implement an extensible desktop book organizer. *Result:* desktop gui-application
 
