@@ -14,11 +14,11 @@ So, it's clear, that a useful GNU GPL digital text organizer is needed today and
 
 == Stage 1 ==
 
-Elaborating mean requirements.
+Elaborating mean requirements and specification.
 
 == Stage 2 ==
 
-Developing a desktop gui-application, satisfying those requirements.
+Developing a desktop gui-application, satisfying this specification.
 
 == Stage 3 ==
 
