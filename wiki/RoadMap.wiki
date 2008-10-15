@@ -1,0 +1,5 @@
+#labels Featured,Phase-Requirements
+=Project Stage Details=
+
+|| *Stage* || *Substage* || *Status* || *Begin Date* || *Possible End Date* ||
+|| Requirements || Vision || Started || 13.10.2008 || ? ||
