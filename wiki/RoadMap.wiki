@@ -1,26 +1,26 @@
 #labels Featured,Phase-Requirements
 =Project Stage Details=
 
-|| *Stage* || *Substage* || *Comment* || *Status* || *Begin Date* || *Possible End Date* ||
-|| Specification || Vision || || Started || 13.10.2008 || ? ||
-|| || Feature list || || Not Started || ? || ? ||
-|| || Use cases || || Not Started || ? || ? ||
-|| || Component model || || Not Started || ? || ? ||
-|| || Object model || || Not Started || ? || ? ||
-|| || Result verification || || Not Started || ? || ? ||
-|| Desktop App Development || Object model implementation || || Not Started || ? || ? ||
-|| || GUI-prototype design || || Not Started || ? || ? ||
-|| || GUI implementation || || Not Started || ? || ? ||
-|| || Components integration || || Not Started || ? || ? ||
-|| Integration || App list collection || || Not Started || ? || ? ||
-|| || Desired feature list collection || || Not Started || ? || ? ||
-|| || List implementation || || Not Started || ? || ? ||
-|| Porting || Target platforms analysis || || Not Started || ? || ? ||
-|| || Changes detection || || Not Started || ? || ? ||
-|| || Implementation || || Not Started || ? || ? ||
-|| PDA Bookreader || Format analysis || || Not Started || ? || ? ||
-|| || Text reader model || || Not Started || ? || ? ||
-|| || Simple text reader implementation || || Not Started || ? || ? ||
-|| || Tagged text reader implementation || || Not Started || ? || ? ||
-|| || Selected format reader implementation || || Not Started || ? || ? ||
-|| || Notes implementation || || Not Started || ? || ? ||
+|| *Stage* || *Substage* || *Comment* || *Status* || *Begin Date* || *Possible End Date* || *Artefact link* ||
+|| Specification || Vision || || Started || 13.10.2008 || ? || ||
+|| || Feature list || || Not Started || ? || ? || ||
+|| || Use cases || || Not Started || ? || ? || ||
+|| || Component model || || Not Started || ? || ? || ||
+|| || Object model || || Not Started || ? || ? || ||
+|| || Result verification || || Not Started || ? || ? || ||
+|| Desktop App Development || Object model implementation || || Not Started || ? || ? || ||
+|| || GUI-prototype design || || Not Started || ? || ? || ||
+|| || GUI implementation || || Not Started || ? || ? || ||
+|| || Components integration || || Not Started || ? || ? || ||
+|| Integration || App list collection || || Not Started || ? || ? || ||
+|| || Desired feature list collection || || Not Started || ? || ? || ||
+|| || List implementation || || Not Started || ? || ? || ||
+|| Porting || Target platforms analysis || || Not Started || ? || ? || ||
+|| || Changes detection || || Not Started || ? || ? || ||
+|| || Implementation || || Not Started || ? || ? || ||
+|| PDA Bookreader || Format analysis || || Not Started || ? || ? || ||
+|| || Text reader model || || Not Started || ? || ? || ||
+|| || Simple text reader implementation || || Not Started || ? || ? || ||
+|| || Tagged text reader implementation || || Not Started || ? || ? || ||
+|| || Selected format reader implementation || || Not Started || ? || ? || ||
+|| || Notes implementation || || Not Started || ? || ? || ||
