@@ -1,7 +1,7 @@
 #labels Featured,Phase-Requirements
 =Project Stage Details=
 
-|| *Stage* || *Substage* || *Comment* || *Status* || *Begin Date* || *Possible End Date* || *Artefact link* ||
+|| *Stage* || *Substage* || *Comment* || *Status* || *Begin Date* || *Possible End Date* || *Artifact link* ||
 || Specification || Vision || || Started || 13.10.2008 || ? || ||
 || || Feature list || || Not Started || ? || ? || ||
 || || Use cases || || Not Started || ? || ? || ||
