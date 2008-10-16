@@ -2,7 +2,7 @@
 =Project Stage Details=
 
 || *Stage* || *Substage* || *Comment* || *Status* || *Begin Date* || *Possible End Date* || *Artifact link* ||
-|| Specification || Vision || || Started || 13.10.2008 || ? || ||
+|| Specification || Project Vision || || Started || 13.10.2008 || ? || ||
 || || Feature list || || Not Started || ? || ? || ||
 || || Use cases || || Not Started || ? || ? || ||
 || || Component model || || Not Started || ? || ? || ||
@@ -13,7 +13,7 @@
 || || GUI implementation || || Not Started || ? || ? || ||
 || || Components integration || || Not Started || ? || ? || ||
 || Integration || App list collection || || Not Started || ? || ? || ||
-|| || Desired feature list collection || || Not Started || ? || ? || ||
+|| || Whishlist collection || || Not Started || ? || ? || ||
 || || List implementation || || Not Started || ? || ? || ||
 || Porting || Target platforms analysis || || Not Started || ? || ? || ||
 || || Changes detection || || Not Started || ? || ? || ||
