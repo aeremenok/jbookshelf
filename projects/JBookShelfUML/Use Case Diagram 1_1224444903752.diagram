@@ -1,0 +1,29 @@
+<XMI xmi.version="1.2"  xmlns:UML="org.omg.xmi.namespace.UML"  timestamp="19 Октябрь 2008 г. 23:35:06 MSD" >
+<XMI.content>
+<UML:Diagram isVisible="false"  zoom="1.0"  name="Use Case Diagram 1"  xmi.id="DCE.E87CDDDA-1B43-A188-104D-AE12866017F5" >
+<UML:GraphElement.position>
+     <XMI.field>0</XMI.field>
+     <XMI.field>0</XMI.field>
+</UML:GraphElement.position>
+<UML:GraphNode.size>
+     <XMI.field>0</XMI.field>
+     <XMI.field>0</XMI.field>
+</UML:GraphNode.size>
+<UML:Diagram.viewport>
+     <XMI.field>0</XMI.field>
+     <XMI.field>0</XMI.field>
+</UML:Diagram.viewport>
+<UML:DiagramElement.property>
+<UML:Property value="DCE.E915D55B-3A20-9FBD-ADFD-0CB2C3B3D8B8"  key="netbeans-diagram-namespace" />
+<UML:Property value="DCE.E915D55B-3A20-9FBD-ADFD-0CB2C3B3D8B8"  xmi.id="Property2_PEID"  key="netbeans-diagram-projectID" />
+</UML:DiagramElement.property>
+<UML:GraphElement.semanticModel>
+<UML:SimpleSemanticModelElement presentation=""  xmi.id="DCE.E87CDDDA-1B43-A188-104D-AE12866017F5"  typeinfo="Use Case Diagram" />
+</UML:GraphElement.semanticModel>
+<UML:GraphElement.contained>
+</UML:GraphElement.contained>
+<UML:Diagram.owner>
+</UML:Diagram.owner>
+</UML:Diagram>
+</XMI.content>
+</XMI>
