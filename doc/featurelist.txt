@@ -1,0 +1,17 @@
+1. show query results
+
+2. open selected unit in a default system browser (allow further extensions for other external programs)
+
+3. store unit authors, tags (=genre?), comments, related unit links
+
+4. store author tags, comments, related author links
+
+5. navigate between units, authors, tags, comments (optional, consider delaying to next iteration)
+
+6. add/remove reading unit from collection
+
+8. register units from file structure according to specified filename masks
+
+9. reorganize existing file structure according to specified filename masks
+
+10. backup/restore existing metadata
