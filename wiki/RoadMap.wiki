@@ -2,7 +2,7 @@
 =Project Stage Details=
 
 || *Stage* || *Substage* || *Comment* || *Status* || *Begin Date* || *Possible End Date* || *Artifact link* ||
-|| Specification || Project Vision || || Started || 13.10.2008 || ? || ||
+|| Specification || Project Vision || || Started || 13.10.2008 || ? || [http://jbookshelf.googlecode.com/svn/trunk/doc/vision.txt vision]||
 || || Feature list || || Not Started || ? || ? || ||
 || || Use cases || || Not Started || ? || ? || ||
 || || Component model || || Not Started || ? || ? || ||
