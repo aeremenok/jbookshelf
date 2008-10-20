@@ -4,7 +4,7 @@
 || *Stage* || *Substage* || *Comment* || *Status* || *Begin Date* || *Possible End Date* || *Artifact link* ||
 || Specification || Project Vision || || Started || 13.10.2008 || 24.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/vision.txt vision]||
 || || Feature list || || Started || 19.10.2008 || 24.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/featurelist.txt featurelist]||
-|| || Use cases || || Not Started || ? || ? || ||
+|| || Use cases || || Started || 20.10.2008 || 24.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/use_cases/use_cases.html diagram_screenshots] ||
 || || Component model || || Not Started || ? || ? || ||
 || || Object model || || Not Started || ? || ? || ||
 || || Result verification || || Not Started || ? || ? || ||
