@@ -1,2 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- <!DOCTYPE XMI SYSTEM "/home/eav/.netbeans/6.5beta/.uml/config/UML_2.0EMBT.dtd"> --><XMI xmlns:UML="omg.org/UML/1.4" xmi.version="2.0"> <XMI.header> <XMI.metamodel xmi.name="UML" xmi.version="1.4"/> <XMI.documentation> <XMI.exporter> Embarcadero's Describe </XMI.exporter> <XMI.exporterVersion> 6.0 </XMI.exporterVersion> </XMI.documentation> </XMI.header> <XMI.content> <UML:Project xmi.id="DCE.E915D55B-3A20-9FBD-ADFD-0CB2C3B3D8B8" mode="Implementation" defaultLanguage="Java" projVersion="6.1.4.837" name="JBookShelfUML"/></XMI.content> </XMI>
+<!-- <!DOCTYPE XMI SYSTEM "/home/eav/.netbeans/6.5beta/.uml/config/UML_2.0EMBT.dtd"> --><XMI xmlns:UML="omg.org/UML/1.4" xmi.version="2.0"> <XMI.header> <XMI.metamodel xmi.name="UML" xmi.version="1.4"/> <XMI.documentation> <XMI.exporter> Embarcadero's Describe </XMI.exporter> <XMI.exporterVersion> 6.0 </XMI.exporterVersion> </XMI.documentation> </XMI.header> <XMI.content> <UML:Project xmi.id="DCE.E915D55B-3A20-9FBD-ADFD-0CB2C3B3D8B8" mode="Implementation" defaultLanguage="Java" projVersion="6.1.4.837" name="JBookShelfUML"><UML:Element.ownedElement>
+
+
+
+
+<UML:Package xmi.id="DCE.FA00A61E-37BA-269B-3842-287A821999AD" name="org" owner="DCE.E915D55B-3A20-9FBD-ADFD-0CB2C3B3D8B8"><UML:Element.presentation>
+</UML:Element.presentation><UML:Element.ownedElement>
+<UML:Package xmi.id="DCE.B93C8BE3-388F-CD9F-A106-665BB8621512" name="jbookshelf" owner="DCE.FA00A61E-37BA-269B-3842-287A821999AD"><UML:Element.presentation>
+</UML:Element.presentation><UML:Element.ownedElement>
+<UML:Actor xmi.id="DCE.94522F38-E046-967C-4155-B76314048B5C" name="user_as_committer" owner="DCE.B93C8BE3-388F-CD9F-A106-665BB8621512"><UML:Element.presentation>
+</UML:Element.presentation><UML:Classifier.generalization>
+<UML:Generalization xmi.id="DCE.BE06B381-64DB-A6E3-3185-BDF83C9DB597" specific="DCE.94522F38-E046-967C-4155-B76314048B5C" general="DCE.F1820C1B-E40D-D7EF-2122-BD116CD7AB35"><UML:Element.presentation>
+</UML:Element.presentation></UML:Generalization></UML:Classifier.generalization></UML:Actor>
+<UML:Actor xmi.id="DCE.F1820C1B-E40D-D7EF-2122-BD116CD7AB35" name="user" owner="DCE.B93C8BE3-388F-CD9F-A106-665BB8621512" specialization="DCE.BE06B381-64DB-A6E3-3185-BDF83C9DB597 DCE.DC55E468-6A3C-682B-623C-184AD27AFA13"><UML:Element.presentation>
+</UML:Element.presentation></UML:Actor>
+<UML:Actor xmi.id="DCE.74E4C7C8-8797-0288-442C-D5A87CA17570" name="user_as_requester" owner="DCE.B93C8BE3-388F-CD9F-A106-665BB8621512"><UML:Element.presentation>
+</UML:Element.presentation><UML:Classifier.generalization>
+<UML:Generalization xmi.id="DCE.DC55E468-6A3C-682B-623C-184AD27AFA13" specific="DCE.74E4C7C8-8797-0288-442C-D5A87CA17570" general="DCE.F1820C1B-E40D-D7EF-2122-BD116CD7AB35"><UML:Element.presentation>
+</UML:Element.presentation></UML:Generalization></UML:Classifier.generalization></UML:Actor>
+<UML:Comment xmi.id="DCE.B4D644A8-35E6-C444-C16D-955620154967" owner="DCE.B93C8BE3-388F-CD9F-A106-665BB8621512" annotatedElement="DCE.F1820C1B-E40D-D7EF-2122-BD116CD7AB35"><UML:Element.presentation>
+
+</UML:Element.presentation>
+<UML:Comment.body>it may help in some cases: to consider one user as two separate roles</UML:Comment.body></UML:Comment></UML:Element.ownedElement></UML:Package></UML:Element.ownedElement></UML:Package>
+
+
+
+
+</UML:Element.ownedElement></UML:Project></XMI.content> </XMI>
