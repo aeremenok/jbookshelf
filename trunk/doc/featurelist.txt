@@ -10,8 +10,8 @@
 
 6. add/remove reading unit from collection
 
-8. register units from file structure according to specified filename masks
+7. register units from file structure according to specified filename masks
 
-9. reorganize existing file structure according to specified filename masks
+8. reorganize existing file structure according to specified filename masks
 
-10. backup/restore existing metadata
+9. backup/restore existing metadata
