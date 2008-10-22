@@ -5,3 +5,7 @@
 1. roles
 
 [http://jbookshelf.googlecode.com/svn/trunk/doc/use_cases/roles.png]
+
+2. access
+
+[http://jbookshelf.googlecode.com/svn/trunk/doc/use_cases/access.png]
