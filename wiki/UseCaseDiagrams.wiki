@@ -9,3 +9,8 @@
 2. access
 
 [http://jbookshelf.googlecode.com/svn/trunk/doc/use_cases/access.png]
+
+
+3. management
+
+[http://jbookshelf.googlecode.com/svn/trunk/doc/use_cases/management.png]
