@@ -6,12 +6,14 @@
 
 4. store author tags, comments, related author links
 
-5. navigate between units, authors, tags, comments (optional, consider delaying to next iteration)
+5. add/remove reading unit from collection
 
-6. add/remove reading unit from collection
+6. register units from file structure according to specified filename masks
 
-7. register units from file structure according to specified filename masks
+7. backup/restore existing metadata
 
-8. reorganize existing file structure according to specified filename masks
+--- delay to next iteration ---
 
-9. backup/restore existing metadata
+8. navigate between units, authors, tags, comments (optional, consider delaying to next iteration)
+
+9. reorganize existing file structure according to specified filename masks
