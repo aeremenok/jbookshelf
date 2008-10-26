@@ -6,7 +6,7 @@
 || || Feature list || || Started || 19.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/featurelist.txt featurelist]||
 || || Use cases || || Started || 20.10.2008 || 31.10.2008 || UseCaseDiagrams ||
 || || Component model || || Started || 26.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/compoments/components.png diagram], [http://jbookshelf.googlecode.com/svn/trunk/doc/compoments/components.odg source]||
-|| || Object model || || Not Started || ? || ? || ||
+|| || Object model || || Started || 26.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/classes/jbookshelf.png emf-diagram], [http://jbookshelf.googlecode.com/svn/trunk/projects/JBookShelfModel/ source] ||
 || || Result verification || || Not Started || ? || ? || ||
 || Desktop App Development || GUI-prototype design || || Not Started || ? || ? || ||
 || || Object model implementation || || Not Started || ? || ? || ||
