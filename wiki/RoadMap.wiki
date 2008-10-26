@@ -8,8 +8,8 @@
 || || Component model || || Started || 26.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/compoments/components.png diagram], [http://jbookshelf.googlecode.com/svn/trunk/doc/compoments/components.odg source]||
 || || Object model || || Not Started || ? || ? || ||
 || || Result verification || || Not Started || ? || ? || ||
-|| Desktop App Development || Object model implementation || || Not Started || ? || ? || ||
-|| || GUI-prototype design || || Not Started || ? || ? || ||
+|| Desktop App Development || GUI-prototype design || || Not Started || ? || ? || ||
+|| || Object model implementation || || Not Started || ? || ? || ||
 || || GUI implementation || || Not Started || ? || ? || ||
 || || Components integration || || Not Started || ? || ? || ||
 || Integration || App list collection || || Not Started || ? || ? || ||
