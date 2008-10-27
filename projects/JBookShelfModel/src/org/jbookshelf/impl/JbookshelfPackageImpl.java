@@ -6,6 +6,7 @@
  */
 package org.jbookshelf.impl;
 
+import java.io.File;
 import java.sql.Date;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -16,15 +17,20 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.jbookshelf.ArchiveFile;
 import org.jbookshelf.Author;
 import org.jbookshelf.BookShelf;
 import org.jbookshelf.Categorizable;
 import org.jbookshelf.Category;
 import org.jbookshelf.Comment;
 import org.jbookshelf.Commentable;
+import org.jbookshelf.IndexFileFolder;
 import org.jbookshelf.JbookshelfFactory;
 import org.jbookshelf.JbookshelfPackage;
+import org.jbookshelf.PhysicalUnit;
 import org.jbookshelf.ReadingUnit;
+import org.jbookshelf.SingleFile;
+import org.jbookshelf.SingleFileFolder;
 import org.jbookshelf.Unique;
 
 /**
@@ -96,7 +102,49 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass archiveFileEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass indexFileFolderEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass physicalUnitEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass singleFileEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass singleFileFolderEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EDataType dateEDataType = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EDataType fileEDataType = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -209,6 +257,16 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     public EReference getReadingUnit_Authors()
     {
         return (EReference)readingUnitEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getReadingUnit_Physical()
+    {
+        return (EReference)readingUnitEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -366,9 +424,129 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getArchiveFile()
+    {
+        return archiveFileEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getArchiveFile_ArchiveFile()
+    {
+        return (EAttribute)archiveFileEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getIndexFileFolder()
+    {
+        return indexFileFolderEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getIndexFileFolder_IndexFile()
+    {
+        return (EAttribute)indexFileFolderEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getIndexFileFolder_IndexFolder()
+    {
+        return (EAttribute)indexFileFolderEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getPhysicalUnit()
+    {
+        return physicalUnitEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getSingleFile()
+    {
+        return singleFileEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getSingleFile_File()
+    {
+        return (EAttribute)singleFileEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getSingleFileFolder()
+    {
+        return singleFileFolderEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getSingleFileFolder_Folder()
+    {
+        return (EAttribute)singleFileFolderEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getSingleFileFolder_SingleFile()
+    {
+        return (EAttribute)singleFileFolderEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EDataType getDate()
     {
         return dateEDataType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EDataType getFile()
+    {
+        return fileEDataType;
     }
 
     /**
@@ -406,6 +584,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
 
         readingUnitEClass = createEClass(READING_UNIT);
         createEReference(readingUnitEClass, READING_UNIT__AUTHORS);
+        createEReference(readingUnitEClass, READING_UNIT__PHYSICAL);
 
         categoryEClass = createEClass(CATEGORY);
         createEAttribute(categoryEClass, CATEGORY__DESCRIPTION);
@@ -428,8 +607,25 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         bookShelfEClass = createEClass(BOOK_SHELF);
         createEReference(bookShelfEClass, BOOK_SHELF__UNIQUES);
 
+        archiveFileEClass = createEClass(ARCHIVE_FILE);
+        createEAttribute(archiveFileEClass, ARCHIVE_FILE__ARCHIVE_FILE);
+
+        indexFileFolderEClass = createEClass(INDEX_FILE_FOLDER);
+        createEAttribute(indexFileFolderEClass, INDEX_FILE_FOLDER__INDEX_FILE);
+        createEAttribute(indexFileFolderEClass, INDEX_FILE_FOLDER__INDEX_FOLDER);
+
+        physicalUnitEClass = createEClass(PHYSICAL_UNIT);
+
+        singleFileEClass = createEClass(SINGLE_FILE);
+        createEAttribute(singleFileEClass, SINGLE_FILE__FILE);
+
+        singleFileFolderEClass = createEClass(SINGLE_FILE_FOLDER);
+        createEAttribute(singleFileFolderEClass, SINGLE_FILE_FOLDER__FOLDER);
+        createEAttribute(singleFileFolderEClass, SINGLE_FILE_FOLDER__SINGLE_FILE);
+
         // Create data types
         dateEDataType = createEDataType(DATE);
+        fileEDataType = createEDataType(FILE);
     }
 
     /**
@@ -474,6 +670,10 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         readingUnitEClass.getESuperTypes().add(theEcorePackage.getEObject());
         categoryEClass.getESuperTypes().add(this.getUnique());
         categoryEClass.getESuperTypes().add(theEcorePackage.getEObject());
+        archiveFileEClass.getESuperTypes().add(this.getPhysicalUnit());
+        indexFileFolderEClass.getESuperTypes().add(this.getPhysicalUnit());
+        singleFileEClass.getESuperTypes().add(this.getPhysicalUnit());
+        singleFileFolderEClass.getESuperTypes().add(this.getPhysicalUnit());
 
         // Initialize classes and features; add operations and parameters
         initEClass(authorEClass, Author.class, "Author", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -481,6 +681,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
 
         initEClass(readingUnitEClass, ReadingUnit.class, "ReadingUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getReadingUnit_Authors(), this.getAuthor(), null, "authors", null, 0, -1, ReadingUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getReadingUnit_Physical(), this.getPhysicalUnit(), null, "physical", null, 0, 1, ReadingUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getCategory_Description(), ecorePackage.getEString(), "description", null, 0, 1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -503,8 +704,29 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         initEClass(bookShelfEClass, BookShelf.class, "BookShelf", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getBookShelf_Uniques(), this.getUnique(), null, "uniques", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        initEClass(archiveFileEClass, ArchiveFile.class, "ArchiveFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getArchiveFile_ArchiveFile(), this.getFile(), "archiveFile", null, 0, 1, ArchiveFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(indexFileFolderEClass, IndexFileFolder.class, "IndexFileFolder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIndexFileFolder_IndexFile(), this.getFile(), "indexFile", null, 0, 1, IndexFileFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIndexFileFolder_IndexFolder(), this.getFile(), "indexFolder", null, 0, 1, IndexFileFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(physicalUnitEClass, PhysicalUnit.class, "PhysicalUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        addEOperation(physicalUnitEClass, null, "openUnit", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+        initEClass(singleFileEClass, SingleFile.class, "SingleFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getSingleFile_File(), this.getFile(), "file", null, 0, 1, SingleFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(singleFileFolderEClass, SingleFileFolder.class, "SingleFileFolder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getSingleFileFolder_Folder(), this.getFile(), "folder", null, 0, 1, SingleFileFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSingleFileFolder_SingleFile(), this.getFile(), "singleFile", null, 0, 1, SingleFileFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        addEOperation(singleFileFolderEClass, null, "openFolder", 0, 1, IS_UNIQUE, IS_ORDERED);
+
         // Initialize data types
         initEDataType(dateEDataType, Date.class, "Date", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+        initEDataType(fileEDataType, File.class, "File", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
         // Create resource
         createResource(eNS_URI);

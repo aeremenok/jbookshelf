@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
@@ -25,6 +26,7 @@ import org.jbookshelf.Category;
 import org.jbookshelf.Comment;
 import org.jbookshelf.Commentable;
 import org.jbookshelf.JbookshelfPackage;
+import org.jbookshelf.PhysicalUnit;
 import org.jbookshelf.ReadingUnit;
 
 /**
@@ -37,6 +39,7 @@ import org.jbookshelf.ReadingUnit;
  *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getComments <em>Comments</em>}</li>
  *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getCategories <em>Categories</em>}</li>
  *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getAuthors <em>Authors</em>}</li>
+ *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getPhysical <em>Physical</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,6 +76,15 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
      * @ordered
      */
     protected EList<Author> authors;
+    /**
+     * The cached value of the '{@link #getPhysical() <em>Physical</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getPhysical()
+     * @generated
+     * @ordered
+     */
+    protected PhysicalUnit physical;
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -127,6 +139,49 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
      * <!-- end-user-doc -->
      * @generated
      */
+    public PhysicalUnit getPhysical()
+    {
+        if (physical != null && physical.eIsProxy())
+        {
+            InternalEObject oldPhysical = (InternalEObject)physical;
+            physical = (PhysicalUnit)eResolveProxy(oldPhysical);
+            if (physical != oldPhysical)
+            {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, JbookshelfPackage.READING_UNIT__PHYSICAL, oldPhysical, physical));
+            }
+        }
+        return physical;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public PhysicalUnit basicGetPhysical()
+    {
+        return physical;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setPhysical(PhysicalUnit newPhysical)
+    {
+        PhysicalUnit oldPhysical = physical;
+        physical = newPhysical;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.READING_UNIT__PHYSICAL, oldPhysical, physical));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EList<Category> getCategories()
     {
         if (categories == null)
@@ -152,6 +207,9 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
                 return getCategories();
             case JbookshelfPackage.READING_UNIT__AUTHORS:
                 return getAuthors();
+            case JbookshelfPackage.READING_UNIT__PHYSICAL:
+                if (resolve) return getPhysical();
+                return basicGetPhysical();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -179,6 +237,9 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
                 getAuthors().clear();
                 getAuthors().addAll((Collection<? extends Author>)newValue);
                 return;
+            case JbookshelfPackage.READING_UNIT__PHYSICAL:
+                setPhysical((PhysicalUnit)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -202,6 +263,9 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
             case JbookshelfPackage.READING_UNIT__AUTHORS:
                 getAuthors().clear();
                 return;
+            case JbookshelfPackage.READING_UNIT__PHYSICAL:
+                setPhysical((PhysicalUnit)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -222,6 +286,8 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
                 return categories != null && !categories.isEmpty();
             case JbookshelfPackage.READING_UNIT__AUTHORS:
                 return authors != null && !authors.isEmpty();
+            case JbookshelfPackage.READING_UNIT__PHYSICAL:
+                return physical != null;
         }
         return super.eIsSet(featureID);
     }

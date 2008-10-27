@@ -6,6 +6,7 @@
  */
 package org.jbookshelf.impl;
 
+import java.io.File;
 import java.sql.Date;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -78,6 +79,11 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
             case JbookshelfPackage.CATEGORIZABLE: return createCategorizable();
             case JbookshelfPackage.UNIQUE: return createUnique();
             case JbookshelfPackage.BOOK_SHELF: return createBookShelf();
+            case JbookshelfPackage.ARCHIVE_FILE: return createArchiveFile();
+            case JbookshelfPackage.INDEX_FILE_FOLDER: return createIndexFileFolder();
+            case JbookshelfPackage.PHYSICAL_UNIT: return createPhysicalUnit();
+            case JbookshelfPackage.SINGLE_FILE: return createSingleFile();
+            case JbookshelfPackage.SINGLE_FILE_FOLDER: return createSingleFileFolder();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -95,6 +101,8 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
         {
             case JbookshelfPackage.DATE:
                 return createDateFromString(eDataType, initialValue);
+            case JbookshelfPackage.FILE:
+                return createFileFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -112,6 +120,8 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
         {
             case JbookshelfPackage.DATE:
                 return convertDateToString(eDataType, instanceValue);
+            case JbookshelfPackage.FILE:
+                return convertFileToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -210,6 +220,61 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
      * <!-- end-user-doc -->
      * @generated
      */
+    public ArchiveFile createArchiveFile()
+    {
+        ArchiveFileImpl archiveFile = new ArchiveFileImpl();
+        return archiveFile;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IndexFileFolder createIndexFileFolder()
+    {
+        IndexFileFolderImpl indexFileFolder = new IndexFileFolderImpl();
+        return indexFileFolder;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public PhysicalUnit createPhysicalUnit()
+    {
+        PhysicalUnitImpl physicalUnit = new PhysicalUnitImpl();
+        return physicalUnit;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SingleFile createSingleFile()
+    {
+        SingleFileImpl singleFile = new SingleFileImpl();
+        return singleFile;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SingleFileFolder createSingleFileFolder()
+    {
+        SingleFileFolderImpl singleFileFolder = new SingleFileFolderImpl();
+        return singleFileFolder;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public Date createDateFromString(EDataType eDataType, String initialValue)
     {
         return (Date)super.createFromString(eDataType, initialValue);
@@ -221,6 +286,26 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
      * @generated
      */
     public String convertDateToString(EDataType eDataType, Object instanceValue)
+    {
+        return super.convertToString(eDataType, instanceValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public File createFileFromString(EDataType eDataType, String initialValue)
+    {
+        return (File)super.createFromString(eDataType, initialValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertFileToString(EDataType eDataType, Object instanceValue)
     {
         return super.convertToString(eDataType, instanceValue);
     }

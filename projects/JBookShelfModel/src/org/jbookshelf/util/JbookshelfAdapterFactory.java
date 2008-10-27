@@ -119,6 +119,31 @@ public class JbookshelfAdapterFactory extends AdapterFactoryImpl
                 return createBookShelfAdapter();
             }
             @Override
+            public Adapter caseArchiveFile(ArchiveFile object)
+            {
+                return createArchiveFileAdapter();
+            }
+            @Override
+            public Adapter caseIndexFileFolder(IndexFileFolder object)
+            {
+                return createIndexFileFolderAdapter();
+            }
+            @Override
+            public Adapter casePhysicalUnit(PhysicalUnit object)
+            {
+                return createPhysicalUnitAdapter();
+            }
+            @Override
+            public Adapter caseSingleFile(SingleFile object)
+            {
+                return createSingleFileAdapter();
+            }
+            @Override
+            public Adapter caseSingleFileFolder(SingleFileFolder object)
+            {
+                return createSingleFileFolderAdapter();
+            }
+            @Override
             public Adapter defaultCase(EObject object)
             {
                 return createEObjectAdapter();
@@ -256,6 +281,81 @@ public class JbookshelfAdapterFactory extends AdapterFactoryImpl
      * @generated
      */
     public Adapter createBookShelfAdapter()
+    {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.jbookshelf.ArchiveFile <em>Archive File</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.jbookshelf.ArchiveFile
+     * @generated
+     */
+    public Adapter createArchiveFileAdapter()
+    {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.jbookshelf.IndexFileFolder <em>Index File Folder</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.jbookshelf.IndexFileFolder
+     * @generated
+     */
+    public Adapter createIndexFileFolderAdapter()
+    {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.jbookshelf.PhysicalUnit <em>Physical Unit</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.jbookshelf.PhysicalUnit
+     * @generated
+     */
+    public Adapter createPhysicalUnitAdapter()
+    {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.jbookshelf.SingleFile <em>Single File</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.jbookshelf.SingleFile
+     * @generated
+     */
+    public Adapter createSingleFileAdapter()
+    {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.jbookshelf.SingleFileFolder <em>Single File Folder</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.jbookshelf.SingleFileFolder
+     * @generated
+     */
+    public Adapter createSingleFileFolderAdapter()
     {
         return null;
     }
