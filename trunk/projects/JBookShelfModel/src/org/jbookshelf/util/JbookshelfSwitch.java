@@ -159,6 +159,45 @@ public class JbookshelfSwitch<T>
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case JbookshelfPackage.ARCHIVE_FILE:
+            {
+                ArchiveFile archiveFile = (ArchiveFile)theEObject;
+                T result = caseArchiveFile(archiveFile);
+                if (result == null) result = casePhysicalUnit(archiveFile);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case JbookshelfPackage.INDEX_FILE_FOLDER:
+            {
+                IndexFileFolder indexFileFolder = (IndexFileFolder)theEObject;
+                T result = caseIndexFileFolder(indexFileFolder);
+                if (result == null) result = casePhysicalUnit(indexFileFolder);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case JbookshelfPackage.PHYSICAL_UNIT:
+            {
+                PhysicalUnit physicalUnit = (PhysicalUnit)theEObject;
+                T result = casePhysicalUnit(physicalUnit);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case JbookshelfPackage.SINGLE_FILE:
+            {
+                SingleFile singleFile = (SingleFile)theEObject;
+                T result = caseSingleFile(singleFile);
+                if (result == null) result = casePhysicalUnit(singleFile);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case JbookshelfPackage.SINGLE_FILE_FOLDER:
+            {
+                SingleFileFolder singleFileFolder = (SingleFileFolder)theEObject;
+                T result = caseSingleFileFolder(singleFileFolder);
+                if (result == null) result = casePhysicalUnit(singleFileFolder);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -287,6 +326,86 @@ public class JbookshelfSwitch<T>
      * @generated
      */
     public T caseBookShelf(BookShelf object)
+    {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Archive File</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Archive File</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseArchiveFile(ArchiveFile object)
+    {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Index File Folder</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Index File Folder</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIndexFileFolder(IndexFileFolder object)
+    {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Physical Unit</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Physical Unit</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePhysicalUnit(PhysicalUnit object)
+    {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Single File</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Single File</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSingleFile(SingleFile object)
+    {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Single File Folder</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Single File Folder</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSingleFileFolder(SingleFileFolder object)
     {
         return null;
     }

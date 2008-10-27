@@ -24,11 +24,13 @@
       <genAnnotations source="jbookshelf.uml"/>
     </genAnnotations>
     <genDataTypes ecoreDataType="jbookshelf.ecore#//Date"/>
+    <genDataTypes ecoreDataType="jbookshelf.ecore#//File"/>
     <genClasses ecoreClass="jbookshelf.ecore#//Author">
       <genFeatures createChild="false" ecoreFeature="ecore:EReference jbookshelf.ecore#//Author/readingUnits"/>
     </genClasses>
     <genClasses ecoreClass="jbookshelf.ecore#//ReadingUnit">
       <genFeatures createChild="false" ecoreFeature="ecore:EReference jbookshelf.ecore#//ReadingUnit/authors"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//ReadingUnit/physical"/>
     </genClasses>
     <genClasses ecoreClass="jbookshelf.ecore#//Category">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//Category/description"/>
@@ -50,6 +52,24 @@
     </genClasses>
     <genClasses ecoreClass="jbookshelf.ecore#//BookShelf">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//BookShelf/uniques"/>
+    </genClasses>
+    <genClasses ecoreClass="jbookshelf.ecore#//ArchiveFile">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//ArchiveFile/archiveFile"/>
+    </genClasses>
+    <genClasses ecoreClass="jbookshelf.ecore#//IndexFileFolder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//IndexFileFolder/indexFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//IndexFileFolder/indexFolder"/>
+    </genClasses>
+    <genClasses ecoreClass="jbookshelf.ecore#//PhysicalUnit">
+      <genOperations ecoreOperation="jbookshelf.ecore#//PhysicalUnit/openUnit"/>
+    </genClasses>
+    <genClasses ecoreClass="jbookshelf.ecore#//SingleFile">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//SingleFile/file"/>
+    </genClasses>
+    <genClasses ecoreClass="jbookshelf.ecore#//SingleFileFolder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//SingleFileFolder/folder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//SingleFileFolder/singleFile"/>
+      <genOperations ecoreOperation="jbookshelf.ecore#//SingleFileFolder/openFolder"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -10,6 +10,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ReadingUnit" eSuperTypes="#//Unique #//Commentable #//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"
         eType="#//Author"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="physical" eType="#//PhysicalUnit"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//Unique platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -37,4 +38,23 @@
         eType="#//Unique"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Date" instanceClassName="java.sql.Date"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ArchiveFile" eSuperTypes="#//PhysicalUnit">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="archiveFile" eType="#//File"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IndexFileFolder" eSuperTypes="#//PhysicalUnit">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="indexFile" eType="#//File"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="indexFolder" eType="#//File"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PhysicalUnit">
+    <eOperations name="openUnit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SingleFile" eSuperTypes="#//PhysicalUnit">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" eType="#//File"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SingleFileFolder" eSuperTypes="#//PhysicalUnit">
+    <eOperations name="openFolder"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="folder" eType="#//File"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="singleFile" eType="#//File"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="File" instanceClassName="java.io.File"/>
 </ecore:EPackage>

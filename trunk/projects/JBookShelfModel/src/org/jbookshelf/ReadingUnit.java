@@ -19,4 +19,19 @@ public interface ReadingUnit
      * @model
      */
     EList<Author> getAuthors();
+
+    /**
+     * @model
+     */
+    PhysicalUnit getPhysical();
+
+    /**
+     * Sets the value of the '{@link org.jbookshelf.ReadingUnit#getPhysical <em>Physical</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Physical</em>' reference.
+     * @see #getPhysical()
+     * @generated
+     */
+    void setPhysical(PhysicalUnit value);
 }
