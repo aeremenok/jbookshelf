@@ -99,6 +99,51 @@ public interface JbookshelfFactory extends EFactory
     BookShelf createBookShelf();
 
     /**
+     * Returns a new object of class '<em>Archive File</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Archive File</em>'.
+     * @generated
+     */
+    ArchiveFile createArchiveFile();
+
+    /**
+     * Returns a new object of class '<em>Index File Folder</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Index File Folder</em>'.
+     * @generated
+     */
+    IndexFileFolder createIndexFileFolder();
+
+    /**
+     * Returns a new object of class '<em>Physical Unit</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Physical Unit</em>'.
+     * @generated
+     */
+    PhysicalUnit createPhysicalUnit();
+
+    /**
+     * Returns a new object of class '<em>Single File</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Single File</em>'.
+     * @generated
+     */
+    SingleFile createSingleFile();
+
+    /**
+     * Returns a new object of class '<em>Single File Folder</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Single File Folder</em>'.
+     * @generated
+     */
+    SingleFileFolder createSingleFileFolder();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

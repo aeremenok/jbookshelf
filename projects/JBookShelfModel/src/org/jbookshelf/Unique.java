@@ -3,13 +3,17 @@ package org.jbookshelf;
 import org.eclipse.emf.ecore.EObject;
 
 /**
+ * something that has unique name
+ * 
  * @author eav
  * @model
  */
-public interface Unique extends EObject
+public interface Unique
+    extends
+        EObject
 {
     /**
-     * @return
+     * @return name
      * @model
      */
     String getName();
@@ -22,5 +26,6 @@ public interface Unique extends EObject
      * @see #getName()
      * @generated
      */
-    void setName(String value);
+    void setName(
+        String value );
 }

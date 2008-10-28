@@ -9,6 +9,7 @@ package org.jbookshelf.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -77,7 +78,7 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
      */
     protected EList<Author> authors;
     /**
-     * The cached value of the '{@link #getPhysical() <em>Physical</em>}' reference.
+     * The cached value of the '{@link #getPhysical() <em>Physical</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getPhysical()
@@ -141,16 +142,6 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
      */
     public PhysicalUnit getPhysical()
     {
-        if (physical != null && physical.eIsProxy())
-        {
-            InternalEObject oldPhysical = (InternalEObject)physical;
-            physical = (PhysicalUnit)eResolveProxy(oldPhysical);
-            if (physical != oldPhysical)
-            {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, JbookshelfPackage.READING_UNIT__PHYSICAL, oldPhysical, physical));
-            }
-        }
         return physical;
     }
 
@@ -159,9 +150,16 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
      * <!-- end-user-doc -->
      * @generated
      */
-    public PhysicalUnit basicGetPhysical()
+    public NotificationChain basicSetPhysical(PhysicalUnit newPhysical, NotificationChain msgs)
     {
-        return physical;
+        PhysicalUnit oldPhysical = physical;
+        physical = newPhysical;
+        if (eNotificationRequired())
+        {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, JbookshelfPackage.READING_UNIT__PHYSICAL, oldPhysical, newPhysical);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
 
     /**
@@ -171,10 +169,34 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
      */
     public void setPhysical(PhysicalUnit newPhysical)
     {
-        PhysicalUnit oldPhysical = physical;
-        physical = newPhysical;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.READING_UNIT__PHYSICAL, oldPhysical, physical));
+        if (newPhysical != physical)
+        {
+            NotificationChain msgs = null;
+            if (physical != null)
+                msgs = ((InternalEObject)physical).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - JbookshelfPackage.READING_UNIT__PHYSICAL, null, msgs);
+            if (newPhysical != null)
+                msgs = ((InternalEObject)newPhysical).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - JbookshelfPackage.READING_UNIT__PHYSICAL, null, msgs);
+            msgs = basicSetPhysical(newPhysical, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.READING_UNIT__PHYSICAL, newPhysical, newPhysical));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.READING_UNIT__PHYSICAL:
+                return basicSetPhysical(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
@@ -208,8 +230,7 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
             case JbookshelfPackage.READING_UNIT__AUTHORS:
                 return getAuthors();
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
-                if (resolve) return getPhysical();
-                return basicGetPhysical();
+                return getPhysical();
         }
         return super.eGet(featureID, resolve, coreType);
     }

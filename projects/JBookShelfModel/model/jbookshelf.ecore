@@ -4,13 +4,14 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="jbookshelf"
     nsURI="http:///org/jbookshelf.ecore" nsPrefix="org.jbookshelf">
   <eClassifiers xsi:type="ecore:EClass" name="Author" eSuperTypes="#//Unique #//Commentable #//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="readingUnits" upperBound="-1"
-        eType="#//ReadingUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="readingUnits" lowerBound="1"
+        upperBound="-1" eType="#//ReadingUnit"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReadingUnit" eSuperTypes="#//Unique #//Commentable #//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"
         eType="#//Author"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="physical" eType="#//PhysicalUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="physical" lowerBound="1"
+        eType="#//PhysicalUnit" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//Unique platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -35,9 +36,14 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BookShelf">
     <eStructuralFeatures xsi:type="ecore:EReference" name="uniques" upperBound="-1"
-        eType="#//Unique"/>
+        eType="#//Unique" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"
+        eType="#//Author" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
+        eType="#//Category" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="readingUnits" upperBound="-1"
+        eType="#//ReadingUnit" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="Date" instanceClassName="java.sql.Date"/>
   <eClassifiers xsi:type="ecore:EClass" name="ArchiveFile" eSuperTypes="#//PhysicalUnit">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="archiveFile" eType="#//File"/>
   </eClassifiers>
@@ -56,5 +62,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="folder" eType="#//File"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="singleFile" eType="#//File"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Date" instanceClassName="java.sql.Date"/>
   <eClassifiers xsi:type="ecore:EDataType" name="File" instanceClassName="java.io.File"/>
 </ecore:EPackage>
