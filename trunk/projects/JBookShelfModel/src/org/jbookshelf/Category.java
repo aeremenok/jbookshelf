@@ -4,6 +4,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
+ * category of some information
+ * 
  * @author eav
  * @model
  */
@@ -13,13 +15,13 @@ public interface Category
         EObject
 {
     /**
-     * @return
+     * @return what category includes
      * @model
      */
     EList<Categorizable> getCategorizables();
 
     /**
-     * @return
+     * @return description
      * @model
      */
     String getDescription();

@@ -4,6 +4,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
+ * something that could be commented
+ * 
  * @author eav
  * @model
  */
@@ -12,7 +14,7 @@ public interface Commentable
         EObject
 {
     /**
-     * @return
+     * @return comments
      * @model
      */
     EList<Comment> getComments();

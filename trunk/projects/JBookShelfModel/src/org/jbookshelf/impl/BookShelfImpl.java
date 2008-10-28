@@ -8,16 +8,23 @@ package org.jbookshelf.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
+import org.jbookshelf.Author;
 import org.jbookshelf.BookShelf;
+import org.jbookshelf.Category;
 import org.jbookshelf.JbookshelfPackage;
+import org.jbookshelf.ReadingUnit;
 import org.jbookshelf.Unique;
 
 /**
@@ -28,6 +35,9 @@ import org.jbookshelf.Unique;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.jbookshelf.impl.BookShelfImpl#getUniques <em>Uniques</em>}</li>
+ *   <li>{@link org.jbookshelf.impl.BookShelfImpl#getAuthors <em>Authors</em>}</li>
+ *   <li>{@link org.jbookshelf.impl.BookShelfImpl#getCategories <em>Categories</em>}</li>
+ *   <li>{@link org.jbookshelf.impl.BookShelfImpl#getReadingUnits <em>Reading Units</em>}</li>
  * </ul>
  * </p>
  *
@@ -36,7 +46,7 @@ import org.jbookshelf.Unique;
 public class BookShelfImpl extends EObjectImpl implements BookShelf
 {
     /**
-     * The cached value of the '{@link #getUniques() <em>Uniques</em>}' reference list.
+     * The cached value of the '{@link #getUniques() <em>Uniques</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getUniques()
@@ -44,6 +54,34 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
      * @ordered
      */
     protected EList<Unique> uniques;
+
+    /**
+     * The cached value of the '{@link #getAuthors() <em>Authors</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAuthors()
+     * @generated
+     * @ordered
+     */
+    protected EList<Author> authors;
+    /**
+     * The cached value of the '{@link #getCategories() <em>Categories</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getCategories()
+     * @generated
+     * @ordered
+     */
+    protected EList<Category> categories;
+    /**
+     * The cached value of the '{@link #getReadingUnits() <em>Reading Units</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getReadingUnits()
+     * @generated
+     * @ordered
+     */
+    protected EList<ReadingUnit> readingUnits;
 
     /**
      * <!-- begin-user-doc -->
@@ -75,9 +113,73 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
     {
         if (uniques == null)
         {
-            uniques = new EObjectResolvingEList<Unique>(Unique.class, this, JbookshelfPackage.BOOK_SHELF__UNIQUES);
+            uniques = new EObjectContainmentEList<Unique>(Unique.class, this, JbookshelfPackage.BOOK_SHELF__UNIQUES);
         }
         return uniques;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Author> getAuthors()
+    {
+        if (authors == null)
+        {
+            authors = new EObjectContainmentEList<Author>(Author.class, this, JbookshelfPackage.BOOK_SHELF__AUTHORS);
+        }
+        return authors;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Category> getCategories()
+    {
+        if (categories == null)
+        {
+            categories = new EObjectContainmentEList<Category>(Category.class, this, JbookshelfPackage.BOOK_SHELF__CATEGORIES);
+        }
+        return categories;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<ReadingUnit> getReadingUnits()
+    {
+        if (readingUnits == null)
+        {
+            readingUnits = new EObjectContainmentEList<ReadingUnit>(ReadingUnit.class, this, JbookshelfPackage.BOOK_SHELF__READING_UNITS);
+        }
+        return readingUnits;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.BOOK_SHELF__UNIQUES:
+                return ((InternalEList<?>)getUniques()).basicRemove(otherEnd, msgs);
+            case JbookshelfPackage.BOOK_SHELF__AUTHORS:
+                return ((InternalEList<?>)getAuthors()).basicRemove(otherEnd, msgs);
+            case JbookshelfPackage.BOOK_SHELF__CATEGORIES:
+                return ((InternalEList<?>)getCategories()).basicRemove(otherEnd, msgs);
+            case JbookshelfPackage.BOOK_SHELF__READING_UNITS:
+                return ((InternalEList<?>)getReadingUnits()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
@@ -92,6 +194,12 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
         {
             case JbookshelfPackage.BOOK_SHELF__UNIQUES:
                 return getUniques();
+            case JbookshelfPackage.BOOK_SHELF__AUTHORS:
+                return getAuthors();
+            case JbookshelfPackage.BOOK_SHELF__CATEGORIES:
+                return getCategories();
+            case JbookshelfPackage.BOOK_SHELF__READING_UNITS:
+                return getReadingUnits();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -111,6 +219,18 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
                 getUniques().clear();
                 getUniques().addAll((Collection<? extends Unique>)newValue);
                 return;
+            case JbookshelfPackage.BOOK_SHELF__AUTHORS:
+                getAuthors().clear();
+                getAuthors().addAll((Collection<? extends Author>)newValue);
+                return;
+            case JbookshelfPackage.BOOK_SHELF__CATEGORIES:
+                getCategories().clear();
+                getCategories().addAll((Collection<? extends Category>)newValue);
+                return;
+            case JbookshelfPackage.BOOK_SHELF__READING_UNITS:
+                getReadingUnits().clear();
+                getReadingUnits().addAll((Collection<? extends ReadingUnit>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -128,6 +248,15 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
             case JbookshelfPackage.BOOK_SHELF__UNIQUES:
                 getUniques().clear();
                 return;
+            case JbookshelfPackage.BOOK_SHELF__AUTHORS:
+                getAuthors().clear();
+                return;
+            case JbookshelfPackage.BOOK_SHELF__CATEGORIES:
+                getCategories().clear();
+                return;
+            case JbookshelfPackage.BOOK_SHELF__READING_UNITS:
+                getReadingUnits().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -144,6 +273,12 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
         {
             case JbookshelfPackage.BOOK_SHELF__UNIQUES:
                 return uniques != null && !uniques.isEmpty();
+            case JbookshelfPackage.BOOK_SHELF__AUTHORS:
+                return authors != null && !authors.isEmpty();
+            case JbookshelfPackage.BOOK_SHELF__CATEGORIES:
+                return categories != null && !categories.isEmpty();
+            case JbookshelfPackage.BOOK_SHELF__READING_UNITS:
+                return readingUnits != null && !readingUnits.isEmpty();
         }
         return super.eIsSet(featureID);
     }
