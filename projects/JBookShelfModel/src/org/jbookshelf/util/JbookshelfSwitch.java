@@ -198,6 +198,21 @@ public class JbookshelfSwitch<T>
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case JbookshelfPackage.BOOK_SHELF_STORAGE:
+            {
+                BookShelfStorage bookShelfStorage = (BookShelfStorage)theEObject;
+                T result = caseBookShelfStorage(bookShelfStorage);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case JbookshelfPackage.SINGLE_FILE_STORAGE:
+            {
+                SingleFileStorage singleFileStorage = (SingleFileStorage)theEObject;
+                T result = caseSingleFileStorage(singleFileStorage);
+                if (result == null) result = caseBookShelfStorage(singleFileStorage);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -406,6 +421,38 @@ public class JbookshelfSwitch<T>
      * @generated
      */
     public T caseSingleFileFolder(SingleFileFolder object)
+    {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Book Shelf Storage</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Book Shelf Storage</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseBookShelfStorage(BookShelfStorage object)
+    {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Single File Storage</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Single File Storage</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSingleFileStorage(SingleFileStorage object)
     {
         return null;
     }

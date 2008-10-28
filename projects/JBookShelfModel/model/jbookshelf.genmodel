@@ -2,7 +2,7 @@
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/JBookShelfModel/src"
-    modelPluginID="JBookShelfModel" modelName="Jbookshelf" importerID="org.eclipse.emf.importer.ecore"
+    modelPluginID="JBookShelfModel" modelName="Jbookshelf" importerID="org.eclipse.emf.importer.java"
     complianceLevel="6.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <genAnnotations source="http://www.eclipse.org/emf/2002/GenModel/exporter/org.eclipse.uml2.uml.ecore.exporter">
     <genAnnotations source="selectedPackages">
@@ -17,7 +17,7 @@
     <details key="BODY_ANNOTATIONS" value="IGNORE"/>
     <details key="REDEFINES_ANNOTATIONS" value="PROCESS"/>
   </genAnnotations>
-  <foreignModel>jbookshelf.ecore</foreignModel>
+  <foreignModel>@model</foreignModel>
   <genPackages prefix="Jbookshelf" basePackage="org" disposableProviderFactory="true"
       ecorePackage="jbookshelf.ecore#/">
     <genAnnotations source="http://www.eclipse.org/emf/2002/GenModel/exporter/org.eclipse.uml2.uml.ecore.exporter">
@@ -55,6 +55,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//BookShelf/authors"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//BookShelf/categories"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//BookShelf/readingUnits"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//BookShelf/storage"/>
     </genClasses>
     <genClasses ecoreClass="jbookshelf.ecore#//ArchiveFile">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//ArchiveFile/archiveFile"/>
@@ -73,6 +74,19 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//SingleFileFolder/folder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//SingleFileFolder/singleFile"/>
       <genOperations ecoreOperation="jbookshelf.ecore#//SingleFileFolder/openFolder"/>
+    </genClasses>
+    <genClasses ecoreClass="jbookshelf.ecore#//BookShelfStorage">
+      <genOperations ecoreOperation="jbookshelf.ecore#//BookShelfStorage/loadCollection"/>
+      <genOperations ecoreOperation="jbookshelf.ecore#//BookShelfStorage/saveCollection"/>
+    </genClasses>
+    <genClasses ecoreClass="jbookshelf.ecore#//SingleFileStorage">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//SingleFileStorage/collectionStorageFile"/>
+      <genOperations ecoreOperation="jbookshelf.ecore#//SingleFileStorage/backupCollection">
+        <genParameters ecoreParameter="jbookshelf.ecore#//SingleFileStorage/backupCollection/externalFile"/>
+      </genOperations>
+      <genOperations ecoreOperation="jbookshelf.ecore#//SingleFileStorage/restoreCollection">
+        <genParameters ecoreParameter="jbookshelf.ecore#//SingleFileStorage/restoreCollection/externalFile"/>
+      </genOperations>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
