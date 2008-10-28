@@ -144,6 +144,16 @@ public class JbookshelfAdapterFactory extends AdapterFactoryImpl
                 return createSingleFileFolderAdapter();
             }
             @Override
+            public Adapter caseBookShelfStorage(BookShelfStorage object)
+            {
+                return createBookShelfStorageAdapter();
+            }
+            @Override
+            public Adapter caseSingleFileStorage(SingleFileStorage object)
+            {
+                return createSingleFileStorageAdapter();
+            }
+            @Override
             public Adapter defaultCase(EObject object)
             {
                 return createEObjectAdapter();
@@ -356,6 +366,36 @@ public class JbookshelfAdapterFactory extends AdapterFactoryImpl
      * @generated
      */
     public Adapter createSingleFileFolderAdapter()
+    {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.jbookshelf.BookShelfStorage <em>Book Shelf Storage</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.jbookshelf.BookShelfStorage
+     * @generated
+     */
+    public Adapter createBookShelfStorageAdapter()
+    {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.jbookshelf.SingleFileStorage <em>Single File Storage</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.jbookshelf.SingleFileStorage
+     * @generated
+     */
+    public Adapter createSingleFileStorageAdapter()
     {
         return null;
     }

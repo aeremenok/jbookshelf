@@ -84,6 +84,8 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
             case JbookshelfPackage.PHYSICAL_UNIT: return createPhysicalUnit();
             case JbookshelfPackage.SINGLE_FILE: return createSingleFile();
             case JbookshelfPackage.SINGLE_FILE_FOLDER: return createSingleFileFolder();
+            case JbookshelfPackage.BOOK_SHELF_STORAGE: return createBookShelfStorage();
+            case JbookshelfPackage.SINGLE_FILE_STORAGE: return createSingleFileStorage();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -268,6 +270,28 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
     {
         SingleFileFolderImpl singleFileFolder = new SingleFileFolderImpl();
         return singleFileFolder;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public BookShelfStorage createBookShelfStorage()
+    {
+        BookShelfStorageImpl bookShelfStorage = new BookShelfStorageImpl();
+        return bookShelfStorage;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SingleFileStorage createSingleFileStorage()
+    {
+        SingleFileStorageImpl singleFileStorage = new SingleFileStorageImpl();
+        return singleFileStorage;
     }
 
     /**
