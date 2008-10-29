@@ -10,8 +10,25 @@ import org.eclipse.emf.ecore.EObject;
  * @author eav
  * @model
  */
-public interface BookShelfStorage extends EObject
+public interface BookShelfStorage
+    extends
+        EObject
 {
+    /**
+     * @model
+     */
+    BookShelf getBookShelf();
+
+    /**
+     * Sets the value of the '{@link org.jbookshelf.BookShelfStorage#getBookShelf <em>Book Shelf</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Book Shelf</em>' reference.
+     * @see #getBookShelf()
+     * @generated
+     */
+    void setBookShelf(BookShelf value);
+
     /**
      * @model
      */

@@ -11,7 +11,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"
         eType="#//Author"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="physical" lowerBound="1"
-        eType="#//PhysicalUnit"/>
+        eType="#//PhysicalUnit" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//Unique platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -35,6 +35,18 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BookShelf">
+    <eOperations name="queryAuthors" upperBound="-1" eType="#//Author">
+      <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="queryUniques" upperBound="-1" eType="#//Unique">
+      <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="queryUnits" upperBound="-1" eType="#//ReadingUnit">
+      <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="quetyCategories" upperBound="-1" eType="#//Category">
+      <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="uniques" upperBound="-1"
         eType="#//Unique" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"
@@ -67,6 +79,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="BookShelfStorage">
     <eOperations name="loadCollection"/>
     <eOperations name="saveCollection"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bookShelf" eType="#//BookShelf"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SingleFileStorage" eSuperTypes="#//BookShelfStorage">
     <eOperations name="backupCollection">

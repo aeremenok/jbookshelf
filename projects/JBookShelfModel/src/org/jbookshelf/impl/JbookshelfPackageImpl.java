@@ -601,6 +601,16 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getBookShelfStorage_BookShelf()
+    {
+        return (EReference)bookShelfStorageEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getSingleFileStorage()
     {
         return singleFileStorageEClass;
@@ -715,6 +725,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         createEAttribute(singleFileFolderEClass, SINGLE_FILE_FOLDER__SINGLE_FILE);
 
         bookShelfStorageEClass = createEClass(BOOK_SHELF_STORAGE);
+        createEReference(bookShelfStorageEClass, BOOK_SHELF_STORAGE__BOOK_SHELF);
 
         singleFileStorageEClass = createEClass(SINGLE_FILE_STORAGE);
         createEAttribute(singleFileStorageEClass, SINGLE_FILE_STORAGE__COLLECTION_STORAGE_FILE);
@@ -778,7 +789,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
 
         initEClass(readingUnitEClass, ReadingUnit.class, "ReadingUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getReadingUnit_Authors(), this.getAuthor(), null, "authors", null, 0, -1, ReadingUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getReadingUnit_Physical(), this.getPhysicalUnit(), null, "physical", null, 0, 1, ReadingUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getReadingUnit_Physical(), this.getPhysicalUnit(), null, "physical", null, 1, 1, ReadingUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getCategory_Description(), ecorePackage.getEString(), "description", null, 0, 1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -799,11 +810,23 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         initEAttribute(getUnique_Name(), ecorePackage.getEString(), "name", null, 0, 1, Unique.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(bookShelfEClass, BookShelf.class, "BookShelf", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getBookShelf_Uniques(), this.getUnique(), null, "uniques", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getBookShelf_Authors(), this.getAuthor(), null, "authors", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getBookShelf_Categories(), this.getCategory(), null, "categories", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getBookShelf_ReadingUnits(), this.getReadingUnit(), null, "readingUnits", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getBookShelf_Storage(), this.getBookShelfStorage(), null, "storage", null, 0, 1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getBookShelf_Uniques(), this.getUnique(), null, "uniques", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getBookShelf_Authors(), this.getAuthor(), null, "authors", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getBookShelf_Categories(), this.getCategory(), null, "categories", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getBookShelf_ReadingUnits(), this.getReadingUnit(), null, "readingUnits", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getBookShelf_Storage(), this.getBookShelfStorage(), null, "storage", null, 1, 1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        EOperation op = addEOperation(bookShelfEClass, this.getAuthor(), "queryAuthors", 0, -1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+        op = addEOperation(bookShelfEClass, this.getUnique(), "queryUniques", 0, -1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+        op = addEOperation(bookShelfEClass, this.getReadingUnit(), "queryUnits", 0, -1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+        op = addEOperation(bookShelfEClass, this.getCategory(), "quetyCategories", 0, -1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         initEClass(archiveFileEClass, ArchiveFile.class, "ArchiveFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getArchiveFile_ArchiveFile(), this.getFile(), "archiveFile", null, 0, 1, ArchiveFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -826,6 +849,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         addEOperation(singleFileFolderEClass, null, "openFolder", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         initEClass(bookShelfStorageEClass, BookShelfStorage.class, "BookShelfStorage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getBookShelfStorage_BookShelf(), this.getBookShelf(), null, "bookShelf", null, 0, 1, BookShelfStorage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         addEOperation(bookShelfStorageEClass, null, "loadCollection", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -834,7 +858,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         initEClass(singleFileStorageEClass, SingleFileStorage.class, "SingleFileStorage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getSingleFileStorage_CollectionStorageFile(), this.getFile(), "collectionStorageFile", null, 0, 1, SingleFileStorage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        EOperation op = addEOperation(singleFileStorageEClass, null, "backupCollection", 0, 1, IS_UNIQUE, IS_ORDERED);
+        op = addEOperation(singleFileStorageEClass, null, "backupCollection", 0, 1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, this.getFile(), "externalFile", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         op = addEOperation(singleFileStorageEClass, null, "restoreCollection", 0, 1, IS_UNIQUE, IS_ORDERED);

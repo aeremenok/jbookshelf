@@ -50,7 +50,7 @@ import org.jbookshelf.Unique;
 public class BookShelfImpl extends EObjectImpl implements BookShelf
 {
     /**
-     * The cached value of the '{@link #getUniques() <em>Uniques</em>}' reference list.
+     * The cached value of the '{@link #getUniques() <em>Uniques</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getUniques()
@@ -60,7 +60,7 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
     protected EList<Unique> uniques;
 
     /**
-     * The cached value of the '{@link #getAuthors() <em>Authors</em>}' reference list.
+     * The cached value of the '{@link #getAuthors() <em>Authors</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getAuthors()
@@ -69,7 +69,7 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
      */
     protected EList<Author> authors;
     /**
-     * The cached value of the '{@link #getCategories() <em>Categories</em>}' reference list.
+     * The cached value of the '{@link #getCategories() <em>Categories</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getCategories()
@@ -78,7 +78,7 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
      */
     protected EList<Category> categories;
     /**
-     * The cached value of the '{@link #getReadingUnits() <em>Reading Units</em>}' reference list.
+     * The cached value of the '{@link #getReadingUnits() <em>Reading Units</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getReadingUnits()
@@ -88,7 +88,7 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
     protected EList<ReadingUnit> readingUnits;
 
     /**
-     * The cached value of the '{@link #getStorage() <em>Storage</em>}' reference.
+     * The cached value of the '{@link #getStorage() <em>Storage</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getStorage()
@@ -127,7 +127,7 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
     {
         if (uniques == null)
         {
-            uniques = new EObjectResolvingEList<Unique>(Unique.class, this, JbookshelfPackage.BOOK_SHELF__UNIQUES);
+            uniques = new EObjectContainmentEList<Unique>(Unique.class, this, JbookshelfPackage.BOOK_SHELF__UNIQUES);
         }
         return uniques;
     }
@@ -141,7 +141,7 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
     {
         if (authors == null)
         {
-            authors = new EObjectResolvingEList<Author>(Author.class, this, JbookshelfPackage.BOOK_SHELF__AUTHORS);
+            authors = new EObjectContainmentEList<Author>(Author.class, this, JbookshelfPackage.BOOK_SHELF__AUTHORS);
         }
         return authors;
     }
@@ -155,7 +155,7 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
     {
         if (categories == null)
         {
-            categories = new EObjectResolvingEList<Category>(Category.class, this, JbookshelfPackage.BOOK_SHELF__CATEGORIES);
+            categories = new EObjectContainmentEList<Category>(Category.class, this, JbookshelfPackage.BOOK_SHELF__CATEGORIES);
         }
         return categories;
     }
@@ -169,7 +169,7 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
     {
         if (readingUnits == null)
         {
-            readingUnits = new EObjectResolvingEList<ReadingUnit>(ReadingUnit.class, this, JbookshelfPackage.BOOK_SHELF__READING_UNITS);
+            readingUnits = new EObjectContainmentEList<ReadingUnit>(ReadingUnit.class, this, JbookshelfPackage.BOOK_SHELF__READING_UNITS);
         }
         return readingUnits;
     }
@@ -181,16 +181,6 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
      */
     public BookShelfStorage getStorage()
     {
-        if (storage != null && storage.eIsProxy())
-        {
-            InternalEObject oldStorage = (InternalEObject)storage;
-            storage = (BookShelfStorage)eResolveProxy(oldStorage);
-            if (storage != oldStorage)
-            {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, JbookshelfPackage.BOOK_SHELF__STORAGE, oldStorage, storage));
-            }
-        }
         return storage;
     }
 
@@ -199,9 +189,16 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
      * <!-- end-user-doc -->
      * @generated
      */
-    public BookShelfStorage basicGetStorage()
+    public NotificationChain basicSetStorage(BookShelfStorage newStorage, NotificationChain msgs)
     {
-        return storage;
+        BookShelfStorage oldStorage = storage;
+        storage = newStorage;
+        if (eNotificationRequired())
+        {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, JbookshelfPackage.BOOK_SHELF__STORAGE, oldStorage, newStorage);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
 
     /**
@@ -211,10 +208,90 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
      */
     public void setStorage(BookShelfStorage newStorage)
     {
-        BookShelfStorage oldStorage = storage;
-        storage = newStorage;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.BOOK_SHELF__STORAGE, oldStorage, storage));
+        if (newStorage != storage)
+        {
+            NotificationChain msgs = null;
+            if (storage != null)
+                msgs = ((InternalEObject)storage).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - JbookshelfPackage.BOOK_SHELF__STORAGE, null, msgs);
+            if (newStorage != null)
+                msgs = ((InternalEObject)newStorage).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - JbookshelfPackage.BOOK_SHELF__STORAGE, null, msgs);
+            msgs = basicSetStorage(newStorage, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.BOOK_SHELF__STORAGE, newStorage, newStorage));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Author> queryAuthors(String query)
+    {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Unique> queryUniques(String query)
+    {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<ReadingUnit> queryUnits(String query)
+    {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Category> quetyCategories(String query)
+    {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.BOOK_SHELF__UNIQUES:
+                return ((InternalEList<?>)getUniques()).basicRemove(otherEnd, msgs);
+            case JbookshelfPackage.BOOK_SHELF__AUTHORS:
+                return ((InternalEList<?>)getAuthors()).basicRemove(otherEnd, msgs);
+            case JbookshelfPackage.BOOK_SHELF__CATEGORIES:
+                return ((InternalEList<?>)getCategories()).basicRemove(otherEnd, msgs);
+            case JbookshelfPackage.BOOK_SHELF__READING_UNITS:
+                return ((InternalEList<?>)getReadingUnits()).basicRemove(otherEnd, msgs);
+            case JbookshelfPackage.BOOK_SHELF__STORAGE:
+                return basicSetStorage(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
@@ -236,8 +313,7 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
             case JbookshelfPackage.BOOK_SHELF__READING_UNITS:
                 return getReadingUnits();
             case JbookshelfPackage.BOOK_SHELF__STORAGE:
-                if (resolve) return getStorage();
-                return basicGetStorage();
+                return getStorage();
         }
         return super.eGet(featureID, resolve, coreType);
     }
