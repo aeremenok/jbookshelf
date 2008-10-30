@@ -5,8 +5,8 @@
 || Specification || Project Vision || || Verifying || 13.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/vision.txt vision]||
 || || Feature list || || Verifying || 19.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/featurelist.txt featurelist]||
 || || Use cases || || Verifying || 20.10.2008 || 31.10.2008 || UseCaseDiagrams ||
-|| || Component model || || Verifying || 26.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/compoments/components.png diagram], [http://jbookshelf.googlecode.com/svn/trunk/doc/compoments/components.odg source]||
-|| || Object model || || Verifying || 26.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/classes/jbookshelf.png emf-diagram], [http://jbookshelf.googlecode.com/svn/trunk/projects/JBookShelfModel/ source] ||
+|| || Component model || || Verifying || 26.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/compoments/components.png diagram] ||
+|| || Object model || || Verifying || 26.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/classes/jbookshelf.png emf-diagram] ||
 || || Result verification || || Started || 30.10.2008 || 07.11.2008 || ||
 || Desktop App Development || GUI-prototype design || || Started || 30.10.2008 || 07.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/gui/main_window.png main window] ||
 || || Object model implementation || || Not Started || ? || ? || ||
