@@ -324,13 +324,6 @@
     <element xmi:type="ecore:EClass" href="jbookshelf.ecore#//SingleFileStorage"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wop5sqcgEd2vHtqP9KjvDA" y="363"/>
   </children>
-  <children xmi:type="notation:Node" xmi:id="_wop5wqcgEd2vHtqP9KjvDA" type="1004">
-    <children xmi:type="notation:Node" xmi:id="_wop5xacgEd2vHtqP9KjvDA" type="4008"/>
-    <children xmi:type="notation:Node" xmi:id="_wop5xqcgEd2vHtqP9KjvDA" type="4009"/>
-    <styles xmi:type="notation:ShapeStyle" xmi:id="_wop5w6cgEd2vHtqP9KjvDA" fontHeight="10" fillColor="13761016" lineColor="0"/>
-    <element xmi:type="ecore:EDataType" href="jbookshelf.ecore#//Date"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wop5xKcgEd2vHtqP9KjvDA" x="1220"/>
-  </children>
   <children xmi:type="notation:Node" xmi:id="_wop5x6cgEd2vHtqP9KjvDA" type="1004">
     <children xmi:type="notation:Node" xmi:id="_wop5yqcgEd2vHtqP9KjvDA" type="4008"/>
     <children xmi:type="notation:Node" xmi:id="_wop5y6cgEd2vHtqP9KjvDA" type="4009"/>
@@ -626,7 +619,7 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_wop6aacgEd2vHtqP9KjvDA" routing="Tree" lineColor="0"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_wop6aqcgEd2vHtqP9KjvDA"/>
     <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_wop6a6cgEd2vHtqP9KjvDA" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_wop6a6cgEd2vHtqP9KjvDA" points="[-2, 0, -3, 60]$[-2, -28, -3, 32]$[-2, -28, -3, 32]$[-2, -60, -3, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wpjRpacgEd2vHtqP9KjvDA" id="(0.5,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wpjRpqcgEd2vHtqP9KjvDA" id="(0.5,1.0)"/>
   </edges>

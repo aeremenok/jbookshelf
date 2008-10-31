@@ -41,6 +41,7 @@ import org.jbookshelf.ReadingUnit;
  *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getCategories <em>Categories</em>}</li>
  *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getAuthors <em>Authors</em>}</li>
  *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getPhysical <em>Physical</em>}</li>
+ *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#isIsRead <em>Is Read</em>}</li>
  * </ul>
  * </p>
  *
@@ -86,6 +87,25 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
      * @ordered
      */
     protected PhysicalUnit physical;
+    /**
+     * The default value of the '{@link #isIsRead() <em>Is Read</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isIsRead()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean IS_READ_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isIsRead() <em>Is Read</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isIsRead()
+     * @generated
+     * @ordered
+     */
+    protected boolean isRead = IS_READ_EDEFAULT;
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -188,6 +208,29 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isIsRead()
+    {
+        return isRead;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setIsRead(boolean newIsRead)
+    {
+        boolean oldIsRead = isRead;
+        isRead = newIsRead;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.READING_UNIT__IS_READ, oldIsRead, isRead));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
     {
@@ -231,6 +274,8 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
                 return getAuthors();
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
                 return getPhysical();
+            case JbookshelfPackage.READING_UNIT__IS_READ:
+                return isIsRead() ? Boolean.TRUE : Boolean.FALSE;
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -261,6 +306,9 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
                 setPhysical((PhysicalUnit)newValue);
                 return;
+            case JbookshelfPackage.READING_UNIT__IS_READ:
+                setIsRead(((Boolean)newValue).booleanValue());
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -287,6 +335,9 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
                 setPhysical((PhysicalUnit)null);
                 return;
+            case JbookshelfPackage.READING_UNIT__IS_READ:
+                setIsRead(IS_READ_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -309,6 +360,8 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
                 return authors != null && !authors.isEmpty();
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
                 return physical != null;
+            case JbookshelfPackage.READING_UNIT__IS_READ:
+                return isRead != IS_READ_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -379,6 +432,23 @@ public class ReadingUnitImpl extends UniqueImpl implements ReadingUnit
             }
         }
         return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString()
+    {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (isRead: ");
+        result.append(isRead);
+        result.append(')');
+        return result.toString();
     }
 
 } //ReadingUnitImpl
