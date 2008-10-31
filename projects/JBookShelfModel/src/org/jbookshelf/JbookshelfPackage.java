@@ -237,13 +237,22 @@ public interface JbookshelfPackage extends EPackage
     int READING_UNIT__PHYSICAL = UNIQUE_FEATURE_COUNT + 3;
 
     /**
+     * The feature id for the '<em><b>Is Read</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int READING_UNIT__IS_READ = UNIQUE_FEATURE_COUNT + 4;
+
+    /**
      * The number of structural features of the '<em>Reading Unit</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int READING_UNIT_FEATURE_COUNT = UNIQUE_FEATURE_COUNT + 4;
+    int READING_UNIT_FEATURE_COUNT = UNIQUE_FEATURE_COUNT + 5;
 
 
     /**
@@ -672,17 +681,6 @@ public interface JbookshelfPackage extends EPackage
     int SINGLE_FILE_STORAGE_FEATURE_COUNT = BOOK_SHELF_STORAGE_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '<em>Date</em>' data type.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see java.sql.Date
-     * @see org.jbookshelf.impl.JbookshelfPackageImpl#getDate()
-     * @generated
-     */
-    int DATE = 15;
-
-
-    /**
      * The meta object id for the '<em>File</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -690,7 +688,7 @@ public interface JbookshelfPackage extends EPackage
      * @see org.jbookshelf.impl.JbookshelfPackageImpl#getFile()
      * @generated
      */
-    int FILE = 16;
+    int FILE = 15;
 
 
     /**
@@ -745,6 +743,17 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      */
     EReference getReadingUnit_Physical();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.jbookshelf.ReadingUnit#isIsRead <em>Is Read</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Is Read</em>'.
+     * @see org.jbookshelf.ReadingUnit#isIsRead()
+     * @see #getReadingUnit()
+     * @generated
+     */
+    EAttribute getReadingUnit_IsRead();
 
     /**
      * Returns the meta object for class '{@link org.jbookshelf.Category <em>Category</em>}'.
@@ -1119,17 +1128,6 @@ public interface JbookshelfPackage extends EPackage
     EAttribute getSingleFileStorage_CollectionStorageFile();
 
     /**
-     * Returns the meta object for data type '{@link java.sql.Date <em>Date</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for data type '<em>Date</em>'.
-     * @see java.sql.Date
-     * @model instanceClass="java.sql.Date"
-     * @generated
-     */
-    EDataType getDate();
-
-    /**
      * Returns the meta object for data type '{@link java.io.File <em>File</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1206,6 +1204,14 @@ public interface JbookshelfPackage extends EPackage
          * @generated
          */
         EReference READING_UNIT__PHYSICAL = eINSTANCE.getReadingUnit_Physical();
+
+        /**
+         * The meta object literal for the '<em><b>Is Read</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute READING_UNIT__IS_READ = eINSTANCE.getReadingUnit_IsRead();
 
         /**
          * The meta object literal for the '{@link org.jbookshelf.impl.CategoryImpl <em>Category</em>}' class.
@@ -1512,16 +1518,6 @@ public interface JbookshelfPackage extends EPackage
          * @generated
          */
         EAttribute SINGLE_FILE_STORAGE__COLLECTION_STORAGE_FILE = eINSTANCE.getSingleFileStorage_CollectionStorageFile();
-
-        /**
-         * The meta object literal for the '<em>Date</em>' data type.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see java.sql.Date
-         * @see org.jbookshelf.impl.JbookshelfPackageImpl#getDate()
-         * @generated
-         */
-        EDataType DATE = eINSTANCE.getDate();
 
         /**
          * The meta object literal for the '<em>File</em>' data type.

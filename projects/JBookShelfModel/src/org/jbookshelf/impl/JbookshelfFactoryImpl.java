@@ -101,8 +101,6 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
     {
         switch (eDataType.getClassifierID())
         {
-            case JbookshelfPackage.DATE:
-                return createDateFromString(eDataType, initialValue);
             case JbookshelfPackage.FILE:
                 return createFileFromString(eDataType, initialValue);
             default:
@@ -120,8 +118,6 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
     {
         switch (eDataType.getClassifierID())
         {
-            case JbookshelfPackage.DATE:
-                return convertDateToString(eDataType, instanceValue);
             case JbookshelfPackage.FILE:
                 return convertFileToString(eDataType, instanceValue);
             default:
@@ -292,26 +288,6 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
     {
         SingleFileStorageImpl singleFileStorage = new SingleFileStorageImpl();
         return singleFileStorage;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Date createDateFromString(EDataType eDataType, String initialValue)
-    {
-        return (Date)super.createFromString(eDataType, initialValue);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String convertDateToString(EDataType eDataType, Object instanceValue)
-    {
-        return super.convertToString(eDataType, instanceValue);
     }
 
     /**

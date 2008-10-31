@@ -154,13 +154,6 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
      * <!-- end-user-doc -->
      * @generated
      */
-    private EDataType dateEDataType = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     private EDataType fileEDataType = null;
 
     /**
@@ -284,6 +277,16 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     public EReference getReadingUnit_Physical()
     {
         return (EReference)readingUnitEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getReadingUnit_IsRead()
+    {
+        return (EAttribute)readingUnitEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -641,16 +644,6 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EDataType getDate()
-    {
-        return dateEDataType;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EDataType getFile()
     {
         return fileEDataType;
@@ -692,6 +685,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         readingUnitEClass = createEClass(READING_UNIT);
         createEReference(readingUnitEClass, READING_UNIT__AUTHORS);
         createEReference(readingUnitEClass, READING_UNIT__PHYSICAL);
+        createEAttribute(readingUnitEClass, READING_UNIT__IS_READ);
 
         categoryEClass = createEClass(CATEGORY);
         createEAttribute(categoryEClass, CATEGORY__DESCRIPTION);
@@ -742,7 +736,6 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         createEAttribute(singleFileStorageEClass, SINGLE_FILE_STORAGE__COLLECTION_STORAGE_FILE);
 
         // Create data types
-        dateEDataType = createEDataType(DATE);
         fileEDataType = createEDataType(FILE);
     }
 
@@ -801,6 +794,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         initEClass(readingUnitEClass, ReadingUnit.class, "ReadingUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getReadingUnit_Authors(), this.getAuthor(), null, "authors", null, 0, -1, ReadingUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReadingUnit_Physical(), this.getPhysicalUnit(), null, "physical", null, 1, 1, ReadingUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getReadingUnit_IsRead(), ecorePackage.getEBoolean(), "isRead", "false", 0, 1, ReadingUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getCategory_Description(), ecorePackage.getEString(), "description", null, 0, 1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -808,7 +802,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
 
         initEClass(commentEClass, Comment.class, "Comment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getComment_Content(), ecorePackage.getEString(), "content", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getComment_CreationDate(), this.getDate(), "creationDate", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getComment_CreationDate(), ecorePackage.getEDate(), "creationDate", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getComment_Subject(), this.getCommentable(), null, "subject", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(commentableEClass, Commentable.class, "Commentable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -877,7 +871,6 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         addEParameter(op, this.getFile(), "externalFile", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         // Initialize data types
-        initEDataType(dateEDataType, Date.class, "Date", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
         initEDataType(fileEDataType, File.class, "File", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
         // Create resource
