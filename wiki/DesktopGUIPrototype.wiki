@@ -1,0 +1,10 @@
+#labels Phase-Design
+made with Netbeans 6.1
+
+1. main window
+
+[http://jbookshelf.googlecode.com/svn/trunk/doc/gui/main_window.png]
+
+2. settings dialog
+
+[http://jbookshelf.googlecode.com/svn/trunk/doc/gui/settings.png]
