@@ -8,7 +8,7 @@
 || || Component model || || Verifying || 26.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/compoments/components.png diagram] ||
 || || Object model || || Verifying || 26.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/classes/jbookshelf.png emf-diagram] ||
 || || Result verification || || Started || 30.10.2008 || 07.11.2008 || ||
-|| Desktop App Development || GUI-prototype design || || Started || 30.10.2008 || 07.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/gui/main_window.png main window] ||
+|| Desktop App Development || GUI-prototype design || || Started || 30.10.2008 || 07.11.2008 || DesktopGUIPrototype ||
 || || Object model implementation || || Not Started || ? || ? || ||
 || || GUI implementation || || Not Started || ? || ? || ||
 || || Components integration || || Not Started || ? || ? || ||
