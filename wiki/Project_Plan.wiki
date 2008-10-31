@@ -14,3 +14,5 @@
  # Integrating it with related free desktop applications (readers, openoffice, etc). Probably integrating with web.
  # Porting it to pda. Rise of linux and google andriod communicators requires a cross-platform application. If development of java-midlet fails, consider porting to .NET CF or PyCE.
  # Developing a simple pda-bookreader. Target feature: making notes on books, available for other programs. Odt-format suits for that.
+
+For details - see RoadMap
