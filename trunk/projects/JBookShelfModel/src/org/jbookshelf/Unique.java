@@ -1,5 +1,6 @@
 package org.jbookshelf;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -17,6 +18,12 @@ public interface Unique
      * @model
      */
     String getName();
+
+    /**
+     * @return collection of items, related to this
+     * @model
+     */
+    EList<Unique> getRelated();
 
     /**
      * Sets the value of the '{@link org.jbookshelf.Unique#getName <em>Name</em>}' attribute.

@@ -81,13 +81,22 @@ public interface JbookshelfPackage extends EPackage
     int UNIQUE__NAME = 0;
 
     /**
+     * The feature id for the '<em><b>Related</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int UNIQUE__RELATED = 1;
+
+    /**
      * The number of structural features of the '<em>Unique</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int UNIQUE_FEATURE_COUNT = 1;
+    int UNIQUE_FEATURE_COUNT = 2;
 
     /**
      * The meta object id for the '{@link org.jbookshelf.impl.CommentableImpl <em>Commentable</em>}' class.
@@ -117,6 +126,15 @@ public interface JbookshelfPackage extends EPackage
      * @ordered
      */
     int AUTHOR__NAME = UNIQUE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Related</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int AUTHOR__RELATED = UNIQUE__RELATED;
 
     /**
      * The feature id for the '<em><b>Comments</b></em>' reference list.
@@ -172,6 +190,15 @@ public interface JbookshelfPackage extends EPackage
      * @ordered
      */
     int READING_UNIT__NAME = UNIQUE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Related</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int READING_UNIT__RELATED = UNIQUE__RELATED;
 
     /**
      * The feature id for the '<em><b>Comments</b></em>' reference list.
@@ -237,6 +264,15 @@ public interface JbookshelfPackage extends EPackage
      * @ordered
      */
     int CATEGORY__NAME = UNIQUE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Related</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CATEGORY__RELATED = UNIQUE__RELATED;
 
     /**
      * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -849,6 +885,17 @@ public interface JbookshelfPackage extends EPackage
     EAttribute getUnique_Name();
 
     /**
+     * Returns the meta object for the reference list '{@link org.jbookshelf.Unique#getRelated <em>Related</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Related</em>'.
+     * @see org.jbookshelf.Unique#getRelated()
+     * @see #getUnique()
+     * @generated
+     */
+    EReference getUnique_Related();
+
+    /**
      * Returns the meta object for class '{@link org.jbookshelf.BookShelf <em>Book Shelf</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1273,6 +1320,14 @@ public interface JbookshelfPackage extends EPackage
          * @generated
          */
         EAttribute UNIQUE__NAME = eINSTANCE.getUnique_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Related</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference UNIQUE__RELATED = eINSTANCE.getUnique_Related();
 
         /**
          * The meta object literal for the '{@link org.jbookshelf.impl.BookShelfImpl <em>Book Shelf</em>}' class.

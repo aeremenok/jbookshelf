@@ -33,6 +33,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Unique">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="related" upperBound="-1"
+        eType="#//Unique"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BookShelf">
     <eOperations name="queryAuthors" upperBound="-1" eType="#//Author">

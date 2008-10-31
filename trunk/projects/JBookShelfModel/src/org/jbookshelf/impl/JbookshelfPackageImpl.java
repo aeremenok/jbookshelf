@@ -421,6 +421,16 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getUnique_Related()
+    {
+        return (EReference)uniqueEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getBookShelf()
     {
         return bookShelfEClass;
@@ -700,6 +710,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
 
         uniqueEClass = createEClass(UNIQUE);
         createEAttribute(uniqueEClass, UNIQUE__NAME);
+        createEReference(uniqueEClass, UNIQUE__RELATED);
 
         bookShelfEClass = createEClass(BOOK_SHELF);
         createEReference(bookShelfEClass, BOOK_SHELF__UNIQUES);
@@ -808,6 +819,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
 
         initEClass(uniqueEClass, Unique.class, "Unique", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getUnique_Name(), ecorePackage.getEString(), "name", null, 0, 1, Unique.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getUnique_Related(), this.getUnique(), null, "related", null, 0, -1, Unique.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(bookShelfEClass, BookShelf.class, "BookShelf", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getBookShelf_Uniques(), this.getUnique(), null, "uniques", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
