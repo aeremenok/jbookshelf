@@ -6,13 +6,16 @@
  */
 package org.jbookshelf.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.jbookshelf.JbookshelfPackage;
 import org.jbookshelf.Unique;
 
@@ -24,6 +27,7 @@ import org.jbookshelf.Unique;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.jbookshelf.impl.UniqueImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.jbookshelf.impl.UniqueImpl#getRelated <em>Related</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,6 +54,16 @@ public class UniqueImpl extends EObjectImpl implements Unique
      * @ordered
      */
     protected String name = NAME_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getRelated() <em>Related</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getRelated()
+     * @generated
+     * @ordered
+     */
+    protected EList<Unique> related;
 
     /**
      * <!-- begin-user-doc -->
@@ -100,6 +114,20 @@ public class UniqueImpl extends EObjectImpl implements Unique
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<Unique> getRelated()
+    {
+        if (related == null)
+        {
+            related = new EObjectResolvingEList<Unique>(Unique.class, this, JbookshelfPackage.UNIQUE__RELATED);
+        }
+        return related;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType)
     {
@@ -107,6 +135,8 @@ public class UniqueImpl extends EObjectImpl implements Unique
         {
             case JbookshelfPackage.UNIQUE__NAME:
                 return getName();
+            case JbookshelfPackage.UNIQUE__RELATED:
+                return getRelated();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -116,6 +146,7 @@ public class UniqueImpl extends EObjectImpl implements Unique
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue)
     {
@@ -123,6 +154,10 @@ public class UniqueImpl extends EObjectImpl implements Unique
         {
             case JbookshelfPackage.UNIQUE__NAME:
                 setName((String)newValue);
+                return;
+            case JbookshelfPackage.UNIQUE__RELATED:
+                getRelated().clear();
+                getRelated().addAll((Collection<? extends Unique>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -141,6 +176,9 @@ public class UniqueImpl extends EObjectImpl implements Unique
             case JbookshelfPackage.UNIQUE__NAME:
                 setName(NAME_EDEFAULT);
                 return;
+            case JbookshelfPackage.UNIQUE__RELATED:
+                getRelated().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -157,6 +195,8 @@ public class UniqueImpl extends EObjectImpl implements Unique
         {
             case JbookshelfPackage.UNIQUE__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case JbookshelfPackage.UNIQUE__RELATED:
+                return related != null && !related.isEmpty();
         }
         return super.eIsSet(featureID);
     }
