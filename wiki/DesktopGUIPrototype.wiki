@@ -15,6 +15,6 @@ _should be generated from xml-file_
 
 =3. book addition dialog=
 
-_"*" - try to autocomplete, if value doesn't exist in collection - add it_
+_ `*` - try to autocomplete, if value doesn't exist in collection - add it_
 
 [http://jbookshelf.googlecode.com/svn/trunk/doc/gui/addition.png]
