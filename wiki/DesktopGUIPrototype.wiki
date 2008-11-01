@@ -12,3 +12,7 @@ _the key consern is how to display books-authors-categories_
 _should be generated from xml-file_
 
 [http://jbookshelf.googlecode.com/svn/trunk/doc/gui/settings.png]
+
+=3. book addition dialog=
+
+[http://jbookshelf.googlecode.com/svn/trunk/doc/gui/addition.png]
