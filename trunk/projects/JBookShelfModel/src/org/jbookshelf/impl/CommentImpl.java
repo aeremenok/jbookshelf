@@ -22,6 +22,7 @@ import org.jbookshelf.JbookshelfPackage;
  *   <li>{@link org.jbookshelf.impl.CommentImpl#getContent <em>Content</em>}</li>
  *   <li>{@link org.jbookshelf.impl.CommentImpl#getCreationDate <em>Creation Date</em>}</li>
  *   <li>{@link org.jbookshelf.impl.CommentImpl#getSubject <em>Subject</em>}</li>
+ *   <li>{@link org.jbookshelf.impl.CommentImpl#getTitle <em>Title</em>}</li>
  * </ul>
  * </p>
  *
@@ -83,6 +84,26 @@ public class CommentImpl
     protected Commentable         subject;
 
     /**
+     * The default value of the '{@link #getTitle() <em>Title</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTitle()
+     * @generated
+     * @ordered
+     */
+    protected static final String TITLE_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getTitle() <em>Title</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTitle()
+     * @generated
+     * @ordered
+     */
+    protected String title = TITLE_EDEFAULT;
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -119,6 +140,8 @@ public class CommentImpl
             case JbookshelfPackage.COMMENT__SUBJECT:
                 if (resolve) return getSubject();
                 return basicGetSubject();
+            case JbookshelfPackage.COMMENT__TITLE:
+                return getTitle();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -139,6 +162,8 @@ public class CommentImpl
                 return CREATION_DATE_EDEFAULT == null ? creationDate != null : !CREATION_DATE_EDEFAULT.equals(creationDate);
             case JbookshelfPackage.COMMENT__SUBJECT:
                 return subject != null;
+            case JbookshelfPackage.COMMENT__TITLE:
+                return TITLE_EDEFAULT == null ? title != null : !TITLE_EDEFAULT.equals(title);
         }
         return super.eIsSet(featureID);
     }
@@ -163,6 +188,9 @@ public class CommentImpl
             case JbookshelfPackage.COMMENT__SUBJECT:
                 setSubject((Commentable)newValue);
                 return;
+            case JbookshelfPackage.COMMENT__TITLE:
+                setTitle((String)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -185,6 +213,9 @@ public class CommentImpl
                 return;
             case JbookshelfPackage.COMMENT__SUBJECT:
                 setSubject((Commentable)null);
+                return;
+            case JbookshelfPackage.COMMENT__TITLE:
+                setTitle(TITLE_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -267,6 +298,29 @@ public class CommentImpl
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getTitle()
+    {
+        return title;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTitle(String newTitle)
+    {
+        String oldTitle = title;
+        title = newTitle;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.COMMENT__TITLE, oldTitle, title));
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -280,6 +334,8 @@ public class CommentImpl
         result.append(content);
         result.append(", creationDate: ");
         result.append(creationDate);
+        result.append(", title: ");
+        result.append(title);
         result.append(')');
         return result.toString();
     }

@@ -51,7 +51,7 @@ public interface ReadingUnit
      * @return the value of the '<em>Is Read</em>' attribute.
      * @see #setIsRead(boolean)
      * @see org.jbookshelf.JbookshelfPackage#getReadingUnit_IsRead()
-     * @model default="false"
+     * @model default="false" required="true"
      * @generated
      */
     boolean isIsRead();
