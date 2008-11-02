@@ -348,13 +348,22 @@ public interface JbookshelfPackage extends EPackage
     int COMMENT__SUBJECT = 2;
 
     /**
+     * The feature id for the '<em><b>Title</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMMENT__TITLE = 3;
+
+    /**
      * The number of structural features of the '<em>Comment</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COMMENT_FEATURE_COUNT = 3;
+    int COMMENT_FEATURE_COUNT = 4;
 
     /**
      * The feature id for the '<em><b>Comments</b></em>' reference list.
@@ -626,7 +635,7 @@ public interface JbookshelfPackage extends EPackage
     int BOOK_SHELF_STORAGE = 13;
 
     /**
-     * The feature id for the '<em><b>Book Shelf</b></em>' reference.
+     * The feature id for the '<em><b>Book Shelf</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -654,7 +663,7 @@ public interface JbookshelfPackage extends EPackage
     int SINGLE_FILE_STORAGE = 14;
 
     /**
-     * The feature id for the '<em><b>Book Shelf</b></em>' reference.
+     * The feature id for the '<em><b>Book Shelf</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -829,6 +838,17 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      */
     EReference getComment_Subject();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.jbookshelf.Comment#getTitle <em>Title</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Title</em>'.
+     * @see org.jbookshelf.Comment#getTitle()
+     * @see #getComment()
+     * @generated
+     */
+    EAttribute getComment_Title();
 
     /**
      * Returns the meta object for class '{@link org.jbookshelf.Commentable <em>Commentable</em>}'.
@@ -1096,10 +1116,10 @@ public interface JbookshelfPackage extends EPackage
     EClass getBookShelfStorage();
 
     /**
-     * Returns the meta object for the reference '{@link org.jbookshelf.BookShelfStorage#getBookShelf <em>Book Shelf</em>}'.
+     * Returns the meta object for the container reference '{@link org.jbookshelf.BookShelfStorage#getBookShelf <em>Book Shelf</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Book Shelf</em>'.
+     * @return the meta object for the container reference '<em>Book Shelf</em>'.
      * @see org.jbookshelf.BookShelfStorage#getBookShelf()
      * @see #getBookShelfStorage()
      * @generated
@@ -1272,6 +1292,14 @@ public interface JbookshelfPackage extends EPackage
          * @generated
          */
         EReference COMMENT__SUBJECT = eINSTANCE.getComment_Subject();
+
+        /**
+         * The meta object literal for the '<em><b>Title</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute COMMENT__TITLE = eINSTANCE.getComment_Title();
 
         /**
          * The meta object literal for the '{@link org.jbookshelf.impl.CommentableImpl <em>Commentable</em>}' class.
@@ -1494,7 +1522,7 @@ public interface JbookshelfPackage extends EPackage
         EClass BOOK_SHELF_STORAGE = eINSTANCE.getBookShelfStorage();
 
         /**
-         * The meta object literal for the '<em><b>Book Shelf</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Book Shelf</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated

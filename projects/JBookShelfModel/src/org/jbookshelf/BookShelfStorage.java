@@ -20,10 +20,10 @@ public interface BookShelfStorage
     BookShelf getBookShelf();
 
     /**
-     * Sets the value of the '{@link org.jbookshelf.BookShelfStorage#getBookShelf <em>Book Shelf</em>}' reference.
+     * Sets the value of the '{@link org.jbookshelf.BookShelfStorage#getBookShelf <em>Book Shelf</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Book Shelf</em>' reference.
+     * @param value the new value of the '<em>Book Shelf</em>' container reference.
      * @see #getBookShelf()
      * @generated
      */

@@ -212,9 +212,9 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
         {
             NotificationChain msgs = null;
             if (storage != null)
-                msgs = ((InternalEObject)storage).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - JbookshelfPackage.BOOK_SHELF__STORAGE, null, msgs);
+                msgs = ((InternalEObject)storage).eInverseRemove(this, JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF, BookShelfStorage.class, msgs);
             if (newStorage != null)
-                msgs = ((InternalEObject)newStorage).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - JbookshelfPackage.BOOK_SHELF__STORAGE, null, msgs);
+                msgs = ((InternalEObject)newStorage).eInverseAdd(this, JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF, BookShelfStorage.class, msgs);
             msgs = basicSetStorage(newStorage, msgs);
             if (msgs != null) msgs.dispatch();
         }
@@ -268,6 +268,24 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
         // TODO: implement this method
         // Ensure that you remove @generated or mark it @generated NOT
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.BOOK_SHELF__STORAGE:
+                if (storage != null)
+                    msgs = ((InternalEObject)storage).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - JbookshelfPackage.BOOK_SHELF__STORAGE, null, msgs);
+                return basicSetStorage((BookShelfStorage)otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**
