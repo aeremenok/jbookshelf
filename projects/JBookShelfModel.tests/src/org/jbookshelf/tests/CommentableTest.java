@@ -1,67 +1,60 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
+ * <copyright> </copyright> $Id$
  */
 package org.jbookshelf.tests;
 
 import junit.framework.TestCase;
 
-import junit.textui.TestRunner;
-
 import org.jbookshelf.Commentable;
-import org.jbookshelf.JbookshelfFactory;
 
 /**
- * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Commentable</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test case for the model object '<em><b>Commentable</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following operations are tested:
  * <ul>
- *   <li>{@link org.jbookshelf.Commentable#queryComments(java.lang.String) <em>Query Comments</em>}</li>
+ * <li>{@link org.jbookshelf.Commentable#queryComments(java.lang.String) <em>Query Comments</em>}</li>
  * </ul>
  * </p>
+ * 
  * @generated
  */
-public abstract class CommentableTest extends TestCase
+public abstract class CommentableTest
+    extends TestCase
 {
 
     /**
-     * The fixture for this Commentable test case.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The fixture for this Commentable test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected Commentable fixture = null;
 
     /**
-     * Constructs a new Commentable test case with the given name.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * Constructs a new Commentable test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
-    public CommentableTest(String name)
+    public CommentableTest(
+        String name )
     {
-        super(name);
+        super( name );
     }
 
     /**
-     * Sets the fixture for this Commentable test case.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
+     * Tests the '{@link org.jbookshelf.Commentable#queryComments(java.lang.String) <em>Query Comments</em>}' operation.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.jbookshelf.Commentable#queryComments(java.lang.String)
+     * @generated NOT
      */
-    protected void setFixture(Commentable fixture)
+    public void testQueryComments__String()
     {
-        this.fixture = fixture;
+        // useless
     }
 
     /**
-     * Returns the fixture for this Commentable test case.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * Returns the fixture for this Commentable test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected Commentable getFixture()
@@ -70,17 +63,14 @@ public abstract class CommentableTest extends TestCase
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.Commentable#queryComments(java.lang.String) <em>Query Comments</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.jbookshelf.Commentable#queryComments(java.lang.String)
+     * Sets the fixture for this Commentable test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
-    public void testQueryComments__String()
+    protected void setFixture(
+        Commentable fixture )
     {
-        // TODO: implement this operation test method
-        // Ensure that you remove @generated or mark it @generated NOT
-        fail();
+        this.fixture = fixture;
     }
 
-} //CommentableTest
+} // CommentableTest
