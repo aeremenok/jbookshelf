@@ -61,11 +61,13 @@ public interface BookShelf
 
     /**
      * @param query search text
+     * @param isRead desired units status, null = read + unread
      * @return reading units, whose data contains text
      * @model
      */
     EList<ReadingUnit> queryUnits(
-        String query );
+        String query,
+        Boolean isRead );
 
     /**
      * @param query search text

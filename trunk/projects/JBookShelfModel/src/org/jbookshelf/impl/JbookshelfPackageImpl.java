@@ -842,6 +842,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
 
         op = addEOperation(bookShelfEClass, this.getReadingUnit(), "queryUnits", 0, -1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, ecorePackage.getEBooleanObject(), "isRead", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         op = addEOperation(bookShelfEClass, this.getCategory(), "quetyCategories", 0, -1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
