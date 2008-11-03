@@ -25,7 +25,7 @@ import org.jbookshelf.JbookshelfFactory;
  * </p>
  * @generated
  */
-public class CommentableTest extends TestCase
+public abstract class CommentableTest extends TestCase
 {
 
     /**
@@ -35,16 +35,6 @@ public class CommentableTest extends TestCase
      * @generated
      */
     protected Commentable fixture = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public static void main(String[] args)
-    {
-        TestRunner.run(CommentableTest.class);
-    }
 
     /**
      * Constructs a new Commentable test case with the given name.
@@ -77,30 +67,6 @@ public class CommentableTest extends TestCase
     protected Commentable getFixture()
     {
         return fixture;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#setUp()
-     * @generated
-     */
-    @Override
-    protected void setUp() throws Exception
-    {
-        setFixture(JbookshelfFactory.eINSTANCE.createCommentable());
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#tearDown()
-     * @generated
-     */
-    @Override
-    protected void tearDown() throws Exception
-    {
-        setFixture(null);
     }
 
     /**
