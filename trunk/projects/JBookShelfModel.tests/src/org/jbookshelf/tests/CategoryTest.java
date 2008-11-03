@@ -1,8 +1,5 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
+ * <copyright> </copyright> $Id$
  */
 package org.jbookshelf.tests;
 
@@ -12,69 +9,71 @@ import org.jbookshelf.Category;
 import org.jbookshelf.JbookshelfFactory;
 
 /**
- * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Category</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test case for the model object '<em><b>Category</b></em>'. <!-- end-user-doc -->
+ * 
  * @generated
  */
-public class CategoryTest extends UniqueTest
+public class CategoryTest
+    extends UniqueTest
 {
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
-    public static void main(String[] args)
+    public static void main(
+        String[] args )
     {
-        TestRunner.run(CategoryTest.class);
+        TestRunner.run( CategoryTest.class );
     }
 
     /**
-     * Constructs a new Category test case with the given name.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * Constructs a new Category test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
-    public CategoryTest(String name)
+    public CategoryTest(
+        String name )
     {
-        super(name);
+        super( name );
     }
 
     /**
-     * Returns the fixture for this Category test case.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * Returns the fixture for this Category test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     protected Category getFixture()
     {
-        return (Category)fixture;
+        return (Category) fixture;
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see junit.framework.TestCase#setUp()
      * @generated
      */
     @Override
-    protected void setUp() throws Exception
+    protected void setUp()
+        throws Exception
     {
-        setFixture(JbookshelfFactory.eINSTANCE.createCategory());
+        setFixture( JbookshelfFactory.eINSTANCE.createCategory() );
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see junit.framework.TestCase#tearDown()
      * @generated
      */
     @Override
-    protected void tearDown() throws Exception
+    protected void tearDown()
+        throws Exception
     {
-        setFixture(null);
+        setFixture( null );
     }
 
-} //CategoryTest
+} // CategoryTest

@@ -1,68 +1,96 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
+ * <copyright> </copyright> $Id$
  */
 package org.jbookshelf.tests;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import junit.textui.TestRunner;
-
 import org.jbookshelf.BookShelfStorage;
-import org.jbookshelf.JbookshelfFactory;
 
 /**
- * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Book Shelf Storage</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test case for the model object '<em><b>Book Shelf Storage</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following operations are tested:
  * <ul>
- *   <li>{@link org.jbookshelf.BookShelfStorage#loadCollection() <em>Load Collection</em>}</li>
- *   <li>{@link org.jbookshelf.BookShelfStorage#saveCollection() <em>Save Collection</em>}</li>
+ * <li>{@link org.jbookshelf.BookShelfStorage#loadCollection() <em>Load Collection</em>}</li>
+ * <li>{@link org.jbookshelf.BookShelfStorage#saveCollection() <em>Save Collection</em>}</li>
  * </ul>
  * </p>
+ * 
  * @generated
  */
-public abstract class BookShelfStorageTest extends TestCase
+public abstract class BookShelfStorageTest
+    extends TestCase
 {
 
     /**
-     * The fixture for this Book Shelf Storage test case.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The fixture for this Book Shelf Storage test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected BookShelfStorage fixture = null;
 
     /**
-     * Constructs a new Book Shelf Storage test case with the given name.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * Constructs a new Book Shelf Storage test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
-    public BookShelfStorageTest(String name)
+    public BookShelfStorageTest(
+        String name )
     {
-        super(name);
+        super( name );
     }
 
     /**
-     * Sets the fixture for this Book Shelf Storage test case.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
+     * Tests the '{@link org.jbookshelf.BookShelfStorage#loadCollection() <em>Load Collection</em>}' operation. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.jbookshelf.BookShelfStorage#loadCollection()
+     * @generated NOT
      */
-    protected void setFixture(BookShelfStorage fixture)
+    public void testLoadCollection()
     {
-        this.fixture = fixture;
+        int oldSize = getFixture().getBookShelf().getUniques().size();
+        try
+        {
+            getFixture().loadCollection();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            fail( e.getMessage() );
+        }
+        int newSize = getFixture().getBookShelf().getUniques().size();
+        Assert.assertTrue( newSize >= oldSize );
     }
 
     /**
-     * Returns the fixture for this Book Shelf Storage test case.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * Tests the '{@link org.jbookshelf.BookShelfStorage#saveCollection() <em>Save Collection</em>}' operation. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.jbookshelf.BookShelfStorage#saveCollection()
+     * @generated NOT
+     */
+    public void testSaveCollection()
+    {
+        int oldSize = getFixture().getBookShelf().getUniques().size();
+        try
+        {
+            getFixture().saveCollection();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            fail( e.getMessage() );
+        }
+        int newSize = getFixture().getBookShelf().getUniques().size();
+        Assert.assertTrue( newSize == oldSize );
+    }
+
+    /**
+     * Returns the fixture for this Book Shelf Storage test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected BookShelfStorage getFixture()
@@ -71,31 +99,14 @@ public abstract class BookShelfStorageTest extends TestCase
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.BookShelfStorage#loadCollection() <em>Load Collection</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.jbookshelf.BookShelfStorage#loadCollection()
+     * Sets the fixture for this Book Shelf Storage test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
-    public void testLoadCollection()
+    protected void setFixture(
+        BookShelfStorage fixture )
     {
-        // TODO: implement this operation test method
-        // Ensure that you remove @generated or mark it @generated NOT
-        fail();
+        this.fixture = fixture;
     }
 
-    /**
-     * Tests the '{@link org.jbookshelf.BookShelfStorage#saveCollection() <em>Save Collection</em>}' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.jbookshelf.BookShelfStorage#saveCollection()
-     * @generated
-     */
-    public void testSaveCollection()
-    {
-        // TODO: implement this operation test method
-        // Ensure that you remove @generated or mark it @generated NOT
-        fail();
-    }
-
-} //BookShelfStorageTest
+} // BookShelfStorageTest

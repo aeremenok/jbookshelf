@@ -1,8 +1,5 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
+ * <copyright> </copyright> $Id$
  */
 package org.jbookshelf.tests;
 
@@ -12,69 +9,71 @@ import org.jbookshelf.JbookshelfFactory;
 import org.jbookshelf.SingleFile;
 
 /**
- * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Single File</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A test case for the model object '<em><b>Single File</b></em>'. <!-- end-user-doc -->
+ * 
  * @generated
  */
-public class SingleFileTest extends PhysicalUnitTest
+public class SingleFileTest
+    extends PhysicalUnitTest
 {
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
-    public static void main(String[] args)
+    public static void main(
+        String[] args )
     {
-        TestRunner.run(SingleFileTest.class);
+        TestRunner.run( SingleFileTest.class );
     }
 
     /**
-     * Constructs a new Single File test case with the given name.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * Constructs a new Single File test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
-    public SingleFileTest(String name)
+    public SingleFileTest(
+        String name )
     {
-        super(name);
+        super( name );
     }
 
     /**
-     * Returns the fixture for this Single File test case.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * Returns the fixture for this Single File test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     protected SingleFile getFixture()
     {
-        return (SingleFile)fixture;
+        return (SingleFile) fixture;
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see junit.framework.TestCase#setUp()
      * @generated
      */
     @Override
-    protected void setUp() throws Exception
+    protected void setUp()
+        throws Exception
     {
-        setFixture(JbookshelfFactory.eINSTANCE.createSingleFile());
+        setFixture( JbookshelfFactory.eINSTANCE.createSingleFile() );
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see junit.framework.TestCase#tearDown()
      * @generated
      */
     @Override
-    protected void tearDown() throws Exception
+    protected void tearDown()
+        throws Exception
     {
-        setFixture(null);
+        setFixture( null );
     }
 
-} //SingleFileTest
+} // SingleFileTest
