@@ -19,7 +19,7 @@ import org.jbookshelf.Unique;
  * <!-- end-user-doc -->
  * @generated
  */
-public class UniqueTest extends TestCase
+public abstract class UniqueTest extends TestCase
 {
 
     /**
@@ -29,16 +29,6 @@ public class UniqueTest extends TestCase
      * @generated
      */
     protected Unique fixture = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public static void main(String[] args)
-    {
-        TestRunner.run(UniqueTest.class);
-    }
 
     /**
      * Constructs a new Unique test case with the given name.
@@ -71,30 +61,6 @@ public class UniqueTest extends TestCase
     protected Unique getFixture()
     {
         return fixture;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#setUp()
-     * @generated
-     */
-    @Override
-    protected void setUp() throws Exception
-    {
-        setFixture(JbookshelfFactory.eINSTANCE.createUnique());
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#tearDown()
-     * @generated
-     */
-    @Override
-    protected void tearDown() throws Exception
-    {
-        setFixture(null);
     }
 
 } //UniqueTest

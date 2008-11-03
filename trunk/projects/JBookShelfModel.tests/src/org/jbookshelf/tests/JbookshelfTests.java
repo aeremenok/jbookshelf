@@ -41,14 +41,11 @@ public class JbookshelfTests extends TestSuite
         suite.addTestSuite(AuthorTest.class);
         suite.addTestSuite(ReadingUnitTest.class);
         suite.addTestSuite(CategoryTest.class);
-        suite.addTestSuite(CommentableTest.class);
         suite.addTestSuite(BookShelfTest.class);
         suite.addTestSuite(ArchiveFileTest.class);
         suite.addTestSuite(IndexFileFolderTest.class);
-        suite.addTestSuite(PhysicalUnitTest.class);
         suite.addTestSuite(SingleFileTest.class);
         suite.addTestSuite(SingleFileFolderTest.class);
-        suite.addTestSuite(BookShelfStorageTest.class);
         suite.addTestSuite(SingleFileStorageTest.class);
         return suite;
     }

@@ -26,7 +26,7 @@ import org.jbookshelf.JbookshelfFactory;
  * </p>
  * @generated
  */
-public class BookShelfStorageTest extends TestCase
+public abstract class BookShelfStorageTest extends TestCase
 {
 
     /**
@@ -36,16 +36,6 @@ public class BookShelfStorageTest extends TestCase
      * @generated
      */
     protected BookShelfStorage fixture = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public static void main(String[] args)
-    {
-        TestRunner.run(BookShelfStorageTest.class);
-    }
 
     /**
      * Constructs a new Book Shelf Storage test case with the given name.
@@ -78,30 +68,6 @@ public class BookShelfStorageTest extends TestCase
     protected BookShelfStorage getFixture()
     {
         return fixture;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#setUp()
-     * @generated
-     */
-    @Override
-    protected void setUp() throws Exception
-    {
-        setFixture(JbookshelfFactory.eINSTANCE.createBookShelfStorage());
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#tearDown()
-     * @generated
-     */
-    @Override
-    protected void tearDown() throws Exception
-    {
-        setFixture(null);
     }
 
     /**

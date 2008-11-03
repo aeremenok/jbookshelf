@@ -25,7 +25,7 @@ import org.jbookshelf.PhysicalUnit;
  * </p>
  * @generated
  */
-public class PhysicalUnitTest extends TestCase
+public abstract class PhysicalUnitTest extends TestCase
 {
 
     /**
@@ -35,16 +35,6 @@ public class PhysicalUnitTest extends TestCase
      * @generated
      */
     protected PhysicalUnit fixture = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public static void main(String[] args)
-    {
-        TestRunner.run(PhysicalUnitTest.class);
-    }
 
     /**
      * Constructs a new Physical Unit test case with the given name.
@@ -77,30 +67,6 @@ public class PhysicalUnitTest extends TestCase
     protected PhysicalUnit getFixture()
     {
         return fixture;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#setUp()
-     * @generated
-     */
-    @Override
-    protected void setUp() throws Exception
-    {
-        setFixture(JbookshelfFactory.eINSTANCE.createPhysicalUnit());
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#tearDown()
-     * @generated
-     */
-    @Override
-    protected void tearDown() throws Exception
-    {
-        setFixture(null);
     }
 
     /**
