@@ -251,7 +251,7 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<ReadingUnit> queryUnits(String query)
+    public EList<ReadingUnit> queryUnits(String query, Boolean isRead)
     {
         // TODO: implement this method
         // Ensure that you remove @generated or mark it @generated NOT

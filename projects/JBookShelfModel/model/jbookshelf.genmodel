@@ -66,6 +66,7 @@
       </genOperations>
       <genOperations ecoreOperation="jbookshelf.ecore#//BookShelf/queryUnits">
         <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/queryUnits/query"/>
+        <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/queryUnits/isRead"/>
       </genOperations>
       <genOperations ecoreOperation="jbookshelf.ecore#//BookShelf/quetyCategories">
         <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/quetyCategories/query"/>

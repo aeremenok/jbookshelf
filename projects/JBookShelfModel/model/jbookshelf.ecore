@@ -51,6 +51,7 @@
     </eOperations>
     <eOperations name="queryUnits" upperBound="-1" eType="#//ReadingUnit">
       <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eParameters name="isRead" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
     </eOperations>
     <eOperations name="quetyCategories" upperBound="-1" eType="#//Category">
       <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
