@@ -44,6 +44,9 @@
     </genClasses>
     <genClasses ecoreClass="jbookshelf.ecore#//Commentable">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//Commentable/comments"/>
+      <genOperations ecoreOperation="jbookshelf.ecore#//Commentable/queryComments">
+        <genParameters ecoreParameter="jbookshelf.ecore#//Commentable/queryComments/query"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="jbookshelf.ecore#//Categorizable">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//Categorizable/categories"/>
@@ -58,8 +61,23 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//BookShelf/categories"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//BookShelf/readingUnits"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//BookShelf/storage"/>
+      <genOperations ecoreOperation="jbookshelf.ecore#//BookShelf/addAuthor">
+        <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/addAuthor/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="jbookshelf.ecore#//BookShelf/addCategory">
+        <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/addCategory/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="jbookshelf.ecore#//BookShelf/addReadingUnit">
+        <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/addReadingUnit/name"/>
+        <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/addReadingUnit/author"/>
+        <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/addReadingUnit/category"/>
+        <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/addReadingUnit/physicalUnit"/>
+      </genOperations>
       <genOperations ecoreOperation="jbookshelf.ecore#//BookShelf/queryAuthors">
         <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/queryAuthors/query"/>
+      </genOperations>
+      <genOperations ecoreOperation="jbookshelf.ecore#//BookShelf/queryCategories">
+        <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/queryCategories/query"/>
       </genOperations>
       <genOperations ecoreOperation="jbookshelf.ecore#//BookShelf/queryUniques">
         <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/queryUniques/query"/>
@@ -67,9 +85,6 @@
       <genOperations ecoreOperation="jbookshelf.ecore#//BookShelf/queryUnits">
         <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/queryUnits/query"/>
         <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/queryUnits/isRead"/>
-      </genOperations>
-      <genOperations ecoreOperation="jbookshelf.ecore#//BookShelf/quetyCategories">
-        <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/quetyCategories/query"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="jbookshelf.ecore#//ArchiveFile">

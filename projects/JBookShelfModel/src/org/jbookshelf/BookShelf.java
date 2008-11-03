@@ -14,6 +14,36 @@ public interface BookShelf
         EObject
 {
     /**
+     * @param name new {@link Author} name
+     * @return new {@link Author}
+     * @model
+     */
+    Author addAuthor(
+        String name );
+
+    /**
+     * @param name new {@link Category} name
+     * @return new {@link Category}
+     * @model
+     */
+    Category addCategory(
+        String name );
+
+    /**
+     * @param name new {@link ReadingUnit} name
+     * @param author unit's author (optional, if null then will be set "Unknown")
+     * @param category units's category (optional)
+     * @param physicalUnit unit's storage
+     * @return new {@link ReadingUnit}
+     * @model
+     */
+    ReadingUnit addReadingUnit(
+        String name,
+        Author author,
+        Category category,
+        PhysicalUnit physicalUnit );
+
+    /**
      * @return all authors in collection
      * @model
      */
@@ -52,6 +82,14 @@ public interface BookShelf
         String query );
 
     /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @model
+     * @generated
+     */
+    EList<Category> queryCategories(
+        String query );
+
+    /**
      * @param query search text
      * @return all uniques, whose data contains text
      * @model
@@ -68,14 +106,6 @@ public interface BookShelf
     EList<ReadingUnit> queryUnits(
         String query,
         Boolean isRead );
-
-    /**
-     * @param query search text
-     * @return categories, whose data contains text
-     * @model
-     */
-    EList<Category> quetyCategories(
-        String query );
 
     /**
      * Sets the value of the '{@link org.jbookshelf.BookShelf#getStorage <em>Storage</em>}' reference. <!--

@@ -29,6 +29,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Commentable">
+    <eOperations name="queryComments" upperBound="-1" eType="#//Comment">
+      <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="comments" upperBound="-1"
         eType="#//Comment"/>
   </eClassifiers>
@@ -43,7 +46,22 @@
         eType="#//Unique"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BookShelf">
+    <eOperations name="addAuthor" eType="#//Author">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="addCategory" eType="#//Category">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="addReadingUnit" eType="#//ReadingUnit">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eParameters name="author" eType="#//Author"/>
+      <eParameters name="category" eType="#//Category"/>
+      <eParameters name="physicalUnit" eType="#//PhysicalUnit"/>
+    </eOperations>
     <eOperations name="queryAuthors" upperBound="-1" eType="#//Author">
+      <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="queryCategories" upperBound="-1" eType="#//Category">
       <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
     <eOperations name="queryUniques" upperBound="-1" eType="#//Unique">
@@ -52,9 +70,6 @@
     <eOperations name="queryUnits" upperBound="-1" eType="#//ReadingUnit">
       <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eParameters name="isRead" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
-    </eOperations>
-    <eOperations name="quetyCategories" upperBound="-1" eType="#//Category">
-      <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="uniques" upperBound="-1"
         eType="#//Unique" containment="true"/>
