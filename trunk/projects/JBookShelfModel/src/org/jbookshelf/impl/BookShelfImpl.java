@@ -27,6 +27,7 @@ import org.jbookshelf.BookShelf;
 import org.jbookshelf.BookShelfStorage;
 import org.jbookshelf.Category;
 import org.jbookshelf.JbookshelfPackage;
+import org.jbookshelf.PhysicalUnit;
 import org.jbookshelf.ReadingUnit;
 import org.jbookshelf.Unique;
 
@@ -227,6 +228,42 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
      * <!-- end-user-doc -->
      * @generated
      */
+    public Author addAuthor(String name)
+    {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Category addCategory(String name)
+    {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ReadingUnit addReadingUnit(String name, Author author, Category category, PhysicalUnit physicalUnit)
+    {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EList<Author> queryAuthors(String query)
     {
         // TODO: implement this method
@@ -252,18 +289,6 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
      * @generated
      */
     public EList<ReadingUnit> queryUnits(String query, Boolean isRead)
-    {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Category> quetyCategories(String query)
     {
         // TODO: implement this method
         // Ensure that you remove @generated or mark it @generated NOT
@@ -310,6 +335,18 @@ public class BookShelfImpl extends EObjectImpl implements BookShelf
                 return basicSetStorage(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Category> queryCategories(String query)
+    {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
     }
 
     /**

@@ -820,6 +820,9 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         initEClass(commentableEClass, Commentable.class, "Commentable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getCommentable_Comments(), this.getComment(), null, "comments", null, 0, -1, Commentable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        EOperation op = addEOperation(commentableEClass, this.getComment(), "queryComments", 0, -1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
+
         initEClass(categorizableEClass, Categorizable.class, "Categorizable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getCategorizable_Categories(), this.getCategory(), null, "categories", null, 0, -1, Categorizable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -834,7 +837,22 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         initEReference(getBookShelf_ReadingUnits(), this.getReadingUnit(), null, "readingUnits", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBookShelf_Storage(), this.getBookShelfStorage(), this.getBookShelfStorage_BookShelf(), "storage", null, 1, 1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        EOperation op = addEOperation(bookShelfEClass, this.getAuthor(), "queryAuthors", 0, -1, IS_UNIQUE, IS_ORDERED);
+        op = addEOperation(bookShelfEClass, this.getAuthor(), "addAuthor", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+        op = addEOperation(bookShelfEClass, this.getCategory(), "addCategory", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+        op = addEOperation(bookShelfEClass, this.getReadingUnit(), "addReadingUnit", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getAuthor(), "author", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getCategory(), "category", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getPhysicalUnit(), "physicalUnit", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+        op = addEOperation(bookShelfEClass, this.getAuthor(), "queryAuthors", 0, -1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+        op = addEOperation(bookShelfEClass, this.getCategory(), "queryCategories", 0, -1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         op = addEOperation(bookShelfEClass, this.getUnique(), "queryUniques", 0, -1, IS_UNIQUE, IS_ORDERED);
@@ -843,9 +861,6 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         op = addEOperation(bookShelfEClass, this.getReadingUnit(), "queryUnits", 0, -1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEBooleanObject(), "isRead", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-        op = addEOperation(bookShelfEClass, this.getCategory(), "quetyCategories", 0, -1, IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         initEClass(archiveFileEClass, ArchiveFile.class, "ArchiveFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getArchiveFile_ArchiveFile(), this.getFile(), "archiveFile", null, 1, 1, ArchiveFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

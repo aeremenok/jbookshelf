@@ -19,4 +19,12 @@ public interface Commentable
      */
     EList<Comment> getComments();
 
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model
+     * @generated
+     */
+    EList<Comment> queryComments(String query);
+
 }
