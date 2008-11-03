@@ -63,33 +63,6 @@ public interface JbookshelfFactory extends EFactory
     Comment createComment();
 
     /**
-     * Returns a new object of class '<em>Commentable</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Commentable</em>'.
-     * @generated
-     */
-    Commentable createCommentable();
-
-    /**
-     * Returns a new object of class '<em>Categorizable</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Categorizable</em>'.
-     * @generated
-     */
-    Categorizable createCategorizable();
-
-    /**
-     * Returns a new object of class '<em>Unique</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Unique</em>'.
-     * @generated
-     */
-    Unique createUnique();
-
-    /**
      * Returns a new object of class '<em>Book Shelf</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -117,15 +90,6 @@ public interface JbookshelfFactory extends EFactory
     IndexFileFolder createIndexFileFolder();
 
     /**
-     * Returns a new object of class '<em>Physical Unit</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Physical Unit</em>'.
-     * @generated
-     */
-    PhysicalUnit createPhysicalUnit();
-
-    /**
      * Returns a new object of class '<em>Single File</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -142,15 +106,6 @@ public interface JbookshelfFactory extends EFactory
      * @generated
      */
     SingleFileFolder createSingleFileFolder();
-
-    /**
-     * Returns a new object of class '<em>Book Shelf Storage</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Book Shelf Storage</em>'.
-     * @generated
-     */
-    BookShelfStorage createBookShelfStorage();
 
     /**
      * Returns a new object of class '<em>Single File Storage</em>'.

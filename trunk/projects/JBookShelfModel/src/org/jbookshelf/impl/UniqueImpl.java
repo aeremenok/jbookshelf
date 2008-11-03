@@ -33,7 +33,7 @@ import org.jbookshelf.Unique;
  *
  * @generated
  */
-public class UniqueImpl extends EObjectImpl implements Unique
+public abstract class UniqueImpl extends EObjectImpl implements Unique
 {
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.

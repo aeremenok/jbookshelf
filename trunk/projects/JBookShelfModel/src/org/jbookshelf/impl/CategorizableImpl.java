@@ -33,7 +33,7 @@ import org.jbookshelf.JbookshelfPackage;
  *
  * @generated
  */
-public class CategorizableImpl extends EObjectImpl implements Categorizable
+public abstract class CategorizableImpl extends EObjectImpl implements Categorizable
 {
     /**
      * The cached value of the '{@link #getCategories() <em>Categories</em>}' reference list.

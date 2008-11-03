@@ -75,16 +75,11 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
             case JbookshelfPackage.READING_UNIT: return createReadingUnit();
             case JbookshelfPackage.CATEGORY: return createCategory();
             case JbookshelfPackage.COMMENT: return createComment();
-            case JbookshelfPackage.COMMENTABLE: return createCommentable();
-            case JbookshelfPackage.CATEGORIZABLE: return createCategorizable();
-            case JbookshelfPackage.UNIQUE: return createUnique();
             case JbookshelfPackage.BOOK_SHELF: return createBookShelf();
             case JbookshelfPackage.ARCHIVE_FILE: return createArchiveFile();
             case JbookshelfPackage.INDEX_FILE_FOLDER: return createIndexFileFolder();
-            case JbookshelfPackage.PHYSICAL_UNIT: return createPhysicalUnit();
             case JbookshelfPackage.SINGLE_FILE: return createSingleFile();
             case JbookshelfPackage.SINGLE_FILE_FOLDER: return createSingleFileFolder();
-            case JbookshelfPackage.BOOK_SHELF_STORAGE: return createBookShelfStorage();
             case JbookshelfPackage.SINGLE_FILE_STORAGE: return createSingleFileStorage();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -174,39 +169,6 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
      * <!-- end-user-doc -->
      * @generated
      */
-    public Commentable createCommentable()
-    {
-        CommentableImpl commentable = new CommentableImpl();
-        return commentable;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Categorizable createCategorizable()
-    {
-        CategorizableImpl categorizable = new CategorizableImpl();
-        return categorizable;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Unique createUnique()
-    {
-        UniqueImpl unique = new UniqueImpl();
-        return unique;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public BookShelf createBookShelf()
     {
         BookShelfImpl bookShelf = new BookShelfImpl();
@@ -240,17 +202,6 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
      * <!-- end-user-doc -->
      * @generated
      */
-    public PhysicalUnit createPhysicalUnit()
-    {
-        PhysicalUnitImpl physicalUnit = new PhysicalUnitImpl();
-        return physicalUnit;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public SingleFile createSingleFile()
     {
         SingleFileImpl singleFile = new SingleFileImpl();
@@ -266,17 +217,6 @@ public class JbookshelfFactoryImpl extends EFactoryImpl implements JbookshelfFac
     {
         SingleFileFolderImpl singleFileFolder = new SingleFileFolderImpl();
         return singleFileFolder;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public BookShelfStorage createBookShelfStorage()
-    {
-        BookShelfStorageImpl bookShelfStorage = new BookShelfStorageImpl();
-        return bookShelfStorage;
     }
 
     /**
