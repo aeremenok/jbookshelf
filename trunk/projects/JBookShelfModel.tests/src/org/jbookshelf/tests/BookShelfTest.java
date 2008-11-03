@@ -78,12 +78,15 @@ public class BookShelfTest
      */
     public void testAddAuthor__String()
     {
+        getFixture().getAuthors().clear();
+
         String name = getName();
         Author author = getFixture().addAuthor( name );
 
         Assert.assertNotNull( author );
         Assert.assertEquals( author.getName(), name );
         Assert.assertTrue( getFixture().getAuthors().contains( author ) );
+        Assert.assertEquals( getFixture().getAuthors().size(), 1 );
     }
 
     /**
@@ -95,12 +98,15 @@ public class BookShelfTest
      */
     public void testAddCategory__String()
     {
+        getFixture().getCategories().clear();
+
         String name = getName();
         Category category = getFixture().addCategory( name );
 
         Assert.assertNotNull( category );
         Assert.assertEquals( category.getName(), name );
         Assert.assertTrue( getFixture().getCategories().contains( category ) );
+        Assert.assertEquals( getFixture().getCategories().size(), 1 );
     }
 
     /**
@@ -114,6 +120,8 @@ public class BookShelfTest
      */
     public void testAddReadingUnit__String_Author_Category_PhysicalUnit()
     {
+        getFixture().getReadingUnits().clear();
+
         Author author = getFixture().addAuthor( "author" );
         Category category = getFixture().addCategory( "category" );
         ArchiveFile archiveFile = JbookshelfFactory.eINSTANCE.createArchiveFile();
@@ -124,6 +132,7 @@ public class BookShelfTest
 
         Assert.assertNotNull( readingUnit );
         Assert.assertTrue( getFixture().getReadingUnits().contains( readingUnit ) );
+        Assert.assertEquals( getFixture().getReadingUnits().size(), 1 );
         Assert.assertEquals( readingUnit.getName(), name );
         Assert.assertTrue( readingUnit.getAuthors().contains( author ) );
         Assert.assertTrue( readingUnit.getCategories().contains( category ) );
@@ -141,6 +150,8 @@ public class BookShelfTest
      */
     public void testQueryAuthors__String()
     {
+        getFixture().getAuthors().clear();
+
         Author author1 = getFixture().addAuthor( "author1" );
         Author author2 = getFixture().addAuthor( "author2" );
         Author author3 = getFixture().addAuthor( "author3" );
@@ -163,10 +174,12 @@ public class BookShelfTest
      * operation. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see org.jbookshelf.BookShelf#queryCategories(java.lang.String)
-     * @generated
+     * @generated NOT
      */
     public void testQueryCategories__String()
     {
+        getFixture().getCategories().clear();
+
         Category category1 = getFixture().addCategory( "category1" );
         Category category2 = getFixture().addCategory( "category2" );
         Category category3 = getFixture().addCategory( "category3" );
@@ -189,10 +202,13 @@ public class BookShelfTest
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see org.jbookshelf.BookShelf#queryUniques(java.lang.String)
-     * @generated
+     * @generated NOT
      */
     public void testQueryUniques__String()
     {
+        getFixture().getCategories().clear();
+        getFixture().getAuthors().clear();
+
         Category category1 = getFixture().addCategory( "category1" );
         Category category2 = getFixture().addCategory( "category2" );
         Author author1 = getFixture().addAuthor( "author1" );
@@ -204,6 +220,7 @@ public class BookShelfTest
         Assert.assertTrue( uniques1.contains( category1 ) );
         Assert.assertFalse( uniques1.contains( author2 ) );
         Assert.assertFalse( uniques1.contains( category2 ) );
+        Assert.assertEquals( uniques1.size(), 2 );
     }
 
     /**
@@ -211,10 +228,12 @@ public class BookShelfTest
      * operation. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see org.jbookshelf.BookShelf#queryUnits(java.lang.String, java.lang.Boolean)
-     * @generated
+     * @generated NOT
      */
     public void testQueryUnits__String_Boolean()
     {
+        getFixture().getReadingUnits().clear();
+
         Author author = getFixture().addAuthor( "author" );
         Category category = getFixture().addCategory( "category" );
         ArchiveFile archiveFile = JbookshelfFactory.eINSTANCE.createArchiveFile();
@@ -232,18 +251,21 @@ public class BookShelfTest
         Assert.assertTrue( units1.contains( book1 ) );
         Assert.assertTrue( units1.contains( book2 ) );
         Assert.assertTrue( units1.contains( book3 ) );
+        Assert.assertEquals( units1.size(), 3 );
 
         EList<ReadingUnit> units2 = getFixture().queryUnits( "book", true );
         Assert.assertNotNull( units2 );
         Assert.assertTrue( units2.contains( book1 ) );
         Assert.assertTrue( units2.contains( book2 ) );
         Assert.assertFalse( units2.contains( book3 ) );
+        Assert.assertEquals( units1.size(), 2 );
 
         EList<ReadingUnit> units3 = getFixture().queryUnits( "book1", null );
         Assert.assertNotNull( units3 );
         Assert.assertTrue( units3.contains( book1 ) );
         Assert.assertTrue( units3.contains( book3 ) );
         Assert.assertFalse( units3.contains( book2 ) );
+        Assert.assertEquals( units1.size(), 2 );
     }
 
     /**
