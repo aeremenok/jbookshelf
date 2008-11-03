@@ -2,14 +2,14 @@
 =Project Stage Details=
 
 || *Stage* || *Substage* || *Comment* || *Status* || *Begin Date* || *Possible End Date* || *Artifact link* ||
-|| Specification || Project Vision || || Verifying || 13.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/vision.txt vision]||
-|| || Feature list || || Verifying || 19.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/featurelist.txt featurelist]||
-|| || Use cases || || Verifying || 20.10.2008 || 31.10.2008 || UseCaseDiagrams ||
-|| || Component model || || Verifying || 26.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/compoments/components.png diagram] ||
-|| || Object model || || Verifying || 26.10.2008 || 31.10.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/classes/jbookshelf.png emf-diagram] ||
-|| || Result verification || || Started || 30.10.2008 || 07.11.2008 || ||
+|| Specification || Project Vision || || Verified || 13.10.2008 || 03.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/vision.txt vision]||
+|| || Feature list || || Verified || 19.10.2008 || 03.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/featurelist.txt featurelist]||
+|| || Use cases || || Verified || 20.10.2008 || 03.11.2008 || UseCaseDiagrams ||
+|| || Component model || || Verified || 26.10.2008 || 03.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/compoments/components.png diagram] ||
+|| || Object model || || Verified || 26.10.2008 || 03.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/classes/jbookshelf.png emf-diagram] ||
+|| || Result verification || || Complete || 30.10.2008 || 03.11.2008 || ||
 || Desktop App Development || GUI-prototype design || || Started || 30.10.2008 || 07.11.2008 || [DesktopGUIPrototype] ||
-|| || Object model implementation || || Not Started || ? || ? || ||
+|| || Object model implementation || || Started || 03.11.2008 || 07.11.2008 || ||
 || || GUI implementation || || Not Started || ? || ? || ||
 || || Components integration || || Not Started || ? || ? || ||
 || Integration || App list collection || || Not Started || ? || ? || ||
