@@ -32,7 +32,7 @@ import org.jbookshelf.JbookshelfPackage;
  *
  * @generated
  */
-public class BookShelfStorageImpl extends EObjectImpl implements BookShelfStorage
+public abstract class BookShelfStorageImpl extends EObjectImpl implements BookShelfStorage
 {
     /**
      * <!-- begin-user-doc -->

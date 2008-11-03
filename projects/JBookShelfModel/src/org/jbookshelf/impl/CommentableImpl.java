@@ -30,7 +30,7 @@ import org.jbookshelf.JbookshelfPackage;
  *
  * @generated
  */
-public class CommentableImpl extends EObjectImpl implements Commentable
+public abstract class CommentableImpl extends EObjectImpl implements Commentable
 {
     /**
      * The cached value of the '{@link #getComments() <em>Comments</em>}' reference list.

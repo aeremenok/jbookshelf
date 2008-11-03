@@ -22,7 +22,7 @@ import org.jbookshelf.PhysicalUnit;
  *
  * @generated
  */
-public class PhysicalUnitImpl extends EObjectImpl implements PhysicalUnit
+public abstract class PhysicalUnitImpl extends EObjectImpl implements PhysicalUnit
 {
     /**
      * <!-- begin-user-doc -->
