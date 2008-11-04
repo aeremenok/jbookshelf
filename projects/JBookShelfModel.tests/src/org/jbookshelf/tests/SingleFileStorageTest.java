@@ -4,6 +4,7 @@
 package org.jbookshelf.tests;
 
 import java.io.File;
+import java.io.IOException;
 
 import junit.framework.Assert;
 import junit.textui.TestRunner;
@@ -59,10 +60,26 @@ public class SingleFileStorageTest
     public void testBackupCollection__File()
     {
         int oldSize = getFixture().getBookShelf().getUniques().size();
-        getFixture().backupCollection( new File( "" ) );
+        File externalFile = new File( "test" );
+        if ( externalFile.exists() )
+        {
+            externalFile.delete();
+            try
+            {
+                externalFile.createNewFile();
+            }
+            catch ( IOException e )
+            {
+                e.printStackTrace();
+                fail( e.getMessage() );
+            }
+        }
+        long oldLength = externalFile.length();
+        getFixture().backupCollection( externalFile );
         int newSize = getFixture().getBookShelf().getUniques().size();
+        long newLength = externalFile.length();
         Assert.assertTrue( oldSize == newSize );
-        // todo check file size
+        Assert.assertTrue( newLength > oldLength );
     }
 
     /**
@@ -75,10 +92,14 @@ public class SingleFileStorageTest
     public void testRestoreCollection__File()
     {
         int oldSize = getFixture().getBookShelf().getUniques().size();
-        getFixture().restoreCollection( new File( "" ) );
+        File externalFile = new File( "test" );
+        Assert.assertTrue( externalFile.exists() );
+        long oldLength = externalFile.length();
+        getFixture().restoreCollection( externalFile );
         int newSize = getFixture().getBookShelf().getUniques().size();
-        Assert.assertTrue( oldSize != newSize );
-        // todo ?
+        long newLength = externalFile.length();
+        Assert.assertTrue( oldSize <= newSize );
+        Assert.assertTrue( oldLength == newLength );
     }
 
     /**
@@ -103,6 +124,8 @@ public class SingleFileStorageTest
         throws Exception
     {
         setFixture( JbookshelfFactory.eINSTANCE.createSingleFileStorage() );
+        getFixture().setBookShelf( JbookshelfFactory.eINSTANCE.createBookShelf() );
+        getFixture().setCollectionStorageFile( new File( "test" ) );
     }
 
     /**
