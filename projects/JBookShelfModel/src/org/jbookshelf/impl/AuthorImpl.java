@@ -23,12 +23,12 @@ import org.jbookshelf.ReadingUnit;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.jbookshelf.impl.AuthorImpl#getComments <em>Comments</em>}</li>
- * <li>{@link org.jbookshelf.impl.AuthorImpl#getCategories <em>Categories</em>}</li>
- * <li>{@link org.jbookshelf.impl.AuthorImpl#getReadingUnits <em>Reading Units</em>}</li>
+ *   <li>{@link org.jbookshelf.impl.AuthorImpl#getComments <em>Comments</em>}</li>
+ *   <li>{@link org.jbookshelf.impl.AuthorImpl#getCategories <em>Categories</em>}</li>
+ *   <li>{@link org.jbookshelf.impl.AuthorImpl#getReadingUnits <em>Reading Units</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class AuthorImpl
@@ -37,9 +37,9 @@ public class AuthorImpl
         Author
 {
     /**
-     * The cached value of the '{@link #getComments() <em>Comments</em>}' reference list. <!-- begin-user-doc --> <!--
+     * The cached value of the '{@link #getComments() <em>Comments</em>}' reference list.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getComments()
      * @generated
      * @ordered
@@ -47,9 +47,9 @@ public class AuthorImpl
     protected EList<Comment>     comments;
 
     /**
-     * The cached value of the '{@link #getCategories() <em>Categories</em>}' reference list. <!-- begin-user-doc -->
+     * The cached value of the '{@link #getCategories() <em>Categories</em>}' reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @see #getCategories()
      * @generated
      * @ordered
@@ -57,9 +57,9 @@ public class AuthorImpl
     protected EList<Category>    categories;
 
     /**
-     * The cached value of the '{@link #getReadingUnits() <em>Reading Units</em>}' reference list. <!-- begin-user-doc
+     * The cached value of the '{@link #getReadingUnits() <em>Reading Units</em>}' reference list.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
      * @see #getReadingUnits()
      * @generated
      * @ordered
@@ -68,7 +68,6 @@ public class AuthorImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected AuthorImpl()
@@ -78,7 +77,6 @@ public class AuthorImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -86,40 +84,34 @@ public class AuthorImpl
         int derivedFeatureID,
         Class<?> baseClass )
     {
-        if ( baseClass == Commentable.class )
+        if (baseClass == Commentable.class)
         {
-            switch ( derivedFeatureID )
+            switch (derivedFeatureID)
             {
-                case JbookshelfPackage.AUTHOR__COMMENTS:
-                    return JbookshelfPackage.COMMENTABLE__COMMENTS;
-                default:
-                    return -1;
+                case JbookshelfPackage.AUTHOR__COMMENTS: return JbookshelfPackage.COMMENTABLE__COMMENTS;
+                default: return -1;
             }
         }
-        if ( baseClass == Categorizable.class )
+        if (baseClass == Categorizable.class)
         {
-            switch ( derivedFeatureID )
+            switch (derivedFeatureID)
             {
-                case JbookshelfPackage.AUTHOR__CATEGORIES:
-                    return JbookshelfPackage.CATEGORIZABLE__CATEGORIES;
-                default:
-                    return -1;
+                case JbookshelfPackage.AUTHOR__CATEGORIES: return JbookshelfPackage.CATEGORIZABLE__CATEGORIES;
+                default: return -1;
             }
         }
-        if ( baseClass == EObject.class )
+        if (baseClass == EObject.class)
         {
-            switch ( derivedFeatureID )
+            switch (derivedFeatureID)
             {
-                default:
-                    return -1;
+                default: return -1;
             }
         }
-        return super.eBaseStructuralFeatureID( derivedFeatureID, baseClass );
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -127,40 +119,34 @@ public class AuthorImpl
         int baseFeatureID,
         Class<?> baseClass )
     {
-        if ( baseClass == Commentable.class )
+        if (baseClass == Commentable.class)
         {
-            switch ( baseFeatureID )
+            switch (baseFeatureID)
             {
-                case JbookshelfPackage.COMMENTABLE__COMMENTS:
-                    return JbookshelfPackage.AUTHOR__COMMENTS;
-                default:
-                    return -1;
+                case JbookshelfPackage.COMMENTABLE__COMMENTS: return JbookshelfPackage.AUTHOR__COMMENTS;
+                default: return -1;
             }
         }
-        if ( baseClass == Categorizable.class )
+        if (baseClass == Categorizable.class)
         {
-            switch ( baseFeatureID )
+            switch (baseFeatureID)
             {
-                case JbookshelfPackage.CATEGORIZABLE__CATEGORIES:
-                    return JbookshelfPackage.AUTHOR__CATEGORIES;
-                default:
-                    return -1;
+                case JbookshelfPackage.CATEGORIZABLE__CATEGORIES: return JbookshelfPackage.AUTHOR__CATEGORIES;
+                default: return -1;
             }
         }
-        if ( baseClass == EObject.class )
+        if (baseClass == EObject.class)
         {
-            switch ( baseFeatureID )
+            switch (baseFeatureID)
             {
-                default:
-                    return -1;
+                default: return -1;
             }
         }
-        return super.eDerivedStructuralFeatureID( baseFeatureID, baseClass );
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -169,7 +155,7 @@ public class AuthorImpl
         boolean resolve,
         boolean coreType )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.AUTHOR__COMMENTS:
                 return getComments();
@@ -178,19 +164,18 @@ public class AuthorImpl
             case JbookshelfPackage.AUTHOR__READING_UNITS:
                 return getReadingUnits();
         }
-        return super.eGet( featureID, resolve, coreType );
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.AUTHOR__COMMENTS:
                 return comments != null && !comments.isEmpty();
@@ -199,12 +184,11 @@ public class AuthorImpl
             case JbookshelfPackage.AUTHOR__READING_UNITS:
                 return readingUnits != null && !readingUnits.isEmpty();
         }
-        return super.eIsSet( featureID );
+        return super.eIsSet(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings( "unchecked" )
@@ -213,34 +197,33 @@ public class AuthorImpl
         int featureID,
         Object newValue )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.AUTHOR__COMMENTS:
                 getComments().clear();
-                getComments().addAll( (Collection<? extends Comment>) newValue );
+                getComments().addAll((Collection<? extends Comment>)newValue);
                 return;
             case JbookshelfPackage.AUTHOR__CATEGORIES:
                 getCategories().clear();
-                getCategories().addAll( (Collection<? extends Category>) newValue );
+                getCategories().addAll((Collection<? extends Category>)newValue);
                 return;
             case JbookshelfPackage.AUTHOR__READING_UNITS:
                 getReadingUnits().clear();
-                getReadingUnits().addAll( (Collection<? extends ReadingUnit>) newValue );
+                getReadingUnits().addAll((Collection<? extends ReadingUnit>)newValue);
                 return;
         }
-        super.eSet( featureID, newValue );
+        super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.AUTHOR__COMMENTS:
                 getComments().clear();
@@ -252,50 +235,44 @@ public class AuthorImpl
                 getReadingUnits().clear();
                 return;
         }
-        super.eUnset( featureID );
+        super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public EList<Category> getCategories()
     {
-        if ( categories == null )
+        if (categories == null)
         {
-            categories =
-                new EObjectResolvingEList<Category>( Category.class, this, JbookshelfPackage.AUTHOR__CATEGORIES );
+            categories = new EObjectResolvingEList<Category>(Category.class, this, JbookshelfPackage.AUTHOR__CATEGORIES);
         }
         return categories;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public EList<Comment> getComments()
     {
-        if ( comments == null )
+        if (comments == null)
         {
-            comments = new EObjectResolvingEList<Comment>( Comment.class, this, JbookshelfPackage.AUTHOR__COMMENTS );
+            comments = new EObjectResolvingEList<Comment>(Comment.class, this, JbookshelfPackage.AUTHOR__COMMENTS);
         }
         return comments;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public EList<ReadingUnit> getReadingUnits()
     {
-        if ( readingUnits == null )
+        if (readingUnits == null)
         {
-            readingUnits =
-                new EObjectResolvingEList<ReadingUnit>( ReadingUnit.class, this,
-                    JbookshelfPackage.AUTHOR__READING_UNITS );
+            readingUnits = new EObjectResolvingEList<ReadingUnit>(ReadingUnit.class, this, JbookshelfPackage.AUTHOR__READING_UNITS);
         }
         return readingUnits;
     }
@@ -321,7 +298,6 @@ public class AuthorImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override

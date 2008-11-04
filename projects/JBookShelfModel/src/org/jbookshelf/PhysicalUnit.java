@@ -6,7 +6,7 @@ import org.eclipse.emf.ecore.EObject;
  * physical implementation of {@link ReadingUnit}
  * 
  * @author eav
- * @model
+ * @model abstract="true"
  */
 public interface PhysicalUnit
     extends

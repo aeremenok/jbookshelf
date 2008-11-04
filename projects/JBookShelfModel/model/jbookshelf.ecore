@@ -10,8 +10,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ReadingUnit" eSuperTypes="#//Unique #//Commentable #//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"
         eType="#//Author"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="physical" lowerBound="1"
-        eType="#//PhysicalUnit" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="physical" eType="#//PhysicalUnit"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRead" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
   </eClassifiers>
@@ -21,10 +20,8 @@
         eType="#//Categorizable"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Comment">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="creationDate" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="creationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subject" eType="#//Commentable"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -40,8 +37,7 @@
         eType="#//Category"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Unique" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="related" upperBound="-1"
         eType="#//Unique"/>
   </eClassifiers>
@@ -72,44 +68,37 @@
       <eParameters name="isRead" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="uniques" upperBound="-1"
-        eType="#//Unique" containment="true"/>
+        eType="#//Unique"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"
-        eType="#//Author" containment="true"/>
+        eType="#//Author"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
-        eType="#//Category" containment="true"/>
+        eType="#//Category"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="readingUnits" upperBound="-1"
-        eType="#//ReadingUnit" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="storage" lowerBound="1"
-        eType="#//BookShelfStorage" containment="true" eOpposite="#//BookShelfStorage/bookShelf"/>
+        eType="#//ReadingUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="storage" eType="#//BookShelfStorage"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ArchiveFile" eSuperTypes="#//PhysicalUnit">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="archiveFile" lowerBound="1"
-        eType="#//File"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="archiveFile" eType="#//File"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IndexFileFolder" eSuperTypes="#//PhysicalUnit">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="indexFile" lowerBound="1"
-        eType="#//File"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="indexFolder" lowerBound="1"
-        eType="#//File"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="indexFile" eType="#//File"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="indexFolder" eType="#//File"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PhysicalUnit" abstract="true">
     <eOperations name="openUnit"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SingleFile" eSuperTypes="#//PhysicalUnit">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" lowerBound="1" eType="#//File"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" eType="#//File"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SingleFileFolder" eSuperTypes="#//PhysicalUnit">
     <eOperations name="openFolder"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="folder" lowerBound="1"
-        eType="#//File"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="singleFile" lowerBound="1"
-        eType="#//File"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="folder" eType="#//File"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="singleFile" eType="#//File"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BookShelfStorage" abstract="true">
     <eOperations name="loadCollection"/>
     <eOperations name="saveCollection"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bookShelf" lowerBound="1"
-        eType="#//BookShelf" eOpposite="#//BookShelf/storage"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bookShelf" eType="#//BookShelf"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SingleFileStorage" eSuperTypes="#//BookShelfStorage">
     <eOperations name="backupCollection">
@@ -119,7 +108,7 @@
       <eParameters name="externalFile" eType="#//File"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="collectionStorageFile"
-        lowerBound="1" eType="#//File"/>
+        eType="#//File"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="File" instanceClassName="java.io.File"/>
 </ecore:EPackage>

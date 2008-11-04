@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EObject;
  * further - consider using javadb
  * 
  * @author eav
- * @model
+ * @model abstract="true"
  */
 public interface BookShelfStorage
     extends
@@ -20,16 +20,6 @@ public interface BookShelfStorage
     BookShelf getBookShelf();
 
     /**
-     * Sets the value of the '{@link org.jbookshelf.BookShelfStorage#getBookShelf <em>Book Shelf</em>}' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Book Shelf</em>' container reference.
-     * @see #getBookShelf()
-     * @generated
-     */
-    void setBookShelf(BookShelf value);
-
-    /**
      * @model
      */
     void loadCollection();
@@ -38,4 +28,15 @@ public interface BookShelfStorage
      * @model
      */
     void saveCollection();
+
+    /**
+     * Sets the value of the '{@link org.jbookshelf.BookShelfStorage#getBookShelf <em>Book Shelf</em>}' reference. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @param value the new value of the '<em>Book Shelf</em>' reference.
+     * @see #getBookShelf()
+     * @generated
+     */
+    void setBookShelf(
+        BookShelf value );
 }

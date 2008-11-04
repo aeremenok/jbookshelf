@@ -35,6 +35,16 @@ import org.jbookshelf.JbookshelfPackage;
 public abstract class BookShelfStorageImpl extends EObjectImpl implements BookShelfStorage
 {
     /**
+     * The cached value of the '{@link #getBookShelf() <em>Book Shelf</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getBookShelf()
+     * @generated
+     * @ordered
+     */
+    protected BookShelf bookShelf;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -62,8 +72,17 @@ public abstract class BookShelfStorageImpl extends EObjectImpl implements BookSh
      */
     public BookShelf getBookShelf()
     {
-        if (eContainerFeatureID != JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF) return null;
-        return (BookShelf)eContainer();
+        if (bookShelf != null && bookShelf.eIsProxy())
+        {
+            InternalEObject oldBookShelf = (InternalEObject)bookShelf;
+            bookShelf = (BookShelf)eResolveProxy(oldBookShelf);
+            if (bookShelf != oldBookShelf)
+            {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF, oldBookShelf, bookShelf));
+            }
+        }
+        return bookShelf;
     }
 
     /**
@@ -71,10 +90,9 @@ public abstract class BookShelfStorageImpl extends EObjectImpl implements BookSh
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetBookShelf(BookShelf newBookShelf, NotificationChain msgs)
+    public BookShelf basicGetBookShelf()
     {
-        msgs = eBasicSetContainer((InternalEObject)newBookShelf, JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF, msgs);
-        return msgs;
+        return bookShelf;
     }
 
     /**
@@ -84,20 +102,10 @@ public abstract class BookShelfStorageImpl extends EObjectImpl implements BookSh
      */
     public void setBookShelf(BookShelf newBookShelf)
     {
-        if (newBookShelf != eInternalContainer() || (eContainerFeatureID != JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF && newBookShelf != null))
-        {
-            if (EcoreUtil.isAncestor(this, newBookShelf))
-                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-            NotificationChain msgs = null;
-            if (eInternalContainer() != null)
-                msgs = eBasicRemoveFromContainer(msgs);
-            if (newBookShelf != null)
-                msgs = ((InternalEObject)newBookShelf).eInverseAdd(this, JbookshelfPackage.BOOK_SHELF__STORAGE, BookShelf.class, msgs);
-            msgs = basicSetBookShelf(newBookShelf, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF, newBookShelf, newBookShelf));
+        BookShelf oldBookShelf = bookShelf;
+        bookShelf = newBookShelf;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF, oldBookShelf, bookShelf));
     }
 
     /**
@@ -130,62 +138,13 @@ public abstract class BookShelfStorageImpl extends EObjectImpl implements BookSh
      * @generated
      */
     @Override
-    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-    {
-        switch (featureID)
-        {
-            case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
-                if (eInternalContainer() != null)
-                    msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetBookShelf((BookShelf)otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-    {
-        switch (featureID)
-        {
-            case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
-                return basicSetBookShelf(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs)
-    {
-        switch (eContainerFeatureID)
-        {
-            case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
-                return eInternalContainer().eInverseRemove(this, JbookshelfPackage.BOOK_SHELF__STORAGE, BookShelf.class, msgs);
-        }
-        return super.eBasicRemoveFromContainerFeature(msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType)
     {
         switch (featureID)
         {
             case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
-                return getBookShelf();
+                if (resolve) return getBookShelf();
+                return basicGetBookShelf();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -235,7 +194,7 @@ public abstract class BookShelfStorageImpl extends EObjectImpl implements BookSh
         switch (featureID)
         {
             case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
-                return getBookShelf() != null;
+                return bookShelf != null;
         }
         return super.eIsSet(featureID);
     }
