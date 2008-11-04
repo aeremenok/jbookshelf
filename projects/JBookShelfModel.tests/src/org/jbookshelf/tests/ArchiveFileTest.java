@@ -3,6 +3,8 @@
  */
 package org.jbookshelf.tests;
 
+import java.io.File;
+
 import junit.textui.TestRunner;
 
 import org.jbookshelf.ArchiveFile;
@@ -61,6 +63,7 @@ public class ArchiveFileTest
         throws Exception
     {
         setFixture( JbookshelfFactory.eINSTANCE.createArchiveFile() );
+        getFixture().setArchiveFile( new File( "test.zip" ) );
     }
 
     /**
