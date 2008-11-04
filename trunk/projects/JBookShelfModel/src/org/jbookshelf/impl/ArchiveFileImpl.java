@@ -10,6 +10,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.jbookshelf.ArchiveFile;
 import org.jbookshelf.JbookshelfPackage;
+import org.util.URIOpener;
+import org.util.ZIPOpener;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Archive File</b></em>'. <!-- end-user-doc -->
@@ -144,8 +146,8 @@ public class ArchiveFileImpl
     @Override
     public void openUnit()
     {
-        // todo
-        super.openUnit();
+        File unzipped = ZIPOpener.openZip( getArchiveFile() );
+        URIOpener.browseFile( unzipped );
     }
 
     /**
