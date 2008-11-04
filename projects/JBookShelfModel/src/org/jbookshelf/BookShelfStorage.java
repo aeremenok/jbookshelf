@@ -15,7 +15,7 @@ public interface BookShelfStorage
         EObject
 {
     /**
-     * @model
+     * @model container="true" lowerBound="1"
      */
     BookShelf getBookShelf();
 

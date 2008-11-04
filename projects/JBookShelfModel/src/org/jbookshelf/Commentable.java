@@ -15,7 +15,7 @@ public interface Commentable
 {
     /**
      * @return comments
-     * @model
+     * @model containment="true"
      */
     EList<Comment> getComments();
 

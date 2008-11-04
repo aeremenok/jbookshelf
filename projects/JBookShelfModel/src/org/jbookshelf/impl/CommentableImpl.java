@@ -7,11 +7,16 @@
 package org.jbookshelf.impl;
 
 import java.util.Collection;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.jbookshelf.Comment;
 import org.jbookshelf.Commentable;
@@ -33,7 +38,7 @@ import org.jbookshelf.JbookshelfPackage;
 public abstract class CommentableImpl extends EObjectImpl implements Commentable
 {
     /**
-     * The cached value of the '{@link #getComments() <em>Comments</em>}' reference list.
+     * The cached value of the '{@link #getComments() <em>Comments</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getComments()
@@ -72,7 +77,7 @@ public abstract class CommentableImpl extends EObjectImpl implements Commentable
     {
         if (comments == null)
         {
-            comments = new EObjectResolvingEList<Comment>(Comment.class, this, JbookshelfPackage.COMMENTABLE__COMMENTS);
+            comments = new EObjectContainmentWithInverseEList<Comment>(Comment.class, this, JbookshelfPackage.COMMENTABLE__COMMENTS, JbookshelfPackage.COMMENT__SUBJECT);
         }
         return comments;
     }
@@ -87,6 +92,39 @@ public abstract class CommentableImpl extends EObjectImpl implements Commentable
         // TODO: implement this method
         // Ensure that you remove @generated or mark it @generated NOT
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.COMMENTABLE__COMMENTS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getComments()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.COMMENTABLE__COMMENTS:
+                return ((InternalEList<?>)getComments()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**

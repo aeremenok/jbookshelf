@@ -45,31 +45,31 @@ public interface BookShelf
 
     /**
      * @return all authors in collection
-     * @model
+     * @model containment="true"
      */
     EList<Author> getAuthors();
 
     /**
      * @return all categories in collection
-     * @model
+     * @model containment="true"
      */
     EList<Category> getCategories();
 
     /**
      * @return all units in collection
-     * @model
+     * @model containment="true"
      */
     EList<ReadingUnit> getReadingUnits();
 
     /**
      * @return physical collection storage
-     * @model
+     * @model containment="true" lowerBound="1"
      */
     BookShelfStorage getStorage();
 
     /**
      * @return all uniques in collection todo probably useless
-     * @model
+     * @model containment="true" derived="true"
      */
     EList<Unique> getUniques();
 

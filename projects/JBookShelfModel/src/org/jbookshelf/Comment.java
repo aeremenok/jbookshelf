@@ -28,9 +28,25 @@ public interface Comment
 
     /**
      * @return what was commented
-     * @model
+     * @model container="true"
      */
     Commentable getSubject();
+
+    /**
+     * Returns the value of the '<em><b>Title</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Title</em>' attribute isn't clear, there really should be more of a description
+     * here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Title</em>' attribute.
+     * @see #setTitle(String)
+     * @see org.jbookshelf.JbookshelfPackage#getComment_Title()
+     * @model required="true"
+     * @generated
+     */
+    String getTitle();
 
     /**
      * Sets the value of the '{@link org.jbookshelf.Comment#getContent <em>Content</em>}' attribute.
@@ -55,31 +71,15 @@ public interface Comment
         Date value );
 
     /**
-     * Sets the value of the '{@link org.jbookshelf.Comment#getSubject <em>Subject</em>}' reference.
+     * Sets the value of the '{@link org.jbookshelf.Comment#getSubject <em>Subject</em>}' container reference.
      * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * @param value the new value of the '<em>Subject</em>' reference.
+     * @param value the new value of the '<em>Subject</em>' container reference.
      * @see #getSubject()
      * @generated
      */
     void setSubject(
         Commentable value );
-
-    /**
-     * Returns the value of the '<em><b>Title</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Title</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Title</em>' attribute.
-     * @see #setTitle(String)
-     * @see org.jbookshelf.JbookshelfPackage#getComment_Title()
-     * @model required="true"
-     * @generated
-     */
-    String getTitle();
 
     /**
      * Sets the value of the '{@link org.jbookshelf.Comment#getTitle <em>Title</em>}' attribute.
@@ -89,5 +89,6 @@ public interface Comment
      * @see #getTitle()
      * @generated
      */
-    void setTitle(String value);
+    void setTitle(
+        String value );
 }
