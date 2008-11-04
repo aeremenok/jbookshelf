@@ -1,32 +1,28 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
+ * <copyright> </copyright> $Id$
  */
 package org.jbookshelf.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.jbookshelf.JbookshelfPackage;
 import org.jbookshelf.PhysicalUnit;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Physical Unit</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Physical Unit</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- *
+ * 
  * @generated
  */
-public abstract class PhysicalUnitImpl extends EObjectImpl implements PhysicalUnit
+public abstract class PhysicalUnitImpl
+    extends EObjectImpl
+    implements
+        PhysicalUnit
 {
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected PhysicalUnitImpl()
@@ -35,8 +31,18 @@ public abstract class PhysicalUnitImpl extends EObjectImpl implements PhysicalUn
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated NOT
+     */
+    public void openUnit()
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -45,16 +51,4 @@ public abstract class PhysicalUnitImpl extends EObjectImpl implements PhysicalUn
         return JbookshelfPackage.Literals.PHYSICAL_UNIT;
     }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void openUnit()
-    {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
-    }
-
-} //PhysicalUnitImpl
+} // PhysicalUnitImpl
