@@ -13,7 +13,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.jbookshelf.Author;
 import org.jbookshelf.Categorizable;
 import org.jbookshelf.Category;
@@ -32,7 +36,7 @@ import org.jbookshelf.ReadingUnit;
  *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getCategories <em>Categories</em>}</li>
  *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getAuthors <em>Authors</em>}</li>
  *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getPhysical <em>Physical</em>}</li>
- *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#isIsRead <em>Is Read</em>}</li>
+ *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#isRead <em>Read</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,7 +48,7 @@ public class ReadingUnitImpl
         ReadingUnit
 {
     /**
-     * The cached value of the '{@link #getComments() <em>Comments</em>}' reference list.
+     * The cached value of the '{@link #getComments() <em>Comments</em>}' containment reference list.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @see #getComments()
@@ -73,7 +77,7 @@ public class ReadingUnitImpl
      */
     protected EList<Author>        authors;
     /**
-     * The cached value of the '{@link #getPhysical() <em>Physical</em>}' reference.
+     * The cached value of the '{@link #getPhysical() <em>Physical</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getPhysical()
@@ -82,24 +86,24 @@ public class ReadingUnitImpl
      */
     protected PhysicalUnit         physical;
     /**
-     * The default value of the '{@link #isIsRead() <em>Is Read</em>}' attribute.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @see #isIsRead()
+     * The default value of the '{@link #isRead() <em>Read</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isRead()
      * @generated
      * @ordered
      */
-    protected static final boolean IS_READ_EDEFAULT = false;
+    protected static final boolean READ_EDEFAULT = false;
 
     /**
-     * The cached value of the '{@link #isIsRead() <em>Is Read</em>}' attribute.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @see #isIsRead()
+     * The cached value of the '{@link #isRead() <em>Read</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isRead()
      * @generated
      * @ordered
      */
-    protected boolean              isRead           = IS_READ_EDEFAULT;
+    protected boolean read = READ_EDEFAULT;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -199,10 +203,9 @@ public class ReadingUnitImpl
             case JbookshelfPackage.READING_UNIT__AUTHORS:
                 return getAuthors();
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
-                if (resolve) return getPhysical();
-                return basicGetPhysical();
-            case JbookshelfPackage.READING_UNIT__IS_READ:
-                return isIsRead() ? Boolean.TRUE : Boolean.FALSE;
+                return getPhysical();
+            case JbookshelfPackage.READING_UNIT__READ:
+                return isRead() ? Boolean.TRUE : Boolean.FALSE;
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -225,8 +228,8 @@ public class ReadingUnitImpl
                 return authors != null && !authors.isEmpty();
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
                 return physical != null;
-            case JbookshelfPackage.READING_UNIT__IS_READ:
-                return isRead != IS_READ_EDEFAULT;
+            case JbookshelfPackage.READING_UNIT__READ:
+                return read != READ_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -258,8 +261,8 @@ public class ReadingUnitImpl
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
                 setPhysical((PhysicalUnit)newValue);
                 return;
-            case JbookshelfPackage.READING_UNIT__IS_READ:
-                setIsRead(((Boolean)newValue).booleanValue());
+            case JbookshelfPackage.READING_UNIT__READ:
+                setRead(((Boolean)newValue).booleanValue());
                 return;
         }
         super.eSet(featureID, newValue);
@@ -287,8 +290,8 @@ public class ReadingUnitImpl
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
                 setPhysical((PhysicalUnit)null);
                 return;
-            case JbookshelfPackage.READING_UNIT__IS_READ:
-                setIsRead(IS_READ_EDEFAULT);
+            case JbookshelfPackage.READING_UNIT__READ:
+                setRead(READ_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -302,7 +305,7 @@ public class ReadingUnitImpl
     {
         if (authors == null)
         {
-            authors = new EObjectResolvingEList<Author>(Author.class, this, JbookshelfPackage.READING_UNIT__AUTHORS);
+            authors = new EObjectWithInverseResolvingEList.ManyInverse<Author>(Author.class, this, JbookshelfPackage.READING_UNIT__AUTHORS, JbookshelfPackage.AUTHOR__READING_UNITS);
         }
         return authors;
     }
@@ -315,7 +318,7 @@ public class ReadingUnitImpl
     {
         if (categories == null)
         {
-            categories = new EObjectResolvingEList<Category>(Category.class, this, JbookshelfPackage.READING_UNIT__CATEGORIES);
+            categories = new EObjectWithInverseResolvingEList.ManyInverse<Category>(Category.class, this, JbookshelfPackage.READING_UNIT__CATEGORIES, JbookshelfPackage.CATEGORY__CATEGORIZABLES);
         }
         return categories;
     }
@@ -328,7 +331,7 @@ public class ReadingUnitImpl
     {
         if (comments == null)
         {
-            comments = new EObjectResolvingEList<Comment>(Comment.class, this, JbookshelfPackage.READING_UNIT__COMMENTS);
+            comments = new EObjectContainmentWithInverseEList<Comment>(Comment.class, this, JbookshelfPackage.READING_UNIT__COMMENTS, JbookshelfPackage.COMMENT__SUBJECT);
         }
         return comments;
     }
@@ -339,16 +342,6 @@ public class ReadingUnitImpl
      */
     public PhysicalUnit getPhysical()
     {
-        if (physical != null && physical.eIsProxy())
-        {
-            InternalEObject oldPhysical = (InternalEObject)physical;
-            physical = (PhysicalUnit)eResolveProxy(oldPhysical);
-            if (physical != oldPhysical)
-            {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, JbookshelfPackage.READING_UNIT__PHYSICAL, oldPhysical, physical));
-            }
-        }
         return physical;
     }
 
@@ -357,18 +350,16 @@ public class ReadingUnitImpl
      * <!-- end-user-doc -->
      * @generated
      */
-    public PhysicalUnit basicGetPhysical()
+    public NotificationChain basicSetPhysical(PhysicalUnit newPhysical, NotificationChain msgs)
     {
-        return physical;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isIsRead()
-    {
-        return isRead;
+        PhysicalUnit oldPhysical = physical;
+        physical = newPhysical;
+        if (eNotificationRequired())
+        {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, JbookshelfPackage.READING_UNIT__PHYSICAL, oldPhysical, newPhysical);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
 
     /**
@@ -391,16 +382,46 @@ public class ReadingUnitImpl
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-    public void setIsRead(
-        boolean newIsRead )
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
     {
-        boolean oldIsRead = isRead;
-        isRead = newIsRead;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.READING_UNIT__IS_READ, oldIsRead, isRead));
+        switch (featureID)
+        {
+            case JbookshelfPackage.READING_UNIT__COMMENTS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getComments()).basicAdd(otherEnd, msgs);
+            case JbookshelfPackage.READING_UNIT__CATEGORIES:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getCategories()).basicAdd(otherEnd, msgs);
+            case JbookshelfPackage.READING_UNIT__AUTHORS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getAuthors()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.READING_UNIT__COMMENTS:
+                return ((InternalEList<?>)getComments()).basicRemove(otherEnd, msgs);
+            case JbookshelfPackage.READING_UNIT__CATEGORIES:
+                return ((InternalEList<?>)getCategories()).basicRemove(otherEnd, msgs);
+            case JbookshelfPackage.READING_UNIT__AUTHORS:
+                return ((InternalEList<?>)getAuthors()).basicRemove(otherEnd, msgs);
+            case JbookshelfPackage.READING_UNIT__PHYSICAL:
+                return basicSetPhysical(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
@@ -410,10 +431,41 @@ public class ReadingUnitImpl
     public void setPhysical(
         PhysicalUnit newPhysical )
     {
-        PhysicalUnit oldPhysical = physical;
-        physical = newPhysical;
+        if (newPhysical != physical)
+        {
+            NotificationChain msgs = null;
+            if (physical != null)
+                msgs = ((InternalEObject)physical).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - JbookshelfPackage.READING_UNIT__PHYSICAL, null, msgs);
+            if (newPhysical != null)
+                msgs = ((InternalEObject)newPhysical).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - JbookshelfPackage.READING_UNIT__PHYSICAL, null, msgs);
+            msgs = basicSetPhysical(newPhysical, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.READING_UNIT__PHYSICAL, newPhysical, newPhysical));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isRead()
+    {
+        return read;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setRead(boolean newRead)
+    {
+        boolean oldRead = read;
+        read = newRead;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.READING_UNIT__PHYSICAL, oldPhysical, physical));
+            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.READING_UNIT__READ, oldRead, read));
     }
 
     /**
@@ -426,8 +478,8 @@ public class ReadingUnitImpl
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (isRead: ");
-        result.append(isRead);
+        result.append(" (read: ");
+        result.append(read);
         result.append(')');
         return result.toString();
     }

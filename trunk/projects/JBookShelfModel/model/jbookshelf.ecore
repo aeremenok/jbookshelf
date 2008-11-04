@@ -5,24 +5,26 @@
     nsURI="http:///org/jbookshelf.ecore" nsPrefix="org.jbookshelf">
   <eClassifiers xsi:type="ecore:EClass" name="Author" eSuperTypes="#//Unique #//Commentable #//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="readingUnits" upperBound="-1"
-        eType="#//ReadingUnit"/>
+        eType="#//ReadingUnit" eOpposite="#//ReadingUnit/authors"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReadingUnit" eSuperTypes="#//Unique #//Commentable #//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"
-        eType="#//Author"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="physical" eType="#//PhysicalUnit"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRead" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+        eType="#//Author" eOpposite="#//Author/readingUnits"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="physical" lowerBound="1"
+        eType="#//PhysicalUnit" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="read" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//Unique platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="categorizables" upperBound="-1"
-        eType="#//Categorizable"/>
+        eType="#//Categorizable" eOpposite="#//Categorizable/categories"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Comment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="creationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subject" eType="#//Commentable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subject" eType="#//Commentable"
+        eOpposite="#//Commentable/comments"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Commentable" abstract="true">
@@ -30,14 +32,14 @@
       <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="comments" upperBound="-1"
-        eType="#//Comment"/>
+        eType="#//Comment" containment="true" resolveProxies="false" eOpposite="#//Comment/subject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Categorizable" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
-        eType="#//Category"/>
+        eType="#//Category" eOpposite="#//Category/categorizables"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Unique" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="related" upperBound="-1"
         eType="#//Unique"/>
   </eClassifiers>
@@ -68,14 +70,15 @@
       <eParameters name="isRead" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="uniques" upperBound="-1"
-        eType="#//Unique"/>
+        eType="#//Unique" derived="true" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"
-        eType="#//Author"/>
+        eType="#//Author" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
-        eType="#//Category"/>
+        eType="#//Category" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="readingUnits" upperBound="-1"
-        eType="#//ReadingUnit"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="storage" eType="#//BookShelfStorage"/>
+        eType="#//ReadingUnit" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="storage" lowerBound="1"
+        eType="#//BookShelfStorage" containment="true" resolveProxies="false" eOpposite="#//BookShelfStorage/bookShelf"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ArchiveFile" eSuperTypes="#//PhysicalUnit">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="archiveFile" eType="#//File"/>
@@ -98,7 +101,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="BookShelfStorage" abstract="true">
     <eOperations name="loadCollection"/>
     <eOperations name="saveCollection"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bookShelf" eType="#//BookShelf"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bookShelf" lowerBound="1"
+        eType="#//BookShelf" eOpposite="#//BookShelf/storage"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SingleFileStorage" eSuperTypes="#//BookShelfStorage">
     <eOperations name="backupCollection">

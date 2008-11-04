@@ -137,7 +137,7 @@ public interface JbookshelfPackage extends EPackage
     int AUTHOR__RELATED = UNIQUE__RELATED;
 
     /**
-     * The feature id for the '<em><b>Comments</b></em>' reference list.
+     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -201,7 +201,7 @@ public interface JbookshelfPackage extends EPackage
     int READING_UNIT__RELATED = UNIQUE__RELATED;
 
     /**
-     * The feature id for the '<em><b>Comments</b></em>' reference list.
+     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -228,7 +228,7 @@ public interface JbookshelfPackage extends EPackage
     int READING_UNIT__AUTHORS = UNIQUE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Physical</b></em>' reference.
+     * The feature id for the '<em><b>Physical</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -237,13 +237,13 @@ public interface JbookshelfPackage extends EPackage
     int READING_UNIT__PHYSICAL = UNIQUE_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Is Read</b></em>' attribute.
+     * The feature id for the '<em><b>Read</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int READING_UNIT__IS_READ = UNIQUE_FEATURE_COUNT + 4;
+    int READING_UNIT__READ = UNIQUE_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>Reading Unit</em>' class.
@@ -339,7 +339,7 @@ public interface JbookshelfPackage extends EPackage
     int COMMENT__CREATION_DATE = 1;
 
     /**
-     * The feature id for the '<em><b>Subject</b></em>' reference.
+     * The feature id for the '<em><b>Subject</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -366,7 +366,7 @@ public interface JbookshelfPackage extends EPackage
     int COMMENT_FEATURE_COUNT = 4;
 
     /**
-     * The feature id for the '<em><b>Comments</b></em>' reference list.
+     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -422,7 +422,7 @@ public interface JbookshelfPackage extends EPackage
     int BOOK_SHELF = 7;
 
     /**
-     * The feature id for the '<em><b>Uniques</b></em>' reference list.
+     * The feature id for the '<em><b>Uniques</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -431,7 +431,7 @@ public interface JbookshelfPackage extends EPackage
     int BOOK_SHELF__UNIQUES = 0;
 
     /**
-     * The feature id for the '<em><b>Authors</b></em>' reference list.
+     * The feature id for the '<em><b>Authors</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -440,7 +440,7 @@ public interface JbookshelfPackage extends EPackage
     int BOOK_SHELF__AUTHORS = 1;
 
     /**
-     * The feature id for the '<em><b>Categories</b></em>' reference list.
+     * The feature id for the '<em><b>Categories</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -449,7 +449,7 @@ public interface JbookshelfPackage extends EPackage
     int BOOK_SHELF__CATEGORIES = 2;
 
     /**
-     * The feature id for the '<em><b>Reading Units</b></em>' reference list.
+     * The feature id for the '<em><b>Reading Units</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -458,7 +458,7 @@ public interface JbookshelfPackage extends EPackage
     int BOOK_SHELF__READING_UNITS = 3;
 
     /**
-     * The feature id for the '<em><b>Storage</b></em>' reference.
+     * The feature id for the '<em><b>Storage</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -635,7 +635,7 @@ public interface JbookshelfPackage extends EPackage
     int BOOK_SHELF_STORAGE = 13;
 
     /**
-     * The feature id for the '<em><b>Book Shelf</b></em>' reference.
+     * The feature id for the '<em><b>Book Shelf</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -663,7 +663,7 @@ public interface JbookshelfPackage extends EPackage
     int SINGLE_FILE_STORAGE = 14;
 
     /**
-     * The feature id for the '<em><b>Book Shelf</b></em>' reference.
+     * The feature id for the '<em><b>Book Shelf</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -743,10 +743,10 @@ public interface JbookshelfPackage extends EPackage
     EReference getReadingUnit_Authors();
 
     /**
-     * Returns the meta object for the reference '{@link org.jbookshelf.ReadingUnit#getPhysical <em>Physical</em>}'.
+     * Returns the meta object for the containment reference '{@link org.jbookshelf.ReadingUnit#getPhysical <em>Physical</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Physical</em>'.
+     * @return the meta object for the containment reference '<em>Physical</em>'.
      * @see org.jbookshelf.ReadingUnit#getPhysical()
      * @see #getReadingUnit()
      * @generated
@@ -754,15 +754,15 @@ public interface JbookshelfPackage extends EPackage
     EReference getReadingUnit_Physical();
 
     /**
-     * Returns the meta object for the attribute '{@link org.jbookshelf.ReadingUnit#isIsRead <em>Is Read</em>}'.
+     * Returns the meta object for the attribute '{@link org.jbookshelf.ReadingUnit#isRead <em>Read</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Read</em>'.
-     * @see org.jbookshelf.ReadingUnit#isIsRead()
+     * @return the meta object for the attribute '<em>Read</em>'.
+     * @see org.jbookshelf.ReadingUnit#isRead()
      * @see #getReadingUnit()
      * @generated
      */
-    EAttribute getReadingUnit_IsRead();
+    EAttribute getReadingUnit_Read();
 
     /**
      * Returns the meta object for class '{@link org.jbookshelf.Category <em>Category</em>}'.
@@ -829,10 +829,10 @@ public interface JbookshelfPackage extends EPackage
     EAttribute getComment_CreationDate();
 
     /**
-     * Returns the meta object for the reference '{@link org.jbookshelf.Comment#getSubject <em>Subject</em>}'.
+     * Returns the meta object for the container reference '{@link org.jbookshelf.Comment#getSubject <em>Subject</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Subject</em>'.
+     * @return the meta object for the container reference '<em>Subject</em>'.
      * @see org.jbookshelf.Comment#getSubject()
      * @see #getComment()
      * @generated
@@ -861,10 +861,10 @@ public interface JbookshelfPackage extends EPackage
     EClass getCommentable();
 
     /**
-     * Returns the meta object for the reference list '{@link org.jbookshelf.Commentable#getComments <em>Comments</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.jbookshelf.Commentable#getComments <em>Comments</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Comments</em>'.
+     * @return the meta object for the containment reference list '<em>Comments</em>'.
      * @see org.jbookshelf.Commentable#getComments()
      * @see #getCommentable()
      * @generated
@@ -935,10 +935,10 @@ public interface JbookshelfPackage extends EPackage
     EClass getBookShelf();
 
     /**
-     * Returns the meta object for the reference list '{@link org.jbookshelf.BookShelf#getUniques <em>Uniques</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.jbookshelf.BookShelf#getUniques <em>Uniques</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Uniques</em>'.
+     * @return the meta object for the containment reference list '<em>Uniques</em>'.
      * @see org.jbookshelf.BookShelf#getUniques()
      * @see #getBookShelf()
      * @generated
@@ -946,10 +946,10 @@ public interface JbookshelfPackage extends EPackage
     EReference getBookShelf_Uniques();
 
     /**
-     * Returns the meta object for the reference list '{@link org.jbookshelf.BookShelf#getAuthors <em>Authors</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.jbookshelf.BookShelf#getAuthors <em>Authors</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Authors</em>'.
+     * @return the meta object for the containment reference list '<em>Authors</em>'.
      * @see org.jbookshelf.BookShelf#getAuthors()
      * @see #getBookShelf()
      * @generated
@@ -957,10 +957,10 @@ public interface JbookshelfPackage extends EPackage
     EReference getBookShelf_Authors();
 
     /**
-     * Returns the meta object for the reference list '{@link org.jbookshelf.BookShelf#getCategories <em>Categories</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.jbookshelf.BookShelf#getCategories <em>Categories</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Categories</em>'.
+     * @return the meta object for the containment reference list '<em>Categories</em>'.
      * @see org.jbookshelf.BookShelf#getCategories()
      * @see #getBookShelf()
      * @generated
@@ -968,10 +968,10 @@ public interface JbookshelfPackage extends EPackage
     EReference getBookShelf_Categories();
 
     /**
-     * Returns the meta object for the reference list '{@link org.jbookshelf.BookShelf#getReadingUnits <em>Reading Units</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.jbookshelf.BookShelf#getReadingUnits <em>Reading Units</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Reading Units</em>'.
+     * @return the meta object for the containment reference list '<em>Reading Units</em>'.
      * @see org.jbookshelf.BookShelf#getReadingUnits()
      * @see #getBookShelf()
      * @generated
@@ -979,10 +979,10 @@ public interface JbookshelfPackage extends EPackage
     EReference getBookShelf_ReadingUnits();
 
     /**
-     * Returns the meta object for the reference '{@link org.jbookshelf.BookShelf#getStorage <em>Storage</em>}'.
+     * Returns the meta object for the containment reference '{@link org.jbookshelf.BookShelf#getStorage <em>Storage</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Storage</em>'.
+     * @return the meta object for the containment reference '<em>Storage</em>'.
      * @see org.jbookshelf.BookShelf#getStorage()
      * @see #getBookShelf()
      * @generated
@@ -1116,10 +1116,10 @@ public interface JbookshelfPackage extends EPackage
     EClass getBookShelfStorage();
 
     /**
-     * Returns the meta object for the reference '{@link org.jbookshelf.BookShelfStorage#getBookShelf <em>Book Shelf</em>}'.
+     * Returns the meta object for the container reference '{@link org.jbookshelf.BookShelfStorage#getBookShelf <em>Book Shelf</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Book Shelf</em>'.
+     * @return the meta object for the container reference '<em>Book Shelf</em>'.
      * @see org.jbookshelf.BookShelfStorage#getBookShelf()
      * @see #getBookShelfStorage()
      * @generated
@@ -1218,7 +1218,7 @@ public interface JbookshelfPackage extends EPackage
         EReference READING_UNIT__AUTHORS = eINSTANCE.getReadingUnit_Authors();
 
         /**
-         * The meta object literal for the '<em><b>Physical</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Physical</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -1226,12 +1226,12 @@ public interface JbookshelfPackage extends EPackage
         EReference READING_UNIT__PHYSICAL = eINSTANCE.getReadingUnit_Physical();
 
         /**
-         * The meta object literal for the '<em><b>Is Read</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Read</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute READING_UNIT__IS_READ = eINSTANCE.getReadingUnit_IsRead();
+        EAttribute READING_UNIT__READ = eINSTANCE.getReadingUnit_Read();
 
         /**
          * The meta object literal for the '{@link org.jbookshelf.impl.CategoryImpl <em>Category</em>}' class.
@@ -1286,7 +1286,7 @@ public interface JbookshelfPackage extends EPackage
         EAttribute COMMENT__CREATION_DATE = eINSTANCE.getComment_CreationDate();
 
         /**
-         * The meta object literal for the '<em><b>Subject</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Subject</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -1312,7 +1312,7 @@ public interface JbookshelfPackage extends EPackage
         EClass COMMENTABLE = eINSTANCE.getCommentable();
 
         /**
-         * The meta object literal for the '<em><b>Comments</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Comments</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -1374,7 +1374,7 @@ public interface JbookshelfPackage extends EPackage
         EClass BOOK_SHELF = eINSTANCE.getBookShelf();
 
         /**
-         * The meta object literal for the '<em><b>Uniques</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Uniques</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -1382,7 +1382,7 @@ public interface JbookshelfPackage extends EPackage
         EReference BOOK_SHELF__UNIQUES = eINSTANCE.getBookShelf_Uniques();
 
         /**
-         * The meta object literal for the '<em><b>Authors</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Authors</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -1390,7 +1390,7 @@ public interface JbookshelfPackage extends EPackage
         EReference BOOK_SHELF__AUTHORS = eINSTANCE.getBookShelf_Authors();
 
         /**
-         * The meta object literal for the '<em><b>Categories</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Categories</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -1398,7 +1398,7 @@ public interface JbookshelfPackage extends EPackage
         EReference BOOK_SHELF__CATEGORIES = eINSTANCE.getBookShelf_Categories();
 
         /**
-         * The meta object literal for the '<em><b>Reading Units</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Reading Units</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -1406,7 +1406,7 @@ public interface JbookshelfPackage extends EPackage
         EReference BOOK_SHELF__READING_UNITS = eINSTANCE.getBookShelf_ReadingUnits();
 
         /**
-         * The meta object literal for the '<em><b>Storage</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Storage</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -1522,7 +1522,7 @@ public interface JbookshelfPackage extends EPackage
         EClass BOOK_SHELF_STORAGE = eINSTANCE.getBookShelfStorage();
 
         /**
-         * The meta object literal for the '<em><b>Book Shelf</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Book Shelf</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated

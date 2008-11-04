@@ -240,11 +240,11 @@ public class BookShelfTest
         archiveFile.setArchiveFile( new File( "" ) );
 
         ReadingUnit book1 = getFixture().addReadingUnit( "book1", author, category, archiveFile );
-        book1.setIsRead( true );
+        book1.setRead( true );
         ReadingUnit book2 = getFixture().addReadingUnit( "book2", author, category, archiveFile );
-        book2.setIsRead( true );
+        book2.setRead( true );
         ReadingUnit book3 = getFixture().addReadingUnit( "book11", author, category, archiveFile );
-        book3.setIsRead( false );
+        book3.setRead( false );
 
         EList<ReadingUnit> units1 = getFixture().queryUnits( "book", null );
         Assert.assertNotNull( units1 );

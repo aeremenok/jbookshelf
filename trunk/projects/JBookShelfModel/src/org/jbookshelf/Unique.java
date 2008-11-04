@@ -15,7 +15,7 @@ public interface Unique
 {
     /**
      * @return name
-     * @model
+     * @model lowerBound="1"
      */
     String getName();
 
