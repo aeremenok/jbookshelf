@@ -3,6 +3,8 @@
  */
 package org.jbookshelf.tests;
 
+import java.io.File;
+
 import junit.textui.TestRunner;
 
 import org.jbookshelf.JbookshelfFactory;
@@ -79,6 +81,9 @@ public class SingleFileFolderTest
         throws Exception
     {
         setFixture( JbookshelfFactory.eINSTANCE.createSingleFileFolder() );
+        File value = new File( "test" );
+        getFixture().setSingleFile( value );
+        getFixture().setFolder( value.getCanonicalFile().getParentFile() );
     }
 
     /**

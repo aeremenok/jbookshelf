@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.jbookshelf.JbookshelfPackage;
 import org.jbookshelf.SingleFile;
-import org.util.OpenURI;
+import org.util.URIOpener;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Single File</b></em>'. <!-- end-user-doc -->
@@ -145,7 +145,7 @@ public class SingleFileImpl
     @Override
     public void openUnit()
     {
-        OpenURI.browse( getFile() );
+        URIOpener.browseFile( getFile() );
     }
 
     /**
