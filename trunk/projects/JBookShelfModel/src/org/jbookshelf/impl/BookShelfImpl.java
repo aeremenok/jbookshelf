@@ -6,15 +6,13 @@ package org.jbookshelf.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.jbookshelf.Author;
 import org.jbookshelf.BookShelf;
 import org.jbookshelf.BookShelfStorage;
@@ -46,8 +44,8 @@ public class BookShelfImpl
         BookShelf
 {
     /**
-     * The cached value of the '{@link #getUniques() <em>Uniques</em>}' containment reference list. <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
+     * The cached value of the '{@link #getUniques() <em>Uniques</em>}' reference list. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @see #getUniques()
      * @generated
@@ -56,8 +54,8 @@ public class BookShelfImpl
     protected EList<Unique>      uniques;
 
     /**
-     * The cached value of the '{@link #getAuthors() <em>Authors</em>}' containment reference list. <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
+     * The cached value of the '{@link #getAuthors() <em>Authors</em>}' reference list. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @see #getAuthors()
      * @generated
@@ -84,8 +82,8 @@ public class BookShelfImpl
     protected EList<ReadingUnit> readingUnits;
 
     /**
-     * The cached value of the '{@link #getStorage() <em>Storage</em>}' containment reference. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The cached value of the '{@link #getStorage() <em>Storage</em>}' reference. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @see #getStorage()
      * @generated
@@ -111,16 +109,15 @@ public class BookShelfImpl
     public Author addAuthor(
         String name )
     {
-        Author author = getAuthorByName( name );
-        if ( author == null )
-        {
-            author = JbookshelfFactory.eINSTANCE.createAuthor();
-            author.setName( name );
+        Author author = JbookshelfFactory.eINSTANCE.createAuthor();
+        author.setName( name );
 
-            getAuthors().add( author );
+        if ( getAuthors().add( author ) )
+        {
+            return author;
         }
 
-        return author;
+        return getAuthorByName( name );
     }
 
     /**
@@ -131,16 +128,15 @@ public class BookShelfImpl
     public Category addCategory(
         String name )
     {
-        Category category = getCategoryByName( name );
-        if ( category == null )
-        {
-            category = JbookshelfFactory.eINSTANCE.createCategory();
-            category.setName( name );
+        Category category = JbookshelfFactory.eINSTANCE.createCategory();
+        category.setName( name );
 
-            getCategories().add( category );
+        if ( getCategories().add( category ) )
+        {
+            return category;
         }
 
-        return category;
+        return getCategoryByName( name );
     }
 
     /**
@@ -154,20 +150,19 @@ public class BookShelfImpl
         Category category,
         PhysicalUnit physicalUnit )
     {
-        ReadingUnit readingUnit = getReadingUnitByName( name );
-        if ( readingUnit == null )
+        ReadingUnit readingUnit = JbookshelfFactory.eINSTANCE.createReadingUnit();
+
+        readingUnit.setName( name );
+        readingUnit.setPhysical( physicalUnit );
+        readingUnit.getAuthors().add( author );
+        readingUnit.getCategories().add( category );
+
+        if ( getReadingUnits().add( readingUnit ) )
         {
-            readingUnit = JbookshelfFactory.eINSTANCE.createReadingUnit();
-
-            readingUnit.setName( name );
-            readingUnit.setPhysical( physicalUnit );
-            readingUnit.getAuthors().add( author );
-            readingUnit.getCategories().add( category );
-
-            getReadingUnits().add( readingUnit );
+            return readingUnit;
         }
 
-        return readingUnit;
+        return getReadingUnitByName( name );
     }
 
     /**
@@ -175,27 +170,9 @@ public class BookShelfImpl
      * 
      * @generated
      */
-    public NotificationChain basicSetStorage(
-        BookShelfStorage newStorage,
-        NotificationChain msgs )
+    public BookShelfStorage basicGetStorage()
     {
-        BookShelfStorage oldStorage = storage;
-        storage = newStorage;
-        if ( eNotificationRequired() )
-        {
-            ENotificationImpl notification =
-                new ENotificationImpl( this, Notification.SET, JbookshelfPackage.BOOK_SHELF__STORAGE, oldStorage,
-                    newStorage );
-            if ( msgs == null )
-            {
-                msgs = notification;
-            }
-            else
-            {
-                msgs.add( notification );
-            }
-        }
-        return msgs;
+        return storage;
     }
 
     /**
@@ -220,61 +197,13 @@ public class BookShelfImpl
             case JbookshelfPackage.BOOK_SHELF__READING_UNITS:
                 return getReadingUnits();
             case JbookshelfPackage.BOOK_SHELF__STORAGE:
-                return getStorage();
+                if ( resolve )
+                {
+                    return getStorage();
+                }
+                return basicGetStorage();
         }
         return super.eGet( featureID, resolve, coreType );
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseAdd(
-        InternalEObject otherEnd,
-        int featureID,
-        NotificationChain msgs )
-    {
-        switch ( featureID )
-        {
-            case JbookshelfPackage.BOOK_SHELF__STORAGE:
-                if ( storage != null )
-                {
-                    msgs =
-                        ((InternalEObject) storage).eInverseRemove( this, EOPPOSITE_FEATURE_BASE -
-                            JbookshelfPackage.BOOK_SHELF__STORAGE, null, msgs );
-                }
-                return basicSetStorage( (BookShelfStorage) otherEnd, msgs );
-        }
-        return super.eInverseAdd( otherEnd, featureID, msgs );
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseRemove(
-        InternalEObject otherEnd,
-        int featureID,
-        NotificationChain msgs )
-    {
-        switch ( featureID )
-        {
-            case JbookshelfPackage.BOOK_SHELF__UNIQUES:
-                return ((InternalEList<?>) getUniques()).basicRemove( otherEnd, msgs );
-            case JbookshelfPackage.BOOK_SHELF__AUTHORS:
-                return ((InternalEList<?>) getAuthors()).basicRemove( otherEnd, msgs );
-            case JbookshelfPackage.BOOK_SHELF__CATEGORIES:
-                return ((InternalEList<?>) getCategories()).basicRemove( otherEnd, msgs );
-            case JbookshelfPackage.BOOK_SHELF__READING_UNITS:
-                return ((InternalEList<?>) getReadingUnits()).basicRemove( otherEnd, msgs );
-            case JbookshelfPackage.BOOK_SHELF__STORAGE:
-                return basicSetStorage( null, msgs );
-        }
-        return super.eInverseRemove( otherEnd, featureID, msgs );
     }
 
     /**
@@ -377,7 +306,7 @@ public class BookShelfImpl
     {
         if ( authors == null )
         {
-            authors = new EObjectContainmentEList<Author>( Author.class, this, JbookshelfPackage.BOOK_SHELF__AUTHORS );
+            authors = new EObjectResolvingEList<Author>( Author.class, this, JbookshelfPackage.BOOK_SHELF__AUTHORS );
         }
         return authors;
     }
@@ -392,7 +321,7 @@ public class BookShelfImpl
         if ( categories == null )
         {
             categories =
-                new EObjectContainmentEList<Category>( Category.class, this, JbookshelfPackage.BOOK_SHELF__CATEGORIES );
+                new EObjectResolvingEList<Category>( Category.class, this, JbookshelfPackage.BOOK_SHELF__CATEGORIES );
         }
         return categories;
     }
@@ -407,7 +336,7 @@ public class BookShelfImpl
         if ( readingUnits == null )
         {
             readingUnits =
-                new EObjectContainmentEList<ReadingUnit>( ReadingUnit.class, this,
+                new EObjectResolvingEList<ReadingUnit>( ReadingUnit.class, this,
                     JbookshelfPackage.BOOK_SHELF__READING_UNITS );
         }
         return readingUnits;
@@ -420,6 +349,19 @@ public class BookShelfImpl
      */
     public BookShelfStorage getStorage()
     {
+        if ( storage != null && storage.eIsProxy() )
+        {
+            InternalEObject oldStorage = (InternalEObject) storage;
+            storage = (BookShelfStorage) eResolveProxy( oldStorage );
+            if ( storage != oldStorage )
+            {
+                if ( eNotificationRequired() )
+                {
+                    eNotify( new ENotificationImpl( this, Notification.RESOLVE, JbookshelfPackage.BOOK_SHELF__STORAGE,
+                        oldStorage, storage ) );
+                }
+            }
+        }
         return storage;
     }
 
@@ -432,7 +374,7 @@ public class BookShelfImpl
     {
         if ( uniques == null )
         {
-            uniques = new EObjectContainmentEList<Unique>( Unique.class, this, JbookshelfPackage.BOOK_SHELF__UNIQUES );
+            uniques = new EObjectResolvingEList<Unique>( Unique.class, this, JbookshelfPackage.BOOK_SHELF__UNIQUES );
         }
         return uniques;
     }
@@ -521,8 +463,6 @@ public class BookShelfImpl
         {
             for ( ReadingUnit unit : getReadingUnits() )
             {
-                System.out.println( isRead );
-                System.out.println( unit.getName() + unit.isIsRead() );
                 if ( isRead.booleanValue() == unit.isIsRead() && unit.getName().contains( query ) )
                 {
                     result.add( unit );
@@ -541,31 +481,12 @@ public class BookShelfImpl
     public void setStorage(
         BookShelfStorage newStorage )
     {
-        if ( newStorage != storage )
+        BookShelfStorage oldStorage = storage;
+        storage = newStorage;
+        if ( eNotificationRequired() )
         {
-            NotificationChain msgs = null;
-            if ( storage != null )
-            {
-                msgs =
-                    ((InternalEObject) storage).eInverseRemove( this, JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF,
-                        BookShelfStorage.class, msgs );
-            }
-            if ( newStorage != null )
-            {
-                msgs =
-                    ((InternalEObject) newStorage).eInverseAdd( this, JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF,
-                        BookShelfStorage.class, msgs );
-            }
-            msgs = basicSetStorage( newStorage, msgs );
-            if ( msgs != null )
-            {
-                msgs.dispatch();
-            }
-        }
-        else if ( eNotificationRequired() )
-        {
-            eNotify( new ENotificationImpl( this, Notification.SET, JbookshelfPackage.BOOK_SHELF__STORAGE, newStorage,
-                newStorage ) );
+            eNotify( new ENotificationImpl( this, Notification.SET, JbookshelfPackage.BOOK_SHELF__STORAGE, oldStorage,
+                storage ) );
         }
     }
 

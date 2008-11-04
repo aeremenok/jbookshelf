@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EObject;
  * something that has unique name
  * 
  * @author eav
- * @model
+ * @model abstract="true"
  */
 public interface Unique
     extends
