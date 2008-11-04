@@ -242,9 +242,9 @@ public class BookShelfTest
         ReadingUnit book1 = getFixture().addReadingUnit( "book1", author, category, archiveFile );
         book1.setIsRead( true );
         ReadingUnit book2 = getFixture().addReadingUnit( "book2", author, category, archiveFile );
-        book1.setIsRead( true );
+        book2.setIsRead( true );
         ReadingUnit book3 = getFixture().addReadingUnit( "book11", author, category, archiveFile );
-        book1.setIsRead( false );
+        book3.setIsRead( false );
 
         EList<ReadingUnit> units1 = getFixture().queryUnits( "book", null );
         Assert.assertNotNull( units1 );
@@ -258,14 +258,14 @@ public class BookShelfTest
         Assert.assertTrue( units2.contains( book1 ) );
         Assert.assertTrue( units2.contains( book2 ) );
         Assert.assertFalse( units2.contains( book3 ) );
-        Assert.assertEquals( units1.size(), 2 );
+        Assert.assertEquals( units2.size(), 2 );
 
         EList<ReadingUnit> units3 = getFixture().queryUnits( "book1", null );
         Assert.assertNotNull( units3 );
         Assert.assertTrue( units3.contains( book1 ) );
         Assert.assertTrue( units3.contains( book3 ) );
         Assert.assertFalse( units3.contains( book2 ) );
-        Assert.assertEquals( units1.size(), 2 );
+        Assert.assertEquals( units3.size(), 2 );
     }
 
     /**
