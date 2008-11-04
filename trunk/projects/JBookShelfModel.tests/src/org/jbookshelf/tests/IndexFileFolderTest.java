@@ -3,6 +3,8 @@
  */
 package org.jbookshelf.tests;
 
+import java.io.File;
+
 import junit.textui.TestRunner;
 
 import org.jbookshelf.IndexFileFolder;
@@ -61,6 +63,9 @@ public class IndexFileFolderTest
         throws Exception
     {
         setFixture( JbookshelfFactory.eINSTANCE.createIndexFileFolder() );
+        File value = new File( "test" );
+        getFixture().setIndexFile( value );
+        getFixture().setIndexFolder( value.getCanonicalFile().getParentFile() );
     }
 
     /**
