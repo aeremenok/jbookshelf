@@ -33,7 +33,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//ReadingUnit/read"/>
     </genClasses>
     <genClasses ecoreClass="jbookshelf.ecore#//Category">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//Category/description"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//Category/categorizables"/>
     </genClasses>
     <genClasses ecoreClass="jbookshelf.ecore#//Comment">

@@ -36,7 +36,6 @@ import org.jbookshelf.ReadingUnit;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.jbookshelf.impl.CategoryImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.jbookshelf.impl.CategoryImpl#getCategorizables <em>Categorizables</em>}</li>
  * </ul>
  * </p>
@@ -45,26 +44,6 @@ import org.jbookshelf.ReadingUnit;
  */
 public class CategoryImpl extends UniqueImpl implements Category
 {
-    /**
-     * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getDescription()
-     * @generated
-     * @ordered
-     */
-    protected static final String DESCRIPTION_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getDescription()
-     * @generated
-     * @ordered
-     */
-    protected String description = DESCRIPTION_EDEFAULT;
-
     /**
      * The cached value of the '{@link #getCategorizables() <em>Categorizables</em>}' reference list.
      * <!-- begin-user-doc -->
@@ -94,29 +73,6 @@ public class CategoryImpl extends UniqueImpl implements Category
     protected EClass eStaticClass()
     {
         return JbookshelfPackage.Literals.CATEGORY;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getDescription()
-    {
-        return description;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setDescription(String newDescription)
-    {
-        String oldDescription = description;
-        description = newDescription;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.CATEGORY__DESCRIPTION, oldDescription, description));
     }
 
     /**
@@ -176,8 +132,6 @@ public class CategoryImpl extends UniqueImpl implements Category
     {
         switch (featureID)
         {
-            case JbookshelfPackage.CATEGORY__DESCRIPTION:
-                return getDescription();
             case JbookshelfPackage.CATEGORY__CATEGORIZABLES:
                 return getCategorizables();
         }
@@ -195,9 +149,6 @@ public class CategoryImpl extends UniqueImpl implements Category
     {
         switch (featureID)
         {
-            case JbookshelfPackage.CATEGORY__DESCRIPTION:
-                setDescription((String)newValue);
-                return;
             case JbookshelfPackage.CATEGORY__CATEGORIZABLES:
                 getCategorizables().clear();
                 getCategorizables().addAll((Collection<? extends Categorizable>)newValue);
@@ -216,9 +167,6 @@ public class CategoryImpl extends UniqueImpl implements Category
     {
         switch (featureID)
         {
-            case JbookshelfPackage.CATEGORY__DESCRIPTION:
-                setDescription(DESCRIPTION_EDEFAULT);
-                return;
             case JbookshelfPackage.CATEGORY__CATEGORIZABLES:
                 getCategorizables().clear();
                 return;
@@ -236,29 +184,10 @@ public class CategoryImpl extends UniqueImpl implements Category
     {
         switch (featureID)
         {
-            case JbookshelfPackage.CATEGORY__DESCRIPTION:
-                return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
             case JbookshelfPackage.CATEGORY__CATEGORIZABLES:
                 return categorizables != null && !categorizables.isEmpty();
         }
         return super.eIsSet(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String toString()
-    {
-        if (eIsProxy()) return super.toString();
-
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (description: ");
-        result.append(description);
-        result.append(')');
-        return result.toString();
     }
 
 } //CategoryImpl
