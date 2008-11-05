@@ -39,10 +39,6 @@
   <children xmi:type="notation:Node" xmi:id="__zpKgKtwEd2LebsHh2hANw" type="1001">
     <children xmi:type="notation:Node" xmi:id="__zpxkKtwEd2LebsHh2hANw" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="__zqYoKtwEd2LebsHh2hANw" type="5001">
-      <children xmi:type="notation:Node" xmi:id="__zrmwKtwEd2LebsHh2hANw" type="2001">
-        <element xmi:type="ecore:EAttribute" href="jbookshelf.ecore#//Category/description"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="__zrmwatwEd2LebsHh2hANw"/>
-      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="__zqYoatwEd2LebsHh2hANw"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="__zqYoqtwEd2LebsHh2hANw"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="__zqYo6twEd2LebsHh2hANw"/>

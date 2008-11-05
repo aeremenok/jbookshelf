@@ -329,22 +329,13 @@ public interface JbookshelfPackage extends EPackage
     int CATEGORY__RELATED = UNIQUE__RELATED;
 
     /**
-     * The feature id for the '<em><b>Description</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CATEGORY__DESCRIPTION = UNIQUE_FEATURE_COUNT + 0;
-
-    /**
      * The feature id for the '<em><b>Categorizables</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CATEGORY__CATEGORIZABLES = UNIQUE_FEATURE_COUNT + 1;
+    int CATEGORY__CATEGORIZABLES = UNIQUE_FEATURE_COUNT + 0;
 
     /**
      * The number of structural features of the '<em>Category</em>' class.
@@ -353,7 +344,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int CATEGORY_FEATURE_COUNT = UNIQUE_FEATURE_COUNT + 2;
+    int CATEGORY_FEATURE_COUNT = UNIQUE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Content</b></em>' attribute.
@@ -781,17 +772,6 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      */
     EClass getCategory();
-
-    /**
-     * Returns the meta object for the attribute '{@link org.jbookshelf.Category#getDescription <em>Description</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Description</em>'.
-     * @see org.jbookshelf.Category#getDescription()
-     * @see #getCategory()
-     * @generated
-     */
-    EAttribute getCategory_Description();
 
     /**
      * Returns the meta object for the reference list '{@link org.jbookshelf.Category#getCategorizables <em>Categorizables</em>}'.
@@ -1239,14 +1219,6 @@ public interface JbookshelfPackage extends EPackage
          * @generated
          */
         EClass CATEGORY = eINSTANCE.getCategory();
-
-        /**
-         * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute CATEGORY__DESCRIPTION = eINSTANCE.getCategory_Description();
 
         /**
          * The meta object literal for the '<em><b>Categorizables</b></em>' reference list feature.
