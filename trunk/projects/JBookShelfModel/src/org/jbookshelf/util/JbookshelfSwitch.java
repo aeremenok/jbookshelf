@@ -101,8 +101,8 @@ public class JbookshelfSwitch<T>
                 Author author = (Author)theEObject;
                 T result = caseAuthor(author);
                 if (result == null) result = caseUnique(author);
-                if (result == null) result = caseCommentable(author);
                 if (result == null) result = caseCategorizable(author);
+                if (result == null) result = caseCommentable(author);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -111,8 +111,8 @@ public class JbookshelfSwitch<T>
                 ReadingUnit readingUnit = (ReadingUnit)theEObject;
                 T result = caseReadingUnit(readingUnit);
                 if (result == null) result = caseUnique(readingUnit);
-                if (result == null) result = caseCommentable(readingUnit);
                 if (result == null) result = caseCategorizable(readingUnit);
+                if (result == null) result = caseCommentable(readingUnit);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -121,6 +121,7 @@ public class JbookshelfSwitch<T>
                 Category category = (Category)theEObject;
                 T result = caseCategory(category);
                 if (result == null) result = caseUnique(category);
+                if (result == null) result = caseCommentable(category);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -149,6 +150,7 @@ public class JbookshelfSwitch<T>
             {
                 Unique unique = (Unique)theEObject;
                 T result = caseUnique(unique);
+                if (result == null) result = caseCommentable(unique);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }

@@ -12,7 +12,6 @@ import org.eclipse.emf.ecore.EObject;
 public interface Author
     extends
         Unique,
-        Commentable,
         Categorizable,
         EObject
 {

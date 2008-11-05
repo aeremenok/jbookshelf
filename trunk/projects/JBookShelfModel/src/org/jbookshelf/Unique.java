@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Unique
     extends
+        Commentable,
         EObject
 {
     /**
@@ -21,14 +22,14 @@ public interface Unique
 
     /**
      * @return collection of items, related to this
-     * @model
+     * @model resolveProxies="false"
      */
     EList<Unique> getRelated();
 
     /**
-     * Sets the value of the '{@link org.jbookshelf.Unique#getName <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
+     * Sets the value of the '{@link org.jbookshelf.Unique#getName <em>Name</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @param value the new value of the '<em>Name</em>' attribute.
      * @see #getName()
      * @generated

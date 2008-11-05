@@ -30,7 +30,6 @@ import org.jbookshelf.Unique;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.jbookshelf.impl.BookShelfImpl#getUniques <em>Uniques</em>}</li>
  *   <li>{@link org.jbookshelf.impl.BookShelfImpl#getAuthors <em>Authors</em>}</li>
  *   <li>{@link org.jbookshelf.impl.BookShelfImpl#getCategories <em>Categories</em>}</li>
  *   <li>{@link org.jbookshelf.impl.BookShelfImpl#getReadingUnits <em>Reading Units</em>}</li>
@@ -45,16 +44,6 @@ public class BookShelfImpl
     implements
         BookShelf
 {
-    /**
-     * The cached value of the '{@link #getUniques() <em>Uniques</em>}' containment reference list.
-     * <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * @see #getUniques()
-     * @generated
-     * @ordered
-     */
-    protected EList<Unique>      uniques;
-
     /**
      * The cached value of the '{@link #getAuthors() <em>Authors</em>}' containment reference list.
      * <!-- begin-user-doc
@@ -196,8 +185,6 @@ public class BookShelfImpl
     {
         switch (featureID)
         {
-            case JbookshelfPackage.BOOK_SHELF__UNIQUES:
-                return getUniques();
             case JbookshelfPackage.BOOK_SHELF__AUTHORS:
                 return getAuthors();
             case JbookshelfPackage.BOOK_SHELF__CATEGORIES:
@@ -222,8 +209,6 @@ public class BookShelfImpl
     {
         switch (featureID)
         {
-            case JbookshelfPackage.BOOK_SHELF__UNIQUES:
-                return ((InternalEList<?>)getUniques()).basicRemove(otherEnd, msgs);
             case JbookshelfPackage.BOOK_SHELF__AUTHORS:
                 return ((InternalEList<?>)getAuthors()).basicRemove(otherEnd, msgs);
             case JbookshelfPackage.BOOK_SHELF__CATEGORIES:
@@ -246,8 +231,6 @@ public class BookShelfImpl
     {
         switch (featureID)
         {
-            case JbookshelfPackage.BOOK_SHELF__UNIQUES:
-                return uniques != null && !uniques.isEmpty();
             case JbookshelfPackage.BOOK_SHELF__AUTHORS:
                 return authors != null && !authors.isEmpty();
             case JbookshelfPackage.BOOK_SHELF__CATEGORIES:
@@ -272,10 +255,6 @@ public class BookShelfImpl
     {
         switch (featureID)
         {
-            case JbookshelfPackage.BOOK_SHELF__UNIQUES:
-                getUniques().clear();
-                getUniques().addAll((Collection<? extends Unique>)newValue);
-                return;
             case JbookshelfPackage.BOOK_SHELF__AUTHORS:
                 getAuthors().clear();
                 getAuthors().addAll((Collection<? extends Author>)newValue);
@@ -305,9 +284,6 @@ public class BookShelfImpl
     {
         switch (featureID)
         {
-            case JbookshelfPackage.BOOK_SHELF__UNIQUES:
-                getUniques().clear();
-                return;
             case JbookshelfPackage.BOOK_SHELF__AUTHORS:
                 getAuthors().clear();
                 return;
@@ -370,19 +346,6 @@ public class BookShelfImpl
     public BookShelfStorage getStorage()
     {
         return storage;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Unique> getUniques()
-    {
-        if (uniques == null)
-        {
-            uniques = new EObjectContainmentEList<Unique>(Unique.class, this, JbookshelfPackage.BOOK_SHELF__UNIQUES);
-        }
-        return uniques;
     }
 
     /**

@@ -31,9 +31,9 @@ public class SingleFileFolderImpl
         SingleFileFolder
 {
     /**
-     * The default value of the '{@link #getFolder() <em>Folder</em>}' attribute. <!-- begin-user-doc --> <!--
+     * The default value of the '{@link #getFolder() <em>Folder</em>}' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getFolder()
      * @generated
      * @ordered
@@ -41,9 +41,9 @@ public class SingleFileFolderImpl
     protected static final File FOLDER_EDEFAULT      = null;
 
     /**
-     * The cached value of the '{@link #getFolder() <em>Folder</em>}' attribute. <!-- begin-user-doc --> <!--
+     * The cached value of the '{@link #getFolder() <em>Folder</em>}' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getFolder()
      * @generated
      * @ordered
@@ -51,9 +51,9 @@ public class SingleFileFolderImpl
     protected File              folder               = FOLDER_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getSingleFile() <em>Single File</em>}' attribute. <!-- begin-user-doc --> <!--
+     * The default value of the '{@link #getSingleFile() <em>Single File</em>}' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getSingleFile()
      * @generated
      * @ordered
@@ -61,9 +61,9 @@ public class SingleFileFolderImpl
     protected static final File SINGLE_FILE_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getSingleFile() <em>Single File</em>}' attribute. <!-- begin-user-doc --> <!--
+     * The cached value of the '{@link #getSingleFile() <em>Single File</em>}' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getSingleFile()
      * @generated
      * @ordered
@@ -72,7 +72,6 @@ public class SingleFileFolderImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected SingleFileFolderImpl()
@@ -82,7 +81,6 @@ public class SingleFileFolderImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -91,38 +89,36 @@ public class SingleFileFolderImpl
         boolean resolve,
         boolean coreType )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.SINGLE_FILE_FOLDER__FOLDER:
                 return getFolder();
             case JbookshelfPackage.SINGLE_FILE_FOLDER__SINGLE_FILE:
                 return getSingleFile();
         }
-        return super.eGet( featureID, resolve, coreType );
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.SINGLE_FILE_FOLDER__FOLDER:
-                return FOLDER_EDEFAULT == null ? folder != null : !FOLDER_EDEFAULT.equals( folder );
+                return FOLDER_EDEFAULT == null ? folder != null : !FOLDER_EDEFAULT.equals(folder);
             case JbookshelfPackage.SINGLE_FILE_FOLDER__SINGLE_FILE:
-                return SINGLE_FILE_EDEFAULT == null ? singleFile != null : !SINGLE_FILE_EDEFAULT.equals( singleFile );
+                return SINGLE_FILE_EDEFAULT == null ? singleFile != null : !SINGLE_FILE_EDEFAULT.equals(singleFile);
         }
-        return super.eIsSet( featureID );
+        return super.eIsSet(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -130,42 +126,40 @@ public class SingleFileFolderImpl
         int featureID,
         Object newValue )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.SINGLE_FILE_FOLDER__FOLDER:
-                setFolder( (File) newValue );
+                setFolder((File)newValue);
                 return;
             case JbookshelfPackage.SINGLE_FILE_FOLDER__SINGLE_FILE:
-                setSingleFile( (File) newValue );
+                setSingleFile((File)newValue);
                 return;
         }
-        super.eSet( featureID, newValue );
+        super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.SINGLE_FILE_FOLDER__FOLDER:
-                setFolder( FOLDER_EDEFAULT );
+                setFolder(FOLDER_EDEFAULT);
                 return;
             case JbookshelfPackage.SINGLE_FILE_FOLDER__SINGLE_FILE:
-                setSingleFile( SINGLE_FILE_EDEFAULT );
+                setSingleFile(SINGLE_FILE_EDEFAULT);
                 return;
         }
-        super.eUnset( featureID );
+        super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public File getFolder()
@@ -175,7 +169,6 @@ public class SingleFileFolderImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public File getSingleFile()
@@ -201,7 +194,6 @@ public class SingleFileFolderImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setFolder(
@@ -209,16 +201,12 @@ public class SingleFileFolderImpl
     {
         File oldFolder = folder;
         folder = newFolder;
-        if ( eNotificationRequired() )
-        {
-            eNotify( new ENotificationImpl( this, Notification.SET, JbookshelfPackage.SINGLE_FILE_FOLDER__FOLDER,
-                oldFolder, folder ) );
-        }
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.SINGLE_FILE_FOLDER__FOLDER, oldFolder, folder));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setSingleFile(
@@ -226,38 +214,30 @@ public class SingleFileFolderImpl
     {
         File oldSingleFile = singleFile;
         singleFile = newSingleFile;
-        if ( eNotificationRequired() )
-        {
-            eNotify( new ENotificationImpl( this, Notification.SET, JbookshelfPackage.SINGLE_FILE_FOLDER__SINGLE_FILE,
-                oldSingleFile, singleFile ) );
-        }
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.SINGLE_FILE_FOLDER__SINGLE_FILE, oldSingleFile, singleFile));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public String toString()
     {
-        if ( eIsProxy() )
-        {
-            return super.toString();
-        }
+        if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer( super.toString() );
-        result.append( " (folder: " );
-        result.append( folder );
-        result.append( ", singleFile: " );
-        result.append( singleFile );
-        result.append( ')' );
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (folder: ");
+        result.append(folder);
+        result.append(", singleFile: ");
+        result.append(singleFile);
+        result.append(')');
         return result.toString();
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
