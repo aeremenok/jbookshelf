@@ -3,8 +3,6 @@
  */
 package org.jbookshelf.tests;
 
-import junit.framework.TestCase;
-
 import org.jbookshelf.Unique;
 
 /**
@@ -13,16 +11,8 @@ import org.jbookshelf.Unique;
  * @generated
  */
 public abstract class UniqueTest
-    extends TestCase
+    extends CommentableTest
 {
-
-    /**
-     * The fixture for this Unique test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    protected Unique fixture = null;
-
     /**
      * Constructs a new Unique test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -39,20 +29,10 @@ public abstract class UniqueTest
      * 
      * @generated
      */
+    @Override
     protected Unique getFixture()
     {
-        return fixture;
-    }
-
-    /**
-     * Sets the fixture for this Unique test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    protected void setFixture(
-        Unique fixture )
-    {
-        this.fixture = fixture;
+        return (Unique) fixture;
     }
 
 } // UniqueTest

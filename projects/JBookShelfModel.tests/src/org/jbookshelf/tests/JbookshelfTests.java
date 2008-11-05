@@ -37,7 +37,7 @@ public class JbookshelfTests
         TestSuite suite = new JbookshelfTests( "jbookshelf Tests" );
         suite.addTestSuite( AuthorTest.class );
         suite.addTestSuite( ReadingUnitTest.class );
-        // suite.addTestSuite(CategoryTest.class);
+        suite.addTestSuite( CategoryTest.class );
         suite.addTestSuite( BookShelfTest.class );
         suite.addTestSuite( ArchiveFileTest.class );
         suite.addTestSuite( IndexFileFolderTest.class );
