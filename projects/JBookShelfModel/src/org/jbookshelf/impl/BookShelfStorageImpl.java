@@ -33,7 +33,6 @@ public abstract class BookShelfStorageImpl
 {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected BookShelfStorageImpl()
@@ -43,39 +42,6 @@ public abstract class BookShelfStorageImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public NotificationChain basicSetBookShelf(
-        BookShelf newBookShelf,
-        NotificationChain msgs )
-    {
-        msgs =
-            eBasicSetContainer( (InternalEObject) newBookShelf, JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF, msgs );
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    @Override
-    public NotificationChain eBasicRemoveFromContainerFeature(
-        NotificationChain msgs )
-    {
-        switch ( eContainerFeatureID )
-        {
-            case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
-                return eInternalContainer().eInverseRemove( this, JbookshelfPackage.BOOK_SHELF__STORAGE,
-                    BookShelf.class, msgs );
-        }
-        return super.eBasicRemoveFromContainerFeature( msgs );
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -84,76 +50,32 @@ public abstract class BookShelfStorageImpl
         boolean resolve,
         boolean coreType )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
                 return getBookShelf();
         }
-        return super.eGet( featureID, resolve, coreType );
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseAdd(
-        InternalEObject otherEnd,
-        int featureID,
-        NotificationChain msgs )
-    {
-        switch ( featureID )
-        {
-            case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
-                if ( eInternalContainer() != null )
-                {
-                    msgs = eBasicRemoveFromContainer( msgs );
-                }
-                return basicSetBookShelf( (BookShelf) otherEnd, msgs );
-        }
-        return super.eInverseAdd( otherEnd, featureID, msgs );
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseRemove(
-        InternalEObject otherEnd,
-        int featureID,
-        NotificationChain msgs )
-    {
-        switch ( featureID )
-        {
-            case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
-                return basicSetBookShelf( null, msgs );
-        }
-        return super.eInverseRemove( otherEnd, featureID, msgs );
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
                 return getBookShelf() != null;
         }
-        return super.eIsSet( featureID );
+        return super.eIsSet(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -161,45 +83,51 @@ public abstract class BookShelfStorageImpl
         int featureID,
         Object newValue )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
-                setBookShelf( (BookShelf) newValue );
+                setBookShelf((BookShelf)newValue);
                 return;
         }
-        super.eSet( featureID, newValue );
+        super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
-                setBookShelf( (BookShelf) null );
+                setBookShelf((BookShelf)null);
                 return;
         }
-        super.eUnset( featureID );
+        super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public BookShelf getBookShelf()
     {
-        if ( eContainerFeatureID != JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF )
-        {
-            return null;
-        }
-        return (BookShelf) eContainer();
+        if (eContainerFeatureID != JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF) return null;
+        return (BookShelf)eContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetBookShelf(BookShelf newBookShelf, NotificationChain msgs)
+    {
+        msgs = eBasicSetContainer((InternalEObject)newBookShelf, JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF, msgs);
+        return msgs;
     }
 
     /**
@@ -223,47 +151,80 @@ public abstract class BookShelfStorageImpl
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetBookShelf((BookShelf)otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
+                return basicSetBookShelf(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs)
+    {
+        switch (eContainerFeatureID)
+        {
+            case JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF:
+                return eInternalContainer().eInverseRemove(this, JbookshelfPackage.BOOK_SHELF__STORAGE, BookShelf.class, msgs);
+        }
+        return super.eBasicRemoveFromContainerFeature(msgs);
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setBookShelf(
         BookShelf newBookShelf )
     {
-        if ( newBookShelf != eInternalContainer() ||
-            eContainerFeatureID != JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF && newBookShelf != null )
+        if (newBookShelf != eInternalContainer() || (eContainerFeatureID != JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF && newBookShelf != null))
         {
-            if ( EcoreUtil.isAncestor( this, newBookShelf ) )
-            {
-                throw new IllegalArgumentException( "Recursive containment not allowed for " + toString() );
-            }
+            if (EcoreUtil.isAncestor(this, newBookShelf))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
-            if ( eInternalContainer() != null )
-            {
-                msgs = eBasicRemoveFromContainer( msgs );
-            }
-            if ( newBookShelf != null )
-            {
-                msgs =
-                    ((InternalEObject) newBookShelf).eInverseAdd( this, JbookshelfPackage.BOOK_SHELF__STORAGE,
-                        BookShelf.class, msgs );
-            }
-            msgs = basicSetBookShelf( newBookShelf, msgs );
-            if ( msgs != null )
-            {
-                msgs.dispatch();
-            }
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newBookShelf != null)
+                msgs = ((InternalEObject)newBookShelf).eInverseAdd(this, JbookshelfPackage.BOOK_SHELF__STORAGE, BookShelf.class, msgs);
+            msgs = basicSetBookShelf(newBookShelf, msgs);
+            if (msgs != null) msgs.dispatch();
         }
-        else if ( eNotificationRequired() )
-        {
-            eNotify( new ENotificationImpl( this, Notification.SET, JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF,
-                newBookShelf, newBookShelf ) );
-        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.BOOK_SHELF_STORAGE__BOOK_SHELF, newBookShelf, newBookShelf));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override

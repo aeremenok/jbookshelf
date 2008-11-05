@@ -18,10 +18,10 @@ import org.util.ZIPOpener;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.jbookshelf.impl.ArchiveFileImpl#getArchiveFile <em>Archive File</em>}</li>
+ *   <li>{@link org.jbookshelf.impl.ArchiveFileImpl#getArchiveFile <em>Archive File</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ArchiveFileImpl
@@ -30,9 +30,9 @@ public class ArchiveFileImpl
         ArchiveFile
 {
     /**
-     * The default value of the '{@link #getArchiveFile() <em>Archive File</em>}' attribute. <!-- begin-user-doc -->
+     * The default value of the '{@link #getArchiveFile() <em>Archive File</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @see #getArchiveFile()
      * @generated
      * @ordered
@@ -40,9 +40,9 @@ public class ArchiveFileImpl
     protected static final File ARCHIVE_FILE_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getArchiveFile() <em>Archive File</em>}' attribute. <!-- begin-user-doc --> <!--
+     * The cached value of the '{@link #getArchiveFile() <em>Archive File</em>}' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getArchiveFile()
      * @generated
      * @ordered
@@ -51,7 +51,6 @@ public class ArchiveFileImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected ArchiveFileImpl()
@@ -61,7 +60,6 @@ public class ArchiveFileImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -70,35 +68,32 @@ public class ArchiveFileImpl
         boolean resolve,
         boolean coreType )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.ARCHIVE_FILE__ARCHIVE_FILE:
                 return getArchiveFile();
         }
-        return super.eGet( featureID, resolve, coreType );
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.ARCHIVE_FILE__ARCHIVE_FILE:
-                return ARCHIVE_FILE_EDEFAULT == null ? archiveFile != null : !ARCHIVE_FILE_EDEFAULT
-                    .equals( archiveFile );
+                return ARCHIVE_FILE_EDEFAULT == null ? archiveFile != null : !ARCHIVE_FILE_EDEFAULT.equals(archiveFile);
         }
-        return super.eIsSet( featureID );
+        return super.eIsSet(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -106,36 +101,34 @@ public class ArchiveFileImpl
         int featureID,
         Object newValue )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.ARCHIVE_FILE__ARCHIVE_FILE:
-                setArchiveFile( (File) newValue );
+                setArchiveFile((File)newValue);
                 return;
         }
-        super.eSet( featureID, newValue );
+        super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case JbookshelfPackage.ARCHIVE_FILE__ARCHIVE_FILE:
-                setArchiveFile( ARCHIVE_FILE_EDEFAULT );
+                setArchiveFile(ARCHIVE_FILE_EDEFAULT);
                 return;
         }
-        super.eUnset( featureID );
+        super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public File getArchiveFile()
@@ -152,7 +145,6 @@ public class ArchiveFileImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setArchiveFile(
@@ -160,36 +152,28 @@ public class ArchiveFileImpl
     {
         File oldArchiveFile = archiveFile;
         archiveFile = newArchiveFile;
-        if ( eNotificationRequired() )
-        {
-            eNotify( new ENotificationImpl( this, Notification.SET, JbookshelfPackage.ARCHIVE_FILE__ARCHIVE_FILE,
-                oldArchiveFile, archiveFile ) );
-        }
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.ARCHIVE_FILE__ARCHIVE_FILE, oldArchiveFile, archiveFile));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public String toString()
     {
-        if ( eIsProxy() )
-        {
-            return super.toString();
-        }
+        if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer( super.toString() );
-        result.append( " (archiveFile: " );
-        result.append( archiveFile );
-        result.append( ')' );
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (archiveFile: ");
+        result.append(archiveFile);
+        result.append(')');
         return result.toString();
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override

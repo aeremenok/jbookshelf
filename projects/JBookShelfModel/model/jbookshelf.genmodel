@@ -56,7 +56,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//Unique/related"/>
     </genClasses>
     <genClasses ecoreClass="jbookshelf.ecore#//BookShelf">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//BookShelf/uniques"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//BookShelf/authors"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//BookShelf/categories"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jbookshelf.ecore#//BookShelf/readingUnits"/>

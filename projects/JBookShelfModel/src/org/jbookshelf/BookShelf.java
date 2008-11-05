@@ -68,12 +68,6 @@ public interface BookShelf
     BookShelfStorage getStorage();
 
     /**
-     * @return all uniques in collection todo probably useless
-     * @model containment="true" derived="true"
-     */
-    EList<Unique> getUniques();
-
-    /**
      * @param query search text
      * @return authors, whose data contains text
      * @model

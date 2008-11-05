@@ -51,9 +51,9 @@ public abstract class BookShelfStorageTest
      */
     public void testLoadCollection()
     {
-        int oldSize = getFixture().getBookShelf().getUniques().size();
+        int oldSize = getFixture().getBookShelf().getReadingUnits().size();
         getFixture().loadCollection();
-        int newSize = getFixture().getBookShelf().getUniques().size();
+        int newSize = getFixture().getBookShelf().getReadingUnits().size();
         Assert.assertTrue( newSize >= oldSize );
     }
 
@@ -66,9 +66,9 @@ public abstract class BookShelfStorageTest
      */
     public void testSaveCollection()
     {
-        int oldSize = getFixture().getBookShelf().getUniques().size();
+        int oldSize = getFixture().getBookShelf().getReadingUnits().size();
         getFixture().saveCollection();
-        int newSize = getFixture().getBookShelf().getUniques().size();
+        int newSize = getFixture().getBookShelf().getReadingUnits().size();
         Assert.assertTrue( newSize == oldSize );
     }
 

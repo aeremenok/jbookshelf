@@ -12,7 +12,6 @@ import org.eclipse.emf.ecore.EObject;
 public interface ReadingUnit
     extends
         Unique,
-        Commentable,
         Categorizable,
         EObject
 {
@@ -45,16 +44,6 @@ public interface ReadingUnit
     boolean isRead();
 
     /**
-     * Sets the value of the '{@link org.jbookshelf.ReadingUnit#isRead <em>Read</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Read</em>' attribute.
-     * @see #isRead()
-     * @generated
-     */
-    void setRead(boolean value);
-
-    /**
      * Sets the value of the '{@link org.jbookshelf.ReadingUnit#getPhysical <em>Physical</em>}' reference. <!--
      * begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -64,4 +53,15 @@ public interface ReadingUnit
      */
     void setPhysical(
         PhysicalUnit value );
+
+    /**
+     * Sets the value of the '{@link org.jbookshelf.ReadingUnit#isRead <em>Read</em>}' attribute.
+     * <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * @param value the new value of the '<em>Read</em>' attribute.
+     * @see #isRead()
+     * @generated
+     */
+    void setRead(
+        boolean value );
 }

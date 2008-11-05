@@ -59,7 +59,7 @@ public class SingleFileStorageTest
      */
     public void testBackupCollection__File()
     {
-        int oldSize = getFixture().getBookShelf().getUniques().size();
+        int oldSize = getFixture().getBookShelf().getReadingUnits().size();
         File externalFile = new File( "test" );
         if ( externalFile.exists() )
         {
@@ -76,7 +76,7 @@ public class SingleFileStorageTest
         }
         long oldLength = externalFile.length();
         getFixture().backupCollection( externalFile );
-        int newSize = getFixture().getBookShelf().getUniques().size();
+        int newSize = getFixture().getBookShelf().getReadingUnits().size();
         long newLength = externalFile.length();
         Assert.assertTrue( oldSize == newSize );
         Assert.assertTrue( newLength > oldLength );
@@ -91,12 +91,12 @@ public class SingleFileStorageTest
      */
     public void testRestoreCollection__File()
     {
-        int oldSize = getFixture().getBookShelf().getUniques().size();
+        int oldSize = getFixture().getBookShelf().getReadingUnits().size();
         File externalFile = new File( "test" );
         Assert.assertTrue( externalFile.exists() );
         long oldLength = externalFile.length();
         getFixture().restoreCollection( externalFile );
-        int newSize = getFixture().getBookShelf().getUniques().size();
+        int newSize = getFixture().getBookShelf().getReadingUnits().size();
         long newLength = externalFile.length();
         Assert.assertTrue( oldSize <= newSize );
         Assert.assertTrue( oldLength == newLength );
