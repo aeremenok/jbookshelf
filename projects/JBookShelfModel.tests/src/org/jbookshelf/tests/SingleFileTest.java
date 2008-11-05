@@ -56,7 +56,7 @@ public class SingleFileTest
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see junit.framework.TestCase#setUp()
-     * @generated
+     * @generated NOT
      */
     @Override
     protected void setUp()
