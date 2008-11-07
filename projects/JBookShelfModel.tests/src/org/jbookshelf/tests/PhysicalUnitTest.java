@@ -13,6 +13,7 @@ import org.jbookshelf.PhysicalUnit;
  * The following operations are tested:
  * <ul>
  * <li>{@link org.jbookshelf.PhysicalUnit#openUnit() <em>Open Unit</em>}</li>
+ * <li>{@link org.jbookshelf.PhysicalUnit#openFolder() <em>Open Folder</em>}</li>
  * </ul>
  * </p>
  * 
@@ -37,6 +38,18 @@ public abstract class PhysicalUnitTest
         String name )
     {
         super( name );
+    }
+
+    /**
+     * Tests the '{@link org.jbookshelf.PhysicalUnit#openFolder() <em>Open Folder</em>}' operation. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * 
+     * @see org.jbookshelf.PhysicalUnit#openFolder()
+     * @generated NOT
+     */
+    public void testOpenFolder()
+    {
+        getFixture().openFolder();
     }
 
     /**
