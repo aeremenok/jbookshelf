@@ -12,12 +12,6 @@ import org.jbookshelf.SingleFileFolder;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Single File Folder</b></em>'. <!-- end-user-doc -->
- * <p>
- * The following operations are tested:
- * <ul>
- * <li>{@link org.jbookshelf.SingleFileFolder#openFolder() <em>Open Folder</em>}</li>
- * </ul>
- * </p>
  * 
  * @generated
  */
@@ -45,18 +39,6 @@ public class SingleFileFolderTest
         String name )
     {
         super( name );
-    }
-
-    /**
-     * Tests the '{@link org.jbookshelf.SingleFileFolder#openFolder() <em>Open Folder</em>}' operation. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see org.jbookshelf.SingleFileFolder#openFolder()
-     * @generated NOT
-     */
-    public void testOpenFolder()
-    {
-        getFixture().openFolder();
     }
 
     /**

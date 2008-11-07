@@ -12,7 +12,7 @@ import org.jbookshelf.PhysicalUnit;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Physical Unit</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- *
+ * 
  * @generated
  */
 public abstract class PhysicalUnitImpl
@@ -22,11 +22,22 @@ public abstract class PhysicalUnitImpl
 {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected PhysicalUnitImpl()
     {
         super();
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated NOT
+     */
+    public void openFolder()
+    {
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -41,6 +52,7 @@ public abstract class PhysicalUnitImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override

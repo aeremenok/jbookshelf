@@ -86,12 +86,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PhysicalUnit" abstract="true">
     <eOperations name="openUnit"/>
+    <eOperations name="openFolder"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SingleFile" eSuperTypes="#//PhysicalUnit">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" eType="#//File"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SingleFileFolder" eSuperTypes="#//PhysicalUnit">
-    <eOperations name="openFolder"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="folder" eType="#//File"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="singleFile" eType="#//File"/>
   </eClassifiers>
