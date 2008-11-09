@@ -8,9 +8,9 @@
 || || Component model || || Verified || 26.10.2008 || 03.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/compoments/components.png diagram] ||
 || || Object model || || Verified || 26.10.2008 || 03.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/doc/classes/jbookshelf.png emf-diagram] ||
 || || Result verification || || Complete || 30.10.2008 || 03.11.2008 || ||
-|| Desktop App Development || GUI-prototype design || || Started || 30.10.2008 || 07.11.2008 || [DesktopGUIPrototype] ||
-|| || Object model implementation || || Started || 03.11.2008 || 11.11.2008 || ||
-|| || GUI implementation || || Not Started || ? || ? || ||
+|| Desktop App Development || GUI-prototype design || || Complete || 30.10.2008 || 07.11.2008 || [DesktopGUIPrototype] ||
+|| || Object model implementation || || Complete || 03.11.2008 || 09.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/projects/JBookShelfModel.tests/ unit-tests] ||
+|| || GUI implementation || || Started || 09.11.2008 || 16.11.2008 || ||
 || || Components integration || || Not Started || ? || ? || ||
 || Integration || App list collection || || Not Started || ? || ? || ||
 || || Whishlist collection || || Not Started || ? || ? || ||
