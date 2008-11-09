@@ -12,7 +12,9 @@ import org.jbookshelf.ReadingUnit;
  * <br>
  * %a - name of {@link Author} <br>
  * %b - name of {@link ReadingUnit} <br>
- * %c - name of {@link Category}
+ * %c - name of {@link Category} <br>
+ * todo treat filenames more softly, now any mismatch to wildcard causes an error<br>
+ * todo optimize parsing
  * 
  * @author eav
  */
@@ -44,6 +46,11 @@ public class NameParser
         return values.get( 'c' );
     }
 
+    /**
+     * extract values from name and put them into map
+     * 
+     * @param name matches pattern, specified in constructor
+     */
     public void parse(
         String name )
     {
