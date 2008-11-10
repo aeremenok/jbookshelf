@@ -38,6 +38,7 @@ public class Settings
         System.out.println( getInstance().getProperty( IMPORT_MASK ) );
         getInstance().setProperty( IMPORT_MASK, "%a====" );
         System.out.println( getInstance().getProperty( IMPORT_MASK ) );
+        getInstance().save( getInstance().getProperty( JBS_FOLDER ) + File.separator + "settings.properties", true );
     }
 
     private Settings()
@@ -48,7 +49,6 @@ public class Settings
     public String getProperty(
         String key )
     {
-        // todo recreate JBS_FOLDER
         return properties.getProperty( key );
     }
 
@@ -124,6 +124,12 @@ public class Settings
         properties.setProperty( JBookShelfSettings.LAF, "metal" );
         properties.setProperty( JBookShelfSettings.JBS_FOLDER, System.getProperty( "user.home" ) + File.separator +
             ".jbookshelf" + File.separator );
+
+        File jbookshelf = new File( getProperty( JBS_FOLDER ) );
+        if ( !jbookshelf.exists() && !jbookshelf.mkdir() )
+        {
+            throw new Error( "cannot create jbookshelf folder" );
+        }
 
         properties.setProperty( JBookShelfSettings.IMPORT_MASK, "%a. %b" );
         // todo trick windows
