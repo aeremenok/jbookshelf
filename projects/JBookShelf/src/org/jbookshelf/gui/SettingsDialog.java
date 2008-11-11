@@ -3,8 +3,10 @@
  *
  * Created on 31 Октябрь 2008 г., 22:43
  */
-
 package org.jbookshelf.gui;
+
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 /**
  *
@@ -57,7 +59,7 @@ public class SettingsDialog extends javax.swing.JDialog {
 
         jButton5.setText(bundle.getString("SettingsDialog.jButton5.text")); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18));
         jLabel1.setText(bundle.getString("SettingsDialog.jLabel1.text")); // NOI18N
 
         jLabel2.setText(bundle.getString("SettingsDialog.jLabel2.text")); // NOI18N
@@ -80,7 +82,7 @@ public class SettingsDialog extends javax.swing.JDialog {
 
         jButton6.setText(bundle.getString("SettingsDialog.jButton6.text")); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Metal", "GTK", "Windows", "Windows Classic", "CDE", "Motif" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(getLAFs()));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "English", "Russian" }));
 
@@ -97,7 +99,7 @@ public class SettingsDialog extends javax.swing.JDialog {
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
@@ -112,13 +114,13 @@ public class SettingsDialog extends javax.swing.JDialog {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 277, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 277, Short.MAX_VALUE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 328, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 328, Short.MAX_VALUE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton6)
@@ -166,13 +168,17 @@ public class SettingsDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
+            @Override
             public void run() {
                 SettingsDialog dialog = new SettingsDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -180,6 +186,16 @@ public class SettingsDialog extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
+    }
+
+    private static String[] getLAFs() {
+        LookAndFeelInfo[] installed = UIManager.getInstalledLookAndFeels();
+        String[] lafs = new String[installed.length];
+        for (int i = 0; i < installed.length; i++) {
+            LookAndFeelInfo lookAndFeelInfo = installed[i];
+            lafs[i] = lookAndFeelInfo.getName();
+        }
+        return lafs;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -202,5 +218,4 @@ public class SettingsDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
-
 }
