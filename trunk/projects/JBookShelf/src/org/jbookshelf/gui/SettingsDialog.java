@@ -5,6 +5,9 @@
  */
 package org.jbookshelf.gui;
 
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -45,8 +48,8 @@ public class SettingsDialog extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
+        lafComboBox = new javax.swing.JComboBox();
+        langComboBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -82,9 +85,14 @@ public class SettingsDialog extends javax.swing.JDialog {
 
         jButton6.setText(bundle.getString("SettingsDialog.jButton6.text")); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(getLAFs()));
+        lafComboBox.setModel(new javax.swing.DefaultComboBoxModel(getLAFs()));
+        lafComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lafComboBoxActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "English", "Russian" }));
+        langComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "English", "Russian" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,8 +125,8 @@ public class SettingsDialog extends javax.swing.JDialog {
                     .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 328, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 328, Short.MAX_VALUE)
+                            .addComponent(langComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 328, Short.MAX_VALUE)
+                            .addComponent(lafComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 328, Short.MAX_VALUE)
                             .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -136,11 +144,11 @@ public class SettingsDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(langComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lafComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -167,6 +175,16 @@ public class SettingsDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+private void lafComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lafComboBoxActionPerformed
+    try {
+        UIManager.setLookAndFeel(lafClassNames.get(lafComboBox.getSelectedItem()));//GEN-LAST:event_lafComboBoxActionPerformed
+        SwingUtilities.updateComponentTreeUI(this);
+        pack();
+    } catch (Exception ex) {
+        throw new Error(ex);
+    }
+}
+
     /**
      * @param args the command line arguments
      */
@@ -187,6 +205,7 @@ public class SettingsDialog extends javax.swing.JDialog {
             }
         });
     }
+    private static Map<String, String> lafClassNames = new HashMap<String, String>();
 
     private static String[] getLAFs() {
         LookAndFeelInfo[] installed = UIManager.getInstalledLookAndFeels();
@@ -194,6 +213,7 @@ public class SettingsDialog extends javax.swing.JDialog {
         for (int i = 0; i < installed.length; i++) {
             LookAndFeelInfo lookAndFeelInfo = installed[i];
             lafs[i] = lookAndFeelInfo.getName();
+            lafClassNames.put(lafs[i], lookAndFeelInfo.getClassName());
         }
         return lafs;
     }
@@ -205,8 +225,6 @@ public class SettingsDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -217,5 +235,7 @@ public class SettingsDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JComboBox lafComboBox;
+    private javax.swing.JComboBox langComboBox;
     // End of variables declaration//GEN-END:variables
 }
