@@ -31,7 +31,7 @@
               <Component id="jButton5" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="113" max="32767" attributes="0"/>
+              <EmptySpace pref="168" max="32767" attributes="0"/>
               <Component id="jButton4" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton3" min="-2" max="-2" attributes="0"/>
@@ -48,13 +48,13 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jTextField1" pref="373" max="32767" attributes="0"/>
+                  <Component id="jTextField1" pref="417" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jComboBox2" alignment="0" pref="277" max="32767" attributes="0"/>
-                          <Component id="jComboBox1" alignment="0" pref="277" max="32767" attributes="0"/>
-                          <Component id="jTextField3" alignment="0" pref="277" max="32767" attributes="0"/>
-                          <Component id="jTextField2" alignment="1" pref="277" max="32767" attributes="0"/>
+                          <Component id="jComboBox2" alignment="0" pref="328" max="32767" attributes="0"/>
+                          <Component id="jComboBox1" alignment="0" pref="328" max="32767" attributes="0"/>
+                          <Component id="jTextField3" alignment="0" pref="328" max="32767" attributes="0"/>
+                          <Component id="jTextField2" alignment="1" pref="328" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -225,15 +225,8 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBox1">
       <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="6">
-            <StringItem index="0" value="Metal"/>
-            <StringItem index="1" value="GTK"/>
-            <StringItem index="2" value="Windows"/>
-            <StringItem index="3" value="Windows Classic"/>
-            <StringItem index="4" value="CDE"/>
-            <StringItem index="5" value="Motif"/>
-          </StringArray>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel(getLAFs())" type="code"/>
         </Property>
       </Properties>
     </Component>
