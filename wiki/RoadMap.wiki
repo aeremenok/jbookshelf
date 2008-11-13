@@ -10,7 +10,7 @@
 || || Result verification || || Complete || 30.10.2008 || 03.11.2008 || ||
 || Desktop App Development || GUI-prototype design || || Complete || 30.10.2008 || 07.11.2008 || [DesktopGUIPrototype] ||
 || || Object model implementation || || Complete || 03.11.2008 || 09.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/projects/JBookShelfModel.tests/ unit-tests] ||
-|| || GUI implementation || || Started || 09.11.2008 || 16.11.2008 || ||
+|| || GUI implementation || || Started || 09.11.2008 || 21.11.2008 || ||
 || || Components integration || || Not Started || ? || ? || ||
 || Integration || App list collection || || Not Started || ? || ? || ||
 || || Whishlist collection || || Not Started || ? || ? || ||
