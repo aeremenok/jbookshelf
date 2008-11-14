@@ -4,6 +4,7 @@
 package org.jbookshelf.gui;
 
 import java.awt.Component;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,12 +19,17 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import org.util.settings.JBookShelfSettings;
+import org.util.settings.Settings;
+
 /**
  * @author eav
  */
 public class SettingsDialog
     extends javax.swing.JDialog
 {
+    private Settings settings = Settings.getInstance();
+
     /** Creates new form SettingsDialog */
     public SettingsDialog(
         java.awt.Frame parent,
@@ -32,6 +38,43 @@ public class SettingsDialog
         super( parent, modal );
         initComponents();
         registerComponents();
+
+        prepareSettings();
+        arrangeSettingValues();
+    }
+
+    private void arrangeSettingValues()
+    {
+        String property = settings.getProperty( JBookShelfSettings.LANGUAGE );
+        System.out.println( property );
+        langComboBox.setSelectedItem( property );
+        langComboBoxActionPerformed( null );
+        lafComboBox.setSelectedItem( settings.getProperty( JBookShelfSettings.LAF ) );
+        lafComboBoxActionPerformed( null );
+        tmpTextField.setText( settings.getProperty( JBookShelfSettings.TEMP_FOLDER ) );
+        jbsTextField.setText( settings.getProperty( JBookShelfSettings.JBS_FOLDER ) );
+        importTextField.setText( settings.getProperty( JBookShelfSettings.IMPORT_MASK ) );
+    }
+
+    private void prepareSettings()
+    {
+        settings.loadDefaults();
+        String folderName = settings.getProperty( JBookShelfSettings.JBS_FOLDER );
+        File folder = new File( folderName );
+        String fileName = folderName + File.separator + "settings.properties";
+        File file = new File( fileName );
+        if ( file.exists() )
+        {
+            settings.load( fileName );
+        }
+        else
+        {
+            if ( !folder.exists() )
+            {
+                folder.mkdir();
+            }
+            settings.save( fileName, true );
+        }
     }
 
     /**
@@ -54,10 +97,10 @@ public class SettingsDialog
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        importTextField = new javax.swing.JTextField();
+        jbsTextField = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        tmpTextField = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         lafComboBox = new javax.swing.JComboBox();
         langComboBox = new javax.swing.JComboBox();
@@ -99,17 +142,17 @@ public class SettingsDialog
         jLabel6.setText( bundle.getString( "SettingsDialog.jLabel6.text" ) ); // NOI18N
         jLabel6.setName( "jLabel6" ); // NOI18N
 
-        jTextField1.setText( bundle.getString( "SettingsDialog.jTextField1.text" ) ); // NOI18N
-        jTextField1.setName( "jTextField1" ); // NOI18N
+        importTextField.setText( bundle.getString( "SettingsDialog.importTextField.text" ) ); // NOI18N
+        importTextField.setName( "importTextField" ); // NOI18N
 
-        jTextField2.setText( bundle.getString( "SettingsDialog.jTextField2.text" ) ); // NOI18N
-        jTextField2.setName( "jTextField2" ); // NOI18N
+        jbsTextField.setText( bundle.getString( "SettingsDialog.jbsTextField.text" ) ); // NOI18N
+        jbsTextField.setName( "jbsTextField" ); // NOI18N
 
         jButton2.setText( bundle.getString( "SettingsDialog.jButton2.text" ) ); // NOI18N
         jButton2.setName( "jButton2" ); // NOI18N
 
-        jTextField3.setText( bundle.getString( "SettingsDialog.jTextField3.text" ) ); // NOI18N
-        jTextField3.setName( "jTextField3" ); // NOI18N
+        tmpTextField.setText( bundle.getString( "SettingsDialog.tmpTextField.text" ) ); // NOI18N
+        tmpTextField.setName( "tmpTextField" ); // NOI18N
 
         jButton6.setText( bundle.getString( "SettingsDialog.jButton6.text" ) ); // NOI18N
         jButton6.setName( "jButton6" ); // NOI18N
@@ -143,24 +186,24 @@ public class SettingsDialog
             javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE ).addGroup(
             layout.createSequentialGroup().addContainerGap().addComponent( jButton5 ).addPreferredGap(
                 javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jButton1 ).addPreferredGap(
-                javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE ).addComponent( jButton4 )
+                javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE ).addComponent( jButton4 )
                 .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jButton3 )
                 .addContainerGap() ).addGroup(
             layout.createSequentialGroup().addContainerGap().addGroup(
                 layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent( jLabel6 )
                     .addComponent( jLabel5 ).addComponent( jLabel4 ).addComponent( jLabel3 ).addComponent( jLabel2 ) )
                 .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
-                    layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent( jTextField1,
-                        javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE ).addGroup(
+                    layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent(
+                        importTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE ).addGroup(
                         javax.swing.GroupLayout.Alignment.TRAILING,
                         layout.createSequentialGroup().addGroup(
                             layout.createParallelGroup( javax.swing.GroupLayout.Alignment.TRAILING ).addComponent(
-                                langComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 379, Short.MAX_VALUE )
-                                .addComponent( lafComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 379,
-                                    Short.MAX_VALUE ).addComponent( jTextField3,
+                                langComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 430, Short.MAX_VALUE )
+                                .addComponent( lafComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 430,
+                                    Short.MAX_VALUE ).addComponent( tmpTextField,
                                     javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                    379, Short.MAX_VALUE ).addComponent( jTextField2,
-                                    javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE ) ).addPreferredGap(
+                                    430, Short.MAX_VALUE ).addComponent( jbsTextField,
+                                    javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE ) ).addPreferredGap(
                             javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
                             layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent(
                                 jButton6 ).addComponent( jButton2 ) ) ) ).addContainerGap() ) );
@@ -179,15 +222,15 @@ public class SettingsDialog
                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) ).addGap( 18,
                 18, 18 ).addGroup(
                 layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel4 )
-                    .addComponent( jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                    .addComponent( tmpTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ).addComponent(
                         jButton6 ) ).addGap( 18, 18, 18 ).addGroup(
                 layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel5 )
-                    .addComponent( jButton2 ).addComponent( jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                    .addComponent( jButton2 ).addComponent( jbsTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) ).addGap( 18,
                 18, 18 ).addGroup(
                 layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel6 )
-                    .addComponent( jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                    .addComponent( importTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) ).addGap( 18,
                 18, 18 ).addGroup(
                 layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jButton5 )
@@ -311,6 +354,7 @@ public class SettingsDialog
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField importTextField;
     private javax.swing.JButton    jButton1;
     private javax.swing.JButton    jButton2;
     private javax.swing.JButton    jButton3;
@@ -324,10 +368,9 @@ public class SettingsDialog
     private javax.swing.JLabel     jLabel5;
     private javax.swing.JLabel     jLabel6;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jbsTextField;
     private javax.swing.JComboBox  lafComboBox;
     private javax.swing.JComboBox  langComboBox;
+    private javax.swing.JTextField tmpTextField;
     // End of variables declaration//GEN-END:variables
 }

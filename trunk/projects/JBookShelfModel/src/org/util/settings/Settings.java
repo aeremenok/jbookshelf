@@ -120,8 +120,8 @@ public class Settings
     {
         properties.clear();
 
-        properties.setProperty( JBookShelfSettings.LANGUAGE, "en" );
-        properties.setProperty( JBookShelfSettings.LAF, "metal" );
+        properties.setProperty( JBookShelfSettings.LANGUAGE, "English" );
+        properties.setProperty( JBookShelfSettings.LAF, "Metal" );
         properties.setProperty( JBookShelfSettings.JBS_FOLDER, System.getProperty( "user.home" ) + File.separator +
             ".jbookshelf" + File.separator );
 
