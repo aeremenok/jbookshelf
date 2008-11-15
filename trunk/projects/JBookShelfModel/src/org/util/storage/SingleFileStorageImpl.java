@@ -15,6 +15,11 @@ public class SingleFileStorageImpl
         return restoreCollection( collectionStorageFile );
     }
 
+    public File getCollectionStorageFile()
+    {
+        return collectionStorageFile;
+    }
+
     @Override
     public void saveCollection(
         BookShelf bookShelf )

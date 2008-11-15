@@ -6,13 +6,11 @@ package org.jbookshelf.gui;
 
 import javax.swing.JTree;
 
-import org.eclipse.emf.ecore.EReference;
-import org.jbookshelf.BookShelf;
-import org.jbookshelf.JbookshelfPackage;
 import org.jbookshelf.gui.tree.AuthorTree;
 import org.jbookshelf.gui.tree.BookTree;
 import org.jbookshelf.gui.tree.CategoryTree;
 import org.jbookshelf.gui.tree.CollectionTree;
+import org.util.storage.Storage;
 
 /**
  * @author eav
@@ -20,17 +18,17 @@ import org.jbookshelf.gui.tree.CollectionTree;
 public class CollectionPanel
     extends javax.swing.JPanel
 {
-    private final BookShelf bookShelf;
+    private final MainWindow mainWindow;
 
     /**
      * Creates new form CollectionPanel
      * 
-     * @param bookShelf
+     * @param mainWindow
      */
     public CollectionPanel(
-        BookShelf bookShelf )
+        MainWindow mainWindow )
     {
-        this.bookShelf = bookShelf;
+        this.mainWindow = mainWindow;
         initComponents();
     }
 
@@ -143,12 +141,9 @@ public class CollectionPanel
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewTabbedPaneStateChanged(
-        javax.swing.event.ChangeEvent evt )
+        @SuppressWarnings( "unused" ) javax.swing.event.ChangeEvent evt )
     {// GEN-FIRST:event_viewTabbedPaneStateChanged
-        if ( bookShelf != null )
-        {
-            updateTree();
-        }
+        updateTree();
     }// GEN-LAST:event_viewTabbedPaneStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -167,7 +162,6 @@ public class CollectionPanel
     private javax.swing.JTabbedPane viewTabbedPane;
     // End of variables declaration//GEN-END:variables
 
-    private EReference[]            collectionViews;
     private JTree[]                 trees;
 
     public JTree[] getTrees()
@@ -179,21 +173,9 @@ public class CollectionPanel
         return trees;
     }
 
-    public EReference[] getCollectionViews()
-    {
-        if ( collectionViews == null )
-        {
-            JbookshelfPackage jbsPackage = JbookshelfPackage.eINSTANCE;
-            collectionViews =
-                new EReference[] { jbsPackage.getBookShelf_ReadingUnits(), jbsPackage.getBookShelf_Authors(),
-                                jbsPackage.getBookShelf_Categories() };
-        }
-        return collectionViews;
-    }
-
     public void updateTree()
     {
         CollectionTree tree = (CollectionTree) getTrees()[viewTabbedPane.getSelectedIndex()];
-        tree.update( bookShelf );
+        tree.update( Storage.getBookShelf() );
     }
 }

@@ -30,7 +30,8 @@ public abstract class Storage
 
     public static BookShelf loadCollection()
     {
-        return impl.loadCollection();
+        bookShelf = impl.loadCollection();
+        return bookShelf;
     }
 
     public static void saveCollection()
@@ -38,15 +39,16 @@ public abstract class Storage
         impl.saveCollection( getBookShelf() );
     }
 
-    public void backupCollection(
+    public static void backupCollection(
         File file )
     {
         impl.backupCollection( getBookShelf(), file );
     }
 
-    public BookShelf restoreCollection(
+    public static BookShelf restoreCollection(
         File file )
     {
-        return impl.restoreCollection( file );
+        bookShelf = impl.restoreCollection( file );
+        return bookShelf;
     }
 }

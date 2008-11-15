@@ -10,10 +10,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JSplitPane;
 
-import org.jbookshelf.BookShelf;
-import org.jbookshelf.JbookshelfFactory;
-import org.jbookshelf.SingleFileStorage;
 import org.util.settings.Settings;
+import org.util.storage.SingleFileStorageImpl;
+import org.util.storage.Storage;
 
 /**
  * @author eav
@@ -21,58 +20,48 @@ import org.util.settings.Settings;
 public class MainWindow
     extends javax.swing.JFrame
 {
-    private final ToolBar         toolBar         = new ToolBar( this );
-    private final JSplitPane      splitPane       = new JSplitPane();
-    private final RelatedPanel    relatedPanel    = new RelatedPanel();
+    private final JSplitPane      splitPane    = new JSplitPane();
+    private final RelatedPanel    relatedPanel = new RelatedPanel();
 
-    private final BookShelf       bookShelf       = JbookshelfFactory.eINSTANCE.createBookShelf();
-    private final CollectionPanel collectionPanel = new CollectionPanel( bookShelf );
+    private final ToolBar         toolBar;
+    private final CollectionPanel collectionPanel;
 
-    private final Settings        settings        = Settings.getInstance();
-
-    public BookShelf getBookShelf()
-    {
-        return bookShelf;
-    }
+    private final Settings        settings     = Settings.getInstance();
 
     /** Creates new form MainWindow */
     public MainWindow()
     {
-        initCustomComponents();
         initComponents();
 
-        initModel();
+        ((SingleFileStorageImpl) Storage.getImpl()).setCollectionStorageFile( settings.getCollectionFile() );
+        Storage.loadCollection();
 
-        addWindowListener( new WindowAdapter()
-        {
-            @SuppressWarnings( "synthetic-access" )
-            @Override
-            public void windowClosing(
-                WindowEvent e )
-            {
-                bookShelf.getStorage().saveCollection();
-            }
-        } );
-    }
+        toolBar = new ToolBar( this );
+        collectionPanel = new CollectionPanel( this );
 
-    private void initModel()
-    {
-        SingleFileStorage bookShelfStorage = JbookshelfFactory.eINSTANCE.createSingleFileStorage();
-        bookShelf.setStorage( bookShelfStorage );
-        bookShelfStorage.setBookShelf( bookShelf );
-        bookShelfStorage.setCollectionStorageFile( settings.getCollectionFile() );
-        bookShelfStorage.loadCollection();
-
-        collectionPanel.updateTree();
+        initCustomComponents();
     }
 
     private void initCustomComponents()
     {
         add( toolBar, BorderLayout.NORTH );
         add( splitPane, BorderLayout.SOUTH );
+
         splitPane.setLeftComponent( collectionPanel );
         splitPane.setRightComponent( relatedPanel );
         splitPane.setResizeWeight( 0.7 );
+
+        addWindowListener( new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(
+                WindowEvent e )
+            {
+                Storage.saveCollection();
+            }
+        } );
+
+        pack();
     }
 
     /**
