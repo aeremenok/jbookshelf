@@ -26,109 +26,118 @@ public class CollectionPanel
      */
     @SuppressWarnings( "unchecked" )
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTree3 = new javax.swing.JTree();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTree4 = new javax.swing.JTree();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTree5 = new javax.swing.JTree();
+        searchPanel = new javax.swing.JPanel();
+        cleanButton = new javax.swing.JButton();
+        searchTextField = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
+        isReadComboBox = new javax.swing.JComboBox();
+        viewTabbedPane = new javax.swing.JTabbedPane();
+        bookScrollPane = new javax.swing.JScrollPane();
+        bookTree = new javax.swing.JTree();
+        authorScrollPane = new javax.swing.JScrollPane();
+        authorTree = new javax.swing.JTree();
+        categoryScrollPane = new javax.swing.JScrollPane();
+        categoryTree = new javax.swing.JTree();
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
-        jButton5.setText( bundle.getString( "CollectionPanel.jButton5.text" ) ); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/jbookshelf/gui/Bundle"); // NOI18N
+        cleanButton.setText(bundle.getString("CollectionPanel.cleanButton.text")); // NOI18N
 
-        jTextField1.setText( bundle.getString( "CollectionPanel.jTextField1.text" ) ); // NOI18N
+        searchTextField.setText(bundle.getString("CollectionPanel.searchTextField.text")); // NOI18N
 
-        jButton6.setText( bundle.getString( "CollectionPanel.jButton6.text" ) ); // NOI18N
-        jButton6.setAutoscrolls( true );
+        searchButton.setText(bundle.getString("CollectionPanel.searchButton.text")); // NOI18N
+        searchButton.setAutoscrolls(true);
 
-        jComboBox1.setModel( new javax.swing.DefaultComboBoxModel( new String[] { "All", "Read", "Unread" } ) );
+        isReadComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Read", "Unread" }));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout( jPanel3 );
-        jPanel3.setLayout( jPanel3Layout );
-        jPanel3Layout.setHorizontalGroup( jPanel3Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addGroup(
-                javax.swing.GroupLayout.Alignment.TRAILING,
-                jPanel3Layout.createSequentialGroup().addContainerGap().addComponent( jTextField1,
-                    javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE )
-                    .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE )
-                    .addComponent( jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ).addPreferredGap(
-                        javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jButton5 ).addPreferredGap(
-                        javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jButton6 ) ) );
-        jPanel3Layout.setVerticalGroup( jPanel3Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addGroup(
-                jPanel3Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jButton6 )
-                    .addComponent( jButton5 ).addComponent( jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ).addComponent(
-                        jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                        javax.swing.GroupLayout.PREFERRED_SIZE ) ) );
+        javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
+        searchPanel.setLayout(searchPanelLayout);
+        searchPanelLayout.setHorizontalGroup(
+            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(isReadComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cleanButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchButton))
+        );
+        searchPanelLayout.setVerticalGroup(
+            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(searchButton)
+                .addComponent(cleanButton)
+                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(isReadComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
-        jScrollPane1.setViewportView( jTree3 );
+        bookScrollPane.setViewportView(bookTree);
 
-        jTabbedPane2.addTab( bundle.getString( "CollectionPanel.jScrollPane1.TabConstraints.tabTitle" ), jScrollPane1 ); // NOI18N
+        viewTabbedPane.addTab(bundle.getString("CollectionPanel.bookScrollPane.TabConstraints.tabTitle"), bookScrollPane); // NOI18N
 
-        jScrollPane4.setViewportView( jTree4 );
+        authorScrollPane.setViewportView(authorTree);
 
-        jTabbedPane2.addTab( bundle.getString( "CollectionPanel.jScrollPane4.TabConstraints.tabTitle" ), jScrollPane4 ); // NOI18N
+        viewTabbedPane.addTab(bundle.getString("CollectionPanel.authorScrollPane.TabConstraints.tabTitle"), authorScrollPane); // NOI18N
 
-        jScrollPane5.setViewportView( jTree5 );
+        categoryScrollPane.setViewportView(categoryTree);
 
-        jTabbedPane2.addTab( bundle.getString( "CollectionPanel.jScrollPane5.TabConstraints.tabTitle" ), jScrollPane5 ); // NOI18N
+        viewTabbedPane.addTab(bundle.getString("CollectionPanel.categoryScrollPane.TabConstraints.tabTitle"), categoryScrollPane); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout( jPanel1 );
-        jPanel1.setLayout( jPanel1Layout );
-        jPanel1Layout.setHorizontalGroup( jPanel1Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addComponent( jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE ).addComponent(
-                jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE ) );
-        jPanel1Layout.setVerticalGroup( jPanel1Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addGroup(
-                jPanel1Layout.createSequentialGroup().addComponent( jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE,
-                    javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ).addPreferredGap(
-                    javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jTabbedPane2,
-                    javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE ) ) );
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(viewTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+            .addComponent(searchPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(viewTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE))
+        );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout( this );
-        this.setLayout( layout );
-        layout.setHorizontalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGap( 0,
-            599, Short.MAX_VALUE ).addGroup(
-            layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup(
-                layout.createSequentialGroup().addGap( 0, 0, Short.MAX_VALUE ).addComponent( jPanel1,
-                    javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                    javax.swing.GroupLayout.PREFERRED_SIZE ).addGap( 0, 0, Short.MAX_VALUE ) ) ) );
-        layout.setVerticalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGap( 0,
-            502, Short.MAX_VALUE ).addGroup(
-            layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup(
-                layout.createSequentialGroup().addGap( 0, 0, Short.MAX_VALUE ).addComponent( jPanel1,
-                    javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                    javax.swing.GroupLayout.PREFERRED_SIZE ).addGap( 0, 0, Short.MAX_VALUE ) ) ) );
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 599, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 502, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton     jButton5;
-    private javax.swing.JButton     jButton6;
-    private javax.swing.JComboBox   jComboBox1;
-    private javax.swing.JPanel      jPanel1;
-    private javax.swing.JPanel      jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTextField  jTextField1;
-    private javax.swing.JTree       jTree3;
-    private javax.swing.JTree       jTree4;
-    private javax.swing.JTree       jTree5;
-
+    private javax.swing.JScrollPane authorScrollPane;
+    private javax.swing.JTree authorTree;
+    private javax.swing.JScrollPane bookScrollPane;
+    private javax.swing.JTree bookTree;
+    private javax.swing.JScrollPane categoryScrollPane;
+    private javax.swing.JTree categoryTree;
+    private javax.swing.JButton cleanButton;
+    private javax.swing.JComboBox isReadComboBox;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JPanel searchPanel;
+    private javax.swing.JTextField searchTextField;
+    private javax.swing.JTabbedPane viewTabbedPane;
     // End of variables declaration//GEN-END:variables
 
     public void setCollection(
