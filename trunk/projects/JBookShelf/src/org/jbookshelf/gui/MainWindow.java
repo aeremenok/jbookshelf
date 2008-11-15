@@ -8,6 +8,11 @@ import java.awt.BorderLayout;
 
 import javax.swing.JSplitPane;
 
+import org.jbookshelf.BookShelf;
+import org.jbookshelf.JbookshelfFactory;
+import org.jbookshelf.SingleFileStorage;
+import org.util.settings.Settings;
+
 /**
  * @author eav
  */
@@ -19,11 +24,28 @@ public class MainWindow
     private CollectionPanel collectionPanel = new CollectionPanel();
     private RelatedPanel    relatedPanel    = new RelatedPanel();
 
+    private BookShelf       bookShelf       = JbookshelfFactory.eINSTANCE.createBookShelf();
+
+    private Settings        settings        = Settings.getInstance();
+
     /** Creates new form MainWindow */
     public MainWindow()
     {
         initCustomComponents();
         initComponents();
+
+        initModel();
+    }
+
+    private void initModel()
+    {
+        SingleFileStorage bookShelfStorage = JbookshelfFactory.eINSTANCE.createSingleFileStorage();
+        bookShelf.setStorage( bookShelfStorage );
+        bookShelfStorage.setBookShelf( bookShelf );
+        bookShelfStorage.setCollectionStorageFile( settings.getCollectionFile() );
+        bookShelfStorage.loadCollection();
+
+        collectionPanel.setCollection( bookShelf );
     }
 
     private void initCustomComponents()
