@@ -3,7 +3,6 @@ package org.jbookshelf.gui.tree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.eclipse.emf.ecore.EReference;
-import org.jbookshelf.Author;
 import org.jbookshelf.Categorizable;
 import org.jbookshelf.Category;
 import org.jbookshelf.JbookshelfPackage;
@@ -25,13 +24,11 @@ public class CategoryTree
         {
             if ( categorizable instanceof ReadingUnit )
             {
-                ReadingUnit readingUnit = (ReadingUnit) categorizable;
-                books.add( new DefaultMutableTreeNode( readingUnit.getName() ) );
+                books.add( new DefaultMutableTreeNode( categorizable.getName() ) );
             }
             else
             {
-                Author author = (Author) categorizable;
-                authors.add( new DefaultMutableTreeNode( author.getName() ) );
+                authors.add( new DefaultMutableTreeNode( categorizable.getName() ) );
             }
         }
 

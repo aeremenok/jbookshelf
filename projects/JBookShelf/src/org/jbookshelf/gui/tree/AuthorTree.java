@@ -21,13 +21,13 @@ public class AuthorTree
         DefaultMutableTreeNode categories = new DefaultMutableTreeNode( "Categories" );
         Author author = (Author) unique;
 
-        for ( Category category : author.getCategories() )
-        {
-            categories.add( new DefaultMutableTreeNode( category.getName() ) );
-        }
         for ( ReadingUnit book : author.getReadingUnits() )
         {
             books.add( new DefaultMutableTreeNode( book.getName() ) );
+        }
+        for ( Category category : author.getCategories() )
+        {
+            categories.add( new DefaultMutableTreeNode( category.getName() ) );
         }
 
         if ( books.getChildCount() > 0 )
