@@ -12,7 +12,6 @@ import org.jbookshelf.JbookshelfFactory;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Index File Folder</b></em>'. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class IndexFileFolderTest
@@ -21,35 +20,34 @@ public class IndexFileFolderTest
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public static void main(
         String[] args )
     {
-        TestRunner.run( IndexFileFolderTest.class );
+        TestRunner.run(IndexFileFolderTest.class);
     }
 
     /**
-     * Constructs a new Index File Folder test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Constructs a new Index File Folder test case with the given name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public IndexFileFolderTest(
         String name )
     {
-        super( name );
+        super(name);
     }
 
     /**
-     * Returns the fixture for this Index File Folder test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Returns the fixture for this Index File Folder test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
     protected IndexFileFolder getFixture()
     {
-        return (IndexFileFolder) fixture;
+        return (IndexFileFolder)fixture;
     }
 
     /**
@@ -70,7 +68,6 @@ public class IndexFileFolderTest
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see junit.framework.TestCase#tearDown()
      * @generated
      */
@@ -78,7 +75,7 @@ public class IndexFileFolderTest
     protected void tearDown()
         throws Exception
     {
-        setFixture( null );
+        setFixture(null);
     }
 
 } // IndexFileFolderTest

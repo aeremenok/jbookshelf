@@ -10,49 +10,46 @@ import org.jbookshelf.JbookshelfFactory;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Category</b></em>'. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class CategoryTest
-    extends UniqueTest
+    extends CommentableTest
 {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public static void main(
         String[] args )
     {
-        TestRunner.run( CategoryTest.class );
+        TestRunner.run(CategoryTest.class);
     }
 
     /**
-     * Constructs a new Category test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Constructs a new Category test case with the given name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public CategoryTest(
         String name )
     {
-        super( name );
+        super(name);
     }
 
     /**
-     * Returns the fixture for this Category test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Returns the fixture for this Category test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
     protected Category getFixture()
     {
-        return (Category) fixture;
+        return (Category)fixture;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see junit.framework.TestCase#setUp()
      * @generated
      */
@@ -60,12 +57,11 @@ public class CategoryTest
     protected void setUp()
         throws Exception
     {
-        setFixture( JbookshelfFactory.eINSTANCE.createCategory() );
+        setFixture(JbookshelfFactory.eINSTANCE.createCategory());
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see junit.framework.TestCase#tearDown()
      * @generated
      */
@@ -73,7 +69,7 @@ public class CategoryTest
     protected void tearDown()
         throws Exception
     {
-        setFixture( null );
+        setFixture(null);
     }
 
 } // CategoryTest

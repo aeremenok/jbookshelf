@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Categorizable
     extends
+        Commentable,
         EObject
 {
     /**

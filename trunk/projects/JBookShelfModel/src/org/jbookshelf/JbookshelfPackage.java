@@ -122,40 +122,13 @@ public interface JbookshelfPackage extends EPackage
     int COMMENT = 3;
 
     /**
-     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int COMMENTABLE__COMMENTS = 0;
-
-    /**
-     * The number of structural features of the '<em>Commentable</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int COMMENTABLE_FEATURE_COUNT = 1;
-
-    /**
-     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int UNIQUE__COMMENTS = COMMENTABLE__COMMENTS;
-
-    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int UNIQUE__NAME = COMMENTABLE_FEATURE_COUNT + 0;
+    int UNIQUE__NAME = 0;
 
     /**
      * The feature id for the '<em><b>Related</b></em>' reference list.
@@ -164,7 +137,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int UNIQUE__RELATED = COMMENTABLE_FEATURE_COUNT + 1;
+    int UNIQUE__RELATED = 1;
 
     /**
      * The number of structural features of the '<em>Unique</em>' class.
@@ -173,16 +146,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int UNIQUE_FEATURE_COUNT = COMMENTABLE_FEATURE_COUNT + 2;
-
-    /**
-     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int AUTHOR__COMMENTS = UNIQUE__COMMENTS;
+    int UNIQUE_FEATURE_COUNT = 2;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -191,7 +155,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int AUTHOR__NAME = UNIQUE__NAME;
+    int COMMENTABLE__NAME = UNIQUE__NAME;
 
     /**
      * The feature id for the '<em><b>Related</b></em>' reference list.
@@ -200,7 +164,62 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int AUTHOR__RELATED = UNIQUE__RELATED;
+    int COMMENTABLE__RELATED = UNIQUE__RELATED;
+
+    /**
+     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMMENTABLE__COMMENTS = UNIQUE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Commentable</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMMENTABLE_FEATURE_COUNT = UNIQUE_FEATURE_COUNT + 1;
+
+    /**
+     * The meta object id for the '{@link org.jbookshelf.impl.CategorizableImpl <em>Categorizable</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.jbookshelf.impl.CategorizableImpl
+     * @see org.jbookshelf.impl.JbookshelfPackageImpl#getCategorizable()
+     * @generated
+     */
+    int CATEGORIZABLE = 5;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CATEGORIZABLE__NAME = COMMENTABLE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Related</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CATEGORIZABLE__RELATED = COMMENTABLE__RELATED;
+
+    /**
+     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CATEGORIZABLE__COMMENTS = COMMENTABLE__COMMENTS;
 
     /**
      * The feature id for the '<em><b>Categories</b></em>' reference list.
@@ -209,7 +228,52 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int AUTHOR__CATEGORIES = UNIQUE_FEATURE_COUNT + 0;
+    int CATEGORIZABLE__CATEGORIES = COMMENTABLE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Categorizable</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CATEGORIZABLE_FEATURE_COUNT = COMMENTABLE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int AUTHOR__NAME = CATEGORIZABLE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Related</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int AUTHOR__RELATED = CATEGORIZABLE__RELATED;
+
+    /**
+     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int AUTHOR__COMMENTS = CATEGORIZABLE__COMMENTS;
+
+    /**
+     * The feature id for the '<em><b>Categories</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int AUTHOR__CATEGORIES = CATEGORIZABLE__CATEGORIES;
 
     /**
      * The feature id for the '<em><b>Reading Units</b></em>' reference list.
@@ -218,7 +282,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int AUTHOR__READING_UNITS = UNIQUE_FEATURE_COUNT + 1;
+    int AUTHOR__READING_UNITS = CATEGORIZABLE_FEATURE_COUNT + 0;
 
     /**
      * The number of structural features of the '<em>Author</em>' class.
@@ -227,16 +291,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int AUTHOR_FEATURE_COUNT = UNIQUE_FEATURE_COUNT + 2;
-
-    /**
-     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int READING_UNIT__COMMENTS = UNIQUE__COMMENTS;
+    int AUTHOR_FEATURE_COUNT = CATEGORIZABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -245,7 +300,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int READING_UNIT__NAME = UNIQUE__NAME;
+    int READING_UNIT__NAME = CATEGORIZABLE__NAME;
 
     /**
      * The feature id for the '<em><b>Related</b></em>' reference list.
@@ -254,7 +309,16 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int READING_UNIT__RELATED = UNIQUE__RELATED;
+    int READING_UNIT__RELATED = CATEGORIZABLE__RELATED;
+
+    /**
+     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int READING_UNIT__COMMENTS = CATEGORIZABLE__COMMENTS;
 
     /**
      * The feature id for the '<em><b>Categories</b></em>' reference list.
@@ -263,7 +327,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int READING_UNIT__CATEGORIES = UNIQUE_FEATURE_COUNT + 0;
+    int READING_UNIT__CATEGORIES = CATEGORIZABLE__CATEGORIES;
 
     /**
      * The feature id for the '<em><b>Authors</b></em>' reference list.
@@ -272,7 +336,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int READING_UNIT__AUTHORS = UNIQUE_FEATURE_COUNT + 1;
+    int READING_UNIT__AUTHORS = CATEGORIZABLE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Physical</b></em>' containment reference.
@@ -281,7 +345,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int READING_UNIT__PHYSICAL = UNIQUE_FEATURE_COUNT + 2;
+    int READING_UNIT__PHYSICAL = CATEGORIZABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Read</b></em>' attribute.
@@ -290,7 +354,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int READING_UNIT__READ = UNIQUE_FEATURE_COUNT + 3;
+    int READING_UNIT__READ = CATEGORIZABLE_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Reading Unit</em>' class.
@@ -299,16 +363,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int READING_UNIT_FEATURE_COUNT = UNIQUE_FEATURE_COUNT + 4;
-
-    /**
-     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CATEGORY__COMMENTS = UNIQUE__COMMENTS;
+    int READING_UNIT_FEATURE_COUNT = CATEGORIZABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -317,7 +372,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int CATEGORY__NAME = UNIQUE__NAME;
+    int CATEGORY__NAME = COMMENTABLE__NAME;
 
     /**
      * The feature id for the '<em><b>Related</b></em>' reference list.
@@ -326,7 +381,16 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int CATEGORY__RELATED = UNIQUE__RELATED;
+    int CATEGORY__RELATED = COMMENTABLE__RELATED;
+
+    /**
+     * The feature id for the '<em><b>Comments</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CATEGORY__COMMENTS = COMMENTABLE__COMMENTS;
 
     /**
      * The feature id for the '<em><b>Categorizables</b></em>' reference list.
@@ -335,7 +399,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int CATEGORY__CATEGORIZABLES = UNIQUE_FEATURE_COUNT + 0;
+    int CATEGORY__CATEGORIZABLES = COMMENTABLE_FEATURE_COUNT + 0;
 
     /**
      * The number of structural features of the '<em>Category</em>' class.
@@ -344,7 +408,7 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      * @ordered
      */
-    int CATEGORY_FEATURE_COUNT = UNIQUE_FEATURE_COUNT + 1;
+    int CATEGORY_FEATURE_COUNT = COMMENTABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Content</b></em>' attribute.
@@ -392,34 +456,6 @@ public interface JbookshelfPackage extends EPackage
     int COMMENT_FEATURE_COUNT = 4;
 
     /**
-     * The meta object id for the '{@link org.jbookshelf.impl.CategorizableImpl <em>Categorizable</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.jbookshelf.impl.CategorizableImpl
-     * @see org.jbookshelf.impl.JbookshelfPackageImpl#getCategorizable()
-     * @generated
-     */
-    int CATEGORIZABLE = 5;
-
-    /**
-     * The feature id for the '<em><b>Categories</b></em>' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CATEGORIZABLE__CATEGORIES = 0;
-
-    /**
-     * The number of structural features of the '<em>Categorizable</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CATEGORIZABLE_FEATURE_COUNT = 1;
-
-    /**
      * The meta object id for the '{@link org.jbookshelf.impl.BookShelfImpl <em>Book Shelf</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -457,22 +493,13 @@ public interface JbookshelfPackage extends EPackage
     int BOOK_SHELF__READING_UNITS = 2;
 
     /**
-     * The feature id for the '<em><b>Storage</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BOOK_SHELF__STORAGE = 3;
-
-    /**
      * The number of structural features of the '<em>Book Shelf</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BOOK_SHELF_FEATURE_COUNT = 4;
+    int BOOK_SHELF_FEATURE_COUNT = 3;
 
     /**
      * The meta object id for the '{@link org.jbookshelf.impl.PhysicalUnitImpl <em>Physical Unit</em>}' class.
@@ -624,71 +651,6 @@ public interface JbookshelfPackage extends EPackage
     int SINGLE_FILE_FOLDER_FEATURE_COUNT = PHYSICAL_UNIT_FEATURE_COUNT + 2;
 
     /**
-     * The meta object id for the '{@link org.jbookshelf.impl.BookShelfStorageImpl <em>Book Shelf Storage</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.jbookshelf.impl.BookShelfStorageImpl
-     * @see org.jbookshelf.impl.JbookshelfPackageImpl#getBookShelfStorage()
-     * @generated
-     */
-    int BOOK_SHELF_STORAGE = 13;
-
-    /**
-     * The feature id for the '<em><b>Book Shelf</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BOOK_SHELF_STORAGE__BOOK_SHELF = 0;
-
-    /**
-     * The number of structural features of the '<em>Book Shelf Storage</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BOOK_SHELF_STORAGE_FEATURE_COUNT = 1;
-
-    /**
-     * The meta object id for the '{@link org.jbookshelf.impl.SingleFileStorageImpl <em>Single File Storage</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.jbookshelf.impl.SingleFileStorageImpl
-     * @see org.jbookshelf.impl.JbookshelfPackageImpl#getSingleFileStorage()
-     * @generated
-     */
-    int SINGLE_FILE_STORAGE = 14;
-
-    /**
-     * The feature id for the '<em><b>Book Shelf</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SINGLE_FILE_STORAGE__BOOK_SHELF = BOOK_SHELF_STORAGE__BOOK_SHELF;
-
-    /**
-     * The feature id for the '<em><b>Collection Storage File</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SINGLE_FILE_STORAGE__COLLECTION_STORAGE_FILE = BOOK_SHELF_STORAGE_FEATURE_COUNT + 0;
-
-    /**
-     * The number of structural features of the '<em>Single File Storage</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SINGLE_FILE_STORAGE_FEATURE_COUNT = BOOK_SHELF_STORAGE_FEATURE_COUNT + 1;
-
-    /**
      * The meta object id for the '<em>File</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -696,7 +658,7 @@ public interface JbookshelfPackage extends EPackage
      * @see org.jbookshelf.impl.JbookshelfPackageImpl#getFile()
      * @generated
      */
-    int FILE = 15;
+    int FILE = 13;
 
 
     /**
@@ -956,17 +918,6 @@ public interface JbookshelfPackage extends EPackage
     EReference getBookShelf_ReadingUnits();
 
     /**
-     * Returns the meta object for the containment reference '{@link org.jbookshelf.BookShelf#getStorage <em>Storage</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Storage</em>'.
-     * @see org.jbookshelf.BookShelf#getStorage()
-     * @see #getBookShelf()
-     * @generated
-     */
-    EReference getBookShelf_Storage();
-
-    /**
      * Returns the meta object for class '{@link org.jbookshelf.ArchiveFile <em>Archive File</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1081,48 +1032,6 @@ public interface JbookshelfPackage extends EPackage
      * @generated
      */
     EAttribute getSingleFileFolder_SingleFile();
-
-    /**
-     * Returns the meta object for class '{@link org.jbookshelf.BookShelfStorage <em>Book Shelf Storage</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Book Shelf Storage</em>'.
-     * @see org.jbookshelf.BookShelfStorage
-     * @generated
-     */
-    EClass getBookShelfStorage();
-
-    /**
-     * Returns the meta object for the container reference '{@link org.jbookshelf.BookShelfStorage#getBookShelf <em>Book Shelf</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Book Shelf</em>'.
-     * @see org.jbookshelf.BookShelfStorage#getBookShelf()
-     * @see #getBookShelfStorage()
-     * @generated
-     */
-    EReference getBookShelfStorage_BookShelf();
-
-    /**
-     * Returns the meta object for class '{@link org.jbookshelf.SingleFileStorage <em>Single File Storage</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Single File Storage</em>'.
-     * @see org.jbookshelf.SingleFileStorage
-     * @generated
-     */
-    EClass getSingleFileStorage();
-
-    /**
-     * Returns the meta object for the attribute '{@link org.jbookshelf.SingleFileStorage#getCollectionStorageFile <em>Collection Storage File</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Collection Storage File</em>'.
-     * @see org.jbookshelf.SingleFileStorage#getCollectionStorageFile()
-     * @see #getSingleFileStorage()
-     * @generated
-     */
-    EAttribute getSingleFileStorage_CollectionStorageFile();
 
     /**
      * Returns the meta object for data type '{@link java.io.File <em>File</em>}'.
@@ -1367,14 +1276,6 @@ public interface JbookshelfPackage extends EPackage
         EReference BOOK_SHELF__READING_UNITS = eINSTANCE.getBookShelf_ReadingUnits();
 
         /**
-         * The meta object literal for the '<em><b>Storage</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference BOOK_SHELF__STORAGE = eINSTANCE.getBookShelf_Storage();
-
-        /**
          * The meta object literal for the '{@link org.jbookshelf.impl.ArchiveFileImpl <em>Archive File</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1471,42 +1372,6 @@ public interface JbookshelfPackage extends EPackage
          * @generated
          */
         EAttribute SINGLE_FILE_FOLDER__SINGLE_FILE = eINSTANCE.getSingleFileFolder_SingleFile();
-
-        /**
-         * The meta object literal for the '{@link org.jbookshelf.impl.BookShelfStorageImpl <em>Book Shelf Storage</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see org.jbookshelf.impl.BookShelfStorageImpl
-         * @see org.jbookshelf.impl.JbookshelfPackageImpl#getBookShelfStorage()
-         * @generated
-         */
-        EClass BOOK_SHELF_STORAGE = eINSTANCE.getBookShelfStorage();
-
-        /**
-         * The meta object literal for the '<em><b>Book Shelf</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference BOOK_SHELF_STORAGE__BOOK_SHELF = eINSTANCE.getBookShelfStorage_BookShelf();
-
-        /**
-         * The meta object literal for the '{@link org.jbookshelf.impl.SingleFileStorageImpl <em>Single File Storage</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see org.jbookshelf.impl.SingleFileStorageImpl
-         * @see org.jbookshelf.impl.JbookshelfPackageImpl#getSingleFileStorage()
-         * @generated
-         */
-        EClass SINGLE_FILE_STORAGE = eINSTANCE.getSingleFileStorage();
-
-        /**
-         * The meta object literal for the '<em><b>Collection Storage File</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute SINGLE_FILE_STORAGE__COLLECTION_STORAGE_FILE = eINSTANCE.getSingleFileStorage_CollectionStorageFile();
 
         /**
          * The meta object literal for the '<em>File</em>' data type.

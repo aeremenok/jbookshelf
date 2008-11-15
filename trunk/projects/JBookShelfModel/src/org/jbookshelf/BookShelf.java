@@ -62,12 +62,6 @@ public interface BookShelf
     EList<ReadingUnit> getReadingUnits();
 
     /**
-     * @return physical collection storage
-     * @model containment="true" lowerBound="1"
-     */
-    BookShelfStorage getStorage();
-
-    /**
      * @param query search text
      * @return authors, whose data contains text
      * @model
@@ -100,15 +94,4 @@ public interface BookShelf
     EList<ReadingUnit> queryUnits(
         String query,
         Boolean isRead );
-
-    /**
-     * Sets the value of the '{@link org.jbookshelf.BookShelf#getStorage <em>Storage</em>}' reference. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @param value the new value of the '<em>Storage</em>' reference.
-     * @see #getStorage()
-     * @generated
-     */
-    void setStorage(
-        BookShelfStorage value );
 }

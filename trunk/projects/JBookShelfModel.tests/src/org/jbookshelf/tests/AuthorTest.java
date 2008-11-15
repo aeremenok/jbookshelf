@@ -10,49 +10,46 @@ import org.jbookshelf.JbookshelfFactory;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Author</b></em>'. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class AuthorTest
-    extends UniqueTest
+    extends CategorizableTest
 {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public static void main(
         String[] args )
     {
-        TestRunner.run( AuthorTest.class );
+        TestRunner.run(AuthorTest.class);
     }
 
     /**
-     * Constructs a new Author test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Constructs a new Author test case with the given name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public AuthorTest(
         String name )
     {
-        super( name );
+        super(name);
     }
 
     /**
-     * Returns the fixture for this Author test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Returns the fixture for this Author test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
     protected Author getFixture()
     {
-        return (Author) fixture;
+        return (Author)fixture;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see junit.framework.TestCase#setUp()
      * @generated
      */
@@ -60,12 +57,11 @@ public class AuthorTest
     protected void setUp()
         throws Exception
     {
-        setFixture( JbookshelfFactory.eINSTANCE.createAuthor() );
+        setFixture(JbookshelfFactory.eINSTANCE.createAuthor());
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see junit.framework.TestCase#tearDown()
      * @generated
      */
@@ -73,7 +69,7 @@ public class AuthorTest
     protected void tearDown()
         throws Exception
     {
-        setFixture( null );
+        setFixture(null);
     }
 
 } // AuthorTest

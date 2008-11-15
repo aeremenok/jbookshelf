@@ -42,7 +42,7 @@ import org.jbookshelf.ReadingUnit;
  *
  * @generated
  */
-public class CategoryImpl extends UniqueImpl implements Category
+public class CategoryImpl extends CommentableImpl implements Category
 {
     /**
      * The cached value of the '{@link #getCategorizables() <em>Categorizables</em>}' reference list.
@@ -84,42 +84,9 @@ public class CategoryImpl extends UniqueImpl implements Category
     {
         if (categorizables == null)
         {
-            categorizables = new EObjectWithInverseResolvingEList.ManyInverse<Categorizable>(Categorizable.class, this, JbookshelfPackage.CATEGORY__CATEGORIZABLES, JbookshelfPackage.CATEGORIZABLE__CATEGORIES);
+            categorizables = new EObjectResolvingEList<Categorizable>(Categorizable.class, this, JbookshelfPackage.CATEGORY__CATEGORIZABLES);
         }
         return categorizables;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-    {
-        switch (featureID)
-        {
-            case JbookshelfPackage.CATEGORY__CATEGORIZABLES:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getCategorizables()).basicAdd(otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-    {
-        switch (featureID)
-        {
-            case JbookshelfPackage.CATEGORY__CATEGORIZABLES:
-                return ((InternalEList<?>)getCategorizables()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**

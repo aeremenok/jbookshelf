@@ -9,6 +9,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.jbookshelf.JbookshelfPackage;
@@ -27,7 +28,7 @@ import org.jbookshelf.Unique;
  * @generated
  */
 public abstract class UniqueImpl
-    extends CommentableImpl
+    extends EObjectImpl
     implements
         Unique
 {

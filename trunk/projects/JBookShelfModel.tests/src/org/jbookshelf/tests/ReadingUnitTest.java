@@ -10,49 +10,46 @@ import org.jbookshelf.ReadingUnit;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Reading Unit</b></em>'. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class ReadingUnitTest
-    extends UniqueTest
+    extends CategorizableTest
 {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public static void main(
         String[] args )
     {
-        TestRunner.run( ReadingUnitTest.class );
+        TestRunner.run(ReadingUnitTest.class);
     }
 
     /**
-     * Constructs a new Reading Unit test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Constructs a new Reading Unit test case with the given name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public ReadingUnitTest(
         String name )
     {
-        super( name );
+        super(name);
     }
 
     /**
-     * Returns the fixture for this Reading Unit test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Returns the fixture for this Reading Unit test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
     protected ReadingUnit getFixture()
     {
-        return (ReadingUnit) fixture;
+        return (ReadingUnit)fixture;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see junit.framework.TestCase#setUp()
      * @generated
      */
@@ -60,12 +57,11 @@ public class ReadingUnitTest
     protected void setUp()
         throws Exception
     {
-        setFixture( JbookshelfFactory.eINSTANCE.createReadingUnit() );
+        setFixture(JbookshelfFactory.eINSTANCE.createReadingUnit());
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see junit.framework.TestCase#tearDown()
      * @generated
      */
@@ -73,7 +69,7 @@ public class ReadingUnitTest
     protected void tearDown()
         throws Exception
     {
-        setFixture( null );
+        setFixture(null);
     }
 
 } // ReadingUnitTest

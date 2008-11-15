@@ -108,15 +108,6 @@ public interface JbookshelfFactory extends EFactory
     SingleFileFolder createSingleFileFolder();
 
     /**
-     * Returns a new object of class '<em>Single File Storage</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Single File Storage</em>'.
-     * @generated
-     */
-    SingleFileStorage createSingleFileStorage();
-
-    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
