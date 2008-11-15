@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
@@ -37,10 +38,13 @@ public class SettingsDialog
     {
         super( parent, modal );
         initComponents();
+
         registerComponents();
 
         prepareSettings();
         arrangeSettingValues();
+
+        fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
     }
 
     private void arrangeSettingValues()
@@ -102,9 +106,9 @@ public class SettingsDialog
         jLabel6 = new javax.swing.JLabel();
         importTextField = new javax.swing.JTextField();
         jbsTextField = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        chooseJBSFolderButton = new javax.swing.JButton();
         tmpTextField = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
+        chooseTempFolderButton = new javax.swing.JButton();
         lafComboBox = new javax.swing.JComboBox();
         langComboBox = new javax.swing.JComboBox();
 
@@ -183,14 +187,30 @@ public class SettingsDialog
         jbsTextField.setText( bundle.getString( "SettingsDialog.jbsTextField.text" ) ); // NOI18N
         jbsTextField.setName( "jbsTextField" ); // NOI18N
 
-        jButton2.setText( bundle.getString( "SettingsDialog.jButton2.text" ) ); // NOI18N
-        jButton2.setName( "jButton2" ); // NOI18N
+        chooseJBSFolderButton.setText( bundle.getString( "SettingsDialog.chooseJBSFolderButton.text" ) ); // NOI18N
+        chooseJBSFolderButton.setName( "chooseJBSFolderButton" ); // NOI18N
+        chooseJBSFolderButton.addActionListener( new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(
+                java.awt.event.ActionEvent evt )
+            {
+                chooseJBSFolderButtonActionPerformed( evt );
+            }
+        } );
 
         tmpTextField.setText( bundle.getString( "SettingsDialog.tmpTextField.text" ) ); // NOI18N
         tmpTextField.setName( "tmpTextField" ); // NOI18N
 
-        jButton6.setText( bundle.getString( "SettingsDialog.jButton6.text" ) ); // NOI18N
-        jButton6.setName( "jButton6" ); // NOI18N
+        chooseTempFolderButton.setText( bundle.getString( "SettingsDialog.chooseTempFolderButton.text" ) ); // NOI18N
+        chooseTempFolderButton.setName( "chooseTempFolderButton" ); // NOI18N
+        chooseTempFolderButton.addActionListener( new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(
+                java.awt.event.ActionEvent evt )
+            {
+                chooseTempFolderButtonActionPerformed( evt );
+            }
+        } );
 
         lafComboBox.setModel( new javax.swing.DefaultComboBoxModel( getLAFs() ) );
         lafComboBox.setName( "lafComboBox" ); // NOI18N
@@ -216,32 +236,37 @@ public class SettingsDialog
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout( getContentPane() );
         getContentPane().setLayout( layout );
-        layout.setHorizontalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup(
-            layout.createSequentialGroup().addComponent( jLabel1 ).addContainerGap() ).addComponent( jSeparator1,
-            javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE ).addGroup(
-            layout.createSequentialGroup().addContainerGap().addComponent( saveButton ).addPreferredGap(
-                javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( restoreButton ).addPreferredGap(
-                javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE ).addComponent( okButton )
-                .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( cancelButton )
-                .addContainerGap() ).addGroup(
-            layout.createSequentialGroup().addContainerGap().addGroup(
-                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent( jLabel6 )
-                    .addComponent( jLabel5 ).addComponent( jLabel4 ).addComponent( jLabel3 ).addComponent( jLabel2 ) )
-                .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
-                    layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent(
-                        importTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE ).addGroup(
-                        javax.swing.GroupLayout.Alignment.TRAILING,
-                        layout.createSequentialGroup().addGroup(
-                            layout.createParallelGroup( javax.swing.GroupLayout.Alignment.TRAILING ).addComponent(
-                                langComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 430, Short.MAX_VALUE )
-                                .addComponent( lafComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 430,
-                                    Short.MAX_VALUE ).addComponent( tmpTextField,
-                                    javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                    430, Short.MAX_VALUE ).addComponent( jbsTextField,
-                                    javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE ) ).addPreferredGap(
-                            javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
-                            layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent(
-                                jButton6 ).addComponent( jButton2 ) ) ) ).addContainerGap() ) );
+        layout
+            .setHorizontalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup(
+                layout.createSequentialGroup().addComponent( jLabel1 ).addContainerGap() ).addComponent( jSeparator1,
+                javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE ).addGroup(
+                layout.createSequentialGroup().addContainerGap().addComponent( saveButton ).addPreferredGap(
+                    javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( restoreButton ).addPreferredGap(
+                    javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE ).addComponent( okButton )
+                    .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( cancelButton )
+                    .addContainerGap() ).addGroup(
+                layout.createSequentialGroup().addContainerGap()
+                    .addGroup(
+                        layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent( jLabel6 )
+                            .addComponent( jLabel5 ).addComponent( jLabel4 ).addComponent( jLabel3 ).addComponent(
+                                jLabel2 ) ).addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED )
+                    .addGroup(
+                        layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent(
+                            importTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE )
+                            .addGroup(
+                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                layout.createSequentialGroup().addGroup(
+                                    layout.createParallelGroup( javax.swing.GroupLayout.Alignment.TRAILING )
+                                        .addComponent( langComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 434,
+                                            Short.MAX_VALUE ).addComponent( lafComboBox,
+                                            javax.swing.GroupLayout.Alignment.LEADING, 0, 434, Short.MAX_VALUE )
+                                        .addComponent( tmpTextField, javax.swing.GroupLayout.Alignment.LEADING,
+                                            javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE ).addComponent(
+                                            jbsTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE ) )
+                                    .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
+                                        layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
+                                            .addComponent( chooseTempFolderButton )
+                                            .addComponent( chooseJBSFolderButton ) ) ) ).addContainerGap() ) );
         layout.setVerticalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup(
             javax.swing.GroupLayout.Alignment.TRAILING,
             layout.createSequentialGroup().addComponent( jLabel1 ).addPreferredGap(
@@ -259,11 +284,11 @@ public class SettingsDialog
                 layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel4 )
                     .addComponent( tmpTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ).addComponent(
-                        jButton6 ) ).addGap( 18, 18, 18 ).addGroup(
+                        chooseTempFolderButton ) ).addGap( 18, 18, 18 ).addGroup(
                 layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel5 )
-                    .addComponent( jButton2 ).addComponent( jbsTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
-                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) ).addGap( 18,
-                18, 18 ).addGroup(
+                    .addComponent( chooseJBSFolderButton ).addComponent( jbsTextField,
+                        javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                        javax.swing.GroupLayout.PREFERRED_SIZE ) ).addGap( 18, 18, 18 ).addGroup(
                 layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel6 )
                     .addComponent( importTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) ).addGap( 18,
@@ -275,17 +300,41 @@ public class SettingsDialog
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private JFileChooser fileChooser = new JFileChooser();
+
+    private void chooseTempFolderButtonActionPerformed(
+        java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_chooseTempFolderButtonActionPerformed
+        fileChooser.setCurrentDirectory( new File( settings.getProperty( JBookShelfSettings.TEMP_FOLDER ) ) );
+        if ( fileChooser.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION )
+        {
+            settings.setProperty( JBookShelfSettings.TEMP_FOLDER, fileChooser.getSelectedFile().getAbsolutePath() );
+            tmpTextField.setText( settings.getProperty( JBookShelfSettings.TEMP_FOLDER ) );
+        }
+    }// GEN-LAST:event_chooseTempFolderButtonActionPerformed
+
+    private void chooseJBSFolderButtonActionPerformed(
+        java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_chooseJBSFolderButtonActionPerformed
+        fileChooser.setCurrentDirectory( new File( settings.getProperty( JBookShelfSettings.JBS_FOLDER ) ) );
+        if ( fileChooser.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION )
+        {
+            settings.setProperty( JBookShelfSettings.JBS_FOLDER, fileChooser.getSelectedFile().getAbsolutePath() );
+            jbsTextField.setText( settings.getProperty( JBookShelfSettings.JBS_FOLDER ) );
+        }
+    }// GEN-LAST:event_chooseJBSFolderButtonActionPerformed
+
     private void okButtonActionPerformed(
         java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_okButtonActionPerformed
         settings.save( getSettingsFileName(), true );
-        setVisible( false );
+        dispose();
     }// GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(
         java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_cancelButtonActionPerformed
-        setVisible( false );
+        dispose();
     }// GEN-LAST:event_cancelButtonActionPerformed
 
     private void restoreButtonActionPerformed(
@@ -405,11 +454,11 @@ public class SettingsDialog
     private void registerComponents()
     {
         components.add( restoreButton );
-        components.add( jButton2 );
+        components.add( chooseJBSFolderButton );
         components.add( cancelButton );
         components.add( okButton );
         components.add( saveButton );
-        components.add( jButton6 );
+        components.add( chooseTempFolderButton );
 
         components.add( jLabel1 );
         components.add( jLabel2 );
@@ -421,9 +470,9 @@ public class SettingsDialog
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton    cancelButton;
+    private javax.swing.JButton    chooseJBSFolderButton;
+    private javax.swing.JButton    chooseTempFolderButton;
     private javax.swing.JTextField importTextField;
-    private javax.swing.JButton    jButton2;
-    private javax.swing.JButton    jButton6;
     private javax.swing.JLabel     jLabel1;
     private javax.swing.JLabel     jLabel2;
     private javax.swing.JLabel     jLabel3;

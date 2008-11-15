@@ -27,7 +27,7 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
-          <Component id="jSeparator1" alignment="0" pref="640" max="32767" attributes="0"/>
+          <Component id="jSeparator1" alignment="0" pref="695" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="saveButton" min="-2" max="-2" attributes="0"/>
@@ -50,18 +50,18 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="importTextField" pref="519" max="32767" attributes="0"/>
+                  <Component id="importTextField" pref="530" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="langComboBox" alignment="0" pref="430" max="32767" attributes="0"/>
-                          <Component id="lafComboBox" alignment="0" pref="430" max="32767" attributes="0"/>
-                          <Component id="tmpTextField" alignment="0" pref="430" max="32767" attributes="0"/>
-                          <Component id="jbsTextField" alignment="1" pref="430" max="32767" attributes="0"/>
+                          <Component id="langComboBox" alignment="0" pref="434" max="32767" attributes="0"/>
+                          <Component id="lafComboBox" alignment="0" pref="434" max="32767" attributes="0"/>
+                          <Component id="tmpTextField" alignment="0" pref="434" max="32767" attributes="0"/>
+                          <Component id="jbsTextField" alignment="1" pref="434" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton6" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="chooseTempFolderButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="chooseJBSFolderButton" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -89,12 +89,12 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tmpTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="chooseTempFolderButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="chooseJBSFolderButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbsTextField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -231,13 +231,16 @@
         <Property name="name" type="java.lang.String" value="jbsTextField" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="chooseJBSFolderButton">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/jbookshelf/gui/Bundle.properties" key="SettingsDialog.jButton2.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="org/jbookshelf/gui/Bundle.properties" key="SettingsDialog.chooseJBSFolderButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="chooseJBSFolderButton" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chooseJBSFolderButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tmpTextField">
       <Properties>
@@ -247,13 +250,16 @@
         <Property name="name" type="java.lang.String" value="tmpTextField" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton6">
+    <Component class="javax.swing.JButton" name="chooseTempFolderButton">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/jbookshelf/gui/Bundle.properties" key="SettingsDialog.jButton6.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="org/jbookshelf/gui/Bundle.properties" key="SettingsDialog.chooseTempFolderButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="jButton6" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="chooseTempFolderButton" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chooseTempFolderButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="lafComboBox">
       <Properties>
