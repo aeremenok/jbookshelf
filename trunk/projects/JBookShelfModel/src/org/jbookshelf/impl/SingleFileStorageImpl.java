@@ -4,6 +4,7 @@
 package org.jbookshelf.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collections;
 
@@ -13,6 +14,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.jbookshelf.JbookshelfPackage;
@@ -214,18 +216,20 @@ public class SingleFileStorageImpl
 
         ResourceSet resourceSet = new ResourceSetImpl();
 
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-            Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl() );
+        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put( Registry.DEFAULT_EXTENSION,
+            new XMLResourceFactoryImpl() );
 
         resourceSet.getPackageRegistry().put( JbookshelfPackage.eNS_URI, JbookshelfPackage.eINSTANCE );
 
         URI fileURI = URI.createFileURI( externalFile.getAbsolutePath() );
 
         Resource resource = resourceSet.getResource( fileURI, true );
+        resource.getContents().add( getBookShelf() );
 
         try
         {
-            resource.load( Collections.EMPTY_MAP );
+            resource.load( new FileInputStream( externalFile ), Collections.EMPTY_MAP );
+            System.out.println( resource.getContents().size() + "," + getBookShelf().getAuthors().size() );
         }
         catch ( IOException e )
         {
