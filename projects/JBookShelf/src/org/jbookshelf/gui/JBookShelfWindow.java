@@ -22,20 +22,8 @@ public class JBookShelfWindow
      */
     @SuppressWarnings( "unchecked" )
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
-        jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JToolBar.Separator();
-        jButton3 = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JToolBar.Separator();
-        jButton4 = new javax.swing.JButton();
-        jSeparator3 = new javax.swing.JToolBar.Separator();
-        jButton9 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel1 = new javax.swing.JPanel();
@@ -65,198 +53,230 @@ public class JBookShelfWindow
         jScrollPane6 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jTextField3 = new javax.swing.JTextField();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        jButton3 = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        jButton4 = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
+        jButton9 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
 
-        setDefaultCloseOperation( javax.swing.WindowConstants.EXIT_ON_CLOSE );
-        setMinimumSize( new java.awt.Dimension( 800, 600 ) );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(800, 600));
 
-        jToolBar1.setRollover( true );
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("org/jbookshelf/gui/Bundle"); // NOI18N
+        jLabel1.setText(bundle.getString("JBookShelfWindow.jLabel1.text")); // NOI18N
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
-        jButton1.setText( bundle.getString( "JBookShelfWindow.jButton1.text" ) ); // NOI18N
-        jButton1.setFocusable( false );
-        jButton1.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
-        jButton1.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
-        jToolBar1.add( jButton1 );
+        jSplitPane1.setDividerLocation(600);
 
-        jButton2.setText( bundle.getString( "JBookShelfWindow.jButton2.text" ) ); // NOI18N
-        jButton2.setFocusable( false );
-        jButton2.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
-        jButton2.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
-        jToolBar1.add( jButton2 );
-        jToolBar1.add( jSeparator1 );
+        jButton5.setText(bundle.getString("JBookShelfWindow.jButton5.text")); // NOI18N
 
-        jButton3.setText( bundle.getString( "JBookShelfWindow.jButton3.text" ) ); // NOI18N
-        jButton3.setFocusable( false );
-        jButton3.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
-        jButton3.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
-        jToolBar1.add( jButton3 );
-        jToolBar1.add( jSeparator2 );
+        jTextField1.setText(bundle.getString("JBookShelfWindow.jTextField1.text")); // NOI18N
 
-        jButton4.setText( bundle.getString( "JBookShelfWindow.jButton4.text" ) ); // NOI18N
-        jButton4.setFocusable( false );
-        jButton4.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
-        jButton4.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
-        jToolBar1.add( jButton4 );
-        jToolBar1.add( jSeparator3 );
+        jButton6.setText(bundle.getString("JBookShelfWindow.jButton6.text")); // NOI18N
+        jButton6.setAutoscrolls(true);
 
-        jButton9.setText( bundle.getString( "JBookShelfWindow.jButton9.text" ) ); // NOI18N
-        jButton9.setFocusable( false );
-        jButton9.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
-        jButton9.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
-        jToolBar1.add( jButton9 );
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "Read", "Unread" }));
 
-        jButton7.setText( bundle.getString( "JBookShelfWindow.jButton7.text" ) ); // NOI18N
-        jButton7.setFocusable( false );
-        jButton7.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
-        jButton7.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
-        jToolBar1.add( jButton7 );
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton6))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jButton6)
+                .addComponent(jButton5)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
-        jButton8.setText( bundle.getString( "JBookShelfWindow.jButton8.text" ) ); // NOI18N
-        jButton8.setFocusable( false );
-        jButton8.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
-        jButton8.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
-        jToolBar1.add( jButton8 );
+        jScrollPane1.setViewportView(jTree3);
 
-        jLabel1.setText( bundle.getString( "JBookShelfWindow.jLabel1.text" ) ); // NOI18N
+        jTabbedPane2.addTab(bundle.getString("JBookShelfWindow.jScrollPane1.TabConstraints.tabTitle"), jScrollPane1); // NOI18N
 
-        jSplitPane1.setDividerLocation( 600 );
+        jScrollPane4.setViewportView(jTree4);
 
-        jButton5.setText( bundle.getString( "JBookShelfWindow.jButton5.text" ) ); // NOI18N
+        jTabbedPane2.addTab(bundle.getString("JBookShelfWindow.jScrollPane4.TabConstraints.tabTitle"), jScrollPane4); // NOI18N
 
-        jTextField1.setText( bundle.getString( "JBookShelfWindow.jTextField1.text" ) ); // NOI18N
+        jScrollPane5.setViewportView(jTree5);
 
-        jButton6.setText( bundle.getString( "JBookShelfWindow.jButton6.text" ) ); // NOI18N
-        jButton6.setAutoscrolls( true );
+        jTabbedPane2.addTab(bundle.getString("JBookShelfWindow.jScrollPane5.TabConstraints.tabTitle"), jScrollPane5); // NOI18N
 
-        jComboBox1.setModel( new javax.swing.DefaultComboBoxModel( new String[] { "All", "Read", "Unread" } ) );
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE))
+        );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout( jPanel3 );
-        jPanel3.setLayout( jPanel3Layout );
-        jPanel3Layout.setHorizontalGroup( jPanel3Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addGroup(
-                javax.swing.GroupLayout.Alignment.TRAILING,
-                jPanel3Layout.createSequentialGroup().addContainerGap().addComponent( jTextField1,
-                    javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE )
-                    .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE )
-                    .addComponent( jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ).addPreferredGap(
-                        javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jButton5 ).addPreferredGap(
-                        javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jButton6 ) ) );
-        jPanel3Layout.setVerticalGroup( jPanel3Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addGroup(
-                jPanel3Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jButton6 )
-                    .addComponent( jButton5 ).addComponent( jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ).addComponent(
-                        jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                        javax.swing.GroupLayout.PREFERRED_SIZE ) ) );
+        jSplitPane1.setLeftComponent(jPanel1);
 
-        jScrollPane1.setViewportView( jTree3 );
+        jButton10.setText(bundle.getString("JBookShelfWindow.jButton10.text")); // NOI18N
 
-        jTabbedPane2.addTab( bundle.getString( "JBookShelfWindow.jScrollPane1.TabConstraints.tabTitle" ), jScrollPane1 ); // NOI18N
+        jButton11.setText(bundle.getString("JBookShelfWindow.jButton11.text")); // NOI18N
 
-        jScrollPane4.setViewportView( jTree4 );
+        jTextField2.setText(bundle.getString("JBookShelfWindow.jTextField2.text")); // NOI18N
 
-        jTabbedPane2.addTab( bundle.getString( "JBookShelfWindow.jScrollPane4.TabConstraints.tabTitle" ), jScrollPane4 ); // NOI18N
+        jScrollPane2.setViewportView(jTree1);
 
-        jScrollPane5.setViewportView( jTree5 );
+        jTabbedPane1.addTab(bundle.getString("JBookShelfWindow.jScrollPane2.TabConstraints.tabTitle"), jScrollPane2); // NOI18N
 
-        jTabbedPane2.addTab( bundle.getString( "JBookShelfWindow.jScrollPane5.TabConstraints.tabTitle" ), jScrollPane5 ); // NOI18N
+        jScrollPane3.setViewportView(jTree2);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout( jPanel1 );
-        jPanel1.setLayout( jPanel1Layout );
-        jPanel1Layout.setHorizontalGroup( jPanel1Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addComponent( jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE ).addComponent(
-                jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE ) );
-        jPanel1Layout.setVerticalGroup( jPanel1Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addGroup(
-                jPanel1Layout.createSequentialGroup().addComponent( jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE,
-                    javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ).addPreferredGap(
-                    javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jTabbedPane2,
-                    javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE ) ) );
+        jLabel2.setText(bundle.getString("JBookShelfWindow.jLabel2.text")); // NOI18N
 
-        jSplitPane1.setLeftComponent( jPanel1 );
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setText(bundle.getString("JBookShelfWindow.jTextArea1.text")); // NOI18N
+        jScrollPane6.setViewportView(jTextArea1);
 
-        jButton10.setText( bundle.getString( "JBookShelfWindow.jButton10.text" ) ); // NOI18N
+        jTextField3.setText(bundle.getString("JBookShelfWindow.jTextField3.text")); // NOI18N
 
-        jButton11.setText( bundle.getString( "JBookShelfWindow.jButton11.text" ) ); // NOI18N
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
-        jTextField2.setText( bundle.getString( "JBookShelfWindow.jTextField2.text" ) ); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("JBookShelfWindow.jPanel4.TabConstraints.tabTitle"), jPanel4); // NOI18N
 
-        jScrollPane2.setViewportView( jTree1 );
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jButton10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton10)
+                    .addComponent(jButton11)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE))
+        );
 
-        jTabbedPane1.addTab( bundle.getString( "JBookShelfWindow.jScrollPane2.TabConstraints.tabTitle" ), jScrollPane2 ); // NOI18N
+        jSplitPane1.setRightComponent(jPanel2);
 
-        jScrollPane3.setViewportView( jTree2 );
+        jToolBar1.setRollover(true);
 
-        jLabel2.setText( bundle.getString( "JBookShelfWindow.jLabel2.text" ) ); // NOI18N
+        jButton1.setText(bundle.getString("JBookShelfWindow.jButton1.text")); // NOI18N
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
 
-        jTextArea1.setColumns( 20 );
-        jTextArea1.setRows( 5 );
-        jTextArea1.setText( bundle.getString( "JBookShelfWindow.jTextArea1.text" ) ); // NOI18N
-        jScrollPane6.setViewportView( jTextArea1 );
+        jButton2.setText(bundle.getString("JBookShelfWindow.jButton2.text")); // NOI18N
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton2);
+        jToolBar1.add(jSeparator1);
 
-        jTextField3.setText( bundle.getString( "JBookShelfWindow.jTextField3.text" ) ); // NOI18N
+        jButton3.setText(bundle.getString("JBookShelfWindow.jButton3.text")); // NOI18N
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton3);
+        jToolBar1.add(jSeparator2);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout( jPanel4 );
-        jPanel4.setLayout( jPanel4Layout );
-        jPanel4Layout.setHorizontalGroup( jPanel4Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addComponent( jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE ).addGroup(
-                jPanel4Layout.createSequentialGroup().addContainerGap().addComponent( jScrollPane6,
-                    javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE ).addContainerGap() ).addGroup(
-                jPanel4Layout.createSequentialGroup().addComponent( jLabel2 ).addPreferredGap(
-                    javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jTextField3,
-                    javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE ).addContainerGap() ) );
-        jPanel4Layout.setVerticalGroup( jPanel4Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addGroup(
-                javax.swing.GroupLayout.Alignment.TRAILING,
-                jPanel4Layout.createSequentialGroup().addGroup(
-                    jPanel4Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent(
-                        jLabel2 ).addComponent( jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE,
-                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) )
-                    .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jScrollPane6,
-                        javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE ).addPreferredGap(
-                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED ).addComponent( jScrollPane3,
-                        javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE )
-                    .addContainerGap() ) );
+        jButton4.setText(bundle.getString("JBookShelfWindow.jButton4.text")); // NOI18N
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton4);
+        jToolBar1.add(jSeparator3);
 
-        jTabbedPane1.addTab( bundle.getString( "JBookShelfWindow.jPanel4.TabConstraints.tabTitle" ), jPanel4 ); // NOI18N
+        jButton9.setText(bundle.getString("JBookShelfWindow.jButton9.text")); // NOI18N
+        jButton9.setFocusable(false);
+        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton9);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout( jPanel2 );
-        jPanel2.setLayout( jPanel2Layout );
-        jPanel2Layout.setHorizontalGroup( jPanel2Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addGroup(
-                jPanel2Layout.createSequentialGroup().addComponent( jButton10 ).addPreferredGap(
-                    javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jButton11 ).addPreferredGap(
-                    javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jTextField2,
-                    javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE ).addContainerGap() ).addComponent(
-                jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE ) );
-        jPanel2Layout.setVerticalGroup( jPanel2Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addGroup(
-                jPanel2Layout.createSequentialGroup().addGroup(
-                    jPanel2Layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent(
-                        jButton10 ).addComponent( jButton11 ).addComponent( jTextField2,
-                        javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                        javax.swing.GroupLayout.PREFERRED_SIZE ) ).addPreferredGap(
-                    javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jTabbedPane1,
-                    javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE ) ) );
+        jButton7.setText(bundle.getString("JBookShelfWindow.jButton7.text")); // NOI18N
+        jButton7.setFocusable(false);
+        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton7);
 
-        jSplitPane1.setRightComponent( jPanel2 );
+        jButton8.setText(bundle.getString("JBookShelfWindow.jButton8.text")); // NOI18N
+        jButton8.setFocusable(false);
+        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton8);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout( getContentPane() );
-        getContentPane().setLayout( layout );
-        layout.setHorizontalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addComponent( jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE ).addGroup(
-                layout.createSequentialGroup().addComponent( jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 105,
-                    javax.swing.GroupLayout.PREFERRED_SIZE ).addContainerGap( 769, Short.MAX_VALUE ) ).addComponent(
-                jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 874,
-                Short.MAX_VALUE ) );
-        layout.setVerticalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup(
-            layout.createSequentialGroup().addComponent( jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 47,
-                javax.swing.GroupLayout.PREFERRED_SIZE ).addPreferredGap(
-                javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jSplitPane1,
-                javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE ).addPreferredGap(
-                javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jLabel1 ) ) );
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(769, Short.MAX_VALUE))
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -277,46 +297,46 @@ public class JBookShelfWindow
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton            jButton1;
-    private javax.swing.JButton            jButton10;
-    private javax.swing.JButton            jButton11;
-    private javax.swing.JButton            jButton2;
-    private javax.swing.JButton            jButton3;
-    private javax.swing.JButton            jButton4;
-    private javax.swing.JButton            jButton5;
-    private javax.swing.JButton            jButton6;
-    private javax.swing.JButton            jButton7;
-    private javax.swing.JButton            jButton8;
-    private javax.swing.JButton            jButton9;
-    private javax.swing.JComboBox          jComboBox1;
-    private javax.swing.JLabel             jLabel1;
-    private javax.swing.JLabel             jLabel2;
-    private javax.swing.JPanel             jPanel1;
-    private javax.swing.JPanel             jPanel2;
-    private javax.swing.JPanel             jPanel3;
-    private javax.swing.JPanel             jPanel4;
-    private javax.swing.JScrollPane        jScrollPane1;
-    private javax.swing.JScrollPane        jScrollPane2;
-    private javax.swing.JScrollPane        jScrollPane3;
-    private javax.swing.JScrollPane        jScrollPane4;
-    private javax.swing.JScrollPane        jScrollPane5;
-    private javax.swing.JScrollPane        jScrollPane6;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
-    private javax.swing.JSplitPane         jSplitPane1;
-    private javax.swing.JTabbedPane        jTabbedPane1;
-    private javax.swing.JTabbedPane        jTabbedPane2;
-    private javax.swing.JTextArea          jTextArea1;
-    private javax.swing.JTextField         jTextField1;
-    private javax.swing.JTextField         jTextField2;
-    private javax.swing.JTextField         jTextField3;
-    private javax.swing.JToolBar           jToolBar1;
-    private javax.swing.JTree              jTree1;
-    private javax.swing.JTree              jTree2;
-    private javax.swing.JTree              jTree3;
-    private javax.swing.JTree              jTree4;
-    private javax.swing.JTree              jTree5;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTree jTree1;
+    private javax.swing.JTree jTree2;
+    private javax.swing.JTree jTree3;
+    private javax.swing.JTree jTree4;
+    private javax.swing.JTree jTree5;
     // End of variables declaration//GEN-END:variables
 
 }
