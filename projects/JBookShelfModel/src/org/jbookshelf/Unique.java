@@ -11,7 +11,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Unique
     extends
-        Commentable,
         EObject
 {
     /**

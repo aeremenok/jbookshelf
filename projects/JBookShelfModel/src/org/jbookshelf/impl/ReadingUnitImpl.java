@@ -11,6 +11,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.jbookshelf.Author;
@@ -25,7 +26,6 @@ import org.jbookshelf.ReadingUnit;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getCategories <em>Categories</em>}</li>
  *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getAuthors <em>Authors</em>}</li>
  *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#getPhysical <em>Physical</em>}</li>
  *   <li>{@link org.jbookshelf.impl.ReadingUnitImpl#isRead <em>Read</em>}</li>
@@ -35,20 +35,10 @@ import org.jbookshelf.ReadingUnit;
  * @generated
  */
 public class ReadingUnitImpl
-    extends UniqueImpl
+    extends CategorizableImpl
     implements
         ReadingUnit
 {
-    /**
-     * The cached value of the '{@link #getCategories() <em>Categories</em>}' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getCategories()
-     * @generated
-     * @ordered
-     */
-    protected EList<Category>      categories;
-
     /**
      * The cached value of the '{@link #getAuthors() <em>Authors</em>}' reference list.
      * <!-- begin-user-doc --> <!--
@@ -119,46 +109,6 @@ public class ReadingUnitImpl
      * @generated
      */
     @Override
-    public int eBaseStructuralFeatureID(
-        int derivedFeatureID,
-        Class<?> baseClass )
-    {
-        if (baseClass == Categorizable.class)
-        {
-            switch (derivedFeatureID)
-            {
-                case JbookshelfPackage.READING_UNIT__CATEGORIES: return JbookshelfPackage.CATEGORIZABLE__CATEGORIES;
-                default: return -1;
-            }
-        }
-        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public int eDerivedStructuralFeatureID(
-        int baseFeatureID,
-        Class<?> baseClass )
-    {
-        if (baseClass == Categorizable.class)
-        {
-            switch (baseFeatureID)
-            {
-                case JbookshelfPackage.CATEGORIZABLE__CATEGORIES: return JbookshelfPackage.READING_UNIT__CATEGORIES;
-                default: return -1;
-            }
-        }
-        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public Object eGet(
         int featureID,
         boolean resolve,
@@ -166,8 +116,6 @@ public class ReadingUnitImpl
     {
         switch (featureID)
         {
-            case JbookshelfPackage.READING_UNIT__CATEGORIES:
-                return getCategories();
             case JbookshelfPackage.READING_UNIT__AUTHORS:
                 return getAuthors();
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
@@ -182,27 +130,6 @@ public class ReadingUnitImpl
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings( "unchecked" )
-    @Override
-    public NotificationChain eInverseAdd(
-        InternalEObject otherEnd,
-        int featureID,
-        NotificationChain msgs )
-    {
-        switch (featureID)
-        {
-            case JbookshelfPackage.READING_UNIT__CATEGORIES:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getCategories()).basicAdd(otherEnd, msgs);
-            case JbookshelfPackage.READING_UNIT__AUTHORS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getAuthors()).basicAdd(otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public NotificationChain eInverseRemove(
         InternalEObject otherEnd,
@@ -211,10 +138,6 @@ public class ReadingUnitImpl
     {
         switch (featureID)
         {
-            case JbookshelfPackage.READING_UNIT__CATEGORIES:
-                return ((InternalEList<?>)getCategories()).basicRemove(otherEnd, msgs);
-            case JbookshelfPackage.READING_UNIT__AUTHORS:
-                return ((InternalEList<?>)getAuthors()).basicRemove(otherEnd, msgs);
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
                 return basicSetPhysical(null, msgs);
         }
@@ -231,8 +154,6 @@ public class ReadingUnitImpl
     {
         switch (featureID)
         {
-            case JbookshelfPackage.READING_UNIT__CATEGORIES:
-                return categories != null && !categories.isEmpty();
             case JbookshelfPackage.READING_UNIT__AUTHORS:
                 return authors != null && !authors.isEmpty();
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
@@ -255,10 +176,6 @@ public class ReadingUnitImpl
     {
         switch (featureID)
         {
-            case JbookshelfPackage.READING_UNIT__CATEGORIES:
-                getCategories().clear();
-                getCategories().addAll((Collection<? extends Category>)newValue);
-                return;
             case JbookshelfPackage.READING_UNIT__AUTHORS:
                 getAuthors().clear();
                 getAuthors().addAll((Collection<? extends Author>)newValue);
@@ -283,9 +200,6 @@ public class ReadingUnitImpl
     {
         switch (featureID)
         {
-            case JbookshelfPackage.READING_UNIT__CATEGORIES:
-                getCategories().clear();
-                return;
             case JbookshelfPackage.READING_UNIT__AUTHORS:
                 getAuthors().clear();
                 return;
@@ -307,22 +221,9 @@ public class ReadingUnitImpl
     {
         if (authors == null)
         {
-            authors = new EObjectWithInverseResolvingEList.ManyInverse<Author>(Author.class, this, JbookshelfPackage.READING_UNIT__AUTHORS, JbookshelfPackage.AUTHOR__READING_UNITS);
+            authors = new EObjectResolvingEList<Author>(Author.class, this, JbookshelfPackage.READING_UNIT__AUTHORS);
         }
         return authors;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Category> getCategories()
-    {
-        if (categories == null)
-        {
-            categories = new EObjectWithInverseResolvingEList.ManyInverse<Category>(Category.class, this, JbookshelfPackage.READING_UNIT__CATEGORIES, JbookshelfPackage.CATEGORY__CATEGORIZABLES);
-        }
-        return categories;
     }
 
     /**

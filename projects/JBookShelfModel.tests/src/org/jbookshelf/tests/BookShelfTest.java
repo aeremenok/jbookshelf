@@ -23,50 +23,46 @@ import org.jbookshelf.Unique;
  * <p>
  * The following operations are tested:
  * <ul>
- * <li>{@link org.jbookshelf.BookShelf#addAuthor(java.lang.String) <em>Add Author</em>}</li>
- * <li>{@link org.jbookshelf.BookShelf#addCategory(java.lang.String) <em>Add Category</em>}</li>
- * <li>
- * {@link org.jbookshelf.BookShelf#addReadingUnit(java.lang.String, org.jbookshelf.Author, org.jbookshelf.Category, org.jbookshelf.PhysicalUnit)
- * <em>Add Reading Unit</em>}</li>
- * <li>{@link org.jbookshelf.BookShelf#queryAuthors(java.lang.String) <em>Query Authors</em>}</li>
- * <li>{@link org.jbookshelf.BookShelf#queryCategories(java.lang.String) <em>Query Categories</em>}</li>
- * <li>{@link org.jbookshelf.BookShelf#queryUniques(java.lang.String) <em>Query Uniques</em>}</li>
- * <li>{@link org.jbookshelf.BookShelf#queryUnits(java.lang.String, java.lang.Boolean) <em>Query Units</em>}</li>
+ *   <li>{@link org.jbookshelf.BookShelf#addAuthor(java.lang.String) <em>Add Author</em>}</li>
+ *   <li>{@link org.jbookshelf.BookShelf#addCategory(java.lang.String) <em>Add Category</em>}</li>
+ *   <li>{@link org.jbookshelf.BookShelf#addReadingUnit(java.lang.String, org.jbookshelf.Author, org.jbookshelf.Category, org.jbookshelf.PhysicalUnit) <em>Add Reading Unit</em>}</li>
+ *   <li>{@link org.jbookshelf.BookShelf#queryAuthors(java.lang.String) <em>Query Authors</em>}</li>
+ *   <li>{@link org.jbookshelf.BookShelf#queryCategories(java.lang.String) <em>Query Categories</em>}</li>
+ *   <li>{@link org.jbookshelf.BookShelf#queryUniques(java.lang.String) <em>Query Uniques</em>}</li>
+ *   <li>{@link org.jbookshelf.BookShelf#queryUnits(java.lang.String, java.lang.Boolean) <em>Query Units</em>}</li>
  * </ul>
  * </p>
- * 
  * @generated
  */
 public class BookShelfTest
     extends TestCase
 {
     /**
-     * The fixture for this Book Shelf test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The fixture for this Book Shelf test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     protected BookShelf fixture = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public static void main(
         String[] args )
     {
-        TestRunner.run( BookShelfTest.class );
+        TestRunner.run(BookShelfTest.class);
     }
 
     /**
-     * Constructs a new Book Shelf test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Constructs a new Book Shelf test case with the given name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public BookShelfTest(
         String name )
     {
-        super( name );
+        super(name);
     }
 
     /**
@@ -269,8 +265,8 @@ public class BookShelfTest
     }
 
     /**
-     * Returns the fixture for this Book Shelf test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Returns the fixture for this Book Shelf test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     protected BookShelf getFixture()
@@ -279,8 +275,8 @@ public class BookShelfTest
     }
 
     /**
-     * Sets the fixture for this Book Shelf test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Sets the fixture for this Book Shelf test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     protected void setFixture(
@@ -291,7 +287,6 @@ public class BookShelfTest
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see junit.framework.TestCase#setUp()
      * @generated
      */
@@ -299,12 +294,11 @@ public class BookShelfTest
     protected void setUp()
         throws Exception
     {
-        setFixture( JbookshelfFactory.eINSTANCE.createBookShelf() );
+        setFixture(JbookshelfFactory.eINSTANCE.createBookShelf());
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see junit.framework.TestCase#tearDown()
      * @generated
      */
@@ -312,7 +306,7 @@ public class BookShelfTest
     protected void tearDown()
         throws Exception
     {
-        setFixture( null );
+        setFixture(null);
     }
 
 } // BookShelfTest

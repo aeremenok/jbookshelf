@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Category
     extends
-        Unique,
+        Commentable,
         EObject
 {
     /**

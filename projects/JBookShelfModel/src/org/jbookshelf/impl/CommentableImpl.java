@@ -10,6 +10,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -29,7 +30,7 @@ import org.jbookshelf.JbookshelfPackage;
  * @generated
  */
 public abstract class CommentableImpl
-    extends EObjectImpl
+    extends UniqueImpl
     implements
         Commentable
 {
@@ -68,25 +69,6 @@ public abstract class CommentableImpl
                 return getComments();
         }
         return super.eGet(featureID, resolve, coreType);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    @SuppressWarnings( "unchecked" )
-    @Override
-    public NotificationChain eInverseAdd(
-        InternalEObject otherEnd,
-        int featureID,
-        NotificationChain msgs )
-    {
-        switch (featureID)
-        {
-            case JbookshelfPackage.COMMENTABLE__COMMENTS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getComments()).basicAdd(otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**
@@ -190,6 +172,23 @@ public abstract class CommentableImpl
             }
         }
         return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.COMMENTABLE__COMMENTS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getComments()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**

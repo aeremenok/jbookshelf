@@ -16,32 +16,24 @@ import org.jbookshelf.JbookshelfFactory;
  * <p>
  * The following operations are tested:
  * <ul>
- * <li>{@link org.jbookshelf.Commentable#queryComments(java.lang.String) <em>Query Comments</em>}</li>
+ *   <li>{@link org.jbookshelf.Commentable#queryComments(java.lang.String) <em>Query Comments</em>}</li>
  * </ul>
  * </p>
- * 
  * @generated
  */
 public abstract class CommentableTest
-    extends TestCase
+    extends UniqueTest
 {
 
     /**
-     * The fixture for this Commentable test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    protected Commentable fixture = null;
-
-    /**
-     * Constructs a new Commentable test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Constructs a new Commentable test case with the given name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public CommentableTest(
         String name )
     {
-        super( name );
+        super(name);
     }
 
     /**
@@ -77,24 +69,14 @@ public abstract class CommentableTest
     }
 
     /**
-     * Returns the fixture for this Commentable test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Returns the fixture for this Commentable test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
+    @Override
     protected Commentable getFixture()
     {
-        return fixture;
-    }
-
-    /**
-     * Sets the fixture for this Commentable test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    protected void setFixture(
-        Commentable fixture )
-    {
-        this.fixture = fixture;
+        return (Commentable)fixture;
     }
 
 } // CommentableTest

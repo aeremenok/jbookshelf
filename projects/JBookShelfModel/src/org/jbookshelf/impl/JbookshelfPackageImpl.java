@@ -1,27 +1,21 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
+ * <copyright> </copyright> $Id$
  */
 package org.jbookshelf.impl;
 
 import java.io.File;
-import java.sql.Date;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.jbookshelf.ArchiveFile;
 import org.jbookshelf.Author;
 import org.jbookshelf.BookShelf;
-import org.jbookshelf.BookShelfStorage;
 import org.jbookshelf.Categorizable;
 import org.jbookshelf.Category;
 import org.jbookshelf.Comment;
@@ -33,139 +27,109 @@ import org.jbookshelf.PhysicalUnit;
 import org.jbookshelf.ReadingUnit;
 import org.jbookshelf.SingleFile;
 import org.jbookshelf.SingleFileFolder;
-import org.jbookshelf.SingleFileStorage;
 import org.jbookshelf.Unique;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Package</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
  * @generated
  */
-public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPackage
+public class JbookshelfPackageImpl
+    extends EPackageImpl
+    implements
+        JbookshelfPackage
 {
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass authorEClass = null;
+    private EClass    authorEClass           = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass readingUnitEClass = null;
+    private EClass    readingUnitEClass      = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass categoryEClass = null;
+    private EClass    categoryEClass         = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass commentEClass = null;
+    private EClass    commentEClass          = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass commentableEClass = null;
+    private EClass    commentableEClass      = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass categorizableEClass = null;
+    private EClass    categorizableEClass    = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass uniqueEClass = null;
+    private EClass    uniqueEClass           = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass bookShelfEClass = null;
+    private EClass    bookShelfEClass        = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass archiveFileEClass = null;
+    private EClass    archiveFileEClass      = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass indexFileFolderEClass = null;
+    private EClass    indexFileFolderEClass  = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass physicalUnitEClass = null;
+    private EClass    physicalUnitEClass     = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass singleFileEClass = null;
+    private EClass    singleFileEClass       = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass singleFileFolderEClass = null;
+    private EClass    singleFileFolderEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass bookShelfStorageEClass = null;
+    private EDataType fileEDataType          = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass singleFileStorageEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EDataType fileEDataType = null;
-
-    /**
-     * Creates an instance of the model <b>Package</b>, registered with
-     * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
-     * package URI value.
-     * <p>Note: the correct way to create the package is via the static
-     * factory method {@link #init init()}, which also performs
-     * initialization of the package, or returns the registered package,
-     * if one already exists.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
+     * EPackage.Registry} by the package package URI value.
+     * <p>
+     * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
+     * performs initialization of the package, or returns the registered package, if one already exists. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.ecore.EPackage.Registry
      * @see org.jbookshelf.JbookshelfPackage#eNS_URI
      * @see #init()
@@ -177,8 +141,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     private static boolean isInited = false;
@@ -198,8 +161,8 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
      * those of another.
      * <p>Invocation of this method will not affect any packages that have
      * already been initialized.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
      * @see #eNS_URI
      * @see #createPackageContents()
      * @see #initializePackageContents()
@@ -230,8 +193,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getAuthor()
@@ -240,8 +202,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EReference getAuthor_ReadingUnits()
@@ -250,8 +211,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getReadingUnit()
@@ -260,8 +220,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EReference getReadingUnit_Authors()
@@ -270,8 +229,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EReference getReadingUnit_Physical()
@@ -280,8 +238,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getReadingUnit_Read()
@@ -290,8 +247,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getCategory()
@@ -300,8 +256,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EReference getCategory_Categorizables()
@@ -310,8 +265,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getComment()
@@ -320,8 +274,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getComment_Content()
@@ -330,8 +283,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getComment_CreationDate()
@@ -340,8 +292,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EReference getComment_Subject()
@@ -350,8 +301,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getComment_Title()
@@ -360,8 +310,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getCommentable()
@@ -370,8 +319,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EReference getCommentable_Comments()
@@ -380,8 +328,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getCategorizable()
@@ -390,8 +337,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EReference getCategorizable_Categories()
@@ -400,8 +346,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getUnique()
@@ -410,8 +355,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getUnique_Name()
@@ -420,8 +364,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EReference getUnique_Related()
@@ -430,8 +373,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getBookShelf()
@@ -440,8 +382,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EReference getBookShelf_Authors()
@@ -450,8 +391,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EReference getBookShelf_Categories()
@@ -460,8 +400,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EReference getBookShelf_ReadingUnits()
@@ -470,18 +409,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getBookShelf_Storage()
-    {
-        return (EReference)bookShelfEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getArchiveFile()
@@ -490,8 +418,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getArchiveFile_ArchiveFile()
@@ -500,8 +427,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getIndexFileFolder()
@@ -510,8 +436,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getIndexFileFolder_IndexFile()
@@ -520,8 +445,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getIndexFileFolder_IndexFolder()
@@ -530,8 +454,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getPhysicalUnit()
@@ -540,8 +463,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getSingleFile()
@@ -550,8 +472,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getSingleFile_File()
@@ -560,8 +481,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EClass getSingleFileFolder()
@@ -570,8 +490,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getSingleFileFolder_Folder()
@@ -580,8 +499,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getSingleFileFolder_SingleFile()
@@ -590,48 +508,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getBookShelfStorage()
-    {
-        return bookShelfStorageEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getBookShelfStorage_BookShelf()
-    {
-        return (EReference)bookShelfStorageEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getSingleFileStorage()
-    {
-        return singleFileStorageEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getSingleFileStorage_CollectionStorageFile()
-    {
-        return (EAttribute)singleFileStorageEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EDataType getFile()
@@ -640,8 +517,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public JbookshelfFactory getJbookshelfFactory()
@@ -650,8 +526,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     private boolean isCreated = false;
@@ -659,8 +534,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     /**
      * Creates the meta-model objects for the package.  This method is
      * guarded to have no affect on any invocation but its first.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public void createPackageContents()
@@ -700,7 +574,6 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         createEReference(bookShelfEClass, BOOK_SHELF__AUTHORS);
         createEReference(bookShelfEClass, BOOK_SHELF__CATEGORIES);
         createEReference(bookShelfEClass, BOOK_SHELF__READING_UNITS);
-        createEReference(bookShelfEClass, BOOK_SHELF__STORAGE);
 
         archiveFileEClass = createEClass(ARCHIVE_FILE);
         createEAttribute(archiveFileEClass, ARCHIVE_FILE__ARCHIVE_FILE);
@@ -718,19 +591,12 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         createEAttribute(singleFileFolderEClass, SINGLE_FILE_FOLDER__FOLDER);
         createEAttribute(singleFileFolderEClass, SINGLE_FILE_FOLDER__SINGLE_FILE);
 
-        bookShelfStorageEClass = createEClass(BOOK_SHELF_STORAGE);
-        createEReference(bookShelfStorageEClass, BOOK_SHELF_STORAGE__BOOK_SHELF);
-
-        singleFileStorageEClass = createEClass(SINGLE_FILE_STORAGE);
-        createEAttribute(singleFileStorageEClass, SINGLE_FILE_STORAGE__COLLECTION_STORAGE_FILE);
-
         // Create data types
         fileEDataType = createEDataType(FILE);
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     private boolean isInitialized = false;
@@ -738,8 +604,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
     /**
      * Complete the initialization of the package and its meta-model.  This
      * method is guarded to have no affect on any invocation but its first.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public void initializePackageContents()
@@ -760,33 +625,32 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         // Set bounds for type parameters
 
         // Add supertypes to classes
-        authorEClass.getESuperTypes().add(this.getUnique());
         authorEClass.getESuperTypes().add(this.getCategorizable());
         authorEClass.getESuperTypes().add(theEcorePackage.getEObject());
-        readingUnitEClass.getESuperTypes().add(this.getUnique());
         readingUnitEClass.getESuperTypes().add(this.getCategorizable());
         readingUnitEClass.getESuperTypes().add(theEcorePackage.getEObject());
-        categoryEClass.getESuperTypes().add(this.getUnique());
+        categoryEClass.getESuperTypes().add(this.getCommentable());
         categoryEClass.getESuperTypes().add(theEcorePackage.getEObject());
-        uniqueEClass.getESuperTypes().add(this.getCommentable());
-        uniqueEClass.getESuperTypes().add(theEcorePackage.getEObject());
+        commentableEClass.getESuperTypes().add(this.getUnique());
+        commentableEClass.getESuperTypes().add(theEcorePackage.getEObject());
+        categorizableEClass.getESuperTypes().add(this.getCommentable());
+        categorizableEClass.getESuperTypes().add(theEcorePackage.getEObject());
         archiveFileEClass.getESuperTypes().add(this.getPhysicalUnit());
         indexFileFolderEClass.getESuperTypes().add(this.getPhysicalUnit());
         singleFileEClass.getESuperTypes().add(this.getPhysicalUnit());
         singleFileFolderEClass.getESuperTypes().add(this.getPhysicalUnit());
-        singleFileStorageEClass.getESuperTypes().add(this.getBookShelfStorage());
 
         // Initialize classes and features; add operations and parameters
         initEClass(authorEClass, Author.class, "Author", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getAuthor_ReadingUnits(), this.getReadingUnit(), this.getReadingUnit_Authors(), "readingUnits", null, 0, -1, Author.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAuthor_ReadingUnits(), this.getReadingUnit(), null, "readingUnits", null, 0, -1, Author.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(readingUnitEClass, ReadingUnit.class, "ReadingUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getReadingUnit_Authors(), this.getAuthor(), this.getAuthor_ReadingUnits(), "authors", null, 0, -1, ReadingUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getReadingUnit_Authors(), this.getAuthor(), null, "authors", null, 0, -1, ReadingUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getReadingUnit_Physical(), this.getPhysicalUnit(), null, "physical", null, 1, 1, ReadingUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getReadingUnit_Read(), ecorePackage.getEBoolean(), "read", "false", 1, 1, ReadingUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getCategory_Categorizables(), this.getCategorizable(), this.getCategorizable_Categories(), "categorizables", null, 0, -1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getCategory_Categorizables(), this.getCategorizable(), null, "categorizables", null, 0, -1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(commentEClass, Comment.class, "Comment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getComment_Content(), ecorePackage.getEString(), "content", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -801,7 +665,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         initEClass(categorizableEClass, Categorizable.class, "Categorizable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getCategorizable_Categories(), this.getCategory(), this.getCategory_Categorizables(), "categories", null, 0, -1, Categorizable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getCategorizable_Categories(), this.getCategory(), null, "categories", null, 0, -1, Categorizable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(uniqueEClass, Unique.class, "Unique", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getUnique_Name(), ecorePackage.getEString(), "name", null, 1, 1, Unique.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -811,7 +675,6 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         initEReference(getBookShelf_Authors(), this.getAuthor(), null, "authors", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBookShelf_Categories(), this.getCategory(), null, "categories", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBookShelf_ReadingUnits(), this.getReadingUnit(), null, "readingUnits", null, 0, -1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getBookShelf_Storage(), this.getBookShelfStorage(), this.getBookShelfStorage_BookShelf(), "storage", null, 1, 1, BookShelf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         op = addEOperation(bookShelfEClass, this.getAuthor(), "addAuthor", 0, 1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -858,21 +721,7 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         initEAttribute(getSingleFileFolder_Folder(), this.getFile(), "folder", null, 0, 1, SingleFileFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSingleFileFolder_SingleFile(), this.getFile(), "singleFile", null, 0, 1, SingleFileFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(bookShelfStorageEClass, BookShelfStorage.class, "BookShelfStorage", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getBookShelfStorage_BookShelf(), this.getBookShelf(), this.getBookShelf_Storage(), "bookShelf", null, 1, 1, BookShelfStorage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        addEOperation(bookShelfStorageEClass, null, "loadCollection", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-        addEOperation(bookShelfStorageEClass, null, "saveCollection", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-        initEClass(singleFileStorageEClass, SingleFileStorage.class, "SingleFileStorage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getSingleFileStorage_CollectionStorageFile(), this.getFile(), "collectionStorageFile", null, 0, 1, SingleFileStorage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        op = addEOperation(singleFileStorageEClass, null, "backupCollection", 0, 1, IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, this.getFile(), "externalFile", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-        op = addEOperation(singleFileStorageEClass, null, "restoreCollection", 0, 1, IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, this.getFile(), "externalFile", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEOperation(singleFileFolderEClass, null, "openFolder", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         // Initialize data types
         initEDataType(fileEDataType, File.class, "File", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
@@ -881,4 +730,4 @@ public class JbookshelfPackageImpl extends EPackageImpl implements JbookshelfPac
         createResource(eNS_URI);
     }
 
-} //JbookshelfPackageImpl
+} // JbookshelfPackageImpl

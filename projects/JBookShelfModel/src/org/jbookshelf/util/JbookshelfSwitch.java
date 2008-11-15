@@ -100,9 +100,9 @@ public class JbookshelfSwitch<T>
             {
                 Author author = (Author)theEObject;
                 T result = caseAuthor(author);
-                if (result == null) result = caseUnique(author);
                 if (result == null) result = caseCategorizable(author);
                 if (result == null) result = caseCommentable(author);
+                if (result == null) result = caseUnique(author);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -110,9 +110,9 @@ public class JbookshelfSwitch<T>
             {
                 ReadingUnit readingUnit = (ReadingUnit)theEObject;
                 T result = caseReadingUnit(readingUnit);
-                if (result == null) result = caseUnique(readingUnit);
                 if (result == null) result = caseCategorizable(readingUnit);
                 if (result == null) result = caseCommentable(readingUnit);
+                if (result == null) result = caseUnique(readingUnit);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -120,8 +120,8 @@ public class JbookshelfSwitch<T>
             {
                 Category category = (Category)theEObject;
                 T result = caseCategory(category);
-                if (result == null) result = caseUnique(category);
                 if (result == null) result = caseCommentable(category);
+                if (result == null) result = caseUnique(category);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -136,6 +136,7 @@ public class JbookshelfSwitch<T>
             {
                 Commentable commentable = (Commentable)theEObject;
                 T result = caseCommentable(commentable);
+                if (result == null) result = caseUnique(commentable);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -143,6 +144,8 @@ public class JbookshelfSwitch<T>
             {
                 Categorizable categorizable = (Categorizable)theEObject;
                 T result = caseCategorizable(categorizable);
+                if (result == null) result = caseCommentable(categorizable);
+                if (result == null) result = caseUnique(categorizable);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -150,7 +153,6 @@ public class JbookshelfSwitch<T>
             {
                 Unique unique = (Unique)theEObject;
                 T result = caseUnique(unique);
-                if (result == null) result = caseCommentable(unique);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -197,21 +199,6 @@ public class JbookshelfSwitch<T>
                 SingleFileFolder singleFileFolder = (SingleFileFolder)theEObject;
                 T result = caseSingleFileFolder(singleFileFolder);
                 if (result == null) result = casePhysicalUnit(singleFileFolder);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case JbookshelfPackage.BOOK_SHELF_STORAGE:
-            {
-                BookShelfStorage bookShelfStorage = (BookShelfStorage)theEObject;
-                T result = caseBookShelfStorage(bookShelfStorage);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case JbookshelfPackage.SINGLE_FILE_STORAGE:
-            {
-                SingleFileStorage singleFileStorage = (SingleFileStorage)theEObject;
-                T result = caseSingleFileStorage(singleFileStorage);
-                if (result == null) result = caseBookShelfStorage(singleFileStorage);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -423,38 +410,6 @@ public class JbookshelfSwitch<T>
      * @generated
      */
     public T caseSingleFileFolder(SingleFileFolder object)
-    {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Book Shelf Storage</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Book Shelf Storage</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseBookShelfStorage(BookShelfStorage object)
-    {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Single File Storage</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Single File Storage</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseSingleFileStorage(SingleFileStorage object)
     {
         return null;
     }
