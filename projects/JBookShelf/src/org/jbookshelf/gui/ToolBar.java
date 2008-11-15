@@ -10,10 +10,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import org.jbookshelf.ReadingUnit;
-import org.jbookshelf.SingleFileStorage;
 import org.util.FileImporter;
 import org.util.settings.JBookShelfSettings;
 import org.util.settings.Settings;
+import org.util.storage.SingleFileStorageImpl;
+import org.util.storage.Storage;
 
 /**
  * @author eav
@@ -194,13 +195,13 @@ public class ToolBar
     }// GEN-LAST:event_openButtonActionPerformed
 
     private void settingsButtonActionPerformed(
-        java.awt.event.ActionEvent evt )
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_settingsButtonActionPerformed
         new SettingsDialog( mainWindow, true ).setVisible( true );
     }// GEN-LAST:event_settingsButtonActionPerformed
 
     private void importButtonActionPerformed(
-        java.awt.event.ActionEvent evt )
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_importButtonActionPerformed
         JFileChooser chooser = new JFileChooser();
         chooser.setMultiSelectionEnabled( false );
@@ -234,43 +235,42 @@ public class ToolBar
             {
                 mask = result;
             }
-            importer.importFiles( chooser.getSelectedFile().listFiles(), mask, mainWindow.getBookShelf() );
+            importer.importFiles( chooser.getSelectedFile().listFiles(), mask, Storage.getBookShelf() );
 
             mainWindow.collectionChanged();
         }
     }// GEN-LAST:event_importButtonActionPerformed
 
     private void backupButtonActionPerformed(
-        java.awt.event.ActionEvent evt )
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_backupButtonActionPerformed
-        SingleFileStorage storage = (SingleFileStorage) mainWindow.getBookShelf().getStorage();
-
         JFileChooser chooser = new JFileChooser();
         chooser.setMultiSelectionEnabled( false );
         chooser.setFileSelectionMode( JFileChooser.FILES_ONLY );
 
+        SingleFileStorageImpl storage = (SingleFileStorageImpl) Storage.getImpl();
         chooser.setSelectedFile( storage.getCollectionStorageFile() );
 
         if ( chooser.showSaveDialog( this ) == JFileChooser.APPROVE_OPTION )
         {
-            storage.backupCollection( chooser.getSelectedFile() );
+            Storage.backupCollection( chooser.getSelectedFile() );
         }
     }// GEN-LAST:event_backupButtonActionPerformed
 
     private void restoreButtonActionPerformed(
-        java.awt.event.ActionEvent evt )
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_restoreButtonActionPerformed
-        SingleFileStorage storage = (SingleFileStorage) mainWindow.getBookShelf().getStorage();
-
         JFileChooser chooser = new JFileChooser();
         chooser.setMultiSelectionEnabled( false );
         chooser.setFileSelectionMode( JFileChooser.FILES_ONLY );
 
+        SingleFileStorageImpl storage = (SingleFileStorageImpl) Storage.getImpl();
         chooser.setSelectedFile( storage.getCollectionStorageFile() );
 
         if ( chooser.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION )
         {
-            storage.restoreCollection( chooser.getSelectedFile() );
+            Storage.restoreCollection( chooser.getSelectedFile() );
+            mainWindow.collectionChanged();
         }
     }// GEN-LAST:event_restoreButtonActionPerformed
 
