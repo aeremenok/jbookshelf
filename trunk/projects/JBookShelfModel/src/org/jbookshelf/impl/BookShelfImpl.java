@@ -77,6 +77,30 @@ public class BookShelfImpl
         super();
     }
 
+    private Author unknown;
+
+    public Author getUnknown()
+    {
+        if ( unknown == null )
+        {
+            unknown = JbookshelfFactory.eINSTANCE.createAuthor();
+            unknown.setName( "Unknown" );
+            getAuthors().add( unknown );
+        }
+        return unknown;
+    }
+
+    public Category getCommon()
+    {
+        if ( common == null )
+        {
+            common = JbookshelfFactory.eINSTANCE.createCategory();
+            common.setName( "Common" );
+            getCategories().add( common );
+        }
+        return common;
+    }
+
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -85,16 +109,22 @@ public class BookShelfImpl
     public Author addAuthor(
         String name )
     {
-        Author author = JbookshelfFactory.eINSTANCE.createAuthor();
-        author.setName( name );
-
-        if ( getAuthors().add( author ) )
+        if ( name == null || "".equals( name ) )
         {
-            return author;
+            return getUnknown();
         }
 
-        return getAuthorByName( name );
+        Author author = getAuthorByName( name );
+        if ( author == null )
+        {
+            author = JbookshelfFactory.eINSTANCE.createAuthor();
+            author.setName( name );
+            getAuthors().add( author );
+        }
+        return author;
     }
+
+    private Category common;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -104,15 +134,19 @@ public class BookShelfImpl
     public Category addCategory(
         String name )
     {
-        Category category = JbookshelfFactory.eINSTANCE.createCategory();
-        category.setName( name );
-
-        if ( getCategories().add( category ) )
+        if ( name == null || "".equals( name ) )
         {
-            return category;
+            return getCommon();
         }
 
-        return getCategoryByName( name );
+        Category category = getCategoryByName( name );
+        if ( category == null )
+        {
+            category = JbookshelfFactory.eINSTANCE.createCategory();
+            category.setName( name );
+            getCategories().add( category );
+        }
+        return category;
     }
 
     /**
@@ -126,19 +160,22 @@ public class BookShelfImpl
         Category category,
         PhysicalUnit physicalUnit )
     {
-        ReadingUnit readingUnit = JbookshelfFactory.eINSTANCE.createReadingUnit();
-
-        readingUnit.setName( name );
-        readingUnit.setPhysical( physicalUnit );
-        readingUnit.getAuthors().add( author );
-        readingUnit.getCategories().add( category );
-
-        if ( getReadingUnits().add( readingUnit ) )
+        if ( name == null || "".equals( name ) )
         {
-            return readingUnit;
+            return null;
         }
 
-        return getReadingUnitByName( name );
+        ReadingUnit readingUnit = getReadingUnitByName( name );
+        if ( readingUnit == null )
+        {
+            readingUnit = JbookshelfFactory.eINSTANCE.createReadingUnit();
+            readingUnit.setName( name );
+            readingUnit.setPhysical( physicalUnit );
+            readingUnit.getAuthors().add( author );
+            readingUnit.getCategories().add( category );
+            getReadingUnits().add( readingUnit );
+        }
+        return readingUnit;
     }
 
     /**
@@ -395,7 +432,7 @@ public class BookShelfImpl
         // todo optimize
         for ( Author author : getAuthors() )
         {
-            if ( author.getName().equals( name ) )
+            if ( name.equals( author.getName() ) )
             {
                 return author;
             }
@@ -409,7 +446,7 @@ public class BookShelfImpl
         // todo optimize
         for ( Category category : getCategories() )
         {
-            if ( category.getName().equals( name ) )
+            if ( name.equals( category.getName() ) )
             {
                 return category;
             }
@@ -423,12 +460,11 @@ public class BookShelfImpl
         // todo optimize
         for ( ReadingUnit readingUnit : getReadingUnits() )
         {
-            if ( readingUnit.getName().equals( name ) )
+            if ( name.equals( readingUnit.getName() ) )
             {
                 return readingUnit;
             }
         }
-
         return null;
     }
 

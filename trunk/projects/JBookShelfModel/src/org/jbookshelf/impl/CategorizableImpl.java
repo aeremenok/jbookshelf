@@ -131,9 +131,42 @@ public abstract class CategorizableImpl
     {
         if (categories == null)
         {
-            categories = new EObjectResolvingEList<Category>(Category.class, this, JbookshelfPackage.CATEGORIZABLE__CATEGORIES);
+            categories = new EObjectWithInverseResolvingEList.ManyInverse<Category>(Category.class, this, JbookshelfPackage.CATEGORIZABLE__CATEGORIES, JbookshelfPackage.CATEGORY__CATEGORIZABLES);
         }
         return categories;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.CATEGORIZABLE__CATEGORIES:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getCategories()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.CATEGORIZABLE__CATEGORIES:
+                return ((InternalEList<?>)getCategories()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
