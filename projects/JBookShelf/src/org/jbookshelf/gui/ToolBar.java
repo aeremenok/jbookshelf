@@ -218,6 +218,7 @@ public class ToolBar
                 {
                     // todo
                     System.out.println( "-cannot import file " + file.getAbsolutePath() + " cause:" + e.getMessage() );
+                    // e.printStackTrace();
                 }
 
                 @Override

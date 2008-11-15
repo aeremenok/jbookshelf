@@ -57,7 +57,14 @@ public class MainWindow
             public void windowClosing(
                 WindowEvent e )
             {
-                Storage.saveCollection();
+                try
+                {
+                    Storage.saveCollection();
+                }
+                catch ( Throwable e1 )
+                {
+                    e1.printStackTrace();
+                }
             }
         } );
 
