@@ -138,6 +138,8 @@ public class ReadingUnitImpl
     {
         switch (featureID)
         {
+            case JbookshelfPackage.READING_UNIT__AUTHORS:
+                return ((InternalEList<?>)getAuthors()).basicRemove(otherEnd, msgs);
             case JbookshelfPackage.READING_UNIT__PHYSICAL:
                 return basicSetPhysical(null, msgs);
         }
@@ -221,7 +223,7 @@ public class ReadingUnitImpl
     {
         if (authors == null)
         {
-            authors = new EObjectResolvingEList<Author>(Author.class, this, JbookshelfPackage.READING_UNIT__AUTHORS);
+            authors = new EObjectWithInverseResolvingEList.ManyInverse<Author>(Author.class, this, JbookshelfPackage.READING_UNIT__AUTHORS, JbookshelfPackage.AUTHOR__READING_UNITS);
         }
         return authors;
     }
@@ -276,6 +278,23 @@ public class ReadingUnitImpl
         read = newRead;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.READING_UNIT__READ, oldRead, read));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.READING_UNIT__AUTHORS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getAuthors()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**
