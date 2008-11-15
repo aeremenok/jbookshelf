@@ -4,22 +4,15 @@
 
 package org.jbookshelf.gui;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.JViewport;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 
-import junit.framework.Assert;
-
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
 import org.jbookshelf.BookShelf;
 import org.jbookshelf.JbookshelfPackage;
-import org.jbookshelf.Unique;
+import org.jbookshelf.gui.tree.AuthorTree;
+import org.jbookshelf.gui.tree.BookTree;
+import org.jbookshelf.gui.tree.CategoryTree;
+import org.jbookshelf.gui.tree.CollectionTree;
 
 /**
  * @author eav
@@ -33,12 +26,6 @@ public class CollectionPanel
     public CollectionPanel()
     {
         initComponents();
-        initCustomComponents();
-    }
-
-    private void initCustomComponents()
-    {
-        // todo
     }
 
     /**
@@ -58,11 +45,11 @@ public class CollectionPanel
         isReadComboBox = new javax.swing.JComboBox();
         viewTabbedPane = new javax.swing.JTabbedPane();
         bookScrollPane = new javax.swing.JScrollPane();
-        bookTree = new javax.swing.JTree();
+        bookTree = new BookTree();
         authorScrollPane = new javax.swing.JScrollPane();
-        authorTree = new javax.swing.JTree();
+        authorTree = new AuthorTree();
         categoryScrollPane = new javax.swing.JScrollPane();
-        categoryTree = new javax.swing.JTree();
+        categoryTree = new CategoryTree();
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
         cleanButton.setText( bundle.getString( "CollectionPanel.cleanButton.text" ) ); // NOI18N
@@ -94,6 +81,15 @@ public class CollectionPanel
                 javax.swing.GroupLayout.PREFERRED_SIZE ).addComponent( isReadComboBox,
                 javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
                 javax.swing.GroupLayout.PREFERRED_SIZE ) ) );
+
+        viewTabbedPane.addChangeListener( new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(
+                javax.swing.event.ChangeEvent evt )
+            {
+                viewTabbedPaneStateChanged( evt );
+            }
+        } );
 
         bookScrollPane.setViewportView( bookTree );
 
@@ -140,73 +136,66 @@ public class CollectionPanel
                     javax.swing.GroupLayout.PREFERRED_SIZE ).addGap( 0, 0, Short.MAX_VALUE ) ) ) );
     }// </editor-fold>//GEN-END:initComponents
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane  authorScrollPane;
-    private javax.swing.JTree        authorTree;
-    private javax.swing.JScrollPane  bookScrollPane;
-    private javax.swing.JTree        bookTree;
-    private javax.swing.JScrollPane  categoryScrollPane;
-    private javax.swing.JTree        categoryTree;
-    private javax.swing.JButton      cleanButton;
-    private javax.swing.JComboBox    isReadComboBox;
-    private javax.swing.JPanel       jPanel1;
-    private javax.swing.JButton      searchButton;
-    private javax.swing.JPanel       searchPanel;
-    private javax.swing.JTextField   searchTextField;
-    private javax.swing.JTabbedPane  viewTabbedPane;
+    private void viewTabbedPaneStateChanged(
+        javax.swing.event.ChangeEvent evt )
+    {// GEN-FIRST:event_viewTabbedPaneStateChanged
+        if ( bookShelf != null )
+        {
+            updateTree( viewTabbedPane.getSelectedIndex() );
+        }
+    }// GEN-LAST:event_viewTabbedPaneStateChanged
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane authorScrollPane;
+    private javax.swing.JTree       authorTree;
+    private javax.swing.JScrollPane bookScrollPane;
+    private javax.swing.JTree       bookTree;
+    private javax.swing.JScrollPane categoryScrollPane;
+    private javax.swing.JTree       categoryTree;
+    private javax.swing.JButton     cleanButton;
+    private javax.swing.JComboBox   isReadComboBox;
+    private javax.swing.JPanel      jPanel1;
+    private javax.swing.JButton     searchButton;
+    private javax.swing.JPanel      searchPanel;
+    private javax.swing.JTextField  searchTextField;
+    private javax.swing.JTabbedPane viewTabbedPane;
     // End of variables declaration//GEN-END:variables
 
-    private Map<JTree, EReference[]> treeViews;
+    private EReference[]            collectionViews;
+    private JTree[]                 trees;
 
-    public Map<JTree, EReference[]> getTreeViews()
+    public JTree[] getTrees()
     {
-        if ( treeViews == null )
+        if ( trees == null )
         {
-            treeViews = new HashMap<JTree, EReference[]>();
-
-            JbookshelfPackage jbsPackage = JbookshelfPackage.eINSTANCE;
-            Assert.assertNotNull( bookTree );
-            Assert.assertNotNull( authorTree );
-            Assert.assertNotNull( categoryTree );
-
-            treeViews.put( bookTree, new EReference[] { jbsPackage.getBookShelf_ReadingUnits(),
-                            jbsPackage.getBookShelf_Authors(), jbsPackage.getBookShelf_Categories() } );
-            treeViews.put( authorTree, new EReference[] { jbsPackage.getBookShelf_Authors(),
-                            jbsPackage.getBookShelf_ReadingUnits(), jbsPackage.getBookShelf_Categories() } );
-            treeViews.put( categoryTree, new EReference[] { jbsPackage.getBookShelf_Categories(),
-                            jbsPackage.getBookShelf_ReadingUnits(), jbsPackage.getBookShelf_Categories() } );
+            trees = new JTree[] { bookTree, authorTree, categoryTree };
         }
-        return treeViews;
+        return trees;
+    }
+
+    public EReference[] getCollectionViews()
+    {
+        if ( collectionViews == null )
+        {
+            JbookshelfPackage jbsPackage = JbookshelfPackage.eINSTANCE;
+            collectionViews =
+                new EReference[] { jbsPackage.getBookShelf_ReadingUnits(), jbsPackage.getBookShelf_Authors(),
+                                jbsPackage.getBookShelf_Categories() };
+        }
+        return collectionViews;
     }
 
     public void setCollection(
         BookShelf bookShelf )
     {
         this.bookShelf = bookShelf;
-        JScrollPane scrollPane = (JScrollPane) viewTabbedPane.getSelectedComponent();
-        JViewport viewport = (JViewport) scrollPane.getComponent( 0 );
-        JTree tree = (JTree) viewport.getComponent( 0 );
-        EReference[] references = getTreeViews().get( tree );
-        Assert.assertNotNull( references );
-        buildTree( tree, references );
+        updateTree( viewTabbedPane.getSelectedIndex() );
     }
 
-    @SuppressWarnings( "unchecked" )
-    private void buildTree(
-        JTree tree,
-        EReference[] references )
+    private void updateTree(
+        int index )
     {
-        tree.removeAll();
-        tree.setRootVisible( false );
-        DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode( "" );
-        model.setRoot( root );
-
-        EList<Unique> list = (EList<Unique>) bookShelf.eGet( references[0] );
-        for ( Unique unique : list )
-        {
-            root.add( new DefaultMutableTreeNode( unique.getName() ) );
-        }
+        CollectionTree tree = (CollectionTree) getTrees()[index];
+        tree.update( bookShelf );
     }
 }
