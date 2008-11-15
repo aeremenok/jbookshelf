@@ -5,11 +5,11 @@
     nsURI="http:///org/jbookshelf.ecore" nsPrefix="org.jbookshelf">
   <eClassifiers xsi:type="ecore:EClass" name="Author" eSuperTypes="#//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="readingUnits" upperBound="-1"
-        eType="#//ReadingUnit"/>
+        eType="#//ReadingUnit" eOpposite="#//ReadingUnit/authors"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReadingUnit" eSuperTypes="#//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"
-        eType="#//Author"/>
+        eType="#//Author" eOpposite="#//Author/readingUnits"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="physical" lowerBound="1"
         eType="#//PhysicalUnit" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="read" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"

@@ -132,9 +132,42 @@ public class AuthorImpl
     {
         if (readingUnits == null)
         {
-            readingUnits = new EObjectResolvingEList<ReadingUnit>(ReadingUnit.class, this, JbookshelfPackage.AUTHOR__READING_UNITS);
+            readingUnits = new EObjectWithInverseResolvingEList.ManyInverse<ReadingUnit>(ReadingUnit.class, this, JbookshelfPackage.AUTHOR__READING_UNITS, JbookshelfPackage.READING_UNIT__AUTHORS);
         }
         return readingUnits;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.AUTHOR__READING_UNITS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getReadingUnits()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case JbookshelfPackage.AUTHOR__READING_UNITS:
+                return ((InternalEList<?>)getReadingUnits()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
