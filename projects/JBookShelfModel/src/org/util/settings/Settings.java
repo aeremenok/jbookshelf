@@ -27,18 +27,37 @@ public class Settings
         if ( instance == null )
         {
             instance = new Settings();
+
+            // preparing values
+            instance.loadDefaults();
+            String folderName = instance.getProperty( JBookShelfSettings.JBS_FOLDER );
+            File folder = new File( folderName );
+            String fileName = instance.getSettingsFile().getAbsolutePath();
+            File file = new File( fileName );
+            if ( file.exists() )
+            {
+                instance.load( fileName );
+            }
+            else
+            {
+                if ( !folder.exists() )
+                {
+                    folder.mkdir();
+                }
+                instance.save( fileName, true );
+            }
         }
         return instance;
     }
 
-    public static void main(
-        String[] args )
+    public File getSettingsFile()
     {
-        getInstance().loadDefaults();
-        System.out.println( getInstance().getProperty( IMPORT_MASK ) );
-        getInstance().setProperty( IMPORT_MASK, "%a====" );
-        System.out.println( getInstance().getProperty( IMPORT_MASK ) );
-        getInstance().save( getInstance().getProperty( JBS_FOLDER ) + File.separator + "settings.properties", true );
+        return new File( getProperty( JBS_FOLDER ) + File.separator + "settings.properties" );
+    }
+
+    public File getCollectionFile()
+    {
+        return new File( getProperty( JBS_FOLDER ) + File.separator + "collection.xml" );
     }
 
     private Settings()

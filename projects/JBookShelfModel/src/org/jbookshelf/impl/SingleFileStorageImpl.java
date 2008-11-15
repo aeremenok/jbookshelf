@@ -24,10 +24,10 @@ import org.jbookshelf.SingleFileStorage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.jbookshelf.impl.SingleFileStorageImpl#getCollectionStorageFile <em>Collection Storage File</em>}</li>
+ * <li>{@link org.jbookshelf.impl.SingleFileStorageImpl#getCollectionStorageFile <em>Collection Storage File</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class SingleFileStorageImpl
@@ -57,6 +57,7 @@ public class SingleFileStorageImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected SingleFileStorageImpl()
@@ -72,6 +73,18 @@ public class SingleFileStorageImpl
     public void backupCollection(
         File externalFile )
     {
+        if ( !externalFile.exists() )
+        {
+            try
+            {
+                externalFile.createNewFile();
+            }
+            catch ( IOException e )
+            {
+                throw new Error( externalFile.getAbsolutePath(), e );
+            }
+        }
+
         ResourceSet resourceSet = new ResourceSetImpl();
 
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
@@ -95,6 +108,7 @@ public class SingleFileStorageImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -103,32 +117,35 @@ public class SingleFileStorageImpl
         boolean resolve,
         boolean coreType )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case JbookshelfPackage.SINGLE_FILE_STORAGE__COLLECTION_STORAGE_FILE:
                 return getCollectionStorageFile();
         }
-        return super.eGet(featureID, resolve, coreType);
+        return super.eGet( featureID, resolve, coreType );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case JbookshelfPackage.SINGLE_FILE_STORAGE__COLLECTION_STORAGE_FILE:
-                return COLLECTION_STORAGE_FILE_EDEFAULT == null ? collectionStorageFile != null : !COLLECTION_STORAGE_FILE_EDEFAULT.equals(collectionStorageFile);
+                return COLLECTION_STORAGE_FILE_EDEFAULT == null ? collectionStorageFile != null
+                    : !COLLECTION_STORAGE_FILE_EDEFAULT.equals( collectionStorageFile );
         }
-        return super.eIsSet(featureID);
+        return super.eIsSet( featureID );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -136,34 +153,36 @@ public class SingleFileStorageImpl
         int featureID,
         Object newValue )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case JbookshelfPackage.SINGLE_FILE_STORAGE__COLLECTION_STORAGE_FILE:
-                setCollectionStorageFile((File)newValue);
+                setCollectionStorageFile( (File) newValue );
                 return;
         }
-        super.eSet(featureID, newValue);
+        super.eSet( featureID, newValue );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case JbookshelfPackage.SINGLE_FILE_STORAGE__COLLECTION_STORAGE_FILE:
-                setCollectionStorageFile(COLLECTION_STORAGE_FILE_EDEFAULT);
+                setCollectionStorageFile( COLLECTION_STORAGE_FILE_EDEFAULT );
                 return;
         }
-        super.eUnset(featureID);
+        super.eUnset( featureID );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public File getCollectionStorageFile()
@@ -188,6 +207,11 @@ public class SingleFileStorageImpl
     public void restoreCollection(
         File externalFile )
     {
+        if ( !externalFile.exists() )
+        {
+            backupCollection( externalFile );
+        }
+
         ResourceSet resourceSet = new ResourceSetImpl();
 
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
@@ -217,6 +241,7 @@ public class SingleFileStorageImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void setCollectionStorageFile(
@@ -224,28 +249,37 @@ public class SingleFileStorageImpl
     {
         File oldCollectionStorageFile = collectionStorageFile;
         collectionStorageFile = newCollectionStorageFile;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, JbookshelfPackage.SINGLE_FILE_STORAGE__COLLECTION_STORAGE_FILE, oldCollectionStorageFile, collectionStorageFile));
+        if ( eNotificationRequired() )
+        {
+            eNotify( new ENotificationImpl( this, Notification.SET,
+                JbookshelfPackage.SINGLE_FILE_STORAGE__COLLECTION_STORAGE_FILE, oldCollectionStorageFile,
+                collectionStorageFile ) );
+        }
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public String toString()
     {
-        if (eIsProxy()) return super.toString();
+        if ( eIsProxy() )
+        {
+            return super.toString();
+        }
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (collectionStorageFile: ");
-        result.append(collectionStorageFile);
-        result.append(')');
+        StringBuffer result = new StringBuffer( super.toString() );
+        result.append( " (collectionStorageFile: " );
+        result.append( collectionStorageFile );
+        result.append( ')' );
         return result.toString();
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override

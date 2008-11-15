@@ -41,7 +41,6 @@ public class SettingsDialog
 
         registerComponents();
 
-        prepareSettings();
         arrangeSettingValues();
 
         fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
@@ -56,32 +55,6 @@ public class SettingsDialog
         tmpTextField.setText( settings.getProperty( JBookShelfSettings.TEMP_FOLDER ) );
         jbsTextField.setText( settings.getProperty( JBookShelfSettings.JBS_FOLDER ) );
         importTextField.setText( settings.getProperty( JBookShelfSettings.IMPORT_MASK ) );
-    }
-
-    private void prepareSettings()
-    {
-        settings.loadDefaults();
-        String folderName = settings.getProperty( JBookShelfSettings.JBS_FOLDER );
-        File folder = new File( folderName );
-        String fileName = getSettingsFileName();
-        File file = new File( fileName );
-        if ( file.exists() )
-        {
-            settings.load( fileName );
-        }
-        else
-        {
-            if ( !folder.exists() )
-            {
-                folder.mkdir();
-            }
-            settings.save( fileName, true );
-        }
-    }
-
-    private String getSettingsFileName()
-    {
-        return settings.getProperty( JBookShelfSettings.JBS_FOLDER ) + File.separator + "settings.properties";
     }
 
     /**
@@ -327,7 +300,7 @@ public class SettingsDialog
     private void okButtonActionPerformed(
         java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_okButtonActionPerformed
-        settings.save( getSettingsFileName(), true );
+        settings.save( settings.getSettingsFile().getAbsolutePath(), true );
         dispose();
     }// GEN-LAST:event_okButtonActionPerformed
 
