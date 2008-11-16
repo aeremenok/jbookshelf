@@ -86,10 +86,9 @@ public class FileImporter
         }.importFiles( root.listFiles(), "%a. %b", bookShelf );
     }
 
-    private static PhysicalUnit createPhysicalUnit(
+    public static PhysicalUnit createPhysicalUnit(
         File file )
     {
-        String fileName = cutExtension( file );
         if ( file.isDirectory() )
         {
             File[] files = file.listFiles( new FileFilter()
@@ -131,7 +130,7 @@ public class FileImporter
         }
 
         // zip file
-        if ( fileName.endsWith( ".zip" ) )
+        if ( file.getName().endsWith( ".zip" ) )
         {
             ArchiveFile archiveFile = JbookshelfFactory.eINSTANCE.createArchiveFile();
             archiveFile.setArchiveFile( file );

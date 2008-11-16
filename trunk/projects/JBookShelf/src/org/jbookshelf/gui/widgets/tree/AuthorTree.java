@@ -1,4 +1,4 @@
-package org.jbookshelf.gui.tree;
+package org.jbookshelf.gui.widgets.tree;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 

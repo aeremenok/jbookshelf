@@ -4,12 +4,49 @@
 
 package org.jbookshelf.gui;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+import org.jbookshelf.Author;
+import org.jbookshelf.Category;
+import org.jbookshelf.PhysicalUnit;
+import org.jbookshelf.Unique;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
+import org.util.FileImporter;
+import org.util.storage.Storage;
+
 /**
  * @author uik
  */
 public class BookAdditionDialog
     extends javax.swing.JDialog
 {
+    private ObjectToStringConverter converter = new ObjectToStringConverter()
+                                              {
+                                                  @Override
+                                                  public String getPreferredStringForItem(
+                                                      Object object )
+                                                  {
+                                                      if ( object == null )
+                                                      {
+                                                          return null;
+                                                      }
+
+                                                      if ( object instanceof Unique )
+                                                      {
+                                                          return ((Unique) object).getName();
+                                                      }
+
+                                                      return object.toString();
+                                                  }
+                                              };
 
     /** Creates new form BookAdditionDialog */
     public BookAdditionDialog(
@@ -18,12 +55,25 @@ public class BookAdditionDialog
     {
         super( parent, modal );
         initComponents();
+
         initCustomComponents();
+
+        registerComponents();
+    }
+
+    private void registerComponents()
+    {
+        components.add( bookTextField );
+        components.add( authorTextField );
+        components.add( categoryTextField );
+        components.add( fileTextField );
     }
 
     private void initCustomComponents()
     {
-        // TODO Auto-generated method stub
+        AutoCompleteDecorator.decorate( authorTextField, Storage.getBookShelf().getAuthors(), false, converter );
+        AutoCompleteDecorator.decorate( categoryTextField, Storage.getBookShelf().getCategories(), false, converter );
+        // todo better autocomplete
     }
 
     /**
@@ -33,6 +83,7 @@ public class BookAdditionDialog
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
     {
+
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
@@ -74,12 +125,48 @@ public class BookAdditionDialog
         fileTextField.setText( "jTextField4" );
 
         chooseButton.setText( "Choose..." );
+        chooseButton.addActionListener( new java.awt.event.ActionListener()
+        {
+            @SuppressWarnings( "synthetic-access" )
+            public void actionPerformed(
+                java.awt.event.ActionEvent evt )
+            {
+                chooseButtonActionPerformed( evt );
+            }
+        } );
 
         cancelButton.setText( "Cancel" );
+        cancelButton.addActionListener( new java.awt.event.ActionListener()
+        {
+            @SuppressWarnings( "synthetic-access" )
+            public void actionPerformed(
+                java.awt.event.ActionEvent evt )
+            {
+                cancelButtonActionPerformed( evt );
+            }
+        } );
 
         addNContinueButton.setText( "Add And Continue" );
+        addNContinueButton.addActionListener( new java.awt.event.ActionListener()
+        {
+            @SuppressWarnings( "synthetic-access" )
+            public void actionPerformed(
+                java.awt.event.ActionEvent evt )
+            {
+                addNContinueButtonActionPerformed( evt );
+            }
+        } );
 
         addNCloseButton.setText( "Add And Close" );
+        addNCloseButton.addActionListener( new java.awt.event.ActionListener()
+        {
+            @SuppressWarnings( "synthetic-access" )
+            public void actionPerformed(
+                java.awt.event.ActionEvent evt )
+            {
+                addNCloseButtonActionPerformed( evt );
+            }
+        } );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout( getContentPane() );
         getContentPane().setLayout( layout );
@@ -141,6 +228,86 @@ public class BookAdditionDialog
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void chooseButtonActionPerformed(
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_chooseButtonActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        if ( fileChooser.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION )
+        {
+            fileTextField.setText( fileChooser.getSelectedFile().getAbsolutePath() );
+        }
+    }// GEN-LAST:event_chooseButtonActionPerformed
+
+    private void cancelButtonActionPerformed(
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_cancelButtonActionPerformed
+        dispose();
+    }// GEN-LAST:event_cancelButtonActionPerformed
+
+    private void addNContinueButtonActionPerformed(
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_addNContinueButtonActionPerformed
+        if ( addBook() )
+        {
+            clear();
+        }
+    }// GEN-LAST:event_addNContinueButtonActionPerformed
+
+    private void addNCloseButtonActionPerformed(
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_addNCloseButtonActionPerformed
+        if ( addBook() )
+        {
+            dispose();
+        }
+    }// GEN-LAST:event_addNCloseButtonActionPerformed
+
+    private boolean addBook()
+    {
+        String bookName = bookTextField.getText();
+        if ( bookName.equals( "" ) )
+        {
+            JOptionPane.showMessageDialog( this, "Book name not specified", "Error", JOptionPane.ERROR_MESSAGE );
+            return false;
+        }
+
+        File file = new File( fileTextField.getText() );
+        if ( !file.exists() )
+        {
+            JOptionPane
+                .showMessageDialog( this, file.getName() + " does not exist", "Error", JOptionPane.ERROR_MESSAGE );
+            return false;
+        }
+
+        String authorName = authorTextField.getText();
+        Author author = Storage.getBookShelf().addAuthor( authorName );
+
+        String categoryName = categoryTextField.getText();
+        Category category = Storage.getBookShelf().addCategory( categoryName );
+
+        PhysicalUnit physicalUnit = FileImporter.createPhysicalUnit( file );
+        Storage.getBookShelf().addReadingUnit( bookName, author, category, physicalUnit );
+
+        CollectionPanel.getInstance().updateTree();
+
+        JOptionPane.showMessageDialog( this, bookName + " added" );
+        return true;
+    }
+
+    private void clear()
+    {
+        for ( JComponent component : components )
+        {
+            if ( component instanceof JTextField )
+            {
+                ((JTextField) component).setText( "" );
+            }
+        }
+        isReadCheckBox.setText( "false" );
+    }
+
+    private List<JComponent> components = new ArrayList<JComponent>();
 
     /**
      * @param args the command line arguments
