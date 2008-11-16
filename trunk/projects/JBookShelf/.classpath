@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="lib/org.eclipse.emf.ecore.xmi_2.4.1.v200808251517.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.emf.common_2.4.0.v200808251517.jar"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/swingx.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
