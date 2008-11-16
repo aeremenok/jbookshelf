@@ -701,6 +701,9 @@ public class JbookshelfPackageImpl
         addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEBooleanObject(), "isRead", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+        op = addEOperation(bookShelfEClass, null, "removeUnique", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getUnique(), "unique", 0, 1, IS_UNIQUE, IS_ORDERED);
+
         initEClass(archiveFileEClass, ArchiveFile.class, "ArchiveFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getArchiveFile_ArchiveFile(), this.getFile(), "archiveFile", null, 0, 1, ArchiveFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
