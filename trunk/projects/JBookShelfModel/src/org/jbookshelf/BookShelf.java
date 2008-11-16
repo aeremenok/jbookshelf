@@ -44,6 +44,13 @@ public interface BookShelf
         PhysicalUnit physicalUnit );
 
     /**
+     * @param unique item to remove
+     * @model
+     */
+    void removeUnique(
+        Unique unique );
+
+    /**
      * @return all authors in collection
      * @model containment="true"
      */

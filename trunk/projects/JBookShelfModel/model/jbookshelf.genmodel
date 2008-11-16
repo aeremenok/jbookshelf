@@ -83,6 +83,9 @@
         <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/queryUnits/query"/>
         <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/queryUnits/isRead"/>
       </genOperations>
+      <genOperations ecoreOperation="jbookshelf.ecore#//BookShelf/removeUnique">
+        <genParameters ecoreParameter="jbookshelf.ecore#//BookShelf/removeUnique/unique"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="jbookshelf.ecore#//ArchiveFile">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jbookshelf.ecore#//ArchiveFile/archiveFile"/>
