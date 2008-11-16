@@ -20,8 +20,6 @@ public abstract class CollectionTree
         super();
 
         ((DefaultTreeModel) getModel()).setRoot( root );
-        // todo expand after updating
-        // setRootVisible( false );
         setExpandsSelectedPaths( true );
 
         getSelectionModel().setSelectionMode( TreeSelectionModel.SINGLE_TREE_SELECTION );
@@ -43,6 +41,9 @@ public abstract class CollectionTree
             root.add( parent );
             addChildren( unique, parent );
         }
+
+        expandRow( 0 );
+        setRootVisible( false );
     }
 
     protected abstract void addChildren(
