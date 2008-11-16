@@ -80,18 +80,7 @@ public abstract class CollectionTree
     public void update(
         BookShelf bookShelf )
     {
-        root.removeAllChildren();
-
-        EList<Unique> uniques = (EList<Unique>) bookShelf.eGet( getReference() );
-        for ( Unique unique : uniques )
-        {
-            UniqueNode parent = new UniqueNode( unique );
-            root.add( parent );
-            addChildren( parent );
-        }
-
-        expandRow( 0 );
-        setRootVisible( false );
+        showResult( (EList<Unique>) bookShelf.eGet( getReference() ) );
     }
 
     protected abstract void addChildren(
@@ -101,6 +90,24 @@ public abstract class CollectionTree
     {
         UniqueNode uniqueNode = (UniqueNode) getLastSelectedPathComponent();
         uniqueNode.removeFromParent();
+        updateUI();
+    }
+
+    public void showResult(
+        EList<? extends Unique> uniques )
+    {
+        root.removeAllChildren();
+
+        for ( Unique unique : uniques )
+        {
+            UniqueNode parent = new UniqueNode( unique );
+            root.add( parent );
+            addChildren( parent );
+        }
+
+        expandRow( 0 );
+        setRootVisible( false );
+
         updateUI();
     }
 }
