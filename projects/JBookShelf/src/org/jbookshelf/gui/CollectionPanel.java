@@ -5,10 +5,10 @@ package org.jbookshelf.gui;
 
 import javax.swing.JTree;
 
-import org.jbookshelf.gui.tree.AuthorTree;
-import org.jbookshelf.gui.tree.BookTree;
-import org.jbookshelf.gui.tree.CategoryTree;
-import org.jbookshelf.gui.tree.CollectionTree;
+import org.jbookshelf.gui.widgets.tree.AuthorTree;
+import org.jbookshelf.gui.widgets.tree.BookTree;
+import org.jbookshelf.gui.widgets.tree.CategoryTree;
+import org.jbookshelf.gui.widgets.tree.CollectionTree;
 import org.util.storage.Storage;
 
 /**
