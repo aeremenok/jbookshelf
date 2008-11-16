@@ -7,28 +7,27 @@ import org.jbookshelf.Categorizable;
 import org.jbookshelf.Category;
 import org.jbookshelf.JbookshelfPackage;
 import org.jbookshelf.ReadingUnit;
-import org.jbookshelf.Unique;
 
 public class CategoryTree
     extends CollectionTree
 {
     @Override
     protected void addChildren(
-        Unique unique,
-        DefaultMutableTreeNode parent )
+        UniqueNode parent )
     {
         DefaultMutableTreeNode authors = new DefaultMutableTreeNode( "Authors" );
         DefaultMutableTreeNode books = new DefaultMutableTreeNode( "Books" );
-        Category category = (Category) unique;
+        Category category = (Category) parent.getUnique();
         for ( Categorizable categorizable : category.getCategorizables() )
         {
+            UniqueNode node = new UniqueNode( categorizable );
             if ( categorizable instanceof ReadingUnit )
             {
-                books.add( new DefaultMutableTreeNode( categorizable.getName() ) );
+                books.add( node );
             }
             else
             {
-                authors.add( new DefaultMutableTreeNode( categorizable.getName() ) );
+                authors.add( node );
             }
         }
 

@@ -11,10 +11,29 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
 import org.jbookshelf.BookShelf;
 import org.jbookshelf.Unique;
+import org.jbookshelf.gui.ToolBar;
 
 public abstract class CollectionTree
     extends JTree
 {
+    protected class UniqueNode
+        extends DefaultMutableTreeNode
+    {
+        private Unique unique;
+
+        public UniqueNode(
+            Unique unique )
+        {
+            super( unique.getName() );
+            this.unique = unique;
+        }
+
+        public Unique getUnique()
+        {
+            return unique;
+        }
+    }
+
     protected DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 
     public CollectionTree()
@@ -35,14 +54,24 @@ public abstract class CollectionTree
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) getLastSelectedPathComponent();
                 if ( node == null )
                 {
-                    // todo
+                    ToolBar.getInstance().nothingSelected();
                 }
                 else
                 {
-                    // todo
+                    if ( node instanceof UniqueNode )
+                    {
+                        UniqueNode uniqueNode = (UniqueNode) node;
+                        ToolBar.getInstance().selectedUnique( uniqueNode.getUnique() );
+                    }
+                    else
+                    {
+                        ToolBar.getInstance().nothingSelected();
+                    }
                 }
             }
         } );
+
+        ToolBar.getInstance().nothingSelected();
     }
 
     protected abstract EReference getReference();
@@ -56,9 +85,9 @@ public abstract class CollectionTree
         EList<Unique> uniques = (EList<Unique>) bookShelf.eGet( getReference() );
         for ( Unique unique : uniques )
         {
-            DefaultMutableTreeNode parent = new DefaultMutableTreeNode( unique.getName() );
+            UniqueNode parent = new UniqueNode( unique );
             root.add( parent );
-            addChildren( unique, parent );
+            addChildren( parent );
         }
 
         expandRow( 0 );
@@ -66,6 +95,5 @@ public abstract class CollectionTree
     }
 
     protected abstract void addChildren(
-        Unique unique,
-        DefaultMutableTreeNode parent );
+        UniqueNode parent );
 }

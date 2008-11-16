@@ -7,27 +7,25 @@ import org.jbookshelf.Author;
 import org.jbookshelf.Category;
 import org.jbookshelf.JbookshelfPackage;
 import org.jbookshelf.ReadingUnit;
-import org.jbookshelf.Unique;
 
 public class AuthorTree
     extends CollectionTree
 {
     @Override
     protected void addChildren(
-        Unique unique,
-        DefaultMutableTreeNode parent )
+        UniqueNode parent )
     {
         DefaultMutableTreeNode books = new DefaultMutableTreeNode( "Books" );
         DefaultMutableTreeNode categories = new DefaultMutableTreeNode( "Categories" );
-        Author author = (Author) unique;
+        Author author = (Author) parent.getUnique();
 
         for ( ReadingUnit book : author.getReadingUnits() )
         {
-            books.add( new DefaultMutableTreeNode( book.getName() ) );
+            books.add( new UniqueNode( book ) );
         }
         for ( Category category : author.getCategories() )
         {
-            categories.add( new DefaultMutableTreeNode( category.getName() ) );
+            categories.add( new UniqueNode( category ) );
         }
 
         if ( books.getChildCount() > 0 )
