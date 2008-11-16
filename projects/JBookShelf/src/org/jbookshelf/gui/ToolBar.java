@@ -10,6 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import org.jbookshelf.ReadingUnit;
+import org.jbookshelf.Unique;
 import org.util.FileImporter;
 import org.util.settings.JBookShelfSettings;
 import org.util.settings.Settings;
@@ -297,4 +298,14 @@ public class ToolBar
         return instance;
     }
 
+    public void nothingSelected()
+    {
+        removeButton.setEnabled( false );
+    }
+
+    public void selectedUnique(
+        @SuppressWarnings( "unused" ) Unique unique )
+    {
+        removeButton.setEnabled( true );
+    }
 }
