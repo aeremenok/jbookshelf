@@ -185,4 +185,10 @@ public class CollectionPanel
         }
         return instance;
     }
+
+    public void removeSelectedItem()
+    {
+        CollectionTree tree = (CollectionTree) getTrees()[viewTabbedPane.getSelectedIndex()];
+        tree.removeSelectedItem();
+    }
 }

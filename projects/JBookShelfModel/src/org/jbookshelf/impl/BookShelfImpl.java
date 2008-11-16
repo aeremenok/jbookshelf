@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.jbookshelf.Author;
 import org.jbookshelf.BookShelf;
 import org.jbookshelf.Category;
+import org.jbookshelf.Commentable;
 import org.jbookshelf.JbookshelfFactory;
 import org.jbookshelf.JbookshelfPackage;
 import org.jbookshelf.PhysicalUnit;
@@ -446,17 +447,27 @@ public class BookShelfImpl
     public void removeUnique(
         Unique unique )
     {
+        unique.getRelated().clear();
+        ((Commentable) unique).getComments().clear();
         if ( unique instanceof ReadingUnit )
         {
             getReadingUnits().remove( unique );
+            ReadingUnit readingUnit = (ReadingUnit) unique;
+            readingUnit.getAuthors().clear();
+            readingUnit.getCategories().clear();
         }
         else if ( unique instanceof Author )
         {
             getAuthors().remove( unique );
+            Author author = (Author) unique;
+            author.getReadingUnits().clear();
+            author.getCategories().clear();
         }
         else if ( unique instanceof Category )
         {
             getCategories().remove( unique );
+            Category category = (Category) unique;
+            category.getCategorizables().clear();
         }
     }
 

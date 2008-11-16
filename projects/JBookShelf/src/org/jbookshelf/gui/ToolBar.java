@@ -184,13 +184,18 @@ public class ToolBar
     private void removeButtonActionPerformed(
         @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_removeButtonActionPerformed
-        // TODO add your handling code here:
+        if ( JOptionPane.showConfirmDialog( this, "Remove " + selectedUnique.getName() + "?" ) == JOptionPane.YES_OPTION )
+        {
+            Storage.getBookShelf().removeUnique( selectedUnique );
+            CollectionPanel.getInstance().removeSelectedItem();
+            JOptionPane.showMessageDialog( this, selectedUnique.getName() + " removed" );
+        }
     }// GEN-LAST:event_removeButtonActionPerformed
 
     private void openButtonActionPerformed(
         @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_openButtonActionPerformed
-        // TODO add your handling code here:
+        ((ReadingUnit) selectedUnique).getPhysical().openUnit();
     }// GEN-LAST:event_openButtonActionPerformed
 
     private void settingsButtonActionPerformed(
@@ -237,7 +242,7 @@ public class ToolBar
             }
             importer.importFiles( chooser.getSelectedFile().listFiles(), mask, Storage.getBookShelf() );
 
-            MainWindow.getInstance().collectionChanged();
+            CollectionPanel.getInstance().updateTree();
         }
     }// GEN-LAST:event_importButtonActionPerformed
 
@@ -270,7 +275,7 @@ public class ToolBar
         if ( chooser.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION )
         {
             Storage.restoreCollection( chooser.getSelectedFile() );
-            MainWindow.getInstance().collectionChanged();
+            CollectionPanel.getInstance().updateTree();
         }
     }// GEN-LAST:event_restoreButtonActionPerformed
 
@@ -301,11 +306,19 @@ public class ToolBar
     public void nothingSelected()
     {
         removeButton.setEnabled( false );
+        openButton.setEnabled( false );
     }
 
+    private Unique selectedUnique;
+
     public void selectedUnique(
-        @SuppressWarnings( "unused" ) Unique unique )
+        Unique unique )
     {
+        this.selectedUnique = unique;
         removeButton.setEnabled( true );
+        if ( selectedUnique instanceof ReadingUnit )
+        {
+            openButton.setEnabled( true );
+        }
     }
 }
