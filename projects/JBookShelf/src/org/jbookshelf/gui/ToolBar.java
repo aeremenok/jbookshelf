@@ -22,17 +22,15 @@ import org.util.storage.Storage;
 public class ToolBar
     extends javax.swing.JPanel
 {
-    private final MainWindow mainWindow;
+    private static ToolBar instance;
 
     /**
      * Creates new form ToolBar
      * 
      * @param mainWindow
      */
-    public ToolBar(
-        MainWindow mainWindow )
+    private ToolBar()
     {
-        this.mainWindow = mainWindow;
         initComponents();
     }
 
@@ -177,19 +175,19 @@ public class ToolBar
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(
-        java.awt.event.ActionEvent evt )
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
+        new BookAdditionDialog( MainWindow.getInstance(), true ).setVisible( true );
     }// GEN-LAST:event_addButtonActionPerformed
 
     private void removeButtonActionPerformed(
-        java.awt.event.ActionEvent evt )
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_removeButtonActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_removeButtonActionPerformed
 
     private void openButtonActionPerformed(
-        java.awt.event.ActionEvent evt )
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_openButtonActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_openButtonActionPerformed
@@ -197,7 +195,7 @@ public class ToolBar
     private void settingsButtonActionPerformed(
         @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
     {// GEN-FIRST:event_settingsButtonActionPerformed
-        new SettingsDialog( mainWindow, true ).setVisible( true );
+        new SettingsDialog( MainWindow.getInstance(), true ).setVisible( true );
     }// GEN-LAST:event_settingsButtonActionPerformed
 
     private void importButtonActionPerformed(
@@ -238,7 +236,7 @@ public class ToolBar
             }
             importer.importFiles( chooser.getSelectedFile().listFiles(), mask, Storage.getBookShelf() );
 
-            mainWindow.collectionChanged();
+            MainWindow.getInstance().collectionChanged();
         }
     }// GEN-LAST:event_importButtonActionPerformed
 
@@ -271,7 +269,7 @@ public class ToolBar
         if ( chooser.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION )
         {
             Storage.restoreCollection( chooser.getSelectedFile() );
-            mainWindow.collectionChanged();
+            MainWindow.getInstance().collectionChanged();
         }
     }// GEN-LAST:event_restoreButtonActionPerformed
 
@@ -287,6 +285,16 @@ public class ToolBar
     private javax.swing.JButton            removeButton;
     private javax.swing.JButton            restoreButton;
     private javax.swing.JButton            settingsButton;
+
     // End of variables declaration//GEN-END:variables
+
+    public static ToolBar getInstance()
+    {
+        if ( instance == null )
+        {
+            instance = new ToolBar();
+        }
+        return instance;
+    }
 
 }

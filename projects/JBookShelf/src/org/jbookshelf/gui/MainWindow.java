@@ -20,13 +20,21 @@ import org.util.storage.Storage;
 public class MainWindow
     extends javax.swing.JFrame
 {
-    private final JSplitPane      splitPane    = new JSplitPane();
-    private final RelatedPanel    relatedPanel = new RelatedPanel();
+    private static MainWindow instance;
 
-    private final ToolBar         toolBar;
-    private final CollectionPanel collectionPanel;
+    public static MainWindow getInstance()
+    {
+        if ( instance == null )
+        {
+            instance = new MainWindow();
+        }
+        return instance;
+    }
 
-    private final Settings        settings     = Settings.getInstance();
+    private final JSplitPane   splitPane    = new JSplitPane();
+    private final RelatedPanel relatedPanel = new RelatedPanel();
+
+    private final Settings     settings     = Settings.getInstance();
 
     /** Creates new form MainWindow */
     public MainWindow()
@@ -36,18 +44,15 @@ public class MainWindow
         ((SingleFileStorageImpl) Storage.getImpl()).setCollectionStorageFile( settings.getCollectionFile() );
         Storage.loadCollection();
 
-        toolBar = new ToolBar( this );
-        collectionPanel = new CollectionPanel( this );
-
         initCustomComponents();
     }
 
     private void initCustomComponents()
     {
-        add( toolBar, BorderLayout.NORTH );
+        add( ToolBar.getInstance(), BorderLayout.NORTH );
         add( splitPane, BorderLayout.SOUTH );
 
-        splitPane.setLeftComponent( collectionPanel );
+        splitPane.setLeftComponent( CollectionPanel.getInstance() );
         splitPane.setRightComponent( relatedPanel );
         splitPane.setResizeWeight( 0.7 );
 
@@ -93,14 +98,14 @@ public class MainWindow
         {
             public void run()
             {
-                new MainWindow().setVisible( true );
+                MainWindow.getInstance().setVisible( true );
             }
         } );
     }
 
     public void collectionChanged()
     {
-        collectionPanel.updateTree();
+        CollectionPanel.getInstance().updateTree();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
