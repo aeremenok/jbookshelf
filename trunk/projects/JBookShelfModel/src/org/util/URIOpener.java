@@ -57,12 +57,14 @@ public class URIOpener
     }
 
     /**
-     * @param path must not start with "file:///"
+     * @param path must not start with "file:///" or "http://"
      */
     public static void browseFile(
         String path )
     {
-        browse( "file:///" + path );
+        String url = "file:///" + path;
+        url = url.replaceAll( " ", "%20" );
+        browse( url );
     }
 
     /**

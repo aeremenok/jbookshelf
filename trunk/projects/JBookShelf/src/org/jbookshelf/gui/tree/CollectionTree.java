@@ -96,4 +96,11 @@ public abstract class CollectionTree
 
     protected abstract void addChildren(
         UniqueNode parent );
+
+    public void removeSelectedItem()
+    {
+        UniqueNode uniqueNode = (UniqueNode) getLastSelectedPathComponent();
+        uniqueNode.removeFromParent();
+        updateUI();
+    }
 }
