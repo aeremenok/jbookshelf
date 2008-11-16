@@ -1,6 +1,8 @@
 package org.jbookshelf.gui.tree;
 
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
@@ -24,6 +26,23 @@ public abstract class CollectionTree
 
         getSelectionModel().setSelectionMode( TreeSelectionModel.SINGLE_TREE_SELECTION );
         setShowsRootHandles( false );
+
+        addTreeSelectionListener( new TreeSelectionListener()
+        {
+            public void valueChanged(
+                TreeSelectionEvent e )
+            {
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) getLastSelectedPathComponent();
+                if ( node == null )
+                {
+                    // todo
+                }
+                else
+                {
+                    // todo
+                }
+            }
+        } );
     }
 
     protected abstract EReference getReference();

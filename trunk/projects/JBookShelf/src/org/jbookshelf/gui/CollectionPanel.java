@@ -18,17 +18,15 @@ import org.util.storage.Storage;
 public class CollectionPanel
     extends javax.swing.JPanel
 {
-    private final MainWindow mainWindow;
+    private static CollectionPanel instance;
 
     /**
      * Creates new form CollectionPanel
      * 
      * @param mainWindow
      */
-    public CollectionPanel(
-        MainWindow mainWindow )
+    public CollectionPanel()
     {
-        this.mainWindow = mainWindow;
         initComponents();
     }
 
@@ -177,5 +175,14 @@ public class CollectionPanel
     {
         CollectionTree tree = (CollectionTree) getTrees()[viewTabbedPane.getSelectedIndex()];
         tree.update( Storage.getBookShelf() );
+    }
+
+    public static CollectionPanel getInstance()
+    {
+        if ( instance == null )
+        {
+            instance = new CollectionPanel();
+        }
+        return instance;
     }
 }
