@@ -353,11 +353,12 @@ public class BookShelfImpl
     public EList<Author> queryAuthors(
         String query )
     {
+        String lowerCase = query.toLowerCase();
         EList<Author> result = new BasicEList<Author>();
 
         for ( Author author : getAuthors() )
         {
-            if ( author.getName().contains( query ) )
+            if ( author.getName().toLowerCase().contains( lowerCase ) )
             {
                 result.add( author );
             }
@@ -374,11 +375,12 @@ public class BookShelfImpl
     public EList<Category> queryCategories(
         String query )
     {
+        String lowerCase = query.toLowerCase();
         EList<Category> result = new BasicEList<Category>();
 
         for ( Category category : getCategories() )
         {
-            if ( category.getName().contains( query ) )
+            if ( category.getName().toLowerCase().contains( lowerCase ) )
             {
                 result.add( category );
             }
@@ -413,13 +415,14 @@ public class BookShelfImpl
         String query,
         Boolean isRead )
     {
+        String lowerCase = query.toLowerCase();
         EList<ReadingUnit> result = new BasicEList<ReadingUnit>();
 
         if ( isRead == null )
         {
             for ( ReadingUnit unit : getReadingUnits() )
             {
-                if ( unit.getName().contains( query ) )
+                if ( unit.getName().toLowerCase().contains( lowerCase ) )
                 {
                     result.add( unit );
                 }
@@ -429,7 +432,7 @@ public class BookShelfImpl
         {
             for ( ReadingUnit unit : getReadingUnits() )
             {
-                if ( isRead.booleanValue() == unit.isRead() && unit.getName().contains( query ) )
+                if ( isRead.booleanValue() == unit.isRead() && unit.getName().toLowerCase().contains( lowerCase ) )
                 {
                     result.add( unit );
                 }

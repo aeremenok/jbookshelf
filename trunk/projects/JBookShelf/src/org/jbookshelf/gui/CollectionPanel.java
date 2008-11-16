@@ -1,7 +1,6 @@
 /*
  * CollectionPanel.java Created on 15 Ноябрь 2008 г., 12:42
  */
-
 package org.jbookshelf.gui;
 
 import javax.swing.JTree;
@@ -18,6 +17,7 @@ import org.util.storage.Storage;
 public class CollectionPanel
     extends javax.swing.JPanel
 {
+
     private static CollectionPanel instance;
 
     /**
@@ -54,11 +54,27 @@ public class CollectionPanel
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
         cleanButton.setText( bundle.getString( "CollectionPanel.cleanButton.text" ) ); // NOI18N
+        cleanButton.addActionListener( new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(
+                java.awt.event.ActionEvent evt )
+            {
+                cleanButtonActionPerformed( evt );
+            }
+        } );
 
         searchTextField.setText( bundle.getString( "CollectionPanel.searchTextField.text" ) ); // NOI18N
 
         searchButton.setText( bundle.getString( "CollectionPanel.searchButton.text" ) ); // NOI18N
         searchButton.setAutoscrolls( true );
+        searchButton.addActionListener( new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(
+                java.awt.event.ActionEvent evt )
+            {
+                searchButtonActionPerformed( evt );
+            }
+        } );
 
         isReadComboBox.setModel( new javax.swing.DefaultComboBoxModel( new String[] { "All", "Read", "Unread" } ) );
 
@@ -85,7 +101,6 @@ public class CollectionPanel
 
         viewTabbedPane.addChangeListener( new javax.swing.event.ChangeListener()
         {
-            @SuppressWarnings( "synthetic-access" )
             public void stateChanged(
                 javax.swing.event.ChangeEvent evt )
             {
@@ -138,9 +153,53 @@ public class CollectionPanel
                     javax.swing.GroupLayout.PREFERRED_SIZE ).addGap( 0, 0, Short.MAX_VALUE ) ) ) );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void searchButtonActionPerformed(
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_searchButtonActionPerformed
+        String text = searchTextField.getText();
+        CollectionTree tree = getActiveTree();
+        if ( tree instanceof BookTree )
+        {
+            Boolean isRead = null;
+            int index = isReadComboBox.getSelectedIndex();
+            if ( index == 1 )
+            {
+                isRead = true;
+            }
+            else if ( index == 2 )
+            {
+                isRead = false;
+            }
+            tree.showResult( Storage.getBookShelf().queryUnits( text, isRead ) );
+        }
+        else if ( tree instanceof AuthorTree )
+        {
+            tree.showResult( Storage.getBookShelf().queryAuthors( text ) );
+        }
+        else
+        // (tree instanceoof CategoryTree)
+        {
+            tree.showResult( Storage.getBookShelf().queryCategories( text ) );
+        }
+    }// GEN-LAST:event_searchButtonActionPerformed
+
+    private void cleanButtonActionPerformed(
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_cleanButtonActionPerformed
+        searchTextField.setText( "" );
+    }// GEN-LAST:event_cleanButtonActionPerformed
+
     private void viewTabbedPaneStateChanged(
         @SuppressWarnings( "unused" ) javax.swing.event.ChangeEvent evt )
     {// GEN-FIRST:event_viewTabbedPaneStateChanged
+        if ( getActiveTree() instanceof BookTree )
+        {
+            isReadComboBox.setEnabled( true );
+        }
+        else
+        {
+            isReadComboBox.setEnabled( false );
+        }
         updateTree();
     }// GEN-LAST:event_viewTabbedPaneStateChanged
 
@@ -173,8 +232,7 @@ public class CollectionPanel
 
     public void updateTree()
     {
-        CollectionTree tree = (CollectionTree) getTrees()[viewTabbedPane.getSelectedIndex()];
-        tree.update( Storage.getBookShelf() );
+        getActiveTree().update( Storage.getBookShelf() );
     }
 
     public static CollectionPanel getInstance()
@@ -188,7 +246,11 @@ public class CollectionPanel
 
     public void removeSelectedItem()
     {
-        CollectionTree tree = (CollectionTree) getTrees()[viewTabbedPane.getSelectedIndex()];
-        tree.removeSelectedItem();
+        getActiveTree().removeSelectedItem();
+    }
+
+    private CollectionTree getActiveTree()
+    {
+        return (CollectionTree) getTrees()[viewTabbedPane.getSelectedIndex()];
     }
 }
