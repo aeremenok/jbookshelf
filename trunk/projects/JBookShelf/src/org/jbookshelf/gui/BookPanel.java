@@ -13,13 +13,17 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import org.jbookshelf.ArchiveFile;
 import org.jbookshelf.Author;
 import org.jbookshelf.Category;
+import org.jbookshelf.IndexFileFolder;
 import org.jbookshelf.PhysicalUnit;
+import org.jbookshelf.ReadingUnit;
+import org.jbookshelf.SingleFile;
+import org.jbookshelf.SingleFileFolder;
 import org.jbookshelf.Unique;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
-import org.util.FileImporter;
 import org.util.storage.Storage;
 
 /**
@@ -47,6 +51,54 @@ public class BookPanel
                                                       return object.toString();
                                                   }
                                               };
+
+    public class Parameters
+    {
+        private final String  bookName;
+        private final String  authorName;
+        private final String  categoryName;
+        private final File    file;
+        private final boolean isRead;
+
+        public Parameters(
+            String bookName,
+            String authorName,
+            String categoryName,
+            File file,
+            boolean isRead )
+        {
+            this.bookName = bookName;
+            this.authorName = authorName;
+            this.categoryName = categoryName;
+            this.file = file;
+            this.isRead = isRead;
+        }
+
+        public boolean isRead()
+        {
+            return isRead;
+        }
+
+        public String getBookName()
+        {
+            return bookName;
+        }
+
+        public String getAuthorName()
+        {
+            return authorName;
+        }
+
+        public String getCategoryName()
+        {
+            return categoryName;
+        }
+
+        public File getFile()
+        {
+            return file;
+        }
+    }
 
     /** Creates new form BookPanel */
     public BookPanel()
@@ -188,7 +240,7 @@ public class BookPanel
     {
         AutoCompleteDecorator.decorate( authorTextField, Storage.getBookShelf().getAuthors(), false, converter );
         AutoCompleteDecorator.decorate( categoryTextField, Storage.getBookShelf().getCategories(), false, converter );
-        // todo better autocomplete
+        // todo better autocomplete and comma separated values
     }
 
     public void clear()
@@ -200,40 +252,84 @@ public class BookPanel
                 ((JTextField) component).setText( "" );
             }
         }
-        isReadCheckBox.setText( "false" );
+        isReadCheckBox.setSelected( false );
     }
 
     private List<JComponent> components = new ArrayList<JComponent>();
 
-    public boolean addBook()
+    public Parameters extractParameters()
     {
         String bookName = bookTextField.getText();
         if ( bookName.equals( "" ) )
         {
             JOptionPane.showMessageDialog( this, "Book name not specified", "Error", JOptionPane.ERROR_MESSAGE );
-            return false;
+            return null;
+        }
+
+        String authorName = authorTextField.getText();
+        if ( authorName.equals( "" ) )
+        {
+            JOptionPane.showMessageDialog( this, "Author name not specified", "Error", JOptionPane.ERROR_MESSAGE );
+            return null;
+        }
+
+        String categoryName = categoryTextField.getText();
+        if ( categoryName.equals( "" ) )
+        {
+            JOptionPane.showMessageDialog( this, "Category name not specified", "Error", JOptionPane.ERROR_MESSAGE );
+            return null;
         }
 
         File file = new File( fileTextField.getText() );
         if ( !file.exists() )
         {
-            JOptionPane
-                .showMessageDialog( this, file.getName() + " does not exist", "Error", JOptionPane.ERROR_MESSAGE );
-            return false;
+            JOptionPane.showMessageDialog( this, "File " + file.getName() + " does not exist", "Error",
+                JOptionPane.ERROR_MESSAGE );
+            return null;
         }
 
-        String authorName = authorTextField.getText();
-        Author author = Storage.getBookShelf().addAuthor( authorName );
+        boolean isRead = isReadCheckBox.isSelected();
 
-        String categoryName = categoryTextField.getText();
-        Category category = Storage.getBookShelf().addCategory( categoryName );
+        return new Parameters( bookName, authorName, categoryName, file, isRead );
+    }
 
-        PhysicalUnit physicalUnit = FileImporter.createPhysicalUnit( file );
-        Storage.getBookShelf().addReadingUnit( bookName, author, category, physicalUnit );
+    public void setBook(
+        ReadingUnit book )
+    {
+        bookTextField.setText( book.getName() );
+        Author author = book.getAuthors().get( 0 ); // todo multiple authors
+        authorTextField.setText( author.getName() );
+        Category category = book.getCategories().get( 0 ); // todo multiple categories
+        categoryTextField.setText( category.getName() );
 
-        CollectionPanel.getInstance().updateTree();
+        String fileName;
+        PhysicalUnit physical = book.getPhysical();
+        if ( physical instanceof SingleFile )
+        {
+            SingleFile singleFile = (SingleFile) physical;
+            fileName = singleFile.getFile().getAbsolutePath();
+        }
+        else if ( physical instanceof ArchiveFile )
+        {
+            ArchiveFile archiveFile = (ArchiveFile) physical;
+            fileName = archiveFile.getArchiveFile().getAbsolutePath();
+        }
+        else if ( physical instanceof SingleFileFolder )
+        {
+            SingleFileFolder singleFileFolder = (SingleFileFolder) physical;
+            fileName = singleFileFolder.getFolder().getAbsolutePath();
+        }
+        else if ( physical instanceof IndexFileFolder )
+        {
+            IndexFileFolder indexFileFolder = (IndexFileFolder) physical;
+            fileName = indexFileFolder.getIndexFolder().getAbsolutePath();
+        }
+        else
+        {
+            throw new Error( physical.toString() );
+        }
+        fileTextField.setText( fileName );
 
-        JOptionPane.showMessageDialog( this, bookName + " added" );
-        return true;
+        isReadCheckBox.setSelected( book.isRead() );
     }
 }

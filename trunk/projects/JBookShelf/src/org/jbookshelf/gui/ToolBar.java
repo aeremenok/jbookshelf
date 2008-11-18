@@ -46,6 +46,7 @@ public class ToolBar
         jToolBar1 = new javax.swing.JToolBar();
         addButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
+        editButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         openButton = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
@@ -64,7 +65,6 @@ public class ToolBar
         addButton.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
         addButton.addActionListener( new java.awt.event.ActionListener()
         {
-            @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
                 java.awt.event.ActionEvent evt )
             {
@@ -79,7 +79,6 @@ public class ToolBar
         removeButton.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
         removeButton.addActionListener( new java.awt.event.ActionListener()
         {
-            @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
                 java.awt.event.ActionEvent evt )
             {
@@ -87,6 +86,20 @@ public class ToolBar
             }
         } );
         jToolBar1.add( removeButton );
+
+        editButton.setText( bundle.getString( "ToolBar.editButton.text" ) ); // NOI18N
+        editButton.setFocusable( false );
+        editButton.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
+        editButton.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
+        editButton.addActionListener( new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(
+                java.awt.event.ActionEvent evt )
+            {
+                editButtonActionPerformed( evt );
+            }
+        } );
+        jToolBar1.add( editButton );
         jToolBar1.add( jSeparator1 );
 
         openButton.setText( bundle.getString( "ToolBar.openButton.text" ) ); // NOI18N
@@ -95,7 +108,6 @@ public class ToolBar
         openButton.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
         openButton.addActionListener( new java.awt.event.ActionListener()
         {
-            @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
                 java.awt.event.ActionEvent evt )
             {
@@ -111,7 +123,6 @@ public class ToolBar
         settingsButton.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
         settingsButton.addActionListener( new java.awt.event.ActionListener()
         {
-            @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
                 java.awt.event.ActionEvent evt )
             {
@@ -127,7 +138,6 @@ public class ToolBar
         importButton.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
         importButton.addActionListener( new java.awt.event.ActionListener()
         {
-            @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
                 java.awt.event.ActionEvent evt )
             {
@@ -142,7 +152,6 @@ public class ToolBar
         backupButton.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
         backupButton.addActionListener( new java.awt.event.ActionListener()
         {
-            @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
                 java.awt.event.ActionEvent evt )
             {
@@ -157,7 +166,6 @@ public class ToolBar
         restoreButton.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
         restoreButton.addActionListener( new java.awt.event.ActionListener()
         {
-            @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
                 java.awt.event.ActionEvent evt )
             {
@@ -169,11 +177,16 @@ public class ToolBar
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout( this );
         this.setLayout( layout );
         layout.setHorizontalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addComponent( jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                Short.MAX_VALUE ) );
+            .addComponent( jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE ) );
         layout.setVerticalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent(
             jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE ) );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void editButtonActionPerformed(
+        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_editButtonActionPerformed
+        new BookEditDialog( MainWindow.getInstance(), true, (ReadingUnit) selectedUnique ).setVisible( true );
+    }// GEN-LAST:event_editButtonActionPerformed
 
     private void addButtonActionPerformed(
         @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
@@ -282,6 +295,7 @@ public class ToolBar
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton            addButton;
     private javax.swing.JButton            backupButton;
+    private javax.swing.JButton            editButton;
     private javax.swing.JButton            importButton;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
@@ -307,6 +321,7 @@ public class ToolBar
     {
         removeButton.setEnabled( false );
         openButton.setEnabled( false );
+        editButton.setEnabled( false );
     }
 
     private Unique selectedUnique;
@@ -319,6 +334,7 @@ public class ToolBar
         if ( selectedUnique instanceof ReadingUnit )
         {
             openButton.setEnabled( true );
+            editButton.setEnabled( true );
         }
     }
 }

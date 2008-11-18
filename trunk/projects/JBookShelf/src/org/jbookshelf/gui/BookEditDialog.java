@@ -1,11 +1,6 @@
-/*
- * BookAdditionDialog.java Created on 1 Ноябрь 2008 г., 16:35
- */
-
 package org.jbookshelf.gui;
 
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.jbookshelf.Author;
@@ -15,20 +10,21 @@ import org.jbookshelf.ReadingUnit;
 import org.jbookshelf.gui.BookPanel.Parameters;
 import org.jdesktop.swingx.VerticalLayout;
 import org.util.FileImporter;
-import org.util.storage.Storage;
 
-/**
- * @author eav
- */
-public class BookAdditionDialog
+public class BookEditDialog
     extends JDialog
 {
-    public BookAdditionDialog(
+    private final ReadingUnit book;
+
+    public BookEditDialog(
         java.awt.Frame parent,
-        boolean modal )
+        boolean modal,
+        ReadingUnit book )
     {
         super( parent, modal );
+        this.book = book;
         initComponents();
+        getBookPanel().setBook( book );
     }
 
     private void initComponents()
@@ -36,8 +32,7 @@ public class BookAdditionDialog
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         cancelButton = new javax.swing.JButton();
-        addNContinueButton = new javax.swing.JButton();
-        addNCloseButton = new javax.swing.JButton();
+        applyButton = new javax.swing.JButton();
         bookPanel = new BookPanel();
 
         setDefaultCloseOperation( javax.swing.WindowConstants.DISPOSE_ON_CLOSE );
@@ -56,25 +51,14 @@ public class BookAdditionDialog
             }
         } );
 
-        addNContinueButton.setText( "Add And Continue" );
-        addNContinueButton.addActionListener( new java.awt.event.ActionListener()
+        applyButton.setText( "Apply" );
+        applyButton.addActionListener( new java.awt.event.ActionListener()
         {
             @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
                 java.awt.event.ActionEvent evt )
             {
-                addNContinueButtonActionPerformed( evt );
-            }
-        } );
-
-        addNCloseButton.setText( "Add And Close" );
-        addNCloseButton.addActionListener( new java.awt.event.ActionListener()
-        {
-            @SuppressWarnings( "synthetic-access" )
-            public void actionPerformed(
-                java.awt.event.ActionEvent evt )
-            {
-                addNCloseButtonActionPerformed( evt );
+                applyButtonActionPerformed( evt );
             }
         } );
 
@@ -86,8 +70,7 @@ public class BookAdditionDialog
         contentPanel.add( bookPanel );
         JPanel buttonPanel = new JPanel();
         contentPanel.add( buttonPanel );
-        buttonPanel.add( addNContinueButton );
-        buttonPanel.add( addNCloseButton );
+        buttonPanel.add( applyButton );
         buttonPanel.add( cancelButton );
 
         pack();
@@ -99,26 +82,32 @@ public class BookAdditionDialog
         dispose();
     }
 
-    private void addNContinueButtonActionPerformed(
+    private void applyButtonActionPerformed(
         @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
     {
         Parameters parameters = getBookPanel().extractParameters();
         if ( parameters != null )
         {
-            addBook( parameters );
-            getBookPanel().clear();
+            saveBook( parameters );
+            dispose();
         }
     }
 
-    private void addNCloseButtonActionPerformed(
-        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
+    public boolean saveBook(
+        Parameters parameters )
     {
-        Parameters parameters = getBookPanel().extractParameters();
-        if ( parameters != null )
-        {
-            addBook( parameters );
-            dispose();
-        }
+        Author author = book.getAuthors().get( 0 ); // todo edit multiple authors
+        author.setName( parameters.getBookName() );
+        Category category = book.getCategories().get( 0 );
+        category.setName( parameters.getCategoryName() ); // todo edit multiple categories
+        book.setName( parameters.getBookName() );
+
+        PhysicalUnit physicalUnit = FileImporter.createPhysicalUnit( parameters.getFile() );
+        book.setPhysical( physicalUnit );
+
+        book.setRead( parameters.isRead() );
+
+        return true;
     }
 
     public BookPanel getBookPanel()
@@ -126,22 +115,7 @@ public class BookAdditionDialog
         return (BookPanel) bookPanel;
     }
 
-    public void addBook(
-        Parameters parameters )
-    {
-        Author author = Storage.getBookShelf().addAuthor( parameters.getAuthorName() );
-        Category category = Storage.getBookShelf().addCategory( parameters.getCategoryName() );
-        PhysicalUnit physicalUnit = FileImporter.createPhysicalUnit( parameters.getFile() );
-        ReadingUnit unit =
-            Storage.getBookShelf().addReadingUnit( parameters.getBookName(), author, category, physicalUnit );
-        unit.setRead( parameters.isRead() );
-        CollectionPanel.getInstance().updateTree();
-
-        JOptionPane.showMessageDialog( this, parameters.getBookName() + " added" );
-    }
-
-    private javax.swing.JButton    addNCloseButton;
-    private javax.swing.JButton    addNContinueButton;
+    private javax.swing.JButton    applyButton;
     private javax.swing.JPanel     bookPanel;
     private javax.swing.JButton    cancelButton;
     private javax.swing.JLabel     jLabel1;
