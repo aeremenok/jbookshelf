@@ -1,6 +1,7 @@
 package org.jbookshelf.gui.widgets.panel;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -8,6 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+
+import org.jbookshelf.Unique;
 
 public class CommentTreePanel
     extends SearchableTreePanel
@@ -40,5 +43,40 @@ public class CommentTreePanel
 
         add( textAreaScrollPane );
         add( treeScrollPane );
+    }
+
+    public void nothingSelected()
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+    public void selectedUnique(
+        Unique unique )
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onAdd()
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onKeyTyped(
+        KeyEvent evt )
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onRemove()
+    {
+        // TODO Auto-generated method stub
+
     }
 }
