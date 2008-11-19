@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import org.jbookshelf.ReadingUnit;
 import org.jbookshelf.Unique;
+import org.jbookshelf.gui.logic.UniqueSelectionListener;
 import org.util.FileImporter;
 import org.util.settings.JBookShelfSettings;
 import org.util.settings.Settings;
@@ -22,6 +23,8 @@ import org.util.storage.Storage;
  */
 public class ToolBar
     extends javax.swing.JPanel
+    implements
+        UniqueSelectionListener
 {
     private static ToolBar instance;
 

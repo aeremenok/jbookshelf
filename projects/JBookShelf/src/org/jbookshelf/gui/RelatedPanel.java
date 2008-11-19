@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import org.jbookshelf.Unique;
+import org.jbookshelf.gui.logic.UniqueSelectionListener;
 import org.jbookshelf.gui.widgets.panel.CommentTreePanel;
 import org.jbookshelf.gui.widgets.panel.RelatedTreePanel;
 import org.jbookshelf.gui.widgets.panel.SearchableTreePanel;
@@ -26,7 +28,10 @@ import org.jdesktop.swingx.VerticalLayout;
  */
 public class RelatedPanel
     extends JPanel
+    implements
+        UniqueSelectionListener
 {
+    private static RelatedPanel   instance;
     private SearchableTreePanel[] searchableTreePanels;
     private JButton               addButton       = new JButton();
     private SearchableTreePanel   commentPanel    = new CommentTreePanel();
@@ -127,5 +132,25 @@ public class RelatedPanel
         KeyEvent evt )
     {
         getSelectedTreePanel().onKeyTyped( evt );
+    }
+
+    public static RelatedPanel getInstance()
+    {
+        if ( instance == null )
+        {
+            instance = new RelatedPanel();
+        }
+        return instance;
+    }
+
+    public void nothingSelected()
+    {
+        getSelectedTreePanel().nothingSelected();
+    }
+
+    public void selectedUnique(
+        Unique unique )
+    {
+        getSelectedTreePanel().selectedUnique( unique );
     }
 }

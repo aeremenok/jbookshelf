@@ -4,29 +4,23 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
 
+import org.jbookshelf.gui.logic.UniqueSelectionListener;
 import org.jdesktop.swingx.VerticalLayout;
 
 public abstract class SearchableTreePanel
     extends JPanel
+    implements
+        UniqueSelectionListener
 {
     public SearchableTreePanel()
     {
         super( new VerticalLayout() );
     }
 
-    public void onAdd()
-    {
-        // TODO Auto-generated method stub
-    }
+    public abstract void onAdd();
 
-    public void onRemove()
-    {
-        // TODO Auto-generated method stub
-    }
+    public abstract void onRemove();
 
-    public void onKeyTyped(
-        KeyEvent evt )
-    {
-        // TODO Auto-generated method stub
-    }
+    public abstract void onKeyTyped(
+        KeyEvent evt );
 }

@@ -1,5 +1,8 @@
 package org.jbookshelf.gui.widgets.tree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -11,10 +14,15 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
 import org.jbookshelf.BookShelf;
 import org.jbookshelf.Unique;
+import org.jbookshelf.gui.RelatedPanel;
 import org.jbookshelf.gui.ToolBar;
+import org.jbookshelf.gui.logic.SoucesUniqueSelection;
+import org.jbookshelf.gui.logic.UniqueSelectionListener;
 
 public abstract class CollectionTree
     extends JTree
+    implements
+        SoucesUniqueSelection
 {
     protected class UniqueNode
         extends DefaultMutableTreeNode
@@ -34,6 +42,20 @@ public abstract class CollectionTree
         }
     }
 
+    private List<UniqueSelectionListener> listeners = new ArrayList<UniqueSelectionListener>();
+
+    public void addSelectionListener(
+        UniqueSelectionListener listener )
+    {
+        listeners.add( listener );
+    }
+
+    public void removeSelectionListener(
+        UniqueSelectionListener listener )
+    {
+        listeners.remove( listener );
+    }
+
     protected DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 
     public CollectionTree()
@@ -46,32 +68,53 @@ public abstract class CollectionTree
         getSelectionModel().setSelectionMode( TreeSelectionModel.SINGLE_TREE_SELECTION );
         setShowsRootHandles( false );
 
+        addSelectionListener( ToolBar.getInstance() );
+        addSelectionListener( RelatedPanel.getInstance() );
+
         addTreeSelectionListener( new TreeSelectionListener()
         {
+            @SuppressWarnings( "synthetic-access" )
             public void valueChanged(
                 TreeSelectionEvent e )
             {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) getLastSelectedPathComponent();
                 if ( node == null )
                 {
-                    ToolBar.getInstance().nothingSelected();
+                    fireNothingSelected();
                 }
                 else
                 {
                     if ( node instanceof UniqueNode )
                     {
-                        UniqueNode uniqueNode = (UniqueNode) node;
-                        ToolBar.getInstance().selectedUnique( uniqueNode.getUnique() );
+                        fireSelectedUnique( ((UniqueNode) node).getUnique() );
                     }
                     else
                     {
-                        ToolBar.getInstance().nothingSelected();
+                        fireNothingSelected();
                     }
                 }
             }
+
         } );
 
         ToolBar.getInstance().nothingSelected();
+    }
+
+    private void fireSelectedUnique(
+        Unique unique )
+    {
+        for ( UniqueSelectionListener listener : listeners )
+        {
+            listener.selectedUnique( unique );
+        }
+    }
+
+    private void fireNothingSelected()
+    {
+        for ( UniqueSelectionListener listener : listeners )
+        {
+            listener.nothingSelected();
+        }
     }
 
     protected abstract EReference getReference();
