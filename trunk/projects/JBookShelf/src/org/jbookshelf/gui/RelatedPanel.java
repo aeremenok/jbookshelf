@@ -7,6 +7,8 @@ package org.jbookshelf.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ResourceBundle;
@@ -29,7 +31,8 @@ import org.jdesktop.swingx.VerticalLayout;
 public class RelatedPanel
     extends JPanel
     implements
-        UniqueSelectionListener
+        UniqueSelectionListener,
+        FocusListener
 {
     private static RelatedPanel   instance;
     private SearchableTreePanel[] searchableTreePanels;
@@ -77,6 +80,8 @@ public class RelatedPanel
         searchTextField.setText( bundle.getString( "RelatedPanel.searchTextField.text" ) ); // NOI18N
         addButton.setText( bundle.getString( "RelatedPanel.addButton.text" ) ); // NOI18N
         removeButton.setText( bundle.getString( "RelatedPanel.removeButton.text" ) ); // NOI18N
+
+        removeButton.setEnabled( false );
 
         JPanel panel = new JPanel( new BorderLayout() );
         add( panel );
@@ -152,5 +157,17 @@ public class RelatedPanel
         Unique unique )
     {
         getSelectedTreePanel().selectedUnique( unique );
+    }
+
+    public void focusGained(
+        FocusEvent e )
+    {
+        removeButton.setEnabled( true );
+    }
+
+    public void focusLost(
+        FocusEvent e )
+    {
+        removeButton.setEnabled( false );
     }
 }

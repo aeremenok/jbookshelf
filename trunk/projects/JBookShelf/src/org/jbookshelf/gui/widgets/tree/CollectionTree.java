@@ -24,24 +24,6 @@ public abstract class CollectionTree
     implements
         SoucesUniqueSelection
 {
-    protected class UniqueNode
-        extends DefaultMutableTreeNode
-    {
-        private Unique unique;
-
-        public UniqueNode(
-            Unique unique )
-        {
-            super( unique.getName() );
-            this.unique = unique;
-        }
-
-        public Unique getUnique()
-        {
-            return unique;
-        }
-    }
-
     private List<UniqueSelectionListener> listeners = new ArrayList<UniqueSelectionListener>();
 
     public void addSelectionListener(
