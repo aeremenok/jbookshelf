@@ -43,11 +43,35 @@ public class RelatedPanel
     private JButton               removeButton    = new JButton();
     private JTextField            searchTextField = new JTextField();
 
+    public static RelatedPanel getInstance()
+    {
+        if ( instance == null )
+        {
+            instance = new RelatedPanel();
+        }
+        return instance;
+    }
+
     public RelatedPanel()
     {
         super( new VerticalLayout() );
         initComponents();
         initListeners();
+    }
+
+    public void focusGained(
+        FocusEvent e )
+    {
+        removeButton.setEnabled( true );
+    }
+
+    public void focusLost(
+        FocusEvent e )
+    {
+        if ( !removeButton.equals( e.getComponent() ) )
+        {
+            removeButton.setEnabled( false );
+        }
     }
 
     public SearchableTreePanel[] getSearchableTreePanels()
@@ -62,6 +86,17 @@ public class RelatedPanel
     public SearchableTreePanel getSelectedTreePanel()
     {
         return getSearchableTreePanels()[tabbedPane.getSelectedIndex()];
+    }
+
+    public void nothingSelected()
+    {
+        getSelectedTreePanel().nothingSelected();
+    }
+
+    public void selectedUnique(
+        Unique unique )
+    {
+        getSelectedTreePanel().selectedUnique( unique );
     }
 
     private void addButtonActionPerformed(
@@ -137,37 +172,5 @@ public class RelatedPanel
         KeyEvent evt )
     {
         getSelectedTreePanel().onKeyTyped( evt );
-    }
-
-    public static RelatedPanel getInstance()
-    {
-        if ( instance == null )
-        {
-            instance = new RelatedPanel();
-        }
-        return instance;
-    }
-
-    public void nothingSelected()
-    {
-        getSelectedTreePanel().nothingSelected();
-    }
-
-    public void selectedUnique(
-        Unique unique )
-    {
-        getSelectedTreePanel().selectedUnique( unique );
-    }
-
-    public void focusGained(
-        FocusEvent e )
-    {
-        removeButton.setEnabled( true );
-    }
-
-    public void focusLost(
-        FocusEvent e )
-    {
-        removeButton.setEnabled( false );
     }
 }
