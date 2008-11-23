@@ -83,6 +83,7 @@ public class RelatedTreePanel
         relatedTree.setSelectionRow( root.getChildCount() - 1 );
 
         JOptionPane.showMessageDialog( this, relatedUnique.getName() + " now relates to " + unique.getName() );
+        selectedUnique( selectedUnique );
     }
 
     @Override
