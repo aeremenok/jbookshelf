@@ -58,6 +58,8 @@ public class ToolBar
         importButton = new javax.swing.JButton();
         backupButton = new javax.swing.JButton();
         restoreButton = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JToolBar.Separator();
+        aboutButton = new javax.swing.JButton();
 
         jToolBar1.setRollover( true );
 
@@ -192,14 +194,37 @@ public class ToolBar
             }
         } );
         jToolBar1.add( restoreButton );
+        jToolBar1.add( jSeparator4 );
+
+        aboutButton.setIcon( new javax.swing.ImageIcon( getClass().getResource(
+            "/org/jbookshelf/gui/images/help-about.png" ) ) ); // NOI18N
+        aboutButton.setText( bundle.getString( "ToolBar.aboutButton.text" ) ); // NOI18N
+        aboutButton.setFocusable( false );
+        aboutButton.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
+        aboutButton.setVerticalTextPosition( javax.swing.SwingConstants.BOTTOM );
+        aboutButton.addActionListener( new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(
+                java.awt.event.ActionEvent evt )
+            {
+                aboutButtonActionPerformed( evt );
+            }
+        } );
+        jToolBar1.add( aboutButton );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout( this );
         this.setLayout( layout );
         layout.setHorizontalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-            .addComponent( jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE ) );
+            .addComponent( jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE ) );
         layout.setVerticalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent(
             jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE ) );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void aboutButtonActionPerformed(
+        java.awt.event.ActionEvent evt )
+    {// GEN-FIRST:event_aboutButtonActionPerformed
+        new AboutDialog( MainWindow.getInstance(), true ).setVisible( true );
+    }// GEN-LAST:event_aboutButtonActionPerformed
 
     private void editButtonActionPerformed(
         @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
@@ -312,6 +337,7 @@ public class ToolBar
     }// GEN-LAST:event_restoreButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton            aboutButton;
     private javax.swing.JButton            addButton;
     private javax.swing.JButton            backupButton;
     private javax.swing.JButton            editButton;
@@ -319,6 +345,7 @@ public class ToolBar
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar           jToolBar1;
     private javax.swing.JButton            openButton;
     private javax.swing.JButton            removeButton;

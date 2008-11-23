@@ -132,7 +132,6 @@ public class BookPanel
         isReadCheckBox = new javax.swing.JCheckBox();
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
-        bookTextField.setText( bundle.getString( "BookPanel.bookTextField.text" ) ); // NOI18N
 
         jLabel3.setText( bundle.getString( "BookPanel.jLabel3.text" ) ); // NOI18N
 
