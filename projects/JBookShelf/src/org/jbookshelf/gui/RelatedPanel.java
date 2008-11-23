@@ -30,8 +30,7 @@ import org.jbookshelf.gui.widgets.panel.SearchableTreePanel;
 public class RelatedPanel
     extends JPanel
     implements
-        UniqueSelectionListener,
-        FocusListener
+        UniqueSelectionListener
 {
     private static final RelatedPanel instance        = new RelatedPanel();
 
@@ -58,19 +57,14 @@ public class RelatedPanel
         initListeners();
     }
 
-    public void focusGained(
-        FocusEvent e )
+    public void focusGained()
     {
         removeButton.setEnabled( true );
     }
 
-    public void focusLost(
-        FocusEvent e )
+    public void focusLost()
     {
-        if ( e == null || !removeButton.equals( e.getComponent() ) )
-        {
-            removeButton.setEnabled( false );
-        }
+        removeButton.setEnabled( false );
     }
 
     public SearchableTreePanel[] getSearchableTreePanels()
@@ -82,26 +76,26 @@ public class RelatedPanel
         return searchableTreePanels;
     }
 
-    public SearchableTreePanel getSelectedTreePanel()
+    public SearchableTreePanel getActiveTreePanel()
     {
         return getSearchableTreePanels()[tabbedPane.getSelectedIndex()];
     }
 
     public void nothingSelected()
     {
-        getSelectedTreePanel().nothingSelected();
+        for ( SearchableTreePanel panel : getSearchableTreePanels() )
+        {
+            panel.nothingSelected();
+        }
     }
 
     public void selectedUnique(
         Unique unique )
     {
-        getSelectedTreePanel().selectedUnique( unique );
-    }
-
-    private void addButtonActionPerformed(
-        @SuppressWarnings( "unused" ) ActionEvent evt )
-    {
-        getSelectedTreePanel().onAdd();
+        for ( SearchableTreePanel panel : getSearchableTreePanels() )
+        {
+            panel.selectedUnique( unique );
+        }
     }
 
     private void initComponents()
@@ -117,14 +111,15 @@ public class RelatedPanel
         removeButton.setEnabled( false );
 
         JPanel panel = new JPanel( new BorderLayout() );
-        add( panel, BorderLayout.NORTH );
         JPanel buttonPanel = new JPanel();
+
         panel.add( buttonPanel, BorderLayout.WEST );
+        panel.add( searchTextField, BorderLayout.CENTER );
+
         buttonPanel.add( addButton );
         buttonPanel.add( removeButton );
 
-        panel.add( searchTextField, BorderLayout.CENTER );
-
+        add( panel, BorderLayout.NORTH );
         add( tabbedPane, BorderLayout.CENTER );
     }
 
@@ -149,43 +144,28 @@ public class RelatedPanel
 
         searchTextField.addKeyListener( new KeyAdapter()
         {
-            @SuppressWarnings( "synthetic-access" )
             @Override
             public void keyReleased(
                 KeyEvent e )
             {
-                searchTextFieldKeyTyped( e );
+                getActiveTreePanel().onKeyReleased( e );
             }
         } );
         removeButton.addActionListener( new ActionListener()
         {
-            @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
                 ActionEvent evt )
             {
-                removeButtonActionPerformed( evt );
+                getActiveTreePanel().onRemove();
             }
         } );
         addButton.addActionListener( new ActionListener()
         {
-            @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
                 ActionEvent evt )
             {
-                addButtonActionPerformed( evt );
+                getActiveTreePanel().onAdd();
             }
         } );
-    }
-
-    private void removeButtonActionPerformed(
-        @SuppressWarnings( "unused" ) ActionEvent evt )
-    {
-        getSelectedTreePanel().onRemove();
-    }
-
-    private void searchTextFieldKeyTyped(
-        KeyEvent evt )
-    {
-        getSelectedTreePanel().onKeyTyped( evt );
     }
 }

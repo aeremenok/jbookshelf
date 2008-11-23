@@ -8,5 +8,4 @@ public interface UniqueSelectionListener
         Unique unique );
 
     void nothingSelected();
-
 }

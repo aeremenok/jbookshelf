@@ -3,12 +3,20 @@
  */
 package org.jbookshelf.gui;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JTree;
 
+import org.jbookshelf.Unique;
+import org.jbookshelf.gui.widgets.panel.RelatedTreePanel;
 import org.jbookshelf.gui.widgets.tree.AuthorTree;
 import org.jbookshelf.gui.widgets.tree.BookTree;
 import org.jbookshelf.gui.widgets.tree.CategoryTree;
 import org.jbookshelf.gui.widgets.tree.CollectionTree;
+import org.jbookshelf.gui.widgets.tree.UniqueNode;
 import org.util.storage.Storage;
 
 /**
@@ -252,5 +260,45 @@ public class CollectionPanel
     private CollectionTree getActiveTree()
     {
         return (CollectionTree) getTrees()[viewTabbedPane.getSelectedIndex()];
+    }
+
+    public void selectRelatedUnique(
+        final RelatedTreePanel relatedTreePanel,
+        final Unique selectedUnique )
+    {
+        final CollectionTree activeTree = getActiveTree();
+        activeTree.setSelectionRow( 0 );
+
+        final MouseAdapter mouseAdapter = new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(
+                MouseEvent e )
+            {
+                if ( e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2 )
+                {
+                    Object node = activeTree.getLastSelectedPathComponent();
+                    if ( node instanceof UniqueNode )
+                    {
+                        UniqueNode uniqueNode = (UniqueNode) node;
+                        relatedTreePanel.onRelatedSelection( uniqueNode.getUnique(), selectedUnique );
+                        activeTree.removeMouseListener( this );
+                    }
+                }
+            }
+        };
+
+        activeTree.addMouseListener( mouseAdapter );
+
+        activeTree.addFocusListener( new FocusAdapter()
+        {
+            @Override
+            public void focusLost(
+                FocusEvent e )
+            {
+                activeTree.removeMouseListener( mouseAdapter );
+                activeTree.removeFocusListener( this );
+            }
+        } );
     }
 }
