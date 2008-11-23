@@ -101,7 +101,7 @@ public class CommentTreePanel
         commentTree.updateUI();
 
         editPanel.setVisible( false );
-        relatedPanel.focusLost( null );
+        relatedPanel.focusLost();
     }
 
     private void refresh()
@@ -128,7 +128,7 @@ public class CommentTreePanel
     }
 
     @Override
-    public void onKeyTyped(
+    public void onKeyReleased(
         KeyEvent evt )
     {
         String text = ((JTextComponent) evt.getSource()).getText();
@@ -158,7 +158,7 @@ public class CommentTreePanel
         }
         else
         {
-            relatedPanel.focusLost( null );
+            relatedPanel.focusLost();
         }
     }
 
@@ -166,7 +166,7 @@ public class CommentTreePanel
         Unique unique )
     {
         editPanel.setVisible( false );
-        relatedPanel.focusLost( null );
+        relatedPanel.focusLost();
 
         selectedCommentable = (Commentable) unique;
         drawComments( selectedCommentable.getComments() );
@@ -235,12 +235,10 @@ public class CommentTreePanel
                 {
                     System.out.println( "null" );
                 }
-                relatedPanel.focusGained( null );
+                relatedPanel.focusGained();
             }
         } );
 
         nothingSelected();
-
-        // todo check focus and notify RelatedPanel
     }
 }

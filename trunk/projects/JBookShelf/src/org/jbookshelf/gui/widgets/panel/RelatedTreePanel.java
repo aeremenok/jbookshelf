@@ -5,21 +5,27 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.JTextComponent;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jbookshelf.Unique;
+import org.jbookshelf.gui.CollectionPanel;
 import org.jbookshelf.gui.RelatedPanel;
 import org.jbookshelf.gui.widgets.tree.UniqueNode;
 
 public class RelatedTreePanel
     extends SearchableTreePanel
 {
-    private JTree       relatedTree = new JTree();
-    private JScrollPane scrollPane  = new JScrollPane( relatedTree );
-    private Unique      selectedUnique;
+    private DefaultMutableTreeNode root        = new DefaultMutableTreeNode();
+
+    private JTree                  relatedTree = new JTree( root );
+    private JScrollPane            scrollPane  = new JScrollPane( relatedTree );
+    private Unique                 selectedUnique;
 
     public RelatedTreePanel(
         RelatedPanel relatedPanel )
@@ -31,17 +37,19 @@ public class RelatedTreePanel
 
     public void nothingSelected()
     {
-        getRoot().removeAllChildren();
+        root.removeAllChildren();
+        relatedPanel.focusLost();
     }
 
     @Override
     public void onAdd()
     {
-        // TODO Auto-generated method stub
+        JOptionPane.showMessageDialog( this, "Double click on related item in the collection tree" );
+        CollectionPanel.getInstance().selectRelatedUnique( this, selectedUnique );
     }
 
     @Override
-    public void onKeyTyped(
+    public void onKeyReleased(
         KeyEvent evt )
     {
         String text = ((JTextComponent) evt.getSource()).getText();
@@ -64,14 +72,38 @@ public class RelatedTreePanel
         }
     }
 
+    public void onRelatedSelection(
+        Unique relatedUnique,
+        Unique unique )
+    {
+        unique.getRelated().add( relatedUnique );
+        relatedUnique.getRelated().add( unique );
+
+        root.add( new UniqueNode( relatedUnique ) );
+        relatedTree.setSelectionRow( root.getChildCount() - 1 );
+
+        JOptionPane.showMessageDialog( this, relatedUnique.getName() + " now relates to " + unique.getName() );
+    }
+
     @Override
     public void onRemove()
     {
         UniqueNode uniqueNode = (UniqueNode) relatedTree.getLastSelectedPathComponent();
         selectedUnique.getRelated().remove( uniqueNode.getUnique() );
+        uniqueNode.getUnique().getRelated().remove( selectedUnique );
 
-        getRoot().remove( uniqueNode );
+        int row = root.getIndex( uniqueNode );
+        root.remove( uniqueNode );
         relatedTree.updateUI();
+
+        if ( row > 1 )
+        {
+            relatedTree.setSelectionRow( row - 1 );
+        }
+        else
+        {
+            relatedPanel.focusLost();
+        }
     }
 
     public void selectedUnique(
@@ -84,29 +116,29 @@ public class RelatedTreePanel
     private void drawUniques(
         List<Unique> relatedUniques )
     {
-        DefaultMutableTreeNode root = getRoot();
         root.removeAllChildren();
 
         for ( Unique related : relatedUniques )
         {
-            UniqueNode parent = new UniqueNode( related );
-            root.add( parent );
+            root.add( new UniqueNode( related ) );
         }
 
         relatedTree.expandRow( 0 );
         relatedTree.setRootVisible( false );
 
-        updateUI();
-    }
-
-    private DefaultMutableTreeNode getRoot()
-    {
-        return (DefaultMutableTreeNode) relatedTree.getModel().getRoot();
+        relatedTree.updateUI();
     }
 
     private void initComponents()
     {
         add( scrollPane );
-        relatedTree.addFocusListener( relatedPanel );
+        relatedTree.addTreeSelectionListener( new TreeSelectionListener()
+        {
+            public void valueChanged(
+                TreeSelectionEvent e )
+            {
+                relatedPanel.focusGained();
+            }
+        } );
     }
 }

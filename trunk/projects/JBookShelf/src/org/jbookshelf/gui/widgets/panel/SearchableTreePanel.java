@@ -24,8 +24,8 @@ public abstract class SearchableTreePanel
 
     public abstract void onAdd();
 
-    public abstract void onRemove();
-
-    public abstract void onKeyTyped(
+    public abstract void onKeyReleased(
         KeyEvent evt );
+
+    public abstract void onRemove();
 }
