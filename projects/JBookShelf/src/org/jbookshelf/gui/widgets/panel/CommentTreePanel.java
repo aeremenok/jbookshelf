@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -202,8 +203,8 @@ public class CommentTreePanel
     private void initComponents()
     {
         JButton submitButton = new JButton();
-        submitButton.setText( "v" );
         submitButton.addActionListener( this );
+        submitButton.setIcon( createIcon( "/org/jbookshelf/gui/images/dialog-ok-apply.png" ) );
 
         JPanel headerPanel = new JPanel( new BorderLayout() );
         headerPanel.add( dateLabel, BorderLayout.WEST );
@@ -228,17 +229,18 @@ public class CommentTreePanel
                 CommentNode commentNode = (CommentNode) commentTree.getLastSelectedPathComponent();
                 if ( commentNode != null )
                 {
-                    System.out.println( commentNode.getComment() );
                     editComment( commentNode.getComment() );
-                }
-                else
-                {
-                    System.out.println( "null" );
                 }
                 relatedPanel.focusGained();
             }
         } );
 
         nothingSelected();
+    }
+
+    private ImageIcon createIcon(
+        String name )
+    {
+        return new ImageIcon( getClass().getResource( name ) );
     }
 }
