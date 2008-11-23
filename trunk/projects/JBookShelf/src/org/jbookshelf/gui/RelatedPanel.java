@@ -44,6 +44,8 @@ public class RelatedPanel
     private SearchableTreePanel       commentPanel    = new CommentTreePanel( this );
     private SearchableTreePanel       relatedPanel    = new RelatedTreePanel( this );
 
+    private ResourceBundle            bundle          = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
+
     public static RelatedPanel getInstance()
     {
         return instance;
@@ -104,7 +106,6 @@ public class RelatedPanel
 
     private void initComponents()
     {
-        ResourceBundle bundle = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
 
         tabbedPane.addTab( bundle.getString( "RelatedPanel.commentPanel.TabConstraints.tabTitle" ), commentPanel ); // NOI18N
         tabbedPane.addTab( bundle.getString( "RelatedPanel.relatedPanel.TabConstraints.tabTitle" ), relatedPanel ); // NOI18N
@@ -129,14 +130,31 @@ public class RelatedPanel
 
     private void initListeners()
     {
+        searchTextField.addFocusListener( new FocusListener()
+        {
+            @SuppressWarnings( "synthetic-access" )
+            public void focusGained(
+                FocusEvent e )
+            {
+                searchTextField.setText( "" );
+            }
+
+            @SuppressWarnings( "synthetic-access" )
+            public void focusLost(
+                FocusEvent e )
+            {
+                searchTextField.setText( bundle.getString( "RelatedPanel.searchTextField.text" ) );
+            }
+        } );
+
         searchTextField.addKeyListener( new KeyAdapter()
         {
             @SuppressWarnings( "synthetic-access" )
             @Override
-            public void keyTyped(
-                java.awt.event.KeyEvent evt )
+            public void keyReleased(
+                KeyEvent e )
             {
-                searchTextFieldKeyTyped( evt );
+                searchTextFieldKeyTyped( e );
             }
         } );
         removeButton.addActionListener( new ActionListener()

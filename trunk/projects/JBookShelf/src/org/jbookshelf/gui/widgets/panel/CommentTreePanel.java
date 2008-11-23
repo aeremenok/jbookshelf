@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.JTextComponent;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -50,28 +50,26 @@ public class CommentTreePanel
         }
     }
 
-    private static final SimpleDateFormat format             = new SimpleDateFormat( "dd.MM.yy HH:mm" );
+    private static final SimpleDateFormat format          = new SimpleDateFormat( "dd.MM.yy HH:mm" );
 
-    private JTextArea                     commentTextArea    = new JTextArea();
-    private JScrollPane                   textAreaScrollPane = new JScrollPane( commentTextArea );
-    private JTextField                    titleTextField     = new JTextField();
-    private JLabel                        dateLabel          = new JLabel();
-    private DefaultMutableTreeNode        root               = new DefaultMutableTreeNode();
-    private JTree                         commentTree        = new JTree( root );
-    private JScrollPane                   treeScrollPane     = new JScrollPane( commentTree );
-    private JPanel                        editPanel          = new JPanel( new VerticalLayout() )
-                                                             {
-                                                                 @SuppressWarnings( "synthetic-access" )
-                                                                 @Override
-                                                                 public void setVisible(
-                                                                     boolean flag )
-                                                                 {
-                                                                     super.setVisible( flag );
-                                                                     refresh();
-                                                                 }
-                                                             };
-    private JPanel                        headerPanel        = new JPanel( new BorderLayout() );
-    private JButton                       submitButton       = new JButton();
+    private final DefaultMutableTreeNode  root            = new DefaultMutableTreeNode();
+    private final JTree                   commentTree     = new JTree( root );
+
+    private final JTextArea               commentTextArea = new JTextArea();
+    private final JTextField              titleTextField  = new JTextField();
+    private final JLabel                  dateLabel       = new JLabel();
+
+    private final JPanel                  editPanel       = new JPanel( new VerticalLayout() )
+                                                          {
+                                                              @SuppressWarnings( "synthetic-access" )
+                                                              @Override
+                                                              public void setVisible(
+                                                                  boolean flag )
+                                                              {
+                                                                  super.setVisible( flag );
+                                                                  refresh();
+                                                              }
+                                                          };
 
     private Commentable                   selectedCommentable;
 
@@ -85,9 +83,13 @@ public class CommentTreePanel
     public void actionPerformed(
         ActionEvent e )
     {
-        Comment comment = ((CommentNode) commentTree.getLastSelectedPathComponent()).getComment();
+        CommentNode node = (CommentNode) commentTree.getLastSelectedPathComponent();
+        Comment comment = node.getComment();
         comment.setContent( commentTextArea.getText() );
         comment.setTitle( titleTextField.getText() );
+
+        node.setUserObject( comment.getTitle() );
+        commentTree.updateUI();
     }
 
     public void nothingSelected()
@@ -106,7 +108,6 @@ public class CommentTreePanel
     {
         updateUI();
         editPanel.updateUI();
-        treeScrollPane.updateUI();
     }
 
     @Override
@@ -200,37 +201,43 @@ public class CommentTreePanel
 
     private void initComponents()
     {
+        JButton submitButton = new JButton();
         submitButton.setText( "v" );
+        submitButton.addActionListener( this );
 
-        commentTextArea.setColumns( 20 );
-        commentTextArea.setRows( 5 );
-
-        add( editPanel, BorderLayout.NORTH );
-        editPanel.add( headerPanel );
+        JPanel headerPanel = new JPanel( new BorderLayout() );
         headerPanel.add( dateLabel, BorderLayout.WEST );
         headerPanel.add( titleTextField, BorderLayout.CENTER );
         headerPanel.add( submitButton, BorderLayout.EAST );
 
-        editPanel.add( textAreaScrollPane );
-        add( treeScrollPane, BorderLayout.CENTER );
+        commentTextArea.setColumns( 20 );
+        commentTextArea.setRows( 5 );
 
-        commentTree.addMouseListener( new MouseAdapter()
+        editPanel.add( headerPanel );
+        editPanel.add( new JScrollPane( commentTextArea ) );
+
+        add( editPanel, BorderLayout.NORTH );
+        add( new JScrollPane( commentTree ), BorderLayout.CENTER );
+
+        commentTree.addTreeSelectionListener( new TreeSelectionListener()
         {
             @SuppressWarnings( "synthetic-access" )
-            @Override
-            public void mousePressed(
-                MouseEvent e )
+            public void valueChanged(
+                TreeSelectionEvent e )
             {
                 CommentNode commentNode = (CommentNode) commentTree.getLastSelectedPathComponent();
                 if ( commentNode != null )
                 {
+                    System.out.println( commentNode.getComment() );
                     editComment( commentNode.getComment() );
+                }
+                else
+                {
+                    System.out.println( "null" );
                 }
                 relatedPanel.focusGained( null );
             }
         } );
-
-        submitButton.addActionListener( this );
 
         nothingSelected();
 
