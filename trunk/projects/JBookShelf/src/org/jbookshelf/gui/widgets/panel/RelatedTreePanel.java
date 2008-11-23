@@ -11,18 +11,20 @@ import javax.swing.text.JTextComponent;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jbookshelf.Unique;
+import org.jbookshelf.gui.RelatedPanel;
 import org.jbookshelf.gui.widgets.tree.UniqueNode;
 
 public class RelatedTreePanel
     extends SearchableTreePanel
 {
-    private javax.swing.JTree       relatedTree = new JTree();
-    private javax.swing.JScrollPane scrollPane  = new JScrollPane( relatedTree );
-    private Unique                  selectedUnique;
+    private JTree       relatedTree = new JTree();
+    private JScrollPane scrollPane  = new JScrollPane( relatedTree );
+    private Unique      selectedUnique;
 
-    public RelatedTreePanel()
+    public RelatedTreePanel(
+        RelatedPanel relatedPanel )
     {
-        super();
+        super( relatedPanel );
         setLayout( new BorderLayout() );
         initComponents();
     }
@@ -105,7 +107,6 @@ public class RelatedTreePanel
     private void initComponents()
     {
         add( scrollPane );
-        // todo StackOverflow
-        // relatedTree.addFocusListener( RelatedPanel.getInstance() );
+        relatedTree.addFocusListener( relatedPanel );
     }
 }
