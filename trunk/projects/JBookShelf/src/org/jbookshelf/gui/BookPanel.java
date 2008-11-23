@@ -145,8 +145,6 @@ public class BookPanel
 
         jLabel2.setText( bundle.getString( "BookPanel.jLabel2.text" ) ); // NOI18N
 
-        fileTextField.setText( bundle.getString( "BookPanel.fileTextField.text" ) ); // NOI18N
-
         chooseButton.setText( bundle.getString( "BookPanel.chooseButton.text" ) ); // NOI18N
         chooseButton.addActionListener( new java.awt.event.ActionListener()
         {

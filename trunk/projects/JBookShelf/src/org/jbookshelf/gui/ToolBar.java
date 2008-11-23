@@ -4,11 +4,9 @@
 
 package org.jbookshelf.gui;
 
+import java.awt.BorderLayout;
 import java.io.File;
-import java.util.ResourceBundle;
 
-import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -33,38 +31,30 @@ public class ToolBar
     implements
         UniqueSelectionListener
 {
-    private static ToolBar     instance;
+    private static final ToolBar instance       = new ToolBar();
 
-    private JButton            aboutButton;
-    private JButton            addButton;
-    private JButton            backupButton;
-    private JButton            editButton;
-    private JButton            importButton;
-    private JButton            openButton;
-    private JButton            removeButton;
-    private JButton            restoreButton;
-    private JButton            settingsButton;
+    private JButton              aboutButton    = new JButton();
+    private JButton              addButton      = new JButton();
+    private JButton              backupButton   = new JButton();
+    private JButton              editButton     = new JButton();
+    private JButton              importButton   = new JButton();
+    private JButton              openButton     = new JButton();
+    private JButton              removeButton   = new JButton();
+    private JButton              restoreButton  = new JButton();
+    private JButton              settingsButton = new JButton();
 
-    private JToolBar.Separator jSeparator1;
-    private JToolBar.Separator jSeparator2;
-    private JToolBar.Separator jSeparator3;
-    private JToolBar.Separator jSeparator4;
+    private JToolBar             toolBar        = new JToolBar();
 
-    private JToolBar           toolBar;
-
-    private Unique             selectedUnique;
+    private Unique               selectedUnique;
 
     public static ToolBar getInstance()
     {
-        if ( instance == null )
-        {
-            instance = new ToolBar();
-        }
         return instance;
     }
 
     private ToolBar()
     {
+        super( new BorderLayout() );
         initComponents();
         initListeners();
     }
@@ -144,114 +134,50 @@ public class ToolBar
         }
     }
 
+    private void addButton(
+        JButton button,
+        String icon,
+        String text )
+    {
+        button.setName( text );
+        Resourses.register( getClass(), button );
+        button.setText( Resourses.getString( getClass(), button ) );
+
+        button.setIcon( Resourses.createIcon( icon ) );
+
+        button.setFocusable( false );
+        button.setHorizontalTextPosition( SwingConstants.CENTER );
+        button.setVerticalTextPosition( SwingConstants.BOTTOM );
+
+        toolBar.add( button );
+    }
+
     private void initComponents()
     {
-        toolBar = new JToolBar();
-        addButton = new JButton();
-        removeButton = new JButton();
-        editButton = new JButton();
-        jSeparator1 = new JToolBar.Separator();
-        openButton = new JButton();
-        jSeparator2 = new JToolBar.Separator();
-        settingsButton = new JButton();
-        jSeparator3 = new JToolBar.Separator();
-        importButton = new JButton();
-        backupButton = new JButton();
-        restoreButton = new JButton();
-        jSeparator4 = new JToolBar.Separator();
-        aboutButton = new JButton();
-
+        add( toolBar, BorderLayout.WEST );
         toolBar.setRollover( true );
 
-        addButton.setIcon( new ImageIcon( getClass().getResource( "/org/jbookshelf/gui/images/list-add.png" ) ) ); // NOI18N
-        ResourceBundle bundle = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
-        addButton.setText( bundle.getString( "ToolBar.addButton.text" ) ); // NOI18N
-        addButton.setFocusable( false );
-        int center = SwingConstants.CENTER;
-        addButton.setHorizontalTextPosition( center );
-        int bottom = SwingConstants.BOTTOM;
-        addButton.setVerticalTextPosition( bottom );
+        addButton( addButton, "list-add.png", "addButton" );
+        addButton( removeButton, "list-remove.png", "removeButton" );
+        addButton( editButton, "document-properties.png", "editButton" );
 
-        toolBar.add( addButton );
+        toolBar.add( new JToolBar.Separator() );
 
-        removeButton.setIcon( new ImageIcon( getClass().getResource( "/org/jbookshelf/gui/images/list-remove.png" ) ) ); // NOI18N
-        removeButton.setText( bundle.getString( "ToolBar.removeButton.text" ) ); // NOI18N
-        removeButton.setFocusable( false );
-        removeButton.setHorizontalTextPosition( center );
-        removeButton.setVerticalTextPosition( bottom );
+        addButton( openButton, "document-preview.png", "openButton" );
 
-        toolBar.add( removeButton );
+        toolBar.add( new JToolBar.Separator() );
 
-        editButton.setIcon( new ImageIcon( getClass()
-            .getResource( "/org/jbookshelf/gui/images/document-properties.png" ) ) ); // NOI18N
-        editButton.setText( bundle.getString( "ToolBar.editButton.text" ) ); // NOI18N
-        editButton.setFocusable( false );
-        editButton.setHorizontalTextPosition( center );
-        editButton.setVerticalTextPosition( bottom );
+        addButton( settingsButton, "configure.png", "settingsButton" );
 
-        toolBar.add( editButton );
-        toolBar.add( jSeparator1 );
+        toolBar.add( new JToolBar.Separator() );
 
-        openButton
-            .setIcon( new ImageIcon( getClass().getResource( "/org/jbookshelf/gui/images/document-preview.png" ) ) ); // NOI18N
-        openButton.setText( bundle.getString( "ToolBar.openButton.text" ) ); // NOI18N
-        openButton.setFocusable( false );
-        openButton.setHorizontalTextPosition( center );
-        openButton.setVerticalTextPosition( bottom );
+        addButton( importButton, "document-import.png", "importButton" );
+        addButton( backupButton, "document-save-as.png", "backupButton" );
+        addButton( restoreButton, "document-open.png", "restoreButton" );
 
-        toolBar.add( openButton );
-        toolBar.add( jSeparator2 );
+        toolBar.add( new JToolBar.Separator() );
 
-        settingsButton.setIcon( new ImageIcon( getClass().getResource( "/org/jbookshelf/gui/images/configure.png" ) ) ); // NOI18N
-        settingsButton.setText( bundle.getString( "ToolBar.settingsButton.text" ) ); // NOI18N
-        settingsButton.setFocusable( false );
-        settingsButton.setHorizontalTextPosition( center );
-        settingsButton.setVerticalTextPosition( bottom );
-
-        toolBar.add( settingsButton );
-        toolBar.add( jSeparator3 );
-
-        importButton
-            .setIcon( new ImageIcon( getClass().getResource( "/org/jbookshelf/gui/images/document-import.png" ) ) ); // NOI18N
-        importButton.setText( bundle.getString( "ToolBar.importButton.text" ) ); // NOI18N
-        importButton.setFocusable( false );
-        importButton.setHorizontalTextPosition( center );
-        importButton.setVerticalTextPosition( bottom );
-
-        toolBar.add( importButton );
-
-        backupButton
-            .setIcon( new ImageIcon( getClass().getResource( "/org/jbookshelf/gui/images/document-save-as.png" ) ) ); // NOI18N
-        backupButton.setText( bundle.getString( "ToolBar.backupButton.text" ) ); // NOI18N
-        backupButton.setFocusable( false );
-        backupButton.setHorizontalTextPosition( center );
-        backupButton.setVerticalTextPosition( bottom );
-
-        toolBar.add( backupButton );
-
-        restoreButton
-            .setIcon( new ImageIcon( getClass().getResource( "/org/jbookshelf/gui/images/document-open.png" ) ) ); // NOI18N
-        restoreButton.setText( bundle.getString( "ToolBar.restoreButton.text" ) ); // NOI18N
-        restoreButton.setFocusable( false );
-        restoreButton.setHorizontalTextPosition( center );
-        restoreButton.setVerticalTextPosition( bottom );
-
-        toolBar.add( restoreButton );
-        toolBar.add( jSeparator4 );
-
-        aboutButton.setIcon( new ImageIcon( getClass().getResource( "/org/jbookshelf/gui/images/help-about.png" ) ) ); // NOI18N
-        aboutButton.setText( bundle.getString( "ToolBar.aboutButton.text" ) ); // NOI18N
-        aboutButton.setFocusable( false );
-        aboutButton.setHorizontalTextPosition( center );
-        aboutButton.setVerticalTextPosition( bottom );
-        toolBar.add( aboutButton );
-
-        GroupLayout layout = new GroupLayout( this );
-        this.setLayout( layout );
-        layout.setHorizontalGroup( layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addComponent( toolBar,
-            GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE ) );
-        layout.setVerticalGroup( layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addComponent( toolBar,
-            GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE ) );
+        addButton( aboutButton, "help-about.png", "aboutButton" );
     }
 
     private void initListeners()
