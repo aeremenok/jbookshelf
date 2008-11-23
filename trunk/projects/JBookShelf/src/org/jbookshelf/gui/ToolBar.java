@@ -61,6 +61,8 @@ public class ToolBar
 
         jToolBar1.setRollover( true );
 
+        addButton.setIcon( new javax.swing.ImageIcon( getClass()
+            .getResource( "/org/jbookshelf/gui/images/list-add.png" ) ) ); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
         addButton.setText( bundle.getString( "ToolBar.addButton.text" ) ); // NOI18N
         addButton.setFocusable( false );
@@ -76,6 +78,8 @@ public class ToolBar
         } );
         jToolBar1.add( addButton );
 
+        removeButton.setIcon( new javax.swing.ImageIcon( getClass().getResource(
+            "/org/jbookshelf/gui/images/list-remove.png" ) ) ); // NOI18N
         removeButton.setText( bundle.getString( "ToolBar.removeButton.text" ) ); // NOI18N
         removeButton.setFocusable( false );
         removeButton.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
@@ -90,6 +94,8 @@ public class ToolBar
         } );
         jToolBar1.add( removeButton );
 
+        editButton.setIcon( new javax.swing.ImageIcon( getClass().getResource(
+            "/org/jbookshelf/gui/images/document-properties.png" ) ) ); // NOI18N
         editButton.setText( bundle.getString( "ToolBar.editButton.text" ) ); // NOI18N
         editButton.setFocusable( false );
         editButton.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
@@ -105,6 +111,8 @@ public class ToolBar
         jToolBar1.add( editButton );
         jToolBar1.add( jSeparator1 );
 
+        openButton.setIcon( new javax.swing.ImageIcon( getClass().getResource(
+            "/org/jbookshelf/gui/images/document-preview.png" ) ) ); // NOI18N
         openButton.setText( bundle.getString( "ToolBar.openButton.text" ) ); // NOI18N
         openButton.setFocusable( false );
         openButton.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
@@ -120,6 +128,8 @@ public class ToolBar
         jToolBar1.add( openButton );
         jToolBar1.add( jSeparator2 );
 
+        settingsButton.setIcon( new javax.swing.ImageIcon( getClass().getResource(
+            "/org/jbookshelf/gui/images/configure.png" ) ) ); // NOI18N
         settingsButton.setText( bundle.getString( "ToolBar.settingsButton.text" ) ); // NOI18N
         settingsButton.setFocusable( false );
         settingsButton.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
@@ -135,6 +145,8 @@ public class ToolBar
         jToolBar1.add( settingsButton );
         jToolBar1.add( jSeparator3 );
 
+        importButton.setIcon( new javax.swing.ImageIcon( getClass().getResource(
+            "/org/jbookshelf/gui/images/document-import.png" ) ) ); // NOI18N
         importButton.setText( bundle.getString( "ToolBar.importButton.text" ) ); // NOI18N
         importButton.setFocusable( false );
         importButton.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
@@ -149,6 +161,8 @@ public class ToolBar
         } );
         jToolBar1.add( importButton );
 
+        backupButton.setIcon( new javax.swing.ImageIcon( getClass().getResource(
+            "/org/jbookshelf/gui/images/document-save-as.png" ) ) ); // NOI18N
         backupButton.setText( bundle.getString( "ToolBar.backupButton.text" ) ); // NOI18N
         backupButton.setFocusable( false );
         backupButton.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
@@ -163,6 +177,8 @@ public class ToolBar
         } );
         jToolBar1.add( backupButton );
 
+        restoreButton.setIcon( new javax.swing.ImageIcon( getClass().getResource(
+            "/org/jbookshelf/gui/images/document-open.png" ) ) ); // NOI18N
         restoreButton.setText( bundle.getString( "ToolBar.restoreButton.text" ) ); // NOI18N
         restoreButton.setFocusable( false );
         restoreButton.setHorizontalTextPosition( javax.swing.SwingConstants.CENTER );
@@ -182,7 +198,7 @@ public class ToolBar
         layout.setHorizontalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
             .addComponent( jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE ) );
         layout.setVerticalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent(
-            jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE ) );
+            jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE ) );
     }// </editor-fold>//GEN-END:initComponents
 
     private void editButtonActionPerformed(

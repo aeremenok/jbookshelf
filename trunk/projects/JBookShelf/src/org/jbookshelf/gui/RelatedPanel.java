@@ -13,6 +13,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ResourceBundle;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -100,13 +101,13 @@ public class RelatedPanel
 
     private void initComponents()
     {
-
         tabbedPane.addTab( bundle.getString( "RelatedPanel.commentPanel.TabConstraints.tabTitle" ), commentPanel ); // NOI18N
         tabbedPane.addTab( bundle.getString( "RelatedPanel.relatedPanel.TabConstraints.tabTitle" ), relatedPanel ); // NOI18N
 
         searchTextField.setText( bundle.getString( "RelatedPanel.searchTextField.text" ) ); // NOI18N
-        addButton.setText( bundle.getString( "RelatedPanel.addButton.text" ) ); // NOI18N
-        removeButton.setText( bundle.getString( "RelatedPanel.removeButton.text" ) ); // NOI18N
+
+        addButton.setIcon( createIcon( "/org/jbookshelf/gui/images/list-add-small.png" ) );
+        removeButton.setIcon( createIcon( "/org/jbookshelf/gui/images/list-remove-small.png" ) );
 
         removeButton.setEnabled( false );
 
@@ -121,6 +122,12 @@ public class RelatedPanel
 
         add( panel, BorderLayout.NORTH );
         add( tabbedPane, BorderLayout.CENTER );
+    }
+
+    private ImageIcon createIcon(
+        String name )
+    {
+        return new ImageIcon( getClass().getResource( name ) );
     }
 
     private void initListeners()
