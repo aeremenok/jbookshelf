@@ -377,32 +377,6 @@ public class SettingsDialog
     }// GEN-LAST:event_langComboBoxActionPerformed
 
     /**
-     * @param args the command line arguments
-     */
-    public static void main(
-        String args[] )
-    {
-        java.awt.EventQueue.invokeLater( new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                SettingsDialog dialog = new SettingsDialog( new javax.swing.JFrame(), true );
-                dialog.addWindowListener( new java.awt.event.WindowAdapter()
-                {
-                    @Override
-                    public void windowClosing(
-                        java.awt.event.WindowEvent e )
-                    {
-                        System.exit( 0 );
-                    }
-                } );
-                dialog.setVisible( true );
-            }
-        } );
-    }
-
-    /**
      * stores {@link LookAndFeel} classNames
      */
     private static Map<String, String> lafClassNames = new HashMap<String, String>();
