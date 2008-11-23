@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import org.jbookshelf.Commentable;
 import org.jbookshelf.JbookshelfFactory;
 import org.jbookshelf.Unique;
 import org.jbookshelf.gui.RelatedPanel;
+import org.jdesktop.swingx.VerticalLayout;
 
 public class CommentTreePanel
     extends SearchableTreePanel
@@ -48,21 +50,35 @@ public class CommentTreePanel
         }
     }
 
-    private JTextArea              commentTextArea    = new JTextArea();
-    private JScrollPane            textAreaScrollPane = new JScrollPane( commentTextArea );
-    private JTextField             titleTextField     = new JTextField();
-    private JLabel                 dateLabel          = new JLabel();
-    private DefaultMutableTreeNode root               = new DefaultMutableTreeNode();
-    private JTree                  commentTree        = new JTree( root );
-    private JScrollPane            treeScrollPane     = new JScrollPane( commentTree );
-    private JPanel                 headerPanel        = new JPanel( new BorderLayout() );
-    private JButton                submitButton       = new JButton();
+    private static final SimpleDateFormat format             = new SimpleDateFormat( "dd.MM.yy HH:mm" );
 
-    private Commentable            selectedCommentable;
+    private JTextArea                     commentTextArea    = new JTextArea();
+    private JScrollPane                   textAreaScrollPane = new JScrollPane( commentTextArea );
+    private JTextField                    titleTextField     = new JTextField();
+    private JLabel                        dateLabel          = new JLabel();
+    private DefaultMutableTreeNode        root               = new DefaultMutableTreeNode();
+    private JTree                         commentTree        = new JTree( root );
+    private JScrollPane                   treeScrollPane     = new JScrollPane( commentTree );
+    private JPanel                        editPanel          = new JPanel( new VerticalLayout() )
+                                                             {
+                                                                 @SuppressWarnings( "synthetic-access" )
+                                                                 @Override
+                                                                 public void setVisible(
+                                                                     boolean flag )
+                                                                 {
+                                                                     super.setVisible( flag );
+                                                                     refresh();
+                                                                 }
+                                                             };
+    private JPanel                        headerPanel        = new JPanel( new BorderLayout() );
+    private JButton                       submitButton       = new JButton();
 
-    public CommentTreePanel()
+    private Commentable                   selectedCommentable;
+
+    public CommentTreePanel(
+        RelatedPanel relatedPanel )
     {
-        super();
+        super( relatedPanel );
         initComponents();
     }
 
@@ -76,12 +92,21 @@ public class CommentTreePanel
 
     public void nothingSelected()
     {
-        textAreaScrollPane.setVisible( false );
-        headerPanel.setVisible( false );
+        selectedCommentable = null;
 
         root.removeAllChildren();
         commentTree.setRootVisible( false );
+        commentTree.updateUI();
+
+        editPanel.setVisible( false );
+        relatedPanel.focusLost( null );
+    }
+
+    private void refresh()
+    {
         updateUI();
+        editPanel.updateUI();
+        treeScrollPane.updateUI();
     }
 
     @Override
@@ -91,11 +116,10 @@ public class CommentTreePanel
         selectedCommentable.getComments().add( comment );
         Date value = new Date();
         comment.setCreationDate( value );
-        comment.setTitle( "comment" + value.toLocaleString() );
+        comment.setTitle( "comment" + format.format( value ) );
         comment.setContent( "" );
 
-        CommentNode node = new CommentNode( comment );
-        root.add( node );
+        root.add( new CommentNode( comment ) );
         commentTree.updateUI();
 
         commentTree.setSelectionRow( root.getChildCount() - 1 );
@@ -123,17 +147,25 @@ public class CommentTreePanel
         CommentNode commentNode = (CommentNode) commentTree.getLastSelectedPathComponent();
         selectedCommentable.getComments().remove( commentNode.getComment() );
 
+        int row = root.getIndex( commentNode );
         root.remove( commentNode );
         commentTree.updateUI();
 
-        commentTree.setSelectionRow( 0 );
+        if ( row > 1 )
+        {
+            commentTree.setSelectionRow( row - 1 );
+        }
+        else
+        {
+            relatedPanel.focusLost( null );
+        }
     }
 
     public void selectedUnique(
         Unique unique )
     {
-        textAreaScrollPane.setVisible( true );
-        headerPanel.setVisible( true );
+        editPanel.setVisible( false );
+        relatedPanel.focusLost( null );
 
         selectedCommentable = (Commentable) unique;
         drawComments( selectedCommentable.getComments() );
@@ -143,46 +175,44 @@ public class CommentTreePanel
         List<Comment> comments )
     {
         root.removeAllChildren();
+        commentTree.setRootVisible( true );
 
         for ( Comment comment : comments )
         {
-            CommentNode parent = new CommentNode( comment );
-            root.add( parent );
+            root.add( new CommentNode( comment ) );
         }
 
         commentTree.expandRow( 0 );
         commentTree.setRootVisible( false );
 
-        updateUI();
+        commentTree.updateUI();
     }
 
     private void editComment(
         Comment comment )
     {
-        dateLabel.setText( comment.getCreationDate().toLocaleString() );
-        dateLabel.repaint();
+        dateLabel.setText( "Created " + format.format( comment.getCreationDate() ) );
         titleTextField.setText( comment.getTitle() );
         commentTextArea.setText( comment.getContent() );
 
-        submitButton.setEnabled( true );
+        editPanel.setVisible( true );
     }
 
     private void initComponents()
     {
         submitButton.setText( "v" );
-        submitButton.setEnabled( false );
 
-        dateLabel.setText( "Created " );
         commentTextArea.setColumns( 20 );
         commentTextArea.setRows( 5 );
 
-        add( headerPanel );
+        add( editPanel, BorderLayout.NORTH );
+        editPanel.add( headerPanel );
         headerPanel.add( dateLabel, BorderLayout.WEST );
         headerPanel.add( titleTextField, BorderLayout.CENTER );
         headerPanel.add( submitButton, BorderLayout.EAST );
 
-        add( textAreaScrollPane );
-        add( treeScrollPane );
+        editPanel.add( textAreaScrollPane );
+        add( treeScrollPane, BorderLayout.CENTER );
 
         commentTree.addMouseListener( new MouseAdapter()
         {
@@ -191,9 +221,12 @@ public class CommentTreePanel
             public void mousePressed(
                 MouseEvent e )
             {
-                RelatedPanel.getInstance().focusGained( null );
                 CommentNode commentNode = (CommentNode) commentTree.getLastSelectedPathComponent();
-                editComment( commentNode.getComment() );
+                if ( commentNode != null )
+                {
+                    editComment( commentNode.getComment() );
+                }
+                relatedPanel.focusGained( null );
             }
         } );
 

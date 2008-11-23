@@ -1,20 +1,25 @@
 package org.jbookshelf.gui.widgets.panel;
 
+import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
 
+import org.jbookshelf.gui.RelatedPanel;
 import org.jbookshelf.gui.logic.UniqueSelectionListener;
-import org.jdesktop.swingx.VerticalLayout;
 
 public abstract class SearchableTreePanel
     extends JPanel
     implements
         UniqueSelectionListener
 {
-    public SearchableTreePanel()
+    protected final RelatedPanel relatedPanel;
+
+    public SearchableTreePanel(
+        RelatedPanel relatedPanel )
     {
-        super( new VerticalLayout() );
+        super( new BorderLayout() );
+        this.relatedPanel = relatedPanel;
     }
 
     public abstract void onAdd();

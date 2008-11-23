@@ -23,7 +23,6 @@ import org.jbookshelf.gui.logic.UniqueSelectionListener;
 import org.jbookshelf.gui.widgets.panel.CommentTreePanel;
 import org.jbookshelf.gui.widgets.panel.RelatedTreePanel;
 import org.jbookshelf.gui.widgets.panel.SearchableTreePanel;
-import org.jdesktop.swingx.VerticalLayout;
 
 /**
  * @author eav
@@ -34,27 +33,25 @@ public class RelatedPanel
         UniqueSelectionListener,
         FocusListener
 {
-    private static RelatedPanel   instance;
-    private SearchableTreePanel[] searchableTreePanels;
-    private JButton               addButton       = new JButton();
-    private SearchableTreePanel   commentPanel    = new CommentTreePanel();
-    private JTabbedPane           tabbedPane      = new JTabbedPane();
-    private SearchableTreePanel   relatedPanel    = new RelatedTreePanel();
-    private JButton               removeButton    = new JButton();
-    private JTextField            searchTextField = new JTextField();
+    private static final RelatedPanel instance        = new RelatedPanel();
+
+    private SearchableTreePanel[]     searchableTreePanels;
+    private JButton                   addButton       = new JButton();
+    private JTabbedPane               tabbedPane      = new JTabbedPane();
+    private JButton                   removeButton    = new JButton();
+    private JTextField                searchTextField = new JTextField();
+
+    private SearchableTreePanel       commentPanel    = new CommentTreePanel( this );
+    private SearchableTreePanel       relatedPanel    = new RelatedTreePanel( this );
 
     public static RelatedPanel getInstance()
     {
-        if ( instance == null )
-        {
-            instance = new RelatedPanel();
-        }
         return instance;
     }
 
     public RelatedPanel()
     {
-        super( new VerticalLayout() );
+        super( new BorderLayout() );
         initComponents();
         initListeners();
     }
@@ -68,7 +65,7 @@ public class RelatedPanel
     public void focusLost(
         FocusEvent e )
     {
-        if ( !removeButton.equals( e.getComponent() ) )
+        if ( e == null || !removeButton.equals( e.getComponent() ) )
         {
             removeButton.setEnabled( false );
         }
@@ -119,7 +116,7 @@ public class RelatedPanel
         removeButton.setEnabled( false );
 
         JPanel panel = new JPanel( new BorderLayout() );
-        add( panel );
+        add( panel, BorderLayout.NORTH );
         JPanel buttonPanel = new JPanel();
         panel.add( buttonPanel, BorderLayout.WEST );
         buttonPanel.add( addButton );
@@ -127,7 +124,7 @@ public class RelatedPanel
 
         panel.add( searchTextField, BorderLayout.CENTER );
 
-        add( tabbedPane );
+        add( tabbedPane, BorderLayout.CENTER );
     }
 
     private void initListeners()
