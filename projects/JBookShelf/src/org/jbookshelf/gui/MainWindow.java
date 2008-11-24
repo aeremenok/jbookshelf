@@ -1,7 +1,3 @@
-/*
- * MainWindow.java Created on 15 Ноябрь 2008 г., 12:41
- */
-
 package org.jbookshelf.gui;
 
 import java.awt.BorderLayout;
@@ -11,7 +7,11 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 
+import org.util.settings.JBookShelfSettings;
 import org.util.settings.Settings;
 import org.util.storage.SingleFileStorageImpl;
 import org.util.storage.Storage;
@@ -53,12 +53,22 @@ public class MainWindow
         ((SingleFileStorageImpl) Storage.getImpl()).setCollectionStorageFile( settings.getCollectionFile() );
         Storage.loadCollection();
 
+        try
+        {
+            UIManager.setLookAndFeel( Resourses.getLAFClassName( settings.getProperty( JBookShelfSettings.LAF ) ) );
+            SwingUtilities.updateComponentTreeUI( this );
+        }
+        catch ( Exception e )
+        {
+            throw new Error( e );
+        }
+
         initComponents();
     }
 
     private void initComponents()
     {
-        setDefaultCloseOperation( javax.swing.WindowConstants.EXIT_ON_CLOSE );
+        setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
 
         add( ToolBar.getInstance(), BorderLayout.NORTH );
         add( splitPane, BorderLayout.SOUTH );
