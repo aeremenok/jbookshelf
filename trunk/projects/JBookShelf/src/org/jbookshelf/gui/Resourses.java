@@ -8,12 +8,16 @@ import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.text.JTextComponent;
 
 public class Resourses
 {
     private static ResourceBundle                bundle     = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
     private static final Map<String, JComponent> components = new HashMap<String, JComponent>();
+    private static Locale                        currentLocale;
 
     public static void register(
         Class clazz,
@@ -68,17 +72,44 @@ public class Resourses
         return bundle.getString( fullName + ".text" );
     }
 
-    public static void switchLanguaage(
+    /**
+     * stores {@link LookAndFeel} classNames
+     */
+    private static Map<String, String> lafClassNames = new HashMap<String, String>();
+    /**
+     * stores {@link LookAndFeel} classNames
+     */
+    public static final String[]       LAF_NAMES     = getLAFs();
+
+    /**
+     * @return {@link LookAndFeel} names for combobox
+     */
+    private static String[] getLAFs()
+    {
+        LookAndFeelInfo[] installed = UIManager.getInstalledLookAndFeels();
+        lafClassNames.clear();
+        String[] lafs = new String[installed.length];
+        for ( int i = 0; i < installed.length; i++ )
+        {
+            LookAndFeelInfo lookAndFeelInfo = installed[i];
+            lafs[i] = lookAndFeelInfo.getName();
+            lafClassNames.put( lafs[i], lookAndFeelInfo.getClassName() );
+        }
+        return lafs;
+    }
+
+    public static void switchLanguage(
         String language )
     {
         if ( language.equals( "Russian" ) )
         {
-            bundle = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle", new Locale( "ru", "RU" ) );
+            currentLocale = new Locale( "ru", "RU" );
         }
         else
         {
-            bundle = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle", new Locale( "en", "US" ) );
+            currentLocale = new Locale( "en", "US" );
         }
+        bundle = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle", currentLocale );
 
         for ( String fullName : components.keySet() )
         {
@@ -93,5 +124,16 @@ public class Resourses
                 ((JTextComponent) component).setText( getString( fullName ) );
             }
         }
+    }
+
+    public static Locale getCurrentLocale()
+    {
+        return currentLocale;
+    }
+
+    public static String getLAFClassName(
+        String lafName )
+    {
+        return lafClassNames.get( lafName );
     }
 }

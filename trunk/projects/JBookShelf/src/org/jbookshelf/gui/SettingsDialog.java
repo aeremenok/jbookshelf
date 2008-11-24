@@ -4,21 +4,18 @@
 package org.jbookshelf.gui;
 
 import java.awt.Component;
+import java.awt.Window;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.util.settings.JBookShelfSettings;
 import org.util.settings.Settings;
@@ -75,7 +72,6 @@ public class SettingsDialog
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
     {
-
         restoreButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
@@ -192,7 +188,7 @@ public class SettingsDialog
             }
         } );
 
-        lafComboBox.setModel( new javax.swing.DefaultComboBoxModel( getLAFs() ) );
+        lafComboBox.setModel( new javax.swing.DefaultComboBoxModel( Resourses.LAF_NAMES ) );
         lafComboBox.setName( "lafComboBox" ); // NOI18N
         lafComboBox.addActionListener( new java.awt.event.ActionListener()
         {
@@ -337,9 +333,11 @@ public class SettingsDialog
         {
             String lafName = lafComboBox.getSelectedItem().toString();
             settings.setProperty( JBookShelfSettings.LAF, lafName );
-            UIManager.setLookAndFeel( lafClassNames.get( lafName ) );
+            UIManager.setLookAndFeel( Resourses.getLAFClassName( lafName ) );
             SwingUtilities.updateComponentTreeUI( this );
             pack();
+            SwingUtilities.updateComponentTreeUI( getParent() );
+            ((Window) getParent()).pack();
         }
         catch ( Exception ex )
         {
@@ -352,6 +350,7 @@ public class SettingsDialog
     {// GEN-FIRST:event_langComboBoxActionPerformed
         String language = langComboBox.getSelectedItem().toString();
         settings.setProperty( JBookShelfSettings.LANGUAGE, language );
+        Resourses.switchLanguage( language );
         ResourceBundle bundle;
         if ( language.equals( "Russian" ) )
         {
@@ -375,27 +374,6 @@ public class SettingsDialog
             }
         }
     }// GEN-LAST:event_langComboBoxActionPerformed
-
-    /**
-     * stores {@link LookAndFeel} classNames
-     */
-    private static Map<String, String> lafClassNames = new HashMap<String, String>();
-
-    /**
-     * @return {@link LookAndFeel} names for combobox
-     */
-    private static String[] getLAFs()
-    {
-        LookAndFeelInfo[] installed = UIManager.getInstalledLookAndFeels();
-        String[] lafs = new String[installed.length];
-        for ( int i = 0; i < installed.length; i++ )
-        {
-            LookAndFeelInfo lookAndFeelInfo = installed[i];
-            lafs[i] = lookAndFeelInfo.getName();
-            lafClassNames.put( lafs[i], lookAndFeelInfo.getClassName() );
-        }
-        return lafs;
-    }
 
     /**
      * stores component names to iterate while changing locale

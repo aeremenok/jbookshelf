@@ -5,6 +5,8 @@
 package org.jbookshelf.gui;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -33,17 +35,17 @@ public class ToolBar
 {
     private static final ToolBar instance       = new ToolBar();
 
-    private JButton              aboutButton    = new JButton();
-    private JButton              addButton      = new JButton();
-    private JButton              backupButton   = new JButton();
-    private JButton              editButton     = new JButton();
-    private JButton              importButton   = new JButton();
-    private JButton              openButton     = new JButton();
-    private JButton              removeButton   = new JButton();
-    private JButton              restoreButton  = new JButton();
-    private JButton              settingsButton = new JButton();
+    private final JButton        aboutButton    = new JButton();
+    private final JButton        addButton      = new JButton();
+    private final JButton        backupButton   = new JButton();
+    private final JButton        editButton     = new JButton();
+    private final JButton        importButton   = new JButton();
+    private final JButton        openButton     = new JButton();
+    private final JButton        removeButton   = new JButton();
+    private final JButton        restoreButton  = new JButton();
+    private final JButton        settingsButton = new JButton();
 
-    private JToolBar             toolBar        = new JToolBar();
+    private final JToolBar       toolBar        = new JToolBar();
 
     private Unique               selectedUnique;
 
@@ -96,6 +98,7 @@ public class ToolBar
     private void importButtonActionPerformed()
     {
         JFileChooser chooser = new JFileChooser();
+        chooser.setLocale( Resourses.getCurrentLocale() );
         chooser.setMultiSelectionEnabled( false );
         chooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
 
@@ -127,8 +130,8 @@ public class ToolBar
             if ( result != null && !result.equals( "" ) )
             {
                 mask = result;
+                importer.importFiles( chooser.getSelectedFile().listFiles(), mask, Storage.getBookShelf() );
             }
-            importer.importFiles( chooser.getSelectedFile().listFiles(), mask, Storage.getBookShelf() );
 
             CollectionPanel.getInstance().updateTree();
         }
@@ -182,83 +185,83 @@ public class ToolBar
 
     private void initListeners()
     {
-        backupButton.addActionListener( new java.awt.event.ActionListener()
+        backupButton.addActionListener( new ActionListener()
         {
             @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
-                java.awt.event.ActionEvent evt )
+                ActionEvent evt )
             {
                 backupButtonActionPerformed();
             }
         } );
 
-        aboutButton.addActionListener( new java.awt.event.ActionListener()
+        aboutButton.addActionListener( new ActionListener()
         {
             public void actionPerformed(
-                java.awt.event.ActionEvent evt )
+                ActionEvent evt )
             {
                 new AboutDialog( MainWindow.getInstance(), true ).setVisible( true );
             }
         } );
 
-        restoreButton.addActionListener( new java.awt.event.ActionListener()
+        restoreButton.addActionListener( new ActionListener()
         {
             @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
-                java.awt.event.ActionEvent evt )
+                ActionEvent evt )
             {
                 restoreButtonActionPerformed();
             }
         } );
-        importButton.addActionListener( new java.awt.event.ActionListener()
+        importButton.addActionListener( new ActionListener()
         {
             @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
-                java.awt.event.ActionEvent evt )
+                ActionEvent evt )
             {
                 importButtonActionPerformed();
             }
         } );
-        openButton.addActionListener( new java.awt.event.ActionListener()
+        openButton.addActionListener( new ActionListener()
         {
             @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
-                java.awt.event.ActionEvent evt )
+                ActionEvent evt )
             {
                 ((ReadingUnit) selectedUnique).getPhysical().openUnit();
             }
         } );
 
-        editButton.addActionListener( new java.awt.event.ActionListener()
+        editButton.addActionListener( new ActionListener()
         {
             @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
-                java.awt.event.ActionEvent evt )
+                ActionEvent evt )
             {
                 new BookEditDialog( MainWindow.getInstance(), true, (ReadingUnit) selectedUnique ).setVisible( true );
             }
         } );
-        removeButton.addActionListener( new java.awt.event.ActionListener()
+        removeButton.addActionListener( new ActionListener()
         {
             @SuppressWarnings( "synthetic-access" )
             public void actionPerformed(
-                java.awt.event.ActionEvent evt )
+                ActionEvent evt )
             {
                 removeButtonActionPerformed();
             }
         } );
-        addButton.addActionListener( new java.awt.event.ActionListener()
+        addButton.addActionListener( new ActionListener()
         {
             public void actionPerformed(
-                java.awt.event.ActionEvent evt )
+                ActionEvent evt )
             {
                 new BookAdditionDialog( MainWindow.getInstance(), true ).setVisible( true );
             }
         } );
-        settingsButton.addActionListener( new java.awt.event.ActionListener()
+        settingsButton.addActionListener( new ActionListener()
         {
             public void actionPerformed(
-                java.awt.event.ActionEvent evt )
+                ActionEvent evt )
             {
                 new SettingsDialog( MainWindow.getInstance(), true ).setVisible( true );
             }
