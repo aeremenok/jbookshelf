@@ -73,6 +73,12 @@ public class Resourses
         return bundle.getString( fullName + ".text" );
     }
 
+    public static String getSpecificString(
+        String fullName )
+    {
+        return bundle.getString( fullName );
+    }
+
     /**
      * stores {@link LookAndFeel} classNames
      */
