@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.LookAndFeel;
@@ -15,7 +16,7 @@ import javax.swing.text.JTextComponent;
 
 public class Resourses
 {
-    private static ResourceBundle                bundle     = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
+    private static ResourceBundle                bundle     = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" );
     private static final Map<String, JComponent> components = new HashMap<String, JComponent>();
     private static Locale                        currentLocale;
 
@@ -114,14 +115,19 @@ public class Resourses
         for ( String fullName : components.keySet() )
         {
             JComponent component = components.get( fullName );
+            String text = getString( fullName );
 
             if ( component instanceof JLabel )
             {
-                ((JLabel) component).setText( getString( fullName ) );
+                ((JLabel) component).setText( text );
             }
             else if ( component instanceof JTextComponent )
             {
-                ((JTextComponent) component).setText( getString( fullName ) );
+                ((JTextComponent) component).setText( text );
+            }
+            else if ( component instanceof JButton )
+            {
+                ((JButton) component).setText( text );
             }
         }
     }
