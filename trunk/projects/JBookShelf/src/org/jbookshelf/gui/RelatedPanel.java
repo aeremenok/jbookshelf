@@ -11,9 +11,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ResourceBundle;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -43,8 +41,6 @@ public class RelatedPanel
 
     private SearchableTreePanel       commentPanel    = new CommentTreePanel( this );
     private SearchableTreePanel       relatedPanel    = new RelatedTreePanel( this );
-
-    private ResourceBundle            bundle          = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
 
     public static RelatedPanel getInstance()
     {
@@ -101,13 +97,15 @@ public class RelatedPanel
 
     private void initComponents()
     {
-        tabbedPane.addTab( bundle.getString( "RelatedPanel.commentPanel.TabConstraints.tabTitle" ), commentPanel ); // NOI18N
-        tabbedPane.addTab( bundle.getString( "RelatedPanel.relatedPanel.TabConstraints.tabTitle" ), relatedPanel ); // NOI18N
+        tabbedPane.addTab( Resourses.getSpecificString( "RelatedPanel.commentPanel.TabConstraints.tabTitle" ),
+            commentPanel );
+        tabbedPane.addTab( Resourses.getSpecificString( "RelatedPanel.relatedPanel.TabConstraints.tabTitle" ),
+            relatedPanel );
 
-        searchTextField.setText( bundle.getString( "RelatedPanel.searchTextField.text" ) ); // NOI18N
+        searchTextField.setText( Resourses.getString( "RelatedPanel.searchTextField" ) );
 
-        addButton.setIcon( createIcon( "/org/jbookshelf/gui/images/list-add-small.png" ) );
-        removeButton.setIcon( createIcon( "/org/jbookshelf/gui/images/list-remove-small.png" ) );
+        addButton.setIcon( Resourses.createIcon( "list-add-small.png" ) );
+        removeButton.setIcon( Resourses.createIcon( "list-remove-small.png" ) );
 
         removeButton.setEnabled( false );
 
@@ -122,12 +120,6 @@ public class RelatedPanel
 
         add( panel, BorderLayout.NORTH );
         add( tabbedPane, BorderLayout.CENTER );
-    }
-
-    private ImageIcon createIcon(
-        String name )
-    {
-        return new ImageIcon( getClass().getResource( name ) );
     }
 
     private void initListeners()
@@ -145,7 +137,7 @@ public class RelatedPanel
             public void focusLost(
                 FocusEvent e )
             {
-                searchTextField.setText( bundle.getString( "RelatedPanel.searchTextField.text" ) );
+                searchTextField.setText( Resourses.getString( "RelatedPanel.searchTextField" ) );
             }
         } );
 
