@@ -3,17 +3,10 @@
  */
 package org.jbookshelf.gui;
 
-import java.awt.Component;
 import java.awt.Window;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -76,13 +69,13 @@ public class SettingsDialog
         cancelButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        settingsLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        languageLabel = new javax.swing.JLabel();
+        lafLabel = new javax.swing.JLabel();
+        tmpFolderLabel = new javax.swing.JLabel();
+        jbsFolderLabel = new javax.swing.JLabel();
+        importMaskLabel = new javax.swing.JLabel();
         importTextField = new javax.swing.JTextField();
         jbsTextField = new javax.swing.JTextField();
         chooseJBSFolderButton = new javax.swing.JButton();
@@ -139,26 +132,26 @@ public class SettingsDialog
             }
         } );
 
-        jLabel1.setFont( new java.awt.Font( "Dialog", 1, 18 ) );
-        jLabel1.setText( bundle.getString( "SettingsDialog.jLabel1.text" ) ); // NOI18N
-        jLabel1.setName( "jLabel1" ); // NOI18N
+        settingsLabel.setFont( new java.awt.Font( "Dialog", 1, 18 ) );
+        settingsLabel.setText( bundle.getString( "SettingsDialog.settingsLabel.text" ) ); // NOI18N
+        settingsLabel.setName( "settingsLabel" ); // NOI18N
 
         jSeparator1.setName( "jSeparator1" ); // NOI18N
 
-        jLabel2.setText( bundle.getString( "SettingsDialog.jLabel2.text" ) ); // NOI18N
-        jLabel2.setName( "jLabel2" ); // NOI18N
+        languageLabel.setText( bundle.getString( "SettingsDialog.languageLabel.text" ) ); // NOI18N
+        languageLabel.setName( "languageLabel" ); // NOI18N
 
-        jLabel3.setText( bundle.getString( "SettingsDialog.jLabel3.text" ) ); // NOI18N
-        jLabel3.setName( "jLabel3" ); // NOI18N
+        lafLabel.setText( bundle.getString( "SettingsDialog.lafLabel.text" ) ); // NOI18N
+        lafLabel.setName( "lafLabel" ); // NOI18N
 
-        jLabel4.setText( bundle.getString( "SettingsDialog.jLabel4.text" ) ); // NOI18N
-        jLabel4.setName( "jLabel4" ); // NOI18N
+        tmpFolderLabel.setText( bundle.getString( "SettingsDialog.tmpFolderLabel.text" ) ); // NOI18N
+        tmpFolderLabel.setName( "tmpFolderLabel" ); // NOI18N
 
-        jLabel5.setText( bundle.getString( "SettingsDialog.jLabel5.text" ) ); // NOI18N
-        jLabel5.setName( "jLabel5" ); // NOI18N
+        jbsFolderLabel.setText( bundle.getString( "SettingsDialog.jbsFolderLabel.text" ) ); // NOI18N
+        jbsFolderLabel.setName( "jbsFolderLabel" ); // NOI18N
 
-        jLabel6.setText( bundle.getString( "SettingsDialog.jLabel6.text" ) ); // NOI18N
-        jLabel6.setName( "jLabel6" ); // NOI18N
+        importMaskLabel.setText( bundle.getString( "SettingsDialog.importMaskLabel.text" ) ); // NOI18N
+        importMaskLabel.setName( "importMaskLabel" ); // NOI18N
 
         importTextField.setName( "importTextField" ); // NOI18N
 
@@ -212,60 +205,56 @@ public class SettingsDialog
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout( getContentPane() );
         getContentPane().setLayout( layout );
-        layout
-            .setHorizontalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup(
-                layout.createSequentialGroup().addComponent( jLabel1 ).addContainerGap() ).addComponent( jSeparator1,
-                javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE ).addGroup(
-                layout.createSequentialGroup().addContainerGap().addComponent( saveButton ).addPreferredGap(
-                    javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( restoreButton ).addPreferredGap(
-                    javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE ).addComponent( okButton )
-                    .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( cancelButton )
-                    .addContainerGap() ).addGroup(
-                layout.createSequentialGroup().addContainerGap()
-                    .addGroup(
-                        layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent( jLabel6 )
-                            .addComponent( jLabel5 ).addComponent( jLabel4 ).addComponent( jLabel3 ).addComponent(
-                                jLabel2 ) ).addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED )
-                    .addGroup(
+        layout.setHorizontalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup(
+            layout.createSequentialGroup().addComponent( settingsLabel ).addContainerGap() ).addComponent( jSeparator1,
+            javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE ).addGroup(
+            layout.createSequentialGroup().addContainerGap().addComponent( saveButton ).addPreferredGap(
+                javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( restoreButton ).addPreferredGap(
+                javax.swing.LayoutStyle.ComponentPlacement.RELATED, 325, Short.MAX_VALUE ).addComponent( okButton )
+                .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( cancelButton )
+                .addContainerGap() ).addGroup(
+            layout.createSequentialGroup().addContainerGap().addGroup(
+                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent( importMaskLabel )
+                    .addComponent( jbsFolderLabel ).addComponent( tmpFolderLabel ).addComponent( lafLabel )
+                    .addComponent( languageLabel ) ).addPreferredGap(
+                javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
+                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent( importTextField,
+                    javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE ).addGroup(
+                    javax.swing.GroupLayout.Alignment.TRAILING,
+                    layout.createSequentialGroup().addGroup(
+                        layout.createParallelGroup( javax.swing.GroupLayout.Alignment.TRAILING ).addComponent(
+                            langComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 485, Short.MAX_VALUE )
+                            .addComponent( lafComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 485,
+                                Short.MAX_VALUE ).addComponent( tmpTextField,
+                                javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 485,
+                                Short.MAX_VALUE ).addComponent( jbsTextField, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                485, Short.MAX_VALUE ) ).addPreferredGap(
+                        javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
                         layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent(
-                            importTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE )
-                            .addGroup(
-                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                layout.createSequentialGroup().addGroup(
-                                    layout.createParallelGroup( javax.swing.GroupLayout.Alignment.TRAILING )
-                                        .addComponent( langComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 434,
-                                            Short.MAX_VALUE ).addComponent( lafComboBox,
-                                            javax.swing.GroupLayout.Alignment.LEADING, 0, 434, Short.MAX_VALUE )
-                                        .addComponent( tmpTextField, javax.swing.GroupLayout.Alignment.LEADING,
-                                            javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE ).addComponent(
-                                            jbsTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE ) )
-                                    .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
-                                        layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-                                            .addComponent( chooseTempFolderButton )
-                                            .addComponent( chooseJBSFolderButton ) ) ) ).addContainerGap() ) );
+                            chooseTempFolderButton ).addComponent( chooseJBSFolderButton ) ) ) ).addContainerGap() ) );
         layout.setVerticalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup(
             javax.swing.GroupLayout.Alignment.TRAILING,
-            layout.createSequentialGroup().addComponent( jLabel1 ).addPreferredGap(
+            layout.createSequentialGroup().addComponent( settingsLabel ).addPreferredGap(
                 javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addComponent( jSeparator1,
                 javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE ).addPreferredGap(
                 javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
-                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel2 )
+                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( languageLabel )
                     .addComponent( langComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) ).addGap( 18,
                 18, 18 ).addGroup(
-                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel3 )
+                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( lafLabel )
                     .addComponent( lafComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) ).addGap( 18,
                 18, 18 ).addGroup(
-                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel4 )
+                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( tmpFolderLabel )
                     .addComponent( tmpTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ).addComponent(
                         chooseTempFolderButton ) ).addGap( 18, 18, 18 ).addGroup(
-                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel5 )
+                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jbsFolderLabel )
                     .addComponent( chooseJBSFolderButton ).addComponent( jbsTextField,
                         javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
                         javax.swing.GroupLayout.PREFERRED_SIZE ) ).addGap( 18, 18, 18 ).addGroup(
-                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel6 )
+                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( importMaskLabel )
                     .addComponent( importTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) ).addGap( 18,
                 18, 18 ).addGroup(
@@ -333,9 +322,12 @@ public class SettingsDialog
         {
             String lafName = lafComboBox.getSelectedItem().toString();
             settings.setProperty( JBookShelfSettings.LAF, lafName );
+
             UIManager.setLookAndFeel( Resourses.getLAFClassName( lafName ) );
+
             SwingUtilities.updateComponentTreeUI( this );
             pack();
+
             SwingUtilities.updateComponentTreeUI( getParent() );
             ((Window) getParent()).pack();
         }
@@ -351,73 +343,46 @@ public class SettingsDialog
         String language = langComboBox.getSelectedItem().toString();
         settings.setProperty( JBookShelfSettings.LANGUAGE, language );
         Resourses.switchLanguage( language );
-        ResourceBundle bundle;
-        if ( language.equals( "Russian" ) )
-        {
-            bundle = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle", new Locale( "ru", "RU" ) );
-        }
-        else
-        {
-            bundle = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle", new Locale( "en", "US" ) );
-        }
-
-        for ( Component component : components )
-        {
-            String text = bundle.getString( "SettingsDialog." + component.getName() + ".text" );
-            if ( component instanceof JButton )
-            {
-                ((JButton) component).setText( text );
-            }
-            else if ( component instanceof JLabel )
-            {
-                ((JLabel) component).setText( text );
-            }
-        }
     }// GEN-LAST:event_langComboBoxActionPerformed
-
-    /**
-     * stores component names to iterate while changing locale
-     */
-    private List<Component> components = new ArrayList<Component>();
 
     /**
      * register components to be localized
      */
     private void registerComponents()
     {
-        components.add( restoreButton );
-        components.add( chooseJBSFolderButton );
-        components.add( cancelButton );
-        components.add( okButton );
-        components.add( saveButton );
-        components.add( chooseTempFolderButton );
+        Resourses.register( getClass(), restoreButton );
+        Resourses.register( getClass(), chooseJBSFolderButton );
+        Resourses.register( getClass(), cancelButton );
+        Resourses.register( getClass(), okButton );
+        Resourses.register( getClass(), saveButton );
+        Resourses.register( getClass(), chooseTempFolderButton );
 
-        components.add( jLabel1 );
-        components.add( jLabel2 );
-        components.add( jLabel3 );
-        components.add( jLabel4 );
-        components.add( jLabel5 );
-        components.add( jLabel6 );
+        Resourses.register( getClass(), settingsLabel );
+        Resourses.register( getClass(), languageLabel );
+        Resourses.register( getClass(), lafLabel );
+        Resourses.register( getClass(), tmpFolderLabel );
+        Resourses.register( getClass(), jbsFolderLabel );
+        Resourses.register( getClass(), importMaskLabel );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton    cancelButton;
     private javax.swing.JButton    chooseJBSFolderButton;
     private javax.swing.JButton    chooseTempFolderButton;
+    private javax.swing.JLabel     importMaskLabel;
     private javax.swing.JTextField importTextField;
-    private javax.swing.JLabel     jLabel1;
-    private javax.swing.JLabel     jLabel2;
-    private javax.swing.JLabel     jLabel3;
-    private javax.swing.JLabel     jLabel4;
-    private javax.swing.JLabel     jLabel5;
-    private javax.swing.JLabel     jLabel6;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel     jbsFolderLabel;
     private javax.swing.JTextField jbsTextField;
     private javax.swing.JComboBox  lafComboBox;
+    private javax.swing.JLabel     lafLabel;
     private javax.swing.JComboBox  langComboBox;
+    private javax.swing.JLabel     languageLabel;
     private javax.swing.JButton    okButton;
     private javax.swing.JButton    restoreButton;
     private javax.swing.JButton    saveButton;
+    private javax.swing.JLabel     settingsLabel;
+    private javax.swing.JLabel     tmpFolderLabel;
     private javax.swing.JTextField tmpTextField;
     // End of variables declaration//GEN-END:variables
 }
