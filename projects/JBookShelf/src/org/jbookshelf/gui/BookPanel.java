@@ -120,30 +120,29 @@ public class BookPanel
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
     {
-
         bookTextField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        nameLabel = new javax.swing.JLabel();
+        authorLabel = new javax.swing.JLabel();
         authorTextField = new javax.swing.JTextField();
         categoryTextField = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        categoryLabel = new javax.swing.JLabel();
+        fileLabel = new javax.swing.JLabel();
         fileTextField = new javax.swing.JTextField();
         chooseButton = new javax.swing.JButton();
         isReadCheckBox = new javax.swing.JCheckBox();
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
-        jLabel3.setText( bundle.getString( "BookPanel.jLabel3.text" ) ); // NOI18N
+        nameLabel.setText( bundle.getString( "BookPanel.nameLabel.text" ) ); // NOI18N
 
-        jLabel4.setText( bundle.getString( "BookPanel.jLabel4.text" ) ); // NOI18N
+        authorLabel.setText( bundle.getString( "BookPanel.authorLabel.text" ) ); // NOI18N
 
         authorTextField.setText( bundle.getString( "BookPanel.authorTextField.text" ) ); // NOI18N
 
         categoryTextField.setText( bundle.getString( "BookPanel.categoryTextField.text" ) ); // NOI18N
 
-        jLabel5.setText( bundle.getString( "BookPanel.jLabel5.text" ) ); // NOI18N
+        categoryLabel.setText( bundle.getString( "BookPanel.categoryLabel.text" ) ); // NOI18N
 
-        jLabel2.setText( bundle.getString( "BookPanel.jLabel2.text" ) ); // NOI18N
+        fileLabel.setText( bundle.getString( "BookPanel.fileLabel.text" ) ); // NOI18N
 
         chooseButton.setText( bundle.getString( "BookPanel.chooseButton.text" ) ); // NOI18N
         chooseButton.addActionListener( new java.awt.event.ActionListener()
@@ -166,8 +165,9 @@ public class BookPanel
                     .addGroup(
                         layout.createSequentialGroup().addGroup(
                             layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addComponent(
-                                jLabel5 ).addComponent( jLabel4 ).addComponent( jLabel3 ).addComponent( jLabel2 ) )
-                            .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
+                                categoryLabel ).addComponent( authorLabel ).addComponent( nameLabel ).addComponent(
+                                fileLabel ) ).addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED )
+                            .addGroup(
                                 layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup(
                                     javax.swing.GroupLayout.Alignment.TRAILING,
                                     layout.createSequentialGroup().addComponent( fileTextField,
@@ -181,19 +181,19 @@ public class BookPanel
                 16, 16 ) ) );
         layout.setVerticalGroup( layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup(
             layout.createSequentialGroup().addContainerGap().addGroup(
-                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel3 )
+                layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( nameLabel )
                     .addComponent( bookTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) )
                 .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
-                    layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel4 )
+                    layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( authorLabel )
                         .addComponent( authorTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
                             javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) )
                 .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
-                    layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel5 )
-                        .addComponent( categoryTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
-                            javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) )
+                    layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent(
+                        categoryLabel ).addComponent( categoryTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
+                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE ) )
                 .addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED ).addGroup(
-                    layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( jLabel2 )
+                    layout.createParallelGroup( javax.swing.GroupLayout.Alignment.BASELINE ).addComponent( fileLabel )
                         .addComponent( chooseButton ).addComponent( fileTextField,
                             javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
                             javax.swing.GroupLayout.PREFERRED_SIZE ) ).addPreferredGap(
@@ -212,16 +212,16 @@ public class BookPanel
     }// GEN-LAST:event_chooseButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel     authorLabel;
     private javax.swing.JTextField authorTextField;
     private javax.swing.JTextField bookTextField;
+    private javax.swing.JLabel     categoryLabel;
     private javax.swing.JTextField categoryTextField;
     private javax.swing.JButton    chooseButton;
+    private javax.swing.JLabel     fileLabel;
     private javax.swing.JTextField fileTextField;
     private javax.swing.JCheckBox  isReadCheckBox;
-    private javax.swing.JLabel     jLabel2;
-    private javax.swing.JLabel     jLabel3;
-    private javax.swing.JLabel     jLabel4;
-    private javax.swing.JLabel     jLabel5;
+    private javax.swing.JLabel     nameLabel;
 
     // End of variables declaration//GEN-END:variables
 
