@@ -26,8 +26,7 @@ public class BookEditDialog
     private JButton           applyButton;
     private BookPanel         bookPanel;
     private JButton           cancelButton;
-    private JLabel            jLabel1;
-    private JSeparator        jSeparator1;
+    private JLabel            headerLabel;
 
     public BookEditDialog(
         Frame parent,
@@ -40,6 +39,17 @@ public class BookEditDialog
         initListeners();
 
         bookPanel.setBook( book );
+    }
+
+    private void registerComponents()
+    {
+        applyButton.setName( "applyButton" );
+        headerLabel.setName( "headerLabel" );
+        cancelButton.setName( "cancelButton" );
+
+        Resourses.register( getClass(), applyButton );
+        Resourses.register( getClass(), cancelButton );
+        Resourses.register( getClass(), headerLabel );
     }
 
     public boolean saveBook(
@@ -59,26 +69,28 @@ public class BookEditDialog
 
     private void initComponents()
     {
-        jLabel1 = new JLabel();
-        jSeparator1 = new JSeparator();
+        headerLabel = new JLabel();
         cancelButton = new JButton();
         applyButton = new JButton();
         bookPanel = new BookPanel();
 
         setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 
-        jLabel1.setFont( new Font( "Tahoma", 1, 14 ) );
-        jLabel1.setText( "Edit Book Properties" );
+        headerLabel.setFont( new Font( "Tahoma", 1, 14 ) );
 
-        cancelButton.setText( "Cancel" );
-        applyButton.setText( "Apply" );
+        registerComponents();
+
+        headerLabel.setText( Resourses.getString( getClass(), headerLabel ) );
+        cancelButton.setText( Resourses.getString( getClass(), cancelButton ) );
+        applyButton.setText( Resourses.getString( getClass(), applyButton ) );
 
         JPanel contentPanel = new JPanel( new VerticalLayout() );
         add( contentPanel );
 
-        contentPanel.add( jLabel1 );
-        contentPanel.add( jSeparator1 );
+        contentPanel.add( headerLabel );
+        contentPanel.add( new JSeparator() );
         contentPanel.add( bookPanel );
+
         JPanel buttonPanel = new JPanel();
         contentPanel.add( buttonPanel );
         buttonPanel.add( applyButton );
