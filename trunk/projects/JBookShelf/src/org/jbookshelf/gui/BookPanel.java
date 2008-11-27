@@ -120,6 +120,7 @@ public class BookPanel
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
     {
+
         bookTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -132,7 +133,6 @@ public class BookPanel
         isReadCheckBox = new javax.swing.JCheckBox();
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
-
         jLabel3.setText( bundle.getString( "BookPanel.jLabel3.text" ) ); // NOI18N
 
         jLabel4.setText( bundle.getString( "BookPanel.jLabel4.text" ) ); // NOI18N
@@ -171,7 +171,7 @@ public class BookPanel
                                 layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING ).addGroup(
                                     javax.swing.GroupLayout.Alignment.TRAILING,
                                     layout.createSequentialGroup().addComponent( fileTextField,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE ).addPreferredGap(
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE ).addPreferredGap(
                                         javax.swing.LayoutStyle.ComponentPlacement.RELATED )
                                         .addComponent( chooseButton ) ).addComponent( authorTextField,
                                     javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE ).addComponent(
