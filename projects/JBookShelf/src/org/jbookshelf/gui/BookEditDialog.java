@@ -1,11 +1,19 @@
 package org.jbookshelf.gui;
 
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.WindowConstants;
 
 import org.jbookshelf.Author;
 import org.jbookshelf.Category;
-import org.jbookshelf.PhysicalUnit;
 import org.jbookshelf.ReadingUnit;
 import org.jbookshelf.gui.BookPanel.Parameters;
 import org.jdesktop.swingx.VerticalLayout;
@@ -15,52 +23,55 @@ public class BookEditDialog
     extends JDialog
 {
     private final ReadingUnit book;
+    private JButton           applyButton;
+    private BookPanel         bookPanel;
+    private JButton           cancelButton;
+    private JLabel            jLabel1;
+    private JSeparator        jSeparator1;
 
     public BookEditDialog(
-        java.awt.Frame parent,
+        Frame parent,
         boolean modal,
         ReadingUnit book )
     {
         super( parent, modal );
         this.book = book;
         initComponents();
-        getBookPanel().setBook( book );
+        initListeners();
+
+        bookPanel.setBook( book );
+    }
+
+    public boolean saveBook(
+        Parameters parameters )
+    {
+        Author author = book.getAuthors().get( 0 ); // todo edit multiple authors
+        author.setName( parameters.getBookName() );
+        Category category = book.getCategories().get( 0 );
+        category.setName( parameters.getCategoryName() ); // todo edit multiple categories
+        book.setName( parameters.getBookName() );
+
+        book.setPhysical( FileImporter.createPhysicalUnit( parameters.getFile() ) );
+        book.setRead( parameters.isRead() );
+
+        return true;
     }
 
     private void initComponents()
     {
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        cancelButton = new javax.swing.JButton();
-        applyButton = new javax.swing.JButton();
+        jLabel1 = new JLabel();
+        jSeparator1 = new JSeparator();
+        cancelButton = new JButton();
+        applyButton = new JButton();
         bookPanel = new BookPanel();
 
-        setDefaultCloseOperation( javax.swing.WindowConstants.DISPOSE_ON_CLOSE );
+        setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 
-        jLabel1.setFont( new java.awt.Font( "Tahoma", 1, 14 ) );
-        jLabel1.setText( "Add book to Collection" );
+        jLabel1.setFont( new Font( "Tahoma", 1, 14 ) );
+        jLabel1.setText( "Edit Book Properties" );
 
         cancelButton.setText( "Cancel" );
-        cancelButton.addActionListener( new java.awt.event.ActionListener()
-        {
-            @SuppressWarnings( "synthetic-access" )
-            public void actionPerformed(
-                java.awt.event.ActionEvent evt )
-            {
-                cancelButtonActionPerformed( evt );
-            }
-        } );
-
         applyButton.setText( "Apply" );
-        applyButton.addActionListener( new java.awt.event.ActionListener()
-        {
-            @SuppressWarnings( "synthetic-access" )
-            public void actionPerformed(
-                java.awt.event.ActionEvent evt )
-            {
-                applyButtonActionPerformed( evt );
-            }
-        } );
 
         JPanel contentPanel = new JPanel( new VerticalLayout() );
         add( contentPanel );
@@ -76,48 +87,29 @@ public class BookEditDialog
         pack();
     }
 
-    private void cancelButtonActionPerformed(
-        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
+    private void initListeners()
     {
-        dispose();
-    }
-
-    private void applyButtonActionPerformed(
-        @SuppressWarnings( "unused" ) java.awt.event.ActionEvent evt )
-    {
-        Parameters parameters = getBookPanel().extractParameters();
-        if ( parameters != null )
+        cancelButton.addActionListener( new ActionListener()
         {
-            saveBook( parameters );
-            dispose();
-        }
+            public void actionPerformed(
+                ActionEvent evt )
+            {
+                dispose();
+            }
+        } );
+
+        applyButton.addActionListener( new ActionListener()
+        {
+            public void actionPerformed(
+                ActionEvent evt )
+            {
+                Parameters parameters = bookPanel.extractParameters();
+                if ( parameters != null )
+                {
+                    saveBook( parameters );
+                    dispose();
+                }
+            }
+        } );
     }
-
-    public boolean saveBook(
-        Parameters parameters )
-    {
-        Author author = book.getAuthors().get( 0 ); // todo edit multiple authors
-        author.setName( parameters.getBookName() );
-        Category category = book.getCategories().get( 0 );
-        category.setName( parameters.getCategoryName() ); // todo edit multiple categories
-        book.setName( parameters.getBookName() );
-
-        PhysicalUnit physicalUnit = FileImporter.createPhysicalUnit( parameters.getFile() );
-        book.setPhysical( physicalUnit );
-
-        book.setRead( parameters.isRead() );
-
-        return true;
-    }
-
-    public BookPanel getBookPanel()
-    {
-        return (BookPanel) bookPanel;
-    }
-
-    private javax.swing.JButton    applyButton;
-    private javax.swing.JPanel     bookPanel;
-    private javax.swing.JButton    cancelButton;
-    private javax.swing.JLabel     jLabel1;
-    private javax.swing.JSeparator jSeparator1;
 }
