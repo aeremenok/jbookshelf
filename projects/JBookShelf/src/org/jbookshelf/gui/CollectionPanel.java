@@ -3,16 +3,16 @@
  */
 package org.jbookshelf.gui;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -20,7 +20,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTree;
-import javax.swing.LayoutStyle;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -41,20 +40,17 @@ public class CollectionPanel
 {
     private static CollectionPanel instance;
 
-    private JScrollPane            authorScrollPane;
     private JTree                  authorTree;
-    private JScrollPane            bookScrollPane;
     private JTree                  bookTree;
-    private JScrollPane            categoryScrollPane;
-
     private JTree                  categoryTree;
+
     private JButton                cleanButton;
     private JComboBox              isReadComboBox;
-    private JPanel                 jPanel1;
+
     private JButton                searchButton;
-    private JPanel                 searchPanel;
     private JTextField             searchTextField;
     private JTabbedPane            viewTabbedPane;
+
     private JTree[]                trees;
 
     public static CollectionPanel getInstance()
@@ -68,8 +64,22 @@ public class CollectionPanel
 
     public CollectionPanel()
     {
+        super( new BorderLayout() );
         initComponents();
         initListeners();
+        registerComponents();
+    }
+
+    private void registerComponents()
+    {
+        searchButton.setName( "searchButton" );
+        searchTextField.setName( "searchTextField" );
+
+        Resourses.register( getClass(), searchTextField );
+        Resourses.register( getClass(), searchButton );
+
+        searchTextField.setText( Resourses.getString( getClass(), searchTextField ) );
+        searchButton.setText( Resourses.getString( getClass(), searchButton ) );
     }
 
     public JTree[] getTrees()
@@ -138,94 +148,42 @@ public class CollectionPanel
 
     private void initComponents()
     {
-        jPanel1 = new JPanel();
-        searchPanel = new JPanel();
         cleanButton = new JButton();
         searchTextField = new JTextField();
         searchButton = new JButton();
         isReadComboBox = new JComboBox();
         viewTabbedPane = new JTabbedPane();
-        bookScrollPane = new JScrollPane();
         bookTree = new BookTree();
-        authorScrollPane = new JScrollPane();
         authorTree = new AuthorTree();
-        categoryScrollPane = new JScrollPane();
         categoryTree = new CategoryTree();
 
-        cleanButton.setIcon( new ImageIcon( getClass().getResource(
-            "/org/jbookshelf/gui/images/edit-clear-locationbar-rtl.png" ) ) ); // NOI18N
-
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
-        searchTextField.setText( bundle.getString( "CollectionPanel.searchTextField.text" ) ); // NOI18N
-
-        searchButton.setIcon( new ImageIcon( getClass().getResource( "/org/jbookshelf/gui/images/edit-find.png" ) ) ); // NOI18N
-        searchButton.setText( bundle.getString( "CollectionPanel.searchButton.text" ) ); // NOI18N
-        searchButton.setAutoscrolls( true );
+        cleanButton.setIcon( Resourses.createIcon( "edit-clear-locationbar-rtl.png" ) );
+        searchButton.setIcon( Resourses.createIcon( "edit-find.png" ) );
 
         isReadComboBox.setModel( new DefaultComboBoxModel( new String[] { "All", "Read", "Unread" } ) );
 
-        GroupLayout searchPanelLayout = new GroupLayout( searchPanel );
-        searchPanel.setLayout( searchPanelLayout );
-        searchPanelLayout.setHorizontalGroup( searchPanelLayout.createParallelGroup( GroupLayout.Alignment.LEADING )
-            .addGroup(
-                GroupLayout.Alignment.TRAILING,
-                searchPanelLayout.createSequentialGroup().addContainerGap().addComponent( searchTextField,
-                    GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE ).addPreferredGap(
-                    LayoutStyle.ComponentPlacement.UNRELATED ).addComponent( cleanButton, GroupLayout.PREFERRED_SIZE,
-                    50, GroupLayout.PREFERRED_SIZE ).addPreferredGap( LayoutStyle.ComponentPlacement.UNRELATED )
-                    .addComponent( isReadComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                        GroupLayout.PREFERRED_SIZE ).addGap( 18, 18, 18 ).addComponent( searchButton ) ) );
-        searchPanelLayout.setVerticalGroup( searchPanelLayout.createParallelGroup( GroupLayout.Alignment.LEADING )
-            .addGroup(
-                searchPanelLayout.createSequentialGroup().addGroup(
-                    searchPanelLayout.createParallelGroup( GroupLayout.Alignment.LEADING ).addGroup(
-                        searchPanelLayout.createParallelGroup( GroupLayout.Alignment.BASELINE ).addComponent(
-                            searchButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE ).addComponent(
-                            searchTextField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE ) )
-                        .addComponent( isReadComboBox, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE )
-                        .addComponent( cleanButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE ) )
-                    .addContainerGap() ) );
+        JPanel searchPanel = new JPanel( new BorderLayout() );
+        add( searchPanel, BorderLayout.NORTH );
+        searchPanel.add( searchTextField, BorderLayout.CENTER );
 
-        bookScrollPane.setViewportView( bookTree );
+        JPanel panel = new JPanel();
+        searchPanel.add( panel, BorderLayout.EAST );
+        panel.add( cleanButton );
+        panel.add( isReadComboBox );
+        panel.add( searchButton );
 
-        viewTabbedPane.addTab( bundle.getString( "CollectionPanel.bookScrollPane.TabConstraints.tabTitle" ),
-            bookScrollPane ); // NOI18N
+        add( viewTabbedPane, BorderLayout.CENTER );
+        viewTabbedPane.addTab( Resourses.getSpecificString( "CollectionPanel.bookScrollPane.TabConstraints.tabTitle" ),
+            new JScrollPane( bookTree ) );
+        viewTabbedPane.addTab(
+            Resourses.getSpecificString( "CollectionPanel.authorScrollPane.TabConstraints.tabTitle" ), new JScrollPane(
+                authorTree ) );
+        viewTabbedPane.addTab( Resourses
+            .getSpecificString( "CollectionPanel.categoryScrollPane.TabConstraints.tabTitle" ), new JScrollPane(
+            categoryTree ) );
 
-        authorScrollPane.setViewportView( authorTree );
-
-        viewTabbedPane.addTab( bundle.getString( "CollectionPanel.authorScrollPane.TabConstraints.tabTitle" ),
-            authorScrollPane ); // NOI18N
-
-        categoryScrollPane.setViewportView( categoryTree );
-
-        viewTabbedPane.addTab( bundle.getString( "CollectionPanel.categoryScrollPane.TabConstraints.tabTitle" ),
-            categoryScrollPane ); // NOI18N
-
-        GroupLayout jPanel1Layout = new GroupLayout( jPanel1 );
-        jPanel1.setLayout( jPanel1Layout );
-        jPanel1Layout.setHorizontalGroup( jPanel1Layout.createParallelGroup( GroupLayout.Alignment.LEADING )
-            .addComponent( searchPanel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE,
-                GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE ).addComponent( viewTabbedPane, GroupLayout.DEFAULT_SIZE,
-                715, Short.MAX_VALUE ) );
-        jPanel1Layout.setVerticalGroup( jPanel1Layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addGroup(
-            jPanel1Layout.createSequentialGroup().addComponent( searchPanel, GroupLayout.PREFERRED_SIZE, 30,
-                GroupLayout.PREFERRED_SIZE ).addPreferredGap( LayoutStyle.ComponentPlacement.RELATED ).addComponent(
-                viewTabbedPane, GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE ) ) );
-
-        GroupLayout layout = new GroupLayout( this );
-        this.setLayout( layout );
-        layout.setHorizontalGroup( layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addGap( 0, 715,
-            Short.MAX_VALUE ).addGroup(
-            layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addGroup(
-                layout.createSequentialGroup().addGap( 0, 0, Short.MAX_VALUE ).addComponent( jPanel1,
-                    GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE ).addGap( 0, 0,
-                    Short.MAX_VALUE ) ) ) );
-        layout.setVerticalGroup( layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addGap( 0, 531,
-            Short.MAX_VALUE ).addGroup(
-            layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addGroup(
-                layout.createSequentialGroup().addGap( 0, 0, Short.MAX_VALUE ).addComponent( jPanel1,
-                    GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE ).addGap( 0, 0,
-                    Short.MAX_VALUE ) ) ) );
+        viewTabbedPane.setSelectedIndex( 0 );
+        viewTabbedPaneStateChanged();
     }
 
     private void initListeners()
@@ -252,6 +210,20 @@ public class CollectionPanel
                 ChangeEvent evt )
             {
                 viewTabbedPaneStateChanged();
+            }
+        } );
+        searchTextField.addFocusListener( new FocusListener()
+        {
+            public void focusGained(
+                FocusEvent e )
+            {
+                searchTextField.setText( "" );
+            }
+
+            public void focusLost(
+                FocusEvent e )
+            {
+                searchTextField.setText( Resourses.getString( "CollectionPanel.searchTextField" ) );
             }
         } );
     }
