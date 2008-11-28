@@ -57,7 +57,6 @@ public class SettingsDialog
     private JTextField   jbsTextField;
 
     private JTextField   tmpTextField;
-    private JSeparator   jSeparator1;
 
     private JComboBox    lafComboBox;
     private JComboBox    langComboBox;
@@ -95,12 +94,12 @@ public class SettingsDialog
 
     private void initComponents()
     {
+        JSeparator jSeparator1 = new JSeparator();
         restoreButton = new JButton();
         cancelButton = new JButton();
         okButton = new JButton();
         saveButton = new JButton();
         settingsLabel = new JLabel();
-        jSeparator1 = new JSeparator();
         languageLabel = new JLabel();
         lafLabel = new JLabel();
         tmpFolderLabel = new JLabel();
