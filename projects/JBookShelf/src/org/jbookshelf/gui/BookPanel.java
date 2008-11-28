@@ -241,8 +241,6 @@ public class BookPanel
         isReadCheckBox.setSelected( book.isRead() );
     }
 
-    java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" ); // NOI18N
-
     private void initComponents()
     {
         bookTextField = new JTextField();
@@ -255,15 +253,6 @@ public class BookPanel
         fileTextField = new JTextField();
         chooseButton = new JButton();
         isReadCheckBox = new JCheckBox();
-
-        nameLabel.setText( bundle.getString( "BookPanel.nameLabel.text" ) ); // NOI18N
-        authorLabel.setText( bundle.getString( "BookPanel.authorLabel.text" ) ); // NOI18N
-        authorTextField.setText( bundle.getString( "BookPanel.authorTextField.text" ) ); // NOI18N
-        categoryTextField.setText( bundle.getString( "BookPanel.categoryTextField.text" ) ); // NOI18N
-        categoryLabel.setText( bundle.getString( "BookPanel.categoryLabel.text" ) ); // NOI18N
-        fileLabel.setText( bundle.getString( "BookPanel.fileLabel.text" ) ); // NOI18N
-        chooseButton.setText( bundle.getString( "BookPanel.chooseButton.text" ) ); // NOI18N
-        isReadCheckBox.setText( bundle.getString( "BookPanel.isReadCheckBox.text" ) ); // NOI18N
 
         isReadCheckBox.setHorizontalTextPosition( SwingConstants.LEADING );
 
@@ -346,5 +335,14 @@ public class BookPanel
         Resourses.register( getClass(), isReadCheckBox );
         Resourses.register( getClass(), fileLabel );
         Resourses.register( getClass(), chooseButton );
+
+        nameLabel.setText( Resourses.getString( getClass(), nameLabel ) );
+        authorLabel.setText( Resourses.getString( getClass(), authorLabel ) );
+        authorTextField.setText( Resourses.getString( getClass(), authorTextField ) );
+        categoryTextField.setText( Resourses.getString( getClass(), categoryTextField ) );
+        categoryLabel.setText( Resourses.getString( getClass(), categoryLabel ) );
+        fileLabel.setText( Resourses.getString( getClass(), fileLabel ) );
+        chooseButton.setText( Resourses.getString( getClass(), chooseButton ) );
+        isReadCheckBox.setText( Resourses.getString( getClass(), isReadCheckBox ) );
     }
 }
