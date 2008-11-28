@@ -1,6 +1,8 @@
 #labels Featured
 =JBookShelf 0.1b1=
 
+[http://jbookshelf.googlecode.com/files/jbookshelf-0.1b1.zip download]
+
 ==Supported Features==
 
  # work with book collection: add, remove, edit book
