@@ -217,13 +217,13 @@ public class CollectionPanel
             public void focusGained(
                 FocusEvent e )
             {
-                searchTextField.setText( "" );
+                // todo searchTextField.setText( "" );
             }
 
             public void focusLost(
                 FocusEvent e )
             {
-                searchTextField.setText( Resourses.getString( "CollectionPanel.searchTextField" ) );
+                // todo searchTextField.setText( Resourses.getString( "CollectionPanel.searchTextField" ) );
             }
         } );
     }

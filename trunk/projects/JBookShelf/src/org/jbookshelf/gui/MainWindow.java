@@ -71,7 +71,7 @@ public class MainWindow
         setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
 
         add( ToolBar.getInstance(), BorderLayout.NORTH );
-        add( splitPane, BorderLayout.SOUTH );
+        add( splitPane, BorderLayout.CENTER );
 
         splitPane.setLeftComponent( CollectionPanel.getInstance() );
         splitPane.setRightComponent( RelatedPanel.getInstance() );
