@@ -5,8 +5,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.LookAndFeel;
@@ -131,9 +131,9 @@ public class Resourses
             {
                 ((JTextComponent) component).setText( text );
             }
-            else if ( component instanceof JButton )
+            else if ( component instanceof AbstractButton )
             {
-                ((JButton) component).setText( text );
+                ((AbstractButton) component).setText( text );
             }
         }
     }
