@@ -12,9 +12,12 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.WindowConstants;
 
+import org.eclipse.emf.common.util.EList;
 import org.jbookshelf.controller.FileImporter;
+import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.gui.Resourses;
 import org.jbookshelf.gui.widgets.panel.BookPanel;
+import org.jbookshelf.gui.widgets.panel.CollectionPanel;
 import org.jbookshelf.gui.widgets.panel.BookPanel.Parameters;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Category;
@@ -46,19 +49,34 @@ public class BookEditDialog
         bookPanel.setBook( book );
     }
 
-    public boolean saveBook(
+    public void saveBook(
         Parameters parameters )
     {
-        Author author = book.getAuthors().get( 0 ); // todo edit multiple authors
-        author.setName( parameters.getBookName() );
-        Category category = book.getCategories().get( 0 );
-        category.setName( parameters.getCategoryName() ); // todo edit multiple categories
+        EList<Author> authors = Storage.getBookShelf().queryAuthors( parameters.getAuthorName() );
+        if ( authors != null && authors.size() > 0 )
+        { // todo what if we've found more than 1 author with equal names?
+            book.getAuthors().set( 0, authors.get( 0 ) ); // todo edit multiple authors
+        }
+        else
+        {
+            Author author = book.getAuthors().get( 0 ); // todo edit multiple authors
+            author.setName( parameters.getAuthorName() );
+        }
+
+        EList<Category> categories = Storage.getBookShelf().queryCategories( parameters.getCategoryName() );
+        if ( categories != null && categories.size() > 0 )
+        {
+            book.getCategories().set( 0, categories.get( 0 ) ); // todo edit multiple categories
+        }
+        else
+        {
+            Category category = book.getCategories().get( 0 );
+            category.setName( parameters.getCategoryName() ); // todo edit multiple categories
+        }
         book.setName( parameters.getBookName() );
 
         book.setPhysical( FileImporter.createPhysicalUnit( parameters.getFile() ) );
         book.setRead( parameters.isRead() );
-
-        return true;
     }
 
     private void initComponents()
@@ -102,6 +120,7 @@ public class BookEditDialog
                 if ( parameters != null )
                 {
                     saveBook( parameters );
+                    CollectionPanel.getInstance().updateTree();
                     dispose();
                 }
             }
