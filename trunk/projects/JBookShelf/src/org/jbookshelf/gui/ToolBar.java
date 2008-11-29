@@ -16,19 +16,19 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
-import org.jbookshelf.ReadingUnit;
-import org.jbookshelf.Unique;
+import org.jbookshelf.controller.FileImporter;
+import org.jbookshelf.controller.settings.JBookShelfSettings;
+import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.storage.SingleFileStorageImpl;
+import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.gui.logic.UniqueSelectionListener;
 import org.jbookshelf.gui.widgets.dialog.AboutDialog;
 import org.jbookshelf.gui.widgets.dialog.BookAdditionDialog;
 import org.jbookshelf.gui.widgets.dialog.BookEditDialog;
 import org.jbookshelf.gui.widgets.dialog.SettingsDialog;
 import org.jbookshelf.gui.widgets.panel.CollectionPanel;
-import org.util.FileImporter;
-import org.util.settings.JBookShelfSettings;
-import org.util.settings.Settings;
-import org.util.storage.SingleFileStorageImpl;
-import org.util.storage.Storage;
+import org.jbookshelf.model.ReadingUnit;
+import org.jbookshelf.model.Unique;
 
 /**
  * @author eav

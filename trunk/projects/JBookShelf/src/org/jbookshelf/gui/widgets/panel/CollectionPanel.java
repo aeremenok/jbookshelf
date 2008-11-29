@@ -23,7 +23,7 @@ import javax.swing.JTree;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.jbookshelf.Unique;
+import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.gui.Resourses;
 import org.jbookshelf.gui.widgets.tree.AuthorTree;
 import org.jbookshelf.gui.widgets.tree.BookTree;
@@ -31,7 +31,7 @@ import org.jbookshelf.gui.widgets.tree.CategoryTree;
 import org.jbookshelf.gui.widgets.tree.CollectionTree;
 import org.jbookshelf.gui.widgets.tree.UniqueNode;
 import org.jbookshelf.gui.widgets.treepanel.RelatedTreePanel;
-import org.util.storage.Storage;
+import org.jbookshelf.model.Unique;
 
 /**
  * @author eav

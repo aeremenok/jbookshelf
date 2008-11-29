@@ -1,6 +1,6 @@
 package org.jbookshelf.gui.logic;
 
-import org.jbookshelf.Unique;
+import org.jbookshelf.model.Unique;
 
 public interface UniqueSelectionListener
 {

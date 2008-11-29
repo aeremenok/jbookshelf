@@ -11,12 +11,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import org.jbookshelf.controller.settings.JBookShelfSettings;
+import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.storage.SingleFileStorageImpl;
+import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.gui.widgets.panel.CollectionPanel;
 import org.jbookshelf.gui.widgets.panel.RelatedPanel;
-import org.util.settings.JBookShelfSettings;
-import org.util.settings.Settings;
-import org.util.storage.SingleFileStorageImpl;
-import org.util.storage.Storage;
 
 /**
  * @author eav

@@ -2,7 +2,7 @@ package org.jbookshelf.gui.widgets.tree;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.jbookshelf.Unique;
+import org.jbookshelf.model.Unique;
 
 public class UniqueNode
     extends DefaultMutableTreeNode

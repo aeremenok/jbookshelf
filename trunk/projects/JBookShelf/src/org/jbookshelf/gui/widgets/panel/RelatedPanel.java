@@ -17,12 +17,12 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import org.jbookshelf.Unique;
 import org.jbookshelf.gui.Resourses;
 import org.jbookshelf.gui.logic.UniqueSelectionListener;
 import org.jbookshelf.gui.widgets.treepanel.CommentTreePanel;
 import org.jbookshelf.gui.widgets.treepanel.RelatedTreePanel;
 import org.jbookshelf.gui.widgets.treepanel.SearchableTreePanel;
+import org.jbookshelf.model.Unique;
 
 /**
  * @author eav

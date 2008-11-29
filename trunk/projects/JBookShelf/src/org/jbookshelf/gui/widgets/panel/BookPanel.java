@@ -22,19 +22,19 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 
-import org.jbookshelf.ArchiveFile;
-import org.jbookshelf.Author;
-import org.jbookshelf.Category;
-import org.jbookshelf.IndexFileFolder;
-import org.jbookshelf.PhysicalUnit;
-import org.jbookshelf.ReadingUnit;
-import org.jbookshelf.SingleFile;
-import org.jbookshelf.SingleFileFolder;
-import org.jbookshelf.Unique;
+import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.gui.Resourses;
+import org.jbookshelf.model.ArchiveFile;
+import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Category;
+import org.jbookshelf.model.IndexFileFolder;
+import org.jbookshelf.model.PhysicalUnit;
+import org.jbookshelf.model.ReadingUnit;
+import org.jbookshelf.model.SingleFile;
+import org.jbookshelf.model.SingleFileFolder;
+import org.jbookshelf.model.Unique;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
-import org.util.storage.Storage;
 
 /**
  * @author eav

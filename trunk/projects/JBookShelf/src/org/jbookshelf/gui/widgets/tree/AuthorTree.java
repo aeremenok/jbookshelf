@@ -3,10 +3,10 @@ package org.jbookshelf.gui.widgets.tree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.eclipse.emf.ecore.EReference;
-import org.jbookshelf.Author;
-import org.jbookshelf.Category;
-import org.jbookshelf.JbookshelfPackage;
-import org.jbookshelf.ReadingUnit;
+import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Category;
+import org.jbookshelf.model.ModelPackage;
+import org.jbookshelf.model.ReadingUnit;
 
 public class AuthorTree
     extends CollectionTree
@@ -41,7 +41,7 @@ public class AuthorTree
     @Override
     protected EReference getReference()
     {
-        return JbookshelfPackage.eINSTANCE.getBookShelf_Authors();
+        return ModelPackage.eINSTANCE.getBookShelf_Authors();
     }
 
 }
