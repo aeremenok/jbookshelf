@@ -27,8 +27,8 @@
 
 ==Known Issues==
 
- # "view" crashes on some zipped books due to encoding problem
+ # [http://code.google.com/p/jbookshelf/issues/detail?id=16 "view" crashes on some zipped books due to encoding problem]
  # "view" crashes sometimes under Windows XP due to path problem (needs testing)
- # import treats only filenames that strictly satisfy mask
+ # [http://code.google.com/p/jbookshelf/issues/detail?id=17 import treats only filenames that strictly satisfy mask]
  # some ui messages weren't localized
- # most exceptions are not reported during work with ui
+ # [http://code.google.com/p/jbookshelf/issues/detail?id=18 most exceptions are not reported while working with ui]
