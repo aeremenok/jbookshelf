@@ -9,15 +9,15 @@ public class SingleFileStorageImpl
 {
     private File collectionStorageFile;
 
+    public File getCollectionStorageFile()
+    {
+        return collectionStorageFile;
+    }
+
     @Override
     public BookShelf loadCollection()
     {
         return restoreCollection( collectionStorageFile );
-    }
-
-    public File getCollectionStorageFile()
-    {
-        return collectionStorageFile;
     }
 
     @Override
