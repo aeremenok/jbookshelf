@@ -44,48 +44,6 @@ public class FileImporter
         }
     }
 
-    public static String cutExtension(
-        File file )
-    {
-        if ( file.isDirectory() )
-        {
-            return file.getName();
-        }
-
-        String name = file.getName();
-        int lastIndexOf = name.lastIndexOf( '.' );
-        if ( name.length() - lastIndexOf > 5 )
-        { // it is probably a part of the name todo which files could have a longer extension?
-            return name;
-        }
-
-        return name.substring( 0, lastIndexOf );
-    }
-
-    public static void main(
-        String[] args )
-    {
-        BookShelf bookShelf = JbookshelfFactory.eINSTANCE.createBookShelf();
-        File root = new File( "/tmp/test" );
-        new FileImporter()
-        {
-            @Override
-            protected void onImportFailure(
-                File file,
-                Exception e )
-            {
-                System.out.println( "-cannot import file " + file.getAbsolutePath() + " cause:" + e.getMessage() );
-            }
-
-            @Override
-            protected void onImportSuccess(
-                ReadingUnit book )
-            {
-                System.out.println( "+imported " + book.getAuthors().get( 0 ).getName() + ". " + book.getName() );
-            }
-        }.importFiles( root.listFiles(), "%a. %b", bookShelf );
-    }
-
     public static PhysicalUnit createPhysicalUnit(
         File file )
     {
@@ -141,6 +99,48 @@ public class FileImporter
         SingleFile singleFile = JbookshelfFactory.eINSTANCE.createSingleFile();
         singleFile.setFile( file );
         return singleFile;
+    }
+
+    public static String cutExtension(
+        File file )
+    {
+        if ( file.isDirectory() )
+        {
+            return file.getName();
+        }
+
+        String name = file.getName();
+        int lastIndexOf = name.lastIndexOf( '.' );
+        if ( name.length() - lastIndexOf > 5 )
+        { // it is probably a part of the name todo which files could have a longer extension?
+            return name;
+        }
+
+        return name.substring( 0, lastIndexOf );
+    }
+
+    public static void main(
+        String[] args )
+    {
+        BookShelf bookShelf = JbookshelfFactory.eINSTANCE.createBookShelf();
+        File root = new File( "/tmp/test" );
+        new FileImporter()
+        {
+            @Override
+            protected void onImportFailure(
+                File file,
+                Exception e )
+            {
+                System.out.println( "-cannot import file " + file.getAbsolutePath() + " cause:" + e.getMessage() );
+            }
+
+            @Override
+            protected void onImportSuccess(
+                ReadingUnit book )
+            {
+                System.out.println( "+imported " + book.getAuthors().get( 0 ).getName() + ". " + book.getName() );
+            }
+        }.importFiles( root.listFiles(), "%a. %b", bookShelf );
     }
 
     /**

@@ -18,6 +18,12 @@ public abstract class Storage
 
     private static BookShelf         bookShelf;
 
+    public static void backupCollection(
+        File file )
+    {
+        impl.backupCollection( getBookShelf(), file );
+    }
+
     public static BookShelf getBookShelf()
     {
         return bookShelf;
@@ -34,21 +40,15 @@ public abstract class Storage
         return bookShelf;
     }
 
-    public static void saveCollection()
-    {
-        impl.saveCollection( getBookShelf() );
-    }
-
-    public static void backupCollection(
-        File file )
-    {
-        impl.backupCollection( getBookShelf(), file );
-    }
-
     public static BookShelf restoreCollection(
         File file )
     {
         bookShelf = impl.restoreCollection( file );
         return bookShelf;
+    }
+
+    public static void saveCollection()
+    {
+        impl.saveCollection( getBookShelf() );
     }
 }
