@@ -21,11 +21,11 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.JTextComponent;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.jbookshelf.Comment;
-import org.jbookshelf.Commentable;
-import org.jbookshelf.JbookshelfFactory;
-import org.jbookshelf.Unique;
 import org.jbookshelf.gui.widgets.panel.RelatedPanel;
+import org.jbookshelf.model.Comment;
+import org.jbookshelf.model.Commentable;
+import org.jbookshelf.model.ModelFactory;
+import org.jbookshelf.model.Unique;
 import org.jdesktop.swingx.VerticalLayout;
 
 public class CommentTreePanel
@@ -108,7 +108,7 @@ public class CommentTreePanel
     @Override
     public void onAdd()
     {
-        Comment comment = JbookshelfFactory.eINSTANCE.createComment();
+        Comment comment = ModelFactory.eINSTANCE.createComment();
         selectedCommentable.getComments().add( comment );
         Date value = new Date();
         comment.setCreationDate( value );

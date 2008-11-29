@@ -12,14 +12,14 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.WindowConstants;
 
-import org.jbookshelf.Author;
-import org.jbookshelf.Category;
-import org.jbookshelf.ReadingUnit;
+import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.gui.Resourses;
 import org.jbookshelf.gui.widgets.panel.BookPanel;
 import org.jbookshelf.gui.widgets.panel.BookPanel.Parameters;
+import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Category;
+import org.jbookshelf.model.ReadingUnit;
 import org.jdesktop.swingx.VerticalLayout;
-import org.util.FileImporter;
 
 public class BookEditDialog
     extends JDialog

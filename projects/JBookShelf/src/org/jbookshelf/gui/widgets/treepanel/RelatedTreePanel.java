@@ -13,10 +13,10 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.JTextComponent;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.jbookshelf.Unique;
 import org.jbookshelf.gui.widgets.panel.CollectionPanel;
 import org.jbookshelf.gui.widgets.panel.RelatedPanel;
 import org.jbookshelf.gui.widgets.tree.UniqueNode;
+import org.jbookshelf.model.Unique;
 
 public class RelatedTreePanel
     extends SearchableTreePanel

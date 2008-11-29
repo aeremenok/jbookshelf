@@ -24,9 +24,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import org.jbookshelf.controller.settings.JBookShelfSettings;
+import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.gui.Resourses;
-import org.util.settings.JBookShelfSettings;
-import org.util.settings.Settings;
 
 /**
  * @author eav
