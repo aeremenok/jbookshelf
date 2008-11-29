@@ -49,8 +49,10 @@ public abstract class CommentableTest
 
         Comment comment1 = ModelFactory.eINSTANCE.createComment();
         comment1.setTitle( "comment1" );
+        comment1.setContent( "comment1content" );
         Comment comment2 = ModelFactory.eINSTANCE.createComment();
         comment2.setTitle( "comment2" );
+        comment2.setContent( "comment2content" );
 
         getFixture().getComments().add( comment1 );
         getFixture().getComments().add( comment2 );
