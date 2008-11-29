@@ -22,11 +22,13 @@ import org.util.FileImporter;
 public class BookEditDialog
     extends JDialog
 {
+    private JButton           applyButton  = new JButton();
+    private JButton           cancelButton = new JButton();
+    private JLabel            headerLabel  = new JLabel();
+
+    private BookPanel         bookPanel    = new BookPanel();
+
     private final ReadingUnit book;
-    private JButton           applyButton;
-    private BookPanel         bookPanel;
-    private JButton           cancelButton;
-    private JLabel            headerLabel;
 
     public BookEditDialog(
         Frame parent,
@@ -35,21 +37,11 @@ public class BookEditDialog
     {
         super( parent, modal );
         this.book = book;
+        registerComponents();
         initComponents();
         initListeners();
 
         bookPanel.setBook( book );
-    }
-
-    private void registerComponents()
-    {
-        applyButton.setName( "applyButton" );
-        headerLabel.setName( "headerLabel" );
-        cancelButton.setName( "cancelButton" );
-
-        Resourses.register( getClass(), applyButton );
-        Resourses.register( getClass(), cancelButton );
-        Resourses.register( getClass(), headerLabel );
     }
 
     public boolean saveBook(
@@ -69,20 +61,9 @@ public class BookEditDialog
 
     private void initComponents()
     {
-        headerLabel = new JLabel();
-        cancelButton = new JButton();
-        applyButton = new JButton();
-        bookPanel = new BookPanel();
-
         setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 
         headerLabel.setFont( new Font( "Tahoma", 1, 14 ) );
-
-        registerComponents();
-
-        headerLabel.setText( Resourses.getString( getClass(), headerLabel ) );
-        cancelButton.setText( Resourses.getString( getClass(), cancelButton ) );
-        applyButton.setText( Resourses.getString( getClass(), applyButton ) );
 
         JPanel contentPanel = new JPanel( new VerticalLayout() );
         add( contentPanel );
@@ -123,5 +104,16 @@ public class BookEditDialog
                 }
             }
         } );
+    }
+
+    private void registerComponents()
+    {
+        applyButton.setName( "applyButton" );
+        headerLabel.setName( "headerLabel" );
+        cancelButton.setName( "cancelButton" );
+
+        Resourses.register( getClass(), applyButton );
+        Resourses.register( getClass(), cancelButton );
+        Resourses.register( getClass(), headerLabel );
     }
 }

@@ -4,8 +4,8 @@ import org.jbookshelf.Unique;
 
 public interface UniqueSelectionListener
 {
+    void nothingSelected();
+
     void selectedUnique(
         Unique unique );
-
-    void nothingSelected();
 }

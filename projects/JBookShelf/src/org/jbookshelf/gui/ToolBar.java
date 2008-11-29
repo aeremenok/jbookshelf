@@ -80,6 +80,23 @@ public class ToolBar
         }
     }
 
+    private void addButton(
+        JButton button,
+        String icon,
+        String text )
+    {
+        button.setName( text );
+        Resourses.register( getClass(), button );
+
+        button.setIcon( Resourses.createIcon( icon ) );
+
+        button.setFocusable( false );
+        button.setHorizontalTextPosition( SwingConstants.CENTER );
+        button.setVerticalTextPosition( SwingConstants.BOTTOM );
+
+        toolBar.add( button );
+    }
+
     private void backupButtonActionPerformed()
     {
         JFileChooser chooser = new JFileChooser();
@@ -135,24 +152,6 @@ public class ToolBar
 
             CollectionPanel.getInstance().updateTree();
         }
-    }
-
-    private void addButton(
-        JButton button,
-        String icon,
-        String text )
-    {
-        button.setName( text );
-        Resourses.register( getClass(), button );
-        button.setText( Resourses.getString( getClass(), button ) );
-
-        button.setIcon( Resourses.createIcon( icon ) );
-
-        button.setFocusable( false );
-        button.setHorizontalTextPosition( SwingConstants.CENTER );
-        button.setVerticalTextPosition( SwingConstants.BOTTOM );
-
-        toolBar.add( button );
     }
 
     private void initComponents()
