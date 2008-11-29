@@ -11,7 +11,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.jbookshelf.model.Categorizable;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.ModelPackage;
@@ -21,10 +20,10 @@ import org.jbookshelf.model.ModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.jbookshelf.model.impl.CategorizableImpl#getCategories <em>Categories</em>}</li>
+ * <li>{@link org.jbookshelf.model.impl.CategorizableImpl#getCategories <em>Categories</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public abstract class CategorizableImpl
@@ -33,9 +32,9 @@ public abstract class CategorizableImpl
         Categorizable
 {
     /**
-     * The cached value of the '{@link #getCategories() <em>Categories</em>}' reference list.
-     * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getCategories() <em>Categories</em>}' reference list. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @see #getCategories()
      * @generated
      * @ordered
@@ -44,6 +43,7 @@ public abstract class CategorizableImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected CategorizableImpl()
@@ -53,6 +53,7 @@ public abstract class CategorizableImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -61,32 +62,73 @@ public abstract class CategorizableImpl
         boolean resolve,
         boolean coreType )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.CATEGORIZABLE__CATEGORIES:
                 return getCategories();
         }
-        return super.eGet(featureID, resolve, coreType);
+        return super.eGet( featureID, resolve, coreType );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    @SuppressWarnings( "unchecked" )
+    @Override
+    public NotificationChain eInverseAdd(
+        InternalEObject otherEnd,
+        int featureID,
+        NotificationChain msgs )
+    {
+        switch ( featureID )
+        {
+            case ModelPackage.CATEGORIZABLE__CATEGORIES:
+                return ((InternalEList<InternalEObject>) (InternalEList<?>) getCategories()).basicAdd( otherEnd, msgs );
+        }
+        return super.eInverseAdd( otherEnd, featureID, msgs );
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(
+        InternalEObject otherEnd,
+        int featureID,
+        NotificationChain msgs )
+    {
+        switch ( featureID )
+        {
+            case ModelPackage.CATEGORIZABLE__CATEGORIES:
+                return ((InternalEList<?>) getCategories()).basicRemove( otherEnd, msgs );
+        }
+        return super.eInverseRemove( otherEnd, featureID, msgs );
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.CATEGORIZABLE__CATEGORIES:
                 return categories != null && !categories.isEmpty();
         }
-        return super.eIsSet(featureID);
+        return super.eIsSet( featureID );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @SuppressWarnings( "unchecked" )
@@ -95,81 +137,53 @@ public abstract class CategorizableImpl
         int featureID,
         Object newValue )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.CATEGORIZABLE__CATEGORIES:
                 getCategories().clear();
-                getCategories().addAll((Collection<? extends Category>)newValue);
+                getCategories().addAll( (Collection<? extends Category>) newValue );
                 return;
         }
-        super.eSet(featureID, newValue);
+        super.eSet( featureID, newValue );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.CATEGORIZABLE__CATEGORIES:
                 getCategories().clear();
                 return;
         }
-        super.eUnset(featureID);
+        super.eUnset( featureID );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public EList<Category> getCategories()
     {
-        if (categories == null)
+        if ( categories == null )
         {
-            categories = new EObjectWithInverseResolvingEList.ManyInverse<Category>(Category.class, this, ModelPackage.CATEGORIZABLE__CATEGORIES, ModelPackage.CATEGORY__CATEGORIZABLES);
+            categories =
+                new EObjectWithInverseResolvingEList.ManyInverse<Category>( Category.class, this,
+                    ModelPackage.CATEGORIZABLE__CATEGORIES, ModelPackage.CATEGORY__CATEGORIZABLES );
         }
         return categories;
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-    {
-        switch (featureID)
-        {
-            case ModelPackage.CATEGORIZABLE__CATEGORIES:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getCategories()).basicAdd(otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-    {
-        switch (featureID)
-        {
-            case ModelPackage.CATEGORIZABLE__CATEGORIES:
-                return ((InternalEList<?>)getCategories()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
-
-    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
