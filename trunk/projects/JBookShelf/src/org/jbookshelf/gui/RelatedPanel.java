@@ -64,6 +64,11 @@ public class RelatedPanel
         removeButton.setEnabled( false );
     }
 
+    public SearchableTreePanel getActiveTreePanel()
+    {
+        return getSearchableTreePanels()[tabbedPane.getSelectedIndex()];
+    }
+
     public SearchableTreePanel[] getSearchableTreePanels()
     {
         if ( searchableTreePanels == null )
@@ -71,11 +76,6 @@ public class RelatedPanel
             searchableTreePanels = new SearchableTreePanel[] { commentPanel, relatedPanel };
         }
         return searchableTreePanels;
-    }
-
-    public SearchableTreePanel getActiveTreePanel()
-    {
-        return getSearchableTreePanels()[tabbedPane.getSelectedIndex()];
     }
 
     public void nothingSelected()

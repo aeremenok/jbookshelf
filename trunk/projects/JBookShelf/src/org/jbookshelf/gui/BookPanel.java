@@ -89,40 +89,40 @@ public class BookPanel
         }
     }
 
-    private ObjectToStringConverter converter  = new ObjectToStringConverter()
-                                               {
-                                                   @Override
-                                                   public String getPreferredStringForItem(
-                                                       Object object )
-                                                   {
-                                                       if ( object == null )
-                                                       {
-                                                           return null;
-                                                       }
+    private ObjectToStringConverter converter         = new ObjectToStringConverter()
+                                                      {
+                                                          @Override
+                                                          public String getPreferredStringForItem(
+                                                              Object object )
+                                                          {
+                                                              if ( object == null )
+                                                              {
+                                                                  return null;
+                                                              }
 
-                                                       if ( object instanceof Unique )
-                                                       {
-                                                           return ((Unique) object).getName();
-                                                       }
+                                                              if ( object instanceof Unique )
+                                                              {
+                                                                  return ((Unique) object).getName();
+                                                              }
 
-                                                       return object.toString();
-                                                   }
-                                               };
+                                                              return object.toString();
+                                                          }
+                                                      };
 
-    private JLabel                  authorLabel;
-    private JLabel                  categoryLabel;
-    private JLabel                  fileLabel;
-    private JLabel                  nameLabel;
+    private JLabel                  authorLabel       = new JLabel();
+    private JLabel                  categoryLabel     = new JLabel();
+    private JLabel                  fileLabel         = new JLabel();
+    private JLabel                  nameLabel         = new JLabel();
 
-    private JCheckBox               isReadCheckBox;
-    private JButton                 chooseButton;
+    private JCheckBox               isReadCheckBox    = new JCheckBox();
+    private JButton                 chooseButton      = new JButton();
 
-    private JTextField              authorTextField;
-    private JTextField              bookTextField;
-    private JTextField              categoryTextField;
-    private JTextField              fileTextField;
+    private JTextField              authorTextField   = new JTextField();
+    private JTextField              bookTextField     = new JTextField();
+    private JTextField              categoryTextField = new JTextField();
+    private JTextField              fileTextField     = new JTextField();
 
-    private List<JComponent>        components = new ArrayList<JComponent>();
+    private List<JComponent>        components        = new ArrayList<JComponent>();
 
     public BookPanel()
     {
@@ -135,22 +135,6 @@ public class BookPanel
         registerComponents();
 
         setVisible( true );
-    }
-
-    private void initListeners()
-    {
-        chooseButton.addActionListener( new ActionListener()
-        {
-            public void actionPerformed(
-                ActionEvent evt )
-            {
-                JFileChooser fileChooser = new JFileChooser();
-                if ( fileChooser.showOpenDialog( BookPanel.this ) == JFileChooser.APPROVE_OPTION )
-                {
-                    fileTextField.setText( fileChooser.getSelectedFile().getAbsolutePath() );
-                }
-            }
-        } );
     }
 
     public void clear()
@@ -243,17 +227,6 @@ public class BookPanel
 
     private void initComponents()
     {
-        bookTextField = new JTextField();
-        nameLabel = new JLabel();
-        authorLabel = new JLabel();
-        authorTextField = new JTextField();
-        categoryTextField = new JTextField();
-        categoryLabel = new JLabel();
-        fileLabel = new JLabel();
-        fileTextField = new JTextField();
-        chooseButton = new JButton();
-        isReadCheckBox = new JCheckBox();
-
         isReadCheckBox.setHorizontalTextPosition( SwingConstants.LEADING );
 
         // setLayout( new GridLayout( 5, 2, 10, 10 ) );
@@ -315,6 +288,22 @@ public class BookPanel
         // todo better autocomplete and comma separated values
     }
 
+    private void initListeners()
+    {
+        chooseButton.addActionListener( new ActionListener()
+        {
+            public void actionPerformed(
+                ActionEvent evt )
+            {
+                JFileChooser fileChooser = new JFileChooser();
+                if ( fileChooser.showOpenDialog( BookPanel.this ) == JFileChooser.APPROVE_OPTION )
+                {
+                    fileTextField.setText( fileChooser.getSelectedFile().getAbsolutePath() );
+                }
+            }
+        } );
+    }
+
     private void registerComponents()
     {
         components.add( bookTextField );
@@ -335,14 +324,5 @@ public class BookPanel
         Resourses.register( getClass(), isReadCheckBox );
         Resourses.register( getClass(), fileLabel );
         Resourses.register( getClass(), chooseButton );
-
-        nameLabel.setText( Resourses.getString( getClass(), nameLabel ) );
-        authorLabel.setText( Resourses.getString( getClass(), authorLabel ) );
-        authorTextField.setText( Resourses.getString( getClass(), authorTextField ) );
-        categoryTextField.setText( Resourses.getString( getClass(), categoryTextField ) );
-        categoryLabel.setText( Resourses.getString( getClass(), categoryLabel ) );
-        fileLabel.setText( Resourses.getString( getClass(), fileLabel ) );
-        chooseButton.setText( Resourses.getString( getClass(), chooseButton ) );
-        isReadCheckBox.setText( Resourses.getString( getClass(), isReadCheckBox ) );
     }
 }

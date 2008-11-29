@@ -40,16 +40,16 @@ public class CollectionPanel
 {
     private static CollectionPanel instance;
 
-    private JTree                  authorTree;
-    private JTree                  bookTree;
-    private JTree                  categoryTree;
+    private CollectionTree         authorTree      = new AuthorTree();
+    private CollectionTree         bookTree        = new BookTree();
+    private CollectionTree         categoryTree    = new CategoryTree();
 
-    private JButton                cleanButton;
-    private JComboBox              isReadComboBox;
+    private JButton                cleanButton     = new JButton();
+    private JComboBox              isReadComboBox  = new JComboBox();
 
-    private JButton                searchButton;
-    private JTextField             searchTextField;
-    private JTabbedPane            viewTabbedPane;
+    private JButton                searchButton    = new JButton();
+    private JTextField             searchTextField = new JTextField();
+    private JTabbedPane            viewTabbedPane  = new JTabbedPane();
 
     private JTree[]                trees;
 
@@ -68,18 +68,6 @@ public class CollectionPanel
         initComponents();
         initListeners();
         registerComponents();
-    }
-
-    private void registerComponents()
-    {
-        searchButton.setName( "searchButton" );
-        searchTextField.setName( "searchTextField" );
-
-        Resourses.register( getClass(), searchTextField );
-        Resourses.register( getClass(), searchButton );
-
-        searchTextField.setText( Resourses.getString( getClass(), searchTextField ) );
-        searchButton.setText( Resourses.getString( getClass(), searchButton ) );
     }
 
     public JTree[] getTrees()
@@ -148,15 +136,6 @@ public class CollectionPanel
 
     private void initComponents()
     {
-        cleanButton = new JButton();
-        searchTextField = new JTextField();
-        searchButton = new JButton();
-        isReadComboBox = new JComboBox();
-        viewTabbedPane = new JTabbedPane();
-        bookTree = new BookTree();
-        authorTree = new AuthorTree();
-        categoryTree = new CategoryTree();
-
         cleanButton.setIcon( Resourses.createIcon( "edit-clear-locationbar-rtl.png" ) );
         searchButton.setIcon( Resourses.createIcon( "edit-find.png" ) );
 
@@ -173,6 +152,7 @@ public class CollectionPanel
         panel.add( searchButton );
 
         add( viewTabbedPane, BorderLayout.CENTER );
+
         viewTabbedPane.addTab( Resourses.getSpecificString( "CollectionPanel.bookScrollPane.TabConstraints.tabTitle" ),
             new JScrollPane( bookTree ) );
         viewTabbedPane.addTab(
@@ -226,6 +206,18 @@ public class CollectionPanel
                 // todo searchTextField.setText( Resourses.getString( "CollectionPanel.searchTextField" ) );
             }
         } );
+    }
+
+    private void registerComponents()
+    {
+        searchButton.setName( "searchButton" );
+        searchTextField.setName( "searchTextField" );
+
+        Resourses.register( getClass(), searchTextField );
+        Resourses.register( getClass(), searchButton );
+
+        searchTextField.setText( Resourses.getString( getClass(), searchTextField ) );
+        searchButton.setText( Resourses.getString( getClass(), searchButton ) );
     }
 
     private void searchButtonActionPerformed()

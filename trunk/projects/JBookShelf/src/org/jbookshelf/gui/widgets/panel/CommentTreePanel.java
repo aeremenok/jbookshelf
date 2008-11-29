@@ -105,12 +105,6 @@ public class CommentTreePanel
         relatedPanel.focusLost();
     }
 
-    private void refresh()
-    {
-        updateUI();
-        editPanel.updateUI();
-    }
-
     @Override
     public void onAdd()
     {
@@ -171,6 +165,12 @@ public class CommentTreePanel
 
         selectedCommentable = (Commentable) unique;
         drawComments( selectedCommentable.getComments() );
+    }
+
+    private ImageIcon createIcon(
+        String name )
+    {
+        return new ImageIcon( getClass().getResource( name ) );
     }
 
     private void drawComments(
@@ -238,9 +238,9 @@ public class CommentTreePanel
         nothingSelected();
     }
 
-    private ImageIcon createIcon(
-        String name )
+    private void refresh()
     {
-        return new ImageIcon( getClass().getResource( name ) );
+        updateUI();
+        editPanel.updateUI();
     }
 }

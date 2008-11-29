@@ -24,70 +24,39 @@ import javax.swing.WindowConstants;
 public class AboutDialog
     extends JDialog
 {
-    private JLabel  header;
-    private JLabel  authorLabel;
-    private JLabel  authorValueLabel;
-    private JLabel  licenseLabel;
-    private JLabel  licenseValueLabel;
-    private JLabel  versionLabel;
-    private JLabel  versionValueLabel;
+    private JLabel  header            = new JLabel();
+    private JLabel  authorLabel       = new JLabel();
+    private JLabel  authorValueLabel  = new JLabel();
+    private JLabel  licenseLabel      = new JLabel();
+    private JLabel  licenseValueLabel = new JLabel();
+    private JLabel  versionLabel      = new JLabel();
+    private JLabel  versionValueLabel = new JLabel();
 
-    private JButton closeButton;
+    private JButton closeButton       = new JButton();
 
     public AboutDialog(
         Frame parent,
         boolean modal )
     {
         super( parent, modal );
+        registerComponents();
         initComponents();
         initListeners();
     }
 
-    private void initListeners()
-    {
-        closeButton.addActionListener( new ActionListener()
-        {
-            public void actionPerformed(
-                ActionEvent evt )
-            {
-                dispose();
-            }
-        } );
-    }
-
     private void initComponents()
     {
-        header = new JLabel();
-        closeButton = new JButton();
-        authorLabel = new JLabel();
-        authorValueLabel = new JLabel();
-        versionLabel = new JLabel();
-        versionValueLabel = new JLabel();
-        licenseLabel = new JLabel();
-        licenseValueLabel = new JLabel();
-
         setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 
         JPanel mainPanel = new JPanel();
         add( mainPanel );
         mainPanel.setLayout( new BorderLayout() );
 
-        header.setFont( new Font( "Tahoma", 1, 18 ) ); // NOI18N
+        header.setFont( new Font( "Tahoma", 1, 18 ) );
         header.setHorizontalAlignment( SwingConstants.CENTER );
         mainPanel.add( header, BorderLayout.PAGE_START );
 
         mainPanel.add( closeButton, BorderLayout.PAGE_END );
-
-        registerComponents();
-
-        closeButton.setText( Resourses.getString( getClass(), closeButton ) );
-        header.setText( Resourses.getString( getClass(), header ) );
-        authorLabel.setText( Resourses.getString( getClass(), authorLabel ) );
-        authorValueLabel.setText( Resourses.getString( getClass(), authorValueLabel ) );
-        versionLabel.setText( Resourses.getString( getClass(), versionLabel ) );
-        versionValueLabel.setText( Resourses.getString( getClass(), versionValueLabel ) );
-        licenseLabel.setText( Resourses.getString( getClass(), licenseLabel ) );
-        licenseValueLabel.setText( Resourses.getString( getClass(), licenseValueLabel ) );
 
         JPanel contentPanel = new JPanel();
         mainPanel.add( contentPanel, BorderLayout.CENTER );
@@ -103,6 +72,18 @@ public class AboutDialog
         contentPanel.add( licenseValueLabel );
 
         pack();
+    }
+
+    private void initListeners()
+    {
+        closeButton.addActionListener( new ActionListener()
+        {
+            public void actionPerformed(
+                ActionEvent evt )
+            {
+                dispose();
+            }
+        } );
     }
 
     private void registerComponents()

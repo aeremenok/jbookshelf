@@ -35,31 +35,30 @@ public class SettingsDialog
     implements
         JBookShelfSettings
 {
-    private Settings     settings    = Settings.getInstance();
+    private Settings     settings               = Settings.getInstance();
 
-    private JFileChooser fileChooser = new JFileChooser();
+    private JFileChooser fileChooser            = new JFileChooser();
 
-    private JButton      cancelButton;
-    private JButton      chooseJBSFolderButton;
-    private JButton      chooseTempFolderButton;
-    private JButton      okButton;
-    private JButton      restoreButton;
-    private JButton      saveButton;
+    private JButton      cancelButton           = new JButton();
+    private JButton      chooseJBSFolderButton  = new JButton();
+    private JButton      chooseTempFolderButton = new JButton();
+    private JButton      okButton               = new JButton();
+    private JButton      restoreButton          = new JButton();
+    private JButton      saveButton             = new JButton();
 
-    private JLabel       importMaskLabel;
-    private JLabel       jbsFolderLabel;
-    private JLabel       lafLabel;
-    private JLabel       languageLabel;
-    private JLabel       settingsLabel;
-    private JLabel       tmpFolderLabel;
+    private JLabel       importMaskLabel        = new JLabel();
+    private JLabel       jbsFolderLabel         = new JLabel();
+    private JLabel       lafLabel               = new JLabel();
+    private JLabel       languageLabel          = new JLabel();
+    private JLabel       settingsLabel          = new JLabel();
+    private JLabel       tmpFolderLabel         = new JLabel();
 
-    private JTextField   importTextField;
-    private JTextField   jbsTextField;
+    private JTextField   importTextField        = new JTextField();
+    private JTextField   jbsTextField           = new JTextField();
+    private JTextField   tmpTextField           = new JTextField();
 
-    private JTextField   tmpTextField;
-
-    private JComboBox    lafComboBox;
-    private JComboBox    langComboBox;
+    private JComboBox    lafComboBox            = new JComboBox();
+    private JComboBox    langComboBox           = new JComboBox();
 
     public SettingsDialog(
         Frame parent,
@@ -90,29 +89,8 @@ public class SettingsDialog
         importTextField.setText( settings.getProperty( IMPORT_MASK ) );
     }
 
-    java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" );
-
     private void initComponents()
     {
-        JSeparator jSeparator1 = new JSeparator();
-        restoreButton = new JButton();
-        cancelButton = new JButton();
-        okButton = new JButton();
-        saveButton = new JButton();
-        settingsLabel = new JLabel();
-        languageLabel = new JLabel();
-        lafLabel = new JLabel();
-        tmpFolderLabel = new JLabel();
-        jbsFolderLabel = new JLabel();
-        importMaskLabel = new JLabel();
-        importTextField = new JTextField();
-        jbsTextField = new JTextField();
-        chooseJBSFolderButton = new JButton();
-        tmpTextField = new JTextField();
-        chooseTempFolderButton = new JButton();
-        lafComboBox = new JComboBox();
-        langComboBox = new JComboBox();
-
         setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 
         settingsLabel.setFont( new Font( "Tahoma", 1, 18 ) );
@@ -120,6 +98,7 @@ public class SettingsDialog
         lafComboBox.setModel( new DefaultComboBoxModel( Resourses.LAF_NAMES ) );
         langComboBox.setModel( new DefaultComboBoxModel( new String[] { "Russian", "English" } ) );
 
+        JSeparator jSeparator1 = new JSeparator();
         GroupLayout layout = new GroupLayout( getContentPane() );
         getContentPane().setLayout( layout );
         layout.setHorizontalGroup( layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addGroup(
@@ -312,19 +291,6 @@ public class SettingsDialog
         importMaskLabel.setName( "importMaskLabel" );
         chooseJBSFolderButton.setName( "chooseJBSFolderButton" );
         chooseTempFolderButton.setName( "chooseTempFolderButton" );
-
-        restoreButton.setText( Resourses.getString( getClass(), restoreButton ) );
-        cancelButton.setText( Resourses.getString( getClass(), cancelButton ) );
-        okButton.setText( Resourses.getString( getClass(), okButton ) );
-        saveButton.setText( Resourses.getString( getClass(), saveButton ) );
-        settingsLabel.setText( Resourses.getString( getClass(), settingsLabel ) );
-        languageLabel.setText( Resourses.getString( getClass(), languageLabel ) );
-        lafLabel.setText( Resourses.getString( getClass(), lafLabel ) );
-        tmpFolderLabel.setText( Resourses.getString( getClass(), tmpFolderLabel ) );
-        jbsFolderLabel.setText( Resourses.getString( getClass(), jbsFolderLabel ) );
-        importMaskLabel.setText( Resourses.getString( getClass(), importMaskLabel ) );
-        chooseJBSFolderButton.setText( Resourses.getString( getClass(), chooseJBSFolderButton ) );
-        chooseTempFolderButton.setText( Resourses.getString( getClass(), chooseTempFolderButton ) );
 
         Resourses.register( getClass(), restoreButton );
         Resourses.register( getClass(), chooseJBSFolderButton );

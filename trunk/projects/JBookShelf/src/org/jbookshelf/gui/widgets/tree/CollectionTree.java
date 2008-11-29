@@ -26,19 +26,7 @@ public abstract class CollectionTree
 {
     private List<UniqueSelectionListener> listeners = new ArrayList<UniqueSelectionListener>();
 
-    public void addSelectionListener(
-        UniqueSelectionListener listener )
-    {
-        listeners.add( listener );
-    }
-
-    public void removeSelectionListener(
-        UniqueSelectionListener listener )
-    {
-        listeners.remove( listener );
-    }
-
-    protected DefaultMutableTreeNode root = new DefaultMutableTreeNode();
+    protected DefaultMutableTreeNode      root      = new DefaultMutableTreeNode();
 
     public CollectionTree()
     {
@@ -82,40 +70,23 @@ public abstract class CollectionTree
         ToolBar.getInstance().nothingSelected();
     }
 
-    private void fireSelectedUnique(
-        Unique unique )
+    public void addSelectionListener(
+        UniqueSelectionListener listener )
     {
-        for ( UniqueSelectionListener listener : listeners )
-        {
-            listener.selectedUnique( unique );
-        }
+        listeners.add( listener );
     }
-
-    private void fireNothingSelected()
-    {
-        for ( UniqueSelectionListener listener : listeners )
-        {
-            listener.nothingSelected();
-        }
-    }
-
-    protected abstract EReference getReference();
-
-    @SuppressWarnings( "unchecked" )
-    public void update(
-        BookShelf bookShelf )
-    {
-        showResult( (EList<Unique>) bookShelf.eGet( getReference() ) );
-    }
-
-    protected abstract void addChildren(
-        UniqueNode parent );
 
     public void removeSelectedItem()
     {
         UniqueNode uniqueNode = (UniqueNode) getLastSelectedPathComponent();
         uniqueNode.removeFromParent();
         updateUI();
+    }
+
+    public void removeSelectionListener(
+        UniqueSelectionListener listener )
+    {
+        listeners.remove( listener );
     }
 
     public void showResult(
@@ -135,4 +106,33 @@ public abstract class CollectionTree
 
         updateUI();
     }
+
+    @SuppressWarnings( "unchecked" )
+    public void update(
+        BookShelf bookShelf )
+    {
+        showResult( (EList<Unique>) bookShelf.eGet( getReference() ) );
+    }
+
+    private void fireNothingSelected()
+    {
+        for ( UniqueSelectionListener listener : listeners )
+        {
+            listener.nothingSelected();
+        }
+    }
+
+    private void fireSelectedUnique(
+        Unique unique )
+    {
+        for ( UniqueSelectionListener listener : listeners )
+        {
+            listener.selectedUnique( unique );
+        }
+    }
+
+    protected abstract void addChildren(
+        UniqueNode parent );
+
+    protected abstract EReference getReference();
 }

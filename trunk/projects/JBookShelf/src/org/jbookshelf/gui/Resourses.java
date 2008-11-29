@@ -16,28 +16,24 @@ import javax.swing.text.JTextComponent;
 
 public class Resourses
 {
-    private static ResourceBundle                bundle     = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" );
-    private static final Map<String, JComponent> components = new HashMap<String, JComponent>();
+    private static ResourceBundle                bundle        = ResourceBundle.getBundle( "org/jbookshelf/gui/Bundle" );
+    private static final Map<String, JComponent> components    = new HashMap<String, JComponent>();
     private static Locale                        currentLocale;
 
-    public static void register(
-        Class clazz,
-        JComponent component )
-    {
-        components.put( clazz.getSimpleName() + "." + component.getName(), component );
-    }
+    /**
+     * stores {@link LookAndFeel} classNames
+     */
+    private static Map<String, String>           lafClassNames = new HashMap<String, String>();
 
-    public static void unregister(
-        Class clazz,
-        JComponent component )
-    {
-        components.remove( clazz.getSimpleName() + "." + component.getName() );
-    }
+    /**
+     * stores {@link LookAndFeel} classNames
+     */
+    public static final String[]                 LAF_NAMES     = getLAFs();
 
     public static ImageIcon createIcon(
         String fileName )
     {
-        return new ImageIcon( Resourses.class.getResource( "/org/jbookshelf/gui/images/" + fileName ) );
+        return createSpecificIcon( "/org/jbookshelf/gui/images/" + fileName );
     }
 
     public static ImageIcon createSpecificIcon(
@@ -46,11 +42,21 @@ public class Resourses
         return new ImageIcon( Resourses.class.getResource( url ) );
     }
 
-    public static String getString(
-        Class clazz,
-        String name )
+    public static Locale getCurrentLocale()
     {
-        return getString( clazz.getSimpleName(), name );
+        return currentLocale;
+    }
+
+    public static String getLAFClassName(
+        String lafName )
+    {
+        return lafClassNames.get( lafName );
+    }
+
+    public static String getSpecificString(
+        String fullName )
+    {
+        return bundle.getString( fullName );
     }
 
     public static String getString(
@@ -61,10 +67,10 @@ public class Resourses
     }
 
     public static String getString(
-        String className,
+        Class clazz,
         String name )
     {
-        return getString( className + "." + name );
+        return getString( clazz.getSimpleName(), name );
     }
 
     public static String getString(
@@ -73,36 +79,19 @@ public class Resourses
         return bundle.getString( fullName + ".text" );
     }
 
-    public static String getSpecificString(
-        String fullName )
+    public static String getString(
+        String className,
+        String name )
     {
-        return bundle.getString( fullName );
+        return getString( className + "." + name );
     }
 
-    /**
-     * stores {@link LookAndFeel} classNames
-     */
-    private static Map<String, String> lafClassNames = new HashMap<String, String>();
-    /**
-     * stores {@link LookAndFeel} classNames
-     */
-    public static final String[]       LAF_NAMES     = getLAFs();
-
-    /**
-     * @return {@link LookAndFeel} names for combobox
-     */
-    private static String[] getLAFs()
+    public static void register(
+        Class clazz,
+        JComponent component )
     {
-        LookAndFeelInfo[] installed = UIManager.getInstalledLookAndFeels();
-        lafClassNames.clear();
-        String[] lafs = new String[installed.length];
-        for ( int i = 0; i < installed.length; i++ )
-        {
-            LookAndFeelInfo lookAndFeelInfo = installed[i];
-            lafs[i] = lookAndFeelInfo.getName();
-            lafClassNames.put( lafs[i], lookAndFeelInfo.getClassName() );
-        }
-        return lafs;
+        components.put( clazz.getSimpleName() + "." + component.getName(), component );
+        setText( component, getString( clazz, component ) );
     }
 
     public static void switchLanguage(
@@ -121,31 +110,49 @@ public class Resourses
         for ( String fullName : components.keySet() )
         {
             JComponent component = components.get( fullName );
-            String text = getString( fullName );
-
-            if ( component instanceof JLabel )
-            {
-                ((JLabel) component).setText( text );
-            }
-            else if ( component instanceof JTextComponent )
-            {
-                ((JTextComponent) component).setText( text );
-            }
-            else if ( component instanceof AbstractButton )
-            {
-                ((AbstractButton) component).setText( text );
-            }
+            setText( component, getString( fullName ) );
         }
     }
 
-    public static Locale getCurrentLocale()
+    public static void unregister(
+        Class clazz,
+        JComponent component )
     {
-        return currentLocale;
+        components.remove( clazz.getSimpleName() + "." + component.getName() );
     }
 
-    public static String getLAFClassName(
-        String lafName )
+    /**
+     * @return {@link LookAndFeel} names for combobox
+     */
+    private static String[] getLAFs()
     {
-        return lafClassNames.get( lafName );
+        LookAndFeelInfo[] installed = UIManager.getInstalledLookAndFeels();
+        lafClassNames.clear();
+        String[] lafs = new String[installed.length];
+        for ( int i = 0; i < installed.length; i++ )
+        {
+            LookAndFeelInfo lookAndFeelInfo = installed[i];
+            lafs[i] = lookAndFeelInfo.getName();
+            lafClassNames.put( lafs[i], lookAndFeelInfo.getClassName() );
+        }
+        return lafs;
+    }
+
+    private static void setText(
+        JComponent component,
+        String text )
+    {
+        if ( component instanceof JLabel )
+        {
+            ((JLabel) component).setText( text );
+        }
+        else if ( component instanceof JTextComponent )
+        {
+            ((JTextComponent) component).setText( text );
+        }
+        else if ( component instanceof AbstractButton )
+        {
+            ((AbstractButton) component).setText( text );
+        }
     }
 }
