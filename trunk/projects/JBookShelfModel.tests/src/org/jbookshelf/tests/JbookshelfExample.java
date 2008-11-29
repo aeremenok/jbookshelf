@@ -8,30 +8,26 @@ import java.io.IOException;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-
 import org.eclipse.emf.ecore.util.Diagnostician;
-
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-
-import org.jbookshelf.Author;
-import org.jbookshelf.JbookshelfFactory;
-import org.jbookshelf.JbookshelfPackage;
+import org.jbookshelf.model.Author;
+import org.jbookshelf.model.ModelFactory;
+import org.jbookshelf.model.ModelPackage;
 
 /**
  * <!-- begin-user-doc --> A sample utility for the '<em><b>jbookshelf</b></em>' package. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class JbookshelfExample
 {
     /**
      * <!-- begin-user-doc --> Load all the argument file paths or URIs as instances of the model. <!-- end-user-doc -->
+     * 
      * @param args the file paths or URIs.
      * @generated
      */
@@ -41,32 +37,29 @@ public class JbookshelfExample
         // Create a resource set to hold the resources.
         //
         ResourceSet resourceSet = new ResourceSetImpl();
-        
+
         // Register the appropriate resource factory to handle all file extensions.
         //
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-            (Resource.Factory.Registry.DEFAULT_EXTENSION, 
-             new XMIResourceFactoryImpl());
+        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+            Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl() );
 
         // Register the package to ensure it is available during loading.
         //
-        resourceSet.getPackageRegistry().put
-            (JbookshelfPackage.eNS_URI, 
-             JbookshelfPackage.eINSTANCE);
-        
+        resourceSet.getPackageRegistry().put( ModelPackage.eNS_URI, ModelPackage.eINSTANCE );
+
         // If there are no arguments, emit an appropriate usage message.
         //
-        if (args.length == 0)
+        if ( args.length == 0 )
         {
-            System.out.println("Enter a list of file paths or URIs that have content like this:");
+            System.out.println( "Enter a list of file paths or URIs that have content like this:" );
             try
             {
-                Resource resource = resourceSet.createResource(URI.createURI("http:///My.jbookshelf"));
-                Author root = JbookshelfFactory.eINSTANCE.createAuthor();
-                resource.getContents().add(root);
-                resource.save(System.out, null);
+                Resource resource = resourceSet.createResource( URI.createURI( "http:///My.jbookshelf" ) );
+                Author root = ModelFactory.eINSTANCE.createAuthor();
+                resource.getContents().add( root );
+                resource.save( System.out, null );
             }
-            catch (IOException exception) 
+            catch ( IOException exception )
             {
                 exception.printStackTrace();
             }
@@ -75,36 +68,36 @@ public class JbookshelfExample
         {
             // Iterate over all the arguments.
             //
-            for (int i = 0; i < args.length; ++i)
+            for ( int i = 0; i < args.length; ++i )
             {
                 // Construct the URI for the instance file.
                 // The argument is treated as a file path only if it denotes an existing file.
                 // Otherwise, it's directly treated as a URL.
                 //
-                File file = new File(args[i]);
-                URI uri = file.isFile() ? URI.createFileURI(file.getAbsolutePath()): URI.createURI(args[0]);
+                File file = new File( args[i] );
+                URI uri = file.isFile() ? URI.createFileURI( file.getAbsolutePath() ) : URI.createURI( args[0] );
 
                 try
                 {
                     // Demand load resource for this file.
                     //
-                    Resource resource = resourceSet.getResource(uri, true);
-                    System.out.println("Loaded " + uri);
+                    Resource resource = resourceSet.getResource( uri, true );
+                    System.out.println( "Loaded " + uri );
 
                     // Validate the contents of the loaded resource.
                     //
-                    for (EObject eObject : resource.getContents())
+                    for ( EObject eObject : resource.getContents() )
                     {
-                        Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject);
-                        if (diagnostic.getSeverity() != Diagnostic.OK)
+                        Diagnostic diagnostic = Diagnostician.INSTANCE.validate( eObject );
+                        if ( diagnostic.getSeverity() != Diagnostic.OK )
                         {
-                            printDiagnostic(diagnostic, "");
+                            printDiagnostic( diagnostic, "" );
                         }
                     }
                 }
-                catch (RuntimeException exception) 
+                catch ( RuntimeException exception )
                 {
-                    System.out.println("Problem loading " + uri);
+                    System.out.println( "Problem loading " + uri );
                     exception.printStackTrace();
                 }
             }
@@ -113,6 +106,7 @@ public class JbookshelfExample
 
     /**
      * <!-- begin-user-doc --> Prints diagnostics with indentation. <!-- end-user-doc -->
+     * 
      * @param diagnostic the diagnostic to print.
      * @param indent the indentation for printing.
      * @generated
@@ -121,11 +115,11 @@ public class JbookshelfExample
         Diagnostic diagnostic,
         String indent )
     {
-        System.out.print(indent);
-        System.out.println(diagnostic.getMessage());
-        for (Diagnostic child : diagnostic.getChildren())
+        System.out.print( indent );
+        System.out.println( diagnostic.getMessage() );
+        for ( Diagnostic child : diagnostic.getChildren() )
         {
-            printDiagnostic(child, indent + "  ");
+            printDiagnostic( child, indent + "  " );
         }
     }
 

@@ -10,29 +10,29 @@ import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
 import org.eclipse.emf.common.util.EList;
-import org.jbookshelf.ArchiveFile;
-import org.jbookshelf.Author;
-import org.jbookshelf.BookShelf;
-import org.jbookshelf.Category;
-import org.jbookshelf.JbookshelfFactory;
-import org.jbookshelf.ReadingUnit;
-import org.jbookshelf.Unique;
+import org.jbookshelf.model.ArchiveFile;
+import org.jbookshelf.model.Author;
+import org.jbookshelf.model.BookShelf;
+import org.jbookshelf.model.Category;
+import org.jbookshelf.model.ModelFactory;
+import org.jbookshelf.model.ReadingUnit;
+import org.jbookshelf.model.Unique;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Book Shelf</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following operations are tested:
  * <ul>
- * <li>{@link org.jbookshelf.BookShelf#addAuthor(java.lang.String) <em>Add Author</em>}</li>
- * <li>{@link org.jbookshelf.BookShelf#addCategory(java.lang.String) <em>Add Category</em>}</li>
+ * <li>{@link org.jbookshelf.model.BookShelf#addAuthor(java.lang.String) <em>Add Author</em>}</li>
+ * <li>{@link org.jbookshelf.model.BookShelf#addCategory(java.lang.String) <em>Add Category</em>}</li>
  * <li>
- * {@link org.jbookshelf.BookShelf#addReadingUnit(java.lang.String, org.jbookshelf.Author, org.jbookshelf.Category, org.jbookshelf.PhysicalUnit)
+ * {@link org.jbookshelf.model.BookShelf#addReadingUnit(java.lang.String, org.jbookshelf.model.Author, org.jbookshelf.model.Category, org.jbookshelf.PhysicalUnit)
  * <em>Add Reading Unit</em>}</li>
- * <li>{@link org.jbookshelf.BookShelf#queryAuthors(java.lang.String) <em>Query Authors</em>}</li>
- * <li>{@link org.jbookshelf.BookShelf#queryCategories(java.lang.String) <em>Query Categories</em>}</li>
- * <li>{@link org.jbookshelf.BookShelf#queryUniques(java.lang.String) <em>Query Uniques</em>}</li>
- * <li>{@link org.jbookshelf.BookShelf#queryUnits(java.lang.String, java.lang.Boolean) <em>Query Units</em>}</li>
- * <li>{@link org.jbookshelf.BookShelf#removeUnique(org.jbookshelf.Unique) <em>Remove Unique</em>}</li>
+ * <li>{@link org.jbookshelf.model.BookShelf#queryAuthors(java.lang.String) <em>Query Authors</em>}</li>
+ * <li>{@link org.jbookshelf.model.BookShelf#queryCategories(java.lang.String) <em>Query Categories</em>}</li>
+ * <li>{@link org.jbookshelf.model.BookShelf#queryUniques(java.lang.String) <em>Query Uniques</em>}</li>
+ * <li>{@link org.jbookshelf.model.BookShelf#queryUnits(java.lang.String, java.lang.Boolean) <em>Query Units</em>}</li>
+ * <li>{@link org.jbookshelf.model.BookShelf#removeUnique(org.jbookshelf.model.Unique) <em>Remove Unique</em>}</li>
  * </ul>
  * </p>
  * 
@@ -71,10 +71,10 @@ public class BookShelfTest
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.BookShelf#addAuthor(java.lang.String) <em>Add Author</em>}' operation. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
+     * Tests the '{@link org.jbookshelf.model.BookShelf#addAuthor(java.lang.String) <em>Add Author</em>}' operation.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see org.jbookshelf.BookShelf#addAuthor(java.lang.String)
+     * @see org.jbookshelf.model.BookShelf#addAuthor(java.lang.String)
      * @generated NOT
      */
     public void testAddAuthor__String()
@@ -91,10 +91,10 @@ public class BookShelfTest
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.BookShelf#addCategory(java.lang.String) <em>Add Category</em>}' operation. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
+     * Tests the '{@link org.jbookshelf.model.BookShelf#addCategory(java.lang.String) <em>Add Category</em>}' operation.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see org.jbookshelf.BookShelf#addCategory(java.lang.String)
+     * @see org.jbookshelf.model.BookShelf#addCategory(java.lang.String)
      * @generated NOT
      */
     public void testAddCategory__String()
@@ -112,11 +112,11 @@ public class BookShelfTest
 
     /**
      * Tests the '
-     * {@link org.jbookshelf.BookShelf#addReadingUnit(java.lang.String, org.jbookshelf.Author, org.jbookshelf.Category, org.jbookshelf.PhysicalUnit)
+     * {@link org.jbookshelf.model.BookShelf#addReadingUnit(java.lang.String, org.jbookshelf.model.Author, org.jbookshelf.model.Category, org.jbookshelf.PhysicalUnit)
      * <em>Add Reading Unit</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see org.jbookshelf.BookShelf#addReadingUnit(java.lang.String, org.jbookshelf.Author, org.jbookshelf.Category,
-     *      org.jbookshelf.PhysicalUnit)
+     * @see org.jbookshelf.model.BookShelf#addReadingUnit(java.lang.String, org.jbookshelf.model.Author,
+     *      org.jbookshelf.model.Category, org.jbookshelf.PhysicalUnit)
      * @generated NOT
      */
     public void testAddReadingUnit__String_Author_Category_PhysicalUnit()
@@ -125,7 +125,7 @@ public class BookShelfTest
 
         Author author = getFixture().addAuthor( "author" );
         Category category = getFixture().addCategory( "category" );
-        ArchiveFile archiveFile = JbookshelfFactory.eINSTANCE.createArchiveFile();
+        ArchiveFile archiveFile = ModelFactory.eINSTANCE.createArchiveFile();
         archiveFile.setArchiveFile( new File( "" ) );
 
         String name = getName();
@@ -143,10 +143,10 @@ public class BookShelfTest
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.BookShelf#queryAuthors(java.lang.String) <em>Query Authors</em>}' operation.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Tests the '{@link org.jbookshelf.model.BookShelf#queryAuthors(java.lang.String) <em>Query Authors</em>}'
+     * operation. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see org.jbookshelf.BookShelf#queryAuthors(java.lang.String)
+     * @see org.jbookshelf.model.BookShelf#queryAuthors(java.lang.String)
      * @generated NOT
      */
     public void testQueryAuthors__String()
@@ -171,10 +171,10 @@ public class BookShelfTest
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.BookShelf#queryCategories(java.lang.String) <em>Query Categories</em>}'
+     * Tests the '{@link org.jbookshelf.model.BookShelf#queryCategories(java.lang.String) <em>Query Categories</em>}'
      * operation. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see org.jbookshelf.BookShelf#queryCategories(java.lang.String)
+     * @see org.jbookshelf.model.BookShelf#queryCategories(java.lang.String)
      * @generated NOT
      */
     public void testQueryCategories__String()
@@ -199,10 +199,10 @@ public class BookShelfTest
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.BookShelf#queryUniques(java.lang.String) <em>Query Uniques</em>}' operation.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Tests the '{@link org.jbookshelf.model.BookShelf#queryUniques(java.lang.String) <em>Query Uniques</em>}'
+     * operation. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see org.jbookshelf.BookShelf#queryUniques(java.lang.String)
+     * @see org.jbookshelf.model.BookShelf#queryUniques(java.lang.String)
      * @generated NOT
      */
     public void testQueryUniques__String()
@@ -225,10 +225,10 @@ public class BookShelfTest
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.BookShelf#queryUnits(java.lang.String, java.lang.Boolean) <em>Query Units</em>}'
-     * operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Tests the '{@link org.jbookshelf.model.BookShelf#queryUnits(java.lang.String, java.lang.Boolean)
+     * <em>Query Units</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see org.jbookshelf.BookShelf#queryUnits(java.lang.String, java.lang.Boolean)
+     * @see org.jbookshelf.model.BookShelf#queryUnits(java.lang.String, java.lang.Boolean)
      * @generated NOT
      */
     public void testQueryUnits__String_Boolean()
@@ -237,7 +237,7 @@ public class BookShelfTest
 
         Author author = getFixture().addAuthor( "author" );
         Category category = getFixture().addCategory( "category" );
-        ArchiveFile archiveFile = JbookshelfFactory.eINSTANCE.createArchiveFile();
+        ArchiveFile archiveFile = ModelFactory.eINSTANCE.createArchiveFile();
         archiveFile.setArchiveFile( new File( "" ) );
 
         ReadingUnit book1 = getFixture().addReadingUnit( "book1", author, category, archiveFile );
@@ -270,10 +270,10 @@ public class BookShelfTest
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.BookShelf#removeUnique(org.jbookshelf.Unique) <em>Remove Unique</em>}'
-     * operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Tests the '{@link org.jbookshelf.model.BookShelf#removeUnique(org.jbookshelf.model.Unique)
+     * <em>Remove Unique</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see org.jbookshelf.BookShelf#removeUnique(org.jbookshelf.Unique)
+     * @see org.jbookshelf.model.BookShelf#removeUnique(org.jbookshelf.model.Unique)
      * @generated
      */
     public void testRemoveUnique__Unique()
@@ -326,7 +326,7 @@ public class BookShelfTest
     protected void setUp()
         throws Exception
     {
-        setFixture( JbookshelfFactory.eINSTANCE.createBookShelf() );
+        setFixture( ModelFactory.eINSTANCE.createBookShelf() );
     }
 
     /**

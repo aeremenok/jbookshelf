@@ -7,11 +7,12 @@ import java.io.File;
 
 import junit.textui.TestRunner;
 
-import org.jbookshelf.JbookshelfFactory;
-import org.jbookshelf.SingleFileFolder;
+import org.jbookshelf.model.ModelFactory;
+import org.jbookshelf.model.SingleFileFolder;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Single File Folder</b></em>'. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class SingleFileFolderTest
@@ -20,34 +21,35 @@ public class SingleFileFolderTest
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public static void main(
         String[] args )
     {
-        TestRunner.run(SingleFileFolderTest.class);
+        TestRunner.run( SingleFileFolderTest.class );
     }
 
     /**
-     * Constructs a new Single File Folder test case with the given name.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Constructs a new Single File Folder test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public SingleFileFolderTest(
         String name )
     {
-        super(name);
+        super( name );
     }
 
     /**
-     * Returns the fixture for this Single File Folder test case.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Returns the fixture for this Single File Folder test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     protected SingleFileFolder getFixture()
     {
-        return (SingleFileFolder)fixture;
+        return (SingleFileFolder) fixture;
     }
 
     /**
@@ -60,7 +62,7 @@ public class SingleFileFolderTest
     protected void setUp()
         throws Exception
     {
-        setFixture( JbookshelfFactory.eINSTANCE.createSingleFileFolder() );
+        setFixture( ModelFactory.eINSTANCE.createSingleFileFolder() );
         File value = new File( "test" );
         getFixture().setSingleFile( value );
         getFixture().setFolder( value.getCanonicalFile().getParentFile() );
@@ -68,6 +70,7 @@ public class SingleFileFolderTest
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see junit.framework.TestCase#tearDown()
      * @generated
      */
@@ -75,7 +78,7 @@ public class SingleFileFolderTest
     protected void tearDown()
         throws Exception
     {
-        setFixture(null);
+        setFixture( null );
     }
 
 } // SingleFileFolderTest

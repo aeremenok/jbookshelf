@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/JBookShelfModel/src"
+    modelPluginID="JBookShelfModel" modelName="Model" importerID="org.eclipse.emf.importer.java"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
+  <foreignModel>@model</foreignModel>
+  <genPackages prefix="Model" basePackage="org.jbookshelf" disposableProviderFactory="true"
+      ecorePackage="model.ecore#/">
+    <genDataTypes ecoreDataType="model.ecore#//File"/>
+    <genClasses ecoreClass="model.ecore#//ArchiveFile">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ArchiveFile/archiveFile"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//Author">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Author/readingUnits"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//BookShelf">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//BookShelf/authors"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//BookShelf/categories"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//BookShelf/readingUnits"/>
+      <genOperations ecoreOperation="model.ecore#//BookShelf/addAuthor">
+        <genParameters ecoreParameter="model.ecore#//BookShelf/addAuthor/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.ecore#//BookShelf/addCategory">
+        <genParameters ecoreParameter="model.ecore#//BookShelf/addCategory/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.ecore#//BookShelf/addReadingUnit">
+        <genParameters ecoreParameter="model.ecore#//BookShelf/addReadingUnit/name"/>
+        <genParameters ecoreParameter="model.ecore#//BookShelf/addReadingUnit/author"/>
+        <genParameters ecoreParameter="model.ecore#//BookShelf/addReadingUnit/category"/>
+        <genParameters ecoreParameter="model.ecore#//BookShelf/addReadingUnit/physicalUnit"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.ecore#//BookShelf/removeUnique">
+        <genParameters ecoreParameter="model.ecore#//BookShelf/removeUnique/unique"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.ecore#//BookShelf/queryAuthors">
+        <genParameters ecoreParameter="model.ecore#//BookShelf/queryAuthors/query"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.ecore#//BookShelf/queryCategories">
+        <genParameters ecoreParameter="model.ecore#//BookShelf/queryCategories/query"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.ecore#//BookShelf/queryUniques">
+        <genParameters ecoreParameter="model.ecore#//BookShelf/queryUniques/query"/>
+      </genOperations>
+      <genOperations ecoreOperation="model.ecore#//BookShelf/queryUnits">
+        <genParameters ecoreParameter="model.ecore#//BookShelf/queryUnits/query"/>
+        <genParameters ecoreParameter="model.ecore#//BookShelf/queryUnits/isRead"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.ecore#//Categorizable">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Categorizable/categories"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//Category">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Category/categorizables"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//Comment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Comment/content"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Comment/creationDate"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Comment/subject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Comment/title"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.ecore#//Commentable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Commentable/comments"/>
+      <genOperations ecoreOperation="model.ecore#//Commentable/queryComments">
+        <genParameters ecoreParameter="model.ecore#//Commentable/queryComments/query"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//IndexFileFolder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//IndexFileFolder/indexFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//IndexFileFolder/indexFolder"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.ecore#//PhysicalUnit">
+      <genOperations ecoreOperation="model.ecore#//PhysicalUnit/openUnit"/>
+      <genOperations ecoreOperation="model.ecore#//PhysicalUnit/openFolder"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//ReadingUnit">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//ReadingUnit/authors"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//ReadingUnit/physical"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ReadingUnit/read"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//SingleFile">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//SingleFile/file"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//SingleFileFolder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//SingleFileFolder/folder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//SingleFileFolder/singleFile"/>
+      <genOperations ecoreOperation="model.ecore#//SingleFileFolder/openFolder"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="model.ecore#//Unique">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Unique/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Unique/related"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
