@@ -10,6 +10,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.jbookshelf.model.Comment;
@@ -148,7 +149,7 @@ public abstract class CommentableImpl
     {
         if (comments == null)
         {
-            comments = new EObjectContainmentEList<Comment>(Comment.class, this, ModelPackage.COMMENTABLE__COMMENTS);
+            comments = new EObjectContainmentWithInverseEList<Comment>(Comment.class, this, ModelPackage.COMMENTABLE__COMMENTS, ModelPackage.COMMENT__SUBJECT);
         }
         return comments;
     }
@@ -172,6 +173,23 @@ public abstract class CommentableImpl
             }
         }
         return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case ModelPackage.COMMENTABLE__COMMENTS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getComments()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**

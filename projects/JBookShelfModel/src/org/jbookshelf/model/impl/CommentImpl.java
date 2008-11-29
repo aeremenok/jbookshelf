@@ -6,10 +6,12 @@ package org.jbookshelf.model.impl;
 import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
 import org.jbookshelf.model.ModelPackage;
@@ -74,16 +76,6 @@ public class CommentImpl
     protected Date                creationDate           = CREATION_DATE_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getSubject() <em>Subject</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getSubject()
-     * @generated
-     * @ordered
-     */
-    protected Commentable subject;
-
-    /**
      * The default value of the '{@link #getTitle() <em>Title</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -129,8 +121,7 @@ public class CommentImpl
             case ModelPackage.COMMENT__CREATION_DATE:
                 return getCreationDate();
             case ModelPackage.COMMENT__SUBJECT:
-                if (resolve) return getSubject();
-                return basicGetSubject();
+                return getSubject();
             case ModelPackage.COMMENT__TITLE:
                 return getTitle();
         }
@@ -152,7 +143,7 @@ public class CommentImpl
             case ModelPackage.COMMENT__CREATION_DATE:
                 return CREATION_DATE_EDEFAULT == null ? creationDate != null : !CREATION_DATE_EDEFAULT.equals(creationDate);
             case ModelPackage.COMMENT__SUBJECT:
-                return subject != null;
+                return getSubject() != null;
             case ModelPackage.COMMENT__TITLE:
                 return TITLE_EDEFAULT == null ? title != null : !TITLE_EDEFAULT.equals(title);
         }
@@ -236,17 +227,8 @@ public class CommentImpl
      */
     public Commentable getSubject()
     {
-        if (subject != null && subject.eIsProxy())
-        {
-            InternalEObject oldSubject = (InternalEObject)subject;
-            subject = (Commentable)eResolveProxy(oldSubject);
-            if (subject != oldSubject)
-            {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.COMMENT__SUBJECT, oldSubject, subject));
-            }
-        }
-        return subject;
+        if (eContainerFeatureID != ModelPackage.COMMENT__SUBJECT) return null;
+        return (Commentable)eContainer();
     }
 
     /**
@@ -254,9 +236,10 @@ public class CommentImpl
      * <!-- end-user-doc -->
      * @generated
      */
-    public Commentable basicGetSubject()
+    public NotificationChain basicSetSubject(Commentable newSubject, NotificationChain msgs)
     {
-        return subject;
+        msgs = eBasicSetContainer((InternalEObject)newSubject, ModelPackage.COMMENT__SUBJECT, msgs);
+        return msgs;
     }
 
     /**
@@ -292,10 +275,20 @@ public class CommentImpl
     public void setSubject(
         Commentable newSubject )
     {
-        Commentable oldSubject = subject;
-        subject = newSubject;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.COMMENT__SUBJECT, oldSubject, subject));
+        if (newSubject != eInternalContainer() || (eContainerFeatureID != ModelPackage.COMMENT__SUBJECT && newSubject != null))
+        {
+            if (EcoreUtil.isAncestor(this, newSubject))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newSubject != null)
+                msgs = ((InternalEObject)newSubject).eInverseAdd(this, ModelPackage.COMMENTABLE__COMMENTS, Commentable.class, msgs);
+            msgs = basicSetSubject(newSubject, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.COMMENT__SUBJECT, newSubject, newSubject));
     }
 
     /**
@@ -319,6 +312,56 @@ public class CommentImpl
         title = newTitle;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.COMMENT__TITLE, oldTitle, title));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case ModelPackage.COMMENT__SUBJECT:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetSubject((Commentable)otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case ModelPackage.COMMENT__SUBJECT:
+                return basicSetSubject(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs)
+    {
+        switch (eContainerFeatureID)
+        {
+            case ModelPackage.COMMENT__SUBJECT:
+                return eInternalContainer().eInverseRemove(this, ModelPackage.COMMENTABLE__COMMENTS, Commentable.class, msgs);
+        }
+        return super.eBasicRemoveFromContainerFeature(msgs);
     }
 
     /**

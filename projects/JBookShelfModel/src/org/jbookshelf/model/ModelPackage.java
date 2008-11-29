@@ -440,7 +440,7 @@ public interface ModelPackage extends EPackage
     int COMMENT__CREATION_DATE = 1;
 
     /**
-     * The feature id for the '<em><b>Subject</b></em>' reference.
+     * The feature id for the '<em><b>Subject</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -821,10 +821,10 @@ public interface ModelPackage extends EPackage
     EAttribute getComment_CreationDate();
 
     /**
-     * Returns the meta object for the reference '{@link org.jbookshelf.model.Comment#getSubject <em>Subject</em>}'.
+     * Returns the meta object for the container reference '{@link org.jbookshelf.model.Comment#getSubject <em>Subject</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Subject</em>'.
+     * @return the meta object for the container reference '<em>Subject</em>'.
      * @see org.jbookshelf.model.Comment#getSubject()
      * @see #getComment()
      * @generated
@@ -1200,7 +1200,7 @@ public interface ModelPackage extends EPackage
         EAttribute COMMENT__CREATION_DATE = eINSTANCE.getComment_CreationDate();
 
         /**
-         * The meta object literal for the '<em><b>Subject</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Subject</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
