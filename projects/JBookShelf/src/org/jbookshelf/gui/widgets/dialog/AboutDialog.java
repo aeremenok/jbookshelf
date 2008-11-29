@@ -2,7 +2,7 @@
  * AboutDialog.java Created on 23 Ноябрь 2008 г., 19:16
  */
 
-package org.jbookshelf.gui;
+package org.jbookshelf.gui.widgets.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+
+import org.jbookshelf.gui.Resourses;
 
 /**
  * @author eav

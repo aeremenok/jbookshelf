@@ -14,10 +14,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
 import org.jbookshelf.BookShelf;
 import org.jbookshelf.Unique;
-import org.jbookshelf.gui.RelatedPanel;
 import org.jbookshelf.gui.ToolBar;
 import org.jbookshelf.gui.logic.SoucesUniqueSelection;
 import org.jbookshelf.gui.logic.UniqueSelectionListener;
+import org.jbookshelf.gui.widgets.panel.RelatedPanel;
 
 public abstract class CollectionTree
     extends JTree

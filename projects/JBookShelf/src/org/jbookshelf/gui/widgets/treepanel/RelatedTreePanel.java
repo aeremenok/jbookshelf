@@ -1,4 +1,4 @@
-package org.jbookshelf.gui.widgets.panel;
+package org.jbookshelf.gui.widgets.treepanel;
 
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
@@ -14,8 +14,8 @@ import javax.swing.text.JTextComponent;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jbookshelf.Unique;
-import org.jbookshelf.gui.CollectionPanel;
-import org.jbookshelf.gui.RelatedPanel;
+import org.jbookshelf.gui.widgets.panel.CollectionPanel;
+import org.jbookshelf.gui.widgets.panel.RelatedPanel;
 import org.jbookshelf.gui.widgets.tree.UniqueNode;
 
 public class RelatedTreePanel
