@@ -11,6 +11,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.ModelPackage;
@@ -134,6 +136,8 @@ public class ReadingUnitImpl
     {
         switch (featureID)
         {
+            case ModelPackage.READING_UNIT__AUTHORS:
+                return ((InternalEList<?>)getAuthors()).basicRemove(otherEnd, msgs);
             case ModelPackage.READING_UNIT__PHYSICAL:
                 return basicSetPhysical(null, msgs);
         }
@@ -217,7 +221,7 @@ public class ReadingUnitImpl
     {
         if (authors == null)
         {
-            authors = new EObjectResolvingEList<Author>(Author.class, this, ModelPackage.READING_UNIT__AUTHORS);
+            authors = new EObjectWithInverseResolvingEList.ManyInverse<Author>(Author.class, this, ModelPackage.READING_UNIT__AUTHORS, ModelPackage.AUTHOR__READING_UNITS);
         }
         return authors;
     }
@@ -272,6 +276,23 @@ public class ReadingUnitImpl
         read = newRead;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.READING_UNIT__READ, oldRead, read));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case ModelPackage.READING_UNIT__AUTHORS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getAuthors()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**

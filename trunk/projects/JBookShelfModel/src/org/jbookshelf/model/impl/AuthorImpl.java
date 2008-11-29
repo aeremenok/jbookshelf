@@ -5,8 +5,12 @@ package org.jbookshelf.model.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.ModelPackage;
@@ -126,9 +130,42 @@ public class AuthorImpl
     {
         if (readingUnits == null)
         {
-            readingUnits = new EObjectResolvingEList<ReadingUnit>(ReadingUnit.class, this, ModelPackage.AUTHOR__READING_UNITS);
+            readingUnits = new EObjectWithInverseResolvingEList.ManyInverse<ReadingUnit>(ReadingUnit.class, this, ModelPackage.AUTHOR__READING_UNITS, ModelPackage.READING_UNIT__AUTHORS);
         }
         return readingUnits;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case ModelPackage.AUTHOR__READING_UNITS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getReadingUnits()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case ModelPackage.AUTHOR__READING_UNITS:
+                return ((InternalEList<?>)getReadingUnits()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**

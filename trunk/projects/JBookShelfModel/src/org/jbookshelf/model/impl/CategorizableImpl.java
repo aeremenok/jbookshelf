@@ -5,8 +5,12 @@ package org.jbookshelf.model.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.jbookshelf.model.Categorizable;
 import org.jbookshelf.model.Category;
@@ -126,9 +130,42 @@ public abstract class CategorizableImpl
     {
         if (categories == null)
         {
-            categories = new EObjectResolvingEList<Category>(Category.class, this, ModelPackage.CATEGORIZABLE__CATEGORIES);
+            categories = new EObjectWithInverseResolvingEList.ManyInverse<Category>(Category.class, this, ModelPackage.CATEGORIZABLE__CATEGORIES, ModelPackage.CATEGORY__CATEGORIZABLES);
         }
         return categories;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case ModelPackage.CATEGORIZABLE__CATEGORIES:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getCategories()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+    {
+        switch (featureID)
+        {
+            case ModelPackage.CATEGORIZABLE__CATEGORIES:
+                return ((InternalEList<?>)getCategories()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
