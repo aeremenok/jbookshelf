@@ -4,21 +4,21 @@
 package org.jbookshelf.tests;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
 
 import org.eclipse.emf.common.util.EList;
-import org.jbookshelf.Comment;
-import org.jbookshelf.Commentable;
-import org.jbookshelf.JbookshelfFactory;
+import org.jbookshelf.model.Comment;
+import org.jbookshelf.model.Commentable;
+import org.jbookshelf.model.ModelFactory;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Commentable</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following operations are tested:
  * <ul>
- *   <li>{@link org.jbookshelf.Commentable#queryComments(java.lang.String) <em>Query Comments</em>}</li>
+ * <li>{@link org.jbookshelf.model.Commentable#queryComments(java.lang.String) <em>Query Comments</em>}</li>
  * </ul>
  * </p>
+ * 
  * @generated
  */
 public abstract class CommentableTest
@@ -26,30 +26,30 @@ public abstract class CommentableTest
 {
 
     /**
-     * Constructs a new Commentable test case with the given name.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Constructs a new Commentable test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public CommentableTest(
         String name )
     {
-        super(name);
+        super( name );
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.Commentable#queryComments(java.lang.String) <em>Query Comments</em>}' operation.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Tests the '{@link org.jbookshelf.model.Commentable#queryComments(java.lang.String) <em>Query Comments</em>}'
+     * operation. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see org.jbookshelf.Commentable#queryComments(java.lang.String)
+     * @see org.jbookshelf.model.Commentable#queryComments(java.lang.String)
      * @generated NOT
      */
     public void testQueryComments__String()
     {
         getFixture().getComments().clear();
 
-        Comment comment1 = JbookshelfFactory.eINSTANCE.createComment();
+        Comment comment1 = ModelFactory.eINSTANCE.createComment();
         comment1.setTitle( "comment1" );
-        Comment comment2 = JbookshelfFactory.eINSTANCE.createComment();
+        Comment comment2 = ModelFactory.eINSTANCE.createComment();
         comment2.setTitle( "comment2" );
 
         getFixture().getComments().add( comment1 );
@@ -69,14 +69,14 @@ public abstract class CommentableTest
     }
 
     /**
-     * Returns the fixture for this Commentable test case.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Returns the fixture for this Commentable test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     protected Commentable getFixture()
     {
-        return (Commentable)fixture;
+        return (Commentable) fixture;
     }
 
 } // CommentableTest

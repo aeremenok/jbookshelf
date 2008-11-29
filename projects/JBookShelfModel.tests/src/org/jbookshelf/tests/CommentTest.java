@@ -6,11 +6,12 @@ package org.jbookshelf.tests;
 import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
-import org.jbookshelf.Comment;
-import org.jbookshelf.JbookshelfFactory;
+import org.jbookshelf.model.Comment;
+import org.jbookshelf.model.ModelFactory;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Comment</b></em>'. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class CommentTest
@@ -18,36 +19,37 @@ public class CommentTest
 {
 
     /**
-     * The fixture for this Comment test case.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The fixture for this Comment test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected Comment fixture = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public static void main(
         String[] args )
     {
-        TestRunner.run(CommentTest.class);
+        TestRunner.run( CommentTest.class );
     }
 
     /**
-     * Constructs a new Comment test case with the given name.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Constructs a new Comment test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public CommentTest(
         String name )
     {
-        super(name);
+        super( name );
     }
 
     /**
-     * Returns the fixture for this Comment test case.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Returns the fixture for this Comment test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected Comment getFixture()
@@ -56,8 +58,8 @@ public class CommentTest
     }
 
     /**
-     * Sets the fixture for this Comment test case.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * Sets the fixture for this Comment test case. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected void setFixture(
@@ -68,6 +70,7 @@ public class CommentTest
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see junit.framework.TestCase#setUp()
      * @generated
      */
@@ -75,11 +78,12 @@ public class CommentTest
     protected void setUp()
         throws Exception
     {
-        setFixture(JbookshelfFactory.eINSTANCE.createComment());
+        setFixture( ModelFactory.eINSTANCE.createComment() );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see junit.framework.TestCase#tearDown()
      * @generated
      */
@@ -87,7 +91,7 @@ public class CommentTest
     protected void tearDown()
         throws Exception
     {
-        setFixture(null);
+        setFixture( null );
     }
 
 } // CommentTest

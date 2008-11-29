@@ -3,9 +3,7 @@
  */
 package org.jbookshelf.tests;
 
-import junit.framework.TestCase;
-
-import org.jbookshelf.Categorizable;
+import org.jbookshelf.model.Categorizable;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Categorizable</b></em>'. <!-- end-user-doc -->

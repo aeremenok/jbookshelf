@@ -5,15 +5,15 @@ package org.jbookshelf.tests;
 
 import junit.framework.TestCase;
 
-import org.jbookshelf.PhysicalUnit;
+import org.jbookshelf.model.PhysicalUnit;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Physical Unit</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following operations are tested:
  * <ul>
- * <li>{@link org.jbookshelf.PhysicalUnit#openUnit() <em>Open Unit</em>}</li>
- * <li>{@link org.jbookshelf.PhysicalUnit#openFolder() <em>Open Folder</em>}</li>
+ * <li>{@link org.jbookshelf.model.PhysicalUnit#openUnit() <em>Open Unit</em>}</li>
+ * <li>{@link org.jbookshelf.model.PhysicalUnit#openFolder() <em>Open Folder</em>}</li>
  * </ul>
  * </p>
  * 
@@ -41,10 +41,10 @@ public abstract class PhysicalUnitTest
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.PhysicalUnit#openFolder() <em>Open Folder</em>}' operation. <!-- begin-user-doc
+     * Tests the '{@link org.jbookshelf.model.PhysicalUnit#openFolder() <em>Open Folder</em>}' operation. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
      * 
-     * @see org.jbookshelf.PhysicalUnit#openFolder()
+     * @see org.jbookshelf.model.PhysicalUnit#openFolder()
      * @generated NOT
      */
     public void testOpenFolder()
@@ -53,10 +53,10 @@ public abstract class PhysicalUnitTest
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.PhysicalUnit#openUnit() <em>Open Unit</em>}' operation. <!-- begin-user-doc -->
+     * Tests the '{@link org.jbookshelf.model.PhysicalUnit#openUnit() <em>Open Unit</em>}' operation. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * 
-     * @see org.jbookshelf.PhysicalUnit#openUnit()
+     * @see org.jbookshelf.model.PhysicalUnit#openUnit()
      * @generated NOT
      */
     public void testOpenUnit()

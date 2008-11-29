@@ -5,7 +5,7 @@ package org.jbookshelf.tests;
 
 import junit.framework.TestCase;
 
-import org.jbookshelf.Unique;
+import org.jbookshelf.model.Unique;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Unique</b></em>'. <!-- end-user-doc -->

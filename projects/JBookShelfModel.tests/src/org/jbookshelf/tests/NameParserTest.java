@@ -3,7 +3,7 @@ package org.jbookshelf.tests;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.util.NameParser;
+import org.jbookshelf.controller.NameParser;
 
 public class NameParserTest
     extends TestCase
