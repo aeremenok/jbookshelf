@@ -1,7 +1,7 @@
 /*
  * CollectionPanel.java Created on 15 Ноябрь 2008 г., 12:42
  */
-package org.jbookshelf.gui;
+package org.jbookshelf.gui.widgets.panel;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -24,12 +24,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.jbookshelf.Unique;
-import org.jbookshelf.gui.widgets.panel.RelatedTreePanel;
+import org.jbookshelf.gui.Resourses;
 import org.jbookshelf.gui.widgets.tree.AuthorTree;
 import org.jbookshelf.gui.widgets.tree.BookTree;
 import org.jbookshelf.gui.widgets.tree.CategoryTree;
 import org.jbookshelf.gui.widgets.tree.CollectionTree;
 import org.jbookshelf.gui.widgets.tree.UniqueNode;
+import org.jbookshelf.gui.widgets.treepanel.RelatedTreePanel;
 import org.util.storage.Storage;
 
 /**

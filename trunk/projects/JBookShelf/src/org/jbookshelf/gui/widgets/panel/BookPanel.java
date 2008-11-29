@@ -2,7 +2,7 @@
  * BookPanel.java Created on 16 Ноябрь 2008 г., 23:01
  */
 
-package org.jbookshelf.gui;
+package org.jbookshelf.gui.widgets.panel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +31,7 @@ import org.jbookshelf.ReadingUnit;
 import org.jbookshelf.SingleFile;
 import org.jbookshelf.SingleFileFolder;
 import org.jbookshelf.Unique;
+import org.jbookshelf.gui.Resourses;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 import org.util.storage.Storage;

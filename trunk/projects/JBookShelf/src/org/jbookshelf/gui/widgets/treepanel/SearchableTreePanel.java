@@ -1,12 +1,12 @@
-package org.jbookshelf.gui.widgets.panel;
+package org.jbookshelf.gui.widgets.treepanel;
 
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
 
-import org.jbookshelf.gui.RelatedPanel;
 import org.jbookshelf.gui.logic.UniqueSelectionListener;
+import org.jbookshelf.gui.widgets.panel.RelatedPanel;
 
 public abstract class SearchableTreePanel
     extends JPanel

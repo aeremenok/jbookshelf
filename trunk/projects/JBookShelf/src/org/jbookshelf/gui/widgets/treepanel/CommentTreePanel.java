@@ -1,4 +1,4 @@
-package org.jbookshelf.gui.widgets.panel;
+package org.jbookshelf.gui.widgets.treepanel;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -25,7 +25,7 @@ import org.jbookshelf.Comment;
 import org.jbookshelf.Commentable;
 import org.jbookshelf.JbookshelfFactory;
 import org.jbookshelf.Unique;
-import org.jbookshelf.gui.RelatedPanel;
+import org.jbookshelf.gui.widgets.panel.RelatedPanel;
 import org.jdesktop.swingx.VerticalLayout;
 
 public class CommentTreePanel

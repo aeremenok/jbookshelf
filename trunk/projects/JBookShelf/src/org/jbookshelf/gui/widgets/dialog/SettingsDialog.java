@@ -1,7 +1,7 @@
 /*
  * SettingsDialog.java Created on 31 Октябрь 2008 г., 22:43
  */
-package org.jbookshelf.gui;
+package org.jbookshelf.gui.widgets.dialog;
 
 import java.awt.Font;
 import java.awt.Frame;
@@ -24,6 +24,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import org.jbookshelf.gui.Resourses;
 import org.util.settings.JBookShelfSettings;
 import org.util.settings.Settings;
 

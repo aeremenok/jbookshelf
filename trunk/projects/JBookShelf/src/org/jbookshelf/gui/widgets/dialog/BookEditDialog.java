@@ -1,4 +1,4 @@
-package org.jbookshelf.gui;
+package org.jbookshelf.gui.widgets.dialog;
 
 import java.awt.Font;
 import java.awt.Frame;
@@ -15,7 +15,9 @@ import javax.swing.WindowConstants;
 import org.jbookshelf.Author;
 import org.jbookshelf.Category;
 import org.jbookshelf.ReadingUnit;
-import org.jbookshelf.gui.BookPanel.Parameters;
+import org.jbookshelf.gui.Resourses;
+import org.jbookshelf.gui.widgets.panel.BookPanel;
+import org.jbookshelf.gui.widgets.panel.BookPanel.Parameters;
 import org.jdesktop.swingx.VerticalLayout;
 import org.util.FileImporter;
 

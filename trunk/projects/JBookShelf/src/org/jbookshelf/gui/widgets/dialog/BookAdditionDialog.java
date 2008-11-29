@@ -2,7 +2,7 @@
  * BookAdditionDialog.java Created on 1 Ноябрь 2008 г., 16:35
  */
 
-package org.jbookshelf.gui;
+package org.jbookshelf.gui.widgets.dialog;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -20,7 +20,10 @@ import org.jbookshelf.Author;
 import org.jbookshelf.Category;
 import org.jbookshelf.PhysicalUnit;
 import org.jbookshelf.ReadingUnit;
-import org.jbookshelf.gui.BookPanel.Parameters;
+import org.jbookshelf.gui.Resourses;
+import org.jbookshelf.gui.widgets.panel.BookPanel;
+import org.jbookshelf.gui.widgets.panel.CollectionPanel;
+import org.jbookshelf.gui.widgets.panel.BookPanel.Parameters;
 import org.jdesktop.swingx.VerticalLayout;
 import org.util.FileImporter;
 import org.util.storage.Storage;
