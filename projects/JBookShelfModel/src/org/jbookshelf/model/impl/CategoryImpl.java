@@ -1,8 +1,5 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
+ * <copyright> </copyright> $Id$
  */
 package org.jbookshelf.model.impl;
 
@@ -14,30 +11,30 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.jbookshelf.model.Categorizable;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.ModelPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Category</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Category</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.jbookshelf.model.impl.CategoryImpl#getCategorizables <em>Categorizables</em>}</li>
+ * <li>{@link org.jbookshelf.model.impl.CategoryImpl#getCategorizables <em>Categorizables</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
-public class CategoryImpl extends CommentableImpl implements Category
+public class CategoryImpl
+    extends CommentableImpl
+    implements
+        Category
 {
     /**
-     * The cached value of the '{@link #getCategorizables() <em>Categorizables</em>}' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The cached value of the '{@link #getCategorizables() <em>Categorizables</em>}' reference list. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see #getCategorizables()
      * @generated
      * @ordered
@@ -45,8 +42,8 @@ public class CategoryImpl extends CommentableImpl implements Category
     protected EList<Categorizable> categorizables;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected CategoryImpl()
@@ -55,8 +52,139 @@ public class CategoryImpl extends CommentableImpl implements Category
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    @Override
+    public Object eGet(
+        int featureID,
+        boolean resolve,
+        boolean coreType )
+    {
+        switch ( featureID )
+        {
+            case ModelPackage.CATEGORY__CATEGORIZABLES:
+                return getCategorizables();
+        }
+        return super.eGet( featureID, resolve, coreType );
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    @SuppressWarnings( "unchecked" )
+    @Override
+    public NotificationChain eInverseAdd(
+        InternalEObject otherEnd,
+        int featureID,
+        NotificationChain msgs )
+    {
+        switch ( featureID )
+        {
+            case ModelPackage.CATEGORY__CATEGORIZABLES:
+                return ((InternalEList<InternalEObject>) (InternalEList<?>) getCategorizables()).basicAdd( otherEnd,
+                    msgs );
+        }
+        return super.eInverseAdd( otherEnd, featureID, msgs );
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(
+        InternalEObject otherEnd,
+        int featureID,
+        NotificationChain msgs )
+    {
+        switch ( featureID )
+        {
+            case ModelPackage.CATEGORY__CATEGORIZABLES:
+                return ((InternalEList<?>) getCategorizables()).basicRemove( otherEnd, msgs );
+        }
+        return super.eInverseRemove( otherEnd, featureID, msgs );
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(
+        int featureID )
+    {
+        switch ( featureID )
+        {
+            case ModelPackage.CATEGORY__CATEGORIZABLES:
+                return categorizables != null && !categorizables.isEmpty();
+        }
+        return super.eIsSet( featureID );
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    @SuppressWarnings( "unchecked" )
+    @Override
+    public void eSet(
+        int featureID,
+        Object newValue )
+    {
+        switch ( featureID )
+        {
+            case ModelPackage.CATEGORY__CATEGORIZABLES:
+                getCategorizables().clear();
+                getCategorizables().addAll( (Collection<? extends Categorizable>) newValue );
+                return;
+        }
+        super.eSet( featureID, newValue );
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    @Override
+    public void eUnset(
+        int featureID )
+    {
+        switch ( featureID )
+        {
+            case ModelPackage.CATEGORY__CATEGORIZABLES:
+                getCategorizables().clear();
+                return;
+        }
+        super.eUnset( featureID );
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    public EList<Categorizable> getCategorizables()
+    {
+        if ( categorizables == null )
+        {
+            categorizables =
+                new EObjectWithInverseResolvingEList.ManyInverse<Categorizable>( Categorizable.class, this,
+                    ModelPackage.CATEGORY__CATEGORIZABLES, ModelPackage.CATEGORIZABLE__CATEGORIES );
+        }
+        return categorizables;
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -65,119 +193,4 @@ public class CategoryImpl extends CommentableImpl implements Category
         return ModelPackage.Literals.CATEGORY;
     }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Categorizable> getCategorizables()
-    {
-        if (categorizables == null)
-        {
-            categorizables = new EObjectWithInverseResolvingEList.ManyInverse<Categorizable>(Categorizable.class, this, ModelPackage.CATEGORY__CATEGORIZABLES, ModelPackage.CATEGORIZABLE__CATEGORIES);
-        }
-        return categorizables;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-    {
-        switch (featureID)
-        {
-            case ModelPackage.CATEGORY__CATEGORIZABLES:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getCategorizables()).basicAdd(otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-    {
-        switch (featureID)
-        {
-            case ModelPackage.CATEGORY__CATEGORIZABLES:
-                return ((InternalEList<?>)getCategorizables()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Object eGet(int featureID, boolean resolve, boolean coreType)
-    {
-        switch (featureID)
-        {
-            case ModelPackage.CATEGORY__CATEGORIZABLES:
-                return getCategorizables();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public void eSet(int featureID, Object newValue)
-    {
-        switch (featureID)
-        {
-            case ModelPackage.CATEGORY__CATEGORIZABLES:
-                getCategorizables().clear();
-                getCategorizables().addAll((Collection<? extends Categorizable>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public void eUnset(int featureID)
-    {
-        switch (featureID)
-        {
-            case ModelPackage.CATEGORY__CATEGORIZABLES:
-                getCategorizables().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public boolean eIsSet(int featureID)
-    {
-        switch (featureID)
-        {
-            case ModelPackage.CATEGORY__CATEGORIZABLES:
-                return categorizables != null && !categorizables.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
-
-} //CategoryImpl
+} // CategoryImpl
