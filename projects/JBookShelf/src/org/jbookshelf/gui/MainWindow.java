@@ -26,8 +26,7 @@ public class MainWindow
 {
     private static MainWindow instance;
 
-    private final JSplitPane  splitPane = new JSplitPane();
-    private final Settings    settings  = Settings.getInstance();
+    private final Settings    settings = Settings.getInstance();
 
     public static MainWindow getInstance()
     {
@@ -73,11 +72,14 @@ public class MainWindow
         setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
 
         add( ToolBar.getInstance(), BorderLayout.NORTH );
+
+        JSplitPane splitPane = new JSplitPane();
         add( splitPane, BorderLayout.CENTER );
 
+        splitPane.setOneTouchExpandable( true );
         splitPane.setLeftComponent( CollectionPanel.getInstance() );
         splitPane.setRightComponent( RelatedPanel.getInstance() );
-        splitPane.setResizeWeight( 0.7 );
+        splitPane.setResizeWeight( 0.6 );
 
         addWindowListener( new WindowAdapter()
         {
