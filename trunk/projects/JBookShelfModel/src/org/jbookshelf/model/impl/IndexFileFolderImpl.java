@@ -1,5 +1,17 @@
 /**
- * <copyright> </copyright> $Id$
+ * <copyright> This file is part of JBookShelf, http://code.google.com/p/jbookshelf/<br>
+ * <br>
+ * Copyright (C) 2008 Andrey Yeremenok (eav1986_at_gmail_com) <br>
+ * <br>
+ * JBookShelf is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later
+ * version.<br>
+ * <br>
+ * JBookShelf is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.<br>
+ * <br>
+ * You should have received a copy of the GNU General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>. </copyright> $Id$
  */
 package org.jbookshelf.model.impl;
 
@@ -31,9 +43,9 @@ public class IndexFileFolderImpl
         IndexFileFolder
 {
     /**
-     * The default value of the '{@link #getIndexFile() <em>Index File</em>}' attribute.
-     * <!-- begin-user-doc --> <!--
+     * The default value of the '{@link #getIndexFile() <em>Index File</em>}' attribute. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @see #getIndexFile()
      * @generated
      * @ordered
@@ -41,9 +53,9 @@ public class IndexFileFolderImpl
     protected static final File INDEX_FILE_EDEFAULT   = null;
 
     /**
-     * The cached value of the '{@link #getIndexFile() <em>Index File</em>}' attribute.
-     * <!-- begin-user-doc --> <!--
+     * The cached value of the '{@link #getIndexFile() <em>Index File</em>}' attribute. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @see #getIndexFile()
      * @generated
      * @ordered
@@ -51,9 +63,9 @@ public class IndexFileFolderImpl
     protected File              indexFile             = INDEX_FILE_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getIndexFolder() <em>Index Folder</em>}' attribute.
-     * <!-- begin-user-doc -->
+     * The default value of the '{@link #getIndexFolder() <em>Index Folder</em>}' attribute. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @see #getIndexFolder()
      * @generated
      * @ordered
@@ -61,9 +73,9 @@ public class IndexFileFolderImpl
     protected static final File INDEX_FOLDER_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getIndexFolder() <em>Index Folder</em>}' attribute.
-     * <!-- begin-user-doc --> <!--
+     * The cached value of the '{@link #getIndexFolder() <em>Index Folder</em>}' attribute. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @see #getIndexFolder()
      * @generated
      * @ordered
@@ -72,6 +84,7 @@ public class IndexFileFolderImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected IndexFileFolderImpl()
@@ -81,6 +94,7 @@ public class IndexFileFolderImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -89,36 +103,39 @@ public class IndexFileFolderImpl
         boolean resolve,
         boolean coreType )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.INDEX_FILE_FOLDER__INDEX_FILE:
                 return getIndexFile();
             case ModelPackage.INDEX_FILE_FOLDER__INDEX_FOLDER:
                 return getIndexFolder();
         }
-        return super.eGet(featureID, resolve, coreType);
+        return super.eGet( featureID, resolve, coreType );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.INDEX_FILE_FOLDER__INDEX_FILE:
-                return INDEX_FILE_EDEFAULT == null ? indexFile != null : !INDEX_FILE_EDEFAULT.equals(indexFile);
+                return INDEX_FILE_EDEFAULT == null ? indexFile != null : !INDEX_FILE_EDEFAULT.equals( indexFile );
             case ModelPackage.INDEX_FILE_FOLDER__INDEX_FOLDER:
-                return INDEX_FOLDER_EDEFAULT == null ? indexFolder != null : !INDEX_FOLDER_EDEFAULT.equals(indexFolder);
+                return INDEX_FOLDER_EDEFAULT == null ? indexFolder != null : !INDEX_FOLDER_EDEFAULT
+                    .equals( indexFolder );
         }
-        return super.eIsSet(featureID);
+        return super.eIsSet( featureID );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -126,40 +143,42 @@ public class IndexFileFolderImpl
         int featureID,
         Object newValue )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.INDEX_FILE_FOLDER__INDEX_FILE:
-                setIndexFile((File)newValue);
+                setIndexFile( (File) newValue );
                 return;
             case ModelPackage.INDEX_FILE_FOLDER__INDEX_FOLDER:
-                setIndexFolder((File)newValue);
+                setIndexFolder( (File) newValue );
                 return;
         }
-        super.eSet(featureID, newValue);
+        super.eSet( featureID, newValue );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.INDEX_FILE_FOLDER__INDEX_FILE:
-                setIndexFile(INDEX_FILE_EDEFAULT);
+                setIndexFile( INDEX_FILE_EDEFAULT );
                 return;
             case ModelPackage.INDEX_FILE_FOLDER__INDEX_FOLDER:
-                setIndexFolder(INDEX_FOLDER_EDEFAULT);
+                setIndexFolder( INDEX_FOLDER_EDEFAULT );
                 return;
         }
-        super.eUnset(featureID);
+        super.eUnset( featureID );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public File getIndexFile()
@@ -169,6 +188,7 @@ public class IndexFileFolderImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public File getIndexFolder()
@@ -190,6 +210,7 @@ public class IndexFileFolderImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void setIndexFile(
@@ -197,12 +218,16 @@ public class IndexFileFolderImpl
     {
         File oldIndexFile = indexFile;
         indexFile = newIndexFile;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.INDEX_FILE_FOLDER__INDEX_FILE, oldIndexFile, indexFile));
+        if ( eNotificationRequired() )
+        {
+            eNotify( new ENotificationImpl( this, Notification.SET, ModelPackage.INDEX_FILE_FOLDER__INDEX_FILE,
+                oldIndexFile, indexFile ) );
+        }
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public void setIndexFolder(
@@ -210,30 +235,38 @@ public class IndexFileFolderImpl
     {
         File oldIndexFolder = indexFolder;
         indexFolder = newIndexFolder;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.INDEX_FILE_FOLDER__INDEX_FOLDER, oldIndexFolder, indexFolder));
+        if ( eNotificationRequired() )
+        {
+            eNotify( new ENotificationImpl( this, Notification.SET, ModelPackage.INDEX_FILE_FOLDER__INDEX_FOLDER,
+                oldIndexFolder, indexFolder ) );
+        }
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public String toString()
     {
-        if (eIsProxy()) return super.toString();
+        if ( eIsProxy() )
+        {
+            return super.toString();
+        }
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (indexFile: ");
-        result.append(indexFile);
-        result.append(", indexFolder: ");
-        result.append(indexFolder);
-        result.append(')');
+        StringBuffer result = new StringBuffer( super.toString() );
+        result.append( " (indexFile: " );
+        result.append( indexFile );
+        result.append( ", indexFolder: " );
+        result.append( indexFolder );
+        result.append( ')' );
         return result.toString();
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
