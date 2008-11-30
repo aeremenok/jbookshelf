@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project JBookShelf">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="/home/eav/projects/jbookshelf/builds/jbookshelf-0.1b2/jbookshelf.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Main-Class" value="org.jbookshelf.gui.MainWindow"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="/home/eav/projects/jbookshelf/repo/projects/JBookShelf/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/eav/projects/jbookshelf/repo/projects/JBookShelf/lib/org.eclipse.emf.ecore_2.4.1.v200808251517.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/eav/projects/jbookshelf/repo/projects/JBookShelf/lib/org.eclipse.emf.ecore.xmi_2.4.1.v200808251517.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/eav/projects/jbookshelf/repo/projects/JBookShelf/lib/org.eclipse.emf.common_2.4.0.v200808251517.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/eav/projects/jbookshelf/repo/projects/JBookShelf/lib/junit.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/eav/projects/jbookshelf/repo/projects/JBookShelf/lib/swingx.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/eav/projects/jbookshelf/repo/projects/JBookShelf/lib/kernel.jar"/>
+        </jar>
+    </target>
+</project>
