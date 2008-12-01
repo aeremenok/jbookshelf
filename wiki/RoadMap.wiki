@@ -11,8 +11,8 @@
 || Desktop App Development || GUI-prototype design || || Complete || 30.10.2008 || 07.11.2008 || [DesktopGUIPrototype] ||
 || || Object model implementation || || Complete || 03.11.2008 || 09.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/projects/JBookShelfModel.tests/ unit-tests] ||
 || || GUI implementation || || Complete || 09.11.2008 || 30.11.2008 || [http://code.google.com/p/jbookshelf/wiki/Release_Notes Release Notes] ||
-|| Porting || Target platforms analysis || || Not Started || ? || ? || ||
-|| || Changes detection || || Not Started || ? || ? || ||
+|| Porting || Target platforms analysis || || Started || 01.12.2008 || 01.12.2008 || ||
+|| || Changes detection || || Started || 01.12.2008 || ? || ||
 || || Implementation || || Not Started || ? || ? || ||
 || PDA Bookreader || Format analysis || || Not Started || ? || ? || ||
 || || Text reader model || || Not Started || ? || ? || ||
