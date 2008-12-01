@@ -1,0 +1,15 @@
+#labels Featured
+=Screenshots=
+
+ # main window
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/main_window(rus).jpg
+ # add book dialog
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/add(rus).jpg
+ # edit book dialog
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/edit(rus).jpg
+ # about 
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/about(rus).jpg
+ # settings
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/settings(rus).jpg
+ # comments
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/comment(rus).jpg
