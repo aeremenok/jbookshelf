@@ -10,10 +10,7 @@
 || || Result verification || || Complete || 30.10.2008 || 03.11.2008 || ||
 || Desktop App Development || GUI-prototype design || || Complete || 30.10.2008 || 07.11.2008 || [DesktopGUIPrototype] ||
 || || Object model implementation || || Complete || 03.11.2008 || 09.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/projects/JBookShelfModel.tests/ unit-tests] ||
-|| || GUI implementation || || Complete || 09.11.2008 || 30.11.2008 || ||
-|| Integration || App list collection || || Not Started || ? || ? || ||
-|| || Whishlist collection || || Not Started || ? || ? || ||
-|| || List implementation || || Not Started || ? || ? || ||
+|| || GUI implementation || || Complete || 09.11.2008 || 30.11.2008 || [http://jbookshelf.googlecode.com/files/jbookshelf-0.1b2.zip application] ||
 || Porting || Target platforms analysis || || Not Started || ? || ? || ||
 || || Changes detection || || Not Started || ? || ? || ||
 || || Implementation || || Not Started || ? || ? || ||
@@ -23,3 +20,11 @@
 || || Tagged text reader implementation || || Not Started || ? || ? || ||
 || || Selected format reader implementation || || Not Started || ? || ? || ||
 || || Notes implementation || || Not Started || ? || ? || ||
+
+----
+
+delayed to next iteration
+
+|| Integration || App list collection || || Not Started || ? || ? || ||
+|| || Whishlist collection || || Not Started || ? || ? || ||
+|| || List implementation || || Not Started || ? || ? || ||
