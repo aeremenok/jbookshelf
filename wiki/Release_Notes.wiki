@@ -1,7 +1,7 @@
 #labels Featured
 =JBookShelf 0.1b2=
 
-[http://jbookshelf.googlecode.com/files/jbookshelf-0.1b2.zip download]
+[http://jbookshelf.googlecode.com/files/jbookshelf-0.1b2.zip Download]
 
 [http://code.google.com/p/jbookshelf/wiki/Screenshots See screenshots]
 
