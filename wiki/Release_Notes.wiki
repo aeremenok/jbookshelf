@@ -3,6 +3,8 @@
 
 [http://jbookshelf.googlecode.com/files/jbookshelf-0.1b2.zip download]
 
+[http://code.google.com/p/jbookshelf/wiki/Screenshots See screenshots]
+
 ==Changes==
 
  * fixed some bugs
