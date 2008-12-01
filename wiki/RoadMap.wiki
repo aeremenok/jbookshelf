@@ -10,7 +10,7 @@
 || || Result verification || || Complete || 30.10.2008 || 03.11.2008 || ||
 || Desktop App Development || GUI-prototype design || || Complete || 30.10.2008 || 07.11.2008 || [DesktopGUIPrototype] ||
 || || Object model implementation || || Complete || 03.11.2008 || 09.11.2008 || [http://jbookshelf.googlecode.com/svn/trunk/projects/JBookShelfModel.tests/ unit-tests] ||
-|| || GUI implementation || || Complete || 09.11.2008 || 30.11.2008 || [http://jbookshelf.googlecode.com/files/jbookshelf-0.1b2.zip application] ||
+|| || GUI implementation || || Complete || 09.11.2008 || 30.11.2008 || [http://code.google.com/p/jbookshelf/wiki/Release_Notes Release Notes] ||
 || Porting || Target platforms analysis || || Not Started || ? || ? || ||
 || || Changes detection || || Not Started || ? || ? || ||
 || || Implementation || || Not Started || ? || ? || ||
