@@ -1,4 +1,4 @@
-#labels Featured,Phase-Requirements
+#labels Phase-Requirements
 = Goals =
 
  * develop a model of book-organizing process, that could be implemented in various OO-languages. *Result:* requirements, specifications, open CASE-program models (Rational Rose/StarUML, EMF, Netbeans, etc).
