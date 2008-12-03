@@ -12,36 +12,6 @@
    * [http://code.google.com/p/jbookshelf/issues/detail?id=14 Can't find resource for bundle]
  * code and resourses reordered
 
-==Supported Features==
-
- # work with book collection: add, remove, edit book
- # search books, authors, categories
- # import files using a simple mask
- # view book with a system deafult browser 
- # backup/restore collection
- # add comments to books, authors, categories
- # link books, authors, categories as related
-
-==Book Types==
-
- # single file
- # single file folder
- # index file folder
- # zip-file
-
-==Languages==
-
- * Russian
- * English
-
-==Known Issues==
-
- # [http://code.google.com/p/jbookshelf/issues/detail?id=16 "view" crashes on some zipped books due to encoding problem]
- # "view" crashes sometimes under Windows XP due to path problem (needs testing)
- # [http://code.google.com/p/jbookshelf/issues/detail?id=17 import treats only filenames that strictly satisfy mask]
- # some ui messages weren't localized
- # [http://code.google.com/p/jbookshelf/issues/detail?id=18 most exceptions are not reported while working with ui]
-
 ----
 
 =JBookShelf 0.1b1=
