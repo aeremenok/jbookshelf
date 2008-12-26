@@ -1,0 +1,8 @@
+#labels Featured,Phase-Requirements
+=Project Stage Details=
+
+|| *Stage [version]* || *Substage* || *Status* || *Begin Date* || *Possible End Date* || *Artifact link* ||
+|| qt jambi [0.2] || porting || not started || 26.12.2008 || ? || ||
+|| new basic features [0.3] || featurelist collection || not started || ? || ? ||
+|| || implementation || not started || ? || ? ||
+|| || testing || not started || ? || ? ||
