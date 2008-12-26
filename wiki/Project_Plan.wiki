@@ -1,4 +1,18 @@
 #labels Phase-Requirements
+Not all goals succeeded, so it's time to change the Plan.
+
+= Goals =
+
+ * (done) develop a model of book-organizing process. *Result:* basic requirements, use case model, emf data model. *Problem:* mobile platforms do not support emf.
+ * (done) implement an extensible desktop book organizer *Result:* java-swing application
+ * port an existing swing-application to qt-jambi, so it could help to implement more features and make desktop app more handy
+ * improve application until emf-model becomes stable
+ * consider porting to pda again - with converting emf classes into simple java classes
+
+----
+
+Old Plan:
+
 = Goals =
 
  * develop a model of book-organizing process, that could be implemented in various OO-languages. *Result:* requirements, specifications, open CASE-program models (Rational Rose/StarUML, EMF, Netbeans, etc).
