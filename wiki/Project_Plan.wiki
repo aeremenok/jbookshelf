@@ -9,6 +9,8 @@ Not all goals succeeded, so it's time to change the Plan.
  * improve application until emf-model becomes stable
  * consider porting to pda again - with converting emf classes into simple java classes
 
+For details - see [http://code.google.com/p/jbookshelf/wiki/RoadMap2 RoadMap]
+
 ----
 
 Old Plan:
@@ -29,4 +31,4 @@ Old Plan:
  # Porting it to pda. Rise of linux and google andriod communicators requires a cross-platform application. If development of java-midlet fails, consider porting to .NET CF or PyCE.
  # Developing a simple pda-bookreader. Target feature: making notes on books, available for other programs. Odt-format suits for that.
 
-For details - see RoadMap
+For details - see ~~RoadMap~~
