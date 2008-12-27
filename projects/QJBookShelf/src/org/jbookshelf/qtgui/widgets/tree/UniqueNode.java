@@ -17,15 +17,17 @@ package org.jbookshelf.qtgui.widgets.tree;
 
 import org.jbookshelf.model.Unique;
 
+import com.trolltech.qt.gui.QTreeWidgetItem;
+
 public class UniqueNode
-// extends DefaultMutableTreeNode
+    extends QTreeWidgetItem
 {
     private Unique unique;
 
     public UniqueNode(
         Unique unique )
     {
-        // super( unique.getName() );
+        setText( 0, unique.getName() );
         this.unique = unique;
     }
 
