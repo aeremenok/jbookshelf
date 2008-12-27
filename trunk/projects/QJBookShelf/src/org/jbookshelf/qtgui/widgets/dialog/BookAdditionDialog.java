@@ -15,8 +15,6 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
-import java.awt.Frame;
-
 import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
@@ -28,6 +26,7 @@ import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel.Parameters;
 
 import com.trolltech.qt.gui.QDialog;
+import com.trolltech.qt.gui.QWidget;
 
 /**
  * @author eav
@@ -44,10 +43,9 @@ public class BookAdditionDialog
     private BookPanel bookPanel = new BookPanel();
 
     public BookAdditionDialog(
-        Frame parent,
-        boolean modal )
+        QWidget parent )
     {
-        // super( parent, modal );
+        super( parent );
         registerComponents();
         initComponents();
         initListeners();

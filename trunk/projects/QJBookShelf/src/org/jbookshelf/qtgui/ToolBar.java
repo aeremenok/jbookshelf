@@ -15,11 +15,30 @@
  */
 package org.jbookshelf.qtgui;
 
+import java.io.File;
+
+import org.jbookshelf.controller.FileImporter;
+import org.jbookshelf.controller.settings.JBookShelfSettings;
+import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.storage.SingleFileStorageImpl;
+import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
+import org.jbookshelf.qtgui.widgets.dialog.AboutDialog;
+import org.jbookshelf.qtgui.widgets.dialog.BookAdditionDialog;
+import org.jbookshelf.qtgui.widgets.dialog.BookEditDialog;
+import org.jbookshelf.qtgui.widgets.dialog.SettingsDialog;
+import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 
+import com.trolltech.qt.gui.QAction;
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QInputDialog;
+import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QToolBar;
+import com.trolltech.qt.gui.QFileDialog.FileMode;
+import com.trolltech.qt.gui.QLineEdit.EchoMode;
+import com.trolltech.qt.gui.QMessageBox.StandardButton;
 
 /**
  * @author eav
@@ -32,6 +51,16 @@ public class ToolBar
     private static final ToolBar instance = new ToolBar();
 
     private Unique               selectedUnique;
+    private QAction              addAction;
+    private QAction              removeAction;
+    private QAction              editAction;
+    private QAction              openAction;
+    private QAction              settingsAction;
+    private QAction              aboutAction;
+    private QAction              restoreAction;
+    private QAction              backupAction;
+
+    private QAction              importAction;
 
     public static ToolBar getInstance()
     {
@@ -40,115 +69,198 @@ public class ToolBar
 
     public ToolBar()
     {
-        initComponents();
+        createActions();
+        connectActions();
     }
 
     public void nothingSelected()
     {
-        // removeButton.setEnabled( false );
-        // openButton.setEnabled( false );
-        // editButton.setEnabled( false );
+        removeAction.setEnabled( false );
+        openAction.setEnabled( false );
+        editAction.setEnabled( false );
     }
 
     public void selectedUnique(
         Unique unique )
     {
         this.selectedUnique = unique;
-        // removeButton.setEnabled( true );
+        removeAction.setEnabled( true );
         if ( selectedUnique instanceof ReadingUnit )
         {
-            // openButton.setEnabled( true );
-            // editButton.setEnabled( true );
+            openAction.setEnabled( true );
+            editAction.setEnabled( true );
         }
     }
 
-    private void backupButtonActionPerformed()
+    private void connectActions()
     {
-        // JFileChooser chooser = new JFileChooser();
-        // chooser.setMultiSelectionEnabled( false );
-        // chooser.setFileSelectionMode( JFileChooser.FILES_ONLY );
-        //
-        // SingleFileStorageImpl storage = (SingleFileStorageImpl) Storage.getImpl();
-        // chooser.setSelectedFile( storage.getCollectionStorageFile() );
-        //
-        // if ( chooser.showSaveDialog( this ) == JFileChooser.APPROVE_OPTION )
-        // {
-        // Storage.backupCollection( chooser.getSelectedFile() );
-        // }
+        addAction.triggered.connect( this, "onAdd()" );
+        removeAction.triggered.connect( this, "onRemove()" );
+        editAction.triggered.connect( this, "onEdit()" );
+
+        openAction.triggered.connect( this, "onOpen()" );
+
+        settingsAction.triggered.connect( this, "onSettings()" );
+
+        importAction.triggered.connect( this, "onImport()" );
+        backupAction.triggered.connect( this, "onBackup()" );
+        restoreAction.triggered.connect( this, "onRestore()" );
+
+        aboutAction.triggered.connect( this, "onAbout()" );
     }
 
-    private void importButtonActionPerformed()
+    private void createActions()
     {
-        // JFileChooser chooser = new JFileChooser();
-        // chooser.setLocale( Resourses.getCurrentLocale() );
-        // chooser.setMultiSelectionEnabled( false );
-        // chooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
-        //
-        // if ( chooser.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION )
-        // {
-        // FileImporter importer = new FileImporter()
-        // {
-        // @Override
-        // protected void onImportFailure(
-        // File file,
-        // Exception e )
-        // {
-        // // todo
-        // System.out.println( "-cannot import file " + file.getAbsolutePath() + " cause:" + e.getMessage() );
-        // // e.printStackTrace();
-        // }
-        //
-        // @Override
-        // protected void onImportSuccess(
-        // ReadingUnit book )
-        // {
-        // // todo
-        // System.out.println( "+imported " + book.getAuthors().get( 0 ).getName() + ". " + book.getName() );
-        // }
-        // };
-        //
-        // String mask = Settings.getInstance().getProperty( JBookShelfSettings.IMPORT_MASK );
-        // String result = JOptionPane.showInputDialog( "Enter import mask", mask ); // todo message
-        // if ( result != null && !result.equals( "" ) )
-        // {
-        // mask = result;
-        // importer.importFiles( chooser.getSelectedFile().listFiles(), mask, Storage.getBookShelf() );
-        // }
-        //
-        // CollectionPanel.getInstance().updateTree();
-        // }
+        String path = "classpath:/org/jbookshelf/qtgui/images/";
+
+        addAction = addAction( new QIcon( path + "list-add.png" ), tr( "&Add" ) );
+        removeAction = addAction( new QIcon( path + "list-remove.png" ), tr( "&Remove" ) );
+        editAction = addAction( new QIcon( path + "document-properties.png" ), tr( "&Edit" ) );
+
+        addSeparator();
+
+        openAction = addAction( new QIcon( path + "document-preview.png" ), tr( "&Open" ) );
+
+        addSeparator();
+
+        settingsAction = addAction( new QIcon( path + "configure.png" ), tr( "&Settings" ) );
+
+        addSeparator();
+
+        importAction = addAction( new QIcon( path + "document-import.png" ), tr( "&Import" ) );
+        backupAction = addAction( new QIcon( path + "document-save-as.png" ), tr( "&Backup" ) );
+        restoreAction = addAction( new QIcon( path + "document-open.png" ), tr( "&Restore" ) );
+
+        addSeparator();
+
+        aboutAction = addAction( new QIcon( path + "help-about.png" ), tr( "&About" ) );
     }
 
-    private void initComponents()
+    @SuppressWarnings( "unused" )
+    private void onAbout()
     {
-        // todo
+        new AboutDialog( MainWindow.getInstance() ).setVisible( true );
     }
 
-    private void removeButtonActionPerformed()
+    @SuppressWarnings( "unused" )
+    private void onAdd()
     {
-        // if ( JOptionPane.showConfirmDialog( this, "Remove " + selectedUnique.getName() + "?" ) ==
-        // JOptionPane.YES_OPTION )
-        // {
-        // Storage.getBookShelf().removeUnique( selectedUnique );
-        // CollectionPanel.getInstance().removeSelectedItem();
-        // JOptionPane.showMessageDialog( this, selectedUnique.getName() + " removed" );
-        // }
+        new BookAdditionDialog( MainWindow.getInstance() );
     }
 
-    private void restoreButtonActionPerformed()
+    @SuppressWarnings( "unused" )
+    private void onBackup()
     {
-        // JFileChooser chooser = new JFileChooser();
-        // chooser.setMultiSelectionEnabled( false );
-        // chooser.setFileSelectionMode( JFileChooser.FILES_ONLY );
-        //
-        // SingleFileStorageImpl storage = (SingleFileStorageImpl) Storage.getImpl();
-        // chooser.setSelectedFile( storage.getCollectionStorageFile() );
-        //
-        // if ( chooser.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION )
-        // {
-        // Storage.restoreCollection( chooser.getSelectedFile() );
-        // CollectionPanel.getInstance().updateTree();
-        // }
+        FileDialog fileDialog = new FileDialog( this, tr( "Select backup file" ) )
+        {
+            @Override
+            protected void filesSelected()
+            {
+                Storage.backupCollection( getSelectedFile() );
+            }
+        };
+
+        SingleFileStorageImpl storage = (SingleFileStorageImpl) Storage.getImpl();
+        fileDialog.setSelectedFile( storage.getCollectionStorageFile() );
+
+        fileDialog.show();
     }
 
+    @SuppressWarnings( "unused" )
+    private void onEdit()
+    {
+        new BookEditDialog( MainWindow.getInstance(), (ReadingUnit) selectedUnique );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onImport()
+    {
+        FileDialog fileDialog = new FileDialog( this, tr( "Select a directory to import" ) )
+        {
+            @Override
+            protected void filesSelected()
+            {
+                FileImporter importer = new FileImporter()
+                {
+                    @Override
+                    protected void onImportFailure(
+                        File file,
+                        Exception e )
+                    {
+                        // todo
+                        System.out.println( "- cannot import file " + file.getAbsolutePath() + " cause:" +
+                            e.getMessage() );
+                        // e.printStackTrace();
+                    }
+
+                    @Override
+                    protected void onImportSuccess(
+                        ReadingUnit book )
+                    {
+                        // todo
+                        System.out.println( "+ imported " + book.getAuthors().get( 0 ).getName() + ". " +
+                            book.getName() );
+                    }
+                };
+
+                String mask = Settings.getInstance().getProperty( JBookShelfSettings.IMPORT_MASK );
+                String result =
+                    QInputDialog.getText( this, tr( "Enter" ), tr( "Enter import mask" ), EchoMode.Normal, mask );
+                if ( result != null && !result.equals( "" ) )
+                {
+                    mask = result;
+                    importer.importFiles( getSelectedFileArray(), mask, Storage.getBookShelf() );
+                }
+
+                CollectionPanel.getInstance().updateTree();
+            }
+        };
+
+        fileDialog.setFileMode( FileMode.DirectoryOnly );
+        fileDialog.show();
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onOpen()
+    {
+        ((ReadingUnit) selectedUnique).getPhysical().openUnit();
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onRemove()
+    {
+        String title = tr( "Confirm" );
+        String message = tr( "Remove" ) + " " + selectedUnique.getName() + "?";
+        if ( QMessageBox.question( this, title, message, StandardButton.Yes, StandardButton.No ) == 0 )
+        {
+            Storage.getBookShelf().removeUnique( selectedUnique );
+            CollectionPanel.getInstance().removeSelectedItem();
+            QMessageBox.information( this, tr( "Removed" ), selectedUnique.getName() + " " + tr( "removed" ) );
+        }
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onRestore()
+    {
+        FileDialog fileDialog = new FileDialog( this, tr( "Select backup file" ) )
+        {
+            @Override
+            protected void filesSelected()
+            {
+                Storage.restoreCollection( getSelectedFile() );
+                CollectionPanel.getInstance().updateTree();
+            }
+        };
+
+        SingleFileStorageImpl storage = (SingleFileStorageImpl) Storage.getImpl();
+        fileDialog.setSelectedFile( storage.getCollectionStorageFile() );
+
+        fileDialog.show();
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onSettings()
+    {
+        new SettingsDialog( MainWindow.getInstance() ).setVisible( true );
+    }
 }

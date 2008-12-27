@@ -15,9 +15,8 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
-import java.awt.Frame;
-
 import com.trolltech.qt.gui.QDialog;
+import com.trolltech.qt.gui.QWidget;
 
 /**
  * @author eav
@@ -36,9 +35,9 @@ public class AboutDialog
     // private JButton closeButton = new JButton();
 
     public AboutDialog(
-        Frame parent,
-        boolean modal )
+        QWidget parent )
     {
+        super( parent );
         registerComponents();
         initComponents();
         initListeners();
