@@ -15,19 +15,17 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
-import java.awt.Frame;
-
-import javax.swing.JDialog;
-import javax.swing.WindowConstants;
-
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
+
+import com.trolltech.qt.gui.QDialog;
+import com.trolltech.qt.gui.QWidget;
 
 /**
  * @author eav
  */
 public class SettingsDialog
-    extends JDialog
+    extends QDialog
     implements
         JBookShelfSettings
 {
@@ -57,10 +55,9 @@ public class SettingsDialog
     // private JComboBox langComboBox = new JComboBox();
 
     public SettingsDialog(
-        Frame parent,
-        boolean modal )
+        QWidget parent )
     {
-        super( parent, modal );
+        super( parent );
 
         initComponents();
         initListeners();
@@ -87,8 +84,6 @@ public class SettingsDialog
 
     private void initComponents()
     {
-        setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
-
         // settingsLabel.setFont( new Font( "Tahoma", 1, 18 ) );
         //
         // lafComboBox.setModel( new DefaultComboBoxModel( Resourses.LAF_NAMES ) );

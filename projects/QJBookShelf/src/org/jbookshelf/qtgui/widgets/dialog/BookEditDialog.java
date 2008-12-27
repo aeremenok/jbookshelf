@@ -15,8 +15,6 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
-import java.awt.Frame;
-
 import org.eclipse.emf.common.util.EList;
 import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.controller.storage.Storage;
@@ -27,6 +25,7 @@ import org.jbookshelf.qtgui.widgets.panel.BookPanel;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel.Parameters;
 
 import com.trolltech.qt.gui.QDialog;
+import com.trolltech.qt.gui.QWidget;
 
 public class BookEditDialog
     extends QDialog
@@ -40,11 +39,10 @@ public class BookEditDialog
     private final ReadingUnit book;
 
     public BookEditDialog(
-        Frame parent,
-        boolean modal,
+        QWidget parent,
         ReadingUnit book )
     {
-        // super( parent, modal );
+        super( parent );
         this.book = book;
         registerComponents();
         initComponents();
