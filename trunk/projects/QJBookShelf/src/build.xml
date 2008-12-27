@@ -32,4 +32,15 @@
 		</jar>
 	</target>
 
+	<property name="srcdir" value="${basedir}/src/" />
+	<property name="packagedir" value="org/jbookshelf/qtgui" />
+
+	<target name="translate">
+		<exec executable="${jambidir}/bin/lupdate">
+			<arg value="${srcdir}/${packagedir}/MainWindow.java" />
+			<arg value="-ts" />
+			<arg value="${basedir}/jbookshelf.ts" />
+		</exec>
+	</target>
+
 </project>
