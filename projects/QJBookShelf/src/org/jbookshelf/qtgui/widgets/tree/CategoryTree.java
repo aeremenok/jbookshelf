@@ -16,7 +16,12 @@
 package org.jbookshelf.qtgui.widgets.tree;
 
 import org.eclipse.emf.ecore.EReference;
+import org.jbookshelf.model.Categorizable;
+import org.jbookshelf.model.Category;
 import org.jbookshelf.model.ModelPackage;
+import org.jbookshelf.model.ReadingUnit;
+
+import com.trolltech.qt.gui.QTreeWidgetItem;
 
 public class CategoryTree
     extends CollectionTree
@@ -25,30 +30,33 @@ public class CategoryTree
     protected void addChildren(
         UniqueNode parent )
     {
-        // DefaultMutableTreeNode authors = new DefaultMutableTreeNode( "Authors" );
-        // DefaultMutableTreeNode books = new DefaultMutableTreeNode( "Books" );
-        // Category category = (Category) parent.getUnique();
-        // for ( Categorizable categorizable : category.getCategorizables() )
-        // {
-        // UniqueNode node = new UniqueNode( categorizable );
-        // if ( categorizable instanceof ReadingUnit )
-        // {
-        // books.add( node );
-        // }
-        // else
-        // {
-        // authors.add( node );
-        // }
-        // }
-        //
-        // if ( books.getChildCount() > 0 )
-        // {
-        // parent.add( books );
-        // }
-        // if ( authors.getChildCount() > 0 )
-        // {
-        // parent.add( authors );
-        // }
+        QTreeWidgetItem authors = new QTreeWidgetItem();
+        authors.setText( 0, tr( "Authors" ) );
+        QTreeWidgetItem books = new QTreeWidgetItem();
+        books.setText( 0, tr( "Books" ) );
+
+        Category category = (Category) parent.getUnique();
+        for ( Categorizable categorizable : category.getCategorizables() )
+        {
+            UniqueNode node = new UniqueNode( categorizable );
+            if ( categorizable instanceof ReadingUnit )
+            {
+                books.addChild( node );
+            }
+            else
+            {
+                authors.addChild( node );
+            }
+        }
+
+        if ( books.childCount() > 0 )
+        {
+            parent.addChild( books );
+        }
+        if ( authors.childCount() > 0 )
+        {
+            parent.addChild( authors );
+        }
     }
 
     @Override
