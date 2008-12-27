@@ -35,12 +35,22 @@
 	<property name="srcdir" value="${basedir}/src/" />
 	<property name="packagedir" value="org/jbookshelf/qtgui" />
 
-	<target name="translate">
+	<target name="lupdate">
 		<exec executable="${jambidir}/bin/lupdate">
 			<arg value="${srcdir}/${packagedir}/MainWindow.java" />
 			<arg value="-ts" />
-			<arg value="${basedir}/jbookshelf.ts" />
+			<arg value="${basedir}/translations/jbookshelf.ts" />
 		</exec>
 	</target>
+
+	<target name="lrelease">
+		<exec executable="${jambidir}/bin/lrelease">
+			<arg value="${basedir}/translations/jbookshelf.ts" />
+			<arg value="-qm" />
+			<arg value="${basedir}/translations/jbookshelf.qm" />
+		</exec>
+	</target>
+
+	<target name="translate" depends="lupdate, lrelease" />
 
 </project>
