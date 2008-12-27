@@ -10,6 +10,11 @@
 			<attribute name="javadoc_location" value="file:/opt/qtjambi/doc/html"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/kernel.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.emf.common_2.4.0.v200808251517.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.emf.ecore_2.4.1.v200808251517.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.emf.ecore.xmi_2.4.1.v200808251517.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
