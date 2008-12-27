@@ -23,13 +23,23 @@
 			<zipfileset excludes="META-INF/*.SF" src="${jambidir}/qtjambi-4.4.3_01.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="${jambidir}/qtjambi-linux32-gcc-4.4.3_01.jar" />
 
-			<zipfileset excludes="META-INF/*.SF" src="${libdir}/junit.jar" />
-			<zipfileset excludes="META-INF/*.SF" src="${libdir}/kernel.jar" />
-			<zipfileset excludes="META-INF/*.SF" src="${libdir}/org.eclipse.emf.common_2.4.0.v200808251517.jar" />
-			<zipfileset excludes="META-INF/*.SF" src="${libdir}/org.eclipse.emf.ecore_2.4.1.v200808251517.jar" />
-			<zipfileset excludes="META-INF/*.SF" src="${libdir}/org.eclipse.emf.ecore.xmi_2.4.1.v200808251517.jar" />
+			<zipfileset dir="${libdir}">
+				<exclude name="**/*.SF"/>
+				<include name="**/*.jar"/>
+			</zipfileset>
+			
 			<fileset dir="${bindir}" />
 		</jar>
+		
+		<copy todir="${targetdir}" overwrite="true">
+			<fileset dir="${basedir}/../../build/">
+				<exclude name=".svn"/>
+			</fileset>
+		</copy>
+		
+		<zip destfile="${targetdir}.zip">
+			<fileset dir="${targetdir}"/>
+		</zip>
 	</target>
 
 	<property name="srcdir" value="${basedir}/src/" />
@@ -37,7 +47,8 @@
 
 	<target name="lupdate">
 		<exec executable="${jambidir}/bin/lupdate">
-			<arg value="${srcdir}/${packagedir}/MainWindow.java" />
+			<!-- todo specify directories recusrively -->
+			<arg value="${srcdir}/${packagedir}/*" />
 			<arg value="-ts" />
 			<arg value="${basedir}/translations/jbookshelf.ts" />
 		</exec>
