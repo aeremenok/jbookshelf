@@ -46,11 +46,13 @@ import com.trolltech.qt.gui.QMessageBox.StandardButton;
 public class ToolBar
     extends QToolBar
     implements
+        JBookShelfConstants,
         UniqueSelectionListener
 {
     private static final ToolBar instance = new ToolBar();
 
     private Unique               selectedUnique;
+
     private QAction              addAction;
     private QAction              removeAction;
     private QAction              editAction;
@@ -59,7 +61,6 @@ public class ToolBar
     private QAction              aboutAction;
     private QAction              restoreAction;
     private QAction              backupAction;
-
     private QAction              importAction;
 
     public static ToolBar getInstance()
@@ -111,29 +112,27 @@ public class ToolBar
 
     private void createActions()
     {
-        String path = "classpath:/org/jbookshelf/qtgui/images/";
-
-        addAction = addAction( new QIcon( path + "list-add.png" ), tr( "&Add" ) );
-        removeAction = addAction( new QIcon( path + "list-remove.png" ), tr( "&Remove" ) );
-        editAction = addAction( new QIcon( path + "document-properties.png" ), tr( "&Edit" ) );
+        addAction = addAction( new QIcon( ICONPATH + "list-add.png" ), tr( "&Add" ) );
+        removeAction = addAction( new QIcon( ICONPATH + "list-remove.png" ), tr( "&Remove" ) );
+        editAction = addAction( new QIcon( ICONPATH + "document-properties.png" ), tr( "&Edit" ) );
 
         addSeparator();
 
-        openAction = addAction( new QIcon( path + "document-preview.png" ), tr( "&Open" ) );
+        openAction = addAction( new QIcon( ICONPATH + "document-preview.png" ), tr( "&Open" ) );
 
         addSeparator();
 
-        settingsAction = addAction( new QIcon( path + "configure.png" ), tr( "&Settings" ) );
+        settingsAction = addAction( new QIcon( ICONPATH + "configure.png" ), tr( "&Settings" ) );
 
         addSeparator();
 
-        importAction = addAction( new QIcon( path + "document-import.png" ), tr( "&Import" ) );
-        backupAction = addAction( new QIcon( path + "document-save-as.png" ), tr( "&Backup" ) );
-        restoreAction = addAction( new QIcon( path + "document-open.png" ), tr( "&Restore" ) );
+        importAction = addAction( new QIcon( ICONPATH + "document-import.png" ), tr( "&Import" ) );
+        backupAction = addAction( new QIcon( ICONPATH + "document-save-as.png" ), tr( "&Backup" ) );
+        restoreAction = addAction( new QIcon( ICONPATH + "document-open.png" ), tr( "&Restore" ) );
 
         addSeparator();
 
-        aboutAction = addAction( new QIcon( path + "help-about.png" ), tr( "&About" ) );
+        aboutAction = addAction( new QIcon( ICONPATH + "help-about.png" ), tr( "&About" ) );
     }
 
     @SuppressWarnings( "unused" )

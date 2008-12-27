@@ -15,16 +15,28 @@
  */
 package org.jbookshelf.qtgui.widgets.panel;
 
-import javax.swing.JTree;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Unique;
+import org.jbookshelf.qtgui.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.tree.AuthorTree;
 import org.jbookshelf.qtgui.widgets.tree.BookTree;
 import org.jbookshelf.qtgui.widgets.tree.CategoryTree;
 import org.jbookshelf.qtgui.widgets.tree.CollectionTree;
+import org.jbookshelf.qtgui.widgets.tree.UniqueNode;
 import org.jbookshelf.qtgui.widgets.treepanel.RelatedTreePanel;
 
+import com.trolltech.qt.gui.QComboBox;
+import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QLineEdit;
+import com.trolltech.qt.gui.QPushButton;
+import com.trolltech.qt.gui.QTabWidget;
+import com.trolltech.qt.gui.QTreeWidgetItem;
 import com.trolltech.qt.gui.QWidget;
 
 /**
@@ -32,21 +44,23 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class CollectionPanel
     extends QWidget
+    implements
+        JBookShelfConstants
 {
     private static CollectionPanel instance;
 
-    private CollectionTree         authorTree   = new AuthorTree();
-    private CollectionTree         bookTree     = new BookTree();
-    private CollectionTree         categoryTree = new CategoryTree();
+    private CollectionTree         authorTree      = new AuthorTree();
+    private CollectionTree         bookTree        = new BookTree();
+    private CollectionTree         categoryTree    = new CategoryTree();
 
-    // private JButton cleanButton = new JButton();
-    // private JComboBox isReadComboBox = new JComboBox();
-    //
-    // private JButton searchButton = new JButton();
-    // private JTextField searchTextField = new JTextField();
-    // private JTabbedPane viewTabbedPane = new JTabbedPane();
+    private QPushButton            cleanButton     = new QPushButton( this );
+    private QPushButton            searchButton    = new QPushButton( this );
+    private QComboBox              isReadComboBox  = new QComboBox( this );
 
-    private JTree[]                trees;
+    private QLineEdit              searchTextField = new QLineEdit( this );
+    private QTabWidget             viewTabbedPane  = new QTabWidget( this );
+
+    private CollectionTree[]       trees;
 
     public static CollectionPanel getInstance()
     {
@@ -61,17 +75,15 @@ public class CollectionPanel
     {
         initComponents();
         initListeners();
-        // registerComponents();
     }
 
-    public JTree[] getTrees()
+    public CollectionTree[] getTrees()
     {
-        return null;
-        // if ( trees == null )
-        // {
-        // trees = new JTree[] { bookTree, authorTree, categoryTree };
-        // }
-        // return trees;
+        if ( trees == null )
+        {
+            trees = new CollectionTree[] { bookTree, authorTree, categoryTree };
+        }
+        return trees;
     }
 
     public void removeSelectedItem()
@@ -83,40 +95,36 @@ public class CollectionPanel
         final RelatedTreePanel relatedTreePanel,
         final Unique selectedUnique )
     {
-        // final CollectionTree activeTree = getActiveTree();
-        // activeTree.setSelectionRow( 0 );
-        //
-        // final MouseAdapter mouseAdapter = new MouseAdapter()
-        // {
-        // @Override
-        // public void mouseClicked(
-        // MouseEvent e )
-        // {
-        // if ( e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2 )
-        // {
-        // Object node = activeTree.getLastSelectedPathComponent();
-        // if ( node instanceof UniqueNode )
-        // {
-        // UniqueNode uniqueNode = (UniqueNode) node;
-        // relatedTreePanel.onRelatedSelection( uniqueNode.getUnique(), selectedUnique );
-        // activeTree.removeMouseListener( this );
-        // }
-        // }
-        // }
-        // };
-        //
-        // activeTree.addMouseListener( mouseAdapter );
-        //
-        // activeTree.addFocusListener( new FocusAdapter()
-        // {
-        // @Override
-        // public void focusLost(
-        // FocusEvent e )
-        // {
-        // activeTree.removeMouseListener( mouseAdapter );
-        // activeTree.removeFocusListener( this );
-        // }
-        // } );
+        final CollectionTree activeTree = getActiveTree();
+
+        final MouseAdapter mouseAdapter = new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(
+                MouseEvent e )
+            {
+                QTreeWidgetItem node = activeTree.selectedItems().get( 0 );
+                if ( node instanceof UniqueNode )
+                {
+                    UniqueNode uniqueNode = (UniqueNode) node;
+                    relatedTreePanel.onRelatedSelection( uniqueNode.getUnique(), selectedUnique );
+                    activeTree.removeMouseListener( this );
+                }
+            }
+        };
+
+        activeTree.addMouseListener( mouseAdapter );
+
+        activeTree.addFocusListener( new FocusAdapter()
+        {
+            @Override
+            public void focusLost(
+                FocusEvent e )
+            {
+                activeTree.removeMouseListener( mouseAdapter );
+                activeTree.removeFocusListener( this );
+            }
+        } );
     }
 
     public void updateTree()
@@ -124,138 +132,90 @@ public class CollectionPanel
         getActiveTree().update( Storage.getBookShelf() );
     }
 
+    @SuppressWarnings( "unused" )
+    private void clean()
+    {
+        searchTextField.setText( "" );
+    }
+
     private CollectionTree getActiveTree()
     {
-        return null;
-        // return (CollectionTree) getTrees()[viewTabbedPane.getSelectedIndex()];
+        return getTrees()[viewTabbedPane.currentIndex()];
     }
 
     private void initComponents()
     {
-        // cleanButton.setIcon( Resourses.createIcon( "edit-clear-locationbar-rtl.png" ) );
-        // searchButton.setIcon( Resourses.createIcon( "edit-find.png" ) );
-        //
-        // isReadComboBox.setModel( new DefaultComboBoxModel( new String[] { "All", "Read", "Unread" } ) );
-        //
-        // JPanel searchPanel = new JPanel( new BorderLayout() );
-        // add( searchPanel, BorderLayout.NORTH );
-        // searchPanel.add( searchTextField, BorderLayout.CENTER );
-        //
-        // JPanel panel = new JPanel();
-        // searchPanel.add( panel, BorderLayout.EAST );
-        // panel.add( cleanButton );
-        // panel.add( isReadComboBox );
-        // panel.add( searchButton );
-        //
-        // add( viewTabbedPane, BorderLayout.CENTER );
-        //
-        // viewTabbedPane.addTab( Resourses.getSpecificString( "CollectionPanel.bookScrollPane.TabConstraints.tabTitle"
-        // ),
-        // new JScrollPane( bookTree ) );
-        // viewTabbedPane.addTab(
-        // Resourses.getSpecificString( "CollectionPanel.authorScrollPane.TabConstraints.tabTitle" ), new JScrollPane(
-        // authorTree ) );
-        // viewTabbedPane.addTab( Resourses
-        // .getSpecificString( "CollectionPanel.categoryScrollPane.TabConstraints.tabTitle" ), new JScrollPane(
-        // categoryTree ) );
-        //
-        // viewTabbedPane.setSelectedIndex( 0 );
-        // viewTabbedPaneStateChanged();
+        QGridLayout layout = new QGridLayout();
+        setLayout( layout );
+
+        cleanButton.setIcon( new QIcon( ICONPATH + "edit-clear-locationbar-rtl.png" ) );
+        searchButton.setIcon( new QIcon( ICONPATH + "edit-find.png" ) );
+        searchButton.setText( tr( "Search" ) );
+
+        isReadComboBox.addItem( tr( "All" ) );
+        isReadComboBox.addItem( tr( "Read" ) );
+        isReadComboBox.addItem( tr( "Unread" ) );
+
+        layout.addWidget( searchTextField, 0, 0 );
+        layout.addWidget( cleanButton, 0, 1 );
+        layout.addWidget( isReadComboBox, 0, 2 );
+        layout.addWidget( searchButton, 0, 3 );
+
+        layout.addWidget( viewTabbedPane, 1, 0, 1, 4 );
+
+        viewTabbedPane.addTab( bookTree, tr( "Books" ) );
+        viewTabbedPane.addTab( authorTree, tr( "Authors" ) );
+        viewTabbedPane.addTab( categoryTree, tr( "Categories" ) );
     }
 
     private void initListeners()
     {
-        // cleanButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // searchTextField.setText( "" );
-        // }
-        // } );
-        // searchButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // searchButtonActionPerformed();
-        // }
-        // } );
-        // viewTabbedPane.addChangeListener( new ChangeListener()
-        // {
-        // public void stateChanged(
-        // ChangeEvent evt )
-        // {
-        // viewTabbedPaneStateChanged();
-        // }
-        // } );
-        // searchTextField.addFocusListener( new FocusListener()
-        // {
-        // public void focusGained(
-        // FocusEvent e )
-        // {
-        // // todo searchTextField.setText( "" );
-        // }
-        //
-        // public void focusLost(
-        // FocusEvent e )
-        // {
-        // // todo searchTextField.setText( Resourses.getString( "CollectionPanel.searchTextField" ) );
-        // }
-        // } );
+        cleanButton.released.connect( this, "clean()" );
+        searchButton.released.connect( this, "searchButtonActionPerformed()" );
+        viewTabbedPane.currentChanged.connect( this, "viewTabbedPaneStateChanged()" );
     }
 
-    // private void registerComponents()
-    // {
-    // searchButton.setName( "searchButton" );
-    // searchTextField.setName( "searchTextField" );
-    //
-    // Resourses.register( getClass(), searchTextField );
-    // Resourses.register( getClass(), searchButton );
-    //
-    // searchTextField.setText( Resourses.getString( getClass(), searchTextField ) );
-    // searchButton.setText( Resourses.getString( getClass(), searchButton ) );
-    // }
-
+    @SuppressWarnings( "unused" )
     private void searchButtonActionPerformed()
     {
-        // String text = searchTextField.getText();
-        // CollectionTree tree = getActiveTree();
-        // if ( tree instanceof BookTree )
-        // {
-        // Boolean isRead = null;
-        // int index = isReadComboBox.getSelectedIndex();
-        // if ( index == 1 )
-        // {
-        // isRead = true;
-        // }
-        // else if ( index == 2 )
-        // {
-        // isRead = false;
-        // }
-        // tree.showResult( Storage.getBookShelf().queryUnits( text, isRead ) );
-        // }
-        // else if ( tree instanceof AuthorTree )
-        // {
-        // tree.showResult( Storage.getBookShelf().queryAuthors( text ) );
-        // }
-        // else
-        // // (tree instanceof CategoryTree)
-        // {
-        // tree.showResult( Storage.getBookShelf().queryCategories( text ) );
-        // }
+        String text = searchTextField.text();
+        CollectionTree tree = getActiveTree();
+        if ( tree instanceof BookTree )
+        {
+            Boolean isRead = null;
+            int index = isReadComboBox.currentIndex();
+            if ( index == 1 )
+            {
+                isRead = true;
+            }
+            else if ( index == 2 )
+            {
+                isRead = false;
+            }
+            tree.showResult( Storage.getBookShelf().queryUnits( text, isRead ) );
+        }
+        else if ( tree instanceof AuthorTree )
+        {
+            tree.showResult( Storage.getBookShelf().queryAuthors( text ) );
+        }
+        else
+        // (tree instanceof CategoryTree)
+        {
+            tree.showResult( Storage.getBookShelf().queryCategories( text ) );
+        }
     }
 
+    @SuppressWarnings( "unused" )
     private void viewTabbedPaneStateChanged()
     {
-        // if ( getActiveTree() instanceof BookTree )
-        // {
-        // isReadComboBox.setEnabled( true );
-        // }
-        // else
-        // {
-        // isReadComboBox.setEnabled( false );
-        // }
-        // updateTree();
+        if ( getActiveTree() instanceof BookTree )
+        {
+            isReadComboBox.setEnabled( true );
+        }
+        else
+        {
+            isReadComboBox.setEnabled( false );
+        }
+        updateTree();
     }
 }

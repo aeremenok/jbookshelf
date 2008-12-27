@@ -15,6 +15,8 @@
  */
 package org.jbookshelf.qtgui.widgets.tree;
 
+import java.awt.event.FocusListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,18 +29,26 @@ import org.jbookshelf.qtgui.logic.SoucesUniqueSelection;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
+import com.trolltech.qt.gui.QFocusEvent;
+import com.trolltech.qt.gui.QTreeWidget;
+import com.trolltech.qt.gui.QTreeWidgetItem;
+
 public abstract class CollectionTree
-    // extends JTree
+    extends QTreeWidget
     implements
         SoucesUniqueSelection
 {
-    private List<UniqueSelectionListener> listeners = new ArrayList<UniqueSelectionListener>();
+    private List<UniqueSelectionListener> listeners      = new ArrayList<UniqueSelectionListener>();
+    private List<FocusListener>           focusListeners = new ArrayList<FocusListener>();
+    private List<MouseListener>           mouseListeners = new ArrayList<MouseListener>();
 
     // protected DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 
     public CollectionTree()
     {
         super();
+
+        initListeners();
 
         // ((DefaultTreeModel) getModel()).setRoot( root );
         // setExpandsSelectedPaths( true );
@@ -78,10 +88,34 @@ public abstract class CollectionTree
         ToolBar.getInstance().nothingSelected();
     }
 
+    public void addFocusListener(
+        FocusListener focusListener )
+    {
+        focusListeners.add( focusListener );
+    }
+
+    public void addMouseListener(
+        MouseListener mouseListener )
+    {
+        mouseListeners.add( mouseListener );
+    }
+
     public void addSelectionListener(
         UniqueSelectionListener listener )
     {
         listeners.add( listener );
+    }
+
+    public void removeFocusListener(
+        FocusListener focusListener )
+    {
+        focusListeners.remove( focusListener );
+    }
+
+    public void removeMouseListener(
+        MouseListener mouseListener )
+    {
+        mouseListeners.remove( mouseListener );
     }
 
     public void removeSelectedItem()
@@ -122,6 +156,17 @@ public abstract class CollectionTree
         showResult( (EList<Unique>) bookShelf.eGet( getReference() ) );
     }
 
+    @SuppressWarnings( "unused" )
+    private void fireDoubleClicked(
+        QTreeWidgetItem item,
+        Integer index )
+    {
+        for ( MouseListener listener : mouseListeners )
+        {
+            listener.mouseClicked( null );
+        }
+    }
+
     private void fireNothingSelected()
     {
         for ( UniqueSelectionListener listener : listeners )
@@ -139,8 +184,35 @@ public abstract class CollectionTree
         }
     }
 
+    private void initListeners()
+    {
+        itemDoubleClicked.connect( this, "fireDoubleClicked(QTreeWidgetItem, Integer)" );
+    }
+
     protected abstract void addChildren(
         UniqueNode parent );
+
+    @Override
+    protected void focusInEvent(
+        QFocusEvent event )
+    {
+        super.focusInEvent( event );
+        for ( FocusListener listener : focusListeners )
+        {
+            listener.focusGained( null );
+        }
+    }
+
+    @Override
+    protected void focusOutEvent(
+        QFocusEvent event )
+    {
+        super.focusOutEvent( event );
+        for ( FocusListener listener : focusListeners )
+        {
+            listener.focusLost( null );
+        }
+    }
 
     protected abstract EReference getReference();
 }
