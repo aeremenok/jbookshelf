@@ -26,6 +26,11 @@ import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel.Parameters;
 
 import com.trolltech.qt.gui.QDialog;
+import com.trolltech.qt.gui.QFont;
+import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QWidget;
 
 /**
@@ -34,19 +39,18 @@ import com.trolltech.qt.gui.QWidget;
 public class BookAdditionDialog
     extends QDialog
 {
-    // private JButton addNCloseButton = new JButton();
-    // private JButton addNContinueButton = new JButton();
-    // private JButton cancelButton = new JButton();
-    //
-    // private JLabel headerLabel = new JLabel();
+    private QPushButton addNCloseButton    = new QPushButton();
+    private QPushButton addNContinueButton = new QPushButton();
+    private QPushButton cancelButton       = new QPushButton();
 
-    private BookPanel bookPanel = new BookPanel();
+    private QLabel      headerLabel        = new QLabel();
+
+    private BookPanel   bookPanel          = new BookPanel();
 
     public BookAdditionDialog(
         QWidget parent )
     {
         super( parent );
-        registerComponents();
         initComponents();
         initListeners();
     }
@@ -63,79 +67,55 @@ public class BookAdditionDialog
 
         CollectionPanel.getInstance().updateTree();
 
-        // JOptionPane.showMessageDialog( this, parameters.getBookName() + " added" );
+        QMessageBox.information( this, tr( "Added" ), parameters.getBookName() + " " + tr( "added" ) );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void addNClose()
+    {
+        Parameters parameters = bookPanel.extractParameters();
+        if ( parameters != null )
+        {
+            addBook( parameters );
+            close();
+        }
+    }
+
+    @SuppressWarnings( "unused" )
+    private void addNContinue()
+    {
+        Parameters parameters = bookPanel.extractParameters();
+        if ( parameters != null )
+        {
+            addBook( parameters );
+            bookPanel.clear();
+        }
     }
 
     private void initComponents()
     {
-        // setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
-        //
-        // headerLabel.setFont( new Font( "Tahoma", 1, 14 ) );
-        //
-        // JPanel contentPanel = new JPanel( new VerticalLayout() );
-        // add( contentPanel );
-        //
-        // contentPanel.add( headerLabel );
-        // contentPanel.add( new JSeparator() );
-        // contentPanel.add( bookPanel );
-        // JPanel buttonPanel = new JPanel();
-        // contentPanel.add( buttonPanel );
-        // buttonPanel.add( addNContinueButton );
-        // buttonPanel.add( addNCloseButton );
-        // buttonPanel.add( cancelButton );
-        //
-        // pack();
+        QGridLayout layout = new QGridLayout();
+        setLayout( layout );
+
+        layout.addWidget( headerLabel, 0, 0, 1, 3 );
+        layout.addWidget( bookPanel, 1, 0, 1, 3 );
+
+        layout.addWidget( addNCloseButton, 2, 0 );
+        layout.addWidget( addNContinueButton, 2, 1 );
+        layout.addWidget( cancelButton, 2, 2 );
+
+        headerLabel.setFont( new QFont( "Tahoma", 14 ) );
+        headerLabel.setText( tr( "Add Book" ) );
+
+        addNCloseButton.setText( tr( "And and close" ) );
+        addNContinueButton.setText( tr( "And and continue" ) );
+        cancelButton.setText( tr( "Cancel" ) );
     }
 
     private void initListeners()
     {
-        // addNCloseButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // Parameters parameters = bookPanel.extractParameters();
-        // if ( parameters != null )
-        // {
-        // addBook( parameters );
-        // dispose();
-        // }
-        // }
-        // } );
-        // addNContinueButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // Parameters parameters = bookPanel.extractParameters();
-        // if ( parameters != null )
-        // {
-        // addBook( parameters );
-        // bookPanel.clear();
-        // }
-        // }
-        // } );
-        // cancelButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // dispose();
-        // }
-        // } );
-    }
-
-    private void registerComponents()
-    {
-        // cancelButton.setName( "cancelButton" );
-        // headerLabel.setName( "headerLabel" );
-        // addNContinueButton.setName( "addNContinueButton" );
-        // addNCloseButton.setName( "addNCloseButton" );
-        //
-        // Resourses.register( getClass(), addNCloseButton );
-        // Resourses.register( getClass(), addNContinueButton );
-        // Resourses.register( getClass(), cancelButton );
-        // Resourses.register( getClass(), headerLabel );
-        // Resourses.register( getClass(), headerLabel );
+        cancelButton.released.connect( this, "close()" );
+        addNCloseButton.released.connect( this, "addNClose()" );
+        addNCloseButton.released.connect( this, "addNContinue()" );
     }
 }
