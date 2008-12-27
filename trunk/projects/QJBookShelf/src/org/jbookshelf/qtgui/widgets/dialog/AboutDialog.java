@@ -16,6 +16,9 @@
 package org.jbookshelf.qtgui.widgets.dialog;
 
 import com.trolltech.qt.gui.QDialog;
+import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QWidget;
 
 /**
@@ -24,85 +27,56 @@ import com.trolltech.qt.gui.QWidget;
 public class AboutDialog
     extends QDialog
 {
-    // private JLabel header = new JLabel();
-    // private JLabel authorLabel = new JLabel();
-    // private JLabel authorValueLabel = new JLabel();
-    // private JLabel licenseLabel = new JLabel();
-    // private JLabel licenseValueLabel = new JLabel();
-    // private JLabel versionLabel = new JLabel();
-    // private JLabel versionValueLabel = new JLabel();
+    private QLabel      header            = new QLabel();
+    private QLabel      authorLabel       = new QLabel();
+    private QLabel      authorValueLabel  = new QLabel();
+    private QLabel      licenseLabel      = new QLabel();
+    private QLabel      licenseValueLabel = new QLabel();
+    private QLabel      versionLabel      = new QLabel();
+    private QLabel      versionValueLabel = new QLabel();
 
-    // private JButton closeButton = new JButton();
+    private QPushButton closeButton       = new QPushButton();
 
     public AboutDialog(
         QWidget parent )
     {
         super( parent );
-        registerComponents();
         initComponents();
         initListeners();
+        setWindowTitle( tr( "About" ) );
     }
 
     private void initComponents()
     {
-        // setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
-        //
-        // JPanel mainPanel = new JPanel();
-        // add( mainPanel );
-        // mainPanel.setLayout( new BorderLayout() );
-        //
-        // header.setFont( new Font( "Tahoma", 1, 18 ) );
-        // header.setHorizontalAlignment( SwingConstants.CENTER );
-        // mainPanel.add( header, BorderLayout.PAGE_START );
-        //
-        // mainPanel.add( closeButton, BorderLayout.PAGE_END );
-        //
-        // JPanel contentPanel = new JPanel();
-        // mainPanel.add( contentPanel, BorderLayout.CENTER );
-        // contentPanel.setLayout( new GridLayout( 3, 2, 10, 10 ) );
-        //
-        // contentPanel.add( authorLabel );
-        // contentPanel.add( authorValueLabel );
-        //
-        // contentPanel.add( versionLabel );
-        // contentPanel.add( versionValueLabel );
-        //
-        // contentPanel.add( licenseLabel );
-        // contentPanel.add( licenseValueLabel );
-        //
-        // pack();
+        QGridLayout layout = new QGridLayout();
+        setLayout( layout );
+
+        layout.addWidget( header, 0, 0, 1, 2 );
+
+        layout.addWidget( authorLabel, 1, 0 );
+        layout.addWidget( authorValueLabel, 1, 1 );
+        layout.addWidget( licenseLabel, 2, 0 );
+        layout.addWidget( licenseValueLabel, 2, 1 );
+        layout.addWidget( versionLabel, 3, 0 );
+        layout.addWidget( versionValueLabel, 3, 1 );
+
+        layout.addWidget( closeButton, 4, 1 );
+
+        header.setText( "JBookShelf" );
+
+        authorLabel.setText( tr( "Author" ) );
+        licenseLabel.setText( tr( "License" ) );
+        versionLabel.setText( tr( "Version" ) );
+
+        authorValueLabel.setText( tr( "Andrey Yeremenok (eav1986_at_gmail_com)" ) );
+        licenseValueLabel.setText( tr( "GPL v.3" ) );
+        versionValueLabel.setText( tr( "0.2b1" ) );
+
+        closeButton.setText( tr( "&Close" ) );
     }
 
     private void initListeners()
     {
-        // closeButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // dispose();
-        // }
-        // } );
-    }
-
-    private void registerComponents()
-    {
-        // closeButton.setName( "closeButton" );
-        // authorLabel.setName( "authorLabel" );
-        // authorValueLabel.setName( "authorValueLabel" );
-        // licenseLabel.setName( "licenseLabel" );
-        // licenseValueLabel.setName( "licenseValueLabel" );
-        // versionLabel.setName( "versionLabel" );
-        // versionValueLabel.setName( "versionValueLabel" );
-        // header.setName( "header" );
-        //
-        // Resourses.register( getClass(), authorLabel );
-        // Resourses.register( getClass(), authorValueLabel );
-        // Resourses.register( getClass(), versionLabel );
-        // Resourses.register( getClass(), versionValueLabel );
-        // Resourses.register( getClass(), licenseLabel );
-        // Resourses.register( getClass(), licenseValueLabel );
-        // Resourses.register( getClass(), header );
-        // Resourses.register( getClass(), closeButton );
+        closeButton.released.connect( this, "close()" );
     }
 }
