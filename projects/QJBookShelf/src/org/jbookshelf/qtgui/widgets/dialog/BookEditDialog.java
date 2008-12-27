@@ -22,19 +22,27 @@ import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel;
+import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel.Parameters;
 
 import com.trolltech.qt.gui.QDialog;
+import com.trolltech.qt.gui.QFont;
+import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QWidget;
 
+/**
+ * @author eav
+ */
 public class BookEditDialog
     extends QDialog
 {
-    // private JButton applyButton = new JButton();
-    // private JButton cancelButton = new JButton();
-    // private JLabel headerLabel = new JLabel();
+    private QPushButton       applyButton  = new QPushButton();
+    private QPushButton       cancelButton = new QPushButton();
+    private QLabel            headerLabel  = new QLabel();
 
-    private BookPanel         bookPanel = new BookPanel();
+    private BookPanel         bookPanel    = new BookPanel();
 
     private final ReadingUnit book;
 
@@ -44,7 +52,6 @@ public class BookEditDialog
     {
         super( parent );
         this.book = book;
-        registerComponents();
         initComponents();
         initListeners();
 
@@ -83,60 +90,36 @@ public class BookEditDialog
 
     private void initComponents()
     {
-        // setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
-        //
-        // headerLabel.setFont( new Font( "Tahoma", 1, 14 ) );
-        //
-        // JPanel contentPanel = new JPanel( new VerticalLayout() );
-        // add( contentPanel );
-        //
-        // contentPanel.add( headerLabel );
-        // contentPanel.add( new JSeparator() );
-        // contentPanel.add( bookPanel );
-        //
-        // JPanel buttonPanel = new JPanel();
-        // contentPanel.add( buttonPanel );
-        // buttonPanel.add( applyButton );
-        // buttonPanel.add( cancelButton );
-        //
-        // pack();
+        QGridLayout layout = new QGridLayout();
+        setLayout( layout );
+
+        headerLabel.setFont( new QFont( "Tahoma", 14 ) );
+
+        layout.addWidget( headerLabel, 0, 0, 1, 2 );
+        layout.addWidget( bookPanel, 1, 0, 1, 2 );
+        layout.addWidget( applyButton, 2, 0 );
+        layout.addWidget( cancelButton, 2, 1 );
+
+        headerLabel.setText( tr( "Edit Book Properties" ) );
+        applyButton.setText( tr( "Apply" ) );
+        cancelButton.setText( tr( "Cancel" ) );
     }
 
     private void initListeners()
     {
-        // cancelButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // dispose();
-        // }
-        // } );
-        //
-        // applyButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // Parameters parameters = bookPanel.extractParameters();
-        // if ( parameters != null )
-        // {
-        // saveBook( parameters );
-        // CollectionPanel.getInstance().updateTree();
-        // dispose();
-        // }
-        // }
-        // } );
+        cancelButton.released.connect( this, "close()" );
+        applyButton.released.connect( this, "save()" );
     }
 
-    private void registerComponents()
+    @SuppressWarnings( "unused" )
+    private void save()
     {
-        // applyButton.setName( "applyButton" );
-        // headerLabel.setName( "headerLabel" );
-        // cancelButton.setName( "cancelButton" );
-        //
-        // Resourses.register( getClass(), applyButton );
-        // Resourses.register( getClass(), cancelButton );
-        // Resourses.register( getClass(), headerLabel );
+        Parameters parameters = bookPanel.extractParameters();
+        if ( parameters != null )
+        {
+            saveBook( parameters );
+            CollectionPanel.getInstance().updateTree();
+            close();
+        }
     }
 }
