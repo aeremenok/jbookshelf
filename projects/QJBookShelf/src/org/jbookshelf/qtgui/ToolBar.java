@@ -144,7 +144,7 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onAdd()
     {
-        new BookAdditionDialog( MainWindow.getInstance() );
+        new BookAdditionDialog( MainWindow.getInstance() ).setVisible( true );
     }
 
     @SuppressWarnings( "unused" )
@@ -168,7 +168,7 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onEdit()
     {
-        new BookEditDialog( MainWindow.getInstance(), (ReadingUnit) selectedUnique );
+        new BookEditDialog( MainWindow.getInstance(), (ReadingUnit) selectedUnique ).setVisible( true );
     }
 
     @SuppressWarnings( "unused" )
