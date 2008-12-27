@@ -16,7 +16,12 @@
 package org.jbookshelf.qtgui.widgets.tree;
 
 import org.eclipse.emf.ecore.EReference;
+import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Category;
 import org.jbookshelf.model.ModelPackage;
+import org.jbookshelf.model.ReadingUnit;
+
+import com.trolltech.qt.gui.QTreeWidgetItem;
 
 public class BookTree
     extends CollectionTree
@@ -25,27 +30,30 @@ public class BookTree
     protected void addChildren(
         UniqueNode parent )
     {
-        // DefaultMutableTreeNode authors = new DefaultMutableTreeNode( "Authors" );
-        // DefaultMutableTreeNode categories = new DefaultMutableTreeNode( "Categories" );
-        // ReadingUnit readingUnit = (ReadingUnit) parent.getUnique();
-        //
-        // for ( Category category : readingUnit.getCategories() )
-        // {
-        // categories.add( new UniqueNode( category ) );
-        // }
-        // for ( Author author : readingUnit.getAuthors() )
-        // {
-        // authors.add( new UniqueNode( author ) );
-        // }
-        //
-        // if ( authors.getChildCount() > 0 )
-        // {
-        // parent.add( authors );
-        // }
-        // if ( categories.getChildCount() > 0 )
-        // {
-        // parent.add( categories );
-        // }
+        QTreeWidgetItem authors = new QTreeWidgetItem();
+        authors.setText( 0, tr( "Authors" ) );
+        QTreeWidgetItem categories = new QTreeWidgetItem();
+        categories.setText( 0, tr( "Categories" ) );
+
+        ReadingUnit readingUnit = (ReadingUnit) parent.getUnique();
+
+        for ( Category category : readingUnit.getCategories() )
+        {
+            categories.addChild( new UniqueNode( category ) );
+        }
+        for ( Author author : readingUnit.getAuthors() )
+        {
+            authors.addChild( new UniqueNode( author ) );
+        }
+
+        if ( authors.childCount() > 0 )
+        {
+            parent.addChild( authors );
+        }
+        if ( categories.childCount() > 0 )
+        {
+            parent.addChild( categories );
+        }
     }
 
     @Override

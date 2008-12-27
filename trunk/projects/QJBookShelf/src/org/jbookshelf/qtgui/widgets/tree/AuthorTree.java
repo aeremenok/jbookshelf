@@ -16,7 +16,12 @@
 package org.jbookshelf.qtgui.widgets.tree;
 
 import org.eclipse.emf.ecore.EReference;
+import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Category;
 import org.jbookshelf.model.ModelPackage;
+import org.jbookshelf.model.ReadingUnit;
+
+import com.trolltech.qt.gui.QTreeWidgetItem;
 
 public class AuthorTree
     extends CollectionTree
@@ -25,27 +30,30 @@ public class AuthorTree
     protected void addChildren(
         UniqueNode parent )
     {
-        // DefaultMutableTreeNode books = new DefaultMutableTreeNode( "Books" );
-        // DefaultMutableTreeNode categories = new DefaultMutableTreeNode( "Categories" );
-        // Author author = (Author) parent.getUnique();
-        //
-        // for ( ReadingUnit book : author.getReadingUnits() )
-        // {
-        // books.add( new UniqueNode( book ) );
-        // }
-        // for ( Category category : author.getCategories() )
-        // {
-        // categories.add( new UniqueNode( category ) );
-        // }
-        //
-        // if ( books.getChildCount() > 0 )
-        // {
-        // parent.add( books );
-        // }
-        // if ( categories.getChildCount() > 0 )
-        // {
-        // parent.add( categories );
-        // }
+        QTreeWidgetItem books = new QTreeWidgetItem();
+        books.setText( 0, tr( "Books" ) );
+        QTreeWidgetItem categories = new QTreeWidgetItem();
+        categories.setText( 0, tr( "Categories" ) );
+
+        Author author = (Author) parent.getUnique();
+
+        for ( ReadingUnit book : author.getReadingUnits() )
+        {
+            books.addChild( new UniqueNode( book ) );
+        }
+        for ( Category category : author.getCategories() )
+        {
+            categories.addChild( new UniqueNode( category ) );
+        }
+
+        if ( books.childCount() > 0 )
+        {
+            parent.addChild( books );
+        }
+        if ( categories.childCount() > 0 )
+        {
+            parent.addChild( categories );
+        }
     }
 
     @Override

@@ -42,48 +42,14 @@ public abstract class CollectionTree
     private List<FocusListener>           focusListeners = new ArrayList<FocusListener>();
     private List<MouseListener>           mouseListeners = new ArrayList<MouseListener>();
 
-    // protected DefaultMutableTreeNode root = new DefaultMutableTreeNode();
+    protected QTreeWidgetItem             root           = new QTreeWidgetItem();
 
     public CollectionTree()
     {
         super();
 
+        initComponents();
         initListeners();
-
-        // ((DefaultTreeModel) getModel()).setRoot( root );
-        // setExpandsSelectedPaths( true );
-        //
-        // getSelectionModel().setSelectionMode( TreeSelectionModel.SINGLE_TREE_SELECTION );
-        // setShowsRootHandles( false );
-
-        addSelectionListener( ToolBar.getInstance() );
-        addSelectionListener( RelatedPanel.getInstance() );
-
-        // addTreeSelectionListener( new TreeSelectionListener()
-        // {
-        // @SuppressWarnings( "synthetic-access" )
-        // public void valueChanged(
-        // TreeSelectionEvent e )
-        // {
-        // DefaultMutableTreeNode node = (DefaultMutableTreeNode) getLastSelectedPathComponent();
-        // if ( node == null )
-        // {
-        // fireNothingSelected();
-        // }
-        // else
-        // {
-        // if ( node instanceof UniqueNode )
-        // {
-        // fireSelectedUnique( ((UniqueNode) node).getUnique() );
-        // }
-        // else
-        // {
-        // fireNothingSelected();
-        // }
-        // }
-        // }
-        // 
-        // } );
 
         ToolBar.getInstance().nothingSelected();
     }
@@ -120,9 +86,8 @@ public abstract class CollectionTree
 
     public void removeSelectedItem()
     {
-        // UniqueNode uniqueNode = (UniqueNode) getLastSelectedPathComponent();
-        // uniqueNode.removeFromParent();
-        // updateUI();
+        UniqueNode uniqueNode = (UniqueNode) selectedItems().get( 0 );
+        uniqueNode.parent().removeChild( uniqueNode );
     }
 
     public void removeSelectionListener(
@@ -134,19 +99,20 @@ public abstract class CollectionTree
     public void showResult(
         EList<? extends Unique> uniques )
     {
-        // root.removeAllChildren();
-        //
-        // for ( Unique unique : uniques )
-        // {
-        // UniqueNode parent = new UniqueNode( unique );
-        // root.add( parent );
-        // addChildren( parent );
-        // }
-        //
-        // expandRow( 0 );
-        // setRootVisible( false );
-        //
-        // updateUI();
+        int childCount = root.childCount();
+        for ( int i = 0; i < childCount; i++ )
+        {
+            root.removeChild( root.child( 0 ) );
+        }
+
+        for ( Unique unique : uniques )
+        {
+            UniqueNode parent = new UniqueNode( unique );
+            root.addChild( parent );
+            addChildren( parent );
+        }
+
+        root.setExpanded( true );
     }
 
     @SuppressWarnings( "unchecked" )
@@ -184,9 +150,40 @@ public abstract class CollectionTree
         }
     }
 
+    private void initComponents()
+    {
+        header().hide();
+        addTopLevelItem( root );
+    }
+
     private void initListeners()
     {
+        addSelectionListener( ToolBar.getInstance() );
+        addSelectionListener( RelatedPanel.getInstance() );
+
         itemDoubleClicked.connect( this, "fireDoubleClicked(QTreeWidgetItem, Integer)" );
+        itemSelectionChanged.connect( this, "itemSelectionChanged()" );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void itemSelectionChanged()
+    {
+        if ( selectedItems().size() == 0 )
+        {
+            fireNothingSelected();
+        }
+        else
+        {
+            QTreeWidgetItem node = selectedItems().get( 0 );
+            if ( node instanceof UniqueNode )
+            {
+                fireSelectedUnique( ((UniqueNode) node).getUnique() );
+            }
+            else
+            {
+                fireNothingSelected();
+            }
+        }
     }
 
     protected abstract void addChildren(

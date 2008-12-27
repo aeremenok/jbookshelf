@@ -166,6 +166,8 @@ public class CollectionPanel
         viewTabbedPane.addTab( bookTree, tr( "Books" ) );
         viewTabbedPane.addTab( authorTree, tr( "Authors" ) );
         viewTabbedPane.addTab( categoryTree, tr( "Categories" ) );
+
+        updateTree();
     }
 
     private void initListeners()
