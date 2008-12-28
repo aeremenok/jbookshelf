@@ -1,4 +1,21 @@
 #labels Featured
+=JBookShelf 0.2b1=
+
+[http://jbookshelf.googlecode.com/files/jbookshelf-linux32-0.2b1.zip Download for Linux] 
+[http://jbookshelf.googlecode.com/files/jbookshelf-win32-0.2b1.zip Download for Windows]
+
+==Changes==
+
+ * *Ported under [http://en.wikipedia.org/wiki/Qt/Jambi qt-jambi] *
+
+==Known issues==
+
+ * Russian translation is temporary unavailable
+ * Some bugs with displaying tree views and dialogs
+ * [http://code.google.com/p/jbookshelf/issues/list other]
+
+----
+
 =JBookShelf 0.1b2=
 
 [http://jbookshelf.googlecode.com/files/jbookshelf-0.1b2.zip Download]
