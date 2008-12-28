@@ -134,6 +134,7 @@ public class Settings
         }
         catch ( Exception e )
         {
+            System.err.println( "fileName=" + fileName );
             throw new Error( e );
         }
     }

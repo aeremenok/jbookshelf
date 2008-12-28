@@ -6,7 +6,10 @@
     ${version}  - release version
     ${jambidir} - where qtjambi resides
     
-    ! qt-jambi is platform-dependent, so replace "qtjambi-linux32-gcc-4.4.3_01.jar" with correct jar name 
+    ! qt-jambi is platform-dependent, so replace "qtjambi-linux32-gcc-4.4.3_01.jar" with correct jar name
+     - qtjambi-linux32-gcc-4.4.3_01 
+     - qtjambi-win32-msvc2005-4.4.3_01
+     - todo mac...
     (writing triple conditionals would have made this script too complex =( )
  -->
 <project default="create_run_jar" name="Create Runnable Jar for Project QJBookShelf">
