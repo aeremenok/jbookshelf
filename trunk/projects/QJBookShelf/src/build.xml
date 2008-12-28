@@ -5,6 +5,9 @@
     ${builddir} - where to build
     ${version}  - release version
     ${jambidir} - where qtjambi resides
+    
+    ! qt-jambi is platform-dependent, so replace "qtjambi-linux32-gcc-4.4.3_01.jar" with correct jar name 
+    (writing triple conditionals would have made this script too complex =( )
  -->
 <project default="create_run_jar" name="Create Runnable Jar for Project QJBookShelf">
 
@@ -13,6 +16,8 @@
 	<property name="targetdir" value="${builddir}/jbookshelf-${version}" />
 
 	<target name="create_run_jar">
+		<mkdir dir="${targetdir}"/>
+		
 		<jar destfile="${targetdir}/jbookshelf.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
 				<attribute name="Built-By" value="${user.name}" />
@@ -23,6 +28,7 @@
 			<zipfileset excludes="META-INF/*.SF" src="${jambidir}/qtjambi-4.4.3_01.jar" />
 			<zipfileset excludes="META-INF/*.SF" src="${jambidir}/qtjambi-linux32-gcc-4.4.3_01.jar" />
 
+			<!-- todo specify jars automatically -->
             <zipfileset excludes="META-INF/*.SF" src="${libdir}/junit.jar" />
             <zipfileset excludes="META-INF/*.SF" src="${libdir}/kernel.jar" />
             <zipfileset excludes="META-INF/*.SF" src="${libdir}/org.eclipse.emf.common_2.4.0.v200808251517.jar" />
