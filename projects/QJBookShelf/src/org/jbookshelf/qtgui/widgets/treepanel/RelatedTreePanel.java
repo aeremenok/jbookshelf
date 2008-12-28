@@ -15,25 +15,24 @@
  */
 package org.jbookshelf.qtgui.widgets.treepanel;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.text.JTextComponent;
 
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
+import org.jbookshelf.qtgui.widgets.tree.UniqueNode;
 
+import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QTreeWidget;
 import com.trolltech.qt.gui.QTreeWidgetItem;
+import com.trolltech.qt.gui.QVBoxLayout;
 
 public class RelatedTreePanel
     extends SearchableTreePanel
 {
-    private QTreeWidgetItem root = new QTreeWidgetItem();
-
-    // private JTree relatedTree = new JTree( root );
-    // private JScrollPane scrollPane = new JScrollPane( relatedTree );
+    private QTreeWidgetItem root        = new QTreeWidgetItem();
+    private QTreeWidget     relatedTree = new QTreeWidget();
     private Unique          selectedUnique;
 
     public RelatedTreePanel(
@@ -41,19 +40,55 @@ public class RelatedTreePanel
     {
         super( relatedPanel );
         initComponents();
+        initListeners();
     }
 
     public void nothingSelected()
     {
-        // root.removeAllChildren();
+        cleanRoot();
         relatedPanel.focusLost();
     }
 
     @Override
     public void onAdd()
     {
-        // JOptionPane.showMessageDialog( this, "Double click on related item in the collection tree" );
+        QMessageBox.information( this, tr( "Info" ), tr( "Double click on related item in the collection tree" ) );
         CollectionPanel.getInstance().selectRelatedUnique( this, selectedUnique );
+    }
+
+    @Override
+    public void onRemove()
+    {
+        UniqueNode uniqueNode = (UniqueNode) relatedTree.selectedItems().get( 0 );
+        selectedUnique.getRelated().remove( uniqueNode.getUnique() );
+        uniqueNode.getUnique().getRelated().remove( selectedUnique );
+
+        int row = root.indexOfChild( uniqueNode );
+        root.removeChild( uniqueNode );
+
+        if ( row > 1 )
+        {
+            relatedTree.setCurrentItem( root.child( row - 1 ) );
+        }
+        else
+        {
+            relatedPanel.focusLost();
+        }
+    }
+
+    public void relatedSelectionFinished(
+        Unique relatedUnique,
+        Unique unique )
+    {
+        unique.getRelated().add( relatedUnique );
+        relatedUnique.getRelated().add( unique );
+
+        root.addChild( new UniqueNode( relatedUnique ) );
+        relatedTree.setCurrentItem( root.child( root.childCount() - 1 ) );
+
+        QMessageBox.information( this, tr( "Linked" ), relatedUnique.getName() + tr( " now relates to " ) +
+            unique.getName() );
+        selectedUnique( selectedUnique );
     }
 
     @Override
@@ -79,41 +114,6 @@ public class RelatedTreePanel
         }
     }
 
-    public void onRelatedSelection(
-        Unique relatedUnique,
-        Unique unique )
-    {
-        unique.getRelated().add( relatedUnique );
-        relatedUnique.getRelated().add( unique );
-
-        // root.add( new UniqueNode( relatedUnique ) );
-        // relatedTree.setSelectionRow( root.getChildCount() - 1 );
-        //
-        // JOptionPane.showMessageDialog( this, relatedUnique.getName() + " now relates to " + unique.getName() );
-        selectedUnique( selectedUnique );
-    }
-
-    @Override
-    public void onRemove()
-    {
-        // UniqueNode uniqueNode = (UniqueNode) relatedTree.getLastSelectedPathComponent();
-        // selectedUnique.getRelated().remove( uniqueNode.getUnique() );
-        // uniqueNode.getUnique().getRelated().remove( selectedUnique );
-        //
-        // int row = root.getIndex( uniqueNode );
-        // root.remove( uniqueNode );
-        // relatedTree.updateUI();
-        //
-        // if ( row > 1 )
-        // {
-        // relatedTree.setSelectionRow( row - 1 );
-        // }
-        // else
-        // {
-        // relatedPanel.focusLost();
-        // }
-    }
-
     public void selectedUnique(
         Unique unique )
     {
@@ -121,32 +121,36 @@ public class RelatedTreePanel
         drawUniques( selectedUnique.getRelated() );
     }
 
+    private void cleanRoot()
+    {
+        for ( int i = 0; i < root.childCount(); i++ )
+        {
+            root.removeChild( root.child( i ) );
+        }
+    }
+
     private void drawUniques(
         List<Unique> relatedUniques )
     {
-        // root.removeAllChildren();
-        //
-        // for ( Unique related : relatedUniques )
-        // {
-        // root.add( new UniqueNode( related ) );
-        // }
-        //
-        // relatedTree.expandRow( 0 );
-        // relatedTree.setRootVisible( false );
-        //
-        // relatedTree.updateUI();
+        cleanRoot();
+        for ( Unique related : relatedUniques )
+        {
+            root.addChild( new UniqueNode( related ) );
+        }
+        root.setExpanded( true );
     }
 
     private void initComponents()
     {
-        // add( scrollPane );
-        // relatedTree.addTreeSelectionListener( new TreeSelectionListener()
-        // {
-        // public void valueChanged(
-        // TreeSelectionEvent e )
-        // {
-        // relatedPanel.focusGained();
-        // }
-        // } );
+        relatedTree.addTopLevelItem( root );
+        relatedTree.header().hide();
+
+        setLayout( new QVBoxLayout() );
+        layout().addWidget( relatedTree );
+    }
+
+    private void initListeners()
+    {
+        relatedTree.activated.connect( relatedPanel, "focusGained()" );
     }
 }

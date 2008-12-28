@@ -107,7 +107,7 @@ public class CollectionPanel
                 if ( node instanceof UniqueNode )
                 {
                     UniqueNode uniqueNode = (UniqueNode) node;
-                    relatedTreePanel.onRelatedSelection( uniqueNode.getUnique(), selectedUnique );
+                    relatedTreePanel.relatedSelectionFinished( uniqueNode.getUnique(), selectedUnique );
                     activeTree.removeMouseListener( this );
                 }
             }

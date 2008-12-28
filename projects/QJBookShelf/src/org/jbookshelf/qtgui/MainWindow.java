@@ -21,6 +21,7 @@ import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
+import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
 import com.trolltech.qt.gui.QMainWindow;
@@ -69,6 +70,10 @@ public class MainWindow
 
     private void initComponents()
     {
+        QRect geometry = geometry();
+        geometry.setWidth( 800 );
+        geometry.setHeight( 600 );
+        setGeometry( geometry );
         addToolBar( ToolBar.getInstance() );
 
         QSplitter splitter = new QSplitter();
