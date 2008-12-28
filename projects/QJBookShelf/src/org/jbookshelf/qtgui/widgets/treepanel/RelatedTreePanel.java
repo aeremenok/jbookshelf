@@ -25,20 +25,21 @@ import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
+import com.trolltech.qt.gui.QTreeWidgetItem;
+
 public class RelatedTreePanel
     extends SearchableTreePanel
 {
-    // private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
-    //
+    private QTreeWidgetItem root = new QTreeWidgetItem();
+
     // private JTree relatedTree = new JTree( root );
     // private JScrollPane scrollPane = new JScrollPane( relatedTree );
-    private Unique selectedUnique;
+    private Unique          selectedUnique;
 
     public RelatedTreePanel(
         RelatedPanel relatedPanel )
     {
         super( relatedPanel );
-        // setLayout( new BorderLayout() );
         initComponents();
     }
 
@@ -56,10 +57,9 @@ public class RelatedTreePanel
     }
 
     @Override
-    public void onKeyReleased(
-        KeyEvent evt )
+    public void search(
+        String text )
     {
-        String text = ((JTextComponent) evt.getSource()).getText();
         if ( text.equals( "" ) )
         {
             drawUniques( selectedUnique.getRelated() );

@@ -15,8 +15,6 @@
  */
 package org.jbookshelf.qtgui.widgets.treepanel;
 
-import java.awt.event.KeyEvent;
-
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
@@ -37,8 +35,8 @@ public abstract class SearchableTreePanel
 
     public abstract void onAdd();
 
-    public abstract void onKeyReleased(
-        KeyEvent evt );
+    public abstract void search(
+        String text );
 
     public abstract void onRemove();
 }

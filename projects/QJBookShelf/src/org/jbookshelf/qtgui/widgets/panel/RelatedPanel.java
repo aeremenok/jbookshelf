@@ -16,11 +16,17 @@
 package org.jbookshelf.qtgui.widgets.panel;
 
 import org.jbookshelf.model.Unique;
+import org.jbookshelf.qtgui.JBookShelfConstants;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.treepanel.CommentTreePanel;
 import org.jbookshelf.qtgui.widgets.treepanel.RelatedTreePanel;
 import org.jbookshelf.qtgui.widgets.treepanel.SearchableTreePanel;
 
+import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QLineEdit;
+import com.trolltech.qt.gui.QPushButton;
+import com.trolltech.qt.gui.QTabWidget;
 import com.trolltech.qt.gui.QWidget;
 
 /**
@@ -29,18 +35,21 @@ import com.trolltech.qt.gui.QWidget;
 public class RelatedPanel
     extends QWidget
     implements
+        JBookShelfConstants,
         UniqueSelectionListener
 {
-    private static final RelatedPanel instance     = new RelatedPanel();
+    private static final RelatedPanel instance        = new RelatedPanel();
 
     private SearchableTreePanel[]     searchableTreePanels;
-    // private JButton addButton = new JButton();
-    // private JTabbedPane tabbedPane = new JTabbedPane();
-    // private JButton removeButton = new JButton();
-    // private JTextField searchTextField = new JTextField();
 
-    private SearchableTreePanel       commentPanel = new CommentTreePanel( this );
-    private SearchableTreePanel       relatedPanel = new RelatedTreePanel( this );
+    private QPushButton               addButton       = new QPushButton();
+    private QPushButton               removeButton    = new QPushButton();
+
+    private QTabWidget                tabbedPane      = new QTabWidget();
+    private QLineEdit                 searchTextField = new QLineEdit();
+
+    private SearchableTreePanel       commentPanel    = new CommentTreePanel( this );
+    private SearchableTreePanel       relatedPanel    = new RelatedTreePanel( this );
 
     public static RelatedPanel getInstance()
     {
@@ -55,18 +64,17 @@ public class RelatedPanel
 
     public void focusGained()
     {
-        // removeButton.setEnabled( true );
+        removeButton.setEnabled( true );
     }
 
     public void focusLost()
     {
-        // removeButton.setEnabled( false );
+        removeButton.setEnabled( false );
     }
 
     public SearchableTreePanel getActiveTreePanel()
     {
-        return null;
-        // return getSearchableTreePanels()[tabbedPane.getSelectedIndex()];
+        return getSearchableTreePanels()[tabbedPane.currentIndex()];
     }
 
     public SearchableTreePanel[] getSearchableTreePanels()
@@ -97,74 +105,45 @@ public class RelatedPanel
 
     private void initComponents()
     {
-        // tabbedPane.addTab( Resourses.getSpecificString( "RelatedPanel.commentPanel.TabConstraints.tabTitle" ),
-        // commentPanel );
-        // tabbedPane.addTab( Resourses.getSpecificString( "RelatedPanel.relatedPanel.TabConstraints.tabTitle" ),
-        // relatedPanel );
-        //
-        // searchTextField.setText( Resourses.getString( "RelatedPanel.searchTextField" ) );
-        //
-        // addButton.setIcon( Resourses.createIcon( "list-add-small.png" ) );
-        // removeButton.setIcon( Resourses.createIcon( "list-remove-small.png" ) );
-        //
-        // removeButton.setEnabled( false );
-        //
-        // JPanel panel = new JPanel( new BorderLayout() );
-        // JPanel buttonPanel = new JPanel();
-        //
-        // panel.add( buttonPanel, BorderLayout.WEST );
-        // panel.add( searchTextField, BorderLayout.CENTER );
-        //
-        // buttonPanel.add( addButton );
-        // buttonPanel.add( removeButton );
-        //
-        // add( panel, BorderLayout.NORTH );
-        // add( tabbedPane, BorderLayout.CENTER );
+        QGridLayout layout = new QGridLayout();
+        setLayout( layout );
+
+        layout.addWidget( addButton, 0, 0 );
+        layout.addWidget( removeButton, 0, 1 );
+        layout.addWidget( searchTextField, 0, 2 );
+
+        tabbedPane.addTab( commentPanel, tr( "Comments" ) );
+        tabbedPane.addTab( relatedPanel, tr( "Related" ) );
+
+        searchTextField.setText( tr( "search..." ) );
+
+        addButton.setIcon( new QIcon( ICONPATH + "list-add-small.png" ) );
+        removeButton.setIcon( new QIcon( ICONPATH + "list-remove-small.png" ) );
+        removeButton.setEnabled( false );
     }
 
     private void initListeners()
     {
-        // searchTextField.addFocusListener( new FocusListener()
-        // {
-        // @SuppressWarnings( "synthetic-access" )
-        // public void focusGained(
-        // FocusEvent e )
-        // {
-        // searchTextField.setText( "" );
-        // }
-        //
-        // @SuppressWarnings( "synthetic-access" )
-        // public void focusLost(
-        // FocusEvent e )
-        // {
-        // searchTextField.setText( Resourses.getString( "RelatedPanel.searchTextField" ) );
-        // }
-        // } );
-        //
-        // searchTextField.addKeyListener( new KeyAdapter()
-        // {
-        // @Override
-        // public void keyReleased(
-        // KeyEvent e )
-        // {
-        // getActiveTreePanel().onKeyReleased( e );
-        // }
-        // } );
-        // removeButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // getActiveTreePanel().onRemove();
-        // }
-        // } );
-        // addButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // getActiveTreePanel().onAdd();
-        // }
-        // } );
+        searchTextField.textChanged.connect( this, "keyReleased()" );
+        removeButton.released.connect( this, "onRemove()" );
+        addButton.released.connect( this, "onAdd()" );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void keyReleased()
+    {
+        getActiveTreePanel().search( searchTextField.text() );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onAdd()
+    {
+        getActiveTreePanel().onAdd();
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onRemove()
+    {
+        getActiveTreePanel().onRemove();
     }
 }
