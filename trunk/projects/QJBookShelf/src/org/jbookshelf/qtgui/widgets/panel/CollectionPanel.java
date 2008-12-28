@@ -156,6 +156,8 @@ public class CollectionPanel
         isReadComboBox.addItem( tr( "Read" ) );
         isReadComboBox.addItem( tr( "Unread" ) );
 
+        searchTextField.setText( tr( "search..." ) );
+
         layout.addWidget( searchTextField, 0, 0 );
         layout.addWidget( cleanButton, 0, 1 );
         layout.addWidget( isReadComboBox, 0, 2 );

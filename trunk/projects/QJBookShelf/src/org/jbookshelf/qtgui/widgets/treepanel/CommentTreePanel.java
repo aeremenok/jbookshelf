@@ -17,11 +17,8 @@ package org.jbookshelf.qtgui.widgets.treepanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
-import javax.swing.text.JTextComponent;
 
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
@@ -123,10 +120,9 @@ public class CommentTreePanel
     }
 
     @Override
-    public void onKeyReleased(
-        KeyEvent evt )
+    public void search(
+        String text )
     {
-        String text = ((JTextComponent) evt.getSource()).getText();
         if ( text.equals( "" ) )
         {
             drawComments( selectedCommentable.getComments() );
