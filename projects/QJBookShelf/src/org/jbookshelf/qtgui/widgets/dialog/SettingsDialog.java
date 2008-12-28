@@ -17,9 +17,19 @@ package org.jbookshelf.qtgui.widgets.dialog;
 
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.qtgui.FileDialog;
 
+import com.trolltech.qt.gui.QApplication;
+import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QDialog;
+import com.trolltech.qt.gui.QFont;
+import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QLineEdit;
+import com.trolltech.qt.gui.QPushButton;
+import com.trolltech.qt.gui.QStyleFactory;
 import com.trolltech.qt.gui.QWidget;
+import com.trolltech.qt.gui.QFileDialog.FileMode;
 
 /**
  * @author eav
@@ -29,30 +39,28 @@ public class SettingsDialog
     implements
         JBookShelfSettings
 {
-    private Settings settings = Settings.getInstance();
+    private Settings    settings               = Settings.getInstance();
 
-    // private JFileChooser fileChooser = new JFileChooser();
-    //
-    // private JButton cancelButton = new JButton();
-    // private JButton chooseJBSFolderButton = new JButton();
-    // private JButton chooseTempFolderButton = new JButton();
-    // private JButton okButton = new JButton();
-    // private JButton restoreButton = new JButton();
-    // private JButton saveButton = new JButton();
-    //
-    // private JLabel importMaskLabel = new JLabel();
-    // private JLabel jbsFolderLabel = new JLabel();
-    // private JLabel lafLabel = new JLabel();
-    // private JLabel languageLabel = new JLabel();
-    // private JLabel settingsLabel = new JLabel();
-    // private JLabel tmpFolderLabel = new JLabel();
-    //
-    // private JTextField importTextField = new JTextField();
-    // private JTextField jbsTextField = new JTextField();
-    // private JTextField tmpTextField = new JTextField();
-    //
-    // private JComboBox lafComboBox = new JComboBox();
-    // private JComboBox langComboBox = new JComboBox();
+    private QPushButton cancelButton           = new QPushButton();
+    private QPushButton chooseJBSFolderButton  = new QPushButton();
+    private QPushButton chooseTempFolderButton = new QPushButton();
+    private QPushButton okButton               = new QPushButton();
+    private QPushButton restoreButton          = new QPushButton();
+    private QPushButton saveButton             = new QPushButton();
+
+    private QLabel      importMaskLabel        = new QLabel();
+    private QLabel      jbsFolderLabel         = new QLabel();
+    private QLabel      lafLabel               = new QLabel();
+    private QLabel      langLabel              = new QLabel();
+    private QLabel      settingsLabel          = new QLabel();
+    private QLabel      tmpFolderLabel         = new QLabel();
+
+    private QLineEdit   importMaskTextField    = new QLineEdit();
+    private QLineEdit   jbsFolderTextField     = new QLineEdit();
+    private QLineEdit   tmpFolderTextField     = new QLineEdit();
+
+    private QComboBox   lafComboBox            = new QComboBox();
+    private QComboBox   langComboBox           = new QComboBox();
 
     public SettingsDialog(
         QWidget parent )
@@ -62,239 +70,168 @@ public class SettingsDialog
         initComponents();
         initListeners();
 
-        registerComponents();
-
         arrangeSettingValues();
-
-        // fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
     }
 
     private void arrangeSettingValues()
     {
-        // langComboBox.setSelectedItem( settings.getProperty( LANGUAGE ) );
-        // String language = langComboBox.getSelectedItem().toString();
-        // settings.setProperty( JBookShelfSettings.LANGUAGE, language );
-        // Resourses.switchLanguage( language );
-        // lafComboBox.setSelectedItem( settings.getProperty( LAF ) );
-        // lafComboBoxActionPerformed();
-        // tmpTextField.setText( settings.getProperty( TEMP_FOLDER ) );
-        // jbsTextField.setText( settings.getProperty( JBS_FOLDER ) );
-        // importTextField.setText( settings.getProperty( IMPORT_MASK ) );
+        langComboBox.setCurrentIndex( langComboBox.findText( settings.getProperty( LANGUAGE ) ) );
+        lafComboBox.setCurrentIndex( lafComboBox.findText( settings.getProperty( LAF ) ) );
+
+        tmpFolderTextField.setText( settings.getProperty( TEMP_FOLDER ) );
+        jbsFolderTextField.setText( settings.getProperty( JBS_FOLDER ) );
+        importMaskTextField.setText( settings.getProperty( IMPORT_MASK ) );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void chooseJBSFolder()
+    {
+        FileDialog dialog = new FileDialog()
+        {
+            @Override
+            protected void filesSelected()
+            {
+                jbsFolderTextField.setText( selectedFiles().get( 0 ) );
+            }
+        };
+        dialog.setFileMode( FileMode.DirectoryOnly );
+        dialog.selectFile( settings.getProperty( JBS_FOLDER ) );
+        dialog.show();
+    }
+
+    @SuppressWarnings( "unused" )
+    private void chooseTempFolder()
+    {
+        FileDialog dialog = new FileDialog()
+        {
+            @Override
+            protected void filesSelected()
+            {
+                tmpFolderTextField.setText( selectedFiles().get( 0 ) );
+            }
+        };
+        dialog.setFileMode( FileMode.DirectoryOnly );
+        dialog.selectFile( settings.getProperty( TEMP_FOLDER ) );
+        dialog.show();
     }
 
     private void initComponents()
     {
-        // settingsLabel.setFont( new Font( "Tahoma", 1, 18 ) );
-        //
-        // lafComboBox.setModel( new DefaultComboBoxModel( Resourses.LAF_NAMES ) );
-        // langComboBox.setModel( new DefaultComboBoxModel( new String[] { "Russian", "English" } ) );
-        //
-        // JSeparator jSeparator1 = new JSeparator();
-        // GroupLayout layout = new GroupLayout( getContentPane() );
-        // getContentPane().setLayout( layout );
-        // layout.setHorizontalGroup( layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addGroup(
-        // layout.createSequentialGroup().addComponent( settingsLabel ).addContainerGap() ).addComponent( jSeparator1,
-        // GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE ).addGroup(
-        // layout.createSequentialGroup().addContainerGap().addComponent( saveButton ).addPreferredGap(
-        // LayoutStyle.ComponentPlacement.RELATED ).addComponent( restoreButton ).addPreferredGap(
-        // LayoutStyle.ComponentPlacement.RELATED, 325, Short.MAX_VALUE ).addComponent( okButton )
-        // .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED ).addComponent( cancelButton )
-        // .addContainerGap() ).addGroup(
-        // layout.createSequentialGroup().addContainerGap().addGroup(
-        // layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addComponent( importMaskLabel )
-        // .addComponent( jbsFolderLabel ).addComponent( tmpFolderLabel ).addComponent( lafLabel )
-        // .addComponent( languageLabel ) ).addPreferredGap( LayoutStyle.ComponentPlacement.RELATED )
-        // .addGroup(
-        // layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addComponent( importTextField,
-        // GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE ).addGroup(
-        // GroupLayout.Alignment.TRAILING,
-        // layout.createSequentialGroup().addGroup(
-        // layout.createParallelGroup( GroupLayout.Alignment.TRAILING ).addComponent( langComboBox,
-        // GroupLayout.Alignment.LEADING, 0, 485, Short.MAX_VALUE ).addComponent( lafComboBox,
-        // GroupLayout.Alignment.LEADING, 0, 485, Short.MAX_VALUE ).addComponent( tmpTextField,
-        // GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE )
-        // .addComponent( jbsTextField, GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE ) )
-        // .addPreferredGap( LayoutStyle.ComponentPlacement.RELATED ).addGroup(
-        // layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addComponent(
-        // chooseTempFolderButton ).addComponent( chooseJBSFolderButton ) ) ) )
-        // .addContainerGap() ) );
-        // layout.setVerticalGroup( layout.createParallelGroup( GroupLayout.Alignment.LEADING ).addGroup(
-        // GroupLayout.Alignment.TRAILING,
-        // layout.createSequentialGroup().addComponent( settingsLabel ).addPreferredGap(
-        // LayoutStyle.ComponentPlacement.RELATED ).addComponent( jSeparator1, GroupLayout.PREFERRED_SIZE, 10,
-        // GroupLayout.PREFERRED_SIZE ).addPreferredGap( LayoutStyle.ComponentPlacement.RELATED ).addGroup(
-        // layout.createParallelGroup( GroupLayout.Alignment.BASELINE ).addComponent( languageLabel )
-        // .addComponent( langComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-        // GroupLayout.PREFERRED_SIZE ) ).addGap( 18, 18, 18 ).addGroup(
-        // layout.createParallelGroup( GroupLayout.Alignment.BASELINE ).addComponent( lafLabel ).addComponent(
-        // lafComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE ) )
-        // .addGap( 18, 18, 18 ).addGroup(
-        // layout.createParallelGroup( GroupLayout.Alignment.BASELINE ).addComponent( tmpFolderLabel )
-        // .addComponent( tmpTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-        // GroupLayout.PREFERRED_SIZE ).addComponent( chooseTempFolderButton ) ).addGap( 18, 18, 18 )
-        // .addGroup(
-        // layout.createParallelGroup( GroupLayout.Alignment.BASELINE ).addComponent( jbsFolderLabel )
-        // .addComponent( chooseJBSFolderButton ).addComponent( jbsTextField, GroupLayout.PREFERRED_SIZE,
-        // GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE ) ).addGap( 18, 18, 18 ).addGroup(
-        // layout.createParallelGroup( GroupLayout.Alignment.BASELINE ).addComponent( importMaskLabel )
-        // .addComponent( importTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-        // GroupLayout.PREFERRED_SIZE ) ).addGap( 18, 18, 18 ).addGroup(
-        // layout.createParallelGroup( GroupLayout.Alignment.BASELINE ).addComponent( saveButton )
-        // .addComponent( restoreButton ).addComponent( cancelButton ).addComponent( okButton ) )
-        // .addContainerGap() ) );
-        //
-        // pack();
+        setModal( true );
+        setWindowTitle( tr( "Settings" ) );
+
+        QGridLayout layout = new QGridLayout();
+        setLayout( layout );
+
+        layout.addWidget( settingsLabel, 0, 0, 1, 5 );
+
+        layout.addWidget( langLabel, 1, 0 );
+        layout.addWidget( langComboBox, 1, 1, 1, 4 );
+
+        layout.addWidget( lafLabel, 2, 0 );
+        layout.addWidget( lafComboBox, 2, 1, 1, 4 );
+
+        layout.addWidget( jbsFolderLabel, 3, 0 );
+        layout.addWidget( jbsFolderTextField, 3, 1, 1, 3 );
+        layout.addWidget( chooseJBSFolderButton, 3, 4 );
+
+        layout.addWidget( tmpFolderLabel, 4, 0 );
+        layout.addWidget( tmpFolderTextField, 4, 1, 1, 3 );
+        layout.addWidget( chooseTempFolderButton, 4, 4 );
+
+        layout.addWidget( importMaskLabel, 5, 0 );
+        layout.addWidget( importMaskTextField, 5, 1, 1, 4 );
+
+        layout.addWidget( saveButton, 6, 0 );
+        layout.addWidget( restoreButton, 6, 1 );
+        layout.addWidget( new QLabel( " " ), 6, 2 ); // todo insert spacer
+        layout.addWidget( okButton, 6, 3 );
+        layout.addWidget( cancelButton, 6, 4 );
+
+        settingsLabel.setFont( new QFont( "Tahoma", 14 ) );
+
+        langComboBox.addItem( tr( "English" ) );
+        langComboBox.addItem( tr( "Russian" ) );
+
+        lafComboBox.addItems( QStyleFactory.keys() );
+
+        settingsLabel.setText( tr( "Settings" ) );
+        langLabel.setText( tr( "Language" ) );
+        lafLabel.setText( tr( "Look-and-feel" ) );
+        jbsFolderLabel.setText( tr( "JBookShelf folder" ) );
+        tmpFolderLabel.setText( tr( "Temp folder" ) );
+        importMaskLabel.setText( tr( "Default import mask" ) );
+
+        saveButton.setText( tr( "Save as defaults" ) );
+        restoreButton.setText( tr( "Restore defaults" ) );
+        okButton.setText( tr( "OK" ) );
+        cancelButton.setText( tr( "Cancel" ) );
+
+        chooseJBSFolderButton.setText( "..." );
+        chooseTempFolderButton.setText( "..." );
     }
 
     private void initListeners()
     {
-        // restoreButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // settings.loadDefaults();
-        // arrangeSettingValues();
-        // }
-        // } );
-        //
-        // cancelButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // dispose();
-        // }
-        // } );
-        //
-        // okButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // readSettingValues();
-        // settings.save( settings.getSettingsFile().getAbsolutePath(), true );
-        // dispose();
-        // }
-        // } );
-        //
-        // saveButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // readSettingValues();
-        // settings.saveAsDefaults();
-        // }
-        // } );
-        //
-        // chooseJBSFolderButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // fileChooser.setCurrentDirectory( new File( settings.getProperty( JBS_FOLDER ) ) );
-        // if ( fileChooser.showOpenDialog( SettingsDialog.this ) == JFileChooser.APPROVE_OPTION )
-        // {
-        // jbsTextField.setText( fileChooser.getSelectedFile().getAbsolutePath() );
-        // }
-        // }
-        // } );
-        //
-        // chooseTempFolderButton.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // fileChooser.setCurrentDirectory( new File( settings.getProperty( TEMP_FOLDER ) ) );
-        // if ( fileChooser.showOpenDialog( SettingsDialog.this ) == JFileChooser.APPROVE_OPTION )
-        // {
-        // tmpTextField.setText( fileChooser.getSelectedFile().getAbsolutePath() );
-        // }
-        // }
-        // } );
-        //
-        // lafComboBox.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // lafComboBoxActionPerformed();
-        // }
-        // } );
-        //
-        // langComboBox.addActionListener( new ActionListener()
-        // {
-        // public void actionPerformed(
-        // ActionEvent evt )
-        // {
-        // String language = langComboBox.getSelectedItem().toString();
-        // settings.setProperty( JBookShelfSettings.LANGUAGE, language );
-        // Resourses.switchLanguage( language );
-        // }
-        // } );
+        lafComboBox.currentIndexChanged.connect( this, "lafComboBoxActionPerformed()" );
+        langComboBox.currentIndexChanged.connect( this, "languageChanged()" );
+
+        cancelButton.released.connect( this, "close()" );
+        okButton.released.connect( this, "onOK()" );
+
+        saveButton.released.connect( this, "onSave()" );
+        restoreButton.released.connect( this, "onRestore()" );
+
+        chooseJBSFolderButton.released.connect( this, "chooseJBSFolder()" );
+        chooseTempFolderButton.released.connect( this, "chooseTempFolder()" );
     }
 
+    @SuppressWarnings( "unused" )
     private void lafComboBoxActionPerformed()
     {
-        // try
-        // {
-        // String lafName = lafComboBox.getSelectedItem().toString();
-        // settings.setProperty( JBookShelfSettings.LAF, lafName );
-        //
-        // UIManager.setLookAndFeel( Resourses.getLAFClassName( lafName ) );
-        //
-        // SwingUtilities.updateComponentTreeUI( this );
-        // pack();
-        //
-        // SwingUtilities.updateComponentTreeUI( getParent() );
-        // ((Window) getParent()).pack();
-        // }
-        // catch ( Exception ex )
-        // {
-        // throw new Error( ex );
-        // }
+        String lafName = lafComboBox.currentText();
+        settings.setProperty( JBookShelfSettings.LAF, lafName );
+
+        QApplication.setStyle( lafName );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void languageChanged()
+    {
+        String language = langComboBox.currentText();
+        settings.setProperty( LANGUAGE, language );
+
+        // todo switch translation
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onOK()
+    {
+        readSettingValues();
+        settings.save( settings.getSettingsFile().getAbsolutePath(), true );
+        close();
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onRestore()
+    {
+        settings.loadDefaults();
+        arrangeSettingValues();
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onSave()
+    {
+        readSettingValues();
+        settings.saveAsDefaults();
     }
 
     private void readSettingValues()
     {
-        // settings.setProperty( LANGUAGE, langComboBox.getSelectedItem().toString() );
-        // settings.setProperty( LAF, lafComboBox.getSelectedItem().toString() );
-        // settings.setProperty( TEMP_FOLDER, tmpTextField.getText() );
-        // settings.setProperty( JBS_FOLDER, jbsTextField.getText() );
-        // settings.setProperty( IMPORT_MASK, importTextField.getText() );
-    }
-
-    /**
-     * register components to be localized
-     */
-    private void registerComponents()
-    {
-        // restoreButton.setName( "restoreButton" );
-        // cancelButton.setName( "cancelButton" );
-        // okButton.setName( "okButton" );
-        // saveButton.setName( "saveButton" );
-        // settingsLabel.setName( "settingsLabel" );
-        // languageLabel.setName( "languageLabel" );
-        // lafLabel.setName( "lafLabel" );
-        // tmpFolderLabel.setName( "tmpFolderLabel" );
-        // jbsFolderLabel.setName( "jbsFolderLabel" );
-        // importMaskLabel.setName( "importMaskLabel" );
-        // chooseJBSFolderButton.setName( "chooseJBSFolderButton" );
-        // chooseTempFolderButton.setName( "chooseTempFolderButton" );
-        //
-        // Resourses.register( getClass(), restoreButton );
-        // Resourses.register( getClass(), chooseJBSFolderButton );
-        // Resourses.register( getClass(), cancelButton );
-        // Resourses.register( getClass(), okButton );
-        // Resourses.register( getClass(), saveButton );
-        // Resourses.register( getClass(), chooseTempFolderButton );
-        //
-        // Resourses.register( getClass(), settingsLabel );
-        // Resourses.register( getClass(), languageLabel );
-        // Resourses.register( getClass(), lafLabel );
-        // Resourses.register( getClass(), tmpFolderLabel );
-        // Resourses.register( getClass(), jbsFolderLabel );
-        // Resourses.register( getClass(), importMaskLabel );
+        settings.setProperty( LANGUAGE, langComboBox.currentText() );
+        settings.setProperty( LAF, lafComboBox.currentText() );
+        settings.setProperty( TEMP_FOLDER, tmpFolderTextField.text() );
+        settings.setProperty( JBS_FOLDER, jbsFolderTextField.text() );
+        settings.setProperty( IMPORT_MASK, importMaskTextField.text() );
     }
 }
