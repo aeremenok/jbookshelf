@@ -112,6 +112,8 @@ public class RelatedPanel
         layout.addWidget( removeButton, 0, 1 );
         layout.addWidget( searchTextField, 0, 2 );
 
+        layout.addWidget( tabbedPane, 1, 0, 1, 3 );
+
         tabbedPane.addTab( commentPanel, tr( "Comments" ) );
         tabbedPane.addTab( relatedPanel, tr( "Related" ) );
 
