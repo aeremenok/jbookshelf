@@ -6,17 +6,15 @@
     ${version}  - release version
     ${jambidir} - where qtjambi resides
     
-    ! qt-jambi is platform-dependent, so replace "qtjambi-linux32-gcc-4.4.3_01.jar" with correct jar name
-     - qtjambi-linux32-gcc-4.4.3_01 
-     - qtjambi-win32-msvc2005-4.4.3_01
-     - todo mac...
-    (writing triple conditionals would have made this script too complex =( )
+    ! qt-jambi is platform-dependent, so 
+    copy qtjambi-[version].jar and qtjambi-[platform]-[version].jar to ${jambidir}
+    and rename them to qtjambi.jar and qtjambi-native.jar
  -->
 <project default="create_run_jar" name="Create Runnable Jar for Project QJBookShelf">
 
 	<property name="libdir" value="${basedir}/lib/" />
-	<property name="bindir" value="${basedir}/bin/" />
 	<property name="targetdir" value="${builddir}/jbookshelf-${version}" />
+	<property name="modeldir" value="${basedir}/../JBookShelfModel" />
 
 	<target name="create_run_jar">
 		<mkdir dir="${targetdir}"/>
@@ -28,8 +26,8 @@
 				<attribute name="Class-Path" value="." />
 			</manifest>
 
-			<zipfileset excludes="META-INF/*.SF" src="${jambidir}/qtjambi-4.4.3_01.jar" />
-			<zipfileset excludes="META-INF/*.SF" src="${jambidir}/qtjambi-linux32-gcc-4.4.3_01.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${jambidir}/qtjambi.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${jambidir}/qtjambi-native.jar" />
 
 			<!-- todo specify jars automatically -->
             <zipfileset excludes="META-INF/*.SF" src="${libdir}/junit.jar" />
@@ -38,7 +36,8 @@
             <zipfileset excludes="META-INF/*.SF" src="${libdir}/org.eclipse.emf.ecore_2.4.1.v200808251517.jar" />
             <zipfileset excludes="META-INF/*.SF" src="${libdir}/org.eclipse.emf.ecore.xmi_2.4.1.v200808251517.jar" />
             	
-			<fileset dir="${bindir}" />
+			<fileset dir="${basedir}/bin" />
+			<fileset dir="${modeldir}/bin" />
 		</jar>
 		
 		<copy todir="${targetdir}" overwrite="true">
