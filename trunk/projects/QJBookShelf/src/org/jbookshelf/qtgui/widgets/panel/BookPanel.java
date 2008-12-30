@@ -206,14 +206,16 @@ public class BookPanel
     @SuppressWarnings( "unused" )
     private void chooseFile()
     {
-        new FileDialog( this )
+        FileDialog fileDialog = new FileDialog( this )
         {
             @Override
             protected void filesSelected()
             {
                 fileTextField.setText( selectedFiles().get( 0 ) );
             }
-        }.show();
+        };
+        fileDialog.selectFile( fileTextField.text() );
+        fileDialog.show();
     }
 
     private void initComponents()
