@@ -206,7 +206,7 @@ public class BookPanel
     @SuppressWarnings( "unused" )
     private void chooseFile()
     {
-        new FileDialog()
+        new FileDialog( this )
         {
             @Override
             protected void filesSelected()
