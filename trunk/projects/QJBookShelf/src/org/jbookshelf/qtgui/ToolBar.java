@@ -39,6 +39,7 @@ import com.trolltech.qt.gui.QToolBar;
 import com.trolltech.qt.gui.QFileDialog.FileMode;
 import com.trolltech.qt.gui.QLineEdit.EchoMode;
 import com.trolltech.qt.gui.QMessageBox.StandardButton;
+import com.trolltech.qt.gui.QMessageBox.StandardButtons;
 
 /**
  * @author eav
@@ -230,11 +231,13 @@ public class ToolBar
     {
         String title = tr( "Confirm" );
         String message = tr( "Remove" ) + " " + selectedUnique.getName() + "?";
-        if ( QMessageBox.question( this, title, message, StandardButton.Yes, StandardButton.No ) == 0 )
+        StandardButtons buttons = new StandardButtons( StandardButton.Yes, StandardButton.No );
+        StandardButton button = QMessageBox.question( this, title, message, buttons, StandardButton.Yes );
+        if ( StandardButton.Yes.equals( button ) )
         {
             Storage.getBookShelf().removeUnique( selectedUnique );
-            CollectionPanel.getInstance().removeSelectedItem();
             QMessageBox.information( this, tr( "Removed" ), selectedUnique.getName() + " " + tr( "removed" ) );
+            CollectionPanel.getInstance().removeSelectedItem();
         }
     }
 
