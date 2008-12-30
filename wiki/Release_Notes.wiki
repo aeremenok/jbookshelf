@@ -1,8 +1,21 @@
 #labels Featured
-=JBookShelf 0.2b1=
+=JBookShelf 0.2b2=
 
-[http://jbookshelf.googlecode.com/files/jbookshelf-linux32-0.2b1.zip Download for Linux] 
-[http://jbookshelf.googlecode.com/files/jbookshelf-win32-0.2b1.zip Download for Windows]
+[http://jbookshelf.googlecode.com/files/jbookshelf-linux-0.2b2.zip Download for Linux] 
+[http://jbookshelf.googlecode.com/files/jbookshelf-windows-0.2b2.zip Download for Windows]
+
+==Changes==
+
+ * Reduced distro size
+ * Fixed some bugs
+
+==Known issues==
+
+ * Russian translation is temporary unavailable
+ * [http://code.google.com/p/jbookshelf/issues/list other]
+----
+
+=JBookShelf 0.2b1=
 
 ==Changes==
 
@@ -32,8 +45,6 @@
 ----
 
 =JBookShelf 0.1b1=
-
-[http://jbookshelf.googlecode.com/files/jbookshelf-0.1b1.zip download]
 
 ==Supported Features==
 
