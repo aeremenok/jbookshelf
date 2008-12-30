@@ -119,6 +119,6 @@ public class BookAdditionDialog
     {
         cancelButton.released.connect( this, "close()" );
         addNCloseButton.released.connect( this, "addNClose()" );
-        addNCloseButton.released.connect( this, "addNContinue()" );
+        addNContinueButton.released.connect( this, "addNContinue()" );
     }
 }
