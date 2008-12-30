@@ -9,12 +9,12 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/JBookShelfModel"/>
 	<classpathentry kind="var" path="JAMBI_LOCATION/qtjambi-native.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/opt/qtjambi/doc/html/"/>
+			<attribute name="javadoc_location" value="file:/opt/qtjambi/linux/doc/html/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="var" path="JAMBI_LOCATION/qtjambi.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/opt/qtjambi/doc/html/"/>
+			<attribute name="javadoc_location" value="file:/opt/qtjambi/linux/doc/html/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
