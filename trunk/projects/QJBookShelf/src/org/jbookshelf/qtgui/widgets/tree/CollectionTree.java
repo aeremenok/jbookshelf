@@ -42,7 +42,7 @@ public abstract class CollectionTree
     private List<FocusListener>           focusListeners = new ArrayList<FocusListener>();
     private List<MouseListener>           mouseListeners = new ArrayList<MouseListener>();
 
-    protected QTreeWidgetItem             root           = new QTreeWidgetItem();
+    protected QTreeWidgetItem             root;
 
     public CollectionTree()
     {
@@ -152,8 +152,8 @@ public abstract class CollectionTree
 
     private void initComponents()
     {
+        root = invisibleRootItem();
         header().hide();
-        addTopLevelItem( root );
     }
 
     private void initListeners()

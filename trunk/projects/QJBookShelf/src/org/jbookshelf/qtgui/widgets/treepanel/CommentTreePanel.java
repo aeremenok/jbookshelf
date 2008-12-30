@@ -62,7 +62,7 @@ public class CommentTreePanel
 
     private static final SimpleDateFormat format          = new SimpleDateFormat( "dd.MM.yy HH:mm" );
 
-    private final QTreeWidgetItem         root            = new QTreeWidgetItem();
+    private QTreeWidgetItem               root;
     private final QTreeWidget             commentTree     = new QTreeWidget();
 
     private final QPlainTextEdit          commentTextArea = new QPlainTextEdit();
@@ -193,7 +193,7 @@ public class CommentTreePanel
 
     private void initComponents()
     {
-        commentTree.addTopLevelItem( root );
+        root = commentTree.invisibleRootItem();
         commentTree.header().hide();
 
         QGridLayout editLayout = new QGridLayout();
