@@ -152,5 +152,6 @@ public class RelatedTreePanel
     private void initListeners()
     {
         relatedTree.activated.connect( relatedPanel, "focusGained()" );
+        relatedTree.itemSelectionChanged.connect( relatedPanel, "focusGained()" );
     }
 }
