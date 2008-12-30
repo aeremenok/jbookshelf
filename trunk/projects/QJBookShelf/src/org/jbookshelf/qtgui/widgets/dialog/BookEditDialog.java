@@ -52,6 +52,7 @@ public class BookEditDialog
     {
         super( parent );
         this.book = book;
+
         initComponents();
         initListeners();
 
@@ -62,7 +63,7 @@ public class BookEditDialog
         Parameters parameters )
     {
         EList<Author> authors = Storage.getBookShelf().queryAuthors( parameters.getAuthorName() );
-        if ( authors != null && authors.size() > 0 )
+        if ( authors.size() > 0 )
         { // todo what if we've found more than 1 author with equal names?
             book.getAuthors().set( 0, authors.get( 0 ) ); // todo edit multiple authors
         }
@@ -73,7 +74,7 @@ public class BookEditDialog
         }
 
         EList<Category> categories = Storage.getBookShelf().queryCategories( parameters.getCategoryName() );
-        if ( categories != null && categories.size() > 0 )
+        if ( categories.size() > 0 )
         {
             book.getCategories().set( 0, categories.get( 0 ) ); // todo edit multiple categories
         }
@@ -90,6 +91,9 @@ public class BookEditDialog
 
     private void initComponents()
     {
+        setWindowTitle( tr( "Edit Book" ) );
+        setModal( true );
+
         QGridLayout layout = new QGridLayout();
         setLayout( layout );
 

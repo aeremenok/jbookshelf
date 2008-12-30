@@ -86,7 +86,7 @@ public class SettingsDialog
     @SuppressWarnings( "unused" )
     private void chooseJBSFolder()
     {
-        FileDialog dialog = new FileDialog()
+        FileDialog dialog = new FileDialog( this )
         {
             @Override
             protected void filesSelected()
@@ -102,7 +102,7 @@ public class SettingsDialog
     @SuppressWarnings( "unused" )
     private void chooseTempFolder()
     {
-        FileDialog dialog = new FileDialog()
+        FileDialog dialog = new FileDialog( this )
         {
             @Override
             protected void filesSelected()
@@ -117,8 +117,8 @@ public class SettingsDialog
 
     private void initComponents()
     {
-        setModal( true );
         setWindowTitle( tr( "Settings" ) );
+        setModal( true );
 
         QGridLayout layout = new QGridLayout();
         setLayout( layout );

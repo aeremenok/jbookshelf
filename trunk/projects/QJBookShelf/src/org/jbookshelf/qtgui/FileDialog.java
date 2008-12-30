@@ -28,17 +28,12 @@ import com.trolltech.qt.gui.QWidget;
 public class FileDialog
     extends QFileDialog
 {
-    public FileDialog()
-    {
-        super();
-        connect();
-    }
-
     public FileDialog(
         QWidget parent )
     {
         super( parent );
         connect();
+        setModal( true );
     }
 
     public FileDialog(
@@ -47,6 +42,7 @@ public class FileDialog
     {
         super( parent, caption );
         connect();
+        setModal( true );
     }
 
     public FileDialog(
@@ -56,6 +52,7 @@ public class FileDialog
     {
         super( parent, caption, directory );
         connect();
+        setModal( true );
     }
 
     public FileDialog(
@@ -66,6 +63,7 @@ public class FileDialog
     {
         super( parent, caption, directory, filter );
         connect();
+        setModal( true );
     }
 
     public File getSelectedFile()

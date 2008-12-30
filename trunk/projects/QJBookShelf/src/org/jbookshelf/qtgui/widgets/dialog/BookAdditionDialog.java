@@ -94,6 +94,9 @@ public class BookAdditionDialog
 
     private void initComponents()
     {
+        setWindowTitle( tr( "Add Book" ) );
+        setModal( true );
+
         QGridLayout layout = new QGridLayout();
         setLayout( layout );
 

@@ -43,11 +43,13 @@ public class AboutDialog
         super( parent );
         initComponents();
         initListeners();
-        setWindowTitle( tr( "About" ) );
     }
 
     private void initComponents()
     {
+        setWindowTitle( tr( "About" ) );
+        setModal( true );
+
         QGridLayout layout = new QGridLayout();
         setLayout( layout );
 
