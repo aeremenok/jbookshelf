@@ -31,8 +31,8 @@ import com.trolltech.qt.gui.QVBoxLayout;
 public class RelatedTreePanel
     extends SearchableTreePanel
 {
-    private QTreeWidgetItem root        = new QTreeWidgetItem();
     private QTreeWidget     relatedTree = new QTreeWidget();
+    private QTreeWidgetItem root;
     private Unique          selectedUnique;
 
     public RelatedTreePanel(
@@ -142,7 +142,7 @@ public class RelatedTreePanel
 
     private void initComponents()
     {
-        relatedTree.addTopLevelItem( root );
+        root = relatedTree.invisibleRootItem();
         relatedTree.header().hide();
 
         setLayout( new QVBoxLayout() );
