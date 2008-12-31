@@ -36,6 +36,7 @@ import com.trolltech.qt.gui.QTreeWidget;
 import com.trolltech.qt.gui.QTreeWidgetItem;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
+import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
 
 public class CommentTreePanel
     extends SearchableTreePanel
@@ -114,18 +115,7 @@ public class CommentTreePanel
     {
         CommentNode commentNode = (CommentNode) commentTree.selectedItems().get( 0 );
         selectedCommentable.getComments().remove( commentNode.getComment() );
-
-        int row = root.indexOfChild( commentNode );
         root.removeChild( commentNode );
-
-        if ( row > 1 )
-        {
-            commentTree.setCurrentItem( root.child( row - 1 ) );
-        }
-        else
-        {
-            relatedPanel.focusLost();
-        }
     }
 
     public void saveComment()
@@ -195,6 +185,7 @@ public class CommentTreePanel
     {
         root = commentTree.invisibleRootItem();
         commentTree.header().hide();
+        commentTree.setSelectionMode( SelectionMode.SingleSelection );
 
         QGridLayout editLayout = new QGridLayout();
         editPanel.setLayout( editLayout );
@@ -222,11 +213,20 @@ public class CommentTreePanel
     @SuppressWarnings( "unused" )
     private void onItemSelection()
     {
-        CommentNode commentNode = (CommentNode) commentTree.selectedItems().get( 0 );
-        if ( commentNode != null )
+        List<QTreeWidgetItem> selectedItems = commentTree.selectedItems();
+        if ( selectedItems.size() > 0 )
         {
-            editComment( commentNode.getComment() );
+            CommentNode commentNode = (CommentNode) selectedItems.get( 0 );
+            if ( commentNode != null )
+            {
+                editComment( commentNode.getComment() );
+            }
+            relatedPanel.focusGained();
         }
-        relatedPanel.focusGained();
+        else
+        {
+            editPanel.setVisible( false );
+            relatedPanel.focusLost();
+        }
     }
 }
