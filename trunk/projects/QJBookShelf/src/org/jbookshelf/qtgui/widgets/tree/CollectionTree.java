@@ -99,6 +99,8 @@ public abstract class CollectionTree
     public void showResult(
         EList<? extends Unique> uniques )
     {
+        clearSelection();
+
         int childCount = root.childCount();
         for ( int i = 0; i < childCount; i++ )
         {
@@ -113,6 +115,8 @@ public abstract class CollectionTree
         }
 
         root.setExpanded( true );
+
+        fireNothingSelected();
     }
 
     @SuppressWarnings( "unchecked" )
