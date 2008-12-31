@@ -19,6 +19,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Category;
@@ -27,6 +28,7 @@ import org.jbookshelf.model.PhysicalUnit;
 import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
+import org.jbookshelf.model.impl.BookShelfImpl;
 import org.jbookshelf.qtgui.FileDialog;
 
 import com.trolltech.qt.gui.QCheckBox;
@@ -127,6 +129,11 @@ public class BookPanel
         isReadCheckBox.setChecked( false );
     }
 
+    /**
+     * read data, entered by user
+     * 
+     * @return all field values, incapsulated in {@link Parameters}
+     */
     public Parameters extractParameters()
     {
         String bookName = bookTextField.text();
@@ -163,15 +170,38 @@ public class BookPanel
         return new Parameters( bookName, authorName, categoryName, file, isRead );
     }
 
+    /**
+     * show book properties on panel
+     * 
+     * @param book a book to edit
+     */
     public void setBook(
         ReadingUnit book )
     {
+        // show book name
         bookTextField.setText( book.getName() );
+
+        // show author name
         Author author = book.getAuthors().get( 0 ); // todo multiple authors
+        if ( author == null )
+        { // author has been removed
+            BookShelfImpl bookShelf = (BookShelfImpl) Storage.getBookShelf();
+            author = bookShelf.getUnknown();
+            book.getAuthors().add( author );
+        }
         authorTextField.setText( author.getName() );
+
+        // show category name
         Category category = book.getCategories().get( 0 ); // todo multiple categories
+        if ( category == null )
+        { // category has been removed
+            BookShelfImpl bookShelf = (BookShelfImpl) Storage.getBookShelf();
+            category = bookShelf.getCommon();
+            book.getCategories().add( category );
+        }
         categoryTextField.setText( category.getName() );
 
+        // show file of the physical unit
         String fileName;
         PhysicalUnit physical = book.getPhysical();
         if ( physical instanceof SingleFile )
@@ -200,6 +230,7 @@ public class BookPanel
         }
         fileTextField.setText( fileName );
 
+        // show whether is read
         isReadCheckBox.setChecked( book.isRead() );
     }
 
@@ -252,6 +283,9 @@ public class BookPanel
         chooseButton.released.connect( this, "chooseFile()" );
     }
 
+    /**
+     * register fields to clear quickly
+     */
     private void registerComponents()
     {
         components.add( bookTextField );
