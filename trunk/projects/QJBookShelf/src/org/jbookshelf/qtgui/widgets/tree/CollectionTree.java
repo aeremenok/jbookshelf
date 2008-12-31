@@ -87,7 +87,12 @@ public abstract class CollectionTree
     public void removeSelectedItem()
     {
         UniqueNode uniqueNode = (UniqueNode) selectedItems().get( 0 );
-        uniqueNode.parent().removeChild( uniqueNode );
+        QTreeWidgetItem parent = uniqueNode.parent();
+        if ( parent == null )
+        { // todo a stub. why parent of toplevel item is null?
+            parent = root;
+        }
+        parent.removeChild( uniqueNode );
     }
 
     public void removeSelectionListener(
