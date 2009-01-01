@@ -45,8 +45,8 @@ public class Settings
 
             // preparing values
             instance.loadDefaults();
-            String folderName = instance.getProperty( JBookShelfSettings.JBS_FOLDER );
-            File folder = new File( folderName );
+
+            File folder = new File( instance.getProperty( JBookShelfSettings.JBS_FOLDER ) );
             String fileName = instance.getSettingsFile().getAbsolutePath();
             File file = new File( fileName );
             if ( file.exists() )
@@ -156,7 +156,6 @@ public class Settings
         properties.clear();
 
         properties.setProperty( JBookShelfSettings.LANGUAGE, "English" );
-        properties.setProperty( JBookShelfSettings.LAF, "Metal" );
         properties.setProperty( JBookShelfSettings.JBS_FOLDER, System.getProperty( "user.home" ) + File.separator +
             ".jbookshelf" + File.separator );
 

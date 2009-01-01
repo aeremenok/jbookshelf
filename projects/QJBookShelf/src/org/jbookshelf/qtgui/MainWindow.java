@@ -15,6 +15,7 @@
  */
 package org.jbookshelf.qtgui;
 
+import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
@@ -60,16 +61,22 @@ public class MainWindow
     {
         super();
 
-        ((SingleFileStorageImpl) Storage.getImpl()).setCollectionStorageFile( settings.getCollectionFile() );
-        Storage.loadCollection();
-
-        // todo set look-and-feel
+        initCollection();
+        initLAF();
 
         initComponents();
     }
 
+    private void initCollection()
+    {
+        ((SingleFileStorageImpl) Storage.getImpl()).setCollectionStorageFile( settings.getCollectionFile() );
+        Storage.loadCollection();
+    }
+
     private void initComponents()
     {
+        setWindowTitle( "JBookShelf" );
+
         QRect geometry = geometry();
         geometry.setWidth( 800 );
         geometry.setHeight( 600 );
@@ -80,6 +87,26 @@ public class MainWindow
         setCentralWidget( splitter );
         splitter.addWidget( CollectionPanel.getInstance() );
         splitter.addWidget( RelatedPanel.getInstance() );
+    }
+
+    private void initLAF()
+    {
+        String lafName = settings.getProperty( JBookShelfSettings.LAF );
+        if ( lafName == null )
+        {
+            String os = System.getProperty( "os.name" );
+            if ( os.toLowerCase().contains( "windows" ) )
+            {
+                lafName = "WindowsXP";
+            }
+            else
+            {
+                lafName = "Cleanlooks";
+            }
+            // todo mac os
+            settings.setProperty( JBookShelfSettings.LAF, lafName );
+        }
+        QApplication.setStyle( lafName );
     }
 
     @Override
