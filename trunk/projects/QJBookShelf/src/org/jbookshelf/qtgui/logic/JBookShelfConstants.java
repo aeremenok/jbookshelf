@@ -1,4 +1,4 @@
-package org.jbookshelf.qtgui;
+package org.jbookshelf.qtgui.logic;
 
 public interface JBookShelfConstants
 {

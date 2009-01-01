@@ -23,7 +23,7 @@ import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.Unique;
-import org.jbookshelf.qtgui.JBookShelfConstants;
+import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
 import com.trolltech.qt.gui.QGridLayout;
@@ -101,7 +101,7 @@ public class CommentTreePanel
         selectedCommentable.getComments().add( comment );
         Date value = new Date();
         comment.setCreationDate( value );
-        comment.setTitle( "comment" + format.format( value ) );
+        comment.setTitle( tr( "comment" ) + format.format( value ) );
         comment.setContent( "" );
 
         root.addChild( new CommentNode( comment ) );
@@ -132,13 +132,16 @@ public class CommentTreePanel
     public void search(
         String text )
     {
-        if ( text.equals( "" ) )
+        if ( selectedCommentable != null )
         {
-            drawComments( selectedCommentable.getComments() );
-        }
-        else
-        {
-            drawComments( selectedCommentable.queryComments( text ) );
+            if ( text.equals( "" ) )
+            {
+                drawComments( selectedCommentable.getComments() );
+            }
+            else
+            {
+                drawComments( selectedCommentable.queryComments( text ) );
+            }
         }
     }
 
@@ -174,6 +177,7 @@ public class CommentTreePanel
     private void editComment(
         Comment comment )
     {
+        // todo translate
         dateLabel.setText( tr( "Created " ) + format.format( comment.getCreationDate() ) );
         titleTextField.setText( comment.getTitle() );
         commentTextArea.setPlainText( comment.getContent() );

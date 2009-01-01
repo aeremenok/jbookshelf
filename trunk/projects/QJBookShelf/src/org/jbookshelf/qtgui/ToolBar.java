@@ -24,6 +24,9 @@ import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.Unique;
+import org.jbookshelf.qtgui.logic.JBookShelfConstants;
+import org.jbookshelf.qtgui.logic.Translatable;
+import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.dialog.AboutDialog;
 import org.jbookshelf.qtgui.widgets.dialog.BookAdditionDialog;
@@ -48,7 +51,8 @@ public class ToolBar
     extends QToolBar
     implements
         JBookShelfConstants,
-        UniqueSelectionListener
+        UniqueSelectionListener,
+        Translatable
 {
     private static final ToolBar instance = new ToolBar();
 
@@ -73,6 +77,8 @@ public class ToolBar
     {
         createActions();
         connectActions();
+
+        Translator.addTranslatable( this );
     }
 
     public void nothingSelected()
@@ -80,6 +86,23 @@ public class ToolBar
         removeAction.setEnabled( false );
         openAction.setEnabled( false );
         editAction.setEnabled( false );
+    }
+
+    public void retranslate()
+    {
+        addAction.setText( tr( "&Add" ) );
+        removeAction.setText( tr( "&Remove" ) );
+        editAction.setText( tr( "&Edit" ) );
+
+        openAction.setText( tr( "&Open" ) );
+
+        settingsAction.setText( tr( "&Settings" ) );
+
+        importAction.setText( tr( "&Import" ) );
+        backupAction.setText( tr( "&Backup" ) );
+        restoreAction.setText( tr( "&Restore" ) );
+
+        aboutAction.setText( tr( "&About" ) );
     }
 
     public void selectedUnique(
@@ -113,27 +136,27 @@ public class ToolBar
 
     private void createActions()
     {
-        addAction = addAction( new QIcon( ICONPATH + "list-add.png" ), tr( "&Add" ) );
-        removeAction = addAction( new QIcon( ICONPATH + "list-remove.png" ), tr( "&Remove" ) );
-        editAction = addAction( new QIcon( ICONPATH + "document-properties.png" ), tr( "&Edit" ) );
+        addAction = addAction( new QIcon( ICONPATH + "list-add.png" ), "" );
+        removeAction = addAction( new QIcon( ICONPATH + "list-remove.png" ), "" );
+        editAction = addAction( new QIcon( ICONPATH + "document-properties.png" ), "" );
 
         addSeparator();
 
-        openAction = addAction( new QIcon( ICONPATH + "document-preview.png" ), tr( "&Open" ) );
+        openAction = addAction( new QIcon( ICONPATH + "document-preview.png" ), "" );
 
         addSeparator();
 
-        settingsAction = addAction( new QIcon( ICONPATH + "configure.png" ), tr( "&Settings" ) );
+        settingsAction = addAction( new QIcon( ICONPATH + "configure.png" ), "" );
 
         addSeparator();
 
-        importAction = addAction( new QIcon( ICONPATH + "document-import.png" ), tr( "&Import" ) );
-        backupAction = addAction( new QIcon( ICONPATH + "document-save-as.png" ), tr( "&Backup" ) );
-        restoreAction = addAction( new QIcon( ICONPATH + "document-open.png" ), tr( "&Restore" ) );
+        importAction = addAction( new QIcon( ICONPATH + "document-import.png" ), "" );
+        backupAction = addAction( new QIcon( ICONPATH + "document-save-as.png" ), "" );
+        restoreAction = addAction( new QIcon( ICONPATH + "document-open.png" ), "" );
 
         addSeparator();
 
-        aboutAction = addAction( new QIcon( ICONPATH + "help-about.png" ), tr( "&About" ) );
+        aboutAction = addAction( new QIcon( ICONPATH + "help-about.png" ), "" );
     }
 
     @SuppressWarnings( "unused" )
@@ -187,7 +210,7 @@ public class ToolBar
                         File file,
                         Exception e )
                     {
-                        // todo
+                        // todo visualize
                         System.out.println( "- cannot import file " + file.getAbsolutePath() + " cause:" +
                             e.getMessage() );
                         // e.printStackTrace();
@@ -197,7 +220,7 @@ public class ToolBar
                     protected void onImportSuccess(
                         ReadingUnit book )
                     {
-                        // todo
+                        // todo visualize
                         System.out.println( "+ imported " + book.getAuthors().get( 0 ).getName() + ". " +
                             book.getName() );
                     }

@@ -30,6 +30,7 @@ import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.model.impl.BookShelfImpl;
 import org.jbookshelf.qtgui.FileDialog;
+import org.jbookshelf.qtgui.logic.Translatable;
 
 import com.trolltech.qt.gui.QCheckBox;
 import com.trolltech.qt.gui.QGridLayout;
@@ -44,6 +45,8 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class BookPanel
     extends QWidget
+    implements
+        Translatable
 {
     public class Parameters
     {
@@ -115,6 +118,8 @@ public class BookPanel
         initListeners();
 
         registerComponents();
+
+        retranslate();
     }
 
     public void clear()
@@ -170,6 +175,15 @@ public class BookPanel
         return new Parameters( bookName, authorName, categoryName, file, isRead );
     }
 
+    public void retranslate()
+    {
+        isReadCheckBox.setText( tr( "Is read" ) );
+        bookLabel.setText( tr( "Book" ) );
+        authorLabel.setText( tr( "Author" ) );
+        categoryLabel.setText( tr( "Category" ) );
+        fileLabel.setText( tr( "File" ) );
+    }
+
     /**
      * show book properties on panel
      * 
@@ -204,6 +218,7 @@ public class BookPanel
         // show file of the physical unit
         String fileName;
         PhysicalUnit physical = book.getPhysical();
+        // todo generalize
         if ( physical instanceof SingleFile )
         {
             SingleFile singleFile = (SingleFile) physical;
@@ -268,12 +283,6 @@ public class BookPanel
         layout.addWidget( chooseButton, 3, 2 );
 
         layout.addWidget( isReadCheckBox, 4, 0 );
-
-        isReadCheckBox.setText( tr( "Is read" ) );
-        bookLabel.setText( tr( "Book" ) );
-        authorLabel.setText( tr( "Author" ) );
-        categoryLabel.setText( tr( "Category" ) );
-        fileLabel.setText( tr( "File" ) );
 
         chooseButton.setText( "..." );
     }

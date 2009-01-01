@@ -34,6 +34,7 @@ import com.trolltech.qt.gui.QTreeWidget;
 import com.trolltech.qt.gui.QTreeWidgetItem;
 
 public abstract class CollectionTree
+    // todo change to model-view and implement Translatable
     extends QTreeWidget
     implements
         SoucesUniqueSelection

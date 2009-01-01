@@ -18,6 +18,8 @@ package org.jbookshelf.qtgui.widgets.dialog;
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.qtgui.FileDialog;
+import org.jbookshelf.qtgui.logic.Translatable;
+import org.jbookshelf.qtgui.logic.Translator;
 
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QComboBox;
@@ -37,7 +39,8 @@ import com.trolltech.qt.gui.QFileDialog.FileMode;
 public class SettingsDialog
     extends QDialog
     implements
-        JBookShelfSettings
+        JBookShelfSettings,
+        Translatable
 {
     private Settings    settings               = Settings.getInstance();
 
@@ -71,6 +74,25 @@ public class SettingsDialog
         initListeners();
 
         arrangeSettingValues();
+
+        retranslate();
+    }
+
+    public void retranslate()
+    {
+        setWindowTitle( tr( "Settings" ) );
+
+        settingsLabel.setText( tr( "Settings" ) );
+        langLabel.setText( tr( "Language" ) );
+        lafLabel.setText( tr( "Look-and-feel" ) );
+        jbsFolderLabel.setText( tr( "JBookShelf folder" ) );
+        tmpFolderLabel.setText( tr( "Temp folder" ) );
+        importMaskLabel.setText( tr( "Default import mask" ) );
+
+        saveButton.setText( tr( "Save as defaults" ) );
+        restoreButton.setText( tr( "Restore defaults" ) );
+        okButton.setText( tr( "OK" ) );
+        cancelButton.setText( tr( "Cancel" ) );
     }
 
     private void arrangeSettingValues()
@@ -117,7 +139,6 @@ public class SettingsDialog
 
     private void initComponents()
     {
-        setWindowTitle( tr( "Settings" ) );
         setModal( true );
 
         QGridLayout layout = new QGridLayout();
@@ -150,22 +171,11 @@ public class SettingsDialog
 
         settingsLabel.setFont( new QFont( "Tahoma", 14 ) );
 
+        // todo retranslate
         langComboBox.addItem( tr( "English" ) );
         langComboBox.addItem( tr( "Russian" ) );
 
         lafComboBox.addItems( QStyleFactory.keys() );
-
-        settingsLabel.setText( tr( "Settings" ) );
-        langLabel.setText( tr( "Language" ) );
-        lafLabel.setText( tr( "Look-and-feel" ) );
-        jbsFolderLabel.setText( tr( "JBookShelf folder" ) );
-        tmpFolderLabel.setText( tr( "Temp folder" ) );
-        importMaskLabel.setText( tr( "Default import mask" ) );
-
-        saveButton.setText( tr( "Save as defaults" ) );
-        restoreButton.setText( tr( "Restore defaults" ) );
-        okButton.setText( tr( "OK" ) );
-        cancelButton.setText( tr( "Cancel" ) );
 
         chooseJBSFolderButton.setText( "..." );
         chooseTempFolderButton.setText( "..." );
@@ -201,7 +211,8 @@ public class SettingsDialog
         String language = langComboBox.currentText();
         settings.setProperty( LANGUAGE, language );
 
-        // todo switch translation
+        Translator.retranslate( language );
+        retranslate();
     }
 
     @SuppressWarnings( "unused" )
