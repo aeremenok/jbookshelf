@@ -76,11 +76,19 @@
 			<arg value="${srcdir}/${packagedir}/widgets/treepanel" />
 
 			<arg value="-ts" />
+			<arg value="${basedir}/translations/jbookshelf_ru.ts" />
+			<arg value="-ts" />
 			<arg value="${basedir}/translations/jbookshelf_en.ts" />
 		</exec>
 	</target>
 
 	<target name="lrelease">
+		<exec executable="${jambidir}/${os}/bin/lrelease">
+			<arg value="${basedir}/translations/jbookshelf_ru.ts" />
+			<arg value="-qm" />
+			<arg value="${basedir}/translations/jbookshelf_ru.qm" />
+		</exec>
+		
 		<exec executable="${jambidir}/${os}/bin/lrelease">
 			<arg value="${basedir}/translations/jbookshelf_en.ts" />
 			<arg value="-qm" />

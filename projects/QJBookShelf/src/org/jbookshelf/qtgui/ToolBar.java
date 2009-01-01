@@ -32,6 +32,7 @@ import org.jbookshelf.qtgui.widgets.dialog.BookAdditionDialog;
 import org.jbookshelf.qtgui.widgets.dialog.BookEditDialog;
 import org.jbookshelf.qtgui.widgets.dialog.SettingsDialog;
 import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
+import org.jbookshelf.qtgui.widgets.ext.QToolBarExt;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 
 import com.trolltech.qt.gui.QAction;

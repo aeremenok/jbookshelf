@@ -1,4 +1,4 @@
-package org.jbookshelf.qtgui;
+package org.jbookshelf.qtgui.widgets.ext;
 
 import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;

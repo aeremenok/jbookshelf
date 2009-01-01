@@ -16,7 +16,7 @@ public class Translator
     static
     {
         RU = new QTranslator();
-        RU.load( "classpath:/../translations/jbookshelf.qm" );
+        RU.load( "classpath:/../translations/jbookshelf_ru.qm" );
 
         EN = new QTranslator();
         EN.load( "classpath:/../translations/jbookshelf_en.qm" );
