@@ -17,9 +17,9 @@ package org.jbookshelf.qtgui.widgets.panel;
 
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
-import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
+import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
 import org.jbookshelf.qtgui.widgets.treepanel.CommentTreePanel;
 import org.jbookshelf.qtgui.widgets.treepanel.RelatedTreePanel;
 import org.jbookshelf.qtgui.widgets.treepanel.SearchableTreePanel;
@@ -29,17 +29,15 @@ import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QTabWidget;
-import com.trolltech.qt.gui.QWidget;
 
 /**
  * @author eav
  */
 public class RelatedPanel
-    extends QWidget
+    extends QWidgetExt
     implements
         JBookShelfConstants,
-        UniqueSelectionListener,
-        Translatable
+        UniqueSelectionListener
 {
     private static final RelatedPanel instance        = new RelatedPanel();
 

@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>. </copyright>
  */
-package org.jbookshelf.qtgui;
+package org.jbookshelf.qtgui.widgets.ext;
 
 import java.io.File;
 import java.util.Arrays;
@@ -25,10 +25,10 @@ import com.trolltech.qt.gui.QWidget;
 /**
  * @author eav
  */
-public class FileDialog
+public class QFileDialogExt
     extends QFileDialog
 {
-    public FileDialog(
+    public QFileDialogExt(
         QWidget parent )
     {
         super( parent );
@@ -36,7 +36,7 @@ public class FileDialog
         setModal( true );
     }
 
-    public FileDialog(
+    public QFileDialogExt(
         QWidget parent,
         String caption )
     {
@@ -45,7 +45,7 @@ public class FileDialog
         setModal( true );
     }
 
-    public FileDialog(
+    public QFileDialogExt(
         QWidget parent,
         String caption,
         String directory )
@@ -55,7 +55,7 @@ public class FileDialog
         setModal( true );
     }
 
-    public FileDialog(
+    public QFileDialogExt(
         QWidget parent,
         String caption,
         String directory,

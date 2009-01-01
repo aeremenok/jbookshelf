@@ -25,20 +25,19 @@ import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
-import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.dialog.AboutDialog;
 import org.jbookshelf.qtgui.widgets.dialog.BookAdditionDialog;
 import org.jbookshelf.qtgui.widgets.dialog.BookEditDialog;
 import org.jbookshelf.qtgui.widgets.dialog.SettingsDialog;
+import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QInputDialog;
 import com.trolltech.qt.gui.QMessageBox;
-import com.trolltech.qt.gui.QToolBar;
 import com.trolltech.qt.gui.QFileDialog.FileMode;
 import com.trolltech.qt.gui.QLineEdit.EchoMode;
 import com.trolltech.qt.gui.QMessageBox.StandardButton;
@@ -48,11 +47,10 @@ import com.trolltech.qt.gui.QMessageBox.StandardButtons;
  * @author eav
  */
 public class ToolBar
-    extends QToolBar
+    extends QToolBarExt
     implements
         JBookShelfConstants,
-        UniqueSelectionListener,
-        Translatable
+        UniqueSelectionListener
 {
     private static final ToolBar instance = new ToolBar();
 
@@ -174,7 +172,7 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onBackup()
     {
-        FileDialog fileDialog = new FileDialog( this, tr( "Select backup file" ) )
+        QFileDialogExt fileDialog = new QFileDialogExt( this, tr( "Select backup file" ) )
         {
             @Override
             protected void filesSelected()
@@ -198,7 +196,7 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onImport()
     {
-        FileDialog fileDialog = new FileDialog( this, tr( "Select a directory to import" ) )
+        QFileDialogExt fileDialog = new QFileDialogExt( this, tr( "Select a directory to import" ) )
         {
             @Override
             protected void filesSelected()
@@ -267,7 +265,7 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onRestore()
     {
-        FileDialog fileDialog = new FileDialog( this, tr( "Select backup file" ) )
+        QFileDialogExt fileDialog = new QFileDialogExt( this, tr( "Select backup file" ) )
         {
             @Override
             protected void filesSelected()

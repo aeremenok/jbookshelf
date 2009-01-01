@@ -29,8 +29,8 @@ import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.model.impl.BookShelfImpl;
-import org.jbookshelf.qtgui.FileDialog;
-import org.jbookshelf.qtgui.logic.Translatable;
+import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
+import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
 
 import com.trolltech.qt.gui.QCheckBox;
 import com.trolltech.qt.gui.QGridLayout;
@@ -44,9 +44,7 @@ import com.trolltech.qt.gui.QWidget;
  * @author eav
  */
 public class BookPanel
-    extends QWidget
-    implements
-        Translatable
+    extends QWidgetExt
 {
     public class Parameters
     {
@@ -252,7 +250,7 @@ public class BookPanel
     @SuppressWarnings( "unused" )
     private void chooseFile()
     {
-        FileDialog fileDialog = new FileDialog( this )
+        QFileDialogExt fileDialog = new QFileDialogExt( this )
         {
             @Override
             protected void filesSelected()
