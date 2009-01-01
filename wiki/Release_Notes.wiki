@@ -1,8 +1,21 @@
 #labels Featured
-=JBookShelf 0.2b2=
+=JBookShelf 0.2b3=
 
-[http://jbookshelf.googlecode.com/files/jbookshelf-linux-0.2b2.zip Download for Linux] 
-[http://jbookshelf.googlecode.com/files/jbookshelf-windows-0.2b2.zip Download for Windows]
+[http://jbookshelf.googlecode.com/files/jbookshelf-linux-0.2b3.zip Download for Linux] 
+[http://jbookshelf.googlecode.com/files/jbookshelf-windows-0.2b3.zip Download for Windows]
+
+==Changes==
+
+ * Translated into Russian
+ * Fixed some bugs
+
+==Known issues==
+
+ * [http://code.google.com/p/jbookshelf/issues/list issues]
+
+----
+
+=JBookShelf 0.2b2=
 
 ==Changes==
 
