@@ -15,9 +15,8 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
-import org.jbookshelf.qtgui.logic.Translatable;
+import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 
-import com.trolltech.qt.gui.QDialog;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QPushButton;
@@ -27,9 +26,7 @@ import com.trolltech.qt.gui.QWidget;
  * @author eav
  */
 public class AboutDialog
-    extends QDialog
-    implements
-        Translatable
+    extends QDialogExt
 {
     private QLabel      header            = new QLabel();
     private QLabel      authorLabel       = new QLabel();

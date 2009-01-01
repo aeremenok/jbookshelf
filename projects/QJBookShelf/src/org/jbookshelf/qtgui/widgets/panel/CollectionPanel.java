@@ -23,8 +23,8 @@ import java.awt.event.MouseEvent;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
-import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;
+import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
 import org.jbookshelf.qtgui.widgets.tree.AuthorTree;
 import org.jbookshelf.qtgui.widgets.tree.BookTree;
 import org.jbookshelf.qtgui.widgets.tree.CategoryTree;
@@ -39,16 +39,14 @@ import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QTabWidget;
 import com.trolltech.qt.gui.QTreeWidgetItem;
-import com.trolltech.qt.gui.QWidget;
 
 /**
  * @author eav
  */
 public class CollectionPanel
-    extends QWidget
+    extends QWidgetExt
     implements
-        JBookShelfConstants,
-        Translatable
+        JBookShelfConstants
 {
     private static CollectionPanel instance;
 

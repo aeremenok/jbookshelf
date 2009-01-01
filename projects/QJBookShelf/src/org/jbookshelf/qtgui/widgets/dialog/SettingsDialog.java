@@ -17,13 +17,12 @@ package org.jbookshelf.qtgui.widgets.dialog;
 
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
-import org.jbookshelf.qtgui.FileDialog;
-import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;
+import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
+import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
 
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QComboBox;
-import com.trolltech.qt.gui.QDialog;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
@@ -37,10 +36,9 @@ import com.trolltech.qt.gui.QFileDialog.FileMode;
  * @author eav
  */
 public class SettingsDialog
-    extends QDialog
+    extends QDialogExt
     implements
-        JBookShelfSettings,
-        Translatable
+        JBookShelfSettings
 {
     private Settings    settings               = Settings.getInstance();
 
@@ -108,7 +106,7 @@ public class SettingsDialog
     @SuppressWarnings( "unused" )
     private void chooseJBSFolder()
     {
-        FileDialog dialog = new FileDialog( this )
+        QFileDialogExt dialog = new QFileDialogExt( this )
         {
             @Override
             protected void filesSelected()
@@ -124,7 +122,7 @@ public class SettingsDialog
     @SuppressWarnings( "unused" )
     private void chooseTempFolder()
     {
-        FileDialog dialog = new FileDialog( this )
+        QFileDialogExt dialog = new QFileDialogExt( this )
         {
             @Override
             protected void filesSelected()

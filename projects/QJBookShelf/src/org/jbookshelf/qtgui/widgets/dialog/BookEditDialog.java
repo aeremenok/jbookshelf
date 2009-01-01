@@ -21,12 +21,11 @@ import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.ReadingUnit;
-import org.jbookshelf.qtgui.logic.Translatable;
+import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel.Parameters;
 
-import com.trolltech.qt.gui.QDialog;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
@@ -37,9 +36,7 @@ import com.trolltech.qt.gui.QWidget;
  * @author eav
  */
 public class BookEditDialog
-    extends QDialog
-    implements
-        Translatable
+    extends QDialogExt
 {
     private QPushButton       applyButton  = new QPushButton();
     private QPushButton       cancelButton = new QPushButton();

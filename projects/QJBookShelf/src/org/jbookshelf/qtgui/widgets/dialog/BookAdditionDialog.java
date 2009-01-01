@@ -21,12 +21,11 @@ import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.PhysicalUnit;
 import org.jbookshelf.model.ReadingUnit;
-import org.jbookshelf.qtgui.logic.Translatable;
+import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel.Parameters;
 
-import com.trolltech.qt.gui.QDialog;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
@@ -38,9 +37,7 @@ import com.trolltech.qt.gui.QWidget;
  * @author eav
  */
 public class BookAdditionDialog
-    extends QDialog
-    implements
-        Translatable
+    extends QDialogExt
 {
     private QPushButton addNCloseButton    = new QPushButton();
     private QPushButton addNContinueButton = new QPushButton();
