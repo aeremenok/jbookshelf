@@ -19,6 +19,7 @@ import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
+import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
@@ -65,6 +66,8 @@ public class MainWindow
         initLAF();
 
         initComponents();
+
+        initLanguage();
     }
 
     private void initCollection()
@@ -107,6 +110,11 @@ public class MainWindow
             settings.setProperty( JBookShelfSettings.LAF, lafName );
         }
         QApplication.setStyle( lafName );
+    }
+
+    private void initLanguage()
+    {
+        Translator.retranslate( settings.getProperty( JBookShelfSettings.LANGUAGE ) );
     }
 
     @Override

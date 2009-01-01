@@ -93,9 +93,6 @@ public class SettingsDialog
         restoreButton.setText( tr( "Restore defaults" ) );
         okButton.setText( tr( "OK" ) );
         cancelButton.setText( tr( "Cancel" ) );
-
-        langComboBox.setItemText( 0, tr( "English" ) );
-        langComboBox.setItemText( 1, tr( "Russian" ) );
     }
 
     private void arrangeSettingValues()
@@ -174,8 +171,8 @@ public class SettingsDialog
 
         settingsLabel.setFont( new QFont( "Tahoma", 14 ) );
 
-        langComboBox.addItem( "" );
-        langComboBox.addItem( "" );
+        langComboBox.addItem( "English" );
+        langComboBox.addItem( "Russian" );
 
         lafComboBox.addItems( QStyleFactory.keys() );
 
