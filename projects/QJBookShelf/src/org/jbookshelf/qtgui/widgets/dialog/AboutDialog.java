@@ -15,6 +15,8 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
+import org.jbookshelf.qtgui.logic.Translatable;
+
 import com.trolltech.qt.gui.QDialog;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
@@ -26,6 +28,8 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class AboutDialog
     extends QDialog
+    implements
+        Translatable
 {
     private QLabel      header            = new QLabel();
     private QLabel      authorLabel       = new QLabel();
@@ -43,11 +47,27 @@ public class AboutDialog
         super( parent );
         initComponents();
         initListeners();
+
+        retranslate();
+    }
+
+    public void retranslate()
+    {
+        setWindowTitle( tr( "About" ) );
+
+        authorLabel.setText( tr( "Author" ) );
+        licenseLabel.setText( tr( "License" ) );
+        versionLabel.setText( tr( "Version" ) );
+
+        authorValueLabel.setText( tr( "Andrey Yeremenok (eav1986_at_gmail_com)" ) );
+        licenseValueLabel.setText( tr( "GPL v.3" ) );
+        versionValueLabel.setText( tr( "0.2b3" ) );
+
+        closeButton.setText( tr( "&Close" ) );
     }
 
     private void initComponents()
     {
-        setWindowTitle( tr( "About" ) );
         setModal( true );
 
         QGridLayout layout = new QGridLayout();
@@ -65,16 +85,6 @@ public class AboutDialog
         layout.addWidget( closeButton, 4, 1 );
 
         header.setText( "JBookShelf" );
-
-        authorLabel.setText( tr( "Author" ) );
-        licenseLabel.setText( tr( "License" ) );
-        versionLabel.setText( tr( "Version" ) );
-
-        authorValueLabel.setText( tr( "Andrey Yeremenok (eav1986_at_gmail_com)" ) );
-        licenseValueLabel.setText( tr( "GPL v.3" ) );
-        versionValueLabel.setText( tr( "0.2b1" ) );
-
-        closeButton.setText( tr( "&Close" ) );
     }
 
     private void initListeners()

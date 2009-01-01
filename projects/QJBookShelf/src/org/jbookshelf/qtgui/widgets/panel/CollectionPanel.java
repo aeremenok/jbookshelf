@@ -22,7 +22,9 @@ import java.awt.event.MouseEvent;
 
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Unique;
-import org.jbookshelf.qtgui.JBookShelfConstants;
+import org.jbookshelf.qtgui.logic.JBookShelfConstants;
+import org.jbookshelf.qtgui.logic.Translatable;
+import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.tree.AuthorTree;
 import org.jbookshelf.qtgui.widgets.tree.BookTree;
 import org.jbookshelf.qtgui.widgets.tree.CategoryTree;
@@ -45,7 +47,8 @@ import com.trolltech.qt.gui.QWidget;
 public class CollectionPanel
     extends QWidget
     implements
-        JBookShelfConstants
+        JBookShelfConstants,
+        Translatable
 {
     private static CollectionPanel instance;
 
@@ -75,6 +78,8 @@ public class CollectionPanel
     {
         initComponents();
         initListeners();
+
+        Translator.addTranslatable( this );
     }
 
     public CollectionTree[] getTrees()
@@ -89,6 +94,20 @@ public class CollectionPanel
     public void removeSelectedItem()
     {
         getActiveTree().removeSelectedItem();
+    }
+
+    public void retranslate()
+    {
+        searchButton.setText( tr( "Search" ) );
+        searchTextField.setText( tr( "search..." ) );
+
+        viewTabbedPane.setTabText( 0, tr( "Books" ) );
+        viewTabbedPane.setTabText( 1, tr( "Authors" ) );
+        viewTabbedPane.setTabText( 2, tr( "Categories" ) );
+
+        isReadComboBox.setItemText( 0, tr( "All" ) );
+        isReadComboBox.setItemText( 1, tr( "Read" ) );
+        isReadComboBox.setItemText( 2, tr( "Unread" ) );
     }
 
     public void selectRelatedUnique(
@@ -150,13 +169,10 @@ public class CollectionPanel
 
         cleanButton.setIcon( new QIcon( ICONPATH + "edit-clear-locationbar-rtl.png" ) );
         searchButton.setIcon( new QIcon( ICONPATH + "edit-find.png" ) );
-        searchButton.setText( tr( "Search" ) );
 
-        isReadComboBox.addItem( tr( "All" ) );
-        isReadComboBox.addItem( tr( "Read" ) );
-        isReadComboBox.addItem( tr( "Unread" ) );
-
-        searchTextField.setText( tr( "search..." ) );
+        isReadComboBox.addItem( "" );
+        isReadComboBox.addItem( "" );
+        isReadComboBox.addItem( "" );
 
         layout.addWidget( searchTextField, 0, 0 );
         layout.addWidget( cleanButton, 0, 1 );
@@ -165,9 +181,9 @@ public class CollectionPanel
 
         layout.addWidget( viewTabbedPane, 1, 0, 1, 4 );
 
-        viewTabbedPane.addTab( bookTree, tr( "Books" ) );
-        viewTabbedPane.addTab( authorTree, tr( "Authors" ) );
-        viewTabbedPane.addTab( categoryTree, tr( "Categories" ) );
+        viewTabbedPane.addTab( bookTree, "" );
+        viewTabbedPane.addTab( authorTree, "" );
+        viewTabbedPane.addTab( categoryTree, "" );
 
         updateTree();
     }

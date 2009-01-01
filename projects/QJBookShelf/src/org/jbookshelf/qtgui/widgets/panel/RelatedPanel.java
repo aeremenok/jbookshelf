@@ -16,7 +16,9 @@
 package org.jbookshelf.qtgui.widgets.panel;
 
 import org.jbookshelf.model.Unique;
-import org.jbookshelf.qtgui.JBookShelfConstants;
+import org.jbookshelf.qtgui.logic.JBookShelfConstants;
+import org.jbookshelf.qtgui.logic.Translatable;
+import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.treepanel.CommentTreePanel;
 import org.jbookshelf.qtgui.widgets.treepanel.RelatedTreePanel;
@@ -36,7 +38,8 @@ public class RelatedPanel
     extends QWidget
     implements
         JBookShelfConstants,
-        UniqueSelectionListener
+        UniqueSelectionListener,
+        Translatable
 {
     private static final RelatedPanel instance        = new RelatedPanel();
 
@@ -60,6 +63,8 @@ public class RelatedPanel
     {
         initComponents();
         initListeners();
+
+        Translator.addTranslatable( this );
     }
 
     public void focusGained()
@@ -94,6 +99,14 @@ public class RelatedPanel
         }
     }
 
+    public void retranslate()
+    {
+        searchTextField.setText( tr( "search..." ) );
+
+        tabbedPane.setTabText( 0, tr( "Comments" ) );
+        tabbedPane.setTabText( 1, tr( "Related" ) );
+    }
+
     public void selectedUnique(
         Unique unique )
     {
@@ -114,10 +127,8 @@ public class RelatedPanel
 
         layout.addWidget( tabbedPane, 1, 0, 1, 3 );
 
-        tabbedPane.addTab( commentPanel, tr( "Comments" ) );
-        tabbedPane.addTab( relatedPanel, tr( "Related" ) );
-
-        searchTextField.setText( tr( "search..." ) );
+        tabbedPane.addTab( commentPanel, "" );
+        tabbedPane.addTab( relatedPanel, "" );
 
         addButton.setIcon( new QIcon( ICONPATH + "list-add-small.png" ) );
         removeButton.setIcon( new QIcon( ICONPATH + "list-remove-small.png" ) );
@@ -126,15 +137,9 @@ public class RelatedPanel
 
     private void initListeners()
     {
-        searchTextField.textChanged.connect( this, "keyReleased()" );
+        searchTextField.textChanged.connect( this, "onSearch()" );
         removeButton.released.connect( this, "onRemove()" );
         addButton.released.connect( this, "onAdd()" );
-    }
-
-    @SuppressWarnings( "unused" )
-    private void keyReleased()
-    {
-        getActiveTreePanel().search( searchTextField.text() );
     }
 
     @SuppressWarnings( "unused" )
@@ -147,5 +152,11 @@ public class RelatedPanel
     private void onRemove()
     {
         getActiveTreePanel().onRemove();
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onSearch()
+    {
+        getActiveTreePanel().search( searchTextField.text() );
     }
 }

@@ -21,6 +21,7 @@ import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.PhysicalUnit;
 import org.jbookshelf.model.ReadingUnit;
+import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel.Parameters;
@@ -38,6 +39,8 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class BookAdditionDialog
     extends QDialog
+    implements
+        Translatable
 {
     private QPushButton addNCloseButton    = new QPushButton();
     private QPushButton addNContinueButton = new QPushButton();
@@ -53,6 +56,8 @@ public class BookAdditionDialog
         super( parent );
         initComponents();
         initListeners();
+
+        retranslate();
     }
 
     public void addBook(
@@ -68,6 +73,17 @@ public class BookAdditionDialog
         CollectionPanel.getInstance().updateTree();
 
         QMessageBox.information( this, tr( "Added" ), parameters.getBookName() + " " + tr( "added" ) );
+    }
+
+    public void retranslate()
+    {
+        setWindowTitle( tr( "Add Book" ) );
+
+        headerLabel.setText( tr( "Add Book" ) );
+
+        addNCloseButton.setText( tr( "And and close" ) );
+        addNContinueButton.setText( tr( "And and continue" ) );
+        cancelButton.setText( tr( "Cancel" ) );
     }
 
     @SuppressWarnings( "unused" )
@@ -94,7 +110,6 @@ public class BookAdditionDialog
 
     private void initComponents()
     {
-        setWindowTitle( tr( "Add Book" ) );
         setModal( true );
 
         QGridLayout layout = new QGridLayout();
@@ -108,11 +123,6 @@ public class BookAdditionDialog
         layout.addWidget( cancelButton, 2, 2 );
 
         headerLabel.setFont( new QFont( "Tahoma", 14 ) );
-        headerLabel.setText( tr( "Add Book" ) );
-
-        addNCloseButton.setText( tr( "And and close" ) );
-        addNContinueButton.setText( tr( "And and continue" ) );
-        cancelButton.setText( tr( "Cancel" ) );
     }
 
     private void initListeners()

@@ -95,22 +95,25 @@ public class RelatedTreePanel
     public void search(
         String text )
     {
-        if ( text.equals( "" ) )
+        if ( selectedUnique != null )
         {
-            drawUniques( selectedUnique.getRelated() );
-        }
-        else
-        {
-            List<Unique> result = new ArrayList<Unique>();
-            String lowerCase = text.toLowerCase();
-            for ( Unique unique : selectedUnique.getRelated() )
+            if ( text.equals( "" ) )
             {
-                if ( unique.getName().toLowerCase().contains( lowerCase ) )
-                {
-                    result.add( unique );
-                }
+                drawUniques( selectedUnique.getRelated() );
             }
-            drawUniques( result );
+            else
+            {
+                List<Unique> result = new ArrayList<Unique>();
+                String lowerCase = text.toLowerCase();
+                for ( Unique unique : selectedUnique.getRelated() )
+                {
+                    if ( unique.getName().toLowerCase().contains( lowerCase ) )
+                    {
+                        result.add( unique );
+                    }
+                }
+                drawUniques( result );
+            }
         }
     }
 

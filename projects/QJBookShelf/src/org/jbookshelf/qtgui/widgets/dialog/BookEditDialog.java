@@ -21,6 +21,7 @@ import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.ReadingUnit;
+import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel.Parameters;
@@ -37,6 +38,8 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class BookEditDialog
     extends QDialog
+    implements
+        Translatable
 {
     private QPushButton       applyButton  = new QPushButton();
     private QPushButton       cancelButton = new QPushButton();
@@ -57,6 +60,17 @@ public class BookEditDialog
         initListeners();
 
         bookPanel.setBook( book );
+
+        retranslate();
+    }
+
+    public void retranslate()
+    {
+        setWindowTitle( tr( "Edit Book" ) );
+
+        headerLabel.setText( tr( "Edit Book Properties" ) );
+        applyButton.setText( tr( "Apply" ) );
+        cancelButton.setText( tr( "Cancel" ) );
     }
 
     public void saveBook(
@@ -91,7 +105,6 @@ public class BookEditDialog
 
     private void initComponents()
     {
-        setWindowTitle( tr( "Edit Book" ) );
         setModal( true );
 
         QGridLayout layout = new QGridLayout();
@@ -103,10 +116,6 @@ public class BookEditDialog
         layout.addWidget( bookPanel, 1, 0, 1, 2 );
         layout.addWidget( applyButton, 2, 0 );
         layout.addWidget( cancelButton, 2, 1 );
-
-        headerLabel.setText( tr( "Edit Book Properties" ) );
-        applyButton.setText( tr( "Apply" ) );
-        cancelButton.setText( tr( "Cancel" ) );
     }
 
     private void initListeners()
