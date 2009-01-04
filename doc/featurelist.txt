@@ -1,3 +1,25 @@
+--- pending ---
+
+- neccesary context menus
+
+- reader based on webkit ( http://doc.trolltech.com/qtjambi-4.4/html/com/trolltech/qt/webkit/QWebView.html )
+
+- citations ( comment + citation text + link to book text )
+
+- autocomplete in author, category field (based on existing list)
+
+- autocomplete in comment and citation textarea (based on vocabulary)
+
+- mass import process visualization (success/failure, add manually)
+
+- monitor new files in specified directory from tray
+
+- navigate between units, authors, tags, comments (optional, consider delaying to next iteration)
+
+- reorganize existing file structure according to specified filename masks
+
+--- implemented ---
+
 1. show query results
 
 2. open selected unit in a default system browser (allow further extensions for other external programs)
@@ -11,9 +33,3 @@
 6. register units from file structure according to specified filename masks
 
 7. backup/restore existing metadata
-
---- delay to next iteration ---
-
-8. navigate between units, authors, tags, comments (optional, consider delaying to next iteration)
-
-9. reorganize existing file structure according to specified filename masks
