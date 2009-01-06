@@ -32,9 +32,10 @@ import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 import com.trolltech.qt.gui.QFocusEvent;
 import com.trolltech.qt.gui.QTreeWidget;
 import com.trolltech.qt.gui.QTreeWidgetItem;
+import com.trolltech.qt.gui.QTreeWidgetItem.ChildIndicatorPolicy;
 
 public abstract class CollectionTree
-    // todo change to model-view and implement Translatable
+    // todo implement Translatable
     extends QTreeWidget
     implements
         SoucesUniqueSelection
@@ -116,11 +117,9 @@ public abstract class CollectionTree
         for ( Unique unique : uniques )
         {
             UniqueNode parent = new UniqueNode( unique );
+            parent.setChildIndicatorPolicy( ChildIndicatorPolicy.ShowIndicator );
             root.addChild( parent );
-            addChildren( parent );
         }
-
-        root.setExpanded( true );
 
         fireNothingSelected();
     }
@@ -173,6 +172,7 @@ public abstract class CollectionTree
 
         itemDoubleClicked.connect( this, "fireDoubleClicked(QTreeWidgetItem, Integer)" );
         itemSelectionChanged.connect( this, "itemSelectionChanged()" );
+        itemExpanded.connect( this, "onExpand(QTreeWidgetItem)" );
     }
 
     @SuppressWarnings( "unused" )
@@ -193,6 +193,17 @@ public abstract class CollectionTree
             {
                 fireNothingSelected();
             }
+        }
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onExpand(
+        QTreeWidgetItem parent )
+    {
+        if ( parent instanceof UniqueNode )
+        {
+            UniqueNode uniqueNode = (UniqueNode) parent;
+            addChildren( uniqueNode );
         }
     }
 
