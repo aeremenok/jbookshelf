@@ -80,15 +80,6 @@ public class CollectionPanel
         Translator.addTranslatable( this );
     }
 
-    public CollectionTree[] getTrees()
-    {
-        if ( trees == null )
-        {
-            trees = new CollectionTree[] { bookTree, authorTree, categoryTree };
-        }
-        return trees;
-    }
-
     public void removeSelectedItem()
     {
         getActiveTree().removeSelectedItem();
@@ -157,7 +148,7 @@ public class CollectionPanel
 
     private CollectionTree getActiveTree()
     {
-        return getTrees()[viewTabbedPane.currentIndex()];
+        return (CollectionTree) viewTabbedPane.currentWidget();
     }
 
     private void initComponents()
