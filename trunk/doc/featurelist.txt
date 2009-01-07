@@ -4,6 +4,8 @@
 
 - reader based on webkit ( http://doc.trolltech.com/qtjambi-4.4/html/com/trolltech/qt/webkit/QWebView.html )
 
+- creation and view of notes
+
 - citations ( comment + citation text + link to book text )
 
 - autocomplete in author, category field (based on existing list)
