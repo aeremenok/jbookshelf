@@ -5,7 +5,6 @@ JBookShelf is released under the terms of the GNU General Public License
 found below.
 
 Additionally, JBookShelf uses the following third party works:
-- SwingX under Lesser General Public License (LGPL)
 - Eclipse Modeling Framework (EMF) under Eclipse Public License - v 1.0
 - JUnit under Common Public License - V1.0
 - Oxygen icons under Lesser General Public License (LGPL)
