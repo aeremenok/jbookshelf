@@ -61,8 +61,6 @@ public class CollectionPanel
     private QLineEdit              searchTextField = new QLineEdit( this );
     private QTabWidget             viewTabbedPane  = new QTabWidget( this );
 
-    private CollectionTree[]       trees;
-
     public static CollectionPanel getInstance()
     {
         if ( instance == null )
