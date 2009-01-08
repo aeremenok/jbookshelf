@@ -19,6 +19,7 @@ import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
+import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
@@ -26,6 +27,7 @@ import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
+import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QSplitter;
 
@@ -34,6 +36,8 @@ import com.trolltech.qt.gui.QSplitter;
  */
 public class MainWindow
     extends QMainWindow
+    implements
+        JBookShelfConstants
 {
     private static MainWindow instance;
 
@@ -62,6 +66,9 @@ public class MainWindow
     {
         super();
 
+        QApplication.setApplicationVersion( "0.3b1" );
+        QApplication.setApplicationName( "JBookShelf" );
+
         initCollection();
         initLAF();
 
@@ -79,6 +86,7 @@ public class MainWindow
     private void initComponents()
     {
         setWindowTitle( "JBookShelf" );
+        setWindowIcon( new QIcon( ICONPATH + "logo-64.png" ) );
 
         QRect geometry = geometry();
         geometry.setWidth( 800 );
