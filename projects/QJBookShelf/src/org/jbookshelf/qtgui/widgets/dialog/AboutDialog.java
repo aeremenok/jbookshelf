@@ -15,10 +15,14 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
+import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 
+import com.trolltech.qt.gui.QApplication;
+import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QPixmap;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QWidget;
 
@@ -27,6 +31,8 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class AboutDialog
     extends QDialogExt
+    implements
+        JBookShelfConstants
 {
     private QLabel      header            = new QLabel();
     private QLabel      authorLabel       = new QLabel();
@@ -57,8 +63,8 @@ public class AboutDialog
         versionLabel.setText( tr( "Version" ) );
 
         authorValueLabel.setText( tr( "Andrey Yeremenok (eav1986_at_gmail_com)" ) );
-        licenseValueLabel.setText( tr( "GPL v.3" ) );
-        versionValueLabel.setText( tr( "0.2b3" ) );
+        licenseValueLabel.setText( "GPL v.3" );
+        versionValueLabel.setText( QApplication.applicationVersion() );
 
         closeButton.setText( tr( "&Close" ) );
     }
@@ -70,7 +76,11 @@ public class AboutDialog
         QGridLayout layout = new QGridLayout();
         setLayout( layout );
 
-        layout.addWidget( header, 0, 0, 1, 2 );
+        QLabel picLabel = new QLabel();
+        picLabel.setPixmap( new QPixmap( ICONPATH + "logo-128.png" ) );
+
+        layout.addWidget( picLabel, 0, 0 );
+        layout.addWidget( header, 0, 1 );
 
         layout.addWidget( authorLabel, 1, 0 );
         layout.addWidget( authorValueLabel, 1, 1 );
@@ -81,7 +91,8 @@ public class AboutDialog
 
         layout.addWidget( closeButton, 4, 1 );
 
-        header.setText( "JBookShelf" );
+        header.setText( QApplication.applicationName() );
+        header.setFont( new QFont( "Tahoma", 14 ) );
     }
 
     private void initListeners()
