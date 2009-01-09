@@ -80,6 +80,21 @@ public class ToolBar
         Translator.addTranslatable( this );
     }
 
+    public QAction getEditAction()
+    {
+        return editAction;
+    }
+
+    public QAction getOpenAction()
+    {
+        return openAction;
+    }
+
+    public QAction getRemoveAction()
+    {
+        return removeAction;
+    }
+
     public void nothingSelected()
     {
         removeAction.setEnabled( false );
