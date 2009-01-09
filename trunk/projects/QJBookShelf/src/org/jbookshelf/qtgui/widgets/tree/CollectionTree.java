@@ -29,6 +29,7 @@ import org.jbookshelf.qtgui.logic.SoucesUniqueSelection;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
+import com.trolltech.qt.gui.QContextMenuEvent;
 import com.trolltech.qt.gui.QFocusEvent;
 import com.trolltech.qt.gui.QTreeWidget;
 import com.trolltech.qt.gui.QTreeWidgetItem;
@@ -209,6 +210,20 @@ public abstract class CollectionTree
 
     protected abstract void addChildren(
         UniqueNode parent );
+
+    @Override
+    protected void contextMenuEvent(
+        QContextMenuEvent arg__1 )
+    {
+        QTreeWidgetItem item = itemAt( arg__1.pos() );
+        if ( item != null && item instanceof UniqueNode )
+        {
+            item.setSelected( true );
+
+            CollectionTreeMenu menu = new CollectionTreeMenu( (UniqueNode) item );
+            menu.exec( arg__1.globalPos() );
+        }
+    }
 
     @Override
     protected void focusInEvent(
