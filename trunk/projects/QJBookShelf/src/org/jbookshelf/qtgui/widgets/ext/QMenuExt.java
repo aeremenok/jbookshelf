@@ -1,7 +1,9 @@
 /**
- * <copyright> This file is part of JBookShelf, http://code.google.com/p/jbookshelf/<br>
- * <br>
- * Copyright (C) 2008 Andrey Yeremenok (eav1986_at_gmail_com) <br>
+ * <copyright> This file is part of JBooimport org.jbookshelf.qtgui.logic.Translator;
+
+import com.trolltech.qt.gui.QMenu;
+import com.trolltech.qt.gui.QWidget;
+<br>
  * <br>
  * JBookShelf is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later
@@ -15,48 +17,42 @@
  */
 package org.jbookshelf.qtgui.widgets.ext;
 
-import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;
 
-import com.trolltech.qt.core.Qt.WindowFlags;
-import com.trolltech.qt.core.Qt.WindowType;
-import com.trolltech.qt.gui.QDialog;
+import com.trolltech.qt.gui.QMenu;
 import com.trolltech.qt.gui.QWidget;
 
-public abstract class QDialogExt
-    extends QDialog
-    implements
-        Translatable
+public class QMenuExt
+    extends QMenu
 {
-    public QDialogExt()
+    public QMenuExt()
     {
         super();
     }
 
-    public QDialogExt(
+    public QMenuExt(
         QPrivateConstructor p )
     {
         super( p );
     }
 
-    public QDialogExt(
+    public QMenuExt(
         QWidget parent )
     {
         super( parent );
     }
 
-    public QDialogExt(
-        QWidget parent,
-        WindowFlags f )
+    public QMenuExt(
+        String title )
     {
-        super( parent, f );
+        super( title );
     }
 
-    public QDialogExt(
-        QWidget parent,
-        WindowType... f )
+    public QMenuExt(
+        String title,
+        QWidget parent )
     {
-        super( parent, f );
+        super( title, parent );
     }
 
     @Override

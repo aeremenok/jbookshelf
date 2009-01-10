@@ -47,9 +47,10 @@ public class RelatedPanel
     private QPushButton               removeButton    = new QPushButton();
 
     private QTabWidget                tabbedPane      = new QTabWidget();
-    private QLineEdit                 searchTextField = new QLineEdit();
 
+    private QLineEdit                 searchTextField = new QLineEdit();
     private SearchableTreePanel       commentPanel    = new CommentTreePanel( this );
+
     private SearchableTreePanel       relatedPanel    = new RelatedTreePanel( this );
 
     public static RelatedPanel getInstance()
@@ -77,7 +78,12 @@ public class RelatedPanel
 
     public SearchableTreePanel getActiveTreePanel()
     {
-        return getSearchableTreePanels()[tabbedPane.currentIndex()];
+        return (SearchableTreePanel) tabbedPane.currentWidget();
+    }
+
+    public QPushButton getRemoveButton()
+    {
+        return removeButton;
     }
 
     public SearchableTreePanel[] getSearchableTreePanels()
@@ -131,6 +137,9 @@ public class RelatedPanel
         addButton.setIcon( new QIcon( ICONPATH + "list-add-small.png" ) );
         removeButton.setIcon( new QIcon( ICONPATH + "list-remove-small.png" ) );
         removeButton.setEnabled( false );
+
+        addButton.setToolTip( tr( "Add" ) );
+        removeButton.setToolTip( tr( "Remove" ) );
     }
 
     private void initListeners()

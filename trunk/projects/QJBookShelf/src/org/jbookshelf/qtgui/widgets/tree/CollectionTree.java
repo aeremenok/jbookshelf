@@ -27,6 +27,7 @@ import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.ToolBar;
 import org.jbookshelf.qtgui.logic.SoucesUniqueSelection;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
+import org.jbookshelf.qtgui.widgets.menu.CollectionTreeMenu;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
 import com.trolltech.qt.gui.QContextMenuEvent;

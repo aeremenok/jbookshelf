@@ -64,7 +64,7 @@ public class CommentTreePanel
     private static final SimpleDateFormat format          = new SimpleDateFormat( "dd.MM.yy HH:mm" );
 
     private QTreeWidgetItem               root;
-    private final QTreeWidget             commentTree     = new QTreeWidget();
+    private final QTreeWidget             commentTree     = new SearchableTree();
 
     private final QPlainTextEdit          commentTextArea = new QPlainTextEdit();
     private final QLineEdit               titleTextField  = new QLineEdit();
@@ -177,7 +177,7 @@ public class CommentTreePanel
     private void editComment(
         Comment comment )
     {
-        // todo translate
+        // todo retranslate
         dateLabel.setText( tr( "Created " ) + format.format( comment.getCreationDate() ) );
         titleTextField.setText( comment.getTitle() );
         commentTextArea.setPlainText( comment.getContent() );
