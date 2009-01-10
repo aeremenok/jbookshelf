@@ -1,9 +1,6 @@
 /**
- * <copyright> This file is part of JBooimport org.jbookshelf.qtgui.logic.Translator;
-
-import com.trolltech.qt.gui.QMenu;
-import com.trolltech.qt.gui.QWidget;
-<br>
+ * <copyright> This file is part of JBooimport org.jbookshelf.qtgui.logic.Translator; import com.trolltech.qt.gui.QMenu;
+ * import com.trolltech.qt.gui.QWidget; <br>
  * <br>
  * JBookShelf is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later
@@ -22,7 +19,12 @@ import org.jbookshelf.qtgui.logic.Translator;
 import com.trolltech.qt.gui.QMenu;
 import com.trolltech.qt.gui.QWidget;
 
-public class QMenuExt
+/**
+ * {@link QMenu} with tricky translation policy
+ * 
+ * @author eav
+ */
+public abstract class QMenuExt
     extends QMenu
 {
     public QMenuExt()

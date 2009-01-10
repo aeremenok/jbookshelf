@@ -1,7 +1,7 @@
 /**
  * <copyright> This file is part of JBookShelf, http://code.google.com/p/jbookshelf/<br>
  * <br>
- * Copyright (C) 2008 Andrey Yeremenok (eav1986_at_gmail_com) <br>
+ * Copyright (C) 2008-2009 Andrey Yeremenok (eav1986_at_gmail_com) <br>
  * <br>
  * JBookShelf is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later
@@ -45,12 +45,10 @@ public class RelatedPanel
 
     private QPushButton               addButton       = new QPushButton();
     private QPushButton               removeButton    = new QPushButton();
+    private QLineEdit                 searchTextField = new QLineEdit();
 
     private QTabWidget                tabbedPane      = new QTabWidget();
-
-    private QLineEdit                 searchTextField = new QLineEdit();
     private SearchableTreePanel       commentPanel    = new CommentTreePanel( this );
-
     private SearchableTreePanel       relatedPanel    = new RelatedTreePanel( this );
 
     public static RelatedPanel getInstance()

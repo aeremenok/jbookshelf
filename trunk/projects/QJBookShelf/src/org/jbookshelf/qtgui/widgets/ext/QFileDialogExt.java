@@ -1,7 +1,7 @@
 /**
  * <copyright> This file is part of JBookShelf, http://code.google.com/p/jbookshelf/<br>
  * <br>
- * Copyright (C) 2008 Andrey Yeremenok (eav1986_at_gmail_com) <br>
+ * Copyright (C) 2008-2009 Andrey Yeremenok (eav1986_at_gmail_com) <br>
  * <br>
  * JBookShelf is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later
@@ -23,6 +23,9 @@ import com.trolltech.qt.gui.QFileDialog;
 import com.trolltech.qt.gui.QWidget;
 
 /**
+ * An adapter over {@link QFileDialog}. Adds callback method {@link QFileDialogExt#filesSelected()} and transforms
+ * selected file names to {@link File}'s
+ * 
  * @author eav
  */
 public class QFileDialogExt

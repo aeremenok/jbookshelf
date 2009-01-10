@@ -1,7 +1,7 @@
 /**
  * <copyright> This file is part of JBookShelf, http://code.google.com/p/jbookshelf/<br>
  * <br>
- * Copyright (C) 2008 Andrey Yeremenok (eav1986_at_gmail_com) <br>
+ * Copyright (C) 2008-2009 Andrey Yeremenok (eav1986_at_gmail_com) <br>
  * <br>
  * JBookShelf is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.ToolBar;
-import org.jbookshelf.qtgui.logic.SoucesUniqueSelection;
+import org.jbookshelf.qtgui.logic.SourcesUniqueSelection;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.menu.CollectionTreeMenu;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
@@ -36,11 +36,16 @@ import com.trolltech.qt.gui.QTreeWidget;
 import com.trolltech.qt.gui.QTreeWidgetItem;
 import com.trolltech.qt.gui.QTreeWidgetItem.ChildIndicatorPolicy;
 
+/**
+ * Displays any collection of {@link Unique}'s from {@link BookShelf}
+ * 
+ * @author eav
+ */
 public abstract class CollectionTree
     // todo implement Translatable
     extends QTreeWidget
     implements
-        SoucesUniqueSelection
+        SourcesUniqueSelection
 {
     private List<UniqueSelectionListener> listeners      = new ArrayList<UniqueSelectionListener>();
     private List<FocusListener>           focusListeners = new ArrayList<FocusListener>();
@@ -93,7 +98,7 @@ public abstract class CollectionTree
         UniqueNode uniqueNode = (UniqueNode) selectedItems().get( 0 );
         QTreeWidgetItem parent = uniqueNode.parent();
         if ( parent == null )
-        { // todo a stub. why parent of toplevel item is null?
+        { // todo a stub. why a parent of a toplevel item is null?
             parent = root;
         }
         parent.removeChild( uniqueNode );
