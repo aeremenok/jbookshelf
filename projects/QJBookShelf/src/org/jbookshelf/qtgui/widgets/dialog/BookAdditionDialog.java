@@ -47,7 +47,7 @@ public class BookAdditionDialog
 
     private QLabel      headerLabel        = new QLabel();
 
-    private BookPanel   bookPanel          = new BookPanel();
+    private BookPanel   bookPanel          = new BookPanel( this );
 
     public BookAdditionDialog(
         QWidget parent )

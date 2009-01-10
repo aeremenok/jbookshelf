@@ -150,11 +150,8 @@ public class RelatedTreePanel
         searchableTree.itemSelectionChanged.connect( relatedPanel, "focusGained()" );
     }
 
-    @Override
     protected void initComponents()
     {
-        super.initComponents();
-
         setLayout( new QVBoxLayout() );
         layout().addWidget( searchableTree );
     }

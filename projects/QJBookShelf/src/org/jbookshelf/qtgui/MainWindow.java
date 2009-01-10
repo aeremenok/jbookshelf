@@ -59,6 +59,9 @@ public class MainWindow
     {
         QApplication.initialize( args );
 
+        QApplication.setApplicationVersion( "0.3b1" );
+        QApplication.setApplicationName( "JBookShelf" );
+
         getInstance().show();
 
         QApplication.exec();
@@ -67,9 +70,6 @@ public class MainWindow
     private MainWindow()
     {
         super();
-
-        QApplication.setApplicationVersion( "0.3b1" );
-        QApplication.setApplicationName( "JBookShelf" );
 
         initCollection();
         initLAF();
