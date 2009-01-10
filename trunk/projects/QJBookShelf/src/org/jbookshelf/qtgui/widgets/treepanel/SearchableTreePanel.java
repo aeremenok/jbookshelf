@@ -75,7 +75,10 @@ public abstract class SearchableTreePanel
         RelatedPanel relatedPanel )
     {
         this.relatedPanel = relatedPanel;
-        initComponents();
+
+        root = searchableTree.invisibleRootItem();
+        searchableTree.header().hide();
+        searchableTree.setSelectionMode( SelectionMode.SingleSelection );
     }
 
     /**
@@ -95,11 +98,4 @@ public abstract class SearchableTreePanel
      */
     public abstract void search(
         String text );
-
-    protected void initComponents()
-    {
-        root = searchableTree.invisibleRootItem();
-        searchableTree.header().hide();
-        searchableTree.setSelectionMode( SelectionMode.SingleSelection );
-    }
 }

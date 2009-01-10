@@ -73,15 +73,14 @@ public class CommentTreePanel
 
     private static final SimpleDateFormat format          = new SimpleDateFormat( "dd.MM.yy HH:mm" );
 
-    private final QPlainTextEdit          commentTextArea = new QPlainTextEdit();
-    private final QLineEdit               titleTextField  = new QLineEdit();
-    private final QLabel                  dateLabel       = new QLabel();
-
-    private final QWidget                 editPanel       = new QWidget();
-
-    private Commentable                   selectedCommentable;
+    private QPlainTextEdit                commentTextArea = new QPlainTextEdit();
+    private QLineEdit                     titleTextField  = new QLineEdit();
+    private QLabel                        dateLabel       = new QLabel();
 
     private QPushButton                   submitButton    = new QPushButton();
+    private QWidget                       editPanel       = new QWidget();
+
+    private Commentable                   selectedCommentable;
 
     public CommentTreePanel(
         RelatedPanel relatedPanel )
@@ -218,11 +217,8 @@ public class CommentTreePanel
         }
     }
 
-    @Override
     protected void initComponents()
     {
-        super.initComponents();
-
         QGridLayout editLayout = new QGridLayout();
         editPanel.setLayout( editLayout );
         editLayout.addWidget( dateLabel, 0, 0 );

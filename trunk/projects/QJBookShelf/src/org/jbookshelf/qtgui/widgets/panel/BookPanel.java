@@ -22,15 +22,19 @@ import java.util.List;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Author;
+import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.PhysicalUnit;
 import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
+import org.jbookshelf.model.Unique;
 import org.jbookshelf.model.impl.BookShelfImpl;
 import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
+import org.jbookshelf.qtgui.widgets.ext.autocomplete.AutoCompleteDecorator;
+import org.jbookshelf.qtgui.widgets.ext.autocomplete.ObjectToStringConverter;
 
 import com.trolltech.qt.gui.QCheckBox;
 import com.trolltech.qt.gui.QGridLayout;
@@ -101,24 +105,37 @@ public class BookPanel
         }
     }
 
+    private class UniqueToStringConverter
+        implements
+            ObjectToStringConverter
+    {
+        public String toString(
+            Object object )
+        {
+            return ((Unique) object).getName();
+        }
+    }
+
     private QLabel        authorLabel       = new QLabel();
     private QLabel        categoryLabel     = new QLabel();
     private QLabel        fileLabel         = new QLabel();
+
     private QLabel        bookLabel         = new QLabel();
-
     private QCheckBox     isReadCheckBox    = new QCheckBox();
-    private QPushButton   chooseButton      = new QPushButton();
 
-    private QLineEdit     authorTextField   = new QLineEdit();
-    private QLineEdit     bookTextField     = new QLineEdit();
-    private QLineEdit     categoryTextField = new QLineEdit();
-    private QLineEdit     fileTextField     = new QLineEdit();
+    private QPushButton   chooseButton      = new QPushButton();
+    private QLineEdit     authorTextField   = new QLineEdit( this );
+    private QLineEdit     bookTextField     = new QLineEdit( this );
+    private QLineEdit     categoryTextField = new QLineEdit( this );
+
+    private QLineEdit     fileTextField     = new QLineEdit( this );
 
     private List<QWidget> components        = new ArrayList<QWidget>();
 
-    public BookPanel()
+    public BookPanel(
+        QWidget parent )
     {
-        super();
+        super( parent );
         initComponents();
         initListeners();
 
@@ -290,6 +307,10 @@ public class BookPanel
         layout.addWidget( isReadCheckBox, 4, 0 );
 
         chooseButton.setText( "..." );
+
+        BookShelf bookShelf = Storage.getBookShelf();
+
+        AutoCompleteDecorator.decorate( authorTextField, bookShelf.getAuthors(), new UniqueToStringConverter() );
     }
 
     private void initListeners()

@@ -45,7 +45,7 @@ public class BookEditDialog
     private QPushButton       cancelButton = new QPushButton();
     private QLabel            headerLabel  = new QLabel();
 
-    private BookPanel         bookPanel    = new BookPanel();
+    private BookPanel         bookPanel    = new BookPanel( this );
 
     private final ReadingUnit book;
 
