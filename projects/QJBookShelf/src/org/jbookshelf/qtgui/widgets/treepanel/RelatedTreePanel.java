@@ -1,7 +1,7 @@
 /**
  * <copyright> This file is part of JBookShelf, http://code.google.com/p/jbookshelf/<br>
  * <br>
- * Copyright (C) 2008 Andrey Yeremenok (eav1986_at_gmail_com) <br>
+ * Copyright (C) 2008-2009 Andrey Yeremenok (eav1986_at_gmail_com) <br>
  * <br>
  * JBookShelf is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later
@@ -24,16 +24,17 @@ import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 import org.jbookshelf.qtgui.widgets.tree.UniqueNode;
 
 import com.trolltech.qt.gui.QMessageBox;
-import com.trolltech.qt.gui.QTreeWidget;
-import com.trolltech.qt.gui.QTreeWidgetItem;
 import com.trolltech.qt.gui.QVBoxLayout;
 
+/**
+ * Displays {@link Unique}'s related to one selected in the {@link CollectionPanel} ( {@link Unique#getRelated()} )
+ * 
+ * @author eav
+ */
 public class RelatedTreePanel
     extends SearchableTreePanel
 {
-    private QTreeWidget     relatedTree = new SearchableTree();
-    private QTreeWidgetItem root;
-    private Unique          selectedUnique;
+    private Unique selectedUnique;
 
     public RelatedTreePanel(
         RelatedPanel relatedPanel )
@@ -59,7 +60,7 @@ public class RelatedTreePanel
     @Override
     public void onRemove()
     {
-        UniqueNode uniqueNode = (UniqueNode) relatedTree.selectedItems().get( 0 );
+        UniqueNode uniqueNode = (UniqueNode) searchableTree.selectedItems().get( 0 );
         selectedUnique.getRelated().remove( uniqueNode.getUnique() );
         uniqueNode.getUnique().getRelated().remove( selectedUnique );
 
@@ -68,7 +69,7 @@ public class RelatedTreePanel
 
         if ( row > 1 )
         {
-            relatedTree.setCurrentItem( root.child( row - 1 ) );
+            searchableTree.setCurrentItem( root.child( row - 1 ) );
         }
         else
         {
@@ -84,7 +85,7 @@ public class RelatedTreePanel
         relatedUnique.getRelated().add( unique );
 
         root.addChild( new UniqueNode( relatedUnique ) );
-        relatedTree.setCurrentItem( root.child( root.childCount() - 1 ) );
+        searchableTree.setCurrentItem( root.child( root.childCount() - 1 ) );
 
         QMessageBox.information( this, tr( "Linked" ), relatedUnique.getName() + tr( " now relates to " ) +
             unique.getName() );
@@ -143,18 +144,18 @@ public class RelatedTreePanel
         root.setExpanded( true );
     }
 
-    private void initComponents()
-    {
-        root = relatedTree.invisibleRootItem();
-        relatedTree.header().hide();
-
-        setLayout( new QVBoxLayout() );
-        layout().addWidget( relatedTree );
-    }
-
     private void initListeners()
     {
-        relatedTree.activated.connect( relatedPanel, "focusGained()" );
-        relatedTree.itemSelectionChanged.connect( relatedPanel, "focusGained()" );
+        searchableTree.activated.connect( relatedPanel, "focusGained()" );
+        searchableTree.itemSelectionChanged.connect( relatedPanel, "focusGained()" );
+    }
+
+    @Override
+    protected void initComponents()
+    {
+        super.initComponents();
+
+        setLayout( new QVBoxLayout() );
+        layout().addWidget( searchableTree );
     }
 }

@@ -1,7 +1,7 @@
 /**
  * <copyright> This file is part of JBookShelf, http://code.google.com/p/jbookshelf/<br>
  * <br>
- * Copyright (C) 2008 Andrey Yeremenok (eav1986_at_gmail_com) <br>
+ * Copyright (C) 2008-2009 Andrey Yeremenok (eav1986_at_gmail_com) <br>
  * <br>
  * JBookShelf is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later
@@ -23,12 +23,23 @@ import com.trolltech.qt.gui.QContextMenuEvent;
 import com.trolltech.qt.gui.QTreeWidget;
 import com.trolltech.qt.gui.QTreeWidgetItem;
 import com.trolltech.qt.gui.QWidget;
+import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
 
+/**
+ * Panel with immediate tree search
+ * 
+ * @author eav
+ */
 public abstract class SearchableTreePanel
     extends QWidget
     implements
         UniqueSelectionListener
 {
+    /**
+     * tree with context menu
+     * 
+     * @author eav
+     */
     protected class SearchableTree
         extends QTreeWidget
     {
@@ -47,18 +58,48 @@ public abstract class SearchableTreePanel
         }
     }
 
-    protected final RelatedPanel relatedPanel;
+    /**
+     * a panel which contains and controls us
+     */
+    protected final RelatedPanel   relatedPanel;
+    /**
+     * a working tree
+     */
+    protected final SearchableTree searchableTree = new SearchableTree();
+    /**
+     * its root
+     */
+    protected QTreeWidgetItem      root;
 
     public SearchableTreePanel(
         RelatedPanel relatedPanel )
     {
         this.relatedPanel = relatedPanel;
+        initComponents();
     }
 
+    /**
+     * add a new tree item
+     */
     public abstract void onAdd();
 
+    /**
+     * remove selected tree item
+     */
     public abstract void onRemove();
 
+    /**
+     * show only items with captions containng text
+     * 
+     * @param text text to search
+     */
     public abstract void search(
         String text );
+
+    protected void initComponents()
+    {
+        root = searchableTree.invisibleRootItem();
+        searchableTree.header().hide();
+        searchableTree.setSelectionMode( SelectionMode.SingleSelection );
+    }
 }

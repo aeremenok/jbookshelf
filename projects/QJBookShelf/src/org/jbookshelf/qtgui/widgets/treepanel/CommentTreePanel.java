@@ -1,7 +1,7 @@
 /**
  * <copyright> This file is part of JBookShelf, http://code.google.com/p/jbookshelf/<br>
  * <br>
- * Copyright (C) 2008 Andrey Yeremenok (eav1986_at_gmail_com) <br>
+ * Copyright (C) 2008-2009 Andrey Yeremenok (eav1986_at_gmail_com) <br>
  * <br>
  * JBookShelf is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later
@@ -24,6 +24,7 @@ import org.jbookshelf.model.Commentable;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
+import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
 import com.trolltech.qt.gui.QGridLayout;
@@ -32,17 +33,26 @@ import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QPlainTextEdit;
 import com.trolltech.qt.gui.QPushButton;
-import com.trolltech.qt.gui.QTreeWidget;
 import com.trolltech.qt.gui.QTreeWidgetItem;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
-import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
 
+/**
+ * Displays {@link Comment}'s of {@link Commentable} selected in the {@link CollectionPanel} (
+ * {@link Commentable#getComments()} )
+ * 
+ * @author eav
+ */
 public class CommentTreePanel
     extends SearchableTreePanel
     implements
         JBookShelfConstants
 {
+    /**
+     * contains a {@link Comment}
+     * 
+     * @author eav
+     */
     private class CommentNode
         extends QTreeWidgetItem
     {
@@ -62,9 +72,6 @@ public class CommentTreePanel
     }
 
     private static final SimpleDateFormat format          = new SimpleDateFormat( "dd.MM.yy HH:mm" );
-
-    private QTreeWidgetItem               root;
-    private final QTreeWidget             commentTree     = new SearchableTree();
 
     private final QPlainTextEdit          commentTextArea = new QPlainTextEdit();
     private final QLineEdit               titleTextField  = new QLineEdit();
@@ -106,21 +113,21 @@ public class CommentTreePanel
 
         root.addChild( new CommentNode( comment ) );
 
-        commentTree.setCurrentItem( root.child( root.childCount() - 1 ) );
+        searchableTree.setCurrentItem( root.child( root.childCount() - 1 ) );
         editComment( comment );
     }
 
     @Override
     public void onRemove()
     {
-        CommentNode commentNode = (CommentNode) commentTree.selectedItems().get( 0 );
+        CommentNode commentNode = (CommentNode) searchableTree.selectedItems().get( 0 );
         selectedCommentable.getComments().remove( commentNode.getComment() );
         root.removeChild( commentNode );
     }
 
     public void saveComment()
     {
-        CommentNode node = (CommentNode) commentTree.selectedItems().get( 0 );
+        CommentNode node = (CommentNode) searchableTree.selectedItems().get( 0 );
         Comment comment = node.getComment();
         comment.setContent( commentTextArea.toPlainText() );
         comment.setTitle( titleTextField.text() );
@@ -185,39 +192,16 @@ public class CommentTreePanel
         editPanel.setVisible( true );
     }
 
-    private void initComponents()
-    {
-        root = commentTree.invisibleRootItem();
-        commentTree.header().hide();
-        commentTree.setSelectionMode( SelectionMode.SingleSelection );
-
-        QGridLayout editLayout = new QGridLayout();
-        editPanel.setLayout( editLayout );
-        editLayout.addWidget( dateLabel, 0, 0 );
-        editLayout.addWidget( titleTextField, 0, 1 );
-        editLayout.addWidget( submitButton, 0, 2 );
-
-        editLayout.addWidget( commentTextArea, 1, 0, 1, 3 );
-
-        setLayout( new QVBoxLayout() );
-        layout().addWidget( editPanel );
-        layout().addWidget( commentTree );
-
-        submitButton.setIcon( new QIcon( ICONPATH + "dialog-ok-apply.png" ) );
-
-        nothingSelected();
-    }
-
     private void initListeners()
     {
-        commentTree.itemSelectionChanged.connect( this, "onItemSelection()" );
+        searchableTree.itemSelectionChanged.connect( this, "onItemSelection()" );
         submitButton.released.connect( this, "saveComment()" );
     }
 
     @SuppressWarnings( "unused" )
     private void onItemSelection()
     {
-        List<QTreeWidgetItem> selectedItems = commentTree.selectedItems();
+        List<QTreeWidgetItem> selectedItems = searchableTree.selectedItems();
         if ( selectedItems.size() > 0 )
         {
             CommentNode commentNode = (CommentNode) selectedItems.get( 0 );
@@ -232,5 +216,27 @@ public class CommentTreePanel
             editPanel.setVisible( false );
             relatedPanel.focusLost();
         }
+    }
+
+    @Override
+    protected void initComponents()
+    {
+        super.initComponents();
+
+        QGridLayout editLayout = new QGridLayout();
+        editPanel.setLayout( editLayout );
+        editLayout.addWidget( dateLabel, 0, 0 );
+        editLayout.addWidget( titleTextField, 0, 1 );
+        editLayout.addWidget( submitButton, 0, 2 );
+
+        editLayout.addWidget( commentTextArea, 1, 0, 1, 3 );
+
+        setLayout( new QVBoxLayout() );
+        layout().addWidget( editPanel );
+        layout().addWidget( searchableTree );
+
+        submitButton.setIcon( new QIcon( ICONPATH + "dialog-ok-apply.png" ) );
+
+        nothingSelected();
     }
 }
