@@ -16,8 +16,12 @@
 package org.jbookshelf.qtgui.widgets.treepanel;
 
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
+import org.jbookshelf.qtgui.widgets.menu.RelatedTreeMenu;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
+import com.trolltech.qt.gui.QContextMenuEvent;
+import com.trolltech.qt.gui.QTreeWidget;
+import com.trolltech.qt.gui.QTreeWidgetItem;
 import com.trolltech.qt.gui.QWidget;
 
 public abstract class SearchableTreePanel
@@ -25,6 +29,24 @@ public abstract class SearchableTreePanel
     implements
         UniqueSelectionListener
 {
+    protected class SearchableTree
+        extends QTreeWidget
+    {
+        @Override
+        protected void contextMenuEvent(
+            QContextMenuEvent arg__1 )
+        {
+            QTreeWidgetItem item = itemAt( arg__1.pos() );
+            if ( item != null )
+            {
+                item.setSelected( true );
+
+                RelatedTreeMenu menu = new RelatedTreeMenu( relatedPanel );
+                menu.exec( arg__1.globalPos() );
+            }
+        }
+    }
+
     protected final RelatedPanel relatedPanel;
 
     public SearchableTreePanel(
@@ -35,8 +57,8 @@ public abstract class SearchableTreePanel
 
     public abstract void onAdd();
 
+    public abstract void onRemove();
+
     public abstract void search(
         String text );
-
-    public abstract void onRemove();
 }
