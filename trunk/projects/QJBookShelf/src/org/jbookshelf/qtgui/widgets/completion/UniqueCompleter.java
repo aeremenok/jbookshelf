@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.jbookshelf.model.Unique;
 
+import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.gui.QCompleter;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QCompleter.CompletionMode;
@@ -17,11 +18,24 @@ import com.trolltech.qt.gui.QCompleter.ModelSorting;
  */
 public class UniqueCompleter
 {
+    private static class CommaSeparatedCompleter
+        extends QCompleter
+    {
+        public CommaSeparatedCompleter(
+            List<String> completions,
+            QObject parent )
+        {
+            super( completions, parent );
+        }
+
+        // todo
+    }
+
     public static void decorate(
         QLineEdit lineEdit,
         List<? extends Unique> uniques )
     {
-        QCompleter completer = new QCompleter( toStringList( uniques ), lineEdit.parent() );
+        CommaSeparatedCompleter completer = new CommaSeparatedCompleter( toStringList( uniques ), lineEdit.parent() );
 
         completer.setModelSorting( ModelSorting.CaseInsensitivelySortedModel );
         completer.setCompletionMode( CompletionMode.PopupCompletion );
