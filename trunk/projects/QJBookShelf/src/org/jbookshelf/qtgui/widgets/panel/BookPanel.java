@@ -29,12 +29,10 @@ import org.jbookshelf.model.PhysicalUnit;
 import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
-import org.jbookshelf.model.Unique;
 import org.jbookshelf.model.impl.BookShelfImpl;
+import org.jbookshelf.qtgui.widgets.completion.UniqueCompleter;
 import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
-import org.jbookshelf.qtgui.widgets.ext.autocomplete.AutoCompleteDecorator;
-import org.jbookshelf.qtgui.widgets.ext.autocomplete.ObjectToStringConverter;
 
 import com.trolltech.qt.gui.QCheckBox;
 import com.trolltech.qt.gui.QGridLayout;
@@ -102,17 +100,6 @@ public class BookPanel
         public boolean isRead()
         {
             return isRead;
-        }
-    }
-
-    private class UniqueToStringConverter
-        implements
-            ObjectToStringConverter
-    {
-        public String toString(
-            Object object )
-        {
-            return ((Unique) object).getName();
         }
     }
 
@@ -308,9 +295,10 @@ public class BookPanel
 
         chooseButton.setText( "..." );
 
+        // hanging in autocompletion
         BookShelf bookShelf = Storage.getBookShelf();
-
-        AutoCompleteDecorator.decorate( authorTextField, bookShelf.getAuthors(), new UniqueToStringConverter() );
+        UniqueCompleter.decorate( authorTextField, bookShelf.getAuthors() );
+        UniqueCompleter.decorate( categoryTextField, bookShelf.getCategories() );
     }
 
     private void initListeners()
