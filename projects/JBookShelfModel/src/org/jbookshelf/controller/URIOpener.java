@@ -79,6 +79,7 @@ public class URIOpener
     {
         String url = "file:///" + path;
         url = url.replaceAll( " ", "%20" );
+        url = url.replaceAll( "\\\\", "/" );
         browse( url );
     }
 
