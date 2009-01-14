@@ -95,13 +95,16 @@ public abstract class CollectionTree
 
     public void removeSelectedItem()
     {
-        UniqueNode uniqueNode = (UniqueNode) selectedItems().get( 0 );
-        QTreeWidgetItem parent = uniqueNode.parent();
-        if ( parent == null )
-        { // todo a stub. why a parent of a toplevel item is null?
-            parent = root;
+        // which uniqe we need to remove
+        Unique unique = ((UniqueNode) selectedItems().get( 0 )).getUnique();
+        // search recursively for its nodes
+        List<UniqueNode> nodes = new ArrayList<UniqueNode>();
+        findUniqueNodes( nodes, root, unique );
+        // remove all of them
+        for ( UniqueNode node : nodes )
+        {
+            removeFromParent( node );
         }
-        parent.removeChild( uniqueNode );
     }
 
     public void removeSelectionListener(
@@ -136,6 +139,32 @@ public abstract class CollectionTree
         BookShelf bookShelf )
     {
         showResult( (EList<Unique>) bookShelf.eGet( getReference() ) );
+    }
+
+    /**
+     * recursively search for nodes containing the specified uniqe
+     * 
+     * @param list search result
+     * @param parent search starts here
+     * @param unique what to search
+     */
+    private void findUniqueNodes(
+        List<UniqueNode> list,
+        QTreeWidgetItem parent,
+        Unique unique )
+    {
+        if ( parent instanceof UniqueNode )
+        {
+            UniqueNode uniqueNode = (UniqueNode) parent;
+            if ( uniqueNode.getUnique().equals( unique ) )
+            {
+                list.add( uniqueNode );
+            }
+        }
+        for ( int i = 0; i < parent.childCount(); i++ )
+        {
+            findUniqueNodes( list, parent.child( i ), unique );
+        }
     }
 
     @SuppressWarnings( "unused" )
@@ -212,6 +241,22 @@ public abstract class CollectionTree
             UniqueNode uniqueNode = (UniqueNode) parent;
             addChildren( uniqueNode );
         }
+    }
+
+    /**
+     * remove a node from its parent
+     * 
+     * @param node a node to remove
+     */
+    private void removeFromParent(
+        QTreeWidgetItem node )
+    {
+        QTreeWidgetItem parent = node.parent();
+        if ( parent == null )
+        { // todo a stub. why a parent of a toplevel item is null?
+            parent = root;
+        }
+        parent.removeChild( node );
     }
 
     protected abstract void addChildren(
