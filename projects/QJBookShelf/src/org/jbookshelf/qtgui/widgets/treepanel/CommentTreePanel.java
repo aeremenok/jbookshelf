@@ -24,6 +24,7 @@ import org.jbookshelf.model.Commentable;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
+import org.jbookshelf.qtgui.widgets.completion.CompletableTextEdit;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
@@ -31,7 +32,6 @@ import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QLineEdit;
-import com.trolltech.qt.gui.QPlainTextEdit;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QTreeWidgetItem;
 import com.trolltech.qt.gui.QVBoxLayout;
@@ -73,7 +73,7 @@ public class CommentTreePanel
 
     private static final SimpleDateFormat format          = new SimpleDateFormat( "dd.MM.yy HH:mm" );
 
-    private QPlainTextEdit                commentTextArea = new QPlainTextEdit();
+    private CompletableTextEdit             commentTextArea = new CompletableTextEdit( this );
     private QLineEdit                     titleTextField  = new QLineEdit();
     private QLabel                        dateLabel       = new QLabel();
 
