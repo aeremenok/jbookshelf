@@ -24,6 +24,7 @@ import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
+import com.trolltech.qt.core.QCoreApplication;
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
@@ -59,8 +60,8 @@ public class MainWindow
     {
         QApplication.initialize( args );
 
-        QApplication.setApplicationVersion( "0.3b1" );
-        QApplication.setApplicationName( "JBookShelf" );
+        QCoreApplication.setApplicationVersion( "0.3b1" );
+        QCoreApplication.setApplicationName( "JBookShelf" );
 
         getInstance().show();
 
