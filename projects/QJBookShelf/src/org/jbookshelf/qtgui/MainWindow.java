@@ -21,6 +21,7 @@ import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.logic.Translator;
+import org.jbookshelf.qtgui.widgets.completion.CompletionDictionary;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
@@ -135,6 +136,7 @@ public class MainWindow
         try
         {
             Storage.saveCollection();
+            CompletionDictionary.getInstance().save();
         }
         catch ( Throwable e1 )
         {
