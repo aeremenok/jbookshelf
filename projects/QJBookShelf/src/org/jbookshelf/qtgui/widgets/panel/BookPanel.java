@@ -30,8 +30,8 @@ import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.model.impl.BookShelfImpl;
+import org.jbookshelf.qtgui.widgets.FilePathEdit;
 import org.jbookshelf.qtgui.widgets.completion.UniqueCompleter;
-import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
 
 import com.trolltech.qt.gui.QCheckBox;
@@ -39,7 +39,6 @@ import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QMessageBox;
-import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QWidget;
 
 /**
@@ -110,12 +109,11 @@ public class BookPanel
     private QLabel        bookLabel         = new QLabel();
     private QCheckBox     isReadCheckBox    = new QCheckBox();
 
-    private QPushButton   chooseButton      = new QPushButton();
     private QLineEdit     authorTextField   = new QLineEdit( this );
     private QLineEdit     bookTextField     = new QLineEdit( this );
     private QLineEdit     categoryTextField = new QLineEdit( this );
 
-    private QLineEdit     fileTextField     = new QLineEdit( this );
+    private FilePathEdit  filePathEdit      = new FilePathEdit( this );
 
     private List<QWidget> components        = new ArrayList<QWidget>();
 
@@ -124,8 +122,6 @@ public class BookPanel
     {
         super( parent );
         initComponents();
-        initListeners();
-
         registerComponents();
 
         retranslate();
@@ -140,6 +136,7 @@ public class BookPanel
                 ((QLineEdit) component).setText( "" );
             }
         }
+        filePathEdit.setText( "" );
         isReadCheckBox.setChecked( false );
     }
 
@@ -172,7 +169,7 @@ public class BookPanel
             return null;
         }
 
-        File file = new File( fileTextField.text() );
+        File file = new File( filePathEdit.text() );
         if ( !file.exists() )
         {
             QMessageBox.critical( this, title, tr( "File does not exist: " ) + file.getName() );
@@ -252,25 +249,10 @@ public class BookPanel
         {
             throw new Error( physical.toString() );
         }
-        fileTextField.setText( fileName );
+        filePathEdit.setText( fileName );
 
         // show whether is read
         isReadCheckBox.setChecked( book.isRead() );
-    }
-
-    @SuppressWarnings( "unused" )
-    private void chooseFile()
-    {
-        QFileDialogExt fileDialog = new QFileDialogExt( this )
-        {
-            @Override
-            protected void filesSelected()
-            {
-                fileTextField.setText( selectedFiles().get( 0 ) );
-            }
-        };
-        fileDialog.selectFile( fileTextField.text() );
-        fileDialog.show();
     }
 
     private void initComponents()
@@ -288,22 +270,14 @@ public class BookPanel
         layout.addWidget( categoryTextField, 2, 1 );
 
         layout.addWidget( fileLabel, 3, 0 );
-        layout.addWidget( fileTextField, 3, 1 );
-        layout.addWidget( chooseButton, 3, 2 );
+        layout.addWidget( filePathEdit, 3, 1 );
 
         layout.addWidget( isReadCheckBox, 4, 0 );
-
-        chooseButton.setText( "..." );
 
         // hanging in autocompletion
         BookShelf bookShelf = Storage.getBookShelf();
         UniqueCompleter.decorate( authorTextField, bookShelf.getAuthors() );
         UniqueCompleter.decorate( categoryTextField, bookShelf.getCategories() );
-    }
-
-    private void initListeners()
-    {
-        chooseButton.released.connect( this, "chooseFile()" );
     }
 
     /**
@@ -314,6 +288,5 @@ public class BookPanel
         components.add( bookTextField );
         components.add( authorTextField );
         components.add( categoryTextField );
-        components.add( fileTextField );
     }
 }
