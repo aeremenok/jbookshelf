@@ -18,7 +18,7 @@ package org.jbookshelf.qtgui.widgets.dialog;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 
-import com.trolltech.qt.gui.QApplication;
+import com.trolltech.qt.core.QCoreApplication;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
@@ -66,7 +66,7 @@ public class AboutDialog
 
         authorValueLabel.setText( tr( "Andrey Yeremenok (eav1986_at_gmail_com)" ) );
         licenseValueLabel.setText( "GPL v.3" );
-        versionValueLabel.setText( QApplication.applicationVersion() );
+        versionValueLabel.setText( QCoreApplication.applicationVersion() );
 
         closeButton.setText( tr( "&Close" ) );
     }
@@ -93,7 +93,7 @@ public class AboutDialog
 
         layout.addWidget( closeButton, 4, 1 );
 
-        header.setText( QApplication.applicationName() );
+        header.setText( QCoreApplication.applicationName() );
         header.setFont( new QFont( "Tahoma", 14 ) );
     }
 

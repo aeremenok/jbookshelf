@@ -18,8 +18,8 @@ package org.jbookshelf.qtgui.widgets.dialog;
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.qtgui.logic.Translator;
+import org.jbookshelf.qtgui.widgets.FilePathEdit;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
-import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
 
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QComboBox;
@@ -42,28 +42,28 @@ public class SettingsDialog
     implements
         JBookShelfSettings
 {
-    private Settings    settings               = Settings.getInstance();
+    private Settings     settings            = Settings.getInstance();
 
-    private QPushButton cancelButton           = new QPushButton();
-    private QPushButton chooseJBSFolderButton  = new QPushButton();
-    private QPushButton chooseTempFolderButton = new QPushButton();
-    private QPushButton okButton               = new QPushButton();
-    private QPushButton restoreButton          = new QPushButton();
-    private QPushButton saveButton             = new QPushButton();
+    private QPushButton  cancelButton        = new QPushButton();
+    private QPushButton  okButton            = new QPushButton();
+    private QPushButton  restoreButton       = new QPushButton();
+    private QPushButton  saveButton          = new QPushButton();
 
-    private QLabel      importMaskLabel        = new QLabel();
-    private QLabel      jbsFolderLabel         = new QLabel();
-    private QLabel      lafLabel               = new QLabel();
-    private QLabel      langLabel              = new QLabel();
-    private QLabel      settingsLabel          = new QLabel();
-    private QLabel      tmpFolderLabel         = new QLabel();
+    private QLabel       importMaskLabel     = new QLabel();
+    private QLabel       lafLabel            = new QLabel();
+    private QLabel       langLabel           = new QLabel();
+    private QLabel       settingsLabel       = new QLabel();
 
-    private QLineEdit   importMaskTextField    = new QLineEdit();
-    private QLineEdit   jbsFolderTextField     = new QLineEdit();
-    private QLineEdit   tmpFolderTextField     = new QLineEdit();
+    private QLineEdit    importMaskTextField = new QLineEdit();
 
-    private QComboBox   lafComboBox            = new QComboBox();
-    private QComboBox   langComboBox           = new QComboBox();
+    private QComboBox    lafComboBox         = new QComboBox();
+    private QComboBox    langComboBox        = new QComboBox();
+
+    private FilePathEdit jbsFolder           = new FilePathEdit( this );
+    private FilePathEdit tmpFolder           = new FilePathEdit( this );
+
+    private QLabel       jbsFolderLabel      = new QLabel( this );
+    private QLabel       tmpFolderLabel      = new QLabel( this );
 
     public SettingsDialog(
         QWidget parent )
@@ -100,41 +100,9 @@ public class SettingsDialog
         langComboBox.setCurrentIndex( langComboBox.findText( settings.getProperty( LANGUAGE ) ) );
         lafComboBox.setCurrentIndex( lafComboBox.findText( settings.getProperty( LAF ) ) );
 
-        tmpFolderTextField.setText( settings.getProperty( TEMP_FOLDER ) );
-        jbsFolderTextField.setText( settings.getProperty( JBS_FOLDER ) );
+        tmpFolder.setText( settings.getProperty( TEMP_FOLDER ) );
+        jbsFolder.setText( settings.getProperty( JBS_FOLDER ) );
         importMaskTextField.setText( settings.getProperty( IMPORT_MASK ) );
-    }
-
-    @SuppressWarnings( "unused" )
-    private void chooseJBSFolder()
-    {
-        QFileDialogExt dialog = new QFileDialogExt( this )
-        {
-            @Override
-            protected void filesSelected()
-            {
-                jbsFolderTextField.setText( selectedFiles().get( 0 ) );
-            }
-        };
-        dialog.setFileMode( FileMode.DirectoryOnly );
-        dialog.selectFile( settings.getProperty( JBS_FOLDER ) );
-        dialog.show();
-    }
-
-    @SuppressWarnings( "unused" )
-    private void chooseTempFolder()
-    {
-        QFileDialogExt dialog = new QFileDialogExt( this )
-        {
-            @Override
-            protected void filesSelected()
-            {
-                tmpFolderTextField.setText( selectedFiles().get( 0 ) );
-            }
-        };
-        dialog.setFileMode( FileMode.DirectoryOnly );
-        dialog.selectFile( settings.getProperty( TEMP_FOLDER ) );
-        dialog.show();
     }
 
     private void initComponents()
@@ -153,12 +121,10 @@ public class SettingsDialog
         layout.addWidget( lafComboBox, 2, 1, 1, 4 );
 
         layout.addWidget( jbsFolderLabel, 3, 0 );
-        layout.addWidget( jbsFolderTextField, 3, 1, 1, 3 );
-        layout.addWidget( chooseJBSFolderButton, 3, 4 );
+        layout.addWidget( jbsFolder, 3, 1, 1, 4 );
 
         layout.addWidget( tmpFolderLabel, 4, 0 );
-        layout.addWidget( tmpFolderTextField, 4, 1, 1, 3 );
-        layout.addWidget( chooseTempFolderButton, 4, 4 );
+        layout.addWidget( tmpFolder, 4, 1, 1, 4 );
 
         layout.addWidget( importMaskLabel, 5, 0 );
         layout.addWidget( importMaskTextField, 5, 1, 1, 4 );
@@ -176,8 +142,8 @@ public class SettingsDialog
 
         lafComboBox.addItems( QStyleFactory.keys() );
 
-        chooseJBSFolderButton.setText( "..." );
-        chooseTempFolderButton.setText( "..." );
+        jbsFolder.setFileMode( FileMode.DirectoryOnly );
+        tmpFolder.setFileMode( FileMode.DirectoryOnly );
     }
 
     private void initListeners()
@@ -190,9 +156,6 @@ public class SettingsDialog
 
         saveButton.released.connect( this, "onSave()" );
         restoreButton.released.connect( this, "onRestore()" );
-
-        chooseJBSFolderButton.released.connect( this, "chooseJBSFolder()" );
-        chooseTempFolderButton.released.connect( this, "chooseTempFolder()" );
     }
 
     @SuppressWarnings( "unused" )
@@ -240,8 +203,8 @@ public class SettingsDialog
     {
         settings.setProperty( LANGUAGE, langComboBox.currentText() );
         settings.setProperty( LAF, lafComboBox.currentText() );
-        settings.setProperty( TEMP_FOLDER, tmpFolderTextField.text() );
-        settings.setProperty( JBS_FOLDER, jbsFolderTextField.text() );
+        settings.setProperty( TEMP_FOLDER, tmpFolder.text() );
+        settings.setProperty( JBS_FOLDER, jbsFolder.text() );
         settings.setProperty( IMPORT_MASK, importMaskTextField.text() );
     }
 }
