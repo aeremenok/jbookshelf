@@ -188,6 +188,7 @@ public class BookPanel
         authorLabel.setText( tr( "Author" ) );
         categoryLabel.setText( tr( "Category" ) );
         fileLabel.setText( tr( "File" ) );
+        filePathEdit.setCaption( tr( "Select a file" ) );
     }
 
     /**

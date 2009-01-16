@@ -15,11 +15,6 @@
  */
 package org.jbookshelf.qtgui;
 
-import java.io.File;
-
-import org.jbookshelf.controller.FileImporter;
-import org.jbookshelf.controller.settings.JBookShelfSettings;
-import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.ReadingUnit;
@@ -30,6 +25,7 @@ import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.dialog.AboutDialog;
 import org.jbookshelf.qtgui.widgets.dialog.BookAdditionDialog;
 import org.jbookshelf.qtgui.widgets.dialog.BookEditDialog;
+import org.jbookshelf.qtgui.widgets.dialog.ImportDialog;
 import org.jbookshelf.qtgui.widgets.dialog.SettingsDialog;
 import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
 import org.jbookshelf.qtgui.widgets.ext.QToolBarExt;
@@ -37,10 +33,7 @@ import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QIcon;
-import com.trolltech.qt.gui.QInputDialog;
 import com.trolltech.qt.gui.QMessageBox;
-import com.trolltech.qt.gui.QFileDialog.FileMode;
-import com.trolltech.qt.gui.QLineEdit.EchoMode;
 import com.trolltech.qt.gui.QMessageBox.StandardButton;
 import com.trolltech.qt.gui.QMessageBox.StandardButtons;
 
@@ -178,13 +171,13 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onAbout()
     {
-        new AboutDialog( MainWindow.getInstance() ).setVisible( true );
+        new AboutDialog( MainWindow.getInstance() ).show();
     }
 
     @SuppressWarnings( "unused" )
     private void onAdd()
     {
-        new BookAdditionDialog( MainWindow.getInstance() ).setVisible( true );
+        new BookAdditionDialog( MainWindow.getInstance() ).show();
     }
 
     @SuppressWarnings( "unused" )
@@ -208,55 +201,13 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onEdit()
     {
-        new BookEditDialog( MainWindow.getInstance(), (ReadingUnit) selectedUnique ).setVisible( true );
+        new BookEditDialog( MainWindow.getInstance(), (ReadingUnit) selectedUnique ).show();
     }
 
     @SuppressWarnings( "unused" )
     private void onImport()
     {
-        QFileDialogExt fileDialog = new QFileDialogExt( this, tr( "Select a directory to import" ) )
-        {
-            @Override
-            protected void filesSelected()
-            {
-                FileImporter importer = new FileImporter()
-                {
-                    @Override
-                    protected void onImportFailure(
-                        File file,
-                        Exception e )
-                    {
-                        // todo visualize
-                        System.out.println( "- cannot import file " + file.getAbsolutePath() + " cause:" +
-                            e.getMessage() );
-                        // e.printStackTrace();
-                    }
-
-                    @Override
-                    protected void onImportSuccess(
-                        ReadingUnit book )
-                    {
-                        // todo visualize
-                        System.out.println( "+ imported " + book.getAuthors().get( 0 ).getName() + ". " +
-                            book.getName() );
-                    }
-                };
-
-                String mask = Settings.getInstance().getProperty( JBookShelfSettings.IMPORT_MASK );
-                String result =
-                    QInputDialog.getText( this, tr( "Enter" ), tr( "Enter import mask" ), EchoMode.Normal, mask );
-                if ( result != null && !result.equals( "" ) )
-                {
-                    mask = result;
-                    importer.importFiles( getSelectedFileArray(), mask, Storage.getBookShelf() );
-                }
-
-                CollectionPanel.getInstance().updateTree();
-            }
-        };
-
-        fileDialog.setFileMode( FileMode.DirectoryOnly );
-        fileDialog.show();
+        new ImportDialog( MainWindow.getInstance() ).show();
     }
 
     @SuppressWarnings( "unused" )

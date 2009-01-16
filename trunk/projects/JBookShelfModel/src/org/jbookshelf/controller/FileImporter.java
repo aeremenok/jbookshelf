@@ -155,7 +155,7 @@ public class FileImporter
             {
                 System.out.println( "+imported " + book.getAuthors().get( 0 ).getName() + ". " + book.getName() );
             }
-        }.importFiles( root.listFiles(), "%a. %b", bookShelf );
+        }.importFiles( "%a. %b", bookShelf, root.listFiles() );
     }
 
     /**
@@ -182,9 +182,9 @@ public class FileImporter
     }
 
     public void importFiles(
-        File[] files,
         String pattern,
-        BookShelf bookShelf )
+        BookShelf bookShelf,
+        File... files )
     {
         NameParser nameParser = new NameParser( pattern );
         for ( File file : files )
@@ -210,7 +210,7 @@ public class FileImporter
             }
             else if ( file.isDirectory() )
             {
-                importFiles( file.listFiles(), pattern, bookShelf );
+                importFiles( pattern, bookShelf, file.listFiles() );
             }
             else
             {

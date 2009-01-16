@@ -13,9 +13,10 @@ import com.trolltech.qt.gui.QFileDialog.FileMode;
 public class FilePathEdit
     extends QWidget
 {
-    private final QLineEdit   edit   = new QLineEdit( this );
-    private final QPushButton button = new QPushButton( this );
-    private FileMode          mode   = FileMode.AnyFile;
+    private final QLineEdit   edit    = new QLineEdit( this );
+    private final QPushButton button  = new QPushButton( this );
+    private FileMode          mode    = FileMode.AnyFile;
+    private String            caption = "";
 
     public FilePathEdit()
     {
@@ -53,6 +54,12 @@ public class FilePathEdit
         initComponents();
     }
 
+    public void setCaption(
+        String caption )
+    {
+        this.caption = caption;
+    }
+
     public void setFileMode(
         FileMode mode )
     {
@@ -73,7 +80,7 @@ public class FilePathEdit
     @SuppressWarnings( "unused" )
     private void chooseFile()
     {
-        QFileDialogExt fileDialog = new QFileDialogExt( this )
+        QFileDialogExt fileDialog = new QFileDialogExt( this, caption )
         {
             @Override
             protected void filesSelected()
