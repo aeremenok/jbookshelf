@@ -1,5 +1,7 @@
 package org.jbookshelf.qtgui.widgets.completion;
 
+import org.jbookshelf.qtgui.logic.JBookShelfConstants;
+
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Qt.CaseSensitivity;
@@ -19,6 +21,8 @@ import com.trolltech.qt.gui.QCompleter.CompletionMode;
  */
 public class CompletableTextEdit
     extends QTextEdit
+    implements
+        JBookShelfConstants
 {
     private QCompleter c;
 
@@ -125,14 +129,13 @@ public class CompletableTextEdit
             return;
         }
 
-        String eow = "~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="; // end of word
         boolean hasModifier = !modifiers.isSet( Qt.KeyboardModifier.NoModifier ) && !ctrlOrShift;
 
         String prefix = textUnderCursor();
 
         boolean shortPrefix = prefix.length() < 3;
         if ( !isShortcut &&
-            (hasModifier || empty || shortPrefix || eow.contains( text.substring( text.length() - 1 ) )) )
+            (hasModifier || empty || shortPrefix || EOW.contains( text.substring( text.length() - 1 ) )) )
         {
             c.popup().hide();
             return;

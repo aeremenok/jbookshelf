@@ -19,15 +19,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.completion.CompletableTextEdit;
+import org.jbookshelf.qtgui.widgets.completion.CompletionDictionary;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
+import com.trolltech.qt.gui.QCompleter;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QLabel;
@@ -73,7 +76,7 @@ public class CommentTreePanel
 
     private static final SimpleDateFormat format          = new SimpleDateFormat( "dd.MM.yy HH:mm" );
 
-    private CompletableTextEdit             commentTextArea = new CompletableTextEdit( this );
+    private CompletableTextEdit           commentTextArea = new CompletableTextEdit( this );
     private QLineEdit                     titleTextField  = new QLineEdit();
     private QLabel                        dateLabel       = new QLabel();
 
@@ -132,6 +135,8 @@ public class CommentTreePanel
         comment.setTitle( titleTextField.text() );
 
         node.setText( 0, comment.getTitle() );
+
+        CompletionDictionary.getInstance().addText( comment.getContent() );
     }
 
     @Override
@@ -232,6 +237,10 @@ public class CommentTreePanel
         layout().addWidget( searchableTree );
 
         submitButton.setIcon( new QIcon( ICONPATH + "dialog-ok-apply.png" ) );
+
+        CompletionDictionary dictionary = CompletionDictionary.getInstance();
+        dictionary.collectWords( Storage.getBookShelf() );
+        commentTextArea.setCompleter( new QCompleter( dictionary.getCompletions() ) );
 
         nothingSelected();
     }
