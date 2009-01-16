@@ -44,20 +44,20 @@ public class SettingsDialog
 {
     private Settings     settings            = Settings.getInstance();
 
-    private QPushButton  cancelButton        = new QPushButton();
-    private QPushButton  okButton            = new QPushButton();
-    private QPushButton  restoreButton       = new QPushButton();
-    private QPushButton  saveButton          = new QPushButton();
+    private QPushButton  cancelButton        = new QPushButton( this );
+    private QPushButton  okButton            = new QPushButton( this );
+    private QPushButton  restoreButton       = new QPushButton( this );
+    private QPushButton  saveButton          = new QPushButton( this );
 
-    private QLabel       importMaskLabel     = new QLabel();
-    private QLabel       lafLabel            = new QLabel();
-    private QLabel       langLabel           = new QLabel();
-    private QLabel       settingsLabel       = new QLabel();
+    private QLabel       importMaskLabel     = new QLabel( this );
+    private QLabel       lafLabel            = new QLabel( this );
+    private QLabel       langLabel           = new QLabel( this );
+    private QLabel       settingsLabel       = new QLabel( this );
 
-    private QLineEdit    importMaskTextField = new QLineEdit();
+    private QLineEdit    importMaskTextField = new QLineEdit( this );
 
-    private QComboBox    lafComboBox         = new QComboBox();
-    private QComboBox    langComboBox        = new QComboBox();
+    private QComboBox    lafComboBox         = new QComboBox( this );
+    private QComboBox    langComboBox        = new QComboBox( this );
 
     private FilePathEdit jbsFolder           = new FilePathEdit( this );
     private FilePathEdit tmpFolder           = new FilePathEdit( this );
@@ -93,6 +93,9 @@ public class SettingsDialog
         restoreButton.setText( tr( "Restore defaults" ) );
         okButton.setText( tr( "OK" ) );
         cancelButton.setText( tr( "Cancel" ) );
+
+        jbsFolder.setCaption( tr( "Select a folder" ) );
+        tmpFolder.setCaption( tr( "Select a folder" ) );
     }
 
     private void arrangeSettingValues()
