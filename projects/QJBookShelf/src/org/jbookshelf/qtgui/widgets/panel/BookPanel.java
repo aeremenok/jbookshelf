@@ -256,6 +256,12 @@ public class BookPanel
         isReadCheckBox.setChecked( book.isRead() );
     }
 
+    public void setBookFile(
+        File bookFile )
+    {
+        filePathEdit.setText( bookFile.getAbsolutePath() );
+    }
+
     private void initComponents()
     {
         QGridLayout layout = new QGridLayout();

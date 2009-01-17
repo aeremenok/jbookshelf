@@ -15,6 +15,8 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
+import java.io.File;
+
 import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
@@ -57,6 +59,14 @@ public class BookAdditionDialog
         initListeners();
 
         retranslate();
+    }
+
+    public BookAdditionDialog(
+        QWidget parent,
+        File file )
+    {
+        this( parent );
+        bookPanel.setBookFile( file );
     }
 
     public void addBook(

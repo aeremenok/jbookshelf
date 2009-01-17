@@ -10,11 +10,12 @@ import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
-import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.FilePathEdit;
+import org.jbookshelf.qtgui.widgets.ext.CyclicProgressBar;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 
+import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QLabel;
@@ -31,16 +32,58 @@ public class ImportDialog
     implements
         JBookShelfConstants
 {
-    private QLabel       maskLabel          = new QLabel( this );
-    private QLabel       folderLabel        = new QLabel( this );
+    private class AddButton
+        extends QPushButton
+    {
+        private final File file;
 
-    private QPushButton  ok                 = new QPushButton( this );
-    private QPushButton  cancel             = new QPushButton( this );
+        public AddButton(
+            File file )
+        {
+            super( ImportDialog.this.tr( "Add" ) );
+            this.file = file;
+            released.connect( this, "addBook()" );
+        }
 
-    private QLineEdit    maskEdit           = new QLineEdit( this );
-    private FilePathEdit pathEdit           = new FilePathEdit( this );
+        @SuppressWarnings( "unused" )
+        private void addBook()
+        {
+            new BookAdditionDialog( ImportDialog.this, file ).show();
+        }
+    }
 
-    private QTableWidget importProcessTable = new QTableWidget( 0, 3 );
+    private class EditButton
+        extends QPushButton
+    {
+        private final ReadingUnit book;
+
+        public EditButton(
+            ReadingUnit book )
+        {
+            super( ImportDialog.this.tr( "Edit" ) );
+            this.book = book;
+            released.connect( this, "editBook()" );
+        }
+
+        @SuppressWarnings( "unused" )
+        private void editBook()
+        {
+            new BookEditDialog( ImportDialog.this, book ).show();
+        }
+    }
+
+    private CyclicProgressBar progressBar        = new CyclicProgressBar( this );
+
+    private QLabel            maskLabel          = new QLabel( this );
+    private QLabel            folderLabel        = new QLabel( this );
+
+    private QPushButton       ok                 = new QPushButton( this );
+    private QPushButton       cancel             = new QPushButton( this );
+
+    private QLineEdit         maskEdit           = new QLineEdit( this );
+    private FilePathEdit      pathEdit           = new FilePathEdit( this );
+
+    private QTableWidget      importProcessTable = new QTableWidget( 0, 3 );
 
     public ImportDialog(
         QWidget parent )
@@ -48,7 +91,7 @@ public class ImportDialog
         super( parent );
         initComponents();
         initListeners();
-        Translator.addTranslatable( this );
+        retranslate();
     }
 
     public void retranslate()
@@ -72,22 +115,33 @@ public class ImportDialog
 
     private void initComponents()
     {
+        QRect geometry = geometry();
+        geometry.setWidth( 770 );
+        geometry.setHeight( 400 );
+        setGeometry( geometry );
+
         QGridLayout layout = new QGridLayout();
         setLayout( layout );
 
         layout.addWidget( maskLabel, 0, 0 );
-        layout.addWidget( maskEdit, 0, 1 );
+        layout.addWidget( maskEdit, 0, 1, 1, 3 );
 
         layout.addWidget( folderLabel, 1, 0 );
-        layout.addWidget( pathEdit, 1, 1 );
+        layout.addWidget( pathEdit, 1, 1, 1, 3 );
 
-        layout.addWidget( importProcessTable, 2, 0, 1, 2 );
+        layout.addWidget( importProcessTable, 2, 0, 1, 4 );
 
-        layout.addWidget( ok, 3, 0 );
-        layout.addWidget( cancel, 3, 1 );
+        layout.addWidget( progressBar, 3, 0, 1, 2 );
+        layout.addWidget( ok, 3, 2 );
+        layout.addWidget( cancel, 3, 3 );
 
         pathEdit.setFileMode( FileMode.DirectoryOnly );
         maskEdit.setText( Settings.getInstance().getProperty( JBookShelfSettings.IMPORT_MASK ) );
+
+        importProcessTable.setColumnWidth( 1, 500 );
+
+        progressBar.setVisible( false );
+        progressBar.setMaximum( 100 );
     }
 
     private void initListeners()
@@ -99,6 +153,10 @@ public class ImportDialog
     @SuppressWarnings( "unused" )
     private void onImport()
     {
+        importProcessTable.setSortingEnabled( false );
+        importProcessTable.clearContents();
+        // todo introduce paginator - large collections are imported very slowly
+
         final List<QTableWidgetItem> counter = new ArrayList<QTableWidgetItem>();
         FileImporter importer = new FileImporter()
         {
@@ -109,17 +167,15 @@ public class ImportDialog
             {
                 importProcessTable.setRowCount( importProcessTable.rowCount() + 1 );
 
-                QTableWidgetItem icon = new QTableWidgetItem( new QIcon( ICONPATH + "edit-delete.png" ), "" );
+                QTableWidgetItem icon = new QTableWidgetItem( new QIcon( ICONPATH + "edit-delete.png" ), null );
                 importProcessTable.setItem( counter.size(), 0, icon );
 
-                QTableWidgetItem name = new QTableWidgetItem( file.getName() );
-                importProcessTable.setItem( counter.size(), 1, name );
+                importProcessTable.setItem( counter.size(), 1, new QTableWidgetItem( file.getAbsolutePath() ) );
 
-                QTableWidgetItem edit = new QTableWidgetItem( tr( "Add" ) );
-                importProcessTable.setItem( counter.size(), 2, edit );
-                // todo add action
+                importProcessTable.setCellWidget( counter.size(), 2, new AddButton( file ) );
 
                 counter.add( icon );
+                progressBar.increment();
             }
 
             @Override
@@ -128,25 +184,28 @@ public class ImportDialog
             {
                 importProcessTable.setRowCount( importProcessTable.rowCount() + 1 );
 
-                QTableWidgetItem icon = new QTableWidgetItem( new QIcon( ICONPATH + "dialog-ok-apply.png" ), "" );
+                QTableWidgetItem icon = new QTableWidgetItem( new QIcon( ICONPATH + "dialog-ok-apply.png" ), null );
                 importProcessTable.setItem( counter.size(), 0, icon );
 
-                QTableWidgetItem name = new QTableWidgetItem( book.getName() );
-                importProcessTable.setItem( counter.size(), 1, name );
+                importProcessTable.setItem( counter.size(), 1, new QTableWidgetItem( book.getName() ) );
 
-                QTableWidgetItem edit = new QTableWidgetItem( tr( "Edit" ) );
-                importProcessTable.setItem( counter.size(), 2, edit );
-                // todo add action
+                importProcessTable.setCellWidget( counter.size(), 2, new EditButton( book ) );
 
                 counter.add( icon );
+                progressBar.increment();
             }
         };
 
         File file = new File( pathEdit.text() );
         if ( file.exists() && file.isDirectory() )
         {
+            progressBar.setVisible( true );
+
             importer.importFiles( maskEdit.text(), Storage.getBookShelf(), file.listFiles() );
-            // todo progressbar
+
+            progressBar.setVisible( false );
+            importProcessTable.setSortingEnabled( true );
+
             CollectionPanel.getInstance().updateTree();
         }
         else
