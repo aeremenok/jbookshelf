@@ -36,7 +36,28 @@ import org.jbookshelf.model.SingleFileFolder;
  */
 public class FileImporter
 {
-    static class HtmlFolderFileFilter
+    private static class ExtensionDenyingFilter
+        implements
+            FileFilter
+    {
+        String[] extensions = { "gif", "png", "bmp", "jpg", "jpeg", "js", "css", "ini", "db" };
+
+        public boolean accept(
+            File pathname )
+        {
+            String name = pathname.getAbsolutePath().toLowerCase();
+            for ( String ext : extensions )
+            {
+                if ( name.endsWith( "." + ext ) )
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    private static class HtmlFolderFileFilter
         implements
             FileFilter
     {
@@ -103,7 +124,7 @@ public class FileImporter
         }
 
         // zip file
-        if ( file.getName().endsWith( ".zip" ) )
+        if ( file.getName().toLowerCase().endsWith( ".zip" ) )
         {
             ArchiveFile archiveFile = ModelFactory.eINSTANCE.createArchiveFile();
             archiveFile.setArchiveFile( file );
@@ -155,7 +176,7 @@ public class FileImporter
             {
                 System.out.println( "+imported " + book.getAuthors().get( 0 ).getName() + ". " + book.getName() );
             }
-        }.importFiles( "%a. %b", bookShelf, root.listFiles() );
+        }.importFiles( "%a. %b", bookShelf, root );
     }
 
     /**
@@ -210,7 +231,7 @@ public class FileImporter
             }
             else if ( file.isDirectory() )
             {
-                importFiles( pattern, bookShelf, file.listFiles() );
+                importFiles( pattern, bookShelf, file.listFiles( new ExtensionDenyingFilter() ) );
             }
             else
             {
