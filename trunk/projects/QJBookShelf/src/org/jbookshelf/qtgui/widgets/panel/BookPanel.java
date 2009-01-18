@@ -21,17 +21,15 @@ import java.util.List;
 
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.ArchiveFile;
-import org.jbookshelf.model.Author;
 import org.jbookshelf.model.BookShelf;
-import org.jbookshelf.model.Category;
 import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.PhysicalUnit;
 import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
-import org.jbookshelf.model.impl.BookShelfImpl;
+import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.widgets.FilePathEdit;
-import org.jbookshelf.qtgui.widgets.completion.UniqueCompleter;
+import org.jbookshelf.qtgui.widgets.completion.CommaSeparatedCompleter;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
 
 import com.trolltech.qt.gui.QCheckBox;
@@ -56,29 +54,29 @@ public class BookPanel
      */
     public class Parameters
     {
-        private final String  bookName;
-        private final String  authorName;
-        private final String  categoryName;
-        private final File    file;
-        private final boolean isRead;
+        private final String   bookName;
+        private final String[] authorNames;
+        private final String[] categoryNames;
+        private final File     file;
+        private final boolean  isRead;
 
         public Parameters(
             String bookName,
-            String authorName,
-            String categoryName,
+            String[] authorNames,
+            String[] categoryNames,
             File file,
             boolean isRead )
         {
             this.bookName = bookName;
-            this.authorName = authorName;
-            this.categoryName = categoryName;
+            this.authorNames = authorNames;
+            this.categoryNames = categoryNames;
             this.file = file;
             this.isRead = isRead;
         }
 
-        public String getAuthorName()
+        public String[] getAuthorNames()
         {
-            return authorName;
+            return authorNames;
         }
 
         public String getBookName()
@@ -86,9 +84,9 @@ public class BookPanel
             return bookName;
         }
 
-        public String getCategoryName()
+        public String[] getCategoryNames()
         {
-            return categoryName;
+            return categoryNames;
         }
 
         public File getFile()
@@ -105,15 +103,15 @@ public class BookPanel
     private QLabel        authorLabel       = new QLabel();
     private QLabel        categoryLabel     = new QLabel();
     private QLabel        fileLabel         = new QLabel();
-
     private QLabel        bookLabel         = new QLabel();
-    private QCheckBox     isReadCheckBox    = new QCheckBox();
 
-    private QLineEdit     authorTextField   = new QLineEdit( this );
     private QLineEdit     bookTextField     = new QLineEdit( this );
+    private QLineEdit     authorTextField   = new QLineEdit( this );
     private QLineEdit     categoryTextField = new QLineEdit( this );
 
     private FilePathEdit  filePathEdit      = new FilePathEdit( this );
+
+    private QCheckBox     isReadCheckBox    = new QCheckBox( this );
 
     private List<QWidget> components        = new ArrayList<QWidget>();
 
@@ -155,15 +153,15 @@ public class BookPanel
             return null;
         }
 
-        String authorName = authorTextField.text();
-        if ( authorName.equals( "" ) )
+        String authorNames = authorTextField.text();
+        if ( authorNames.equals( "" ) )
         {
             QMessageBox.critical( this, title, tr( "Author name not specified" ) );
             return null;
         }
 
-        String categoryName = categoryTextField.text();
-        if ( categoryName.equals( "" ) )
+        String categoryNames = categoryTextField.text();
+        if ( categoryNames.equals( "" ) )
         {
             QMessageBox.critical( this, title, tr( "Category name not specified" ) );
             return null;
@@ -178,7 +176,7 @@ public class BookPanel
 
         boolean isRead = isReadCheckBox.isChecked();
 
-        return new Parameters( bookName, authorName, categoryName, file, isRead );
+        return new Parameters( bookName, authorNames.split( "," ), categoryNames.split( "," ), file, isRead );
     }
 
     public void retranslate()
@@ -201,26 +199,8 @@ public class BookPanel
     {
         // show book name
         bookTextField.setText( book.getName() );
-
-        // show author name
-        Author author = book.getAuthors().get( 0 ); // todo multiple authors
-        if ( author == null )
-        { // author has been removed
-            BookShelfImpl bookShelf = (BookShelfImpl) Storage.getBookShelf();
-            author = bookShelf.getUnknown();
-            book.getAuthors().add( author );
-        }
-        authorTextField.setText( author.getName() );
-
-        // show category name
-        Category category = book.getCategories().get( 0 ); // todo multiple categories
-        if ( category == null )
-        { // category has been removed
-            BookShelfImpl bookShelf = (BookShelfImpl) Storage.getBookShelf();
-            category = bookShelf.getCommon();
-            book.getCategories().add( category );
-        }
-        categoryTextField.setText( category.getName() );
+        authorTextField.setText( concat( book.getAuthors() ) );
+        categoryTextField.setText( concat( book.getCategories() ) );
 
         // show file of the physical unit
         String fileName;
@@ -262,6 +242,22 @@ public class BookPanel
         filePathEdit.setText( bookFile.getAbsolutePath() );
     }
 
+    private String concat(
+        List<? extends Unique> list )
+    {
+        StringBuilder builder = new StringBuilder();
+        for ( Unique unique : list )
+        {
+            if ( unique != null )
+            {
+                builder.append( unique.getName() ).append( ", " );
+            }
+        }
+        builder.deleteCharAt( builder.length() - 1 );
+        builder.deleteCharAt( builder.length() - 1 );
+        return builder.toString();
+    }
+
     private void initComponents()
     {
         QGridLayout layout = new QGridLayout();
@@ -283,8 +279,8 @@ public class BookPanel
 
         // hanging in autocompletion
         BookShelf bookShelf = Storage.getBookShelf();
-        UniqueCompleter.decorate( authorTextField, bookShelf.getAuthors() );
-        UniqueCompleter.decorate( categoryTextField, bookShelf.getCategories() );
+        CommaSeparatedCompleter.decorate( authorTextField, bookShelf.getAuthors() );
+        CommaSeparatedCompleter.decorate( categoryTextField, bookShelf.getCategories() );
     }
 
     /**

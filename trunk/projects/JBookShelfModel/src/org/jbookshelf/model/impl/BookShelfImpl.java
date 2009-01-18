@@ -163,8 +163,15 @@ public class BookShelfImpl
             readingUnit = ModelFactory.eINSTANCE.createReadingUnit();
             readingUnit.setName( name );
             readingUnit.setPhysical( physicalUnit );
-            readingUnit.getAuthors().add( author );
-            readingUnit.getCategories().add( category );
+            // todo make relations optional
+            if ( author != null )
+            {
+                readingUnit.getAuthors().add( author );
+            }
+            if ( category != null )
+            {
+                readingUnit.getCategories().add( category );
+            }
             getReadingUnits().add( readingUnit );
         }
         return readingUnit;
