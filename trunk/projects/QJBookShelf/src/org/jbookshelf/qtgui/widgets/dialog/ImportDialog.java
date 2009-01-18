@@ -201,7 +201,7 @@ public class ImportDialog
         {
             progressBar.setVisible( true );
 
-            importer.importFiles( maskEdit.text(), Storage.getBookShelf(), file.listFiles() );
+            importer.importFiles( maskEdit.text(), Storage.getBookShelf(), file );
 
             progressBar.setVisible( false );
             importProcessTable.setSortingEnabled( true );
