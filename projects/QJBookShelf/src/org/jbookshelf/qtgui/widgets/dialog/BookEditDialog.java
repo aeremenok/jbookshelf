@@ -15,7 +15,8 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
-import org.eclipse.emf.common.util.EList;
+import java.util.List;
+
 import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
@@ -76,27 +77,41 @@ public class BookEditDialog
     public void saveBook(
         Parameters parameters )
     {
-        EList<Author> authors = Storage.getBookShelf().queryAuthors( parameters.getAuthorName() );
-        if ( authors.size() > 0 )
-        { // todo what if we've found more than 1 author with equal names?
-            book.getAuthors().set( 0, authors.get( 0 ) ); // todo edit multiple authors
-        }
-        else
+        // todo reflective
+        book.getAuthors().clear();
+        for ( String name : parameters.getAuthorNames() )
         {
-            Author author = book.getAuthors().get( 0 ); // todo edit multiple authors
-            author.setName( parameters.getAuthorName() );
+            Author author;
+            String trim = name.trim();
+            List<Author> authors = Storage.getBookShelf().queryAuthors( trim );
+            if ( authors.size() > 0 )
+            { // todo what if we've found more than 1 author with equal names?
+                author = authors.get( 0 );
+            }
+            else
+            {
+                author = Storage.getBookShelf().addAuthor( trim );
+            }
+            book.getAuthors().add( author );
         }
 
-        EList<Category> categories = Storage.getBookShelf().queryCategories( parameters.getCategoryName() );
-        if ( categories.size() > 0 )
+        book.getCategories().clear();
+        for ( String name : parameters.getCategoryNames() )
         {
-            book.getCategories().set( 0, categories.get( 0 ) ); // todo edit multiple categories
+            Category category;
+            String trim = name.trim();
+            List<Category> authors = Storage.getBookShelf().queryCategories( trim );
+            if ( authors.size() > 0 )
+            { // todo what if we've found more than 1 author with equal names?
+                category = authors.get( 0 );
+            }
+            else
+            {
+                category = Storage.getBookShelf().addCategory( trim );
+            }
+            book.getCategories().add( category );
         }
-        else
-        {
-            Category category = book.getCategories().get( 0 );
-            category.setName( parameters.getCategoryName() ); // todo edit multiple categories
-        }
+
         book.setName( parameters.getBookName() );
 
         book.setPhysical( FileImporter.createPhysicalUnit( parameters.getFile() ) );
