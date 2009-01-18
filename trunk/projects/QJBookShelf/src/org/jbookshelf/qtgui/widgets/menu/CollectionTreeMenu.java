@@ -44,6 +44,7 @@ public class CollectionTreeMenu
         if ( unique instanceof ReadingUnit )
         { // only the book can be opened and edited
             addAction( ToolBar.getInstance().getOpenAction() );
+            addAction( ToolBar.getInstance().getOpenFolderAction() );
             addAction( ToolBar.getInstance().getEditAction() );
         }
 
