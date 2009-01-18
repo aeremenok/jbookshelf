@@ -134,14 +134,14 @@ public class CompletableTextEdit
         String prefix = textUnderCursor();
 
         boolean shortPrefix = prefix.length() < 3;
-        if ( !isShortcut &&
-            (hasModifier || empty || shortPrefix || EOW.contains( text.substring( text.length() - 1 ) )) )
+        boolean hasEndOfWord = EOW.contains( text.substring( text.length() - 1 ) );
+        if ( !isShortcut && (hasModifier || empty || shortPrefix || hasEndOfWord) )
         {
             c.popup().hide();
             return;
         }
 
-        if ( prefix != c.completionPrefix() )
+        if ( !prefix.equals( c.completionPrefix() ) )
         {
             c.setCompletionPrefix( prefix );
             c.popup().setCurrentIndex( c.completionModel().index( 0, 0 ) );
