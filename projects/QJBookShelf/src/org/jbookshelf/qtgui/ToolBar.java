@@ -56,6 +56,7 @@ public class ToolBar
     private QAction              removeAction;
     private QAction              editAction;
     private QAction              openAction;
+    private QAction              openFolderAction;
     private QAction              settingsAction;
     private QAction              aboutAction;
     private QAction              restoreAction;
@@ -85,6 +86,11 @@ public class ToolBar
         return openAction;
     }
 
+    public QAction getOpenFolderAction()
+    {
+        return openFolderAction;
+    }
+
     public QAction getRemoveAction()
     {
         return removeAction;
@@ -93,6 +99,7 @@ public class ToolBar
     public void nothingSelected()
     {
         removeAction.setEnabled( false );
+        openFolderAction.setEnabled( false );
         openAction.setEnabled( false );
         editAction.setEnabled( false );
     }
@@ -104,6 +111,7 @@ public class ToolBar
         editAction.setText( tr( "&Edit" ) );
 
         openAction.setText( tr( "&Open" ) );
+        openFolderAction.setText( tr( "Open &Folder" ) );
 
         settingsAction.setText( tr( "&Settings" ) );
 
@@ -122,6 +130,7 @@ public class ToolBar
         if ( selectedUnique instanceof ReadingUnit )
         {
             openAction.setEnabled( true );
+            openFolderAction.setEnabled( true );
             editAction.setEnabled( true );
         }
     }
@@ -132,6 +141,7 @@ public class ToolBar
         removeAction.triggered.connect( this, "onRemove()" );
         editAction.triggered.connect( this, "onEdit()" );
 
+        openFolderAction.triggered.connect( this, "onOpenFolder()" );
         openAction.triggered.connect( this, "onOpen()" );
 
         settingsAction.triggered.connect( this, "onSettings()" );
@@ -152,16 +162,17 @@ public class ToolBar
         addSeparator();
 
         openAction = addAction( new QIcon( ICONPATH + "document-preview.png" ), "" );
-
-        addSeparator();
-
-        settingsAction = addAction( new QIcon( ICONPATH + "configure.png" ), "" );
+        openFolderAction = addAction( new QIcon( ICONPATH + "document-open-folder.png" ), "" );
 
         addSeparator();
 
         importAction = addAction( new QIcon( ICONPATH + "document-import.png" ), "" );
-        backupAction = addAction( new QIcon( ICONPATH + "document-save-as.png" ), "" );
-        restoreAction = addAction( new QIcon( ICONPATH + "document-open.png" ), "" );
+        backupAction = addAction( new QIcon( ICONPATH + "document-save.png" ), "" );
+        restoreAction = addAction( new QIcon( ICONPATH + "document-revert.png" ), "" );
+
+        addSeparator();
+
+        settingsAction = addAction( new QIcon( ICONPATH + "configure.png" ), "" );
 
         addSeparator();
 
@@ -214,6 +225,12 @@ public class ToolBar
     private void onOpen()
     {
         ((ReadingUnit) selectedUnique).getPhysical().openUnit();
+    }
+
+    @SuppressWarnings( "unused" )
+    private void onOpenFolder()
+    {
+        ((ReadingUnit) selectedUnique).getPhysical().openFolder();
     }
 
     @SuppressWarnings( "unused" )
