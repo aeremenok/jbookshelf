@@ -94,8 +94,8 @@ public class BookAdditionDialog
 
         headerLabel.setText( tr( "Add Book" ) );
 
-        addNCloseButton.setText( tr( "And and close" ) );
-        addNContinueButton.setText( tr( "And and continue" ) );
+        addNCloseButton.setText( tr( "Add and close" ) );
+        addNContinueButton.setText( tr( "Add and continue" ) );
         cancelButton.setText( tr( "Cancel" ) );
     }
 
