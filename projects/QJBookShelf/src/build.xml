@@ -59,7 +59,7 @@
 		<chmod perm="+x" file="${targetdir}/run.sh" />
 
 		<zip destfile="${targetdir}.zip">
-			<fileset dir="${targetdir}" />
+			<zipfileset dir="${targetdir}" prefix="jbookshelf" />
 		</zip>
 	</target>
 
