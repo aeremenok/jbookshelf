@@ -239,7 +239,10 @@ public abstract class CollectionTree
         if ( parent instanceof UniqueNode )
         {
             UniqueNode uniqueNode = (UniqueNode) parent;
-            addChildren( uniqueNode );
+            if ( uniqueNode.childCount() == 0 )
+            {
+                addChildren( uniqueNode );
+            }
         }
     }
 

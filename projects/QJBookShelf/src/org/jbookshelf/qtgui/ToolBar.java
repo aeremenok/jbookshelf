@@ -243,7 +243,6 @@ public class ToolBar
         if ( StandardButton.Yes.equals( button ) )
         {
             Storage.getBookShelf().removeUnique( selectedUnique );
-            QMessageBox.information( this, tr( "Removed" ), selectedUnique.getName() + " " + tr( "removed" ) );
             CollectionPanel.getInstance().removeSelectedItem();
         }
     }
