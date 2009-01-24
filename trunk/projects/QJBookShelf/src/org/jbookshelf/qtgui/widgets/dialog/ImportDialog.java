@@ -24,6 +24,7 @@ import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.ReadingUnit;
+import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.FilePathEdit;
 import org.jbookshelf.qtgui.widgets.ext.CyclicProgressBar;
@@ -107,6 +108,7 @@ public class ImportDialog
         QWidget parent )
     {
         super( parent );
+
         initComponents();
         initListeners();
         retranslate();
@@ -142,9 +144,12 @@ public class ImportDialog
 
     private void initComponents()
     {
+        setModal( true );
+
         QRect geometry = geometry();
         geometry.setWidth( 770 );
         geometry.setHeight( 400 );
+        geometry.moveCenter( MainWindow.getInstance().geometry().center() );
         setGeometry( geometry );
 
         QGridLayout layout = new QGridLayout();

@@ -29,7 +29,6 @@ import org.jbookshelf.qtgui.widgets.panel.BookPanel.Parameters;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
-import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QWidget;
 
@@ -84,8 +83,6 @@ public class BookAdditionDialog
         }
 
         CollectionPanel.getInstance().updateTree();
-
-        QMessageBox.information( this, tr( "Added" ), parameters.getBookName() + " " + tr( "added" ) );
     }
 
     public void retranslate()

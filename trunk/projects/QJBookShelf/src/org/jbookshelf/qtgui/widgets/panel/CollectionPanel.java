@@ -144,6 +144,7 @@ public class CollectionPanel
     private void clean()
     {
         searchTextField.setText( "" );
+        updateTree();
     }
 
     private CollectionTree getActiveTree()
