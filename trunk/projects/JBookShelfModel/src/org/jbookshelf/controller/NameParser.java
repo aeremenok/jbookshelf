@@ -39,9 +39,12 @@ public class NameParser
 
     private final Map<Character, String> values = new HashMap<Character, String>();
 
+    private final String                 pattern;
+
     public NameParser(
         String pattern )
     {
+        this.pattern = pattern;
         // prepare delimiters
         delims = pattern.split( "%" );
     }
@@ -61,13 +64,20 @@ public class NameParser
         return values.get( 'c' );
     }
 
+    public String getPattern()
+    {
+        return pattern;
+    }
+
     /**
      * extract values from name and put them into map
      * 
      * @param name matches pattern, specified in constructor
      */
+    @SuppressWarnings( "unused" )
     public void parse(
         String name )
+        throws Exception
     {
         // cut delimiters at edges
         String right = name.substring( delims[0].length(), name.length() - delims[delims.length - 1].length() + 1 );
