@@ -74,7 +74,7 @@ public class CommentTreePanel
         }
     }
 
-    private static final SimpleDateFormat format          = new SimpleDateFormat( "dd.MM.yy HH:mm" );
+    private static final SimpleDateFormat format          = new SimpleDateFormat( "yyyy-MM-dd HH-mm-ss" );
 
     private CompletableTextEdit           commentTextArea = new CompletableTextEdit( this );
     private QLineEdit                     titleTextField  = new QLineEdit();
@@ -110,7 +110,7 @@ public class CommentTreePanel
         selectedCommentable.getComments().add( comment );
         Date value = new Date();
         comment.setCreationDate( value );
-        comment.setTitle( tr( "comment" ) + format.format( value ) );
+        comment.setTitle( format.format( value ) );
         comment.setContent( "" );
 
         root.addChild( new CommentNode( comment ) );
