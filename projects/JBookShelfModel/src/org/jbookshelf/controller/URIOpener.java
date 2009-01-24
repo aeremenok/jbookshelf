@@ -17,8 +17,6 @@ package org.jbookshelf.controller;
 
 import java.io.File;
 
-import org.eclipse.core.runtime.Assert;
-
 /**
  * opens urls in default browser using awt
  * 
@@ -95,7 +93,6 @@ public class URIOpener
     public static void openFolder(
         File file )
     {
-        Assert.isTrue( file.isDirectory() );
         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
         try
         {
