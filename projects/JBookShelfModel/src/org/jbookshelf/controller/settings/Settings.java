@@ -119,6 +119,11 @@ public class Settings
         }
     }
 
+    public void save()
+    {
+        save( getSettingsFile().getAbsolutePath(), true );
+    }
+
     public void save(
         String fileName,
         boolean createNewFile )
@@ -165,7 +170,7 @@ public class Settings
             throw new Error( "cannot create jbookshelf folder" );
         }
 
-        properties.setProperty( JBookShelfSettings.IMPORT_MASK, "%a. %b" );
+        properties.setProperty( JBookShelfSettings.IMPORT_MASK, "%b" );
         // todo trick windows
         properties.setProperty( JBookShelfSettings.TEMP_FOLDER, System.getProperty( "java.io.tmpdir" ) );
     }

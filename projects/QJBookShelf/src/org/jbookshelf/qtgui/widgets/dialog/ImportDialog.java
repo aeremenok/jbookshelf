@@ -16,6 +16,7 @@ import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 
 import com.trolltech.qt.core.QRect;
+import com.trolltech.qt.gui.QCloseEvent;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QLabel;
@@ -72,18 +73,20 @@ public class ImportDialog
         }
     }
 
-    private CyclicProgressBar progressBar        = new CyclicProgressBar( this );
+    private static final String MASK_SEPARATOR     = "/";
 
-    private QLabel            maskLabel          = new QLabel( this );
-    private QLabel            folderLabel        = new QLabel( this );
+    private CyclicProgressBar   progressBar        = new CyclicProgressBar( this );
 
-    private QPushButton       ok                 = new QPushButton( this );
-    private QPushButton       cancel             = new QPushButton( this );
+    private QLabel              maskLabel          = new QLabel( this );
+    private QLabel              folderLabel        = new QLabel( this );
 
-    private QLineEdit         maskEdit           = new QLineEdit( this );
-    private FilePathEdit      pathEdit           = new FilePathEdit( this );
+    private QPushButton         ok                 = new QPushButton( this );
+    private QPushButton         cancel             = new QPushButton( this );
 
-    private QTableWidget      importProcessTable = new QTableWidget( 0, 3 );
+    private QLineEdit           maskEdit           = new QLineEdit( this );
+    private FilePathEdit        pathEdit           = new FilePathEdit( this );
+
+    private QTableWidget        importProcessTable = new QTableWidget( 0, 3 );
 
     public ImportDialog(
         QWidget parent )
@@ -98,6 +101,14 @@ public class ImportDialog
     {
         setWindowTitle( tr( "Import files" ) );
 
+        String help =
+            tr( "Specify multiple masks separated with /. If JBookShelf fails to parse a filename using the mask - it will try the next one.\n"
+                + "Use:\n%a - to mask an author\n%b - to mask a book\n%c - to mask a category" );
+        maskLabel.setWhatsThis( help );
+        maskLabel.setToolTip( help );
+        maskEdit.setWhatsThis( help );
+        maskEdit.setToolTip( help );
+
         maskLabel.setText( tr( "Import mask" ) );
         folderLabel.setText( tr( "Import folder" ) );
 
@@ -111,6 +122,7 @@ public class ImportDialog
         list.add( tr( "Name" ) );
         list.add( tr( "Action" ) );
         importProcessTable.setHorizontalHeaderLabels( list );
+
     }
 
     private void initComponents()
@@ -155,7 +167,7 @@ public class ImportDialog
     {
         importProcessTable.setSortingEnabled( false );
         importProcessTable.clearContents();
-        // todo introduce paginator - large collections are imported very slowly
+        // todo introduce a paginator or a tree - large collections are imported very slowly
 
         final List<QTableWidgetItem> counter = new ArrayList<QTableWidgetItem>();
         FileImporter importer = new FileImporter()
@@ -169,9 +181,7 @@ public class ImportDialog
 
                 QTableWidgetItem icon = new QTableWidgetItem( new QIcon( ICONPATH + "edit-delete.png" ), null );
                 importProcessTable.setItem( counter.size(), 0, icon );
-
                 importProcessTable.setItem( counter.size(), 1, new QTableWidgetItem( file.getAbsolutePath() ) );
-
                 importProcessTable.setCellWidget( counter.size(), 2, new AddButton( file ) );
 
                 counter.add( icon );
@@ -186,9 +196,7 @@ public class ImportDialog
 
                 QTableWidgetItem icon = new QTableWidgetItem( new QIcon( ICONPATH + "dialog-ok-apply.png" ), null );
                 importProcessTable.setItem( counter.size(), 0, icon );
-
                 importProcessTable.setItem( counter.size(), 1, new QTableWidgetItem( book.getName() ) );
-
                 importProcessTable.setCellWidget( counter.size(), 2, new EditButton( book ) );
 
                 counter.add( icon );
@@ -201,7 +209,9 @@ public class ImportDialog
         {
             progressBar.setVisible( true );
 
-            importer.importFiles( maskEdit.text(), Storage.getBookShelf(), file );
+            String[] masks = maskEdit.text().split( MASK_SEPARATOR );
+            System.out.println( masks.length );
+            importer.importFiles( masks, Storage.getBookShelf(), file );
 
             progressBar.setVisible( false );
             importProcessTable.setSortingEnabled( true );
@@ -212,5 +222,15 @@ public class ImportDialog
         {
             QMessageBox.critical( this, tr( "Error" ), tr( "File does not exist: " ) + file.getName() );
         }
+    }
+
+    @Override
+    protected void closeEvent(
+        QCloseEvent arg__1 )
+    {
+        Settings.getInstance().setProperty( JBookShelfSettings.IMPORT_MASK, maskEdit.text() );
+        Settings.getInstance().save();
+
+        super.closeEvent( arg__1 );
     }
 }

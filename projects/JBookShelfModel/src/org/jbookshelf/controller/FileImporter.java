@@ -17,6 +17,9 @@ package org.jbookshelf.controller;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Author;
@@ -176,7 +179,7 @@ public class FileImporter
             {
                 System.out.println( "+imported " + book.getAuthors().get( 0 ).getName() + ". " + book.getName() );
             }
-        }.importFiles( "%a. %b", bookShelf, root );
+        }.importFiles( new String[] { "%a. %b" }, bookShelf, root );
     }
 
     /**
@@ -203,41 +206,70 @@ public class FileImporter
     }
 
     public void importFiles(
-        String pattern,
+        String[] patterns,
         BookShelf bookShelf,
         File... files )
     {
-        NameParser nameParser = new NameParser( pattern );
+        List<NameParser> parsers = new ArrayList<NameParser>();
+        for ( String string : patterns )
+        {
+            NameParser nameParser = new NameParser( string );
+            parsers.add( nameParser );
+        }
+
         for ( File file : files )
         {
             PhysicalUnit physicalUnit = createPhysicalUnit( file );
             if ( physicalUnit != null )
             {
-                try
+                ReadingUnit book = null;
+                Iterator<NameParser> iterator = parsers.iterator();
+                while ( iterator.hasNext() && book == null )
                 {
-                    nameParser.parse( cutExtension( file ) );
+                    NameParser parser = iterator.next();
+                    book = bookFromName( parser, file, physicalUnit, bookShelf );
+                }
 
-                    Author author = bookShelf.addAuthor( nameParser.getAuthorName() );
-                    Category category = bookShelf.addCategory( nameParser.getCategoryName() );
-                    ReadingUnit book =
-                        bookShelf.addReadingUnit( nameParser.getBookName(), author, category, physicalUnit );
-
+                if ( book != null )
+                {
                     onImportSuccess( book );
                 }
-                catch ( Exception e )
+                else
                 {
-                    onImportFailure( file, e );
+                    // todo message
+                    onImportFailure( file, new Exception() );
                 }
             }
             else if ( file.isDirectory() )
             {
-                importFiles( pattern, bookShelf, file.listFiles( new ExtensionDenyingFilter() ) );
+                importFiles( patterns, bookShelf, file.listFiles( new ExtensionDenyingFilter() ) );
             }
             else
             {
                 onImportFailure( file, new Exception( "unparseable directory" ) // todo specify more info
                 );
             }
+        }
+    }
+
+    private ReadingUnit bookFromName(
+        NameParser parser,
+        File file,
+        PhysicalUnit physicalUnit,
+        BookShelf bookShelf )
+    {
+        try
+        {
+            parser.parse( cutExtension( file ) );
+            System.out.println( parser.getPattern() );
+
+            Author author = bookShelf.addAuthor( parser.getAuthorName() );
+            Category category = bookShelf.addCategory( parser.getCategoryName() );
+            return bookShelf.addReadingUnit( parser.getBookName(), author, category, physicalUnit );
+        }
+        catch ( Exception e )
+        {
+            return null;
         }
     }
 

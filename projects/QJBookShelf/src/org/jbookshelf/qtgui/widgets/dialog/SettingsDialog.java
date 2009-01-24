@@ -26,7 +26,6 @@ import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
-import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QStyleFactory;
 import com.trolltech.qt.gui.QWidget;
@@ -42,28 +41,25 @@ public class SettingsDialog
     implements
         JBookShelfSettings
 {
-    private Settings     settings            = Settings.getInstance();
+    private Settings     settings       = Settings.getInstance();
 
-    private QPushButton  cancelButton        = new QPushButton( this );
-    private QPushButton  okButton            = new QPushButton( this );
-    private QPushButton  restoreButton       = new QPushButton( this );
-    private QPushButton  saveButton          = new QPushButton( this );
+    private QPushButton  cancelButton   = new QPushButton( this );
+    private QPushButton  okButton       = new QPushButton( this );
+    private QPushButton  restoreButton  = new QPushButton( this );
+    private QPushButton  saveButton     = new QPushButton( this );
 
-    private QLabel       importMaskLabel     = new QLabel( this );
-    private QLabel       lafLabel            = new QLabel( this );
-    private QLabel       langLabel           = new QLabel( this );
-    private QLabel       settingsLabel       = new QLabel( this );
+    private QLabel       lafLabel       = new QLabel( this );
+    private QLabel       langLabel      = new QLabel( this );
+    private QLabel       settingsLabel  = new QLabel( this );
 
-    private QLineEdit    importMaskTextField = new QLineEdit( this );
+    private QComboBox    lafComboBox    = new QComboBox( this );
+    private QComboBox    langComboBox   = new QComboBox( this );
 
-    private QComboBox    lafComboBox         = new QComboBox( this );
-    private QComboBox    langComboBox        = new QComboBox( this );
+    private FilePathEdit jbsFolder      = new FilePathEdit( this );
+    private FilePathEdit tmpFolder      = new FilePathEdit( this );
 
-    private FilePathEdit jbsFolder           = new FilePathEdit( this );
-    private FilePathEdit tmpFolder           = new FilePathEdit( this );
-
-    private QLabel       jbsFolderLabel      = new QLabel( this );
-    private QLabel       tmpFolderLabel      = new QLabel( this );
+    private QLabel       jbsFolderLabel = new QLabel( this );
+    private QLabel       tmpFolderLabel = new QLabel( this );
 
     public SettingsDialog(
         QWidget parent )
@@ -87,7 +83,6 @@ public class SettingsDialog
         lafLabel.setText( tr( "Look-and-feel" ) );
         jbsFolderLabel.setText( tr( "JBookShelf folder" ) );
         tmpFolderLabel.setText( tr( "Temp folder" ) );
-        importMaskLabel.setText( tr( "Default import mask" ) );
 
         saveButton.setText( tr( "Save as defaults" ) );
         restoreButton.setText( tr( "Restore defaults" ) );
@@ -105,7 +100,6 @@ public class SettingsDialog
 
         tmpFolder.setText( settings.getProperty( TEMP_FOLDER ) );
         jbsFolder.setText( settings.getProperty( JBS_FOLDER ) );
-        importMaskTextField.setText( settings.getProperty( IMPORT_MASK ) );
     }
 
     private void initComponents()
@@ -128,9 +122,6 @@ public class SettingsDialog
 
         layout.addWidget( tmpFolderLabel, 4, 0 );
         layout.addWidget( tmpFolder, 4, 1, 1, 4 );
-
-        layout.addWidget( importMaskLabel, 5, 0 );
-        layout.addWidget( importMaskTextField, 5, 1, 1, 4 );
 
         layout.addWidget( saveButton, 6, 0 );
         layout.addWidget( restoreButton, 6, 1 );
@@ -184,7 +175,7 @@ public class SettingsDialog
     private void onOK()
     {
         readSettingValues();
-        settings.save( settings.getSettingsFile().getAbsolutePath(), true );
+        settings.save();
         close();
     }
 
@@ -208,6 +199,5 @@ public class SettingsDialog
         settings.setProperty( LAF, lafComboBox.currentText() );
         settings.setProperty( TEMP_FOLDER, tmpFolder.text() );
         settings.setProperty( JBS_FOLDER, jbsFolder.text() );
-        settings.setProperty( IMPORT_MASK, importMaskTextField.text() );
     }
 }
