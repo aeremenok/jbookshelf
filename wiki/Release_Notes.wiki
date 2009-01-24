@@ -1,8 +1,23 @@
 #labels Featured
-=JBookShelf 0.2b3=
+=JBookShelf 0.3b1=
 
-[http://jbookshelf.googlecode.com/files/jbookshelf-linux-0.2b3.zip Download for Linux] 
-[http://jbookshelf.googlecode.com/files/jbookshelf-windows-0.2b3.zip Download for Windows]
+[http://jbookshelf.googlecode.com/files/jbookshelf-linux-0.3b1.zip Download for Linux] 
+[http://jbookshelf.googlecode.com/files/jbookshelf-windows-0.3b1.zip Download for Windows]
+
+==Changes==
+
+ * Collection trees have context menus
+ * Autocomplete in the fileds of Author and Category (based on existing collection)
+ * Autocomplete in the Comment textarea (based on dictionary)
+ * Import dialog displays the process of book import
+
+==Known issues==
+
+ * [http://code.google.com/p/jbookshelf/issues/list issues]
+
+----
+
+=JBookShelf 0.2b3=
 
 ==Changes==
 
