@@ -16,13 +16,13 @@
 package org.jbookshelf.qtgui.widgets.treepanel;
 
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
+import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
 import org.jbookshelf.qtgui.widgets.menu.RelatedTreeMenu;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
 import com.trolltech.qt.gui.QContextMenuEvent;
 import com.trolltech.qt.gui.QTreeWidget;
 import com.trolltech.qt.gui.QTreeWidgetItem;
-import com.trolltech.qt.gui.QWidget;
 import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
 
 /**
@@ -31,7 +31,7 @@ import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
  * @author eav
  */
 public abstract class SearchableTreePanel
-    extends QWidget
+    extends QWidgetExt
     implements
         UniqueSelectionListener
 {
@@ -90,6 +90,10 @@ public abstract class SearchableTreePanel
      * remove selected tree item
      */
     public abstract void onRemove();
+
+    public void retranslate()
+    {
+    }
 
     /**
      * show only items with captions containng text
