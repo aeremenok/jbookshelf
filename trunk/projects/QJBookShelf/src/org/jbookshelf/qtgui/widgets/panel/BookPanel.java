@@ -253,8 +253,11 @@ public class BookPanel
                 builder.append( unique.getName() ).append( ", " );
             }
         }
-        builder.deleteCharAt( builder.length() - 1 );
-        builder.deleteCharAt( builder.length() - 1 );
+        if ( builder.length() > 0 )
+        {
+            builder.deleteCharAt( builder.length() - 1 );
+            builder.deleteCharAt( builder.length() - 1 );
+        }
         return builder.toString();
     }
 
