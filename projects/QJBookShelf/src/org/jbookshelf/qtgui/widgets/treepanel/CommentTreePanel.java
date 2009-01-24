@@ -188,7 +188,6 @@ public class CommentTreePanel
     private void editComment(
         Comment comment )
     {
-        // todo retranslate
         dateLabel.setText( tr( "Created " ) + format.format( comment.getCreationDate() ) );
         titleTextField.setText( comment.getTitle() );
         commentTextArea.setPlainText( comment.getContent() );

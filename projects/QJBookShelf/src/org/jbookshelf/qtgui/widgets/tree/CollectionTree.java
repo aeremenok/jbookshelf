@@ -20,7 +20,6 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Unique;
@@ -114,7 +113,7 @@ public abstract class CollectionTree
     }
 
     public void showResult(
-        EList<? extends Unique> uniques )
+        List<? extends Unique> uniques )
     {
         clearSelection();
 
@@ -138,7 +137,7 @@ public abstract class CollectionTree
     public void update(
         BookShelf bookShelf )
     {
-        showResult( (EList<Unique>) bookShelf.eGet( getReference() ) );
+        showResult( (List<Unique>) bookShelf.eGet( getReference() ) );
     }
 
     /**

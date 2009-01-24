@@ -43,13 +43,13 @@ public class RelatedPanel
 
     private SearchableTreePanel[]     searchableTreePanels;
 
-    private QPushButton               addButton       = new QPushButton();
-    private QPushButton               removeButton    = new QPushButton();
-    private QLineEdit                 searchTextField = new QLineEdit();
+    private final QPushButton         addButton       = new QPushButton( this );
+    private final QPushButton         removeButton    = new QPushButton( this );
+    private final QLineEdit           searchTextField = new QLineEdit( this );
 
-    private QTabWidget                tabbedPane      = new QTabWidget();
-    private SearchableTreePanel       commentPanel    = new CommentTreePanel( this );
-    private SearchableTreePanel       relatedPanel    = new RelatedTreePanel( this );
+    private final QTabWidget          tabbedPane      = new QTabWidget( this );
+    private final SearchableTreePanel commentPanel    = new CommentTreePanel( this );
+    private final SearchableTreePanel relatedPanel    = new RelatedTreePanel( this );
 
     public static RelatedPanel getInstance()
     {
@@ -66,11 +66,13 @@ public class RelatedPanel
 
     public void focusGained()
     {
+        addButton.setEnabled( false );
         removeButton.setEnabled( true );
     }
 
     public void focusLost()
     {
+        addButton.setEnabled( false );
         removeButton.setEnabled( false );
     }
 
@@ -95,7 +97,7 @@ public class RelatedPanel
 
     public void nothingSelected()
     {
-        for ( SearchableTreePanel panel : getSearchableTreePanels() )
+        for ( final SearchableTreePanel panel : getSearchableTreePanels() )
         {
             panel.nothingSelected();
         }
@@ -110,9 +112,9 @@ public class RelatedPanel
     }
 
     public void selectedUnique(
-        Unique unique )
+        final Unique unique )
     {
-        for ( SearchableTreePanel panel : getSearchableTreePanels() )
+        for ( final SearchableTreePanel panel : getSearchableTreePanels() )
         {
             panel.selectedUnique( unique );
         }
@@ -120,7 +122,7 @@ public class RelatedPanel
 
     private void initComponents()
     {
-        QGridLayout layout = new QGridLayout();
+        final QGridLayout layout = new QGridLayout();
         setLayout( layout );
 
         layout.addWidget( addButton, 0, 0 );
