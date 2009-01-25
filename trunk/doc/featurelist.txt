@@ -8,9 +8,11 @@
 
 - monitor new files in specified directory from tray
 
-- navigate between units, authors, tags, comments (optional, consider delaying to next iteration)
+- navigate between units, authors, categories, comments (optional, consider delaying to next iteration)
 
 - reorganize existing file structure according to specified filename masks
+
+- hierarchical categories 
 
 --- implemented in 0.3 ---
 
