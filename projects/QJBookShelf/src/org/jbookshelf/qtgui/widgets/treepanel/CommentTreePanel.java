@@ -80,7 +80,7 @@ public class CommentTreePanel
     private QLineEdit                     titleTextField  = new QLineEdit();
     private QLabel                        dateLabel       = new QLabel();
 
-    private QPushButton                   submitButton    = new QPushButton();
+    private QPushButton                   undoButton      = new QPushButton();
     private QWidget                       editPanel       = new QWidget();
 
     private Commentable                   selectedCommentable;
@@ -188,7 +188,7 @@ public class CommentTreePanel
     private void editComment(
         Comment comment )
     {
-        dateLabel.setText( tr( "Created " ) + format.format( comment.getCreationDate() ) );
+        dateLabel.setText( tr( "Created" ) + " " + format.format( comment.getCreationDate() ) );
         titleTextField.setText( comment.getTitle() );
         commentTextArea.setPlainText( comment.getContent() );
 
@@ -198,7 +198,8 @@ public class CommentTreePanel
     private void initListeners()
     {
         searchableTree.itemSelectionChanged.connect( this, "onItemSelection()" );
-        submitButton.released.connect( this, "saveComment()" );
+        commentTextArea.textChanged.connect( this, "saveComment()" );
+        undoButton.released.connect( commentTextArea, "undo()" );
     }
 
     @SuppressWarnings( "unused" )
@@ -227,7 +228,7 @@ public class CommentTreePanel
         editPanel.setLayout( editLayout );
         editLayout.addWidget( dateLabel, 0, 0 );
         editLayout.addWidget( titleTextField, 0, 1 );
-        editLayout.addWidget( submitButton, 0, 2 );
+        editLayout.addWidget( undoButton, 0, 2 );
 
         editLayout.addWidget( commentTextArea, 1, 0, 1, 3 );
 
@@ -235,7 +236,7 @@ public class CommentTreePanel
         layout().addWidget( editPanel );
         layout().addWidget( searchableTree );
 
-        submitButton.setIcon( new QIcon( ICONPATH + "dialog-ok-apply.png" ) );
+        undoButton.setIcon( new QIcon( ICONPATH + "dialog-ok-apply.png" ) );
 
         CompletionDictionary dictionary = CompletionDictionary.getInstance();
         dictionary.collectWords( Storage.getBookShelf() );
