@@ -66,13 +66,11 @@ public class RelatedPanel
 
     public void focusGained()
     {
-        addButton.setEnabled( false );
         removeButton.setEnabled( true );
     }
 
     public void focusLost()
     {
-        addButton.setEnabled( false );
         removeButton.setEnabled( false );
     }
 
@@ -97,6 +95,8 @@ public class RelatedPanel
 
     public void nothingSelected()
     {
+        addButton.setEnabled( false );
+        removeButton.setEnabled( false );
         for ( final SearchableTreePanel panel : getSearchableTreePanels() )
         {
             panel.nothingSelected();
@@ -114,6 +114,7 @@ public class RelatedPanel
     public void selectedUnique(
         final Unique unique )
     {
+        addButton.setEnabled( true );
         for ( final SearchableTreePanel panel : getSearchableTreePanels() )
         {
             panel.selectedUnique( unique );
