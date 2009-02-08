@@ -236,7 +236,8 @@ public class CommentTreePanel
         layout().addWidget( editPanel );
         layout().addWidget( searchableTree );
 
-        undoButton.setIcon( new QIcon( ICONPATH + "dialog-ok-apply.png" ) );
+        undoButton.setIcon( new QIcon( ICONPATH + "edit-undo.png" ) );
+        undoButton.setToolTip( tr( "Undo" ) );
 
         CompletionDictionary dictionary = CompletionDictionary.getInstance();
         dictionary.collectWords( Storage.getBookShelf() );
