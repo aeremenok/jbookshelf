@@ -26,6 +26,7 @@ import org.jbookshelf.qtgui.widgets.dialog.AboutDialog;
 import org.jbookshelf.qtgui.widgets.dialog.BookAdditionDialog;
 import org.jbookshelf.qtgui.widgets.dialog.BookEditDialog;
 import org.jbookshelf.qtgui.widgets.dialog.ImportDialog;
+import org.jbookshelf.qtgui.widgets.dialog.ReaderDialog;
 import org.jbookshelf.qtgui.widgets.dialog.SettingsDialog;
 import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
 import org.jbookshelf.qtgui.widgets.ext.QToolBarExt;
@@ -224,7 +225,15 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onOpen()
     {
-        ((ReadingUnit) selectedUnique).getPhysical().openUnit();
+        try
+        {
+            new ReaderDialog( MainWindow.getInstance(), (ReadingUnit) selectedUnique ).show();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            ((ReadingUnit) selectedUnique).getPhysical().openUnit();
+        }
     }
 
     @SuppressWarnings( "unused" )
