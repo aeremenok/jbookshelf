@@ -43,6 +43,7 @@ import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QTreeWidget;
 import com.trolltech.qt.gui.QTreeWidgetItem;
 import com.trolltech.qt.gui.QWidget;
+import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
 import com.trolltech.qt.gui.QFileDialog.FileMode;
 import com.trolltech.qt.gui.QTreeWidgetItem.ChildIndicatorPolicy;
 
@@ -60,19 +61,17 @@ public class ImportDialog
     private class AddButton
         extends QPushButton
     {
-        private final File file;
-
-        public AddButton(
-            final File file )
+        public AddButton()
         {
-            super( ImportDialog.this.tr( "Add" ) );
-            this.file = file;
+            super( ImportDialog.this.tr( "Add" ), ImportDialog.this );
             released.connect( this, "addBook()" );
         }
 
         @SuppressWarnings( "unused" )
         private void addBook()
         {
+            QTreeWidgetItem item = importProcessTree.selectedItems().get( 0 );
+            File file = failure.get( failureNode.indexOfChild( item ) );
             new BookAdditionDialog( ImportDialog.this, file ).show();
         }
     }
@@ -80,19 +79,17 @@ public class ImportDialog
     private class EditButton
         extends QPushButton
     {
-        private final ReadingUnit book;
-
-        public EditButton(
-            final ReadingUnit book )
+        public EditButton()
         {
-            super( ImportDialog.this.tr( "Edit" ) );
-            this.book = book;
+            super( ImportDialog.this.tr( "Edit" ), ImportDialog.this );
             released.connect( this, "editBook()" );
         }
 
         @SuppressWarnings( "unused" )
         private void editBook()
         {
+            QTreeWidgetItem item = importProcessTree.selectedItems().get( 0 );
+            ReadingUnit book = success.get( successNode.indexOfChild( item ) );
             new BookEditDialog( ImportDialog.this, book ).show();
         }
     }
@@ -111,8 +108,11 @@ public class ImportDialog
     private final FilePathEdit      pathEdit          = new FilePathEdit( this );
 
     private final QTreeWidget       importProcessTree = new QTreeWidget( this );
-    private final QTreeWidgetItem   failureNode       = new QTreeWidgetItem( importProcessTree );
     private final QTreeWidgetItem   successNode       = new QTreeWidgetItem( importProcessTree );
+    private final QTreeWidgetItem   failureNode       = new QTreeWidgetItem( importProcessTree );
+
+    private final AddButton         addButton         = new AddButton();
+    private final EditButton        editButton        = new EditButton();
 
     private final List<File>        failure           = new ArrayList<File>();
 
@@ -168,11 +168,14 @@ public class ImportDialog
         layout.addWidget( folderLabel, 1, 0 );
         layout.addWidget( pathEdit, 1, 1, 1, 3 );
 
-        layout.addWidget( importProcessTree, 2, 0, 1, 4 );
+        layout.addWidget( addButton, 2, 0, 1, 2 );
+        layout.addWidget( editButton, 2, 2, 1, 2 );
 
-        layout.addWidget( progressBar, 3, 0, 1, 2 );
-        layout.addWidget( ok, 3, 2 );
-        layout.addWidget( cancel, 3, 3 );
+        layout.addWidget( importProcessTree, 3, 0, 1, 4 );
+
+        layout.addWidget( progressBar, 4, 0, 1, 2 );
+        layout.addWidget( ok, 4, 2 );
+        layout.addWidget( cancel, 4, 3 );
 
         pathEdit.setFileMode( FileMode.DirectoryOnly );
         maskEdit.setText( Settings.getInstance().getProperty( JBookShelfSettings.IMPORT_MASK ) );
@@ -185,6 +188,7 @@ public class ImportDialog
         importProcessTree.setColumnWidth( 0, 40 );
         importProcessTree.setColumnWidth( 1, 600 );
         importProcessTree.setColumnWidth( 2, 40 );
+        importProcessTree.setSelectionMode( SelectionMode.SingleSelection );
 
         failureNode.setIcon( 0, new QIcon( ICONPATH + "edit-delete.png" ) );
         successNode.setIcon( 0, new QIcon( ICONPATH + "dialog-ok-apply.png" ) );
@@ -199,6 +203,11 @@ public class ImportDialog
         cancel.released.connect( this, "close()" );
         ok.released.connect( this, "onImport()" );
         importProcessTree.itemExpanded.connect( this, "onExpand(QTreeWidgetItem)" );
+        importProcessTree.itemExpanded.connect( importProcessTree, "clearSelection()" );
+        importProcessTree.itemCollapsed.connect( importProcessTree, "clearSelection()" );
+        importProcessTree.itemSelectionChanged.connect( this, "selected()" );
+
+        selected();
     }
 
     @SuppressWarnings( "unused" )
@@ -216,7 +225,7 @@ public class ImportDialog
             {
                 QTreeWidgetItem leaf = new QTreeWidgetItem( successNode );
                 leaf.setText( 1, book.getName() );
-                importProcessTree.setItemWidget( leaf, 2, new EditButton( book ) );
+                // importProcessTree.setItemWidget( leaf, 2, new EditButton( book ) );
                 progressBar.increment();
             }
         }
@@ -226,7 +235,7 @@ public class ImportDialog
             {
                 QTreeWidgetItem leaf = new QTreeWidgetItem( failureNode );
                 leaf.setText( 1, file.getAbsolutePath() );
-                importProcessTree.setItemWidget( leaf, 2, new AddButton( file ) );
+                // importProcessTree.setItemWidget( leaf, 2, new AddButton( file ) );
                 progressBar.increment();
             }
         }
@@ -287,6 +296,30 @@ public class ImportDialog
         {
             QMessageBox.critical( this, tr( "Error" ), tr( "File does not exist: " ) + file.getName() );
         }
+    }
+
+    private void selected()
+    {
+        List<QTreeWidgetItem> selectedItems = importProcessTree.selectedItems();
+        if ( selectedItems.size() == 1 )
+        {
+            QTreeWidgetItem parent = selectedItems.get( 0 ).parent();
+            if ( successNode.equals( parent ) )
+            {
+                editButton.setVisible( true );
+                addButton.setVisible( false );
+                return;
+            }
+            else if ( failureNode.equals( parent ) )
+            {
+                addButton.setVisible( true );
+                editButton.setVisible( false );
+                return;
+            }
+        }
+
+        addButton.setVisible( false );
+        editButton.setVisible( false );
     }
 
     @Override
