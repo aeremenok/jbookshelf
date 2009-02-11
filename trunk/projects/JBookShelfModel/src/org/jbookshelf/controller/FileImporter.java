@@ -261,7 +261,6 @@ public class FileImporter
         try
         {
             parser.parse( cutExtension( file ) );
-            System.out.println( parser.getPattern() );
 
             Author author = bookShelf.addAuthor( parser.getAuthorName() );
             Category category = bookShelf.addCategory( parser.getCategoryName() );
