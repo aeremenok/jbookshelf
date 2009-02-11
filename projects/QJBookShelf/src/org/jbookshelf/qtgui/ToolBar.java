@@ -15,6 +15,8 @@
  */
 package org.jbookshelf.qtgui;
 
+import java.util.List;
+
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.ReadingUnit;
@@ -97,14 +99,6 @@ public class ToolBar
         return removeAction;
     }
 
-    public void nothingSelected()
-    {
-        removeAction.setEnabled( false );
-        openFolderAction.setEnabled( false );
-        openAction.setEnabled( false );
-        editAction.setEnabled( false );
-    }
-
     public void retranslate()
     {
         addAction.setText( tr( "&Add" ) );
@@ -133,6 +127,30 @@ public class ToolBar
             openAction.setEnabled( true );
             openFolderAction.setEnabled( true );
             editAction.setEnabled( true );
+        }
+    }
+
+    public void selectedUniques(
+        List<Unique> uniques )
+    {
+        // todo verify
+        if ( uniques.size() > 0 )
+        {
+            removeAction.setEnabled( true );
+            if ( uniques.size() == 1 && uniques.get( 0 ) instanceof ReadingUnit )
+            {
+                selectedUnique = uniques.get( 0 );
+                openAction.setEnabled( true );
+                openFolderAction.setEnabled( true );
+                editAction.setEnabled( true );
+            }
+        }
+        else
+        {
+            removeAction.setEnabled( false );
+            openFolderAction.setEnabled( false );
+            openAction.setEnabled( false );
+            editAction.setEnabled( false );
         }
     }
 
