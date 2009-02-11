@@ -46,11 +46,17 @@ import com.trolltech.qt.gui.QWidget;
 import com.trolltech.qt.gui.QFileDialog.FileMode;
 import com.trolltech.qt.gui.QTreeWidgetItem.ChildIndicatorPolicy;
 
+/**
+ * allows to select the import options and displays how the import goes on
+ * 
+ * @author eav
+ */
 public class ImportDialog
     extends QDialogExt
     implements
         JBookShelfConstants
 {
+    // todo consider using contextmenus or a single button for all nodes
     private class AddButton
         extends QPushButton
     {
@@ -141,12 +147,6 @@ public class ImportDialog
         cancel.setText( tr( "Close" ) );
 
         pathEdit.setCaption( tr( "Select a directory to import" ) );
-
-        final List<String> list = new ArrayList<String>();
-        list.add( tr( "Result" ) );
-        list.add( tr( "Name" ) );
-        list.add( tr( "Action" ) );
-        importProcessTree.setHeaderLabels( list );
     }
 
     private void initComponents()
@@ -180,12 +180,14 @@ public class ImportDialog
         progressBar.setVisible( false );
         progressBar.setMaximum( 100 );
 
-        importProcessTree.setColumnWidth( 0, 5 );
-        importProcessTree.setColumnWidth( 1, 500 );
-        importProcessTree.setColumnWidth( 2, 100 );
+        importProcessTree.header().hide();
+        importProcessTree.setColumnCount( 3 );
+        importProcessTree.setColumnWidth( 0, 40 );
+        importProcessTree.setColumnWidth( 1, 600 );
+        importProcessTree.setColumnWidth( 2, 40 );
 
-        successNode.setIcon( 0, new QIcon( ICONPATH + "dialog-ok-apply.png" ) );
         failureNode.setIcon( 0, new QIcon( ICONPATH + "edit-delete.png" ) );
+        successNode.setIcon( 0, new QIcon( ICONPATH + "dialog-ok-apply.png" ) );
         failureNode.setText( 1, tr( "Failed to import" ) );
         successNode.setText( 1, tr( "Imported successfully" ) );
         failureNode.setChildIndicatorPolicy( ChildIndicatorPolicy.ShowIndicator );
@@ -203,9 +205,11 @@ public class ImportDialog
     private void onExpand(
         QTreeWidgetItem item )
     {
+        // preparing job
         progressBar.setVisible( true );
         progressBar.reset();
 
+        // updating the expanded node
         if ( item.equals( successNode ) && successNode.childCount() == 0 )
         {
             for ( ReadingUnit book : success )
@@ -227,12 +231,14 @@ public class ImportDialog
             }
         }
 
+        // job's done
         progressBar.setVisible( false );
     }
 
     @SuppressWarnings( "unused" )
     private void onImport()
     {
+        // prepare the importer
         final FileImporter importer = new FileImporter()
         {
             @Override
@@ -256,17 +262,23 @@ public class ImportDialog
         final File file = new File( pathEdit.text() );
         if ( file.exists() && file.isDirectory() )
         {
+            // preparing job
             progressBar.setVisible( true );
             progressBar.reset();
 
             success.clear();
             failure.clear();
-            CollectionTree.removeChildren( failureNode );
-            CollectionTree.removeChildren( successNode );
             final String[] masks = maskEdit.text().split( MASK_SEPARATOR );
             importer.importFiles( masks, Storage.getBookShelf(), file );
-            CollectionPanel.getInstance().updateTree();
 
+            // updating views
+            CollectionPanel.getInstance().updateTree();
+            CollectionTree.removeChildren( failureNode );
+            CollectionTree.removeChildren( successNode );
+            successNode.setText( 2, success.size() + " " + tr( "books" ) );
+            failureNode.setText( 2, failure.size() + " " + tr( "files" ) );
+
+            // job's done
             progressBar.setVisible( false );
 
             QMessageBox.information( this, tr( "Done" ), tr( "Expand tree nodes to see results" ) );

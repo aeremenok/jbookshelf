@@ -18,9 +18,16 @@ package org.jbookshelf.qtgui.widgets.ext;
 import com.trolltech.qt.gui.QProgressBar;
 import com.trolltech.qt.gui.QWidget;
 
+/**
+ * resets when getting filled
+ * 
+ * @author eav
+ */
 public class CyclicProgressBar
     extends QProgressBar
 {
+    // todo void doJob{}: progressBar shows itself, resets and hides when job is done
+
     public CyclicProgressBar()
     {
         super();

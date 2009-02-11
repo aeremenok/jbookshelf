@@ -60,6 +60,7 @@ public abstract class CollectionTree
         {
             parent.removeChild( parent.child( 0 ) );
         }
+        parent.setExpanded( false );
     }
 
     public CollectionTree()
