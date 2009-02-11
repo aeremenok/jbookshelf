@@ -15,18 +15,27 @@
  */
 package org.jbookshelf.qtgui.widgets;
 
+import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
 
-import com.trolltech.qt.core.Qt.WindowFlags;
-import com.trolltech.qt.core.Qt.WindowType;
+import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
+import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QWidget;
 import com.trolltech.qt.gui.QFileDialog.FileMode;
 
+/**
+ * file selection widget: a textfield and a file dialog button
+ * 
+ * @author eav
+ */
 public class FilePathEdit
-    extends QWidget
+    extends QGroupBox
+    implements
+        JBookShelfConstants
 {
     private final QLineEdit   edit    = new QLineEdit( this );
     private final QPushButton button  = new QPushButton( this );
@@ -53,22 +62,6 @@ public class FilePathEdit
         initComponents();
     }
 
-    public FilePathEdit(
-        QWidget parent,
-        WindowFlags f )
-    {
-        super( parent, f );
-        initComponents();
-    }
-
-    public FilePathEdit(
-        QWidget parent,
-        WindowType... f )
-    {
-        super( parent, f );
-        initComponents();
-    }
-
     public void setCaption(
         String caption )
     {
@@ -85,6 +78,7 @@ public class FilePathEdit
         String text )
     {
         edit.setText( text );
+        saveConfig( text );
     }
 
     public String text()
@@ -108,14 +102,35 @@ public class FilePathEdit
         fileDialog.show();
     }
 
+    private String getKey()
+    {
+        return parent().getClass().getName() + "/" + getClass().getName();
+    }
+
     private void initComponents()
     {
-        setLayout( new QHBoxLayout() );
-        layout().addWidget( edit );
-        layout().addWidget( button );
+        QHBoxLayout layout = new QHBoxLayout();
+        setLayout( layout );
+        layout.addWidget( edit );
+        layout.addWidget( button );
 
-        button.setText( "..." );
+        button.setIcon( new QIcon( ICONPATH + "document-open-folder.png" ) );
+
+        // trying to set the last used path
+        String lastPath = Settings.getInstance().getProperty( getKey() );
+        if ( lastPath != null )
+        {
+            edit.setText( lastPath );
+        }
 
         button.released.connect( this, "chooseFile()" );
+        edit.textChanged.connect( this, "saveConfig(String)" );
+    }
+
+    private void saveConfig(
+        String lastPath )
+    {
+        Settings.getInstance().setProperty( getKey(), lastPath );
+        Settings.getInstance().save();
     }
 }
