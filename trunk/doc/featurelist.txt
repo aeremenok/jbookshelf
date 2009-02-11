@@ -1,20 +1,24 @@
+--- ideas ---
+
+- monitor new files in specified directory while being minimized to tray
+
+- reorganize existing file structure according to specified filename masks
+
 --- pending ---
 
-- reader based on webkit ( http://doc.trolltech.com/qtjambi-4.4/html/com/trolltech/qt/webkit/QWebView.html )
+- navigate between units, authors, categories, comments etc.
+
+- FictionBook converter
 
 - creation and view of notes
 
 - citations ( comment + citation text + link to book text )
 
-- monitor new files in specified directory from tray
-
-- navigate between units, authors, categories, comments (optional, consider delaying to next iteration)
-
-- reorganize existing file structure according to specified filename masks
-
 - hierarchical categories 
 
 --- implemented in 0.3 ---
+
+- reader
 
 - neccesary context menus
 
