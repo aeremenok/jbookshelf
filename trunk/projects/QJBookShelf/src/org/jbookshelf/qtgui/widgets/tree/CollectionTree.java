@@ -52,6 +52,16 @@ public abstract class CollectionTree
 
     protected QTreeWidgetItem             root;
 
+    public static void removeChildren(
+        QTreeWidgetItem parent )
+    {
+        int childCount = parent.childCount();
+        for ( int i = 0; i < childCount; i++ )
+        {
+            parent.removeChild( parent.child( 0 ) );
+        }
+    }
+
     public CollectionTree()
     {
         super();
@@ -117,11 +127,7 @@ public abstract class CollectionTree
     {
         clearSelection();
 
-        int childCount = root.childCount();
-        for ( int i = 0; i < childCount; i++ )
-        {
-            root.removeChild( root.child( 0 ) );
-        }
+        removeChildren( root );
 
         for ( Unique unique : uniques )
         {
