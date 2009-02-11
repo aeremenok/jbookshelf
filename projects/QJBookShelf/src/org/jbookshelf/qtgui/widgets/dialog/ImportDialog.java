@@ -230,7 +230,6 @@ public class ImportDialog
             progressBar.setVisible( true );
 
             String[] masks = maskEdit.text().split( MASK_SEPARATOR );
-            System.out.println( masks.length );
             importer.importFiles( masks, Storage.getBookShelf(), file );
 
             progressBar.setVisible( false );
