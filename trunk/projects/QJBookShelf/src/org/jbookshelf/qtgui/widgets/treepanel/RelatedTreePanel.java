@@ -44,12 +44,6 @@ public class RelatedTreePanel
         initListeners();
     }
 
-    public void nothingSelected()
-    {
-        cleanRoot();
-        relatedPanel.focusLost();
-    }
-
     @Override
     public void onAdd()
     {
@@ -118,7 +112,21 @@ public class RelatedTreePanel
         }
     }
 
-    public void selectedUnique(
+    public void selectedUniques(
+        List<Unique> uniques )
+    {
+        if ( uniques.size() == 1 )
+        {
+            selectedUnique( uniques.get( 0 ) );
+        }
+        else
+        {
+            cleanRoot();
+            relatedPanel.focusLost();
+        }
+    }
+
+    private void selectedUnique(
         Unique unique )
     {
         this.selectedUnique = unique;

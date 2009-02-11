@@ -70,7 +70,7 @@ public abstract class CollectionTree
         initComponents();
         initListeners();
 
-        ToolBar.getInstance().nothingSelected();
+        ToolBar.getInstance().selectedUniques( new ArrayList<Unique>() );
     }
 
     public void addFocusListener(
@@ -137,7 +137,7 @@ public abstract class CollectionTree
             root.addChild( parent );
         }
 
-        fireNothingSelected();
+        fireSelectedUniques( new ArrayList<Unique>() );
     }
 
     @SuppressWarnings( "unchecked" )
@@ -184,25 +184,18 @@ public abstract class CollectionTree
         }
     }
 
-    private void fireNothingSelected()
+    private void fireSelectedUniques(
+        List<Unique> uniques )
     {
         for ( UniqueSelectionListener listener : listeners )
         {
-            listener.nothingSelected();
-        }
-    }
-
-    private void fireSelectedUnique(
-        Unique unique )
-    {
-        for ( UniqueSelectionListener listener : listeners )
-        {
-            listener.selectedUnique( unique );
+            listener.selectedUniques( uniques );
         }
     }
 
     private void initComponents()
     {
+        setSelectionMode( SelectionMode.MultiSelection );
         root = invisibleRootItem();
         header().hide();
     }
@@ -220,22 +213,16 @@ public abstract class CollectionTree
     @SuppressWarnings( "unused" )
     private void itemSelectionChanged()
     {
-        if ( selectedItems().size() == 0 )
+        List<Unique> uniques = new ArrayList<Unique>();
+        for ( QTreeWidgetItem node : selectedItems() )
         {
-            fireNothingSelected();
-        }
-        else
-        {
-            QTreeWidgetItem node = selectedItems().get( 0 );
             if ( node instanceof UniqueNode )
             {
-                fireSelectedUnique( ((UniqueNode) node).getUnique() );
-            }
-            else
-            {
-                fireNothingSelected();
+                uniques.add( ((UniqueNode) node).getUnique() );
             }
         }
+
+        fireSelectedUniques( uniques );
     }
 
     @SuppressWarnings( "unused" )

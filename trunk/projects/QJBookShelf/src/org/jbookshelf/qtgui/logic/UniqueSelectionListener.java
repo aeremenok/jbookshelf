@@ -15,6 +15,8 @@
  */
 package org.jbookshelf.qtgui.logic;
 
+import java.util.List;
+
 import org.jbookshelf.model.Unique;
 
 /**
@@ -24,8 +26,6 @@ import org.jbookshelf.model.Unique;
  */
 public interface UniqueSelectionListener
 {
-    void nothingSelected();
-
-    void selectedUnique(
-        Unique unique );
+    void selectedUniques(
+        List<Unique> uniques );
 }

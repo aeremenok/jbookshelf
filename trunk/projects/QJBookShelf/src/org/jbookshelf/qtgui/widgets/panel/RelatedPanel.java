@@ -15,6 +15,8 @@
  */
 package org.jbookshelf.qtgui.widgets.panel;
 
+import java.util.List;
+
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.logic.Translator;
@@ -93,16 +95,6 @@ public class RelatedPanel
         return searchableTreePanels;
     }
 
-    public void nothingSelected()
-    {
-        addButton.setEnabled( false );
-        removeButton.setEnabled( false );
-        for ( final SearchableTreePanel panel : getSearchableTreePanels() )
-        {
-            panel.nothingSelected();
-        }
-    }
-
     public void retranslate()
     {
         searchTextField.setText( tr( "search..." ) );
@@ -111,13 +103,22 @@ public class RelatedPanel
         tabbedPane.setTabText( 1, tr( "Related" ) );
     }
 
-    public void selectedUnique(
-        final Unique unique )
+    public void selectedUniques(
+        List<Unique> uniques )
     {
-        addButton.setEnabled( true );
+        if ( uniques.size() > 0 )
+        {
+            addButton.setEnabled( true );
+        }
+        else
+        {
+            addButton.setEnabled( false );
+            removeButton.setEnabled( false );
+        }
+
         for ( final SearchableTreePanel panel : getSearchableTreePanels() )
         {
-            panel.selectedUnique( unique );
+            panel.selectedUniques( uniques );
         }
     }
 

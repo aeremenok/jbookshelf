@@ -93,16 +93,6 @@ public class CommentTreePanel
         initListeners();
     }
 
-    public void nothingSelected()
-    {
-        selectedCommentable = null;
-
-        cleanRoot();
-
-        editPanel.setVisible( false );
-        relatedPanel.focusLost();
-    }
-
     @Override
     public void onAdd()
     {
@@ -156,14 +146,31 @@ public class CommentTreePanel
         }
     }
 
-    public void selectedUnique(
-        Unique unique )
+    public void selectedUniques(
+        List<Unique> uniques )
     {
+        if ( uniques.size() == 1 )
+        {
+            editPanel.setVisible( false );
+            relatedPanel.focusLost();
+
+            selectedCommentable = (Commentable) uniques.get( 0 );
+            drawComments( selectedCommentable.getComments() );
+        }
+        else
+        {
+            nothingSelected();
+        }
+    }
+
+    private void nothingSelected()
+    {
+        selectedCommentable = null;
+
+        cleanRoot();
+
         editPanel.setVisible( false );
         relatedPanel.focusLost();
-
-        selectedCommentable = (Commentable) unique;
-        drawComments( selectedCommentable.getComments() );
     }
 
     private void cleanRoot()
