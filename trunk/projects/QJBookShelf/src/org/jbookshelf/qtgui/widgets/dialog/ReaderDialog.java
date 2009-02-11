@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.IndexFileFolder;
@@ -12,8 +13,8 @@ import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
+import org.mozilla.universalchardet.UniversalDetector;
 
-import com.glaforge.i18n.io.CharsetToolkit;
 import com.trolltech.qt.core.Qt.WindowState;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QTextEdit;
@@ -128,6 +129,35 @@ public class ReaderDialog
         return file;
     }
 
+    private static String guessEncoding(
+        File file )
+    {
+        UniversalDetector detector = new UniversalDetector( null );
+        try
+        {
+            byte[] buf = new byte[4096];
+            FileInputStream fis = new FileInputStream( file );
+
+            int nread;
+            while ( (nread = fis.read( buf )) > 0 && !detector.isDone() )
+            {
+                detector.handleData( buf, 0, nread );
+            }
+            detector.dataEnd();
+
+            return detector.getDetectedCharset();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            return Charset.defaultCharset().name();
+        }
+        finally
+        {
+            detector.reset();
+        }
+    }
+
     public ReaderDialog(
         QWidget parent,
         ReadingUnit book )
@@ -147,8 +177,7 @@ public class ReaderDialog
     {
         try
         {
-            byte[] bytesFromFile = getBytesFromFile( file );
-            return new String( bytesFromFile, new CharsetToolkit( bytesFromFile ).guessEncoding() );
+            return new String( getBytesFromFile( file ), guessEncoding( file ) );
         }
         catch ( IOException e )
         {
