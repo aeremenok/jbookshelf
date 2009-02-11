@@ -13,6 +13,7 @@ import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 
+import com.glaforge.i18n.io.CharsetToolkit;
 import com.trolltech.qt.core.Qt.WindowState;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QTextEdit;
@@ -63,21 +64,29 @@ public class ReaderDialog
         return bytes;
     }
 
-    public ReaderDialog(
+    public static void open(
         QWidget parent,
         ReadingUnit book )
     {
-        super( parent );
-        this.book = book;
-
-        initComponents();
+        File file = getFile( book );
+        if ( canBeOpened( file ) )
+        {
+            new ReaderDialog( parent, book ).show();
+        }
+        else
+        {
+            try
+            {
+                book.getPhysical().openUnit();
+            }
+            catch ( Throwable e )
+            {
+                QMessageBox.critical( parent, "Error", "Error opening file " + file.getAbsolutePath() );
+            }
+        }
     }
 
-    public void retranslate()
-    {
-    }
-
-    private boolean canBeOpened(
+    private static boolean canBeOpened(
         File file )
     {
         String lowerCase = file.getName().toLowerCase();
@@ -91,22 +100,8 @@ public class ReaderDialog
         return false;
     }
 
-    private String getContent(
-        File file )
-    {
-        try
-        {
-            byte[] bytesFromFile = getBytesFromFile( file );
-            return new String( bytesFromFile, "cp1251" );
-        }
-        catch ( IOException e )
-        {
-            e.printStackTrace();
-            return tr( "Error displaying file" );
-        }
-    }
-
-    private File getFile()
+    private static File getFile(
+        ReadingUnit book )
     {
         File file = null;
         PhysicalUnit physical = book.getPhysical();
@@ -133,35 +128,45 @@ public class ReaderDialog
         return file;
     }
 
+    public ReaderDialog(
+        QWidget parent,
+        ReadingUnit book )
+    {
+        super( parent );
+        this.book = book;
+
+        initComponents();
+    }
+
+    public void retranslate()
+    {
+    }
+
+    private String getContent(
+        File file )
+    {
+        try
+        {
+            byte[] bytesFromFile = getBytesFromFile( file );
+            return new String( bytesFromFile, new CharsetToolkit( bytesFromFile ).guessEncoding() );
+        }
+        catch ( IOException e )
+        {
+            e.printStackTrace();
+            return "Error displaying file";
+        }
+    }
+
     private void initComponents()
     {
-        File file = getFile();
-        if ( canBeOpened( file ) )
-        {
-            setWindowTitle( book.getName() );
+        setWindowTitle( book.getName() );
 
-            setWindowState( WindowState.WindowMaximized );
+        setWindowState( WindowState.WindowMaximized );
 
-            setLayout( new QVBoxLayout() );
-            layout().addWidget( textEdit );
-            textEdit.setReadOnly( true );
+        setLayout( new QVBoxLayout() );
+        layout().addWidget( textEdit );
+        textEdit.setReadOnly( true );
 
-            textEdit.setText( getContent( file ) );
-        }
-        else
-        {
-            try
-            {
-                book.getPhysical().openUnit();
-            }
-            catch ( Throwable e )
-            {
-                String message =
-                    "\n" + e.getMessage() + " cause " + e.getCause() != null ? e.getCause().getMessage() : "";
-                QMessageBox.critical( this, tr( "Error" ), tr( "Error opening file " ) + file.getAbsolutePath() +
-                    message );
-            }
-            close();
-        }
+        textEdit.setText( getContent( getFile( book ) ) );
     }
 }
