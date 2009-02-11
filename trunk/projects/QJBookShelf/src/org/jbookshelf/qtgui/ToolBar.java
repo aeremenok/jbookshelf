@@ -225,15 +225,7 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onOpen()
     {
-        try
-        {
-            new ReaderDialog( MainWindow.getInstance(), (ReadingUnit) selectedUnique ).show();
-        }
-        catch ( Exception e )
-        {
-            e.printStackTrace();
-            ((ReadingUnit) selectedUnique).getPhysical().openUnit();
-        }
+        ReaderDialog.open( this, (ReadingUnit) selectedUnique );
     }
 
     @SuppressWarnings( "unused" )
