@@ -195,7 +195,7 @@ public abstract class CollectionTree
 
     private void initComponents()
     {
-        setSelectionMode( SelectionMode.MultiSelection );
+        setSelectionMode( SelectionMode.ExtendedSelection );
         root = invisibleRootItem();
         header().hide();
     }
