@@ -15,11 +15,12 @@
  */
 package org.jbookshelf.qtgui.widgets.menu;
 
+import java.util.List;
+
 import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.ToolBar;
 import org.jbookshelf.qtgui.widgets.ext.QMenuExt;
-import org.jbookshelf.qtgui.widgets.tree.UniqueNode;
 
 import com.trolltech.qt.gui.QAction;
 
@@ -31,18 +32,16 @@ import com.trolltech.qt.gui.QAction;
 public class CollectionTreeMenu
     extends QMenuExt
 {
-    /**
-     * what to manage
-     */
-    private Unique unique;
+    private final List<ReadingUnit> books;
+    private QAction                 isReadAction;
 
     public CollectionTreeMenu(
-        UniqueNode uniqueNode )
+        final List<Unique> uniques )
     {
-        unique = uniqueNode.getUnique();
-
-        if ( unique instanceof ReadingUnit )
-        { // only the book can be opened and edited
+        books = ToolBar.hasBooks( uniques );
+        if ( books.size() > 0 )
+        {
+            // only the books can be opened and edited
             addAction( ToolBar.getInstance().getOpenAction() );
             addAction( ToolBar.getInstance().getOpenFolderAction() );
             addAction( ToolBar.getInstance().getEditAction() );
@@ -51,19 +50,33 @@ public class CollectionTreeMenu
         // all can be removed
         addAction( ToolBar.getInstance().getRemoveAction() );
 
-        if ( unique instanceof ReadingUnit )
-        { // only the book can be read
+        if ( books.size() > 0 )
+        { // only the books can be read
             addSeparator();
-            addAction( isReadAction( (ReadingUnit) unique ) );
+            addAction( isReadAction() );
         }
     }
 
-    private QAction isReadAction(
-        ReadingUnit book )
+    private boolean areAllRead(
+        @SuppressWarnings( "hiding" ) final List<ReadingUnit> books )
     {
-        QAction isReadAction = new QAction( tr( "Is Read" ), this );
+        for ( final ReadingUnit book : books )
+        {
+            if ( !book.isRead() )
+            {
+                return false;
+            }
+        }
+        // all are read
+        return true;
+    }
+
+    private QAction isReadAction()
+    {
+        isReadAction = new QAction( tr( "Is Read" ), this );
         isReadAction.setCheckable( true );
-        isReadAction.setChecked( book.isRead() );
+        // todo gray checkbox
+        isReadAction.setChecked( areAllRead( books ) );
 
         isReadAction.toggled.connect( this, "setRead()" );
 
@@ -73,7 +86,9 @@ public class CollectionTreeMenu
     @SuppressWarnings( "unused" )
     private void setRead()
     {
-        ReadingUnit book = (ReadingUnit) unique;
-        book.setRead( !book.isRead() );
+        for ( final ReadingUnit book : books )
+        {
+            book.setRead( isReadAction.isChecked() );
+        }
     }
 }

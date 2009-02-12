@@ -268,12 +268,17 @@ public abstract class CollectionTree
     protected void contextMenuEvent(
         QContextMenuEvent arg__1 )
     {
-        QTreeWidgetItem item = itemAt( arg__1.pos() );
-        if ( item != null && item instanceof UniqueNode )
+        List<Unique> uniques = new ArrayList<Unique>();
+        for ( QTreeWidgetItem item : selectedItems() )
         {
-            item.setSelected( true );
-
-            CollectionTreeMenu menu = new CollectionTreeMenu( (UniqueNode) item );
+            if ( item instanceof UniqueNode )
+            {
+                uniques.add( ((UniqueNode) item).getUnique() );
+            }
+        }
+        if ( uniques.size() > 0 )
+        {
+            CollectionTreeMenu menu = new CollectionTreeMenu( uniques );
             menu.exec( arg__1.globalPos() );
         }
     }
