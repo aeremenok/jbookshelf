@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EReference;
+import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.ToolBar;
@@ -103,17 +104,22 @@ public abstract class CollectionTree
         mouseListeners.remove( mouseListener );
     }
 
-    public void removeSelectedItem()
+    public void removeSelectedItems()
     {
-        // which uniqe we need to remove
-        Unique unique = ((UniqueNode) selectedItems().get( 0 )).getUnique();
-        // search recursively for its nodes
-        List<UniqueNode> nodes = new ArrayList<UniqueNode>();
-        findUniqueNodes( nodes, root, unique );
-        // remove all of them
-        for ( UniqueNode node : nodes )
+        for ( QTreeWidgetItem item : selectedItems() )
         {
-            removeFromParent( node );
+            if ( item instanceof UniqueNode )
+            {
+                // search recursively for its nodes
+                List<UniqueNode> nodes = new ArrayList<UniqueNode>();
+                findUniqueNodes( nodes, root, ((UniqueNode) item).getUnique() );
+                // remove all of them
+                for ( UniqueNode node : nodes )
+                {
+                    removeFromParent( node );
+                    Storage.getBookShelf().removeUnique( node.getUnique() );
+                }
+            }
         }
     }
 
@@ -148,7 +154,7 @@ public abstract class CollectionTree
     }
 
     /**
-     * recursively search for nodes containing the specified uniqe
+     * recursively search for nodes containing the specified unique
      * 
      * @param list search result
      * @param parent search starts here

@@ -80,9 +80,9 @@ public class CollectionPanel
         Translator.addTranslatable( this );
     }
 
-    public void removeSelectedItem()
+    public void removeSelectedItems()
     {
-        getActiveTree().removeSelectedItem();
+        getActiveTree().removeSelectedItems();
     }
 
     public void retranslate()
