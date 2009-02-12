@@ -306,20 +306,20 @@ public class ImportDialog
             QTreeWidgetItem parent = selectedItems.get( 0 ).parent();
             if ( successNode.equals( parent ) )
             {
-                editButton.setVisible( true );
-                addButton.setVisible( false );
+                editButton.setEnabled( true );
+                addButton.setEnabled( false );
                 return;
             }
             else if ( failureNode.equals( parent ) )
             {
-                addButton.setVisible( true );
-                editButton.setVisible( false );
+                addButton.setEnabled( true );
+                editButton.setEnabled( false );
                 return;
             }
         }
 
-        addButton.setVisible( false );
-        editButton.setVisible( false );
+        addButton.setEnabled( false );
+        editButton.setEnabled( false );
     }
 
     @Override
