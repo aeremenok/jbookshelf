@@ -256,13 +256,12 @@ public class ToolBar
     private void onRemove()
     {
         String title = tr( "Confirm" );
-        String message = tr( "Remove" ) + " " + selectedUnique.getName() + "?";
+        String message = tr( "Remove selected?" );
         StandardButtons buttons = new StandardButtons( StandardButton.Yes, StandardButton.No );
         StandardButton button = QMessageBox.question( this, title, message, buttons, StandardButton.Yes );
         if ( StandardButton.Yes.equals( button ) )
         {
-            Storage.getBookShelf().removeUnique( selectedUnique );
-            CollectionPanel.getInstance().removeSelectedItem();
+            CollectionPanel.getInstance().removeSelectedItems();
         }
     }
 
