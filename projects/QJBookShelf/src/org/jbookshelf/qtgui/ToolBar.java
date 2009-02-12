@@ -15,6 +15,7 @@
  */
 package org.jbookshelf.qtgui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
@@ -53,8 +54,6 @@ public class ToolBar
 {
     private static final ToolBar instance = new ToolBar();
 
-    private Unique               selectedUnique;
-
     private QAction              addAction;
     private QAction              removeAction;
     private QAction              editAction;
@@ -66,9 +65,25 @@ public class ToolBar
     private QAction              backupAction;
     private QAction              importAction;
 
+    private List<Unique>         selectedUniques;
+
     public static ToolBar getInstance()
     {
         return instance;
+    }
+
+    public static List<ReadingUnit> hasBooks(
+        List<? extends Unique> uniques )
+    {
+        List<ReadingUnit> books = new ArrayList<ReadingUnit>();
+        for ( Unique unique : uniques )
+        {
+            if ( unique instanceof ReadingUnit )
+            {
+                books.add( (ReadingUnit) unique );
+            }
+        }
+        return books;
     }
 
     public ToolBar()
@@ -117,32 +132,18 @@ public class ToolBar
         aboutAction.setText( tr( "&About" ) );
     }
 
-    public void selectedUnique(
-        Unique unique )
-    {
-        this.selectedUnique = unique;
-        removeAction.setEnabled( true );
-        if ( selectedUnique instanceof ReadingUnit )
-        {
-            openAction.setEnabled( true );
-            openFolderAction.setEnabled( true );
-            editAction.setEnabled( true );
-        }
-    }
-
     public void selectedUniques(
         List<Unique> uniques )
     {
-        // todo verify
+        this.selectedUniques = uniques;
         if ( uniques.size() > 0 )
         {
             removeAction.setEnabled( true );
-            if ( uniques.size() == 1 && uniques.get( 0 ) instanceof ReadingUnit )
+            if ( hasBooks( uniques ).size() > 0 )
             {
-                selectedUnique = uniques.get( 0 );
-                openAction.setEnabled( true );
                 openFolderAction.setEnabled( true );
                 editAction.setEnabled( true );
+                openAction.setEnabled( true );
             }
         }
         else
@@ -231,7 +232,8 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onEdit()
     {
-        new BookEditDialog( MainWindow.getInstance(), (ReadingUnit) selectedUnique ).show();
+        // todo edit multiple books
+        new BookEditDialog( MainWindow.getInstance(), (ReadingUnit) selectedUniques.get( 0 ) ).show();
     }
 
     @SuppressWarnings( "unused" )
@@ -243,13 +245,27 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onOpen()
     {
-        ReaderDialog.open( this, (ReadingUnit) selectedUnique );
+        for ( Unique unique : selectedUniques )
+        {
+            if ( unique instanceof ReadingUnit )
+            {
+                ReadingUnit book = (ReadingUnit) unique;
+                ReaderDialog.open( this, book );
+            }
+        }
     }
 
     @SuppressWarnings( "unused" )
     private void onOpenFolder()
     {
-        ((ReadingUnit) selectedUnique).getPhysical().openFolder();
+        for ( Unique unique : selectedUniques )
+        {
+            if ( unique instanceof ReadingUnit )
+            {
+                ReadingUnit book = (ReadingUnit) unique;
+                book.getPhysical().openFolder();
+            }
+        }
     }
 
     @SuppressWarnings( "unused" )
