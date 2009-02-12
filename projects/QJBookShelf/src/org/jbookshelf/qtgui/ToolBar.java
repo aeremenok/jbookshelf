@@ -137,17 +137,19 @@ public class ToolBar
     {
         this.selectedUniques = uniques;
         if ( uniques.size() > 0 )
-        {
+        { // all uniques can be removed
             removeAction.setEnabled( true );
-            if ( hasBooks( uniques ).size() > 0 )
-            {
-                openFolderAction.setEnabled( true );
-                editAction.setEnabled( true );
+            List<ReadingUnit> books = hasBooks( uniques );
+            if ( books.size() > 0 )
+            { // all books and their folders can be opened
                 openAction.setEnabled( true );
+                openFolderAction.setEnabled( true );
+                // only a single book can be edited
+                editAction.setEnabled( books.size() == 1 );
             }
         }
         else
-        {
+        { // nothing selected
             removeAction.setEnabled( false );
             openFolderAction.setEnabled( false );
             openAction.setEnabled( false );
@@ -233,7 +235,7 @@ public class ToolBar
     private void onEdit()
     {
         // todo edit multiple books
-        new BookEditDialog( MainWindow.getInstance(), (ReadingUnit) selectedUniques.get( 0 ) ).show();
+        new BookEditDialog( MainWindow.getInstance(), hasBooks( selectedUniques ).get( 0 ) ).show();
     }
 
     @SuppressWarnings( "unused" )
@@ -249,8 +251,7 @@ public class ToolBar
         {
             if ( unique instanceof ReadingUnit )
             {
-                ReadingUnit book = (ReadingUnit) unique;
-                ReaderDialog.open( this, book );
+                ReaderDialog.open( this, (ReadingUnit) unique );
             }
         }
     }
@@ -262,8 +263,7 @@ public class ToolBar
         {
             if ( unique instanceof ReadingUnit )
             {
-                ReadingUnit book = (ReadingUnit) unique;
-                book.getPhysical().openFolder();
+                ((ReadingUnit) unique).getPhysical().openFolder();
             }
         }
     }
