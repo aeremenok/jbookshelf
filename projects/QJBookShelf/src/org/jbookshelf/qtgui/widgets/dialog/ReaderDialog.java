@@ -82,6 +82,7 @@ public class ReaderDialog
             }
             catch ( Throwable e )
             {
+                e.printStackTrace();
                 QMessageBox.critical( parent, "Error", "Error opening file " + file.getAbsolutePath() );
             }
         }
@@ -156,6 +157,7 @@ public class ReaderDialog
         {
             detector.reset();
         }
+        // todo ZIPOpener.guessEncoding()
     }
 
     public ReaderDialog(
@@ -195,7 +197,6 @@ public class ReaderDialog
         setLayout( new QVBoxLayout() );
         layout().addWidget( textEdit );
         textEdit.setReadOnly( true );
-
         textEdit.setText( getContent( getFile( book ) ) );
     }
 }

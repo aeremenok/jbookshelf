@@ -18,45 +18,100 @@ package org.jbookshelf.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.nio.charset.Charset;
+
+import net.sf.jazzlib.ZipEntry;
+import net.sf.jazzlib.ZipInputStreamEncoded;
+
+import org.jbookshelf.controller.settings.JBookShelfSettings;
+import org.jbookshelf.controller.settings.Settings;
 
 public class ZIPOpener
 {
+    public static void extractZipFiles(
+        String filename,
+        String destDir )
+    {
+        System.out.println( "Extracting zip-file" );
+        try
+        {
+            File file = new File( filename );
+            String encoding = guessEncoding( file );
+
+            ZipInputStreamEncoded zise = new ZipInputStreamEncoded( new FileInputStream( filename ), encoding );
+            ZipEntry entry;
+            do
+            {
+                entry = zise.getNextEntry();
+                if ( entry != null )
+                {
+                    File f = new File( destDir + File.separator + entry.getName() );
+                    if ( entry.isDirectory() )
+                    { // if its a directory, create it
+                        f.mkdir();
+                    }
+                    else
+                    {
+                        FileOutputStream fos = new FileOutputStream( f );
+                        while ( zise.available() > 0 )
+                        { // write contents of 'is' to 'fos'
+                            fos.write( zise.read() );
+                        }
+                        fos.close();
+                    }
+                }
+            }
+            while ( entry != null );
+
+            zise.close();
+
+            System.out.println( "Zip-file extracted" );
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public static String guessEncoding(
+        @SuppressWarnings( "unused" ) File file )
+    {
+        String encoding = Charset.defaultCharset().displayName();
+        System.out.println( encoding );
+        return "IBM866";
+        // todo autodetect
+        // UniversalDetector detector = new UniversalDetector( null );
+        // try
+        // {
+        // byte[] buf = new byte[4096];
+        // FileInputStream fis = new FileInputStream( file );
+        //
+        // int nread;
+        // while ( (nread = fis.read( buf )) > 0 && !detector.isDone() )
+        // {
+        // detector.handleData( buf, 0, nread );
+        // }
+        // detector.dataEnd();
+        //
+        // return detector.getDetectedCharset();
+        // }
+        // catch ( Exception e )
+        // {
+        // e.printStackTrace();
+        // return Charset.defaultCharset().name();
+        // }
+        // finally
+        // {
+        // detector.reset();
+        // }
+    }
+
     public static File openZip(
         File zipFile )
     {
-        try
-        {
-            ZipInputStream in = new ZipInputStream( new FileInputStream( zipFile ) );
-
-            ZipEntry entry = in.getNextEntry();
-
-            String outFilename = System.getProperty( "java.io.tmpdir" ) + "/" + entry.getName();
-            File unzipped = new File( outFilename );
-            if ( unzipped.exists() && entry.getSize() == unzipped.length() )
-            {
-                return unzipped;
-            }
-
-            FileOutputStream out = new FileOutputStream( unzipped );
-
-            byte[] buf = new byte[1024];
-            int len;
-            while ( (len = in.read( buf )) > 0 )
-            {
-                out.write( buf, 0, len );
-            }
-
-            out.close();
-            in.close();
-
-            return unzipped;
-        }
-        catch ( IOException e )
-        {
-            throw new Error( e );
-        }
+        extractZipFiles( zipFile.getAbsolutePath(), Settings.getInstance().getProperty( JBookShelfSettings.TEMP_FOLDER ) );
+        File extracted = null;
+        // todo search a file to open
+        return extracted;
     }
 }
