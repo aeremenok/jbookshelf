@@ -19,12 +19,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.charset.Charset;
+import java.util.Enumeration;
+import java.util.zip.ZipFile;
 
 import net.sf.jazzlib.ZipEntry;
 import net.sf.jazzlib.ZipInputStreamEncoded;
 
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
+import org.mozilla.universalchardet.UniversalDetector;
 
 public class ZIPOpener
 {
@@ -36,7 +39,7 @@ public class ZIPOpener
         try
         {
             File file = new File( filename );
-            String encoding = guessEncoding( file );
+            String encoding = guessZipEncoding( file );
 
             ZipInputStreamEncoded zise = new ZipInputStreamEncoded( new FileInputStream( filename ), encoding );
             ZipEntry entry;
@@ -73,45 +76,75 @@ public class ZIPOpener
         }
     }
 
-    public static String guessEncoding(
-        @SuppressWarnings( "unused" ) File file )
+    public static String guessZipEncoding(
+        File file )
     {
-        String encoding = Charset.defaultCharset().displayName();
-        System.out.println( encoding );
-        return "IBM866";
+        // String encoding = Charset.defaultCharset().displayName();
+        // System.out.println( encoding );
+        // return "IBM866";
         // todo autodetect
-        // UniversalDetector detector = new UniversalDetector( null );
-        // try
-        // {
-        // byte[] buf = new byte[4096];
-        // FileInputStream fis = new FileInputStream( file );
-        //
-        // int nread;
-        // while ( (nread = fis.read( buf )) > 0 && !detector.isDone() )
-        // {
-        // detector.handleData( buf, 0, nread );
-        // }
-        // detector.dataEnd();
-        //
-        // return detector.getDetectedCharset();
-        // }
-        // catch ( Exception e )
-        // {
-        // e.printStackTrace();
-        // return Charset.defaultCharset().name();
-        // }
-        // finally
-        // {
-        // detector.reset();
-        // }
+
+        try
+        {
+            ZipFile zipFile = new ZipFile( file );
+            Enumeration<? extends java.util.zip.ZipEntry> entries = zipFile.entries();
+            StringBuilder builder = new StringBuilder();
+            while ( entries.hasMoreElements() )
+            {
+                java.util.zip.ZipEntry zipEntry = entries.nextElement();
+                builder.append( zipEntry.getName() );
+            }
+            String encoding = guessStringEncoding( builder.toString() );
+            if ( encoding != null )
+            {
+                System.out.println( "encoding=" + encoding );
+                return encoding;
+            }
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        return Charset.defaultCharset().name();
     }
 
     public static File openZip(
         File zipFile )
     {
         extractZipFiles( zipFile.getAbsolutePath(), Settings.getInstance().getProperty( JBookShelfSettings.TEMP_FOLDER ) );
-        File extracted = null;
-        // todo search a file to open
+        File extracted = zipFile;
+        // todo search for a file to open
         return extracted;
+    }
+
+    private static String guessStringEncoding(
+        String string )
+    {
+        UniversalDetector detector = new UniversalDetector( null );
+        try
+        {
+            System.out.println( new String( string.getBytes(), "IBM866" ) );
+            byte[] bytes = string.getBytes();
+            // ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream( bytes );
+            // byte[] buf = new byte[4096];
+            // int nread;
+            // while ( (nread = byteArrayInputStream.read( buf )) > 0 && !detector.isDone() )
+            // {
+            // detector.handleData( buf, 0, nread );
+            // }
+            detector.handleData( bytes, 0, bytes.length - 1 );
+            detector.dataEnd();
+
+            return detector.getDetectedCharset();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            return Charset.defaultCharset().name();
+        }
+        finally
+        {
+            detector.reset();
+        }
     }
 }
