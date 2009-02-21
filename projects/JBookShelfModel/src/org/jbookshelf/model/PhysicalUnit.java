@@ -38,6 +38,7 @@ public interface PhysicalUnit
     /**
      * open unit in default browser
      * 
+     * @throws Exception
      * @model
      */
     void openUnit();

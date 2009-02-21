@@ -55,6 +55,7 @@ public abstract class PhysicalUnitImpl
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
+     * @throws Exception
      * @generated NOT
      */
     public void openUnit()

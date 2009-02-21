@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.charset.Charset;
 
+import org.jbookshelf.controller.ZIPHandler;
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.PhysicalUnit;
@@ -40,7 +43,8 @@ public class ReaderDialog
 
         if ( length > Integer.MAX_VALUE )
         {
-            // File is too large
+            // todo break into parts?
+            throw new IOException( "File is too large: " + file.getAbsolutePath() );
         }
 
         // Create the byte array to hold the data
@@ -69,22 +73,24 @@ public class ReaderDialog
         QWidget parent,
         ReadingUnit book )
     {
-        File file = getFile( book );
-        if ( canBeOpened( file ) )
+        try
         {
-            new ReaderDialog( parent, book ).show();
-        }
-        else
-        {
-            try
+            File file = getFile( book );
+            if ( canBeOpened( file ) )
             {
+                new ReaderDialog( parent, book ).show();
+            }
+            else
+            {
+                // todo waiting dialog
                 book.getPhysical().openUnit();
             }
-            catch ( Throwable e )
-            {
-                e.printStackTrace();
-                QMessageBox.critical( parent, "Error", "Error opening file " + file.getAbsolutePath() );
-            }
+        }
+        catch ( Throwable e )
+        {
+            e.printStackTrace();
+            QMessageBox
+                .critical( parent, "Error", "Error opening book " + book.getName() + "\n\n" + printThrowable( e ) );
         }
     }
 
@@ -110,7 +116,8 @@ public class ReaderDialog
         if ( physical instanceof ArchiveFile )
         {
             ArchiveFile archiveFile = (ArchiveFile) physical;
-            file = archiveFile.getArchiveFile();
+            // todo waiting dialog
+            file = ZIPHandler.getZippedFileToOpen( archiveFile.getArchiveFile() );
         }
         else if ( physical instanceof SingleFile )
         {
@@ -151,13 +158,20 @@ public class ReaderDialog
         catch ( Exception e )
         {
             e.printStackTrace();
-            return Charset.defaultCharset().name();
         }
         finally
         {
             detector.reset();
         }
-        // todo ZIPOpener.guessEncoding()
+        return Charset.defaultCharset().name();
+    }
+
+    private static String printThrowable(
+        Throwable e )
+    {
+        StringWriter stringWriter = new StringWriter();
+        e.printStackTrace( new PrintWriter( stringWriter ) );
+        return stringWriter.toString();
     }
 
     public ReaderDialog(
@@ -184,7 +198,8 @@ public class ReaderDialog
         catch ( IOException e )
         {
             e.printStackTrace();
-            return "Error displaying file";
+
+            return tr( "Error displaying file " ) + file.getAbsolutePath() + "\n\n" + printThrowable( e );
         }
     }
 
