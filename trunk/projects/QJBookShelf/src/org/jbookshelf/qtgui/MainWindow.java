@@ -61,7 +61,7 @@ public class MainWindow
     {
         QApplication.initialize( args );
 
-        QCoreApplication.setApplicationVersion( "0.3b1" );
+        QCoreApplication.setApplicationVersion( "0.3b2" );
         QCoreApplication.setApplicationName( "JBookShelf" );
 
         getInstance().show();
