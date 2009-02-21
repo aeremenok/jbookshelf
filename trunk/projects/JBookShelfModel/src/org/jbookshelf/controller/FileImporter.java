@@ -39,7 +39,7 @@ import org.jbookshelf.model.SingleFileFolder;
  */
 public class FileImporter
 {
-    private static class ExtensionDenyingFilter
+    public static class ExtensionDenyingFilter
         implements
             FileFilter
     {

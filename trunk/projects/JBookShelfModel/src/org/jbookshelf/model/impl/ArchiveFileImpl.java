@@ -22,7 +22,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.jbookshelf.controller.URIOpener;
-import org.jbookshelf.controller.ZIPOpener;
+import org.jbookshelf.controller.ZIPHandler;
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.ModelPackage;
 
@@ -172,7 +172,7 @@ public class ArchiveFileImpl
     @Override
     public void openUnit()
     {
-        File unzipped = ZIPOpener.openZip( getArchiveFile() );
+        File unzipped = ZIPHandler.getZippedFileToOpen( getArchiveFile() );
         URIOpener.browseFile( unzipped );
     }
 
