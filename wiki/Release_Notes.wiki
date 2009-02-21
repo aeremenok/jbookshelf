@@ -1,4 +1,28 @@
 #labels Featured
+=JBookShelf 0.3b2=
+
+[http://jbookshelf.googlecode.com/files/jbookshelf-linux-0.3b2.zip Download for Linux] 
+[http://jbookshelf.googlecode.com/files/jbookshelf-windows-0.3b2.zip Download for Windows]
+
+==Changes==
+
+ * Simple reader dialog introduced
+ * Collection tree allows multiselection
+ * Comment textarea allows "undo" action
+ * Import visualization optimized
+ * File path textfields remember last selected file location
+ * Fixed bugs
+   * (partly) http://code.google.com/p/jbookshelf/issues/detail?id=16
+   * http://code.google.com/p/jbookshelf/issues/detail?id=50
+   * http://code.google.com/p/jbookshelf/issues/detail?id=52
+
+ ==Known issues==
+
+ * Opening the file zipped with a nonsystem encoding may cause an error
+ * Other [http://code.google.com/p/jbookshelf/issues/list issues]
+
+----
+
 =JBookShelf 0.3b1=
 
 [http://jbookshelf.googlecode.com/files/jbookshelf-linux-0.3b1.zip Download for Linux] 
