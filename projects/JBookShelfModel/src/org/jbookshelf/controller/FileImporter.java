@@ -64,22 +64,24 @@ public class FileImporter
         implements
             FileFilter
     {
-        private String mainFolderName;
+        File mainFolder;
+        File mainFile;
 
         public boolean accept(
             File pathname )
         {
-            boolean b = pathname.isDirectory() && pathname.getName().endsWith( "_files" );
+            String name = pathname.getName();
+            boolean b = pathname.isDirectory() && name.endsWith( "_files" );
             if ( b )
             {
-                mainFolderName = pathname.getName();
+                mainFolder = pathname;
+            }
+            else if ( pathname.isFile() &&
+                (name.endsWith( ".htm" ) || name.endsWith( ".html" ) || name.endsWith( ".shtml" )) )
+            {
+                mainFile = pathname;
             }
             return b;
-        }
-
-        public String getMainFolderName()
-        {
-            return mainFolderName;
         }
     }
 
@@ -93,8 +95,8 @@ public class FileImporter
                 public boolean accept(
                     File pathname )
                 {
-                    String name = pathname.getName();
-                    return name.equalsIgnoreCase( "index.html" ) || name.equalsIgnoreCase( "index.htm" );
+                    String name = pathname.getName().toLowerCase();
+                    return name.equals( "index.html" ) || name.equals( "index.htm" ) || name.equals( "index.shtml" );
                 }
             } );
 
@@ -107,7 +109,7 @@ public class FileImporter
             }
 
             File[] listFiles = file.listFiles();
-            if ( listFiles.length == 1 )
+            if ( listFiles.length == 1 && listFiles[0].isFile() )
             { // simply single file
                 SingleFileFolder singleFileFolder = ModelFactory.eINSTANCE.createSingleFileFolder();
                 singleFileFolder.setFolder( file );
@@ -162,7 +164,7 @@ public class FileImporter
         String[] args )
     {
         BookShelf bookShelf = ModelFactory.eINSTANCE.createBookShelf();
-        File root = new File( "/tmp/test" );
+        File root = new File( "/home/eav/doc" );
         new FileImporter()
         {
             @Override
@@ -170,7 +172,7 @@ public class FileImporter
                 File file,
                 Exception e )
             {
-                System.out.println( "-cannot import file " + file.getAbsolutePath() + " cause:" + e.getMessage() );
+                System.out.println( "-cannot import file " + file.getAbsolutePath() + " cause: " + e.getMessage() );
             }
 
             @Override
@@ -183,7 +185,7 @@ public class FileImporter
     }
 
     /**
-     * try to find if folder holds "file" with "file_files/"
+     * try to find if folder holds "file" with "file_files/" todo too complex - simplify!
      * 
      * @param folder folder
      * @return main file ("file") or null in case failure
@@ -192,15 +194,10 @@ public class FileImporter
         File folder )
     {
         HtmlFolderFileFilter filter = new HtmlFolderFileFilter();
-        File[] listFiles = folder.listFiles( filter );
-        if ( listFiles.length == 1 )
+        folder.listFiles( filter );
+        if ( filter.mainFolder != null && filter.mainFile != null )
         {
-            String mainFolderName = filter.getMainFolderName();
-            File mainFile = new File( mainFolderName.substring( 0, mainFolderName.indexOf( "_files" ) ) );
-            if ( mainFile.exists() )
-            {
-                return mainFile;
-            }
+            return filter.mainFile;
         }
         return null;
     }
