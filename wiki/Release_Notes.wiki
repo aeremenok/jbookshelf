@@ -16,7 +16,7 @@
    * http://code.google.com/p/jbookshelf/issues/detail?id=50
    * http://code.google.com/p/jbookshelf/issues/detail?id=52
 
- ==Known issues==
+==Known issues==
 
  * Opening the file zipped with a nonsystem encoding may cause an error
  * Other [http://code.google.com/p/jbookshelf/issues/list issues]
