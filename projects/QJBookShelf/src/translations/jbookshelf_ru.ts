@@ -1,55 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="ru_RU">
-<defaultcodec></defaultcodec>
 <context>
     <name>org.jbookshelf.qtgui.ToolBar</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="109"/>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="119"/>
         <source>&amp;Add</source>
         <translation>&amp;Добавить</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="110"/>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="120"/>
         <source>&amp;Remove</source>
         <translation>&amp;Удалить</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="111"/>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="121"/>
         <source>&amp;Edit</source>
         <translation>&amp;Править</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="113"/>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="123"/>
         <source>&amp;Open</source>
         <translation>&amp;Открыть</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="116"/>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="126"/>
         <source>&amp;Settings</source>
         <translation>&amp;Настройки</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="118"/>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="128"/>
         <source>&amp;Import</source>
         <translation>&amp;Импорт</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="119"/>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="129"/>
         <source>&amp;Backup</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="120"/>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="130"/>
         <source>&amp;Restore</source>
         <translation>&amp;Восстановить</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="122"/>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="132"/>
         <source>&amp;About</source>
         <translation>О программ&amp;е</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="254"/>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="287"/>
         <source>Select backup file</source>
         <translation>Выберите файл для восстановления</translation>
     </message>
@@ -69,29 +68,34 @@
         <translation type="obsolete">Введите маску импорта</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="239"/>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="274"/>
         <source>Confirm</source>
         <translation>Подтвердите</translation>
     </message>
     <message>
         <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="240"/>
         <source>Remove</source>
-        <translation>Удалить</translation>
+        <translation type="obsolete">Удалить</translation>
     </message>
     <message>
         <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="246"/>
         <source>Removed</source>
-        <translation>Удален</translation>
+        <translation type="obsolete">Удален</translation>
     </message>
     <message>
         <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="246"/>
         <source>removed</source>
-        <translation>удален</translation>
+        <translation type="obsolete">удален</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="114"/>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="124"/>
         <source>Open &amp;Folder</source>
         <translation>Открыть &amp;Папку</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/ToolBar.java" line="275"/>
+        <source>Remove selected?</source>
+        <translation>Удалить выбранное?</translation>
     </message>
 </context>
 <context>
@@ -142,32 +146,42 @@
     <message>
         <location filename="../org/jbookshelf/qtgui/widgets/dialog/BookAdditionDialog.java" line="88"/>
         <source>Added</source>
-        <translation>Добавлен</translation>
+        <translation type="obsolete">Добавлен</translation>
     </message>
     <message>
         <location filename="../org/jbookshelf/qtgui/widgets/dialog/BookAdditionDialog.java" line="88"/>
         <source>added</source>
-        <translation>добавлен</translation>
+        <translation type="obsolete">добавлен</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/BookAdditionDialog.java" line="95"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/BookAdditionDialog.java" line="92"/>
         <source>Add Book</source>
         <translation>Добавить Книгу</translation>
     </message>
     <message>
         <location filename="../org/jbookshelf/qtgui/widgets/dialog/BookAdditionDialog.java" line="97"/>
         <source>And and close</source>
-        <translation>Добавить и закрыть</translation>
+        <translation type="obsolete">Добавить и закрыть</translation>
     </message>
     <message>
         <location filename="../org/jbookshelf/qtgui/widgets/dialog/BookAdditionDialog.java" line="98"/>
         <source>And and continue</source>
-        <translation>Добавить и продолжить</translation>
+        <translation type="obsolete">Добавить и продолжить</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/BookAdditionDialog.java" line="99"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/BookAdditionDialog.java" line="96"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/BookAdditionDialog.java" line="94"/>
+        <source>Add and close</source>
+        <translation>Добавить и закрыть</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/BookAdditionDialog.java" line="95"/>
+        <source>Add and continue</source>
+        <translation>Добавить и продолжить</translation>
     </message>
 </context>
 <context>
@@ -196,78 +210,113 @@
 <context>
     <name>org.jbookshelf.qtgui.widgets.dialog.ImportDialog</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="102"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="132"/>
         <source>Import files</source>
         <translation>Импортировать файлы</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="106"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="136"/>
         <source>Specify multiple masks separated with /. If JBookShelf fails to parse a filename using the mask - it will try the next one.
 Use:
 %a - to mask an author
 %b - to mask a book
 %c - to mask a category</source>
-        <translation type="unfinished">Можно задать несколько масок импорта, разделенных /. Если JBookShelf не сможет применить одну маску - он попробует следующую.
+        <translation>Можно задать несколько масок импорта, разделенных /. Если JBookShelf не сможет применить одну маску - он попробует следующую.
 Используйте:
 %a - чтобы маскировать автора
 %b - чтобы маскировать книгу
 %c - чтобы маскировать категорию</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="112"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="142"/>
         <source>Import mask</source>
         <translation>Маска импорта</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="113"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="143"/>
         <source>Import folder</source>
         <translation>Папка импорта</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="115"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="145"/>
         <source>Import</source>
         <translation>Импорт</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="116"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="146"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="118"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="148"/>
         <source>Select a directory to import</source>
         <translation>Выберите папку для импорта</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="121"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="151"/>
         <source>Result</source>
-        <translation>Результат</translation>
+        <translation type="obsolete">Результат</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="122"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="152"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
         <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="123"/>
         <source>Action</source>
-        <translation>Действие</translation>
+        <translation type="obsolete">Действие</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="223"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="301"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="223"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="301"/>
         <source>File does not exist: </source>
         <translation>Файл не найден:</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="199"/>
+        <source>Failed to import</source>
+        <translation>Не удалось импортировать</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="200"/>
+        <source>Imported successfully</source>
+        <translation>Импортировано успешно</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="291"/>
+        <source>books</source>
+        <translation>книги</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="292"/>
+        <source>files</source>
+        <translation>файлы</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="297"/>
+        <source>Done</source>
+        <translation>Выполнено</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="297"/>
+        <source>Expand tree nodes to see results</source>
+        <translation>Разверните узлы дерева чтобы увидеть результаты</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="153"/>
+        <source>Count</source>
+        <translation>Количество</translation>
     </message>
 </context>
 <context>
     <name>org.jbookshelf.qtgui.widgets.dialog.ImportDialog$AddButton</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="44"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="65"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
@@ -275,9 +324,17 @@ Use:
 <context>
     <name>org.jbookshelf.qtgui.widgets.dialog.ImportDialog$EditButton</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="64"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ImportDialog.java" line="83"/>
         <source>Edit</source>
         <translation>Править</translation>
+    </message>
+</context>
+<context>
+    <name>org.jbookshelf.qtgui.widgets.dialog.ReaderDialog</name>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/widgets/dialog/ReaderDialog.java" line="202"/>
+        <source>Error displaying file </source>
+        <translation>Ошибка отображения файла</translation>
     </message>
 </context>
 <context>
@@ -351,7 +408,7 @@ Use:
 <context>
     <name>org.jbookshelf.qtgui.widgets.menu.CollectionTreeMenu</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/menu/CollectionTreeMenu.java" line="64"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/menu/CollectionTreeMenu.java" line="76"/>
         <source>Is Read</source>
         <translation>Прочитана</translation>
     </message>
@@ -460,27 +517,27 @@ Use:
 <context>
     <name>org.jbookshelf.qtgui.widgets.panel.RelatedPanel</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/panel/RelatedPanel.java" line="106"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/panel/RelatedPanel.java" line="100"/>
         <source>search...</source>
         <translation>поиск...</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/panel/RelatedPanel.java" line="108"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/panel/RelatedPanel.java" line="102"/>
         <source>Comments</source>
         <translation>Заметки</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/panel/RelatedPanel.java" line="109"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/panel/RelatedPanel.java" line="103"/>
         <source>Related</source>
         <translation>Связанные</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/panel/RelatedPanel.java" line="139"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/panel/RelatedPanel.java" line="143"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/panel/RelatedPanel.java" line="140"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/panel/RelatedPanel.java" line="144"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -529,33 +586,43 @@ Use:
     <message>
         <location filename="../org/jbookshelf/qtgui/widgets/treepanel/CommentTreePanel.java" line="113"/>
         <source>comment</source>
-        <translation>заметка</translation>
+        <translation type="obsolete">заметка</translation>
     </message>
     <message>
         <location filename="../org/jbookshelf/qtgui/widgets/treepanel/CommentTreePanel.java" line="192"/>
         <source>Created </source>
+        <translation type="obsolete">Создана</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/widgets/treepanel/CommentTreePanel.java" line="198"/>
+        <source>Created</source>
         <translation>Создана</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/widgets/treepanel/CommentTreePanel.java" line="247"/>
+        <source>Undo</source>
+        <translation>Отменить</translation>
     </message>
 </context>
 <context>
     <name>org.jbookshelf.qtgui.widgets.treepanel.RelatedTreePanel</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/treepanel/RelatedTreePanel.java" line="56"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/treepanel/RelatedTreePanel.java" line="50"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/treepanel/RelatedTreePanel.java" line="56"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/treepanel/RelatedTreePanel.java" line="50"/>
         <source>Double click on related item in the collection tree</source>
         <translation>Для привязки дважды кликните узел в дереве коллекции</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/treepanel/RelatedTreePanel.java" line="90"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/treepanel/RelatedTreePanel.java" line="84"/>
         <source>Linked</source>
         <translation>Связан</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/treepanel/RelatedTreePanel.java" line="90"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/treepanel/RelatedTreePanel.java" line="84"/>
         <source> now relates to </source>
         <translation>теперь связан с</translation>
     </message>

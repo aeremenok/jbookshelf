@@ -57,7 +57,6 @@ public class ImportDialog
     implements
         JBookShelfConstants
 {
-    // todo consider using contextmenus or a single button for all nodes
     private class AddButton
         extends QPushButton
     {
@@ -147,6 +146,12 @@ public class ImportDialog
         cancel.setText( tr( "Close" ) );
 
         pathEdit.setCaption( tr( "Select a directory to import" ) );
+
+        List<String> list = new ArrayList<String>();
+        list.add( "" );
+        list.add( tr( "Name" ) );
+        list.add( tr( "Count" ) );
+        importProcessTree.setHeaderLabels( list );
     }
 
     private void initComponents()
@@ -183,7 +188,6 @@ public class ImportDialog
         progressBar.setVisible( false );
         progressBar.setMaximum( 100 );
 
-        importProcessTree.header().hide();
         importProcessTree.setColumnCount( 3 );
         importProcessTree.setColumnWidth( 0, 40 );
         importProcessTree.setColumnWidth( 1, 600 );

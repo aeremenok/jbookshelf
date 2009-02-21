@@ -27,6 +27,7 @@
 	<target name="copyfiles">
 		<copy todir="${targetdir}/lib">
 			<fileset dir="${libdir}" />
+			<fileset dir="${basedir}/../JBookShelfModel/lib"/>
 		</copy>
 		<copy todir="${targetdir}/lib" file="${jambidir-os}/qtjambi.jar" />
 		<copy todir="${targetdir}/lib" file="${jambidir-os}/qtjambi-native.jar" />
@@ -78,6 +79,7 @@
 			<arg value="${srcdir}/${packagedir}/widgets/completion" />
 			<arg value="${srcdir}/${packagedir}/widgets/dialog" />
 			<arg value="${srcdir}/${packagedir}/widgets/ext" />
+			<arg value="${srcdir}/${packagedir}/widgets/menu" />
 			<arg value="${srcdir}/${packagedir}/widgets/panel" />
 			<arg value="${srcdir}/${packagedir}/widgets/tree" />
 			<arg value="${srcdir}/${packagedir}/widgets/treepanel" />
