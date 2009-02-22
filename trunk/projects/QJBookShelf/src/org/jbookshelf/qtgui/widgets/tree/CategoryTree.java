@@ -16,10 +16,10 @@
 package org.jbookshelf.qtgui.widgets.tree;
 
 import org.eclipse.emf.ecore.EReference;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Categorizable;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.ModelPackage;
-import org.jbookshelf.model.ReadingUnit;
 
 import com.trolltech.qt.gui.QTreeWidgetItem;
 
@@ -44,7 +44,7 @@ public class CategoryTree
         for ( Categorizable categorizable : category.getCategorizables() )
         {
             UniqueNode node = new UniqueNode( categorizable );
-            if ( categorizable instanceof ReadingUnit )
+            if ( categorizable instanceof Book )
             {
                 books.addChild( node );
             }

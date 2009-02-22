@@ -10,9 +10,9 @@ import java.nio.charset.Charset;
 
 import org.jbookshelf.controller.ZIPHandler;
 import org.jbookshelf.model.ArchiveFile;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.PhysicalUnit;
-import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
@@ -28,7 +28,7 @@ public class ReaderDialog
     extends QDialogExt
 {
     private final QTextEdit       textEdit   = new QTextEdit( this );
-    private final ReadingUnit     book;
+    private final Book            book;
 
     private final static String[] extensions = { "txt", "html", "htm", "shtml" };
 
@@ -71,7 +71,7 @@ public class ReaderDialog
 
     public static void open(
         QWidget parent,
-        ReadingUnit book )
+        Book book )
     {
         try
         {
@@ -109,7 +109,7 @@ public class ReaderDialog
     }
 
     private static File getFile(
-        ReadingUnit book )
+        Book book )
     {
         File file = null;
         PhysicalUnit physical = book.getPhysical();
@@ -176,7 +176,7 @@ public class ReaderDialog
 
     public ReaderDialog(
         QWidget parent,
-        ReadingUnit book )
+        Book book )
     {
         super( parent );
         this.book = book;

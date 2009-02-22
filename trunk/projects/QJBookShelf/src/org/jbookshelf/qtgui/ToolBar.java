@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
-import org.jbookshelf.model.ReadingUnit;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.logic.Translator;
@@ -72,15 +72,15 @@ public class ToolBar
         return instance;
     }
 
-    public static List<ReadingUnit> hasBooks(
+    public static List<Book> hasBooks(
         List<? extends Unique> uniques )
     {
-        List<ReadingUnit> books = new ArrayList<ReadingUnit>();
+        List<Book> books = new ArrayList<Book>();
         for ( Unique unique : uniques )
         {
-            if ( unique instanceof ReadingUnit )
+            if ( unique instanceof Book )
             {
-                books.add( (ReadingUnit) unique );
+                books.add( (Book) unique );
             }
         }
         return books;
@@ -139,7 +139,7 @@ public class ToolBar
         if ( uniques.size() > 0 )
         { // all uniques can be removed
             removeAction.setEnabled( true );
-            List<ReadingUnit> books = hasBooks( uniques );
+            List<Book> books = hasBooks( uniques );
             if ( books.size() > 0 )
             { // all books and their folders can be opened
                 openAction.setEnabled( true );
@@ -249,9 +249,9 @@ public class ToolBar
     {
         for ( Unique unique : selectedUniques )
         {
-            if ( unique instanceof ReadingUnit )
+            if ( unique instanceof Book )
             {
-                ReaderDialog.open( this, (ReadingUnit) unique );
+                ReaderDialog.open( this, (Book) unique );
             }
         }
     }
@@ -261,9 +261,9 @@ public class ToolBar
     {
         for ( Unique unique : selectedUniques )
         {
-            if ( unique instanceof ReadingUnit )
+            if ( unique instanceof Book )
             {
-                ((ReadingUnit) unique).getPhysical().openFolder();
+                ((Book) unique).getPhysical().openFolder();
             }
         }
     }

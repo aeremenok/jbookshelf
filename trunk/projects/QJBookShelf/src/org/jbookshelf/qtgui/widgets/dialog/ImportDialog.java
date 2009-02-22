@@ -23,7 +23,7 @@ import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.storage.Storage;
-import org.jbookshelf.model.ReadingUnit;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.FilePathEdit;
@@ -88,7 +88,7 @@ public class ImportDialog
         private void editBook()
         {
             QTreeWidgetItem item = importProcessTree.selectedItems().get( 0 );
-            ReadingUnit book = success.get( successNode.indexOfChild( item ) );
+            Book book = success.get( successNode.indexOfChild( item ) );
             new BookEditDialog( ImportDialog.this, book ).show();
         }
     }
@@ -115,7 +115,7 @@ public class ImportDialog
 
     private final List<File>        failure           = new ArrayList<File>();
 
-    private final List<ReadingUnit> success           = new ArrayList<ReadingUnit>();
+    private final List<Book>        success           = new ArrayList<Book>();
 
     public ImportDialog(
         final QWidget parent )
@@ -225,7 +225,7 @@ public class ImportDialog
         // updating the expanded node
         if ( item.equals( successNode ) && successNode.childCount() == 0 )
         {
-            for ( ReadingUnit book : success )
+            for ( Book book : success )
             {
                 QTreeWidgetItem leaf = new QTreeWidgetItem( successNode );
                 leaf.setText( 1, book.getName() );
@@ -265,7 +265,7 @@ public class ImportDialog
 
             @Override
             protected void onImportSuccess(
-                final ReadingUnit book )
+                final Book book )
             {
                 success.add( book );
                 progressBar.increment();

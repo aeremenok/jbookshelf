@@ -45,6 +45,14 @@ public interface BookShelf
         String name );
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model
+     * @generated
+     */
+    Book addBook(String name, Author author, Category category, PhysicalUnit physicalUnit);
+
+    /**
      * @param name new {@link ReadingUnit} name
      * @param author unit's author (optional, if null then will be set "Unknown")
      * @param category units's category (optional)
@@ -52,7 +60,7 @@ public interface BookShelf
      * @return new {@link ReadingUnit}
      * @model
      */
-    ReadingUnit addReadingUnit(
+    Book addReadingUnit(
         String name,
         Author author,
         Category category,
@@ -74,7 +82,7 @@ public interface BookShelf
      * @return all units in collection
      * @model containment="true"
      */
-    EList<ReadingUnit> getReadingUnits();
+    EList<Book> getReadingUnits();
 
     /**
      * @param query search text
@@ -86,7 +94,6 @@ public interface BookShelf
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @model
      * @generated
      */
@@ -102,12 +109,20 @@ public interface BookShelf
         String query );
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model
+     * @generated
+     */
+    EList<Book> queryBooks(String query, Boolean isRead);
+
+    /**
      * @param query search text
      * @param isRead desired units status, null = read + unread
      * @return reading units, whose data contains text
      * @model
      */
-    EList<ReadingUnit> queryUnits(
+    EList<Book> queryUnits(
         String query,
         Boolean isRead );
 

@@ -26,13 +26,13 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.Commentable;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.ModelPackage;
 import org.jbookshelf.model.PhysicalUnit;
-import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.Unique;
 
 /**
@@ -61,7 +61,7 @@ public class BookShelfImpl
      * @generated
      * @ordered
      */
-    protected EList<Author>      authors;
+    protected EList<Author>   authors;
     /**
      * The cached value of the '{@link #getCategories() <em>Categories</em>}' containment reference list. <!--
      * begin-user-doc --> <!-- end-user-doc -->
@@ -70,7 +70,7 @@ public class BookShelfImpl
      * @generated
      * @ordered
      */
-    protected EList<Category>    categories;
+    protected EList<Category> categories;
     /**
      * The cached value of the '{@link #getReadingUnits() <em>Reading Units</em>}' containment reference list. <!--
      * begin-user-doc --> <!-- end-user-doc -->
@@ -79,11 +79,11 @@ public class BookShelfImpl
      * @generated
      * @ordered
      */
-    protected EList<ReadingUnit> readingUnits;
+    protected EList<Book>     readingUnits;
 
-    private Author               unknown;
+    private Author            unknown;
 
-    private Category             common;
+    private Category          common;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -121,6 +121,22 @@ public class BookShelfImpl
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
+     * @generated
+     */
+    public Book addBook(
+        String name,
+        Author author,
+        Category category,
+        PhysicalUnit physicalUnit )
+    {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated NOT
      */
     public Category addCategory(
@@ -146,7 +162,7 @@ public class BookShelfImpl
      * 
      * @generated NOT
      */
-    public ReadingUnit addReadingUnit(
+    public Book addReadingUnit(
         String name,
         Author author,
         Category category,
@@ -157,10 +173,10 @@ public class BookShelfImpl
             return null;
         }
 
-        ReadingUnit readingUnit = getReadingUnitByName( name );
+        Book readingUnit = getReadingUnitByName( name );
         if ( readingUnit == null )
         {
-            readingUnit = ModelFactory.eINSTANCE.createReadingUnit();
+            readingUnit = ModelFactory.eINSTANCE.createBook();
             readingUnit.setName( name );
             readingUnit.setPhysical( physicalUnit );
             // todo make relations optional
@@ -267,7 +283,7 @@ public class BookShelfImpl
                 return;
             case ModelPackage.BOOK_SHELF__READING_UNITS:
                 getReadingUnits().clear();
-                getReadingUnits().addAll( (Collection<? extends ReadingUnit>) newValue );
+                getReadingUnits().addAll( (Collection<? extends Book>) newValue );
                 return;
         }
         super.eSet( featureID, newValue );
@@ -342,13 +358,11 @@ public class BookShelfImpl
      * 
      * @generated
      */
-    public EList<ReadingUnit> getReadingUnits()
+    public EList<Book> getReadingUnits()
     {
         if ( readingUnits == null )
         {
-            readingUnits =
-                new EObjectContainmentEList<ReadingUnit>( ReadingUnit.class, this,
-                    ModelPackage.BOOK_SHELF__READING_UNITS );
+            readingUnits = new EObjectContainmentEList<Book>( Book.class, this, ModelPackage.BOOK_SHELF__READING_UNITS );
         }
         return readingUnits;
     }
@@ -384,6 +398,20 @@ public class BookShelfImpl
         }
 
         return result;
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    public EList<Book> queryBooks(
+        String query,
+        Boolean isRead )
+    {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -430,16 +458,16 @@ public class BookShelfImpl
      * 
      * @generated NOT
      */
-    public EList<ReadingUnit> queryUnits(
+    public EList<Book> queryUnits(
         String query,
         Boolean isRead )
     {
         String lowerCase = query.toLowerCase();
-        EList<ReadingUnit> result = new BasicEList<ReadingUnit>();
+        EList<Book> result = new BasicEList<Book>();
 
         if ( isRead == null )
         {
-            for ( ReadingUnit unit : getReadingUnits() )
+            for ( Book unit : getReadingUnits() )
             {
                 if ( unit.getName().toLowerCase().contains( lowerCase ) )
                 {
@@ -449,7 +477,7 @@ public class BookShelfImpl
         }
         else
         {
-            for ( ReadingUnit unit : getReadingUnits() )
+            for ( Book unit : getReadingUnits() )
             {
                 if ( isRead.booleanValue() == unit.isRead() && unit.getName().toLowerCase().contains( lowerCase ) )
                 {
@@ -471,10 +499,10 @@ public class BookShelfImpl
     {
         unique.getRelated().clear();
         ((Commentable) unique).getComments().clear();
-        if ( unique instanceof ReadingUnit )
+        if ( unique instanceof Book )
         {
             getReadingUnits().remove( unique );
-            ReadingUnit readingUnit = (ReadingUnit) unique;
+            Book readingUnit = (Book) unique;
             readingUnit.getAuthors().clear();
             readingUnit.getCategories().clear();
         }
@@ -482,7 +510,7 @@ public class BookShelfImpl
         {
             getAuthors().remove( unique );
             Author author = (Author) unique;
-            author.getReadingUnits().clear();
+            author.getBooks().clear();
             author.getCategories().clear();
         }
         else if ( unique instanceof Category )
@@ -521,11 +549,11 @@ public class BookShelfImpl
         return null;
     }
 
-    private ReadingUnit getReadingUnitByName(
+    private Book getReadingUnitByName(
         String name )
     {
         // todo optimize
-        for ( ReadingUnit readingUnit : getReadingUnits() )
+        for ( Book readingUnit : getReadingUnits() )
         {
             if ( name.equals( readingUnit.getName() ) )
             {

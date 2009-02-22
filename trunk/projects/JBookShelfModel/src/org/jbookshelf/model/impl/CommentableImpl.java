@@ -33,10 +33,10 @@ import org.jbookshelf.model.ModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.jbookshelf.model.impl.CommentableImpl#getComments <em>Comments</em>}</li>
+ *   <li>{@link org.jbookshelf.model.impl.CommentableImpl#getComments <em>Comments</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class CommentableImpl
@@ -56,7 +56,6 @@ public abstract class CommentableImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected CommentableImpl()
@@ -66,7 +65,6 @@ public abstract class CommentableImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -75,17 +73,16 @@ public abstract class CommentableImpl
         boolean resolve,
         boolean coreType )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.COMMENTABLE__COMMENTS:
                 return getComments();
         }
-        return super.eGet( featureID, resolve, coreType );
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings( "unchecked" )
@@ -95,17 +92,16 @@ public abstract class CommentableImpl
         int featureID,
         NotificationChain msgs )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.COMMENTABLE__COMMENTS:
-                return ((InternalEList<InternalEObject>) (InternalEList<?>) getComments()).basicAdd( otherEnd, msgs );
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getComments()).basicAdd(otherEnd, msgs);
         }
-        return super.eInverseAdd( otherEnd, featureID, msgs );
+        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -114,34 +110,32 @@ public abstract class CommentableImpl
         int featureID,
         NotificationChain msgs )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.COMMENTABLE__COMMENTS:
-                return ((InternalEList<?>) getComments()).basicRemove( otherEnd, msgs );
+                return ((InternalEList<?>)getComments()).basicRemove(otherEnd, msgs);
         }
-        return super.eInverseRemove( otherEnd, featureID, msgs );
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.COMMENTABLE__COMMENTS:
                 return comments != null && !comments.isEmpty();
         }
-        return super.eIsSet( featureID );
+        return super.eIsSet(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings( "unchecked" )
@@ -150,46 +144,42 @@ public abstract class CommentableImpl
         int featureID,
         Object newValue )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.COMMENTABLE__COMMENTS:
                 getComments().clear();
-                getComments().addAll( (Collection<? extends Comment>) newValue );
+                getComments().addAll((Collection<? extends Comment>)newValue);
                 return;
         }
-        super.eSet( featureID, newValue );
+        super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.COMMENTABLE__COMMENTS:
                 getComments().clear();
                 return;
         }
-        super.eUnset( featureID );
+        super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public EList<Comment> getComments()
     {
-        if ( comments == null )
+        if (comments == null)
         {
-            comments =
-                new EObjectContainmentWithInverseEList<Comment>( Comment.class, this,
-                    ModelPackage.COMMENTABLE__COMMENTS, ModelPackage.COMMENT__SUBJECT );
+            comments = new EObjectContainmentWithInverseEList<Comment>(Comment.class, this, ModelPackage.COMMENTABLE__COMMENTS, ModelPackage.COMMENT__SUBJECT);
         }
         return comments;
     }
@@ -217,7 +207,6 @@ public abstract class CommentableImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override

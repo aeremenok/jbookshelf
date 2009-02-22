@@ -19,8 +19,10 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.jbookshelf.model.*;
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Categorizable;
 import org.jbookshelf.model.Category;
@@ -29,7 +31,6 @@ import org.jbookshelf.model.Commentable;
 import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.ModelPackage;
 import org.jbookshelf.model.PhysicalUnit;
-import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.model.Unique;
@@ -39,36 +40,35 @@ import org.jbookshelf.model.Unique;
  * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
  * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
  * returned, which is the result of the switch. <!-- end-user-doc -->
- * 
  * @see org.jbookshelf.model.ModelPackage
  * @generated
  */
 public class ModelSwitch<T>
 {
     /**
-     * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The cached model package
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     protected static ModelPackage modelPackage;
 
     /**
-     * Creates an instance of the switch. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Creates an instance of the switch.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public ModelSwitch()
     {
-        if ( modelPackage == null )
+        if (modelPackage == null)
         {
             modelPackage = ModelPackage.eINSTANCE;
         }
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Archive File</em>'. <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Archive File</em>'.
+     * <!-- begin-user-doc -->
      * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-     * 
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Archive File</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -81,9 +81,9 @@ public class ModelSwitch<T>
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Author</em>'. <!-- begin-user-doc --> This
+     * Returns the result of interpreting the object as an instance of '<em>Author</em>'.
+     * <!-- begin-user-doc --> This
      * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-     * 
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Author</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -96,9 +96,24 @@ public class ModelSwitch<T>
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Book Shelf</em>'. <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Book</em>'.
+     * <!-- begin-user-doc --> This
+     * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Book</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseBook(
+        Book object )
+    {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Book Shelf</em>'.
+     * <!-- begin-user-doc -->
      * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-     * 
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Book Shelf</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -111,9 +126,9 @@ public class ModelSwitch<T>
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Categorizable</em>'. <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Categorizable</em>'.
+     * <!-- begin-user-doc -->
      * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-     * 
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Categorizable</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -126,9 +141,9 @@ public class ModelSwitch<T>
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Category</em>'. <!-- begin-user-doc --> This
+     * Returns the result of interpreting the object as an instance of '<em>Category</em>'.
+     * <!-- begin-user-doc --> This
      * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-     * 
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Category</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -141,9 +156,9 @@ public class ModelSwitch<T>
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Comment</em>'. <!-- begin-user-doc --> This
+     * Returns the result of interpreting the object as an instance of '<em>Comment</em>'.
+     * <!-- begin-user-doc --> This
      * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-     * 
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Comment</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -156,9 +171,9 @@ public class ModelSwitch<T>
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Commentable</em>'. <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Commentable</em>'.
+     * <!-- begin-user-doc -->
      * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-     * 
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Commentable</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -187,9 +202,9 @@ public class ModelSwitch<T>
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Physical Unit</em>'. <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Physical Unit</em>'.
+     * <!-- begin-user-doc -->
      * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-     * 
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Physical Unit</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -202,24 +217,9 @@ public class ModelSwitch<T>
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Reading Unit</em>'. <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Single File</em>'.
+     * <!-- begin-user-doc -->
      * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-     * 
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Reading Unit</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseReadingUnit(
-        ReadingUnit object )
-    {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Single File</em>'. <!-- begin-user-doc -->
-     * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-     * 
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Single File</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -248,9 +248,9 @@ public class ModelSwitch<T>
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Unique</em>'. <!-- begin-user-doc --> This
+     * Returns the result of interpreting the object as an instance of '<em>Unique</em>'.
+     * <!-- begin-user-doc --> This
      * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-     * 
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Unique</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -263,10 +263,10 @@ public class ModelSwitch<T>
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
+     * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+     * <!-- begin-user-doc --> This
      * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
      * anyway. <!-- end-user-doc -->
-     * 
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject)
@@ -279,22 +279,20 @@ public class ModelSwitch<T>
     }
 
     /**
-     * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that
-     * result. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the first non-null result returned by a <code>caseXXX</code> call.
      * @generated
      */
     public T doSwitch(
         EObject theEObject )
     {
-        return doSwitch( theEObject.eClass(), theEObject );
+        return doSwitch(theEObject.eClass(), theEObject);
     }
 
     /**
-     * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that
-     * result. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the first non-null result returned by a <code>caseXXX</code> call.
      * @generated
      */
@@ -302,21 +300,23 @@ public class ModelSwitch<T>
         EClass theEClass,
         EObject theEObject )
     {
-        if ( theEClass.eContainer() == modelPackage )
+        if (theEClass.eContainer() == modelPackage)
         {
-            return doSwitch( theEClass.getClassifierID(), theEObject );
+            return doSwitch(theEClass.getClassifierID(), theEObject);
         }
         else
         {
             List<EClass> eSuperTypes = theEClass.getESuperTypes();
-            return eSuperTypes.isEmpty() ? defaultCase( theEObject ) : doSwitch( eSuperTypes.get( 0 ), theEObject );
+            return
+                eSuperTypes.isEmpty() ?
+                    defaultCase(theEObject) :
+                    doSwitch(eSuperTypes.get(0), theEObject);
         }
     }
 
     /**
-     * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that
-     * result. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the first non-null result returned by a <code>caseXXX</code> call.
      * @generated
      */
@@ -324,200 +324,115 @@ public class ModelSwitch<T>
         int classifierID,
         EObject theEObject )
     {
-        switch ( classifierID )
+        switch (classifierID)
         {
             case ModelPackage.ARCHIVE_FILE:
             {
-                ArchiveFile archiveFile = (ArchiveFile) theEObject;
-                T result = caseArchiveFile( archiveFile );
-                if ( result == null )
-                {
-                    result = casePhysicalUnit( archiveFile );
-                }
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                ArchiveFile archiveFile = (ArchiveFile)theEObject;
+                T result = caseArchiveFile(archiveFile);
+                if (result == null) result = casePhysicalUnit(archiveFile);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ModelPackage.AUTHOR:
             {
-                Author author = (Author) theEObject;
-                T result = caseAuthor( author );
-                if ( result == null )
-                {
-                    result = caseCategorizable( author );
-                }
-                if ( result == null )
-                {
-                    result = caseCommentable( author );
-                }
-                if ( result == null )
-                {
-                    result = caseUnique( author );
-                }
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                Author author = (Author)theEObject;
+                T result = caseAuthor(author);
+                if (result == null) result = caseCategorizable(author);
+                if (result == null) result = caseCommentable(author);
+                if (result == null) result = caseUnique(author);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ModelPackage.BOOK_SHELF:
             {
-                BookShelf bookShelf = (BookShelf) theEObject;
-                T result = caseBookShelf( bookShelf );
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                BookShelf bookShelf = (BookShelf)theEObject;
+                T result = caseBookShelf(bookShelf);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ModelPackage.CATEGORIZABLE:
             {
-                Categorizable categorizable = (Categorizable) theEObject;
-                T result = caseCategorizable( categorizable );
-                if ( result == null )
-                {
-                    result = caseCommentable( categorizable );
-                }
-                if ( result == null )
-                {
-                    result = caseUnique( categorizable );
-                }
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                Categorizable categorizable = (Categorizable)theEObject;
+                T result = caseCategorizable(categorizable);
+                if (result == null) result = caseCommentable(categorizable);
+                if (result == null) result = caseUnique(categorizable);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ModelPackage.CATEGORY:
             {
-                Category category = (Category) theEObject;
-                T result = caseCategory( category );
-                if ( result == null )
-                {
-                    result = caseCommentable( category );
-                }
-                if ( result == null )
-                {
-                    result = caseUnique( category );
-                }
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                Category category = (Category)theEObject;
+                T result = caseCategory(category);
+                if (result == null) result = caseCommentable(category);
+                if (result == null) result = caseUnique(category);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ModelPackage.COMMENT:
             {
-                Comment comment = (Comment) theEObject;
-                T result = caseComment( comment );
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                Comment comment = (Comment)theEObject;
+                T result = caseComment(comment);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ModelPackage.COMMENTABLE:
             {
-                Commentable commentable = (Commentable) theEObject;
-                T result = caseCommentable( commentable );
-                if ( result == null )
-                {
-                    result = caseUnique( commentable );
-                }
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                Commentable commentable = (Commentable)theEObject;
+                T result = caseCommentable(commentable);
+                if (result == null) result = caseUnique(commentable);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ModelPackage.INDEX_FILE_FOLDER:
             {
-                IndexFileFolder indexFileFolder = (IndexFileFolder) theEObject;
-                T result = caseIndexFileFolder( indexFileFolder );
-                if ( result == null )
-                {
-                    result = casePhysicalUnit( indexFileFolder );
-                }
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                IndexFileFolder indexFileFolder = (IndexFileFolder)theEObject;
+                T result = caseIndexFileFolder(indexFileFolder);
+                if (result == null) result = casePhysicalUnit(indexFileFolder);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ModelPackage.PHYSICAL_UNIT:
             {
-                PhysicalUnit physicalUnit = (PhysicalUnit) theEObject;
-                T result = casePhysicalUnit( physicalUnit );
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                PhysicalUnit physicalUnit = (PhysicalUnit)theEObject;
+                T result = casePhysicalUnit(physicalUnit);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case ModelPackage.READING_UNIT:
+            case ModelPackage.BOOK:
             {
-                ReadingUnit readingUnit = (ReadingUnit) theEObject;
-                T result = caseReadingUnit( readingUnit );
-                if ( result == null )
-                {
-                    result = caseCategorizable( readingUnit );
-                }
-                if ( result == null )
-                {
-                    result = caseCommentable( readingUnit );
-                }
-                if ( result == null )
-                {
-                    result = caseUnique( readingUnit );
-                }
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                Book book = (Book)theEObject;
+                T result = caseBook(book);
+                if (result == null) result = caseCategorizable(book);
+                if (result == null) result = caseCommentable(book);
+                if (result == null) result = caseUnique(book);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ModelPackage.SINGLE_FILE:
             {
-                SingleFile singleFile = (SingleFile) theEObject;
-                T result = caseSingleFile( singleFile );
-                if ( result == null )
-                {
-                    result = casePhysicalUnit( singleFile );
-                }
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                SingleFile singleFile = (SingleFile)theEObject;
+                T result = caseSingleFile(singleFile);
+                if (result == null) result = casePhysicalUnit(singleFile);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ModelPackage.SINGLE_FILE_FOLDER:
             {
-                SingleFileFolder singleFileFolder = (SingleFileFolder) theEObject;
-                T result = caseSingleFileFolder( singleFileFolder );
-                if ( result == null )
-                {
-                    result = casePhysicalUnit( singleFileFolder );
-                }
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                SingleFileFolder singleFileFolder = (SingleFileFolder)theEObject;
+                T result = caseSingleFileFolder(singleFileFolder);
+                if (result == null) result = casePhysicalUnit(singleFileFolder);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ModelPackage.UNIQUE:
             {
-                Unique unique = (Unique) theEObject;
-                T result = caseUnique( unique );
-                if ( result == null )
-                {
-                    result = defaultCase( theEObject );
-                }
+                Unique unique = (Unique)theEObject;
+                T result = caseUnique(unique);
+                if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            default:
-                return defaultCase( theEObject );
+            default: return defaultCase(theEObject);
         }
     }
 

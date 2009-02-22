@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Category;
-import org.jbookshelf.model.ReadingUnit;
 
 /**
  * pasres strings, described as wildcards, where<br>

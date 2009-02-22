@@ -17,9 +17,9 @@ package org.jbookshelf.qtgui.widgets.tree;
 
 import org.eclipse.emf.ecore.EReference;
 import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.ModelPackage;
-import org.jbookshelf.model.ReadingUnit;
 
 import com.trolltech.qt.gui.QTreeWidgetItem;
 
@@ -42,7 +42,7 @@ public class AuthorTree
 
         Author author = (Author) parent.getUnique();
 
-        for ( ReadingUnit book : author.getReadingUnits() )
+        for ( Book book : author.getBooks() )
         {
             books.addChild( new UniqueNode( book ) );
         }

@@ -23,21 +23,21 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.jbookshelf.model.*;
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.ModelPackage;
-import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class ModelFactoryImpl
@@ -47,7 +47,6 @@ public class ModelFactoryImpl
 {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @deprecated
      * @generated
      */
@@ -58,31 +57,30 @@ public class ModelFactoryImpl
     }
 
     /**
-     * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public static ModelFactory init()
     {
         try
         {
-            ModelFactory theModelFactory =
-                (ModelFactory) EPackage.Registry.INSTANCE.getEFactory( "http:///org/jbookshelf/model.ecore" );
-            if ( theModelFactory != null )
+            ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory("http:///org/jbookshelf/model.ecore"); 
+            if (theModelFactory != null)
             {
                 return theModelFactory;
             }
         }
-        catch ( Exception exception )
+        catch (Exception exception)
         {
-            EcorePlugin.INSTANCE.log( exception );
+            EcorePlugin.INSTANCE.log(exception);
         }
         return new ModelFactoryImpl();
     }
 
     /**
-     * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public ModelFactoryImpl()
@@ -92,19 +90,17 @@ public class ModelFactoryImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public String convertFileToString(
         EDataType eDataType,
         Object instanceValue )
     {
-        return super.convertToString( eDataType, instanceValue );
+        return super.convertToString(eDataType, instanceValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -112,53 +108,41 @@ public class ModelFactoryImpl
         EDataType eDataType,
         Object instanceValue )
     {
-        switch ( eDataType.getClassifierID() )
+        switch (eDataType.getClassifierID())
         {
             case ModelPackage.FILE:
-                return convertFileToString( eDataType, instanceValue );
+                return convertFileToString(eDataType, instanceValue);
             default:
-                throw new IllegalArgumentException( "The datatype '" + eDataType.getName() +
-                    "' is not a valid classifier" );
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public EObject create(
         EClass eClass )
     {
-        switch ( eClass.getClassifierID() )
+        switch (eClass.getClassifierID())
         {
-            case ModelPackage.ARCHIVE_FILE:
-                return createArchiveFile();
-            case ModelPackage.AUTHOR:
-                return createAuthor();
-            case ModelPackage.BOOK_SHELF:
-                return createBookShelf();
-            case ModelPackage.CATEGORY:
-                return createCategory();
-            case ModelPackage.COMMENT:
-                return createComment();
-            case ModelPackage.INDEX_FILE_FOLDER:
-                return createIndexFileFolder();
-            case ModelPackage.READING_UNIT:
-                return createReadingUnit();
-            case ModelPackage.SINGLE_FILE:
-                return createSingleFile();
-            case ModelPackage.SINGLE_FILE_FOLDER:
-                return createSingleFileFolder();
+            case ModelPackage.ARCHIVE_FILE: return createArchiveFile();
+            case ModelPackage.AUTHOR: return createAuthor();
+            case ModelPackage.BOOK_SHELF: return createBookShelf();
+            case ModelPackage.CATEGORY: return createCategory();
+            case ModelPackage.COMMENT: return createComment();
+            case ModelPackage.INDEX_FILE_FOLDER: return createIndexFileFolder();
+            case ModelPackage.BOOK: return createBook();
+            case ModelPackage.SINGLE_FILE: return createSingleFile();
+            case ModelPackage.SINGLE_FILE_FOLDER: return createSingleFileFolder();
             default:
-                throw new IllegalArgumentException( "The class '" + eClass.getName() + "' is not a valid classifier" );
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public ArchiveFile createArchiveFile()
@@ -169,7 +153,6 @@ public class ModelFactoryImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Author createAuthor()
@@ -180,7 +163,16 @@ public class ModelFactoryImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * @generated
+     */
+    public Book createBook()
+    {
+        BookImpl book = new BookImpl();
+        return book;
+    }
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public BookShelf createBookShelf()
@@ -191,7 +183,6 @@ public class ModelFactoryImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Category createCategory()
@@ -202,7 +193,6 @@ public class ModelFactoryImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Comment createComment()
@@ -213,19 +203,17 @@ public class ModelFactoryImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public File createFileFromString(
         EDataType eDataType,
         String initialValue )
     {
-        return (File) super.createFromString( eDataType, initialValue );
+        return (File)super.createFromString(eDataType, initialValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -233,19 +221,17 @@ public class ModelFactoryImpl
         EDataType eDataType,
         String initialValue )
     {
-        switch ( eDataType.getClassifierID() )
+        switch (eDataType.getClassifierID())
         {
             case ModelPackage.FILE:
-                return createFileFromString( eDataType, initialValue );
+                return createFileFromString(eDataType, initialValue);
             default:
-                throw new IllegalArgumentException( "The datatype '" + eDataType.getName() +
-                    "' is not a valid classifier" );
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public IndexFileFolder createIndexFileFolder()
@@ -256,18 +242,6 @@ public class ModelFactoryImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public ReadingUnit createReadingUnit()
-    {
-        ReadingUnitImpl readingUnit = new ReadingUnitImpl();
-        return readingUnit;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public SingleFile createSingleFile()
@@ -278,7 +252,6 @@ public class ModelFactoryImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public SingleFileFolder createSingleFileFolder()
@@ -289,12 +262,11 @@ public class ModelFactoryImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public ModelPackage getModelPackage()
     {
-        return (ModelPackage) getEPackage();
+        return (ModelPackage)getEPackage();
     }
 
 } // ModelFactoryImpl

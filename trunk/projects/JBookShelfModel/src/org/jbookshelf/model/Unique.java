@@ -41,9 +41,9 @@ public interface Unique
     EList<Unique> getRelated();
 
     /**
-     * Sets the value of the '{@link org.jbookshelf.model.Unique#getName <em>Name</em>}' attribute. <!-- begin-user-doc
+     * Sets the value of the '{@link org.jbookshelf.model.Unique#getName <em>Name</em>}' attribute.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
      * @param value the new value of the '<em>Name</em>' attribute.
      * @see #getName()
      * @generated

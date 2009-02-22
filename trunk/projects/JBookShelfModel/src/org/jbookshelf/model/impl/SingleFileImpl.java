@@ -30,10 +30,10 @@ import org.jbookshelf.model.SingleFile;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.jbookshelf.model.impl.SingleFileImpl#getFile <em>File</em>}</li>
+ *   <li>{@link org.jbookshelf.model.impl.SingleFileImpl#getFile <em>File</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class SingleFileImpl
@@ -63,7 +63,6 @@ public class SingleFileImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected SingleFileImpl()
@@ -73,7 +72,6 @@ public class SingleFileImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -82,34 +80,32 @@ public class SingleFileImpl
         boolean resolve,
         boolean coreType )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.SINGLE_FILE__FILE:
                 return getFile();
         }
-        return super.eGet( featureID, resolve, coreType );
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.SINGLE_FILE__FILE:
-                return FILE_EDEFAULT == null ? file != null : !FILE_EDEFAULT.equals( file );
+                return FILE_EDEFAULT == null ? file != null : !FILE_EDEFAULT.equals(file);
         }
-        return super.eIsSet( featureID );
+        return super.eIsSet(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -117,36 +113,34 @@ public class SingleFileImpl
         int featureID,
         Object newValue )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.SINGLE_FILE__FILE:
-                setFile( (File) newValue );
+                setFile((File)newValue);
                 return;
         }
-        super.eSet( featureID, newValue );
+        super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.SINGLE_FILE__FILE:
-                setFile( FILE_EDEFAULT );
+                setFile(FILE_EDEFAULT);
                 return;
         }
-        super.eUnset( featureID );
+        super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public File getFile()
@@ -175,7 +169,6 @@ public class SingleFileImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setFile(
@@ -183,35 +176,28 @@ public class SingleFileImpl
     {
         File oldFile = file;
         file = newFile;
-        if ( eNotificationRequired() )
-        {
-            eNotify( new ENotificationImpl( this, Notification.SET, ModelPackage.SINGLE_FILE__FILE, oldFile, file ) );
-        }
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.SINGLE_FILE__FILE, oldFile, file));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public String toString()
     {
-        if ( eIsProxy() )
-        {
-            return super.toString();
-        }
+        if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer( super.toString() );
-        result.append( " (file: " );
-        result.append( file );
-        result.append( ')' );
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (file: ");
+        result.append(file);
+        result.append(')');
         return result.toString();
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override

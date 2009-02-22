@@ -7,8 +7,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="archiveFile" eType="#//File"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Author" eSuperTypes="#//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="readingUnits" upperBound="-1"
-        eType="#//ReadingUnit" eOpposite="#//ReadingUnit/authors"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="books" upperBound="-1"
+        eType="#//Book" eOpposite="#//Book/authors"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BookShelf">
     <eOperations name="addAuthor" eType="#//Author">
@@ -17,7 +17,7 @@
     <eOperations name="addCategory" eType="#//Category">
       <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
-    <eOperations name="addReadingUnit" eType="#//ReadingUnit">
+    <eOperations name="addBook" eType="#//Book">
       <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eParameters name="author" eType="#//Author"/>
       <eParameters name="category" eType="#//Category"/>
@@ -35,7 +35,7 @@
     <eOperations name="queryUniques" upperBound="-1" eType="#//Unique">
       <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
-    <eOperations name="queryUnits" upperBound="-1" eType="#//ReadingUnit">
+    <eOperations name="queryBooks" upperBound="-1" eType="#//Book">
       <eParameters name="query" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eParameters name="isRead" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
     </eOperations>
@@ -44,7 +44,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
         eType="#//Category" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="readingUnits" upperBound="-1"
-        eType="#//ReadingUnit" containment="true" resolveProxies="false"/>
+        eType="#//Book" containment="true" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Categorizable" abstract="true" eSuperTypes="#//Commentable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
@@ -76,9 +76,9 @@
     <eOperations name="openUnit"/>
     <eOperations name="openFolder"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ReadingUnit" eSuperTypes="#//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
+  <eClassifiers xsi:type="ecore:EClass" name="Book" eSuperTypes="#//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"
-        eType="#//Author" eOpposite="#//Author/readingUnits"/>
+        eType="#//Author" eOpposite="#//Author/books"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="physical" lowerBound="1"
         eType="#//PhysicalUnit" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="read" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
