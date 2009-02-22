@@ -71,7 +71,7 @@ public class BookAdditionDialog
     {
         PhysicalUnit physicalUnit = FileImporter.createPhysicalUnit( parameters.getFile() );
         Book unit = Storage.getBookShelf().addReadingUnit( parameters.getBookName(), null, null, physicalUnit );
-        unit.setRead( parameters.isRead() );
+        unit.setRead( parameters.isRead() ? 1 : 0 );
 
         for ( String name : parameters.getAuthorNames() )
         {

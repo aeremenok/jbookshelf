@@ -115,7 +115,7 @@ public class BookEditDialog
         book.setName( parameters.getBookName() );
 
         book.setPhysical( FileImporter.createPhysicalUnit( parameters.getFile() ) );
-        book.setRead( parameters.isRead() );
+        book.setRead( parameters.isRead() ? 1 : 0 );
     }
 
     private void initComponents()

@@ -1123,11 +1123,11 @@ public interface ModelPackage
     EReference getBook_Physical();
 
     /**
-     * Returns the meta object for the attribute '{@link org.jbookshelf.model.Book#isRead <em>Read</em>}'.
+     * Returns the meta object for the attribute '{@link org.jbookshelf.model.Book#getRead <em>Read</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Read</em>'.
-     * @see org.jbookshelf.model.Book#isRead()
+     * @see org.jbookshelf.model.Book#getRead()
      * @see #getBook()
      * @generated
      */

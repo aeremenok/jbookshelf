@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.jbookshelf.model.Book#getAuthors <em>Authors</em>}</li>
  *   <li>{@link org.jbookshelf.model.Book#getPhysical <em>Physical</em>}</li>
- *   <li>{@link org.jbookshelf.model.Book#isRead <em>Read</em>}</li>
+ *   <li>{@link org.jbookshelf.model.Book#getRead <em>Read</em>}</li>
  * </ul>
  * </p>
  *
@@ -76,7 +76,7 @@ public interface Book extends Categorizable, EObject
 
     /**
      * Returns the value of the '<em><b>Read</b></em>' attribute.
-     * The default value is <code>"false"</code>.
+     * The default value is <code>"0"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Read</em>' attribute isn't clear,
@@ -84,21 +84,21 @@ public interface Book extends Categorizable, EObject
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Read</em>' attribute.
-     * @see #setRead(boolean)
+     * @see #setRead(float)
      * @see org.jbookshelf.model.ModelPackage#getBook_Read()
-     * @model default="false" required="true"
+     * @model default="0" required="true"
      * @generated
      */
-    boolean isRead();
+    float getRead();
 
     /**
-     * Sets the value of the '{@link org.jbookshelf.model.Book#isRead <em>Read</em>}' attribute.
+     * Sets the value of the '{@link org.jbookshelf.model.Book#getRead <em>Read</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Read</em>' attribute.
-     * @see #isRead()
+     * @see #getRead()
      * @generated
      */
-    void setRead(boolean value);
+    void setRead(float value);
 
 } // Book

@@ -35,7 +35,7 @@ import org.jbookshelf.model.PhysicalUnit;
  * <ul>
  *   <li>{@link org.jbookshelf.model.impl.BookImpl#getAuthors <em>Authors</em>}</li>
  *   <li>{@link org.jbookshelf.model.impl.BookImpl#getPhysical <em>Physical</em>}</li>
- *   <li>{@link org.jbookshelf.model.impl.BookImpl#isRead <em>Read</em>}</li>
+ *   <li>{@link org.jbookshelf.model.impl.BookImpl#getRead <em>Read</em>}</li>
  * </ul>
  * </p>
  *
@@ -64,24 +64,24 @@ public class BookImpl extends CategorizableImpl implements Book
     protected PhysicalUnit physical;
 
     /**
-     * The default value of the '{@link #isRead() <em>Read</em>}' attribute.
+     * The default value of the '{@link #getRead() <em>Read</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isRead()
+     * @see #getRead()
      * @generated
      * @ordered
      */
-    protected static final boolean READ_EDEFAULT = false;
+    protected static final float READ_EDEFAULT = 0.0F;
 
     /**
-     * The cached value of the '{@link #isRead() <em>Read</em>}' attribute.
+     * The cached value of the '{@link #getRead() <em>Read</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isRead()
+     * @see #getRead()
      * @generated
      * @ordered
      */
-    protected boolean read = READ_EDEFAULT;
+    protected float read = READ_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -171,7 +171,7 @@ public class BookImpl extends CategorizableImpl implements Book
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isRead()
+    public float getRead()
     {
         return read;
     }
@@ -181,9 +181,9 @@ public class BookImpl extends CategorizableImpl implements Book
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setRead(boolean newRead)
+    public void setRead(float newRead)
     {
-        boolean oldRead = read;
+        float oldRead = read;
         read = newRead;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.BOOK__READ, oldRead, read));
@@ -239,7 +239,7 @@ public class BookImpl extends CategorizableImpl implements Book
             case ModelPackage.BOOK__PHYSICAL:
                 return getPhysical();
             case ModelPackage.BOOK__READ:
-                return isRead() ? Boolean.TRUE : Boolean.FALSE;
+                return new Float(getRead());
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -263,7 +263,7 @@ public class BookImpl extends CategorizableImpl implements Book
                 setPhysical((PhysicalUnit)newValue);
                 return;
             case ModelPackage.BOOK__READ:
-                setRead(((Boolean)newValue).booleanValue());
+                setRead(((Float)newValue).floatValue());
                 return;
         }
         super.eSet(featureID, newValue);

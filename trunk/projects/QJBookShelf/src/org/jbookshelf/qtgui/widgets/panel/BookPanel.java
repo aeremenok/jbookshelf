@@ -209,7 +209,7 @@ public class BookPanel
         filePathEdit.setText( fileName );
 
         // show whether is read
-        isReadCheckBox.setChecked( book.isRead() );
+        isReadCheckBox.setChecked( book.getRead() == 1 );
     }
 
     public void setBookFile(
