@@ -1,1 +1,1 @@
-java -jar jbookshelf.jar
+start javaw -jar jbookshelf.jar
