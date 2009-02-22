@@ -40,12 +40,12 @@ import org.jbookshelf.model.Unique;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.jbookshelf.model.impl.BookShelfImpl#getAuthors <em>Authors</em>}</li>
- *   <li>{@link org.jbookshelf.model.impl.BookShelfImpl#getCategories <em>Categories</em>}</li>
- *   <li>{@link org.jbookshelf.model.impl.BookShelfImpl#getReadingUnits <em>Reading Units</em>}</li>
+ * <li>{@link org.jbookshelf.model.impl.BookShelfImpl#getAuthors <em>Authors</em>}</li>
+ * <li>{@link org.jbookshelf.model.impl.BookShelfImpl#getCategories <em>Categories</em>}</li>
+ * <li>{@link org.jbookshelf.model.impl.BookShelfImpl#getReadingUnits <em>Reading Units</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class BookShelfImpl
@@ -54,9 +54,9 @@ public class BookShelfImpl
         BookShelf
 {
     /**
-     * The cached value of the '{@link #getAuthors() <em>Authors</em>}' containment reference list.
-     * <!-- begin-user-doc
+     * The cached value of the '{@link #getAuthors() <em>Authors</em>}' containment reference list. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
+     * 
      * @see #getAuthors()
      * @generated
      * @ordered
@@ -87,6 +87,7 @@ public class BookShelfImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected BookShelfImpl()
@@ -119,6 +120,7 @@ public class BookShelfImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public Book addBook(
@@ -193,6 +195,7 @@ public class BookShelfImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -201,7 +204,7 @@ public class BookShelfImpl
         boolean resolve,
         boolean coreType )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.BOOK_SHELF__AUTHORS:
                 return getAuthors();
@@ -210,11 +213,12 @@ public class BookShelfImpl
             case ModelPackage.BOOK_SHELF__READING_UNITS:
                 return getReadingUnits();
         }
-        return super.eGet(featureID, resolve, coreType);
+        return super.eGet( featureID, resolve, coreType );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
@@ -223,27 +227,28 @@ public class BookShelfImpl
         int featureID,
         NotificationChain msgs )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.BOOK_SHELF__AUTHORS:
-                return ((InternalEList<?>)getAuthors()).basicRemove(otherEnd, msgs);
+                return ((InternalEList<?>) getAuthors()).basicRemove( otherEnd, msgs );
             case ModelPackage.BOOK_SHELF__CATEGORIES:
-                return ((InternalEList<?>)getCategories()).basicRemove(otherEnd, msgs);
+                return ((InternalEList<?>) getCategories()).basicRemove( otherEnd, msgs );
             case ModelPackage.BOOK_SHELF__READING_UNITS:
-                return ((InternalEList<?>)getReadingUnits()).basicRemove(otherEnd, msgs);
+                return ((InternalEList<?>) getReadingUnits()).basicRemove( otherEnd, msgs );
         }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
+        return super.eInverseRemove( otherEnd, featureID, msgs );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.BOOK_SHELF__AUTHORS:
                 return authors != null && !authors.isEmpty();
@@ -252,11 +257,12 @@ public class BookShelfImpl
             case ModelPackage.BOOK_SHELF__READING_UNITS:
                 return readingUnits != null && !readingUnits.isEmpty();
         }
-        return super.eIsSet(featureID);
+        return super.eIsSet( featureID );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @SuppressWarnings( "unchecked" )
@@ -265,33 +271,34 @@ public class BookShelfImpl
         int featureID,
         Object newValue )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.BOOK_SHELF__AUTHORS:
                 getAuthors().clear();
-                getAuthors().addAll((Collection<? extends Author>)newValue);
+                getAuthors().addAll( (Collection<? extends Author>) newValue );
                 return;
             case ModelPackage.BOOK_SHELF__CATEGORIES:
                 getCategories().clear();
-                getCategories().addAll((Collection<? extends Category>)newValue);
+                getCategories().addAll( (Collection<? extends Category>) newValue );
                 return;
             case ModelPackage.BOOK_SHELF__READING_UNITS:
                 getReadingUnits().clear();
-                getReadingUnits().addAll((Collection<? extends Book>)newValue);
+                getReadingUnits().addAll( (Collection<? extends Book>) newValue );
                 return;
         }
-        super.eSet(featureID, newValue);
+        super.eSet( featureID, newValue );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.BOOK_SHELF__AUTHORS:
                 getAuthors().clear();
@@ -303,31 +310,34 @@ public class BookShelfImpl
                 getReadingUnits().clear();
                 return;
         }
-        super.eUnset(featureID);
+        super.eUnset( featureID );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public EList<Author> getAuthors()
     {
-        if (authors == null)
+        if ( authors == null )
         {
-            authors = new EObjectContainmentEList<Author>(Author.class, this, ModelPackage.BOOK_SHELF__AUTHORS);
+            authors = new EObjectContainmentEList<Author>( Author.class, this, ModelPackage.BOOK_SHELF__AUTHORS );
         }
         return authors;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public EList<Category> getCategories()
     {
-        if (categories == null)
+        if ( categories == null )
         {
-            categories = new EObjectContainmentEList<Category>(Category.class, this, ModelPackage.BOOK_SHELF__CATEGORIES);
+            categories =
+                new EObjectContainmentEList<Category>( Category.class, this, ModelPackage.BOOK_SHELF__CATEGORIES );
         }
         return categories;
     }
@@ -345,13 +355,14 @@ public class BookShelfImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public EList<Book> getReadingUnits()
     {
-        if (readingUnits == null)
+        if ( readingUnits == null )
         {
-            readingUnits = new EObjectContainmentEList<Book>(Book.class, this, ModelPackage.BOOK_SHELF__READING_UNITS);
+            readingUnits = new EObjectContainmentEList<Book>( Book.class, this, ModelPackage.BOOK_SHELF__READING_UNITS );
         }
         return readingUnits;
     }
@@ -391,6 +402,7 @@ public class BookShelfImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public EList<Book> queryBooks(
@@ -467,7 +479,8 @@ public class BookShelfImpl
         {
             for ( Book unit : getReadingUnits() )
             {
-                if ( isRead.booleanValue() == unit.isRead() && unit.getName().toLowerCase().contains( lowerCase ) )
+                boolean read = !isRead.booleanValue() || isRead.booleanValue() && unit.getRead() == 1;
+                if ( read && unit.getName().toLowerCase().contains( lowerCase ) )
                 {
                     result.add( unit );
                 }
@@ -553,6 +566,7 @@ public class BookShelfImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override

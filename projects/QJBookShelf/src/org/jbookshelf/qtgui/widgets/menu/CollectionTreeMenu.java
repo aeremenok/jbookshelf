@@ -62,7 +62,7 @@ public class CollectionTreeMenu
     {
         for ( final Book book : books )
         {
-            if ( !book.isRead() )
+            if ( book.getRead() != 1 )
             {
                 return false;
             }
@@ -88,7 +88,7 @@ public class CollectionTreeMenu
     {
         for ( final Book book : books )
         {
-            book.setRead( isReadAction.isChecked() );
+            book.setRead( isReadAction.isChecked() ? 1 : 0 );
         }
     }
 }

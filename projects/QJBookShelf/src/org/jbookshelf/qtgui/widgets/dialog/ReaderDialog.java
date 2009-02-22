@@ -17,7 +17,9 @@ import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.mozilla.universalchardet.UniversalDetector;
 
 import com.trolltech.qt.core.Qt.WindowState;
+import com.trolltech.qt.gui.QCloseEvent;
 import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QScrollBar;
 import com.trolltech.qt.gui.QTextEdit;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
@@ -198,6 +200,30 @@ public class ReaderDialog
         setLayout( new QVBoxLayout() );
         layout().addWidget( textEdit );
         textEdit.setReadOnly( true );
+
         textEdit.setText( getContent( getFile( book ) ) );
+        // wait for the size to be stabilized to scroll
+        textEdit.verticalScrollBar().rangeChanged.connect( this, "rangeChanged(Integer,Integer)" );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void rangeChanged(
+        Integer min,
+        Integer max )
+    {
+        // todo apply only at first change
+        QScrollBar scrollBar = textEdit.verticalScrollBar();
+        scrollBar.setSliderPosition( (int) (book.getRead() * max) );
+    }
+
+    @Override
+    protected void closeEvent(
+        QCloseEvent arg__1 )
+    {
+        // save current position
+        QScrollBar scrollBar = textEdit.verticalScrollBar();
+        book.setRead( (float) scrollBar.sliderPosition() / (float) scrollBar.maximum() );
+
+        super.closeEvent( arg__1 );
     }
 }
