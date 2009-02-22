@@ -125,7 +125,11 @@ public class BookPanel
         retranslate();
     }
 
-    public void clear()
+    /**
+     * @param hard indicates whether to clear file path
+     */
+    public void clear(
+        boolean hard )
     {
         for ( QWidget component : components )
         {
@@ -134,7 +138,10 @@ public class BookPanel
                 ((QLineEdit) component).setText( "" );
             }
         }
-        filePathEdit.setText( "" );
+        if ( hard )
+        {
+            filePathEdit.setText( "" );
+        }
         isReadCheckBox.setChecked( false );
     }
 
