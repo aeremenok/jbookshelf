@@ -19,8 +19,8 @@ import java.io.File;
 
 import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.controller.storage.Storage;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.PhysicalUnit;
-import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
@@ -70,7 +70,7 @@ public class BookAdditionDialog
         Parameters parameters )
     {
         PhysicalUnit physicalUnit = FileImporter.createPhysicalUnit( parameters.getFile() );
-        ReadingUnit unit = Storage.getBookShelf().addReadingUnit( parameters.getBookName(), null, null, physicalUnit );
+        Book unit = Storage.getBookShelf().addReadingUnit( parameters.getBookName(), null, null, physicalUnit );
         unit.setRead( parameters.isRead() );
 
         for ( String name : parameters.getAuthorNames() )

@@ -24,18 +24,18 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.ModelPackage;
-import org.jbookshelf.model.ReadingUnit;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Author</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.jbookshelf.model.impl.AuthorImpl#getReadingUnits <em>Reading Units</em>}</li>
+ *   <li>{@link org.jbookshelf.model.impl.AuthorImpl#getBooks <em>Books</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class AuthorImpl
@@ -44,18 +44,16 @@ public class AuthorImpl
         Author
 {
     /**
-     * The cached value of the '{@link #getReadingUnits() <em>Reading Units</em>}' reference list. <!-- begin-user-doc
-     * --> <!-- end-user-doc -->
-     * 
-     * @see #getReadingUnits()
+     * The cached value of the '{@link #getBooks() <em>Books</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getBooks()
      * @generated
      * @ordered
      */
-    protected EList<ReadingUnit> readingUnits;
-
+    protected EList<Book> books;
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected AuthorImpl()
@@ -65,7 +63,6 @@ public class AuthorImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -74,17 +71,16 @@ public class AuthorImpl
         boolean resolve,
         boolean coreType )
     {
-        switch ( featureID )
+        switch (featureID)
         {
-            case ModelPackage.AUTHOR__READING_UNITS:
-                return getReadingUnits();
+            case ModelPackage.AUTHOR__BOOKS:
+                return getBooks();
         }
-        return super.eGet( featureID, resolve, coreType );
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings( "unchecked" )
@@ -94,18 +90,16 @@ public class AuthorImpl
         int featureID,
         NotificationChain msgs )
     {
-        switch ( featureID )
+        switch (featureID)
         {
-            case ModelPackage.AUTHOR__READING_UNITS:
-                return ((InternalEList<InternalEObject>) (InternalEList<?>) getReadingUnits())
-                    .basicAdd( otherEnd, msgs );
+            case ModelPackage.AUTHOR__BOOKS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getBooks()).basicAdd(otherEnd, msgs);
         }
-        return super.eInverseAdd( otherEnd, featureID, msgs );
+        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -114,34 +108,32 @@ public class AuthorImpl
         int featureID,
         NotificationChain msgs )
     {
-        switch ( featureID )
+        switch (featureID)
         {
-            case ModelPackage.AUTHOR__READING_UNITS:
-                return ((InternalEList<?>) getReadingUnits()).basicRemove( otherEnd, msgs );
+            case ModelPackage.AUTHOR__BOOKS:
+                return ((InternalEList<?>)getBooks()).basicRemove(otherEnd, msgs);
         }
-        return super.eInverseRemove( otherEnd, featureID, msgs );
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
-            case ModelPackage.AUTHOR__READING_UNITS:
-                return readingUnits != null && !readingUnits.isEmpty();
+            case ModelPackage.AUTHOR__BOOKS:
+                return books != null && !books.isEmpty();
         }
-        return super.eIsSet( featureID );
+        return super.eIsSet(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings( "unchecked" )
@@ -150,59 +142,55 @@ public class AuthorImpl
         int featureID,
         Object newValue )
     {
-        switch ( featureID )
+        switch (featureID)
         {
-            case ModelPackage.AUTHOR__READING_UNITS:
-                getReadingUnits().clear();
-                getReadingUnits().addAll( (Collection<? extends ReadingUnit>) newValue );
+            case ModelPackage.AUTHOR__BOOKS:
+                getBooks().clear();
+                getBooks().addAll((Collection<? extends Book>)newValue);
                 return;
         }
-        super.eSet( featureID, newValue );
+        super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
-            case ModelPackage.AUTHOR__READING_UNITS:
-                getReadingUnits().clear();
+            case ModelPackage.AUTHOR__BOOKS:
+                getBooks().clear();
                 return;
         }
-        super.eUnset( featureID );
+        super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    public EList<ReadingUnit> getReadingUnits()
-    {
-        if ( readingUnits == null )
-        {
-            readingUnits =
-                new EObjectWithInverseResolvingEList.ManyInverse<ReadingUnit>( ReadingUnit.class, this,
-                    ModelPackage.AUTHOR__READING_UNITS, ModelPackage.READING_UNIT__AUTHORS );
-        }
-        return readingUnits;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     protected EClass eStaticClass()
     {
         return ModelPackage.Literals.AUTHOR;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Book> getBooks()
+    {
+        if (books == null)
+        {
+            books = new EObjectWithInverseResolvingEList.ManyInverse<Book>(Book.class, this, ModelPackage.AUTHOR__BOOKS, ModelPackage.BOOK__AUTHORS);
+        }
+        return books;
     }
 
 } // AuthorImpl

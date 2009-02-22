@@ -48,13 +48,13 @@ public interface Comment
     Commentable getSubject();
 
     /**
-     * Returns the value of the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Title</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Title</em>' attribute isn't clear, there really should be more of a description
      * here...
      * </p>
      * <!-- end-user-doc -->
-     * 
      * @return the value of the '<em>Title</em>' attribute.
      * @see #setTitle(String)
      * @see org.jbookshelf.model.ModelPackage#getComment_Title()
@@ -77,7 +77,6 @@ public interface Comment
     /**
      * Sets the value of the '{@link org.jbookshelf.model.Comment#getCreationDate <em>Creation Date</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @param value the new value of the '<em>Creation Date</em>' attribute.
      * @see #getCreationDate()
      * @generated

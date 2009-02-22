@@ -37,7 +37,6 @@ public interface Commentable
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @model
      * @generated
      */

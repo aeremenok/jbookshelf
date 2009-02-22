@@ -23,12 +23,12 @@ import java.util.List;
 
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.PhysicalUnit;
-import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
 
@@ -177,7 +177,7 @@ public class FileImporter
 
             @Override
             protected void onImportSuccess(
-                ReadingUnit book )
+                Book book )
             {
                 System.out.println( "+imported " + book.getAuthors().get( 0 ).getName() + ". " + book.getName() );
             }
@@ -219,7 +219,7 @@ public class FileImporter
             PhysicalUnit physicalUnit = createPhysicalUnit( file );
             if ( physicalUnit != null )
             {
-                ReadingUnit book = null;
+                Book book = null;
                 Iterator<NameParser> iterator = parsers.iterator();
                 while ( iterator.hasNext() && book == null )
                 {
@@ -249,7 +249,7 @@ public class FileImporter
         }
     }
 
-    private ReadingUnit bookFromName(
+    private Book bookFromName(
         NameParser parser,
         File file,
         PhysicalUnit physicalUnit,
@@ -277,7 +277,7 @@ public class FileImporter
     }
 
     protected void onImportSuccess(
-        @SuppressWarnings( "unused" ) ReadingUnit book )
+        @SuppressWarnings( "unused" ) Book book )
     {
         // override if needed
     }

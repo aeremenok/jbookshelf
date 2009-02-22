@@ -33,13 +33,13 @@ import org.jbookshelf.model.ModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.jbookshelf.model.impl.CommentImpl#getContent <em>Content</em>}</li>
- * <li>{@link org.jbookshelf.model.impl.CommentImpl#getCreationDate <em>Creation Date</em>}</li>
- * <li>{@link org.jbookshelf.model.impl.CommentImpl#getSubject <em>Subject</em>}</li>
- * <li>{@link org.jbookshelf.model.impl.CommentImpl#getTitle <em>Title</em>}</li>
+ *   <li>{@link org.jbookshelf.model.impl.CommentImpl#getContent <em>Content</em>}</li>
+ *   <li>{@link org.jbookshelf.model.impl.CommentImpl#getCreationDate <em>Creation Date</em>}</li>
+ *   <li>{@link org.jbookshelf.model.impl.CommentImpl#getSubject <em>Subject</em>}</li>
+ *   <li>{@link org.jbookshelf.model.impl.CommentImpl#getTitle <em>Title</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CommentImpl
@@ -48,9 +48,9 @@ public class CommentImpl
         Comment
 {
     /**
-     * The default value of the '{@link #getContent() <em>Content</em>}' attribute. <!-- begin-user-doc --> <!--
+     * The default value of the '{@link #getContent() <em>Content</em>}' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getContent()
      * @generated
      * @ordered
@@ -58,9 +58,9 @@ public class CommentImpl
     protected static final String CONTENT_EDEFAULT       = null;
 
     /**
-     * The cached value of the '{@link #getContent() <em>Content</em>}' attribute. <!-- begin-user-doc --> <!--
+     * The cached value of the '{@link #getContent() <em>Content</em>}' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getContent()
      * @generated
      * @ordered
@@ -68,9 +68,9 @@ public class CommentImpl
     protected String              content                = CONTENT_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getCreationDate() <em>Creation Date</em>}' attribute. <!-- begin-user-doc -->
+     * The default value of the '{@link #getCreationDate() <em>Creation Date</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @see #getCreationDate()
      * @generated
      * @ordered
@@ -78,9 +78,9 @@ public class CommentImpl
     protected static final Date   CREATION_DATE_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getCreationDate() <em>Creation Date</em>}' attribute. <!-- begin-user-doc -->
+     * The cached value of the '{@link #getCreationDate() <em>Creation Date</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @see #getCreationDate()
      * @generated
      * @ordered
@@ -88,9 +88,9 @@ public class CommentImpl
     protected Date                creationDate           = CREATION_DATE_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getTitle() <em>Title</em>}' attribute. <!-- begin-user-doc --> <!--
+     * The default value of the '{@link #getTitle() <em>Title</em>}' attribute.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getTitle()
      * @generated
      * @ordered
@@ -109,7 +109,6 @@ public class CommentImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected CommentImpl()
@@ -119,38 +118,34 @@ public class CommentImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public NotificationChain basicSetSubject(
         Commentable newSubject,
         NotificationChain msgs )
     {
-        msgs = eBasicSetContainer( (InternalEObject) newSubject, ModelPackage.COMMENT__SUBJECT, msgs );
+        msgs = eBasicSetContainer((InternalEObject)newSubject, ModelPackage.COMMENT__SUBJECT, msgs);
         return msgs;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature(
         NotificationChain msgs )
     {
-        switch ( eContainerFeatureID )
+        switch (eContainerFeatureID)
         {
             case ModelPackage.COMMENT__SUBJECT:
-                return eInternalContainer().eInverseRemove( this, ModelPackage.COMMENTABLE__COMMENTS,
-                    Commentable.class, msgs );
+                return eInternalContainer().eInverseRemove(this, ModelPackage.COMMENTABLE__COMMENTS, Commentable.class, msgs);
         }
-        return super.eBasicRemoveFromContainerFeature( msgs );
+        return super.eBasicRemoveFromContainerFeature(msgs);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -159,7 +154,7 @@ public class CommentImpl
         boolean resolve,
         boolean coreType )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.COMMENT__CONTENT:
                 return getContent();
@@ -170,12 +165,11 @@ public class CommentImpl
             case ModelPackage.COMMENT__TITLE:
                 return getTitle();
         }
-        return super.eGet( featureID, resolve, coreType );
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -184,21 +178,18 @@ public class CommentImpl
         int featureID,
         NotificationChain msgs )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.COMMENT__SUBJECT:
-                if ( eInternalContainer() != null )
-                {
-                    msgs = eBasicRemoveFromContainer( msgs );
-                }
-                return basicSetSubject( (Commentable) otherEnd, msgs );
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetSubject((Commentable)otherEnd, msgs);
         }
-        return super.eInverseAdd( otherEnd, featureID, msgs );
+        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -207,41 +198,38 @@ public class CommentImpl
         int featureID,
         NotificationChain msgs )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.COMMENT__SUBJECT:
-                return basicSetSubject( null, msgs );
+                return basicSetSubject(null, msgs);
         }
-        return super.eInverseRemove( otherEnd, featureID, msgs );
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.COMMENT__CONTENT:
-                return CONTENT_EDEFAULT == null ? content != null : !CONTENT_EDEFAULT.equals( content );
+                return CONTENT_EDEFAULT == null ? content != null : !CONTENT_EDEFAULT.equals(content);
             case ModelPackage.COMMENT__CREATION_DATE:
-                return CREATION_DATE_EDEFAULT == null ? creationDate != null : !CREATION_DATE_EDEFAULT
-                    .equals( creationDate );
+                return CREATION_DATE_EDEFAULT == null ? creationDate != null : !CREATION_DATE_EDEFAULT.equals(creationDate);
             case ModelPackage.COMMENT__SUBJECT:
                 return getSubject() != null;
             case ModelPackage.COMMENT__TITLE:
-                return TITLE_EDEFAULT == null ? title != null : !TITLE_EDEFAULT.equals( title );
+                return TITLE_EDEFAULT == null ? title != null : !TITLE_EDEFAULT.equals(title);
         }
-        return super.eIsSet( featureID );
+        return super.eIsSet(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -249,54 +237,52 @@ public class CommentImpl
         int featureID,
         Object newValue )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.COMMENT__CONTENT:
-                setContent( (String) newValue );
+                setContent((String)newValue);
                 return;
             case ModelPackage.COMMENT__CREATION_DATE:
-                setCreationDate( (Date) newValue );
+                setCreationDate((Date)newValue);
                 return;
             case ModelPackage.COMMENT__SUBJECT:
-                setSubject( (Commentable) newValue );
+                setSubject((Commentable)newValue);
                 return;
             case ModelPackage.COMMENT__TITLE:
-                setTitle( (String) newValue );
+                setTitle((String)newValue);
                 return;
         }
-        super.eSet( featureID, newValue );
+        super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.COMMENT__CONTENT:
-                setContent( CONTENT_EDEFAULT );
+                setContent(CONTENT_EDEFAULT);
                 return;
             case ModelPackage.COMMENT__CREATION_DATE:
-                setCreationDate( CREATION_DATE_EDEFAULT );
+                setCreationDate(CREATION_DATE_EDEFAULT);
                 return;
             case ModelPackage.COMMENT__SUBJECT:
-                setSubject( (Commentable) null );
+                setSubject((Commentable)null);
                 return;
             case ModelPackage.COMMENT__TITLE:
-                setTitle( TITLE_EDEFAULT );
+                setTitle(TITLE_EDEFAULT);
                 return;
         }
-        super.eUnset( featureID );
+        super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public String getContent()
@@ -306,7 +292,6 @@ public class CommentImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Date getCreationDate()
@@ -316,21 +301,16 @@ public class CommentImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Commentable getSubject()
     {
-        if ( eContainerFeatureID != ModelPackage.COMMENT__SUBJECT )
-        {
-            return null;
-        }
-        return (Commentable) eContainer();
+        if (eContainerFeatureID != ModelPackage.COMMENT__SUBJECT) return null;
+        return (Commentable)eContainer();
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public String getTitle()
@@ -340,7 +320,6 @@ public class CommentImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setContent(
@@ -348,15 +327,12 @@ public class CommentImpl
     {
         String oldContent = content;
         content = newContent;
-        if ( eNotificationRequired() )
-        {
-            eNotify( new ENotificationImpl( this, Notification.SET, ModelPackage.COMMENT__CONTENT, oldContent, content ) );
-        }
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.COMMENT__CONTENT, oldContent, content));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setCreationDate(
@@ -364,55 +340,35 @@ public class CommentImpl
     {
         Date oldCreationDate = creationDate;
         creationDate = newCreationDate;
-        if ( eNotificationRequired() )
-        {
-            eNotify( new ENotificationImpl( this, Notification.SET, ModelPackage.COMMENT__CREATION_DATE,
-                oldCreationDate, creationDate ) );
-        }
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.COMMENT__CREATION_DATE, oldCreationDate, creationDate));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setSubject(
         Commentable newSubject )
     {
-        if ( newSubject != eInternalContainer() || eContainerFeatureID != ModelPackage.COMMENT__SUBJECT &&
-            newSubject != null )
+        if (newSubject != eInternalContainer() || (eContainerFeatureID != ModelPackage.COMMENT__SUBJECT && newSubject != null))
         {
-            if ( EcoreUtil.isAncestor( this, newSubject ) )
-            {
-                throw new IllegalArgumentException( "Recursive containment not allowed for " + toString() );
-            }
+            if (EcoreUtil.isAncestor(this, newSubject))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
-            if ( eInternalContainer() != null )
-            {
-                msgs = eBasicRemoveFromContainer( msgs );
-            }
-            if ( newSubject != null )
-            {
-                msgs =
-                    ((InternalEObject) newSubject).eInverseAdd( this, ModelPackage.COMMENTABLE__COMMENTS,
-                        Commentable.class, msgs );
-            }
-            msgs = basicSetSubject( newSubject, msgs );
-            if ( msgs != null )
-            {
-                msgs.dispatch();
-            }
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newSubject != null)
+                msgs = ((InternalEObject)newSubject).eInverseAdd(this, ModelPackage.COMMENTABLE__COMMENTS, Commentable.class, msgs);
+            msgs = basicSetSubject(newSubject, msgs);
+            if (msgs != null) msgs.dispatch();
         }
-        else if ( eNotificationRequired() )
-        {
-            eNotify( new ENotificationImpl( this, Notification.SET, ModelPackage.COMMENT__SUBJECT, newSubject,
-                newSubject ) );
-        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.COMMENT__SUBJECT, newSubject, newSubject));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setTitle(
@@ -420,39 +376,32 @@ public class CommentImpl
     {
         String oldTitle = title;
         title = newTitle;
-        if ( eNotificationRequired() )
-        {
-            eNotify( new ENotificationImpl( this, Notification.SET, ModelPackage.COMMENT__TITLE, oldTitle, title ) );
-        }
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.COMMENT__TITLE, oldTitle, title));
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public String toString()
     {
-        if ( eIsProxy() )
-        {
-            return super.toString();
-        }
+        if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer( super.toString() );
-        result.append( " (content: " );
-        result.append( content );
-        result.append( ", creationDate: " );
-        result.append( creationDate );
-        result.append( ", title: " );
-        result.append( title );
-        result.append( ')' );
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (content: ");
+        result.append(content);
+        result.append(", creationDate: ");
+        result.append(creationDate);
+        result.append(", title: ");
+        result.append(title);
+        result.append(')');
         return result.toString();
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override

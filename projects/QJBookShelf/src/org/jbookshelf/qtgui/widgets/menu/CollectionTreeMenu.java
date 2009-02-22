@@ -17,7 +17,7 @@ package org.jbookshelf.qtgui.widgets.menu;
 
 import java.util.List;
 
-import org.jbookshelf.model.ReadingUnit;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.ToolBar;
 import org.jbookshelf.qtgui.widgets.ext.QMenuExt;
@@ -32,8 +32,8 @@ import com.trolltech.qt.gui.QAction;
 public class CollectionTreeMenu
     extends QMenuExt
 {
-    private final List<ReadingUnit> books;
-    private QAction                 isReadAction;
+    private final List<Book> books;
+    private QAction          isReadAction;
 
     public CollectionTreeMenu(
         final List<Unique> uniques )
@@ -58,9 +58,9 @@ public class CollectionTreeMenu
     }
 
     private boolean areAllRead(
-        @SuppressWarnings( "hiding" ) final List<ReadingUnit> books )
+        @SuppressWarnings( "hiding" ) final List<Book> books )
     {
-        for ( final ReadingUnit book : books )
+        for ( final Book book : books )
         {
             if ( !book.isRead() )
             {
@@ -86,7 +86,7 @@ public class CollectionTreeMenu
     @SuppressWarnings( "unused" )
     private void setRead()
     {
-        for ( final ReadingUnit book : books )
+        for ( final Book book : books )
         {
             book.setRead( isReadAction.isChecked() );
         }

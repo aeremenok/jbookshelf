@@ -20,8 +20,8 @@ import java.util.List;
 import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Category;
-import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
@@ -42,17 +42,17 @@ import com.trolltech.qt.gui.QWidget;
 public class BookEditDialog
     extends QDialogExt
 {
-    private QPushButton       applyButton  = new QPushButton();
-    private QPushButton       cancelButton = new QPushButton();
-    private QLabel            headerLabel  = new QLabel();
+    private QPushButton applyButton  = new QPushButton();
+    private QPushButton cancelButton = new QPushButton();
+    private QLabel      headerLabel  = new QLabel();
 
-    private BookPanel         bookPanel    = new BookPanel( this );
+    private BookPanel   bookPanel    = new BookPanel( this );
 
-    private final ReadingUnit book;
+    private final Book  book;
 
     public BookEditDialog(
         QWidget parent,
-        ReadingUnit book )
+        Book book )
     {
         super( parent );
         this.book = book;

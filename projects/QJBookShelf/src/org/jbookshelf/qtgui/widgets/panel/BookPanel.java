@@ -21,10 +21,10 @@ import java.util.List;
 
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.ArchiveFile;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.PhysicalUnit;
-import org.jbookshelf.model.ReadingUnit;
 import org.jbookshelf.model.SingleFile;
 import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.model.Unique;
@@ -202,7 +202,7 @@ public class BookPanel
      * @param book a book to edit
      */
     public void setBook(
-        ReadingUnit book )
+        Book book )
     {
         // show book name
         bookTextField.setText( book.getName() );

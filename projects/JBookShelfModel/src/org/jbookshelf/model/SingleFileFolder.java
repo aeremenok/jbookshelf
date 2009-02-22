@@ -58,9 +58,8 @@ public interface SingleFileFolder
         File value );
 
     /**
-     * Sets the value of the '{@link org.jbookshelf.model.SingleFileFolder#getSingleFile <em>Single File</em>}'
-     * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Sets the value of the '{@link org.jbookshelf.model.SingleFileFolder#getSingleFile <em>Single File</em>}' attribute.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Single File</em>' attribute.
      * @see #getSingleFile()
      * @generated

@@ -1,19 +1,7 @@
 /**
- * <copyright> This file is part of JBookShelf, http://code.google.com/p/jbookshelf/<br>
- * <br>
- * Copyright (C) 2008-2009 Andrey Yeremenok (eav1986_at_gmail_com) <br>
- * <br>
- * JBookShelf is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later
- * version.<br>
- * <br>
- * JBookShelf is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.<br>
- * <br>
- * You should have received a copy of the GNU General Public License along with this program. If not, see
- * <http://www.gnu.org/licenses/>. </copyright> $Id$
+ * <copyright> </copyright> $Id$
  */
-package org.jbookshelf.tests;
+package org.jbookshelf.model.tests;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,16 +14,16 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.jbookshelf.model.Author;
+import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.ModelPackage;
 
 /**
- * <!-- begin-user-doc --> A sample utility for the '<em><b>jbookshelf</b></em>' package. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A sample utility for the '<em><b>model</b></em>' package. <!-- end-user-doc -->
  * 
  * @generated
  */
-public class JbookshelfExample
+public class ModelExample
 {
     /**
      * <!-- begin-user-doc --> Load all the argument file paths or URIs as instances of the model. <!-- end-user-doc -->
@@ -66,8 +54,8 @@ public class JbookshelfExample
             System.out.println( "Enter a list of file paths or URIs that have content like this:" );
             try
             {
-                Resource resource = resourceSet.createResource( URI.createURI( "http:///My.jbookshelf" ) );
-                Author root = ModelFactory.eINSTANCE.createAuthor();
+                Resource resource = resourceSet.createResource( URI.createURI( "http:///My.model" ) );
+                ArchiveFile root = ModelFactory.eINSTANCE.createArchiveFile();
                 resource.getContents().add( root );
                 resource.save( System.out, null );
             }
@@ -135,4 +123,4 @@ public class JbookshelfExample
         }
     }
 
-} // JbookshelfExample
+} // ModelExample

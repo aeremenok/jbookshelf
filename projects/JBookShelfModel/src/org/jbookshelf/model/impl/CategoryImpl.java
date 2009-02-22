@@ -32,10 +32,10 @@ import org.jbookshelf.model.ModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.jbookshelf.model.impl.CategoryImpl#getCategorizables <em>Categorizables</em>}</li>
+ *   <li>{@link org.jbookshelf.model.impl.CategoryImpl#getCategorizables <em>Categorizables</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CategoryImpl
@@ -55,7 +55,6 @@ public class CategoryImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected CategoryImpl()
@@ -65,7 +64,6 @@ public class CategoryImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -74,17 +72,16 @@ public class CategoryImpl
         boolean resolve,
         boolean coreType )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.CATEGORY__CATEGORIZABLES:
                 return getCategorizables();
         }
-        return super.eGet( featureID, resolve, coreType );
+        return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings( "unchecked" )
@@ -94,18 +91,16 @@ public class CategoryImpl
         int featureID,
         NotificationChain msgs )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.CATEGORY__CATEGORIZABLES:
-                return ((InternalEList<InternalEObject>) (InternalEList<?>) getCategorizables()).basicAdd( otherEnd,
-                    msgs );
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getCategorizables()).basicAdd(otherEnd, msgs);
         }
-        return super.eInverseAdd( otherEnd, featureID, msgs );
+        return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -114,34 +109,32 @@ public class CategoryImpl
         int featureID,
         NotificationChain msgs )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.CATEGORY__CATEGORIZABLES:
-                return ((InternalEList<?>) getCategorizables()).basicRemove( otherEnd, msgs );
+                return ((InternalEList<?>)getCategorizables()).basicRemove(otherEnd, msgs);
         }
-        return super.eInverseRemove( otherEnd, featureID, msgs );
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.CATEGORY__CATEGORIZABLES:
                 return categorizables != null && !categorizables.isEmpty();
         }
-        return super.eIsSet( featureID );
+        return super.eIsSet(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @SuppressWarnings( "unchecked" )
@@ -150,53 +143,48 @@ public class CategoryImpl
         int featureID,
         Object newValue )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.CATEGORY__CATEGORIZABLES:
                 getCategorizables().clear();
-                getCategorizables().addAll( (Collection<? extends Categorizable>) newValue );
+                getCategorizables().addAll((Collection<? extends Categorizable>)newValue);
                 return;
         }
-        super.eSet( featureID, newValue );
+        super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(
         int featureID )
     {
-        switch ( featureID )
+        switch (featureID)
         {
             case ModelPackage.CATEGORY__CATEGORIZABLES:
                 getCategorizables().clear();
                 return;
         }
-        super.eUnset( featureID );
+        super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public EList<Categorizable> getCategorizables()
     {
-        if ( categorizables == null )
+        if (categorizables == null)
         {
-            categorizables =
-                new EObjectWithInverseResolvingEList.ManyInverse<Categorizable>( Categorizable.class, this,
-                    ModelPackage.CATEGORY__CATEGORIZABLES, ModelPackage.CATEGORIZABLE__CATEGORIES );
+            categorizables = new EObjectWithInverseResolvingEList.ManyInverse<Categorizable>(Categorizable.class, this, ModelPackage.CATEGORY__CATEGORIZABLES, ModelPackage.CATEGORIZABLE__CATEGORIES);
         }
         return categorizables;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override

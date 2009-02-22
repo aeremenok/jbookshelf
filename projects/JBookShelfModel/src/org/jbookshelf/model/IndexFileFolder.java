@@ -42,7 +42,6 @@ public interface IndexFileFolder
     /**
      * Sets the value of the '{@link org.jbookshelf.model.IndexFileFolder#getIndexFile <em>Index File</em>}' attribute.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @param value the new value of the '<em>Index File</em>' attribute.
      * @see #getIndexFile()
      * @generated
@@ -51,9 +50,8 @@ public interface IndexFileFolder
         File value );
 
     /**
-     * Sets the value of the '{@link org.jbookshelf.model.IndexFileFolder#getIndexFolder <em>Index Folder</em>}'
-     * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Sets the value of the '{@link org.jbookshelf.model.IndexFileFolder#getIndexFolder <em>Index Folder</em>}' attribute.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @param value the new value of the '<em>Index Folder</em>' attribute.
      * @see #getIndexFolder()
      * @generated

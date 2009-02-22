@@ -29,7 +29,6 @@ public interface PhysicalUnit
 {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @model
      * @generated
      */
