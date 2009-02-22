@@ -28,11 +28,8 @@ import org.jbookshelf.model.Categorizable;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
-import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.ModelPackage;
 import org.jbookshelf.model.PhysicalUnit;
-import org.jbookshelf.model.SingleFile;
-import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.model.Unique;
 
 /**
@@ -94,11 +91,6 @@ public class ModelAdapterFactory
                 return createCommentableAdapter();
             }
             @Override
-            public Adapter caseIndexFileFolder(IndexFileFolder object)
-            {
-                return createIndexFileFolderAdapter();
-            }
-            @Override
             public Adapter casePhysicalUnit(PhysicalUnit object)
             {
                 return createPhysicalUnitAdapter();
@@ -107,16 +99,6 @@ public class ModelAdapterFactory
             public Adapter caseBook(Book object)
             {
                 return createBookAdapter();
-            }
-            @Override
-            public Adapter caseSingleFile(SingleFile object)
-            {
-                return createSingleFileAdapter();
-            }
-            @Override
-            public Adapter caseSingleFileFolder(SingleFileFolder object)
-            {
-                return createSingleFileFolderAdapter();
             }
             @Override
             public Adapter caseUnique(Unique object)
@@ -279,20 +261,6 @@ public class ModelAdapterFactory
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.jbookshelf.model.IndexFileFolder <em>Index File Folder</em>}'.
-     * <!-- begin-user-doc --> This default implementation returns null so that we can
-     * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-     * end-user-doc -->
-     * @return the new adapter.
-     * @see org.jbookshelf.model.IndexFileFolder
-     * @generated
-     */
-    public Adapter createIndexFileFolderAdapter()
-    {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link org.jbookshelf.model.PhysicalUnit <em>Physical Unit</em>}'.
      * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
      * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
@@ -301,34 +269,6 @@ public class ModelAdapterFactory
      * @generated
      */
     public Adapter createPhysicalUnitAdapter()
-    {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link org.jbookshelf.model.SingleFile <em>Single File</em>}'. <!--
-     * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
-     * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-     * 
-     * @return the new adapter.
-     * @see org.jbookshelf.model.SingleFile
-     * @generated
-     */
-    public Adapter createSingleFileAdapter()
-    {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link org.jbookshelf.model.SingleFileFolder <em>Single File Folder</em>}'.
-     * <!-- begin-user-doc --> This default implementation returns null so that we can
-     * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-     * end-user-doc -->
-     * @return the new adapter.
-     * @see org.jbookshelf.model.SingleFileFolder
-     * @generated
-     */
-    public Adapter createSingleFileFolderAdapter()
     {
         return null;
     }

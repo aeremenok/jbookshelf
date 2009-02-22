@@ -9,7 +9,6 @@ import junit.textui.TestRunner;
 
 /**
  * <!-- begin-user-doc --> A test suite for the '<em><b>model</b></em>' package. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class ModelTests
@@ -18,43 +17,36 @@ public class ModelTests
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public static void main(
         String[] args )
     {
-        TestRunner.run( suite() );
+        TestRunner.run(suite());
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public static Test suite()
     {
-        TestSuite suite = new ModelTests( "model Tests" );
-        suite.addTestSuite( ArchiveFileTest.class );
-        suite.addTestSuite( AuthorTest.class );
-        suite.addTestSuite( BookShelfTest.class );
-        suite.addTestSuite( CategoryTest.class );
-        suite.addTestSuite( IndexFileFolderTest.class );
-        suite.addTestSuite( BookTest.class );
-        suite.addTestSuite( SingleFileTest.class );
-        suite.addTestSuite( SingleFileFolderTest.class );
+        TestSuite suite = new ModelTests("model Tests");
+        suite.addTestSuite(AuthorTest.class);
+        suite.addTestSuite(BookShelfTest.class);
+        suite.addTestSuite(CategoryTest.class);
+        suite.addTestSuite(BookTest.class);
         return suite;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public ModelTests(
         String name )
     {
-        super( name );
+        super(name);
     }
 
 } // ModelTests

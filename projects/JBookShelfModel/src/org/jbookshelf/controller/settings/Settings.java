@@ -28,8 +28,7 @@ import java.util.Properties;
  */
 public class Settings
     implements
-        JBookShelfSettings,
-        ThirdPartySettings
+        JBookShelfSettings
 {
     private static final String DEFAULTS   = "defaults.properties";
 

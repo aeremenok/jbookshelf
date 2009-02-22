@@ -20,13 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jbookshelf.controller.storage.Storage;
-import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.BookShelf;
-import org.jbookshelf.model.IndexFileFolder;
-import org.jbookshelf.model.PhysicalUnit;
-import org.jbookshelf.model.SingleFile;
-import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.widgets.FilePathEdit;
 import org.jbookshelf.qtgui.widgets.completion.CommaSeparatedCompleter;
@@ -210,33 +205,7 @@ public class BookPanel
         categoryTextField.setText( concat( book.getCategories() ) );
 
         // show file of the physical unit
-        String fileName;
-        PhysicalUnit physical = book.getPhysical();
-        // todo generalize
-        if ( physical instanceof SingleFile )
-        {
-            SingleFile singleFile = (SingleFile) physical;
-            fileName = singleFile.getFile().getAbsolutePath();
-        }
-        else if ( physical instanceof ArchiveFile )
-        {
-            ArchiveFile archiveFile = (ArchiveFile) physical;
-            fileName = archiveFile.getArchiveFile().getAbsolutePath();
-        }
-        else if ( physical instanceof SingleFileFolder )
-        {
-            SingleFileFolder singleFileFolder = (SingleFileFolder) physical;
-            fileName = singleFileFolder.getFolder().getAbsolutePath();
-        }
-        else if ( physical instanceof IndexFileFolder )
-        {
-            IndexFileFolder indexFileFolder = (IndexFileFolder) physical;
-            fileName = indexFileFolder.getIndexFolder().getAbsolutePath();
-        }
-        else
-        {
-            throw new Error( physical.toString() );
-        }
+        String fileName = book.getPhysical().getFile().getAbsolutePath();
         filePathEdit.setText( fileName );
 
         // show whether is read

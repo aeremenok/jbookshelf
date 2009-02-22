@@ -33,12 +33,9 @@ import org.jbookshelf.model.Categorizable;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
-import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.ModelPackage;
 import org.jbookshelf.model.PhysicalUnit;
-import org.jbookshelf.model.SingleFile;
-import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.model.Unique;
 
 /**
@@ -54,103 +51,85 @@ public class ModelPackageImpl
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         archiveFileEClass      = null;
+    private EClass         archiveFileEClass   = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         authorEClass           = null;
+    private EClass         authorEClass        = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         bookShelfEClass        = null;
+    private EClass         bookShelfEClass     = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         categorizableEClass    = null;
+    private EClass         categorizableEClass = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         categoryEClass         = null;
+    private EClass         categoryEClass      = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         commentEClass          = null;
+    private EClass         commentEClass       = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         commentableEClass      = null;
+    private EClass         commentableEClass   = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         indexFileFolderEClass  = null;
+    private EClass         physicalUnitEClass  = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         physicalUnitEClass     = null;
+    private EClass         bookEClass          = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         bookEClass             = null;
+    private EClass         uniqueEClass        = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         singleFileEClass       = null;
+    private EDataType      fileEDataType       = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         singleFileFolderEClass = null;
+    private static boolean isInited            = false;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EClass         uniqueEClass           = null;
+    private boolean        isCreated           = false;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    private EDataType      fileEDataType          = null;
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    private static boolean isInited               = false;
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    private boolean        isCreated              = false;
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    private boolean        isInitialized          = false;
+    private boolean        isInitialized       = false;
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this
@@ -254,23 +233,14 @@ public class ModelPackageImpl
         commentableEClass = createEClass(COMMENTABLE);
         createEReference(commentableEClass, COMMENTABLE__COMMENTS);
 
-        indexFileFolderEClass = createEClass(INDEX_FILE_FOLDER);
-        createEAttribute(indexFileFolderEClass, INDEX_FILE_FOLDER__INDEX_FILE);
-        createEAttribute(indexFileFolderEClass, INDEX_FILE_FOLDER__INDEX_FOLDER);
-
         physicalUnitEClass = createEClass(PHYSICAL_UNIT);
+        createEAttribute(physicalUnitEClass, PHYSICAL_UNIT__FILE);
+        createEAttribute(physicalUnitEClass, PHYSICAL_UNIT__DIRECTORY);
 
         bookEClass = createEClass(BOOK);
         createEReference(bookEClass, BOOK__AUTHORS);
         createEReference(bookEClass, BOOK__PHYSICAL);
         createEAttribute(bookEClass, BOOK__READ);
-
-        singleFileEClass = createEClass(SINGLE_FILE);
-        createEAttribute(singleFileEClass, SINGLE_FILE__FILE);
-
-        singleFileFolderEClass = createEClass(SINGLE_FILE_FOLDER);
-        createEAttribute(singleFileFolderEClass, SINGLE_FILE_FOLDER__FOLDER);
-        createEAttribute(singleFileFolderEClass, SINGLE_FILE_FOLDER__SINGLE_FILE);
 
         uniqueEClass = createEClass(UNIQUE);
         createEAttribute(uniqueEClass, UNIQUE__NAME);
@@ -308,8 +278,7 @@ public class ModelPackageImpl
     }
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EReference getAuthor_Books()
@@ -501,33 +470,6 @@ public class ModelPackageImpl
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EClass getIndexFileFolder()
-    {
-        return indexFileFolderEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getIndexFileFolder_IndexFile()
-    {
-        return (EAttribute)indexFileFolderEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getIndexFileFolder_IndexFolder()
-    {
-        return (EAttribute)indexFileFolderEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
     public ModelFactory getModelFactory()
     {
         return (ModelFactory)getEFactoryInstance();
@@ -546,45 +488,18 @@ public class ModelPackageImpl
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EClass getSingleFile()
+    public EAttribute getPhysicalUnit_Directory()
     {
-        return singleFileEClass;
+        return (EAttribute)physicalUnitEClass.getEStructuralFeatures().get(1);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSingleFile_File()
+    public EAttribute getPhysicalUnit_File()
     {
-        return (EAttribute)singleFileEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getSingleFileFolder()
-    {
-        return singleFileFolderEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getSingleFileFolder_Folder()
-    {
-        return (EAttribute)singleFileFolderEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getSingleFileFolder_SingleFile()
-    {
-        return (EAttribute)singleFileFolderEClass.getEStructuralFeatures().get(1);
+        return (EAttribute)physicalUnitEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -647,11 +562,8 @@ public class ModelPackageImpl
         categoryEClass.getESuperTypes().add(theEcorePackage.getEObject());
         commentableEClass.getESuperTypes().add(this.getUnique());
         commentableEClass.getESuperTypes().add(theEcorePackage.getEObject());
-        indexFileFolderEClass.getESuperTypes().add(this.getPhysicalUnit());
         bookEClass.getESuperTypes().add(this.getCategorizable());
         bookEClass.getESuperTypes().add(theEcorePackage.getEObject());
-        singleFileEClass.getESuperTypes().add(this.getPhysicalUnit());
-        singleFileFolderEClass.getESuperTypes().add(this.getPhysicalUnit());
 
         // Initialize classes and features; add operations and parameters
         initEClass(archiveFileEClass, ArchiveFile.class, "ArchiveFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -711,29 +623,14 @@ public class ModelPackageImpl
         op = addEOperation(commentableEClass, this.getComment(), "queryComments", 0, -1, IS_UNIQUE, IS_ORDERED);
         addEParameter(op, ecorePackage.getEString(), "query", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-        initEClass(indexFileFolderEClass, IndexFileFolder.class, "IndexFileFolder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getIndexFileFolder_IndexFile(), this.getFile(), "indexFile", null, 0, 1, IndexFileFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getIndexFileFolder_IndexFolder(), this.getFile(), "indexFolder", null, 0, 1, IndexFileFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(physicalUnitEClass, PhysicalUnit.class, "PhysicalUnit", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-        addEOperation(physicalUnitEClass, null, "openUnit", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-        addEOperation(physicalUnitEClass, null, "openFolder", 0, 1, IS_UNIQUE, IS_ORDERED);
+        initEClass(physicalUnitEClass, PhysicalUnit.class, "PhysicalUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getPhysicalUnit_File(), this.getFile(), "file", null, 0, 1, PhysicalUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getPhysicalUnit_Directory(), this.getFile(), "directory", null, 0, 1, PhysicalUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(bookEClass, Book.class, "Book", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getBook_Authors(), this.getAuthor(), this.getAuthor_Books(), "authors", null, 0, -1, Book.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBook_Physical(), this.getPhysicalUnit(), null, "physical", null, 1, 1, Book.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBook_Read(), ecorePackage.getEBoolean(), "read", "false", 1, 1, Book.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(singleFileEClass, SingleFile.class, "SingleFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getSingleFile_File(), this.getFile(), "file", null, 0, 1, SingleFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(singleFileFolderEClass, SingleFileFolder.class, "SingleFileFolder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getSingleFileFolder_Folder(), this.getFile(), "folder", null, 0, 1, SingleFileFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSingleFileFolder_SingleFile(), this.getFile(), "singleFile", null, 0, 1, SingleFileFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        addEOperation(singleFileFolderEClass, null, "openFolder", 0, 1, IS_UNIQUE, IS_ORDERED);
 
         initEClass(uniqueEClass, Unique.class, "Unique", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getUnique_Name(), ecorePackage.getEString(), "name", null, 1, 1, Unique.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

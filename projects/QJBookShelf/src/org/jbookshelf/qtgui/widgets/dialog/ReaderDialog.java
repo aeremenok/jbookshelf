@@ -8,13 +8,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
 
+import org.jbookshelf.controller.URIOpener;
 import org.jbookshelf.controller.ZIPHandler;
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Book;
-import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.PhysicalUnit;
-import org.jbookshelf.model.SingleFile;
-import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.mozilla.universalchardet.UniversalDetector;
 
@@ -82,8 +80,7 @@ public class ReaderDialog
             }
             else
             {
-                // todo waiting dialog
-                book.getPhysical().openUnit();
+                URIOpener.browseFile( file );
             }
         }
         catch ( Throwable e )
@@ -111,30 +108,20 @@ public class ReaderDialog
     private static File getFile(
         Book book )
     {
-        File file = null;
         PhysicalUnit physical = book.getPhysical();
         if ( physical instanceof ArchiveFile )
         {
             ArchiveFile archiveFile = (ArchiveFile) physical;
-            // todo waiting dialog
-            file = ZIPHandler.getZippedFileToOpen( archiveFile.getArchiveFile() );
+            if ( archiveFile.getArchiveFile() == null )
+            { // unpack and remember the file
+                // todo waiting dialog
+                File zippedFileToOpen = ZIPHandler.getZippedFileToOpen( archiveFile.getFile() );
+                archiveFile.setArchiveFile( zippedFileToOpen );
+            }
+            return archiveFile.getArchiveFile();
         }
-        else if ( physical instanceof SingleFile )
-        {
-            SingleFile singleFile = (SingleFile) physical;
-            file = singleFile.getFile();
-        }
-        else if ( physical instanceof SingleFileFolder )
-        {
-            SingleFileFolder singleFileFolder = (SingleFileFolder) physical;
-            file = singleFileFolder.getSingleFile();
-        }
-        else if ( physical instanceof IndexFileFolder )
-        {
-            IndexFileFolder indexFileFolder = (IndexFileFolder) physical;
-            file = indexFileFolder.getIndexFile();
-        }
-        return file;
+
+        return physical.getFile();
     }
 
     private static String guessEncoding(
@@ -198,7 +185,6 @@ public class ReaderDialog
         catch ( IOException e )
         {
             e.printStackTrace();
-
             return tr( "Error displaying file " ) + file.getAbsolutePath() + "\n\n" + printThrowable( e );
         }
     }
