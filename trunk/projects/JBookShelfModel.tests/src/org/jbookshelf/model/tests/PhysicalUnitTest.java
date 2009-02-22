@@ -5,73 +5,49 @@ package org.jbookshelf.model.tests;
 
 import junit.framework.TestCase;
 
+import junit.textui.TestRunner;
+import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.PhysicalUnit;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Physical Unit</b></em>'. <!-- end-user-doc -->
- * <p>
- * The following operations are tested:
- * <ul>
- * <li>{@link org.jbookshelf.model.PhysicalUnit#openUnit() <em>Open Unit</em>}</li>
- * <li>{@link org.jbookshelf.model.PhysicalUnit#openFolder() <em>Open Folder</em>}</li>
- * </ul>
- * </p>
- * 
  * @generated
  */
-public abstract class PhysicalUnitTest
+public class PhysicalUnitTest
     extends TestCase
 {
 
     /**
-     * The fixture for this Physical Unit test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The fixture for this Physical Unit test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     protected PhysicalUnit fixture = null;
 
     /**
-     * Constructs a new Physical Unit test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public static void main(String[] args)
+    {
+        TestRunner.run(PhysicalUnitTest.class);
+    }
+
+    /**
+     * Constructs a new Physical Unit test case with the given name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public PhysicalUnitTest(
         String name )
     {
-        super( name );
+        super(name);
     }
 
     /**
-     * Tests the '{@link org.jbookshelf.model.PhysicalUnit#openFolder() <em>Open Folder</em>}' operation. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see org.jbookshelf.model.PhysicalUnit#openFolder()
-     * @generated
-     */
-    public void testOpenFolder()
-    {
-        // TODO: implement this operation test method
-        // Ensure that you remove @generated or mark it @generated NOT
-        fail();
-    }
-
-    /**
-     * Tests the '{@link org.jbookshelf.model.PhysicalUnit#openUnit() <em>Open Unit</em>}' operation. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see org.jbookshelf.model.PhysicalUnit#openUnit()
-     * @generated
-     */
-    public void testOpenUnit()
-    {
-        // TODO: implement this operation test method
-        // Ensure that you remove @generated or mark it @generated NOT
-        fail();
-    }
-
-    /**
-     * Returns the fixture for this Physical Unit test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Returns the fixture for this Physical Unit test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     protected PhysicalUnit getFixture()
@@ -80,8 +56,32 @@ public abstract class PhysicalUnitTest
     }
 
     /**
-     * Sets the fixture for this Physical Unit test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see junit.framework.TestCase#setUp()
+     * @generated
+     */
+    @Override
+    protected void setUp() throws Exception
+    {
+        setFixture(ModelFactory.eINSTANCE.createPhysicalUnit());
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see junit.framework.TestCase#tearDown()
+     * @generated
+     */
+    @Override
+    protected void tearDown() throws Exception
+    {
+        setFixture(null);
+    }
+
+    /**
+     * Sets the fixture for this Physical Unit test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     protected void setFixture(

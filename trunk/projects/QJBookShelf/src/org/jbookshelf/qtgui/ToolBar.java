@@ -15,9 +15,11 @@
  */
 package org.jbookshelf.qtgui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jbookshelf.controller.URIOpener;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Book;
@@ -263,7 +265,8 @@ public class ToolBar
         {
             if ( unique instanceof Book )
             {
-                ((Book) unique).getPhysical().openFolder();
+                File directory = ((Book) unique).getPhysical().getDirectory();
+                URIOpener.openFolder( directory );
             }
         }
     }

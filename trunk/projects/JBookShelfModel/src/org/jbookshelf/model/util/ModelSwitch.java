@@ -28,11 +28,8 @@ import org.jbookshelf.model.Categorizable;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
-import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.ModelPackage;
 import org.jbookshelf.model.PhysicalUnit;
-import org.jbookshelf.model.SingleFile;
-import org.jbookshelf.model.SingleFileFolder;
 import org.jbookshelf.model.Unique;
 
 /**
@@ -186,22 +183,6 @@ public class ModelSwitch<T>
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Index File Folder</em>'. <!-- begin-user-doc
-     * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc
-     * -->
-     * 
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Index File Folder</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseIndexFileFolder(
-        IndexFileFolder object )
-    {
-        return null;
-    }
-
-    /**
      * Returns the result of interpreting the object as an instance of '<em>Physical Unit</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
@@ -212,37 +193,6 @@ public class ModelSwitch<T>
      */
     public T casePhysicalUnit(
         PhysicalUnit object )
-    {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Single File</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Single File</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseSingleFile(
-        SingleFile object )
-    {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Single File Folder</em>'. <!--
-     * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
-     * end-user-doc -->
-     * 
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Single File Folder</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseSingleFileFolder(
-        SingleFileFolder object )
     {
         return null;
     }
@@ -384,14 +334,6 @@ public class ModelSwitch<T>
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case ModelPackage.INDEX_FILE_FOLDER:
-            {
-                IndexFileFolder indexFileFolder = (IndexFileFolder)theEObject;
-                T result = caseIndexFileFolder(indexFileFolder);
-                if (result == null) result = casePhysicalUnit(indexFileFolder);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case ModelPackage.PHYSICAL_UNIT:
             {
                 PhysicalUnit physicalUnit = (PhysicalUnit)theEObject;
@@ -406,22 +348,6 @@ public class ModelSwitch<T>
                 if (result == null) result = caseCategorizable(book);
                 if (result == null) result = caseCommentable(book);
                 if (result == null) result = caseUnique(book);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ModelPackage.SINGLE_FILE:
-            {
-                SingleFile singleFile = (SingleFile)theEObject;
-                T result = caseSingleFile(singleFile);
-                if (result == null) result = casePhysicalUnit(singleFile);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ModelPackage.SINGLE_FILE_FOLDER:
-            {
-                SingleFileFolder singleFileFolder = (SingleFileFolder)theEObject;
-                T result = caseSingleFileFolder(singleFileFolder);
-                if (result == null) result = casePhysicalUnit(singleFileFolder);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }

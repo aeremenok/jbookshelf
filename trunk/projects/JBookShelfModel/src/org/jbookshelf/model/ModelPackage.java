@@ -213,31 +213,6 @@ public interface ModelPackage
         EReference COMMENTABLE__COMMENTS           = eINSTANCE.getCommentable_Comments();
 
         /**
-         * The meta object literal for the '{@link org.jbookshelf.model.impl.IndexFileFolderImpl <em>Index File Folder</em>}' class.
-         * <!-- begin-user-doc --> <!-- end-user-doc -->
-         * @see org.jbookshelf.model.impl.IndexFileFolderImpl
-         * @see org.jbookshelf.model.impl.ModelPackageImpl#getIndexFileFolder()
-         * @generated
-         */
-        EClass     INDEX_FILE_FOLDER               = eINSTANCE.getIndexFileFolder();
-
-        /**
-         * The meta object literal for the '<em><b>Index File</b></em>' attribute feature.
-         * <!-- begin-user-doc --> <!--
-         * end-user-doc -->
-         * @generated
-         */
-        EAttribute INDEX_FILE_FOLDER__INDEX_FILE   = eINSTANCE.getIndexFileFolder_IndexFile();
-
-        /**
-         * The meta object literal for the '<em><b>Index Folder</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute INDEX_FILE_FOLDER__INDEX_FOLDER = eINSTANCE.getIndexFileFolder_IndexFolder();
-
-        /**
          * The meta object literal for the '{@link org.jbookshelf.model.impl.PhysicalUnitImpl <em>Physical Unit</em>}' class.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see org.jbookshelf.model.impl.PhysicalUnitImpl
@@ -245,6 +220,22 @@ public interface ModelPackage
          * @generated
          */
         EClass     PHYSICAL_UNIT                   = eINSTANCE.getPhysicalUnit();
+
+        /**
+         * The meta object literal for the '<em><b>File</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PHYSICAL_UNIT__FILE = eINSTANCE.getPhysicalUnit_File();
+
+        /**
+         * The meta object literal for the '<em><b>Directory</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PHYSICAL_UNIT__DIRECTORY = eINSTANCE.getPhysicalUnit_Directory();
 
         /**
          * The meta object literal for the '{@link org.jbookshelf.model.impl.BookImpl <em>Book</em>}' class.
@@ -279,48 +270,6 @@ public interface ModelPackage
          * @generated
          */
         EAttribute BOOK__READ = eINSTANCE.getBook_Read();
-
-        /**
-         * The meta object literal for the '{@link org.jbookshelf.model.impl.SingleFileImpl <em>Single File</em>}' class.
-         * <!-- begin-user-doc --> <!-- end-user-doc -->
-         * @see org.jbookshelf.model.impl.SingleFileImpl
-         * @see org.jbookshelf.model.impl.ModelPackageImpl#getSingleFile()
-         * @generated
-         */
-        EClass     SINGLE_FILE                     = eINSTANCE.getSingleFile();
-
-        /**
-         * The meta object literal for the '<em><b>File</b></em>' attribute feature.
-         * <!-- begin-user-doc --> <!--
-         * end-user-doc -->
-         * @generated
-         */
-        EAttribute SINGLE_FILE__FILE               = eINSTANCE.getSingleFile_File();
-
-        /**
-         * The meta object literal for the '{@link org.jbookshelf.model.impl.SingleFileFolderImpl <em>Single File Folder</em>}' class.
-         * <!-- begin-user-doc --> <!-- end-user-doc -->
-         * @see org.jbookshelf.model.impl.SingleFileFolderImpl
-         * @see org.jbookshelf.model.impl.ModelPackageImpl#getSingleFileFolder()
-         * @generated
-         */
-        EClass     SINGLE_FILE_FOLDER              = eINSTANCE.getSingleFileFolder();
-
-        /**
-         * The meta object literal for the '<em><b>Folder</b></em>' attribute feature.
-         * <!-- begin-user-doc --> <!--
-         * end-user-doc -->
-         * @generated
-         */
-        EAttribute SINGLE_FILE_FOLDER__FOLDER      = eINSTANCE.getSingleFileFolder_Folder();
-
-        /**
-         * The meta object literal for the '<em><b>Single File</b></em>' attribute feature.
-         * <!-- begin-user-doc --> <!--
-         * end-user-doc -->
-         * @generated
-         */
-        EAttribute SINGLE_FILE_FOLDER__SINGLE_FILE = eINSTANCE.getSingleFileFolder_SingleFile();
 
         /**
          * The meta object literal for the '{@link org.jbookshelf.model.impl.UniqueImpl <em>Unique</em>}' class. <!--
@@ -394,7 +343,25 @@ public interface ModelPackage
      * @see org.jbookshelf.model.impl.ModelPackageImpl#getPhysicalUnit()
      * @generated
      */
-    int          PHYSICAL_UNIT                    = 8;
+    int          PHYSICAL_UNIT                    = 7;
+
+    /**
+     * The feature id for the '<em><b>File</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PHYSICAL_UNIT__FILE = 0;
+
+    /**
+     * The feature id for the '<em><b>Directory</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PHYSICAL_UNIT__DIRECTORY = 1;
 
     /**
      * The number of structural features of the '<em>Physical Unit</em>' class.
@@ -403,7 +370,7 @@ public interface ModelPackage
      * @generated
      * @ordered
      */
-    int          PHYSICAL_UNIT_FEATURE_COUNT      = 0;
+    int          PHYSICAL_UNIT_FEATURE_COUNT      = 2;
 
     /**
      * The meta object id for the '{@link org.jbookshelf.model.impl.ArchiveFileImpl <em>Archive File</em>}' class. <!--
@@ -414,6 +381,24 @@ public interface ModelPackage
      * @generated
      */
     int          ARCHIVE_FILE                     = 0;
+
+    /**
+     * The feature id for the '<em><b>File</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ARCHIVE_FILE__FILE = PHYSICAL_UNIT__FILE;
+
+    /**
+     * The feature id for the '<em><b>Directory</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ARCHIVE_FILE__DIRECTORY = PHYSICAL_UNIT__DIRECTORY;
 
     /**
      * The feature id for the '<em><b>Archive File</b></em>' attribute.
@@ -440,7 +425,7 @@ public interface ModelPackage
      * @see org.jbookshelf.model.impl.ModelPackageImpl#getUnique()
      * @generated
      */
-    int          UNIQUE                           = 12;
+    int          UNIQUE                           = 9;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -771,40 +756,6 @@ public interface ModelPackage
     int          COMMENT_FEATURE_COUNT            = 4;
 
     /**
-     * The meta object id for the '{@link org.jbookshelf.model.impl.IndexFileFolderImpl <em>Index File Folder</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see org.jbookshelf.model.impl.IndexFileFolderImpl
-     * @see org.jbookshelf.model.impl.ModelPackageImpl#getIndexFileFolder()
-     * @generated
-     */
-    int          INDEX_FILE_FOLDER                = 7;
-
-    /**
-     * The feature id for the '<em><b>Index File</b></em>' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int          INDEX_FILE_FOLDER__INDEX_FILE    = PHYSICAL_UNIT_FEATURE_COUNT + 0;
-
-    /**
-     * The feature id for the '<em><b>Index Folder</b></em>' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int          INDEX_FILE_FOLDER__INDEX_FOLDER  = PHYSICAL_UNIT_FEATURE_COUNT + 1;
-
-    /**
-     * The number of structural features of the '<em>Index File Folder</em>' class.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int          INDEX_FILE_FOLDER_FEATURE_COUNT  = PHYSICAL_UNIT_FEATURE_COUNT + 2;
-
-    /**
      * The meta object id for the '{@link org.jbookshelf.model.impl.BookImpl <em>Book</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -812,7 +763,7 @@ public interface ModelPackage
      * @see org.jbookshelf.model.impl.ModelPackageImpl#getBook()
      * @generated
      */
-    int BOOK = 9;
+    int BOOK = 8;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -887,74 +838,13 @@ public interface ModelPackage
     int BOOK_FEATURE_COUNT = CATEGORIZABLE_FEATURE_COUNT + 3;
 
     /**
-     * The meta object id for the '{@link org.jbookshelf.model.impl.SingleFileImpl <em>Single File</em>}' class. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see org.jbookshelf.model.impl.SingleFileImpl
-     * @see org.jbookshelf.model.impl.ModelPackageImpl#getSingleFile()
-     * @generated
-     */
-    int          SINGLE_FILE                      = 10;
-
-    /**
-     * The feature id for the '<em><b>File</b></em>' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int          SINGLE_FILE__FILE                = PHYSICAL_UNIT_FEATURE_COUNT + 0;
-
-    /**
-     * The number of structural features of the '<em>Single File</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
-     * -->
-     * 
-     * @generated
-     * @ordered
-     */
-    int          SINGLE_FILE_FEATURE_COUNT        = PHYSICAL_UNIT_FEATURE_COUNT + 1;
-
-    /**
-     * The meta object id for the '{@link org.jbookshelf.model.impl.SingleFileFolderImpl <em>Single File Folder</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @see org.jbookshelf.model.impl.SingleFileFolderImpl
-     * @see org.jbookshelf.model.impl.ModelPackageImpl#getSingleFileFolder()
-     * @generated
-     */
-    int          SINGLE_FILE_FOLDER               = 11;
-
-    /**
-     * The feature id for the '<em><b>Folder</b></em>' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int          SINGLE_FILE_FOLDER__FOLDER       = PHYSICAL_UNIT_FEATURE_COUNT + 0;
-
-    /**
-     * The feature id for the '<em><b>Single File</b></em>' attribute.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int          SINGLE_FILE_FOLDER__SINGLE_FILE  = PHYSICAL_UNIT_FEATURE_COUNT + 1;
-
-    /**
-     * The number of structural features of the '<em>Single File Folder</em>' class.
-     * <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int          SINGLE_FILE_FOLDER_FEATURE_COUNT = PHYSICAL_UNIT_FEATURE_COUNT + 2;
-
-    /**
      * The meta object id for the '<em>File</em>' data type.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see java.io.File
      * @see org.jbookshelf.model.impl.ModelPackageImpl#getFile()
      * @generated
      */
-    int          FILE                             = 13;
+    int          FILE                             = 10;
 
     /**
      * Returns the meta object for class '{@link org.jbookshelf.model.ArchiveFile <em>Archive File</em>}'. <!--
@@ -1161,36 +1051,6 @@ public interface ModelPackage
     EDataType getFile();
 
     /**
-     * Returns the meta object for class '{@link org.jbookshelf.model.IndexFileFolder <em>Index File Folder</em>}'. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @return the meta object for class '<em>Index File Folder</em>'.
-     * @see org.jbookshelf.model.IndexFileFolder
-     * @generated
-     */
-    EClass getIndexFileFolder();
-
-    /**
-     * Returns the meta object for the attribute '{@link org.jbookshelf.model.IndexFileFolder#getIndexFile <em>Index File</em>}'.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Index File</em>'.
-     * @see org.jbookshelf.model.IndexFileFolder#getIndexFile()
-     * @see #getIndexFileFolder()
-     * @generated
-     */
-    EAttribute getIndexFileFolder_IndexFile();
-
-    /**
-     * Returns the meta object for the attribute '{@link org.jbookshelf.model.IndexFileFolder#getIndexFolder <em>Index Folder</em>}'.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Index Folder</em>'.
-     * @see org.jbookshelf.model.IndexFileFolder#getIndexFolder()
-     * @see #getIndexFileFolder()
-     * @generated
-     */
-    EAttribute getIndexFileFolder_IndexFolder();
-
-    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the factory that creates the instances of the model.
@@ -1207,6 +1067,28 @@ public interface ModelPackage
      * @generated
      */
     EClass getPhysicalUnit();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.jbookshelf.model.PhysicalUnit#getFile <em>File</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>File</em>'.
+     * @see org.jbookshelf.model.PhysicalUnit#getFile()
+     * @see #getPhysicalUnit()
+     * @generated
+     */
+    EAttribute getPhysicalUnit_File();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.jbookshelf.model.PhysicalUnit#getDirectory <em>Directory</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Directory</em>'.
+     * @see org.jbookshelf.model.PhysicalUnit#getDirectory()
+     * @see #getPhysicalUnit()
+     * @generated
+     */
+    EAttribute getPhysicalUnit_Directory();
 
     /**
      * Returns the meta object for class '{@link org.jbookshelf.model.Book <em>Book</em>}'.
@@ -1250,56 +1132,6 @@ public interface ModelPackage
      * @generated
      */
     EAttribute getBook_Read();
-
-    /**
-     * Returns the meta object for class '{@link org.jbookshelf.model.SingleFile <em>Single File</em>}'. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @return the meta object for class '<em>Single File</em>'.
-     * @see org.jbookshelf.model.SingleFile
-     * @generated
-     */
-    EClass getSingleFile();
-
-    /**
-     * Returns the meta object for the attribute '{@link org.jbookshelf.model.SingleFile#getFile <em>File</em>}'. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @return the meta object for the attribute '<em>File</em>'.
-     * @see org.jbookshelf.model.SingleFile#getFile()
-     * @see #getSingleFile()
-     * @generated
-     */
-    EAttribute getSingleFile_File();
-
-    /**
-     * Returns the meta object for class '{@link org.jbookshelf.model.SingleFileFolder <em>Single File Folder</em>}'.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for class '<em>Single File Folder</em>'.
-     * @see org.jbookshelf.model.SingleFileFolder
-     * @generated
-     */
-    EClass getSingleFileFolder();
-
-    /**
-     * Returns the meta object for the attribute '{@link org.jbookshelf.model.SingleFileFolder#getFolder <em>Folder</em>}'.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Folder</em>'.
-     * @see org.jbookshelf.model.SingleFileFolder#getFolder()
-     * @see #getSingleFileFolder()
-     * @generated
-     */
-    EAttribute getSingleFileFolder_Folder();
-
-    /**
-     * Returns the meta object for the attribute '{@link org.jbookshelf.model.SingleFileFolder#getSingleFile <em>Single File</em>}'.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Single File</em>'.
-     * @see org.jbookshelf.model.SingleFileFolder#getSingleFile()
-     * @see #getSingleFileFolder()
-     * @generated
-     */
-    EAttribute getSingleFileFolder_SingleFile();
 
     /**
      * Returns the meta object for class '{@link org.jbookshelf.model.Unique <em>Unique</em>}'.

@@ -30,11 +30,8 @@ import org.jbookshelf.model.Book;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.Comment;
-import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.ModelPackage;
-import org.jbookshelf.model.SingleFile;
-import org.jbookshelf.model.SingleFileFolder;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
@@ -132,10 +129,8 @@ public class ModelFactoryImpl
             case ModelPackage.BOOK_SHELF: return createBookShelf();
             case ModelPackage.CATEGORY: return createCategory();
             case ModelPackage.COMMENT: return createComment();
-            case ModelPackage.INDEX_FILE_FOLDER: return createIndexFileFolder();
+            case ModelPackage.PHYSICAL_UNIT: return createPhysicalUnit();
             case ModelPackage.BOOK: return createBook();
-            case ModelPackage.SINGLE_FILE: return createSingleFile();
-            case ModelPackage.SINGLE_FILE_FOLDER: return createSingleFileFolder();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -202,6 +197,17 @@ public class ModelFactoryImpl
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public PhysicalUnit createPhysicalUnit()
+    {
+        PhysicalUnitImpl physicalUnit = new PhysicalUnitImpl();
+        return physicalUnit;
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -228,36 +234,6 @@ public class ModelFactoryImpl
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public IndexFileFolder createIndexFileFolder()
-    {
-        IndexFileFolderImpl indexFileFolder = new IndexFileFolderImpl();
-        return indexFileFolder;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public SingleFile createSingleFile()
-    {
-        SingleFileImpl singleFile = new SingleFileImpl();
-        return singleFile;
-    }
-
-    /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @generated
-     */
-    public SingleFileFolder createSingleFileFolder()
-    {
-        SingleFileFolderImpl singleFileFolder = new SingleFileFolderImpl();
-        return singleFileFolder;
     }
 
     /**

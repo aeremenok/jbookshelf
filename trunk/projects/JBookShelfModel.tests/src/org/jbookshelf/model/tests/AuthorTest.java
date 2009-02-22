@@ -10,7 +10,6 @@ import org.jbookshelf.model.ModelFactory;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Author</b></em>'. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class AuthorTest
@@ -18,59 +17,56 @@ public class AuthorTest
 {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public static void main(
         String[] args )
     {
-        TestRunner.run( AuthorTest.class );
+        TestRunner.run(AuthorTest.class);
     }
 
     /**
-     * Constructs a new Author test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Constructs a new Author test case with the given name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public AuthorTest(
         String name )
     {
-        super( name );
+        super(name);
     }
 
     /**
-     * Returns the fixture for this Author test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Returns the fixture for this Author test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     @Override
     protected Author getFixture()
     {
-        return (Author) fixture;
+        return (Author)fixture;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see junit.framework.TestCase#setUp()
      * @generated
      */
     @Override
-    protected void setUp()
+    protected void setUp() throws Exception
     {
-        setFixture( ModelFactory.eINSTANCE.createAuthor() );
+        setFixture(ModelFactory.eINSTANCE.createAuthor());
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see junit.framework.TestCase#tearDown()
      * @generated
      */
     @Override
-    protected void tearDown()
+    protected void tearDown() throws Exception
     {
-        setFixture( null );
+        setFixture(null);
     }
 
 } // AuthorTest

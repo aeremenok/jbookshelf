@@ -26,11 +26,8 @@ import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Category;
-import org.jbookshelf.model.IndexFileFolder;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.PhysicalUnit;
-import org.jbookshelf.model.SingleFile;
-import org.jbookshelf.model.SingleFileFolder;
 
 /**
  * imports filesystem into {@link BookShelf}
@@ -88,8 +85,10 @@ public class FileImporter
     public static PhysicalUnit createPhysicalUnit(
         File file )
     {
+        PhysicalUnit physicalUnit = ModelFactory.eINSTANCE.createPhysicalUnit();
         if ( file.isDirectory() )
         {
+            physicalUnit.setDirectory( file );
             File[] files = file.listFiles( new FileFilter()
             {
                 public boolean accept(
@@ -102,44 +101,44 @@ public class FileImporter
 
             if ( files.length > 1 )
             { // at least one index file
-                IndexFileFolder indexFileFolder = ModelFactory.eINSTANCE.createIndexFileFolder();
-                indexFileFolder.setIndexFile( files[0] );
-                indexFileFolder.setIndexFolder( file );
-                return indexFileFolder;
+                physicalUnit.setFile( files[0] );
+                return physicalUnit;
             }
 
             File[] listFiles = file.listFiles();
-            if ( listFiles.length == 1 && listFiles[0].isFile() )
+            if ( listFiles.length == 1 && listFiles[0].isFile() &&
+            // zip file will be imported later
+                !listFiles[0].getName().toLowerCase().endsWith( ".zip" ) )
             { // simply single file
-                SingleFileFolder singleFileFolder = ModelFactory.eINSTANCE.createSingleFileFolder();
-                singleFileFolder.setFolder( file );
-                singleFileFolder.setSingleFile( listFiles[0] );
-                return singleFileFolder;
+                physicalUnit.setFile( listFiles[0] );
+                return physicalUnit;
             }
 
             File mainFile = getHtmlFile( file );
             if ( mainFile != null )
             { // file.html with file_files/
-                SingleFileFolder singleFileFolder = ModelFactory.eINSTANCE.createSingleFileFolder();
-                singleFileFolder.setFolder( file );
-                singleFileFolder.setSingleFile( mainFile );
-                return singleFileFolder;
+                physicalUnit.setFile( mainFile );
+                return physicalUnit;
             }
+
             return null;
         }
 
         // zip file
         if ( file.getName().toLowerCase().endsWith( ".zip" ) )
         {
-            ArchiveFile archiveFile = ModelFactory.eINSTANCE.createArchiveFile();
-            archiveFile.setArchiveFile( file );
-            return archiveFile;
+            physicalUnit = ModelFactory.eINSTANCE.createArchiveFile();
+            physicalUnit.setDirectory( file.getParentFile() );
+            physicalUnit.setFile( file );
+            // todo will be unpacked
+            ((ArchiveFile) physicalUnit).setArchiveFile( file );
+            return physicalUnit;
         }
 
         // single file
-        SingleFile singleFile = ModelFactory.eINSTANCE.createSingleFile();
-        singleFile.setFile( file );
-        return singleFile;
+        physicalUnit.setDirectory( file.getParentFile() );
+        physicalUnit.setFile( file );
+        return physicalUnit;
     }
 
     public static String cutExtension(
@@ -224,7 +223,7 @@ public class FileImporter
                 while ( iterator.hasNext() && book == null )
                 {
                     NameParser parser = iterator.next();
-                    book = bookFromName( parser, file, physicalUnit, bookShelf );
+                    book = bookFromName( parser, physicalUnit, bookShelf );
                 }
 
                 if ( book != null )
@@ -251,13 +250,12 @@ public class FileImporter
 
     private Book bookFromName(
         NameParser parser,
-        File file,
         PhysicalUnit physicalUnit,
         BookShelf bookShelf )
     {
         try
         {
-            parser.parse( cutExtension( file ) );
+            parser.parse( cutExtension( physicalUnit.getFile() ) );
 
             Author author = bookShelf.addAuthor( parser.getAuthorName() );
             Category category = bookShelf.addCategory( parser.getCategoryName() );

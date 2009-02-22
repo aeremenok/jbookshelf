@@ -15,6 +15,8 @@
  */
 package org.jbookshelf.model;
 
+import java.io.File;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -28,17 +30,55 @@ public interface PhysicalUnit
         EObject
 {
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * @model
+     * Returns the value of the '<em><b>Directory</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Directory</em>' attribute isn't clear, there really should be more of a description
+     * here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Directory</em>' attribute.
+     * @see #setDirectory(File)
+     * @see org.jbookshelf.model.ModelPackage#getPhysicalUnit_Directory()
+     * @model dataType="org.jbookshelf.model.File"
      * @generated
      */
-    void openFolder();
+    File getDirectory();
 
     /**
-     * open unit in default browser
-     * 
-     * @throws Exception
-     * @model
+     * Returns the value of the '<em><b>File</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>File</em>' attribute isn't clear, there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>File</em>' attribute.
+     * @see #setFile(File)
+     * @see org.jbookshelf.model.ModelPackage#getPhysicalUnit_File()
+     * @model dataType="org.jbookshelf.model.File"
+     * @generated
      */
-    void openUnit();
+    File getFile();
+
+    /**
+     * Sets the value of the '{@link org.jbookshelf.model.PhysicalUnit#getDirectory <em>Directory</em>}' attribute. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @param value the new value of the '<em>Directory</em>' attribute.
+     * @see #getDirectory()
+     * @generated
+     */
+    void setDirectory(
+        File value );
+
+    /**
+     * Sets the value of the '{@link org.jbookshelf.model.PhysicalUnit#getFile <em>File</em>}' attribute. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @param value the new value of the '<em>File</em>' attribute.
+     * @see #getFile()
+     * @generated
+     */
+    void setFile(
+        File value );
 }

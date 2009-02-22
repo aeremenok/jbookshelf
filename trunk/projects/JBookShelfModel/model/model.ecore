@@ -68,13 +68,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="comments" upperBound="-1"
         eType="#//Comment" containment="true" resolveProxies="false" eOpposite="#//Comment/subject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IndexFileFolder" eSuperTypes="#//PhysicalUnit">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="indexFile" eType="#//File"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="indexFolder" eType="#//File"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PhysicalUnit" abstract="true">
-    <eOperations name="openUnit"/>
-    <eOperations name="openFolder"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PhysicalUnit">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" eType="#//File"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="directory" eType="#//File"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Book" eSuperTypes="#//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"
@@ -83,14 +79,6 @@
         eType="#//PhysicalUnit" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="read" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SingleFile" eSuperTypes="#//PhysicalUnit">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" eType="#//File"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SingleFileFolder" eSuperTypes="#//PhysicalUnit">
-    <eOperations name="openFolder"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="folder" eType="#//File"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="singleFile" eType="#//File"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Unique" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

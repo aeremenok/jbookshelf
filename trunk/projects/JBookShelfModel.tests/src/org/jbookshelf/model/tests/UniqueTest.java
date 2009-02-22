@@ -9,7 +9,6 @@ import org.jbookshelf.model.Unique;
 
 /**
  * <!-- begin-user-doc --> A test case for the model object '<em><b>Unique</b></em>'. <!-- end-user-doc -->
- * 
  * @generated
  */
 public abstract class UniqueTest
@@ -17,26 +16,26 @@ public abstract class UniqueTest
 {
 
     /**
-     * The fixture for this Unique test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The fixture for this Unique test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     protected Unique fixture = null;
 
     /**
-     * Constructs a new Unique test case with the given name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Constructs a new Unique test case with the given name.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public UniqueTest(
         String name )
     {
-        super( name );
+        super(name);
     }
 
     /**
-     * Returns the fixture for this Unique test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Returns the fixture for this Unique test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     protected Unique getFixture()
@@ -45,8 +44,8 @@ public abstract class UniqueTest
     }
 
     /**
-     * Sets the fixture for this Unique test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Sets the fixture for this Unique test case.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     protected void setFixture(
