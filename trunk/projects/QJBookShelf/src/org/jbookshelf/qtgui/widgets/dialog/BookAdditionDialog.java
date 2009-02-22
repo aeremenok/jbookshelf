@@ -114,7 +114,7 @@ public class BookAdditionDialog
         if ( parameters != null )
         {
             addBook( parameters );
-            bookPanel.clear();
+            bookPanel.clear( false );
         }
     }
 
