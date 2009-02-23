@@ -95,7 +95,11 @@ public class ZIPHandler
             {
                 if ( file.isDirectory() )
                 {
-                    biggest = getBiggestFile( file );
+                    File biggestFile = getBiggestFile( file );
+                    if ( biggestFile.length() > biggest.length() )
+                    {
+                        biggest = biggestFile;
+                    }
                 }
                 else if ( file.length() > biggest.length() )
                 {

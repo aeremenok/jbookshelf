@@ -13,33 +13,42 @@ import org.jbookshelf.controller.ZIPHandler;
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.PhysicalUnit;
+import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.mozilla.universalchardet.UniversalDetector;
 
 import com.trolltech.qt.core.Qt.WindowState;
+import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QCloseEvent;
+import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QScrollBar;
-import com.trolltech.qt.gui.QTextEdit;
+import com.trolltech.qt.gui.QTextBrowser;
+import com.trolltech.qt.gui.QToolBar;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
 public class ReaderDialog
     extends QDialogExt
+    implements
+        JBookShelfConstants
 {
-    private final QTextEdit       textEdit   = new QTextEdit( this );
+    private final QTextBrowser    textEdit   = new QTextBrowser( this );
+    private final QAction         backward   = new QAction( new QIcon( ICONPATH + "go-previous.png" ), "", this );
+    private final QAction         forward    = new QAction( new QIcon( ICONPATH + "go-next.png" ), "", this );
+
     private final Book            book;
 
     private final static String[] extensions = { "txt", "html", "htm", "shtml" };
 
     public static byte[] getBytesFromFile(
-        File file )
+        final File file )
         throws IOException
     {
-        InputStream is = new FileInputStream( file );
+        final InputStream is = new FileInputStream( file );
 
         // Get the size of the file
-        long length = file.length();
+        final long length = file.length();
 
         if ( length > Integer.MAX_VALUE )
         {
@@ -48,7 +57,7 @@ public class ReaderDialog
         }
 
         // Create the byte array to hold the data
-        byte[] bytes = new byte[(int) length];
+        final byte[] bytes = new byte[(int) length];
 
         // Read in the bytes
         int offset = 0;
@@ -70,12 +79,12 @@ public class ReaderDialog
     }
 
     public static void open(
-        QWidget parent,
-        Book book )
+        final QWidget parent,
+        final Book book )
     {
         try
         {
-            File file = getFile( book );
+            final File file = getFile( book );
             if ( canBeOpened( file ) )
             {
                 new ReaderDialog( parent, book ).show();
@@ -85,7 +94,7 @@ public class ReaderDialog
                 URIOpener.browseFile( file );
             }
         }
-        catch ( Throwable e )
+        catch ( final Throwable e )
         {
             e.printStackTrace();
             QMessageBox
@@ -94,10 +103,10 @@ public class ReaderDialog
     }
 
     private static boolean canBeOpened(
-        File file )
+        final File file )
     {
-        String lowerCase = file.getName().toLowerCase();
-        for ( String string : extensions )
+        final String lowerCase = file.getName().toLowerCase();
+        for ( final String string : extensions )
         {
             if ( lowerCase.endsWith( "." + string ) )
             {
@@ -108,16 +117,16 @@ public class ReaderDialog
     }
 
     private static File getFile(
-        Book book )
+        final Book book )
     {
-        PhysicalUnit physical = book.getPhysical();
+        final PhysicalUnit physical = book.getPhysical();
         if ( physical instanceof ArchiveFile )
         {
-            ArchiveFile archiveFile = (ArchiveFile) physical;
+            final ArchiveFile archiveFile = (ArchiveFile) physical;
             if ( archiveFile.getArchiveFile() == null )
             { // unpack and remember the file
                 // todo waiting dialog
-                File zippedFileToOpen = ZIPHandler.getZippedFileToOpen( archiveFile.getFile() );
+                final File zippedFileToOpen = ZIPHandler.getZippedFileToOpen( archiveFile.getFile() );
                 archiveFile.setArchiveFile( zippedFileToOpen );
             }
             return archiveFile.getArchiveFile();
@@ -127,13 +136,13 @@ public class ReaderDialog
     }
 
     private static String guessEncoding(
-        File file )
+        final File file )
     {
-        UniversalDetector detector = new UniversalDetector( null );
+        final UniversalDetector detector = new UniversalDetector( null );
         try
         {
-            byte[] buf = new byte[4096];
-            FileInputStream fis = new FileInputStream( file );
+            final byte[] buf = new byte[4096];
+            final FileInputStream fis = new FileInputStream( file );
 
             int nread;
             while ( (nread = fis.read( buf )) > 0 && !detector.isDone() )
@@ -144,7 +153,7 @@ public class ReaderDialog
 
             return detector.getDetectedCharset();
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             e.printStackTrace();
         }
@@ -156,35 +165,38 @@ public class ReaderDialog
     }
 
     private static String printThrowable(
-        Throwable e )
+        final Throwable e )
     {
-        StringWriter stringWriter = new StringWriter();
+        final StringWriter stringWriter = new StringWriter();
         e.printStackTrace( new PrintWriter( stringWriter ) );
         return stringWriter.toString();
     }
 
     public ReaderDialog(
-        QWidget parent,
-        Book book )
+        final QWidget parent,
+        final Book book )
     {
         super( parent );
         this.book = book;
 
         initComponents();
+        initListeners();
     }
 
     public void retranslate()
     {
+        backward.setText( tr( "Backward" ) );
+        forward.setText( tr( "Forward" ) );
     }
 
     private String getContent(
-        File file )
+        final File file )
     {
         try
         {
             return new String( getBytesFromFile( file ), guessEncoding( file ) );
         }
-        catch ( IOException e )
+        catch ( final IOException e )
         {
             e.printStackTrace();
             return tr( "Error displaying file " ) + file.getAbsolutePath() + "\n\n" + printThrowable( e );
@@ -198,30 +210,47 @@ public class ReaderDialog
         setWindowState( WindowState.WindowMaximized );
 
         setLayout( new QVBoxLayout() );
+        final QToolBar toolBar = new QToolBar( this );
+        layout().addWidget( toolBar );
         layout().addWidget( textEdit );
-        textEdit.setReadOnly( true );
 
+        toolBar.addAction( backward );
+        toolBar.addAction( forward );
+
+        textEdit.setReadOnly( true );
         textEdit.setText( getContent( getFile( book ) ) );
+    }
+
+    private void initListeners()
+    {
         // wait for the size to be stabilized to scroll
         textEdit.verticalScrollBar().rangeChanged.connect( this, "rangeChanged(Integer,Integer)" );
+
+        textEdit.backwardAvailable.connect( backward, "setEnabled(boolean)" );
+        textEdit.forwardAvailable.connect( forward, "setEnabled(boolean)" );
+        backward.triggered.connect( textEdit, "backward()" );
+        forward.triggered.connect( textEdit, "forward()" );
+
+        backward.setEnabled( textEdit.isBackwardAvailable() );
+        forward.setEnabled( textEdit.isForwardAvailable() );
     }
 
     @SuppressWarnings( "unused" )
     private void rangeChanged(
-        Integer min,
-        Integer max )
+        final Integer min,
+        final Integer max )
     {
         // todo apply only at first change
-        QScrollBar scrollBar = textEdit.verticalScrollBar();
+        final QScrollBar scrollBar = textEdit.verticalScrollBar();
         scrollBar.setSliderPosition( (int) (book.getRead() * max) );
     }
 
     @Override
     protected void closeEvent(
-        QCloseEvent arg__1 )
+        final QCloseEvent arg__1 )
     {
         // save current position
-        QScrollBar scrollBar = textEdit.verticalScrollBar();
+        final QScrollBar scrollBar = textEdit.verticalScrollBar();
         book.setRead( (float) scrollBar.sliderPosition() / (float) scrollBar.maximum() );
 
         super.closeEvent( arg__1 );
