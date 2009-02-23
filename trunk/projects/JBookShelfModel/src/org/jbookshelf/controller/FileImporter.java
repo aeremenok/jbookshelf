@@ -130,8 +130,8 @@ public class FileImporter
             physicalUnit = ModelFactory.eINSTANCE.createArchiveFile();
             physicalUnit.setDirectory( file.getParentFile() );
             physicalUnit.setFile( file );
-            // todo will be unpacked
-            ((ArchiveFile) physicalUnit).setArchiveFile( file );
+            // will be unpacked later
+            ((ArchiveFile) physicalUnit).setArchiveFile( null );
             return physicalUnit;
         }
 
