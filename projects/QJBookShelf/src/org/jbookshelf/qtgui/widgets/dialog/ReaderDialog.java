@@ -20,6 +20,8 @@ import org.mozilla.universalchardet.UniversalDetector;
 import com.trolltech.qt.core.Qt.WindowState;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QCloseEvent;
+import com.trolltech.qt.gui.QFont;
+import com.trolltech.qt.gui.QFontComboBox;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QScrollBar;
@@ -33,13 +35,20 @@ public class ReaderDialog
     implements
         JBookShelfConstants
 {
-    private final QTextBrowser    textEdit   = new QTextBrowser( this );
-    private final QAction         backward   = new QAction( new QIcon( ICONPATH + "go-previous.png" ), "", this );
-    private final QAction         forward    = new QAction( new QIcon( ICONPATH + "go-next.png" ), "", this );
+    private final QTextBrowser    textEdit     = new QTextBrowser( this );
+    private final QAction         backward     = new QAction( new QIcon( ICONPATH + "go-previous.png" ), "", this );
+    private final QAction         forward      = new QAction( new QIcon( ICONPATH + "go-next.png" ), "", this );
+    private final QFontComboBox   fontComboBox = new QFontComboBox( this );
+    private final QAction         bookSettings =
+                                                   new QAction( new QIcon( ICONPATH + "document-properties.png" ), "",
+                                                       this );
+    private final QAction         bookmark     = new QAction( new QIcon( ICONPATH + "flag-yellow.png" ), "", this );
+    private final QAction         citation     = new QAction( new QIcon( ICONPATH + "knotes.png" ), "", this );
+    private final QAction         view         = new QAction( new QIcon( ICONPATH + "view-pim-notes.png" ), "", this );
 
     private final Book            book;
 
-    private final static String[] extensions = { "txt", "html", "htm", "shtml" };
+    private final static String[] extensions   = { "txt", "html", "htm", "shtml" };
 
     public static byte[] getBytesFromFile(
         final File file )
@@ -187,6 +196,23 @@ public class ReaderDialog
     {
         backward.setText( tr( "Backward" ) );
         forward.setText( tr( "Forward" ) );
+        bookSettings.setText( tr( "Edit book properties" ) );
+        bookmark.setText( tr( "Add bookmark" ) );
+        citation.setText( tr( "Add citation" ) );
+        view.setText( tr( "View bookmarks and citations" ) );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void editBook()
+    {
+        new BookEditDialog( this, book ).show();
+    }
+
+    @SuppressWarnings( "unused" )
+    private void fontChanged(
+        QFont font )
+    {
+        textEdit.setFont( fontComboBox.currentFont() );
     }
 
     private String getContent(
@@ -216,8 +242,17 @@ public class ReaderDialog
 
         toolBar.addAction( backward );
         toolBar.addAction( forward );
+        toolBar.addSeparator();
+        toolBar.addWidget( fontComboBox );
+        toolBar.addSeparator();
+        toolBar.addAction( bookSettings );
+        toolBar.addAction( bookmark );
+        toolBar.addAction( citation );
+        toolBar.addSeparator();
+        toolBar.addAction( view );
 
         textEdit.setReadOnly( true );
+        // todo break huge content into parts
         textEdit.setText( getContent( getFile( book ) ) );
     }
 
@@ -233,6 +268,12 @@ public class ReaderDialog
 
         backward.setEnabled( textEdit.isBackwardAvailable() );
         forward.setEnabled( textEdit.isForwardAvailable() );
+
+        fontComboBox.currentFontChanged.connect( this, "fontChanged(QFont)" );
+
+        bookSettings.triggered.connect( this, "editBook()" );
+
+        // todo bookmark, citation, view
     }
 
     @SuppressWarnings( "unused" )
