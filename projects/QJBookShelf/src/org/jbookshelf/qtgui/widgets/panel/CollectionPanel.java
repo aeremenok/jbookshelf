@@ -25,6 +25,7 @@ import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
+import org.jbookshelf.qtgui.widgets.ext.SearchTextField;
 import org.jbookshelf.qtgui.widgets.tree.AuthorTree;
 import org.jbookshelf.qtgui.widgets.tree.BookTree;
 import org.jbookshelf.qtgui.widgets.tree.CategoryTree;
@@ -60,7 +61,7 @@ public class CollectionPanel
     private QPushButton            searchButton    = new QPushButton( this );
     private QComboBox              isReadComboBox  = new QComboBox( this );
 
-    private QLineEdit              searchTextField = new QLineEdit( this );
+    private QLineEdit              searchTextField = new SearchTextField( this );
     private QTabWidget             viewTabbedPane  = new QTabWidget( this );
 
     public static CollectionPanel getInstance()
@@ -88,7 +89,6 @@ public class CollectionPanel
     public void retranslate()
     {
         searchButton.setText( tr( "Search" ) );
-        searchTextField.setText( tr( "search..." ) );
 
         viewTabbedPane.setTabText( 0, tr( "Books" ) );
         viewTabbedPane.setTabText( 1, tr( "Authors" ) );
