@@ -22,6 +22,7 @@ import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
+import org.jbookshelf.qtgui.widgets.ext.SearchTextField;
 import org.jbookshelf.qtgui.widgets.treepanel.CommentTreePanel;
 import org.jbookshelf.qtgui.widgets.treepanel.RelatedTreePanel;
 import org.jbookshelf.qtgui.widgets.treepanel.SearchableTreePanel;
@@ -47,7 +48,7 @@ public class RelatedPanel
 
     private final QPushButton         addButton       = new QPushButton( this );
     private final QPushButton         removeButton    = new QPushButton( this );
-    private final QLineEdit           searchTextField = new QLineEdit( this );
+    private final QLineEdit           searchTextField = new SearchTextField( this );
 
     private final QTabWidget          tabbedPane      = new QTabWidget( this );
     private final SearchableTreePanel commentPanel    = new CommentTreePanel( this );
@@ -97,8 +98,6 @@ public class RelatedPanel
 
     public void retranslate()
     {
-        searchTextField.setText( tr( "search..." ) );
-
         tabbedPane.setTabText( 0, tr( "Comments" ) );
         tabbedPane.setTabText( 1, tr( "Related" ) );
     }
