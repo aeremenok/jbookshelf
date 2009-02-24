@@ -19,6 +19,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jbookshelf.controller.FileImporter;
+import org.jbookshelf.controller.settings.JBookShelfSettings;
+import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.BookShelf;
@@ -56,11 +59,11 @@ public class BookPanel
         private final boolean  isRead;
 
         public Parameters(
-            String bookName,
-            String[] authorNames,
-            String[] categoryNames,
-            File file,
-            boolean isRead )
+            final String bookName,
+            final String[] authorNames,
+            final String[] categoryNames,
+            final File file,
+            final boolean isRead )
         {
             this.bookName = bookName;
             this.authorNames = authorNames;
@@ -95,23 +98,51 @@ public class BookPanel
         }
     }
 
-    private QLabel        authorLabel       = new QLabel();
-    private QLabel        categoryLabel     = new QLabel();
-    private QLabel        fileLabel         = new QLabel();
-    private QLabel        bookLabel         = new QLabel();
+    private final QLabel        authorLabel       = new QLabel();
+    private final QLabel        categoryLabel     = new QLabel();
+    private final QLabel        fileLabel         = new QLabel();
+    private final QLabel        bookLabel         = new QLabel();
 
-    private QLineEdit     bookTextField     = new QLineEdit( this );
-    private QLineEdit     authorTextField   = new QLineEdit( this );
-    private QLineEdit     categoryTextField = new QLineEdit( this );
+    private final QLineEdit     bookTextField     = new QLineEdit( this );
+    private final QLineEdit     authorTextField   = new QLineEdit( this );
+    private final QLineEdit     categoryTextField = new QLineEdit( this );
 
-    private FilePathEdit  filePathEdit      = new FilePathEdit( this );
+    private final FileImporter  fileImporter      = new FileImporter()
+                                                  {
+                                                      @Override
+                                                      protected void onImportFailure(
+                                                          final File file,
+                                                          final Exception e )
+                                                      {
+                                                          // let user enters the data
+                                                      }
 
-    private QCheckBox     isReadCheckBox    = new QCheckBox( this );
+                                                      @Override
+                                                      protected void onImportSuccess(
+                                                          final Book book )
+                                                      {
+                                                          setBook( book );
+                                                      }
+                                                  };
 
-    private List<QWidget> components        = new ArrayList<QWidget>();
+    private final FilePathEdit  filePathEdit      = new FilePathEdit( this )
+                                                  {
+                                                      @Override
+                                                      protected void fileSelected(
+                                                          final String fileName )
+                                                      {
+                                                          super.fileSelected( fileName );
+                                                          // try to parse book data
+                                                          BookPanel.this.fileSelected( fileName );
+                                                      }
+                                                  };
+
+    private final QCheckBox     isReadCheckBox    = new QCheckBox( this );
+
+    private final List<QWidget> components        = new ArrayList<QWidget>();
 
     public BookPanel(
-        QWidget parent )
+        final QWidget parent )
     {
         super( parent );
         initComponents();
@@ -124,9 +155,9 @@ public class BookPanel
      * @param hard indicates whether to clear file path
      */
     public void clear(
-        boolean hard )
+        final boolean hard )
     {
-        for ( QWidget component : components )
+        for ( final QWidget component : components )
         {
             if ( component instanceof QLineEdit )
             {
@@ -147,36 +178,36 @@ public class BookPanel
      */
     public Parameters extractParameters()
     {
-        String bookName = bookTextField.text();
-        String title = tr( "Error" );
+        final String bookName = bookTextField.text();
+        final String title = tr( "Error" );
         if ( bookName.equals( "" ) )
         {
             QMessageBox.critical( this, title, tr( "Book name not specified" ) );
             return null;
         }
 
-        String authorNames = authorTextField.text();
+        final String authorNames = authorTextField.text();
         if ( authorNames.equals( "" ) )
         {
             QMessageBox.critical( this, title, tr( "Author name not specified" ) );
             return null;
         }
 
-        String categoryNames = categoryTextField.text();
+        final String categoryNames = categoryTextField.text();
         if ( categoryNames.equals( "" ) )
         {
             QMessageBox.critical( this, title, tr( "Category name not specified" ) );
             return null;
         }
 
-        File file = new File( filePathEdit.text() );
+        final File file = new File( filePathEdit.text() );
         if ( !file.exists() )
         {
             QMessageBox.critical( this, title, tr( "File does not exist: " ) + file.getName() );
             return null;
         }
 
-        boolean isRead = isReadCheckBox.isChecked();
+        final boolean isRead = isReadCheckBox.isChecked();
 
         return new Parameters( bookName, authorNames.split( "," ), categoryNames.split( "," ), file, isRead );
     }
@@ -197,7 +228,7 @@ public class BookPanel
      * @param book a book to edit
      */
     public void setBook(
-        Book book )
+        final Book book )
     {
         // show book name
         bookTextField.setText( book.getName() );
@@ -205,7 +236,7 @@ public class BookPanel
         categoryTextField.setText( concat( book.getCategories() ) );
 
         // show file of the physical unit
-        String fileName = book.getPhysical().getFile().getAbsolutePath();
+        final String fileName = book.getPhysical().getFile().getAbsolutePath();
         filePathEdit.setText( fileName );
 
         // show whether is read
@@ -213,16 +244,16 @@ public class BookPanel
     }
 
     public void setBookFile(
-        File bookFile )
+        final File bookFile )
     {
         filePathEdit.setText( bookFile.getAbsolutePath() );
     }
 
     private String concat(
-        List<? extends Unique> list )
+        final List<? extends Unique> list )
     {
-        StringBuilder builder = new StringBuilder();
-        for ( Unique unique : list )
+        final StringBuilder builder = new StringBuilder();
+        for ( final Unique unique : list )
         {
             if ( unique != null )
             {
@@ -237,9 +268,17 @@ public class BookPanel
         return builder.toString();
     }
 
+    private void fileSelected(
+        final String fileName )
+    {
+        final String mask = Settings.getInstance().getProperty( JBookShelfSettings.IMPORT_MASK );
+        final String[] masks = mask.split( "/" );
+        fileImporter.importFiles( masks, Storage.getBookShelf(), new File( fileName ) );
+    }
+
     private void initComponents()
     {
-        QGridLayout layout = new QGridLayout();
+        final QGridLayout layout = new QGridLayout();
         setLayout( layout );
 
         layout.addWidget( bookLabel, 0, 0 );
@@ -257,7 +296,7 @@ public class BookPanel
         layout.addWidget( isReadCheckBox, 4, 0 );
 
         // hanging in autocompletion
-        BookShelf bookShelf = Storage.getBookShelf();
+        final BookShelf bookShelf = Storage.getBookShelf();
         CommaSeparatedCompleter.decorate( authorTextField, bookShelf.getAuthors() );
         CommaSeparatedCompleter.decorate( categoryTextField, bookShelf.getCategories() );
     }

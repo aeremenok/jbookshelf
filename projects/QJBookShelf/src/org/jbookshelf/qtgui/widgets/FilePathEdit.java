@@ -95,6 +95,7 @@ public class FilePathEdit
             protected void filesSelected()
             {
                 setText( selectedFiles().get( 0 ) );
+                fileSelected( selectedFiles().get( 0 ) );
             }
         };
         fileDialog.selectFile( text() );
@@ -132,5 +133,10 @@ public class FilePathEdit
     {
         Settings.getInstance().setProperty( getKey(), lastPath );
         Settings.getInstance().save();
+    }
+
+    protected void fileSelected(
+        @SuppressWarnings( "unused" ) String fileName )
+    {
     }
 }
