@@ -13,6 +13,7 @@ import org.jbookshelf.controller.ZIPHandler;
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.PhysicalUnit;
+import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.mozilla.universalchardet.UniversalDetector;
@@ -132,11 +133,16 @@ public class ReaderDialog
         if ( physical instanceof ArchiveFile )
         {
             final ArchiveFile archiveFile = (ArchiveFile) physical;
-            if ( archiveFile.getArchiveFile() == null )
+            if ( archiveFile.getArchiveFile() == null || !archiveFile.getArchiveFile().exists() )
             { // unpack and remember the file
-                // todo waiting dialog
+                QMessageBox messageBox = new QMessageBox( MainWindow.getInstance() );
+                messageBox.setWindowTitle( "Unpacking. Please wait..." );
+                messageBox.show();
+
                 final File zippedFileToOpen = ZIPHandler.getZippedFileToOpen( archiveFile.getFile() );
                 archiveFile.setArchiveFile( zippedFileToOpen );
+
+                messageBox.hide();
             }
             return archiveFile.getArchiveFile();
         }
@@ -210,7 +216,7 @@ public class ReaderDialog
 
     @SuppressWarnings( "unused" )
     private void fontChanged(
-        QFont font )
+        final QFont font )
     {
         textEdit.setFont( fontComboBox.currentFont() );
     }
