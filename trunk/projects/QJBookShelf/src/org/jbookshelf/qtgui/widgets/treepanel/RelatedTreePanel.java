@@ -23,7 +23,9 @@ import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 import org.jbookshelf.qtgui.widgets.tree.UniqueNode;
 
+import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QTreeWidgetItem;
 import com.trolltech.qt.gui.QVBoxLayout;
 
 /**
@@ -81,7 +83,7 @@ public class RelatedTreePanel
         root.addChild( new UniqueNode( relatedUnique ) );
         searchableTree.setCurrentItem( root.child( root.childCount() - 1 ) );
 
-        QMessageBox.information( this, tr( "Linked" ), relatedUnique.getName() + tr( " now relates to " ) +
+        QMessageBox.information( this, tr( "Linked" ), relatedUnique.getName() + " " + tr( "now relates to" ) + " " +
             unique.getName() );
         selectedUnique( selectedUnique );
     }
@@ -126,13 +128,6 @@ public class RelatedTreePanel
         }
     }
 
-    private void selectedUnique(
-        Unique unique )
-    {
-        this.selectedUnique = unique;
-        drawUniques( selectedUnique.getRelated() );
-    }
-
     private void cleanRoot()
     {
         for ( int i = 0; i < root.childCount(); i++ )
@@ -156,6 +151,26 @@ public class RelatedTreePanel
     {
         searchableTree.activated.connect( relatedPanel, "focusGained()" );
         searchableTree.itemSelectionChanged.connect( relatedPanel, "focusGained()" );
+        searchableTree.doubleClicked.connect( this, "navigate(QModelIndex)" );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void navigate(
+        QModelIndex index )
+    {
+        List<QTreeWidgetItem> selectedItems = searchableTree.selectedItems();
+        if ( selectedItems.size() > 0 && selectedItems.get( 0 ) instanceof UniqueNode )
+        {
+            UniqueNode node = (UniqueNode) selectedItems.get( 0 );
+            CollectionPanel.getInstance().selectUnique( node.getUnique() );
+        }
+    }
+
+    private void selectedUnique(
+        Unique unique )
+    {
+        this.selectedUnique = unique;
+        drawUniques( selectedUnique.getRelated() );
     }
 
     protected void initComponents()

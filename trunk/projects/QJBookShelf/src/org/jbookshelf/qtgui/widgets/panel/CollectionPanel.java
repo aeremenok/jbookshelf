@@ -21,6 +21,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import org.jbookshelf.controller.storage.Storage;
+import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.logic.Translator;
@@ -53,16 +55,16 @@ public class CollectionPanel
 {
     private static CollectionPanel instance;
 
-    private CollectionTree         authorTree      = new AuthorTree();
-    private CollectionTree         bookTree        = new BookTree();
-    private CollectionTree         categoryTree    = new CategoryTree();
+    private final CollectionTree   authorTree      = new AuthorTree();
+    private final CollectionTree   bookTree        = new BookTree();
+    private final CollectionTree   categoryTree    = new CategoryTree();
 
-    private QPushButton            cleanButton     = new QPushButton( this );
-    private QPushButton            searchButton    = new QPushButton( this );
-    private QComboBox              isReadComboBox  = new QComboBox( this );
+    private final QPushButton      cleanButton     = new QPushButton( this );
+    private final QPushButton      searchButton    = new QPushButton( this );
+    private final QComboBox        isReadComboBox  = new QComboBox( this );
 
-    private QLineEdit              searchTextField = new SearchTextField( this );
-    private QTabWidget             viewTabbedPane  = new QTabWidget( this );
+    private final QLineEdit        searchTextField = new SearchTextField( this );
+    private final QTabWidget       viewTabbedPane  = new QTabWidget( this );
 
     public static CollectionPanel getInstance()
     {
@@ -109,12 +111,12 @@ public class CollectionPanel
         {
             @Override
             public void mouseClicked(
-                MouseEvent e )
+                final MouseEvent e )
             {
-                QTreeWidgetItem node = activeTree.selectedItems().get( 0 );
+                final QTreeWidgetItem node = activeTree.selectedItems().get( 0 );
                 if ( node instanceof UniqueNode )
                 {
-                    UniqueNode uniqueNode = (UniqueNode) node;
+                    final UniqueNode uniqueNode = (UniqueNode) node;
                     relatedTreePanel.relatedSelectionFinished( uniqueNode.getUnique(), selectedUnique );
                     activeTree.removeMouseListener( this );
                 }
@@ -127,12 +129,25 @@ public class CollectionPanel
         {
             @Override
             public void focusLost(
-                FocusEvent e )
+                final FocusEvent e )
             {
                 activeTree.removeMouseListener( mouseAdapter );
                 activeTree.removeFocusListener( this );
             }
         } );
+    }
+
+    /**
+     * define what unique is and select it in a proper tree
+     * 
+     * @param unique what to select
+     */
+    public void selectUnique(
+        final Unique unique )
+    {
+        final int i = unique instanceof Book ? 0 : unique instanceof Author ? 1 : 2;
+        viewTabbedPane.setCurrentIndex( i );
+        getActiveTree().selectUnique( unique );
     }
 
     public void updateTree()
@@ -154,7 +169,7 @@ public class CollectionPanel
 
     private void initComponents()
     {
-        QGridLayout layout = new QGridLayout();
+        final QGridLayout layout = new QGridLayout();
         setLayout( layout );
 
         cleanButton.setIcon( new QIcon( ICONPATH + "edit-clear-locationbar-rtl.png" ) );
@@ -188,12 +203,12 @@ public class CollectionPanel
     @SuppressWarnings( "unused" )
     private void searchButtonActionPerformed()
     {
-        String text = searchTextField.text();
-        CollectionTree tree = getActiveTree();
+        final String text = searchTextField.text();
+        final CollectionTree tree = getActiveTree();
         if ( tree instanceof BookTree )
         {
             Boolean isRead = null;
-            int index = isReadComboBox.currentIndex();
+            final int index = isReadComboBox.currentIndex();
             if ( index == 1 )
             {
                 isRead = true;
