@@ -28,8 +28,10 @@ import org.jbookshelf.qtgui.ToolBar;
 import org.jbookshelf.qtgui.logic.SourcesUniqueSelection;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.menu.CollectionTreeMenu;
+import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
+import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.gui.QContextMenuEvent;
 import com.trolltech.qt.gui.QFocusEvent;
 import com.trolltech.qt.gui.QTreeWidget;
@@ -129,6 +131,21 @@ public abstract class CollectionTree
         listeners.remove( listener );
     }
 
+    public void selectUnique(
+        Unique unique )
+    {
+        clearSelection();
+        for ( int i = 0; i < root.childCount(); i++ )
+        {
+            UniqueNode child = (UniqueNode) root.child( i );
+            if ( child.getUnique().equals( unique ) )
+            {
+                child.setSelected( true );
+                return;
+            }
+        }
+    }
+
     public void showResult(
         List<? extends Unique> uniques )
     {
@@ -214,6 +231,7 @@ public abstract class CollectionTree
         itemDoubleClicked.connect( this, "fireDoubleClicked(QTreeWidgetItem, Integer)" );
         itemSelectionChanged.connect( this, "itemSelectionChanged()" );
         itemExpanded.connect( this, "onExpand(QTreeWidgetItem)" );
+        doubleClicked.connect( this, "navigate(QModelIndex)" );
     }
 
     @SuppressWarnings( "unused" )
@@ -229,6 +247,20 @@ public abstract class CollectionTree
         }
 
         fireSelectedUniques( uniques );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void navigate(
+        QModelIndex index )
+    {
+        if ( selectedItems().size() > 0 )
+        {
+            QTreeWidgetItem item = selectedItems().get( 0 );
+            if ( item instanceof UniqueNode && !item.parent().equals( root ) )
+            { // leaf doubleclicked
+                CollectionPanel.getInstance().selectUnique( ((UniqueNode) item).getUnique() );
+            }
+        }
     }
 
     @SuppressWarnings( "unused" )
