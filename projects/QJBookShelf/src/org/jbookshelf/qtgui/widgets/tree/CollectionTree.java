@@ -155,7 +155,7 @@ public abstract class CollectionTree
 
         for ( Unique unique : uniques )
         {
-            UniqueNode parent = new UniqueNode( unique );
+            UniqueNode parent = createNode( unique );
             parent.setChildIndicatorPolicy( ChildIndicatorPolicy.ShowIndicator );
             root.addChild( parent );
         }
@@ -220,7 +220,6 @@ public abstract class CollectionTree
     {
         setSelectionMode( SelectionMode.ExtendedSelection );
         root = invisibleRootItem();
-        header().hide();
     }
 
     private void initListeners()
@@ -313,6 +312,12 @@ public abstract class CollectionTree
             CollectionTreeMenu menu = new CollectionTreeMenu( uniques );
             menu.exec( arg__1.globalPos() );
         }
+    }
+
+    protected UniqueNode createNode(
+        Unique unique )
+    {
+        return new UniqueNode( unique );
     }
 
     @Override
