@@ -15,11 +15,15 @@
  */
 package org.jbookshelf.qtgui.widgets.tree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EReference;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.ModelPackage;
+import org.jbookshelf.model.Unique;
 
 import com.trolltech.qt.gui.QTreeWidgetItem;
 
@@ -31,6 +35,18 @@ import com.trolltech.qt.gui.QTreeWidgetItem;
 public class AuthorTree
     extends CollectionTree
 {
+    public AuthorTree()
+    {
+        super();
+        setColumnCount( 2 );
+        List<String> list = new ArrayList<String>();
+        list.add( tr( "Name" ) );
+        list.add( tr( "Category" ) );
+        setHeaderLabels( list );
+        setColumnWidth( 0, 400 );
+        setColumnWidth( 1, 40 );
+    }
+
     @Override
     protected void addChildren(
         UniqueNode parent )
@@ -59,6 +75,20 @@ public class AuthorTree
         {
             parent.addChild( categories );
         }
+    }
+
+    @Override
+    protected UniqueNode createNode(
+        Unique unique )
+    {
+        UniqueNode node = super.createNode( unique );
+        Author author = (Author) unique;
+        List<Category> categories = author.getCategories();
+        if ( categories.size() > 0 )
+        {
+            node.setText( 1, categories.get( 0 ).getName() );
+        }
+        return node;
     }
 
     @Override

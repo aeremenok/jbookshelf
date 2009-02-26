@@ -15,11 +15,15 @@
  */
 package org.jbookshelf.qtgui.widgets.tree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EReference;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.ModelPackage;
+import org.jbookshelf.model.Unique;
 
 import com.trolltech.qt.gui.QTreeWidgetItem;
 
@@ -31,6 +35,21 @@ import com.trolltech.qt.gui.QTreeWidgetItem;
 public class BookTree
     extends CollectionTree
 {
+    public BookTree()
+    {
+        super();
+        setColumnCount( 3 );
+
+        List<String> list = new ArrayList<String>();
+        list.add( tr( "Name" ) );
+        list.add( tr( "Author" ) );
+        list.add( tr( "Category" ) );
+        setHeaderLabels( list );
+        setColumnWidth( 0, 300 );
+        setColumnWidth( 1, 100 );
+        setColumnWidth( 2, 40 );
+    }
+
     @Override
     protected void addChildren(
         UniqueNode parent )
@@ -59,6 +78,25 @@ public class BookTree
         {
             parent.addChild( categories );
         }
+    }
+
+    @Override
+    protected UniqueNode createNode(
+        Unique unique )
+    {
+        UniqueNode node = super.createNode( unique );
+        Book book = (Book) unique;
+        List<Category> categories = book.getCategories();
+        if ( categories.size() > 0 )
+        {
+            node.setText( 2, categories.get( 0 ).getName() );
+        }
+        List<Author> authors = book.getAuthors();
+        if ( authors.size() > 0 )
+        {
+            node.setText( 1, authors.get( 0 ).getName() );
+        }
+        return node;
     }
 
     @Override

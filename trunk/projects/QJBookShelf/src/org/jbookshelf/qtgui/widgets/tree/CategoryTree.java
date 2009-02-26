@@ -15,6 +15,9 @@
  */
 package org.jbookshelf.qtgui.widgets.tree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EReference;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Categorizable;
@@ -31,6 +34,15 @@ import com.trolltech.qt.gui.QTreeWidgetItem;
 public class CategoryTree
     extends CollectionTree
 {
+
+    public CategoryTree()
+    {
+        super();
+        List<String> list = new ArrayList<String>();
+        list.add( tr( "Name" ) );
+        setHeaderLabels( list );
+    }
+
     @Override
     protected void addChildren(
         UniqueNode parent )

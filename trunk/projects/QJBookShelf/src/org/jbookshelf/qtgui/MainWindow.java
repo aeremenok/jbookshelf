@@ -61,7 +61,7 @@ public class MainWindow
     {
         QApplication.initialize( args );
 
-        QCoreApplication.setApplicationVersion( "0.3b2" );
+        QCoreApplication.setApplicationVersion( "0.4b1" );
         QCoreApplication.setApplicationName( "JBookShelf" );
 
         getInstance().show();
@@ -93,8 +93,8 @@ public class MainWindow
         setWindowIcon( new QIcon( ICONPATH + "logo-64.png" ) );
 
         QRect geometry = geometry();
-        geometry.setWidth( 800 );
-        geometry.setHeight( 600 );
+        geometry.setWidth( 1000 );
+        geometry.setHeight( 700 );
         setGeometry( geometry );
         addToolBar( ToolBar.getInstance() );
 
