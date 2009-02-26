@@ -32,6 +32,8 @@ import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
 import com.trolltech.qt.core.QModelIndex;
+import com.trolltech.qt.gui.QBrush;
+import com.trolltech.qt.gui.QColor;
 import com.trolltech.qt.gui.QContextMenuEvent;
 import com.trolltech.qt.gui.QFocusEvent;
 import com.trolltech.qt.gui.QTreeWidget;
@@ -49,6 +51,9 @@ public abstract class CollectionTree
     implements
         SourcesUniqueSelection
 {
+    protected final static QBrush         GRAY           = new QBrush( QColor.fromRgb( 210, 210, 210 ) );
+    protected final static QBrush         WHITE          = new QBrush( QColor.white );
+
     private List<UniqueSelectionListener> listeners      = new ArrayList<UniqueSelectionListener>();
     private List<FocusListener>           focusListeners = new ArrayList<FocusListener>();
     private List<MouseListener>           mouseListeners = new ArrayList<MouseListener>();

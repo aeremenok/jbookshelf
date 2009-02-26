@@ -16,12 +16,15 @@
 package org.jbookshelf.qtgui.widgets.tree;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EReference;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Category;
+import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.ModelPackage;
 import org.jbookshelf.model.Unique;
 
@@ -35,6 +38,11 @@ import com.trolltech.qt.gui.QTreeWidgetItem;
 public class BookTree
     extends CollectionTree
 {
+    /**
+     * helps to guess if the next book has the same author as previous
+     */
+    private Set<Author> uniqueAuthors = new HashSet<Author>();
+
     public BookTree()
     {
         super();
@@ -48,6 +56,14 @@ public class BookTree
         setColumnWidth( 0, 300 );
         setColumnWidth( 1, 100 );
         setColumnWidth( 2, 40 );
+    }
+
+    @Override
+    public void showResult(
+        List<? extends Unique> uniques )
+    {
+        uniqueAuthors.clear();
+        super.showResult( uniques );
     }
 
     @Override
@@ -95,6 +111,22 @@ public class BookTree
         if ( authors.size() > 0 )
         {
             node.setText( 1, authors.get( 0 ).getName() );
+            uniqueAuthors.add( authors.get( 0 ) );
+        }
+        else
+        { // keep the order - add a dummy
+            uniqueAuthors.add( ModelFactory.eINSTANCE.createAuthor() );
+        }
+
+        if ( uniqueAuthors.size() % 2 == 0 )
+        {
+            node.setBackground( 0, GRAY );
+            node.setBackground( 1, GRAY );
+            node.setBackground( 2, GRAY );
+
+            node.setForeground( 0, WHITE );
+            node.setForeground( 1, WHITE );
+            node.setForeground( 2, WHITE );
         }
         return node;
     }
@@ -104,5 +136,4 @@ public class BookTree
     {
         return ModelPackage.eINSTANCE.getBookShelf_ReadingUnits();
     }
-
 }
