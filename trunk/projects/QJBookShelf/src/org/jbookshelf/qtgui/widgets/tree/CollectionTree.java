@@ -32,8 +32,6 @@ import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
 import com.trolltech.qt.core.QModelIndex;
-import com.trolltech.qt.gui.QBrush;
-import com.trolltech.qt.gui.QColor;
 import com.trolltech.qt.gui.QContextMenuEvent;
 import com.trolltech.qt.gui.QFocusEvent;
 import com.trolltech.qt.gui.QTreeWidget;
@@ -51,19 +49,16 @@ public abstract class CollectionTree
     implements
         SourcesUniqueSelection
 {
-    protected final static QBrush         GRAY           = new QBrush( QColor.fromRgb( 210, 210, 210 ) );
-    protected final static QBrush         WHITE          = new QBrush( QColor.white );
+    private final List<UniqueSelectionListener> listeners      = new ArrayList<UniqueSelectionListener>();
+    private final List<FocusListener>           focusListeners = new ArrayList<FocusListener>();
+    private final List<MouseListener>           mouseListeners = new ArrayList<MouseListener>();
 
-    private List<UniqueSelectionListener> listeners      = new ArrayList<UniqueSelectionListener>();
-    private List<FocusListener>           focusListeners = new ArrayList<FocusListener>();
-    private List<MouseListener>           mouseListeners = new ArrayList<MouseListener>();
-
-    protected QTreeWidgetItem             root;
+    protected QTreeWidgetItem                   root;
 
     public static void removeChildren(
-        QTreeWidgetItem parent )
+        final QTreeWidgetItem parent )
     {
-        int childCount = parent.childCount();
+        final int childCount = parent.childCount();
         for ( int i = 0; i < childCount; i++ )
         {
             parent.removeChild( parent.child( 0 ) );
@@ -82,46 +77,46 @@ public abstract class CollectionTree
     }
 
     public void addFocusListener(
-        FocusListener focusListener )
+        final FocusListener focusListener )
     {
         focusListeners.add( focusListener );
     }
 
     public void addMouseListener(
-        MouseListener mouseListener )
+        final MouseListener mouseListener )
     {
         mouseListeners.add( mouseListener );
     }
 
     public void addSelectionListener(
-        UniqueSelectionListener listener )
+        final UniqueSelectionListener listener )
     {
         listeners.add( listener );
     }
 
     public void removeFocusListener(
-        FocusListener focusListener )
+        final FocusListener focusListener )
     {
         focusListeners.remove( focusListener );
     }
 
     public void removeMouseListener(
-        MouseListener mouseListener )
+        final MouseListener mouseListener )
     {
         mouseListeners.remove( mouseListener );
     }
 
     public void removeSelectedItems()
     {
-        for ( QTreeWidgetItem item : selectedItems() )
+        for ( final QTreeWidgetItem item : selectedItems() )
         {
             if ( item instanceof UniqueNode )
             {
                 // search recursively for its nodes
-                List<UniqueNode> nodes = new ArrayList<UniqueNode>();
+                final List<UniqueNode> nodes = new ArrayList<UniqueNode>();
                 findUniqueNodes( nodes, root, ((UniqueNode) item).getUnique() );
                 // remove all of them
-                for ( UniqueNode node : nodes )
+                for ( final UniqueNode node : nodes )
                 {
                     removeFromParent( node );
                     Storage.getBookShelf().removeUnique( node.getUnique() );
@@ -131,18 +126,18 @@ public abstract class CollectionTree
     }
 
     public void removeSelectionListener(
-        UniqueSelectionListener listener )
+        final UniqueSelectionListener listener )
     {
         listeners.remove( listener );
     }
 
     public void selectUnique(
-        Unique unique )
+        final Unique unique )
     {
         clearSelection();
         for ( int i = 0; i < root.childCount(); i++ )
         {
-            UniqueNode child = (UniqueNode) root.child( i );
+            final UniqueNode child = (UniqueNode) root.child( i );
             if ( child.getUnique().equals( unique ) )
             {
                 child.setSelected( true );
@@ -152,15 +147,15 @@ public abstract class CollectionTree
     }
 
     public void showResult(
-        List<? extends Unique> uniques )
+        final List<? extends Unique> uniques )
     {
         clearSelection();
 
         removeChildren( root );
 
-        for ( Unique unique : uniques )
+        for ( final Unique unique : uniques )
         {
-            UniqueNode parent = createNode( unique );
+            final UniqueNode parent = createNode( unique );
             parent.setChildIndicatorPolicy( ChildIndicatorPolicy.ShowIndicator );
             root.addChild( parent );
         }
@@ -170,7 +165,7 @@ public abstract class CollectionTree
 
     @SuppressWarnings( "unchecked" )
     public void update(
-        BookShelf bookShelf )
+        final BookShelf bookShelf )
     {
         showResult( (List<Unique>) bookShelf.eGet( getReference() ) );
     }
@@ -183,13 +178,13 @@ public abstract class CollectionTree
      * @param unique what to search
      */
     private void findUniqueNodes(
-        List<UniqueNode> list,
-        QTreeWidgetItem parent,
-        Unique unique )
+        final List<UniqueNode> list,
+        final QTreeWidgetItem parent,
+        final Unique unique )
     {
         if ( parent instanceof UniqueNode )
         {
-            UniqueNode uniqueNode = (UniqueNode) parent;
+            final UniqueNode uniqueNode = (UniqueNode) parent;
             if ( uniqueNode.getUnique().equals( unique ) )
             {
                 list.add( uniqueNode );
@@ -203,19 +198,19 @@ public abstract class CollectionTree
 
     @SuppressWarnings( "unused" )
     private void fireDoubleClicked(
-        QTreeWidgetItem item,
-        Integer index )
+        final QTreeWidgetItem item,
+        final Integer index )
     {
-        for ( MouseListener listener : mouseListeners )
+        for ( final MouseListener listener : mouseListeners )
         {
             listener.mouseClicked( null );
         }
     }
 
     private void fireSelectedUniques(
-        List<Unique> uniques )
+        final List<Unique> uniques )
     {
-        for ( UniqueSelectionListener listener : listeners )
+        for ( final UniqueSelectionListener listener : listeners )
         {
             listener.selectedUniques( uniques );
         }
@@ -223,6 +218,7 @@ public abstract class CollectionTree
 
     private void initComponents()
     {
+        setSortingEnabled( true );
         setSelectionMode( SelectionMode.ExtendedSelection );
         root = invisibleRootItem();
     }
@@ -241,8 +237,8 @@ public abstract class CollectionTree
     @SuppressWarnings( "unused" )
     private void itemSelectionChanged()
     {
-        List<Unique> uniques = new ArrayList<Unique>();
-        for ( QTreeWidgetItem node : selectedItems() )
+        final List<Unique> uniques = new ArrayList<Unique>();
+        for ( final QTreeWidgetItem node : selectedItems() )
         {
             if ( node instanceof UniqueNode )
             {
@@ -255,11 +251,11 @@ public abstract class CollectionTree
 
     @SuppressWarnings( "unused" )
     private void navigate(
-        QModelIndex index )
+        final QModelIndex index )
     {
         if ( selectedItems().size() > 0 )
         {
-            QTreeWidgetItem item = selectedItems().get( 0 );
+            final QTreeWidgetItem item = selectedItems().get( 0 );
             if ( item instanceof UniqueNode && !item.parent().equals( root ) )
             { // leaf doubleclicked
                 CollectionPanel.getInstance().selectUnique( ((UniqueNode) item).getUnique() );
@@ -269,11 +265,11 @@ public abstract class CollectionTree
 
     @SuppressWarnings( "unused" )
     private void onExpand(
-        QTreeWidgetItem parent )
+        final QTreeWidgetItem parent )
     {
         if ( parent instanceof UniqueNode )
         {
-            UniqueNode uniqueNode = (UniqueNode) parent;
+            final UniqueNode uniqueNode = (UniqueNode) parent;
             if ( uniqueNode.childCount() == 0 )
             {
                 addChildren( uniqueNode );
@@ -287,7 +283,7 @@ public abstract class CollectionTree
      * @param node a node to remove
      */
     private void removeFromParent(
-        QTreeWidgetItem node )
+        final QTreeWidgetItem node )
     {
         QTreeWidgetItem parent = node.parent();
         if ( parent == null )
@@ -302,10 +298,10 @@ public abstract class CollectionTree
 
     @Override
     protected void contextMenuEvent(
-        QContextMenuEvent arg__1 )
+        final QContextMenuEvent arg__1 )
     {
-        List<Unique> uniques = new ArrayList<Unique>();
-        for ( QTreeWidgetItem item : selectedItems() )
+        final List<Unique> uniques = new ArrayList<Unique>();
+        for ( final QTreeWidgetItem item : selectedItems() )
         {
             if ( item instanceof UniqueNode )
             {
@@ -314,23 +310,23 @@ public abstract class CollectionTree
         }
         if ( uniques.size() > 0 )
         {
-            CollectionTreeMenu menu = new CollectionTreeMenu( uniques );
+            final CollectionTreeMenu menu = new CollectionTreeMenu( uniques );
             menu.exec( arg__1.globalPos() );
         }
     }
 
     protected UniqueNode createNode(
-        Unique unique )
+        final Unique unique )
     {
         return new UniqueNode( unique );
     }
 
     @Override
     protected void focusInEvent(
-        QFocusEvent event )
+        final QFocusEvent event )
     {
         super.focusInEvent( event );
-        for ( FocusListener listener : focusListeners )
+        for ( final FocusListener listener : focusListeners )
         {
             listener.focusGained( null );
         }
@@ -338,10 +334,10 @@ public abstract class CollectionTree
 
     @Override
     protected void focusOutEvent(
-        QFocusEvent event )
+        final QFocusEvent event )
     {
         super.focusOutEvent( event );
-        for ( FocusListener listener : focusListeners )
+        for ( final FocusListener listener : focusListeners )
         {
             listener.focusLost( null );
         }
