@@ -29,14 +29,33 @@ public interface PhysicalUnit
     extends
         EObject
 {
+    String INTERNAL_VIEWER = "internal";
+    String SYSTEM_VIEWER   = "system";
+
     /**
-     * Returns the value of the '<em><b>Directory</b></em>' attribute.
-     * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Charset</b></em>' attribute. <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Charset</em>' attribute isn't clear, there really should be more of a description
+     * here...
+     * </p>
+     * <!-- end-user-doc -->
+     * 
+     * @return the value of the '<em>Charset</em>' attribute.
+     * @see #setCharset(String)
+     * @see org.jbookshelf.model.ModelPackage#getPhysicalUnit_Charset()
+     * @model
+     * @generated
+     */
+    String getCharset();
+
+    /**
+     * Returns the value of the '<em><b>Directory</b></em>' attribute. <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Directory</em>' attribute isn't clear, there really should be more of a description
      * here...
      * </p>
      * <!-- end-user-doc -->
+     * 
      * @return the value of the '<em>Directory</em>' attribute.
      * @see #setDirectory(File)
      * @see org.jbookshelf.model.ModelPackage#getPhysicalUnit_Directory()
@@ -46,12 +65,12 @@ public interface PhysicalUnit
     File getDirectory();
 
     /**
-     * Returns the value of the '<em><b>File</b></em>' attribute.
-     * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>File</b></em>' attribute. <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>File</em>' attribute isn't clear, there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * 
      * @return the value of the '<em>File</em>' attribute.
      * @see #setFile(File)
      * @see org.jbookshelf.model.ModelPackage#getPhysicalUnit_File()
@@ -59,6 +78,33 @@ public interface PhysicalUnit
      * @generated
      */
     File getFile();
+
+    /**
+     * Returns the value of the '<em><b>Viewer</b></em>' attribute. <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Viewer</em>' attribute isn't clear, there really should be more of a description
+     * here...
+     * </p>
+     * <!-- end-user-doc -->
+     * 
+     * @return the value of the '<em>Viewer</em>' attribute.
+     * @see #setViewer(String)
+     * @see org.jbookshelf.model.ModelPackage#getPhysicalUnit_Viewer()
+     * @model
+     * @generated
+     */
+    String getViewer();
+
+    /**
+     * Sets the value of the '{@link org.jbookshelf.model.PhysicalUnit#getCharset <em>Charset</em>}' attribute. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @param value the new value of the '<em>Charset</em>' attribute.
+     * @see #getCharset()
+     * @generated
+     */
+    void setCharset(
+        String value );
 
     /**
      * Sets the value of the '{@link org.jbookshelf.model.PhysicalUnit#getDirectory <em>Directory</em>}' attribute. <!--
@@ -81,4 +127,15 @@ public interface PhysicalUnit
      */
     void setFile(
         File value );
+
+    /**
+     * Sets the value of the '{@link org.jbookshelf.model.PhysicalUnit#getViewer <em>Viewer</em>}' attribute. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @param value the new value of the '<em>Viewer</em>' attribute.
+     * @see #getViewer()
+     * @generated
+     */
+    void setViewer(
+        String value );
 }

@@ -21,11 +21,13 @@ import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.PhysicalUnit;
+import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel.Parameters;
 
+import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
@@ -40,16 +42,16 @@ import com.trolltech.qt.gui.QWidget;
 public class BookAdditionDialog
     extends QDialogExt
 {
-    private QPushButton addNCloseButton    = new QPushButton();
-    private QPushButton addNContinueButton = new QPushButton();
-    private QPushButton cancelButton       = new QPushButton();
+    private final QPushButton addNCloseButton    = new QPushButton();
+    private final QPushButton addNContinueButton = new QPushButton();
+    private final QPushButton cancelButton       = new QPushButton();
 
-    private QLabel      headerLabel        = new QLabel();
+    private final QLabel      headerLabel        = new QLabel();
 
-    private BookPanel   bookPanel          = new BookPanel( this );
+    private final BookPanel   bookPanel          = new BookPanel( this );
 
     public BookAdditionDialog(
-        QWidget parent )
+        final QWidget parent )
     {
         super( parent );
         initComponents();
@@ -59,28 +61,19 @@ public class BookAdditionDialog
     }
 
     public BookAdditionDialog(
-        QWidget parent,
-        File file )
+        final QWidget parent,
+        final File file )
     {
         this( parent );
         bookPanel.setBookFile( file );
     }
 
     public void addBook(
-        Parameters parameters )
+        final Parameters parameters )
     {
-        PhysicalUnit physicalUnit = FileImporter.createPhysicalUnit( parameters.getFile() );
-        Book unit = Storage.getBookShelf().addReadingUnit( parameters.getBookName(), null, null, physicalUnit );
-        unit.setRead( parameters.isRead() ? 1 : 0 );
-
-        for ( String name : parameters.getAuthorNames() )
-        {
-            unit.getAuthors().add( Storage.getBookShelf().addAuthor( name.trim() ) );
-        }
-        for ( String name : parameters.getCategoryNames() )
-        {
-            unit.getCategories().add( Storage.getBookShelf().addCategory( name.trim() ) );
-        }
+        final PhysicalUnit physicalUnit = FileImporter.createPhysicalUnit( parameters.getFile() );
+        final Book book = Storage.getBookShelf().addReadingUnit( parameters.getBookName(), null, null, physicalUnit );
+        BookPanel.changeBook( book, parameters );
 
         CollectionPanel.getInstance().updateTree();
     }
@@ -99,7 +92,7 @@ public class BookAdditionDialog
     @SuppressWarnings( "unused" )
     private void addNClose()
     {
-        Parameters parameters = bookPanel.extractParameters();
+        final Parameters parameters = bookPanel.extractParameters();
         if ( parameters != null )
         {
             addBook( parameters );
@@ -110,7 +103,7 @@ public class BookAdditionDialog
     @SuppressWarnings( "unused" )
     private void addNContinue()
     {
-        Parameters parameters = bookPanel.extractParameters();
+        final Parameters parameters = bookPanel.extractParameters();
         if ( parameters != null )
         {
             addBook( parameters );
@@ -122,7 +115,13 @@ public class BookAdditionDialog
     {
         setModal( true );
 
-        QGridLayout layout = new QGridLayout();
+        final QRect geometry = geometry();
+        geometry.setWidth( 770 );
+        geometry.setHeight( 300 );
+        geometry.moveCenter( MainWindow.getInstance().geometry().center() );
+        setGeometry( geometry );
+
+        final QGridLayout layout = new QGridLayout();
         setLayout( layout );
 
         layout.addWidget( headerLabel, 0, 0, 1, 3 );

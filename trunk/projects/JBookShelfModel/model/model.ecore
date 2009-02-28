@@ -71,6 +71,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="PhysicalUnit">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" eType="#//File"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="directory" eType="#//File"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="viewer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="charset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Book" eSuperTypes="#//Categorizable platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="authors" upperBound="-1"

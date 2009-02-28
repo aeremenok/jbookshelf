@@ -23,14 +23,18 @@ import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.storage.Storage;
+import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.BookShelf;
+import org.jbookshelf.model.Category;
+import org.jbookshelf.model.PhysicalUnit;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.widgets.FilePathEdit;
 import org.jbookshelf.qtgui.widgets.completion.CommaSeparatedCompleter;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
 
 import com.trolltech.qt.gui.QCheckBox;
+import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QLineEdit;
@@ -57,19 +61,23 @@ public class BookPanel
         private final String[] categoryNames;
         private final File     file;
         private final boolean  isRead;
+        private final String   viewer;
 
         public Parameters(
-            final String bookName,
-            final String[] authorNames,
-            final String[] categoryNames,
-            final File file,
-            final boolean isRead )
+            String bookName,
+            String[] authorNames,
+            String[] categoryNames,
+            File file,
+            boolean isRead,
+            String viewer )
         {
+            super();
             this.bookName = bookName;
             this.authorNames = authorNames;
             this.categoryNames = categoryNames;
             this.file = file;
             this.isRead = isRead;
+            this.viewer = viewer;
         }
 
         public String[] getAuthorNames()
@@ -92,20 +100,27 @@ public class BookPanel
             return file;
         }
 
+        public String getViewer()
+        {
+            return viewer;
+        }
+
         public boolean isRead()
         {
             return isRead;
         }
     }
 
-    private final QLabel        authorLabel       = new QLabel();
-    private final QLabel        categoryLabel     = new QLabel();
-    private final QLabel        fileLabel         = new QLabel();
-    private final QLabel        bookLabel         = new QLabel();
+    private final QLabel        authorLabel       = new QLabel( this );
+    private final QLabel        categoryLabel     = new QLabel( this );
+    private final QLabel        fileLabel         = new QLabel( this );
+    private final QLabel        bookLabel         = new QLabel( this );
+    private final QLabel        viewerLabel       = new QLabel( this );
 
     private final QLineEdit     bookTextField     = new QLineEdit( this );
     private final QLineEdit     authorTextField   = new QLineEdit( this );
     private final QLineEdit     categoryTextField = new QLineEdit( this );
+    private final QComboBox     viewerComboBox    = new QComboBox( this );
 
     private final FileImporter  fileImporter      = new FileImporter()
                                                   {
@@ -140,6 +155,60 @@ public class BookPanel
     private final QCheckBox     isReadCheckBox    = new QCheckBox( this );
 
     private final List<QWidget> components        = new ArrayList<QWidget>();
+
+    public static Book changeBook(
+        Book book,
+        Parameters parameters )
+    {
+        // todo reflective
+        book.getAuthors().clear();
+        for ( String name : parameters.getAuthorNames() )
+        {
+            Author author;
+            String trim = name.trim();
+            List<Author> authors = Storage.getBookShelf().queryAuthors( trim );
+            if ( authors.size() > 0 )
+            { // todo what if we've found more than 1 author with equal names?
+                author = authors.get( 0 );
+            }
+            else
+            {
+                author = Storage.getBookShelf().addAuthor( trim );
+            }
+            book.getAuthors().add( author );
+        }
+
+        book.getCategories().clear();
+        for ( String name : parameters.getCategoryNames() )
+        {
+            Category category;
+            String trim = name.trim();
+            List<Category> authors = Storage.getBookShelf().queryCategories( trim );
+            if ( authors.size() > 0 )
+            { // todo what if we've found more than 1 author with equal names?
+                category = authors.get( 0 );
+            }
+            else
+            {
+                category = Storage.getBookShelf().addCategory( trim );
+            }
+            book.getCategories().add( category );
+        }
+
+        book.setName( parameters.getBookName() );
+
+        PhysicalUnit physical = book.getPhysical();
+        if ( physical == null || !physical.getFile().equals( parameters.getFile() ) )
+        {
+            physical = FileImporter.createPhysicalUnit( parameters.getFile() );
+        }
+        physical.setViewer( parameters.getViewer() );
+
+        book.setPhysical( physical );
+        book.setRead( parameters.isRead() ? 1 : 0 );
+
+        return book;
+    }
 
     public BookPanel(
         final QWidget parent )
@@ -209,7 +278,10 @@ public class BookPanel
 
         final boolean isRead = isReadCheckBox.isChecked();
 
-        return new Parameters( bookName, authorNames.split( "," ), categoryNames.split( "," ), file, isRead );
+        int viewerIndex = viewerComboBox.currentIndex();
+        String viewer =
+            viewerIndex == 0 ? null : viewerIndex == 1 ? PhysicalUnit.INTERNAL_VIEWER : PhysicalUnit.SYSTEM_VIEWER;
+        return new Parameters( bookName, authorNames.split( "," ), categoryNames.split( "," ), file, isRead, viewer );
     }
 
     public void retranslate()
@@ -220,6 +292,7 @@ public class BookPanel
         categoryLabel.setText( tr( "Category" ) );
         fileLabel.setText( tr( "File" ) );
         filePathEdit.setCaption( tr( "Select a file" ) );
+        viewerLabel.setText( tr( "Viewer" ) );
     }
 
     /**
@@ -230,17 +303,22 @@ public class BookPanel
     public void setBook(
         final Book book )
     {
-        // show book name
+        // display book name
         bookTextField.setText( book.getName() );
         authorTextField.setText( concat( book.getAuthors() ) );
         categoryTextField.setText( concat( book.getCategories() ) );
 
-        // show file of the physical unit
+        // display file of the physical unit
         final String fileName = book.getPhysical().getFile().getAbsolutePath();
         filePathEdit.setText( fileName );
 
-        // show whether is read
+        // display whether is read
         isReadCheckBox.setChecked( book.getRead() == 1 );
+
+        // display viewer
+        String viewer = book.getPhysical().getViewer();
+        int index = viewer == null ? 0 : PhysicalUnit.INTERNAL_VIEWER.equals( viewer ) ? 1 : 2;
+        viewerComboBox.setCurrentIndex( index );
     }
 
     public void setBookFile(
@@ -293,7 +371,14 @@ public class BookPanel
         layout.addWidget( fileLabel, 3, 0 );
         layout.addWidget( filePathEdit, 3, 1 );
 
-        layout.addWidget( isReadCheckBox, 4, 0 );
+        layout.addWidget( viewerLabel, 4, 0 );
+        layout.addWidget( viewerComboBox, 4, 1 );
+
+        layout.addWidget( isReadCheckBox, 5, 0 );
+
+        viewerComboBox.addItem( tr( "Auto" ) );
+        viewerComboBox.addItem( tr( "Internal" ) );
+        viewerComboBox.addItem( tr( "System" ) );
 
         // hanging in autocompletion
         final BookShelf bookShelf = Storage.getBookShelf();
