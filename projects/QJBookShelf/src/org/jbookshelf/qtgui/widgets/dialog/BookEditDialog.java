@@ -15,18 +15,14 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
-import java.util.List;
-
-import org.jbookshelf.controller.FileImporter;
-import org.jbookshelf.controller.storage.Storage;
-import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
-import org.jbookshelf.model.Category;
+import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.BookPanel.Parameters;
 
+import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QLabel;
@@ -42,17 +38,17 @@ import com.trolltech.qt.gui.QWidget;
 public class BookEditDialog
     extends QDialogExt
 {
-    private QPushButton applyButton  = new QPushButton();
-    private QPushButton cancelButton = new QPushButton();
-    private QLabel      headerLabel  = new QLabel();
+    private final QPushButton applyButton  = new QPushButton( this );
+    private final QPushButton cancelButton = new QPushButton( this );
+    private final QLabel      headerLabel  = new QLabel( this );
 
-    private BookPanel   bookPanel    = new BookPanel( this );
+    private final BookPanel   bookPanel    = new BookPanel( this );
 
-    private final Book  book;
+    private final Book        book;
 
     public BookEditDialog(
-        QWidget parent,
-        Book book )
+        final QWidget parent,
+        final Book book )
     {
         super( parent );
         this.book = book;
@@ -74,55 +70,17 @@ public class BookEditDialog
         cancelButton.setText( tr( "Cancel" ) );
     }
 
-    public void saveBook(
-        Parameters parameters )
-    {
-        // todo reflective
-        book.getAuthors().clear();
-        for ( String name : parameters.getAuthorNames() )
-        {
-            Author author;
-            String trim = name.trim();
-            List<Author> authors = Storage.getBookShelf().queryAuthors( trim );
-            if ( authors.size() > 0 )
-            { // todo what if we've found more than 1 author with equal names?
-                author = authors.get( 0 );
-            }
-            else
-            {
-                author = Storage.getBookShelf().addAuthor( trim );
-            }
-            book.getAuthors().add( author );
-        }
-
-        book.getCategories().clear();
-        for ( String name : parameters.getCategoryNames() )
-        {
-            Category category;
-            String trim = name.trim();
-            List<Category> authors = Storage.getBookShelf().queryCategories( trim );
-            if ( authors.size() > 0 )
-            { // todo what if we've found more than 1 author with equal names?
-                category = authors.get( 0 );
-            }
-            else
-            {
-                category = Storage.getBookShelf().addCategory( trim );
-            }
-            book.getCategories().add( category );
-        }
-
-        book.setName( parameters.getBookName() );
-
-        book.setPhysical( FileImporter.createPhysicalUnit( parameters.getFile() ) );
-        book.setRead( parameters.isRead() ? 1 : 0 );
-    }
-
     private void initComponents()
     {
         setModal( true );
 
-        QGridLayout layout = new QGridLayout();
+        final QRect geometry = geometry();
+        geometry.setWidth( 770 );
+        geometry.setHeight( 300 );
+        geometry.moveCenter( MainWindow.getInstance().geometry().center() );
+        setGeometry( geometry );
+
+        final QGridLayout layout = new QGridLayout();
         setLayout( layout );
 
         headerLabel.setFont( new QFont( "Tahoma", 14 ) );
@@ -142,10 +100,10 @@ public class BookEditDialog
     @SuppressWarnings( "unused" )
     private void save()
     {
-        Parameters parameters = bookPanel.extractParameters();
+        final Parameters parameters = bookPanel.extractParameters();
         if ( parameters != null )
         {
-            saveBook( parameters );
+            BookPanel.changeBook( book, parameters );
             CollectionPanel.getInstance().updateTree();
             close();
         }

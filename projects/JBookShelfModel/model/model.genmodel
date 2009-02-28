@@ -68,6 +68,8 @@
     <genClasses image="false" ecoreClass="model.ecore#//PhysicalUnit">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//PhysicalUnit/file"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//PhysicalUnit/directory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//PhysicalUnit/viewer"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//PhysicalUnit/charset"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//Book">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Book/authors"/>

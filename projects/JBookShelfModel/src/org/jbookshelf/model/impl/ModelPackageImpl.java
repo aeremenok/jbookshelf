@@ -236,6 +236,8 @@ public class ModelPackageImpl
         physicalUnitEClass = createEClass(PHYSICAL_UNIT);
         createEAttribute(physicalUnitEClass, PHYSICAL_UNIT__FILE);
         createEAttribute(physicalUnitEClass, PHYSICAL_UNIT__DIRECTORY);
+        createEAttribute(physicalUnitEClass, PHYSICAL_UNIT__VIEWER);
+        createEAttribute(physicalUnitEClass, PHYSICAL_UNIT__CHARSET);
 
         bookEClass = createEClass(BOOK);
         createEReference(bookEClass, BOOK__AUTHORS);
@@ -494,6 +496,26 @@ public class ModelPackageImpl
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getPhysicalUnit_Viewer()
+    {
+        return (EAttribute)physicalUnitEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getPhysicalUnit_Charset()
+    {
+        return (EAttribute)physicalUnitEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -626,6 +648,8 @@ public class ModelPackageImpl
         initEClass(physicalUnitEClass, PhysicalUnit.class, "PhysicalUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getPhysicalUnit_File(), this.getFile(), "file", null, 0, 1, PhysicalUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getPhysicalUnit_Directory(), this.getFile(), "directory", null, 0, 1, PhysicalUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getPhysicalUnit_Viewer(), ecorePackage.getEString(), "viewer", null, 0, 1, PhysicalUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getPhysicalUnit_Charset(), ecorePackage.getEString(), "charset", null, 0, 1, PhysicalUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(bookEClass, Book.class, "Book", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getBook_Authors(), this.getAuthor(), this.getAuthor_Books(), "authors", null, 0, -1, Book.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

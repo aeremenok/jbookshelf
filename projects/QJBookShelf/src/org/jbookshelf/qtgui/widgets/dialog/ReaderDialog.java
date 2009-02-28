@@ -15,41 +15,46 @@ import org.jbookshelf.model.Book;
 import org.jbookshelf.model.PhysicalUnit;
 import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
-import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.mozilla.universalchardet.UniversalDetector;
 
 import com.trolltech.qt.core.Qt.WindowState;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QCloseEvent;
+import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QFontComboBox;
 import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QScrollBar;
 import com.trolltech.qt.gui.QTextBrowser;
 import com.trolltech.qt.gui.QToolBar;
-import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
 public class ReaderDialog
-    extends QDialogExt
+    extends QMainWindow
     implements
         JBookShelfConstants
 {
-    private final QTextBrowser    textEdit     = new QTextBrowser( this );
-    private final QAction         backward     = new QAction( new QIcon( ICONPATH + "go-previous.png" ), "", this );
-    private final QAction         forward      = new QAction( new QIcon( ICONPATH + "go-next.png" ), "", this );
-    private final QFontComboBox   fontComboBox = new QFontComboBox( this );
-    private final QAction         bookSettings =
-                                                   new QAction( new QIcon( ICONPATH + "document-properties.png" ), "",
-                                                       this );
-    private final QAction         bookmark     = new QAction( new QIcon( ICONPATH + "flag-yellow.png" ), "", this );
-    private final QAction         citation     = new QAction( new QIcon( ICONPATH + "knotes.png" ), "", this );
-    private final QAction         view         = new QAction( new QIcon( ICONPATH + "view-pim-notes.png" ), "", this );
+    private final QTextBrowser    textEdit        = new QTextBrowser( this );
+    private final QAction         backward        = new QAction( new QIcon( ICONPATH + "go-previous.png" ), "", this );
+    private final QAction         forward         = new QAction( new QIcon( ICONPATH + "go-next.png" ), "", this );
+    private final QAction         home            = new QAction( new QIcon( ICONPATH + "go-home.png" ), "", this );
+    private final QFontComboBox   fontComboBox    = new QFontComboBox( this );
+    private final QAction         bookSettings    =
+                                                      new QAction( new QIcon( ICONPATH + "document-properties.png" ),
+                                                          "", this );
+    private final QAction         bookmark        = new QAction( new QIcon( ICONPATH + "flag-yellow.png" ), "", this );
+    private final QAction         citation        = new QAction( new QIcon( ICONPATH + "knotes.png" ), "", this );
+    private final QAction         view            =
+                                                      new QAction( new QIcon( ICONPATH + "view-pim-notes.png" ), "",
+                                                          this );
+    private final QComboBox       charsetComboBox = new QComboBox( this );
 
     private final Book            book;
+    private byte[]                contentBytes;
 
-    private final static String[] extensions   = { "txt", "html", "htm", "shtml" };
+    private final static String[] extensions      = { "txt", "html", "htm", "shtml" };
 
     public static byte[] getBytesFromFile(
         final File file )
@@ -95,12 +100,20 @@ public class ReaderDialog
         try
         {
             final File file = getFile( book );
-            if ( canBeOpened( file ) )
+            // define which viewer to use
+            String viewer = book.getPhysical().getViewer();
+            if ( viewer == null )
             {
+                viewer = canBeOpened( file ) ? PhysicalUnit.INTERNAL_VIEWER : PhysicalUnit.SYSTEM_VIEWER;
+                book.getPhysical().setViewer( viewer );
+            }
+
+            if ( PhysicalUnit.INTERNAL_VIEWER.equals( viewer ) )
+            { // internal
                 new ReaderDialog( parent, book ).show();
             }
             else
-            {
+            { // system default
                 URIOpener.browseFile( file );
             }
         }
@@ -135,7 +148,7 @@ public class ReaderDialog
             final ArchiveFile archiveFile = (ArchiveFile) physical;
             if ( archiveFile.getArchiveFile() == null || !archiveFile.getArchiveFile().exists() )
             { // unpack and remember the file
-                QMessageBox messageBox = new QMessageBox( MainWindow.getInstance() );
+                final QMessageBox messageBox = new QMessageBox( MainWindow.getInstance() );
                 messageBox.setWindowTitle( "Unpacking. Please wait..." );
                 messageBox.show();
 
@@ -202,10 +215,21 @@ public class ReaderDialog
     {
         backward.setText( tr( "Backward" ) );
         forward.setText( tr( "Forward" ) );
+        home.setText( tr( "Home" ) );
+
         bookSettings.setText( tr( "Edit book properties" ) );
         bookmark.setText( tr( "Add bookmark" ) );
         citation.setText( tr( "Add citation" ) );
         view.setText( tr( "View bookmarks and citations" ) );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void charsetChanged(
+        String charset )
+    {
+        book.getPhysical().setCharset( charset );
+        // reload text
+        textEdit.setText( getContent() );
     }
 
     @SuppressWarnings( "unused" )
@@ -221,12 +245,23 @@ public class ReaderDialog
         textEdit.setFont( fontComboBox.currentFont() );
     }
 
-    private String getContent(
-        final File file )
+    private String getContent()
     {
+        final File file = getFile( book );
         try
         {
-            return new String( getBytesFromFile( file ), guessEncoding( file ) );
+            // define which encoding to use
+            String charset = book.getPhysical().getCharset();
+            if ( charset == null )
+            {
+                charset = guessEncoding( file );
+                book.getPhysical().setCharset( charset );
+            }
+            if ( contentBytes == null )
+            { // cache the contents
+                contentBytes = getBytesFromFile( file );
+            }
+            return new String( contentBytes, charset );
         }
         catch ( final IOException e )
         {
@@ -238,18 +273,18 @@ public class ReaderDialog
     private void initComponents()
     {
         setWindowTitle( book.getName() );
-
         setWindowState( WindowState.WindowMaximized );
 
-        setLayout( new QVBoxLayout() );
-        final QToolBar toolBar = new QToolBar( this );
-        layout().addWidget( toolBar );
-        layout().addWidget( textEdit );
+        setCentralWidget( textEdit );
 
+        final QToolBar toolBar = new QToolBar( this );
+        addToolBar( toolBar );
         toolBar.addAction( backward );
         toolBar.addAction( forward );
+        toolBar.addAction( home );
         toolBar.addSeparator();
         toolBar.addWidget( fontComboBox );
+        toolBar.addWidget( charsetComboBox );
         toolBar.addSeparator();
         toolBar.addAction( bookSettings );
         toolBar.addAction( bookmark );
@@ -259,7 +294,14 @@ public class ReaderDialog
 
         textEdit.setReadOnly( true );
         // todo break huge content into parts
-        textEdit.setText( getContent( getFile( book ) ) );
+        textEdit.setText( getContent() );
+
+        for ( String charsetName : Charset.availableCharsets().keySet() )
+        {
+            charsetComboBox.addItem( Charset.availableCharsets().get( charsetName ).name() );
+        }
+        charsetComboBox.setEditable( true );
+        charsetComboBox.setCurrentIndex( charsetComboBox.findText( book.getPhysical().getCharset() ) );
     }
 
     private void initListeners()
@@ -271,6 +313,7 @@ public class ReaderDialog
         textEdit.forwardAvailable.connect( forward, "setEnabled(boolean)" );
         backward.triggered.connect( textEdit, "backward()" );
         forward.triggered.connect( textEdit, "forward()" );
+        home.triggered.connect( textEdit, "home()" );
 
         backward.setEnabled( textEdit.isBackwardAvailable() );
         forward.setEnabled( textEdit.isForwardAvailable() );
@@ -278,6 +321,8 @@ public class ReaderDialog
         fontComboBox.currentFontChanged.connect( this, "fontChanged(QFont)" );
 
         bookSettings.triggered.connect( this, "editBook()" );
+
+        charsetComboBox.currentStringChanged.connect( this, "charsetChanged(String)" );
 
         // todo bookmark, citation, view
     }

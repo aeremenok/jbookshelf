@@ -238,6 +238,22 @@ public interface ModelPackage
         EAttribute PHYSICAL_UNIT__DIRECTORY = eINSTANCE.getPhysicalUnit_Directory();
 
         /**
+         * The meta object literal for the '<em><b>Viewer</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PHYSICAL_UNIT__VIEWER = eINSTANCE.getPhysicalUnit_Viewer();
+
+        /**
+         * The meta object literal for the '<em><b>Charset</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PHYSICAL_UNIT__CHARSET = eINSTANCE.getPhysicalUnit_Charset();
+
+        /**
          * The meta object literal for the '{@link org.jbookshelf.model.impl.BookImpl <em>Book</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -364,13 +380,31 @@ public interface ModelPackage
     int PHYSICAL_UNIT__DIRECTORY = 1;
 
     /**
+     * The feature id for the '<em><b>Viewer</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PHYSICAL_UNIT__VIEWER = 2;
+
+    /**
+     * The feature id for the '<em><b>Charset</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PHYSICAL_UNIT__CHARSET = 3;
+
+    /**
      * The number of structural features of the '<em>Physical Unit</em>' class.
      * <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * @generated
      * @ordered
      */
-    int          PHYSICAL_UNIT_FEATURE_COUNT      = 2;
+    int          PHYSICAL_UNIT_FEATURE_COUNT      = 4;
 
     /**
      * The meta object id for the '{@link org.jbookshelf.model.impl.ArchiveFileImpl <em>Archive File</em>}' class. <!--
@@ -399,6 +433,24 @@ public interface ModelPackage
      * @ordered
      */
     int ARCHIVE_FILE__DIRECTORY = PHYSICAL_UNIT__DIRECTORY;
+
+    /**
+     * The feature id for the '<em><b>Viewer</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ARCHIVE_FILE__VIEWER = PHYSICAL_UNIT__VIEWER;
+
+    /**
+     * The feature id for the '<em><b>Charset</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ARCHIVE_FILE__CHARSET = PHYSICAL_UNIT__CHARSET;
 
     /**
      * The feature id for the '<em><b>Archive File</b></em>' attribute.
@@ -1089,6 +1141,28 @@ public interface ModelPackage
      * @generated
      */
     EAttribute getPhysicalUnit_Directory();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.jbookshelf.model.PhysicalUnit#getViewer <em>Viewer</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Viewer</em>'.
+     * @see org.jbookshelf.model.PhysicalUnit#getViewer()
+     * @see #getPhysicalUnit()
+     * @generated
+     */
+    EAttribute getPhysicalUnit_Viewer();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.jbookshelf.model.PhysicalUnit#getCharset <em>Charset</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Charset</em>'.
+     * @see org.jbookshelf.model.PhysicalUnit#getCharset()
+     * @see #getPhysicalUnit()
+     * @generated
+     */
+    EAttribute getPhysicalUnit_Charset();
 
     /**
      * Returns the meta object for class '{@link org.jbookshelf.model.Book <em>Book</em>}'.

@@ -31,6 +31,8 @@ import org.jbookshelf.model.PhysicalUnit;
  * <ul>
  *   <li>{@link org.jbookshelf.model.impl.PhysicalUnitImpl#getFile <em>File</em>}</li>
  *   <li>{@link org.jbookshelf.model.impl.PhysicalUnitImpl#getDirectory <em>Directory</em>}</li>
+ *   <li>{@link org.jbookshelf.model.impl.PhysicalUnitImpl#getViewer <em>Viewer</em>}</li>
+ *   <li>{@link org.jbookshelf.model.impl.PhysicalUnitImpl#getCharset <em>Charset</em>}</li>
  * </ul>
  * </p>
  *
@@ -79,6 +81,43 @@ public class PhysicalUnitImpl
     protected File              directory          = DIRECTORY_EDEFAULT;
 
     /**
+     * The default value of the '{@link #getViewer() <em>Viewer</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getViewer()
+     * @generated
+     * @ordered
+     */
+    protected static final String VIEWER_EDEFAULT = null;
+    /**
+     * The cached value of the '{@link #getViewer() <em>Viewer</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getViewer()
+     * @generated
+     * @ordered
+     */
+    protected String viewer = VIEWER_EDEFAULT;
+    /**
+     * The default value of the '{@link #getCharset() <em>Charset</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getCharset()
+     * @generated
+     * @ordered
+     */
+    protected static final String CHARSET_EDEFAULT = null;
+    /**
+     * The cached value of the '{@link #getCharset() <em>Charset</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getCharset()
+     * @generated
+     * @ordered
+     */
+    protected String charset = CHARSET_EDEFAULT;
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -103,6 +142,10 @@ public class PhysicalUnitImpl
                 return getFile();
             case ModelPackage.PHYSICAL_UNIT__DIRECTORY:
                 return getDirectory();
+            case ModelPackage.PHYSICAL_UNIT__VIEWER:
+                return getViewer();
+            case ModelPackage.PHYSICAL_UNIT__CHARSET:
+                return getCharset();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -121,6 +164,10 @@ public class PhysicalUnitImpl
                 return FILE_EDEFAULT == null ? file != null : !FILE_EDEFAULT.equals(file);
             case ModelPackage.PHYSICAL_UNIT__DIRECTORY:
                 return DIRECTORY_EDEFAULT == null ? directory != null : !DIRECTORY_EDEFAULT.equals(directory);
+            case ModelPackage.PHYSICAL_UNIT__VIEWER:
+                return VIEWER_EDEFAULT == null ? viewer != null : !VIEWER_EDEFAULT.equals(viewer);
+            case ModelPackage.PHYSICAL_UNIT__CHARSET:
+                return CHARSET_EDEFAULT == null ? charset != null : !CHARSET_EDEFAULT.equals(charset);
         }
         return super.eIsSet(featureID);
     }
@@ -142,6 +189,12 @@ public class PhysicalUnitImpl
             case ModelPackage.PHYSICAL_UNIT__DIRECTORY:
                 setDirectory((File)newValue);
                 return;
+            case ModelPackage.PHYSICAL_UNIT__VIEWER:
+                setViewer((String)newValue);
+                return;
+            case ModelPackage.PHYSICAL_UNIT__CHARSET:
+                setCharset((String)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -161,6 +214,12 @@ public class PhysicalUnitImpl
                 return;
             case ModelPackage.PHYSICAL_UNIT__DIRECTORY:
                 setDirectory(DIRECTORY_EDEFAULT);
+                return;
+            case ModelPackage.PHYSICAL_UNIT__VIEWER:
+                setViewer(VIEWER_EDEFAULT);
+                return;
+            case ModelPackage.PHYSICAL_UNIT__CHARSET:
+                setCharset(CHARSET_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -198,6 +257,52 @@ public class PhysicalUnitImpl
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getViewer()
+    {
+        return viewer;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setViewer(String newViewer)
+    {
+        String oldViewer = viewer;
+        viewer = newViewer;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PHYSICAL_UNIT__VIEWER, oldViewer, viewer));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getCharset()
+    {
+        return charset;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setCharset(String newCharset)
+    {
+        String oldCharset = charset;
+        charset = newCharset;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PHYSICAL_UNIT__CHARSET, oldCharset, charset));
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -224,6 +329,10 @@ public class PhysicalUnitImpl
         result.append(file);
         result.append(", directory: ");
         result.append(directory);
+        result.append(", viewer: ");
+        result.append(viewer);
+        result.append(", charset: ");
+        result.append(charset);
         result.append(')');
         return result.toString();
     }
