@@ -17,12 +17,21 @@ package org.jbookshelf.qtgui.widgets.menu;
 
 import java.util.List;
 
+import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
+import org.jbookshelf.model.Category;
 import org.jbookshelf.model.Unique;
+import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.ToolBar;
+import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.ext.QMenuExt;
+import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 
+import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.gui.QAction;
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QInputDialog;
+import com.trolltech.qt.gui.QLineEdit.EchoMode;
 
 /**
  * popups over collection tree
@@ -31,64 +40,110 @@ import com.trolltech.qt.gui.QAction;
  */
 public class CollectionTreeMenu
     extends QMenuExt
+    implements
+        JBookShelfConstants
 {
-    private final List<Book> books;
-    private QAction          isReadAction;
+    /**
+     * renames {@link Author}'s and {@link Category}'ies
+     * 
+     * @author eav
+     */
+    private static class RenameAction
+        extends QAction
+    {
+        static final QIcon icon = new QIcon( ICONPATH + "document-properties.png" );
+        final Unique       unique;
+
+        public RenameAction(
+            final QObject parent,
+            final Unique unique )
+        {
+            super( icon, parent.tr( "Rename" ), parent );
+            this.unique = unique;
+            triggered.connect( RenameAction.this, "rename()" );
+        }
+
+        @SuppressWarnings( "unused" )
+        private void rename()
+        {
+            String text = unique.getName();
+            text =
+                QInputDialog.getText( MainWindow.getInstance(), text(), tr( "Enter new name" ), EchoMode.Normal, text );
+            text = text == null ? "" : text;
+            unique.setName( text );
+            CollectionPanel.getInstance().updateTree();
+        }
+    }
+
+    /**
+     * sets books read/unread
+     * 
+     * @author eav
+     */
+    private static class SetReadAction
+        extends QAction
+    {
+        final List<Book> books;
+
+        public SetReadAction(
+            final QObject parent,
+            final List<Book> books )
+        {
+            super( parent.tr( "Is read" ), parent );
+            this.books = books;
+
+            setCheckable( true );
+            // todo gray checkbox
+            setChecked( areAllRead() );
+
+            triggered.connect( SetReadAction.this, "setRead()" );
+        }
+
+        private boolean areAllRead()
+        {
+            for ( final Book book : books )
+            {
+                if ( book.getRead() != 1 )
+                { // at least one unread
+                    return false;
+                }
+            }
+            // all are read
+            return true;
+        }
+
+        @SuppressWarnings( "unused" )
+        private void setRead()
+        {
+            for ( final Book book : books )
+            {
+                book.setRead( isChecked() ? 1 : 0 );
+            }
+        }
+    }
 
     public CollectionTreeMenu(
         final List<Unique> uniques )
     {
-        books = ToolBar.hasBooks( uniques );
-        if ( books.size() > 0 )
-        {
-            // only the books can be opened and edited
-            addAction( ToolBar.getInstance().getOpenAction() );
-            addAction( ToolBar.getInstance().getOpenFolderAction() );
-            addAction( ToolBar.getInstance().getEditAction() );
+        if ( uniques.size() == 1 && (uniques.get( 0 ) instanceof Author || uniques.get( 0 ) instanceof Category) )
+        { // single author or category selected
+            addAction( new RenameAction( this, uniques.get( 0 ) ) );
+        }
+        else
+        { // multiple books selected
+            final List<Book> books = ToolBar.hasBooks( uniques );
+            if ( books.size() > 0 )
+            { // only the books can be opened, edited and read
+                addAction( ToolBar.getInstance().getOpenAction() );
+                addAction( ToolBar.getInstance().getOpenFolderAction() );
+                addAction( ToolBar.getInstance().getEditAction() );
+                addSeparator();
+                addAction( new SetReadAction( this, books ) );
+                addSeparator();
+            }
         }
 
         // all can be removed
         addAction( ToolBar.getInstance().getRemoveAction() );
-
-        if ( books.size() > 0 )
-        { // only the books can be read
-            addSeparator();
-            addAction( isReadAction() );
-        }
-    }
-
-    private boolean areAllRead(
-        @SuppressWarnings( "hiding" ) final List<Book> books )
-    {
-        for ( final Book book : books )
-        {
-            if ( book.getRead() != 1 )
-            {
-                return false;
-            }
-        }
-        // all are read
-        return true;
-    }
-
-    private QAction isReadAction()
-    {
-        isReadAction = new QAction( tr( "Is Read" ), this );
-        isReadAction.setCheckable( true );
-        // todo gray checkbox
-        isReadAction.setChecked( areAllRead( books ) );
-
-        isReadAction.toggled.connect( this, "setRead()" );
-
-        return isReadAction;
-    }
-
-    @SuppressWarnings( "unused" )
-    private void setRead()
-    {
-        for ( final Book book : books )
-        {
-            book.setRead( isReadAction.isChecked() ? 1 : 0 );
-        }
     }
 }
