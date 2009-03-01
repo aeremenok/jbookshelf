@@ -154,6 +154,22 @@ public interface ModelPackage
         EReference CATEGORY__CATEGORIZABLES        = eINSTANCE.getCategory_Categorizables();
 
         /**
+         * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference CATEGORY__PARENT = eINSTANCE.getCategory_Parent();
+
+        /**
+         * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference CATEGORY__CHILDREN = eINSTANCE.getCategory_Children();
+
+        /**
          * The meta object literal for the '{@link org.jbookshelf.model.impl.CommentImpl <em>Comment</em>}' class. <!--
          * begin-user-doc --> <!-- end-user-doc -->
          * 
@@ -749,12 +765,30 @@ public interface ModelPackage
     int          CATEGORY__CATEGORIZABLES         = COMMENTABLE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Parent</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CATEGORY__PARENT = COMMENTABLE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Children</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CATEGORY__CHILDREN = COMMENTABLE_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Category</em>' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int          CATEGORY_FEATURE_COUNT           = COMMENTABLE_FEATURE_COUNT + 1;
+    int          CATEGORY_FEATURE_COUNT           = COMMENTABLE_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link org.jbookshelf.model.impl.CommentImpl <em>Comment</em>}' class. <!--
@@ -1019,6 +1053,28 @@ public interface ModelPackage
      * @generated
      */
     EReference getCategory_Categorizables();
+
+    /**
+     * Returns the meta object for the reference '{@link org.jbookshelf.model.Category#getParent <em>Parent</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Parent</em>'.
+     * @see org.jbookshelf.model.Category#getParent()
+     * @see #getCategory()
+     * @generated
+     */
+    EReference getCategory_Parent();
+
+    /**
+     * Returns the meta object for the reference list '{@link org.jbookshelf.model.Category#getChildren <em>Children</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Children</em>'.
+     * @see org.jbookshelf.model.Category#getChildren()
+     * @see #getCategory()
+     * @generated
+     */
+    EReference getCategory_Children();
 
     /**
      * Returns the meta object for class '{@link org.jbookshelf.model.Comment <em>Comment</em>}'.
