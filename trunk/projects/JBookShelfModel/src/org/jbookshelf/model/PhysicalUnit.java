@@ -33,13 +33,13 @@ public interface PhysicalUnit
     String SYSTEM_VIEWER   = "system";
 
     /**
-     * Returns the value of the '<em><b>Charset</b></em>' attribute. <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Charset</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Charset</em>' attribute isn't clear, there really should be more of a description
      * here...
      * </p>
      * <!-- end-user-doc -->
-     * 
      * @return the value of the '<em>Charset</em>' attribute.
      * @see #setCharset(String)
      * @see org.jbookshelf.model.ModelPackage#getPhysicalUnit_Charset()
@@ -49,13 +49,13 @@ public interface PhysicalUnit
     String getCharset();
 
     /**
-     * Returns the value of the '<em><b>Directory</b></em>' attribute. <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Directory</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Directory</em>' attribute isn't clear, there really should be more of a description
      * here...
      * </p>
      * <!-- end-user-doc -->
-     * 
      * @return the value of the '<em>Directory</em>' attribute.
      * @see #setDirectory(File)
      * @see org.jbookshelf.model.ModelPackage#getPhysicalUnit_Directory()
@@ -65,12 +65,12 @@ public interface PhysicalUnit
     File getDirectory();
 
     /**
-     * Returns the value of the '<em><b>File</b></em>' attribute. <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>File</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>File</em>' attribute isn't clear, there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * 
      * @return the value of the '<em>File</em>' attribute.
      * @see #setFile(File)
      * @see org.jbookshelf.model.ModelPackage#getPhysicalUnit_File()
@@ -80,13 +80,13 @@ public interface PhysicalUnit
     File getFile();
 
     /**
-     * Returns the value of the '<em><b>Viewer</b></em>' attribute. <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Viewer</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Viewer</em>' attribute isn't clear, there really should be more of a description
      * here...
      * </p>
      * <!-- end-user-doc -->
-     * 
      * @return the value of the '<em>Viewer</em>' attribute.
      * @see #setViewer(String)
      * @see org.jbookshelf.model.ModelPackage#getPhysicalUnit_Viewer()

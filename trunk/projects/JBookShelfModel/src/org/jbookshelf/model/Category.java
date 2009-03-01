@@ -34,4 +34,50 @@ public interface Category
      * @model
      */
     EList<Categorizable> getCategorizables();
+
+    /**
+     * Returns the value of the '<em><b>Parent</b></em>' reference.
+     * It is bidirectional and its opposite is '{@link org.jbookshelf.model.Category#getChildren <em>Children</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Parent</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Parent</em>' reference.
+     * @see #setParent(Category)
+     * @see org.jbookshelf.model.ModelPackage#getCategory_Parent()
+     * @see org.jbookshelf.model.Category#getChildren
+     * @model opposite="children"
+     * @generated
+     */
+    Category getParent();
+
+    /**
+     * Sets the value of the '{@link org.jbookshelf.model.Category#getParent <em>Parent</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Parent</em>' reference.
+     * @see #getParent()
+     * @generated
+     */
+    void setParent(Category value);
+
+    /**
+     * Returns the value of the '<em><b>Children</b></em>' reference list.
+     * The list contents are of type {@link org.jbookshelf.model.Category}.
+     * It is bidirectional and its opposite is '{@link org.jbookshelf.model.Category#getParent <em>Parent</em>}'.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Children</em>' reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Children</em>' reference list.
+     * @see org.jbookshelf.model.ModelPackage#getCategory_Children()
+     * @see org.jbookshelf.model.Category#getParent
+     * @model opposite="parent" resolveProxies="false"
+     * @generated
+     */
+    EList<Category> getChildren();
 }

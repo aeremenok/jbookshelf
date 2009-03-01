@@ -223,6 +223,8 @@ public class ModelPackageImpl
 
         categoryEClass = createEClass(CATEGORY);
         createEReference(categoryEClass, CATEGORY__CATEGORIZABLES);
+        createEReference(categoryEClass, CATEGORY__PARENT);
+        createEReference(categoryEClass, CATEGORY__CHILDREN);
 
         commentEClass = createEClass(COMMENT);
         createEAttribute(commentEClass, COMMENT__CONTENT);
@@ -394,6 +396,26 @@ public class ModelPackageImpl
     public EReference getCategory_Categorizables()
     {
         return (EReference)categoryEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getCategory_Parent()
+    {
+        return (EReference)categoryEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getCategory_Children()
+    {
+        return (EReference)categoryEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -632,6 +654,8 @@ public class ModelPackageImpl
 
         initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getCategory_Categorizables(), this.getCategorizable(), this.getCategorizable_Categories(), "categorizables", null, 0, -1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getCategory_Parent(), this.getCategory(), this.getCategory_Children(), "parent", null, 0, 1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getCategory_Children(), this.getCategory(), this.getCategory_Parent(), "children", null, 0, -1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(commentEClass, Comment.class, "Comment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getComment_Content(), ecorePackage.getEString(), "content", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
