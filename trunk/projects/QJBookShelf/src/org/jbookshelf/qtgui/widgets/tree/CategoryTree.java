@@ -74,6 +74,12 @@ public class CategoryTree
         {
             parent.addChild( authors );
         }
+
+        for ( Category child : category.getChildren() )
+        {
+            parent.addChild( new UniqueNode( child ) );
+        }
+        // todo drag and drop nodes
     }
 
     @Override
