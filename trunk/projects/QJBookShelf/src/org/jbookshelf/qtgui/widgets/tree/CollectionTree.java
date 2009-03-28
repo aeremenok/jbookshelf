@@ -23,6 +23,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EReference;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.BookShelf;
+import org.jbookshelf.model.Category;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.ToolBar;
 import org.jbookshelf.qtgui.logic.SourcesUniqueSelection;
@@ -33,6 +34,8 @@ import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
 import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.gui.QContextMenuEvent;
+import com.trolltech.qt.gui.QDragEnterEvent;
+import com.trolltech.qt.gui.QDropEvent;
 import com.trolltech.qt.gui.QFocusEvent;
 import com.trolltech.qt.gui.QTreeWidget;
 import com.trolltech.qt.gui.QTreeWidgetItem;
@@ -221,6 +224,10 @@ public abstract class CollectionTree
         setSortingEnabled( true );
         setSelectionMode( SelectionMode.ExtendedSelection );
         root = invisibleRootItem();
+
+        setDragEnabled( true );
+        setDropIndicatorShown( true );
+        setDragDropMode( DragDropMode.InternalMove );
     }
 
     private void initListeners()
@@ -330,6 +337,37 @@ public abstract class CollectionTree
         final Unique unique )
     {
         return new UniqueNode( unique );
+    }
+
+    @Override
+    protected void dragEnterEvent(
+        QDragEnterEvent event )
+    {
+        // allow dragging categories into parents
+        QTreeWidgetItem itemAt = this.itemAt( event.pos() );
+        if ( itemAt instanceof UniqueNode )
+        {
+            if ( ((UniqueNode) itemAt).getUnique() instanceof Category )
+            {
+                event.accept();
+            }
+        }
+    }
+
+    @Override
+    protected void dropEvent(
+        QDropEvent event )
+    {
+        // allow categories accepting children
+        QTreeWidgetItem itemAt = this.itemAt( event.pos() );
+        if ( itemAt instanceof UniqueNode )
+        {
+            if ( ((UniqueNode) itemAt).getUnique() instanceof Category )
+            {
+                event.accept();
+                // todo update data
+            }
+        }
     }
 
     @Override
