@@ -296,6 +296,17 @@ public abstract class CollectionTree
     protected abstract void addChildren(
         UniqueNode parent );
 
+    protected void addToParent(
+        final UniqueNode parent,
+        final QTreeWidgetItem child )
+    {
+        if ( child.childCount() > 0 )
+        {
+            child.setText( 1, child.childCount() + "" );
+            parent.addChild( child );
+        }
+    }
+
     @Override
     protected void contextMenuEvent(
         final QContextMenuEvent arg__1 )
