@@ -78,7 +78,6 @@ public class CategoryTree
         {
             parent.addChild( new UniqueNode( child ) );
         }
-        // todo drag and drop nodes
     }
 
     @Override
