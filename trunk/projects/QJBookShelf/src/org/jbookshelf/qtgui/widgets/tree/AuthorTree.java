@@ -51,12 +51,12 @@ public class AuthorTree
     protected void addChildren(
         UniqueNode parent )
     {
+        Author author = (Author) parent.getUnique();
+
         QTreeWidgetItem books = new QTreeWidgetItem();
         books.setText( 0, tr( "Books" ) );
         QTreeWidgetItem categories = new QTreeWidgetItem();
         categories.setText( 0, tr( "Categories" ) );
-
-        Author author = (Author) parent.getUnique();
 
         for ( Book book : author.getBooks() )
         {
@@ -67,14 +67,8 @@ public class AuthorTree
             categories.addChild( new UniqueNode( category ) );
         }
 
-        if ( books.childCount() > 0 )
-        {
-            parent.addChild( books );
-        }
-        if ( categories.childCount() > 0 )
-        {
-            parent.addChild( categories );
-        }
+        addToParent( parent, books );
+        addToParent( parent, categories );
     }
 
     @Override

@@ -40,19 +40,24 @@ public class CategoryTree
         super();
         List<String> list = new ArrayList<String>();
         list.add( tr( "Name" ) );
+        list.add( tr( "Count" ) );
         setHeaderLabels( list );
+
+        setColumnWidth( 0, 440 );
+        setColumnWidth( 1, 15 );
     }
 
     @Override
     protected void addChildren(
         UniqueNode parent )
     {
+        Category category = (Category) parent.getUnique();
+
         QTreeWidgetItem authors = new QTreeWidgetItem();
         authors.setText( 0, tr( "Authors" ) );
         QTreeWidgetItem books = new QTreeWidgetItem();
         books.setText( 0, tr( "Books" ) );
 
-        Category category = (Category) parent.getUnique();
         for ( Categorizable categorizable : category.getCategorizables() )
         {
             UniqueNode node = new UniqueNode( categorizable );
@@ -66,14 +71,8 @@ public class CategoryTree
             }
         }
 
-        if ( books.childCount() > 0 )
-        {
-            parent.addChild( books );
-        }
-        if ( authors.childCount() > 0 )
-        {
-            parent.addChild( authors );
-        }
+        addToParent( parent, books );
+        addToParent( parent, authors );
 
         for ( Category child : category.getChildren() )
         {

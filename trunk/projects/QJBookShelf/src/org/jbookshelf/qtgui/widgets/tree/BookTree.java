@@ -54,30 +54,24 @@ public class BookTree
     protected void addChildren(
         final UniqueNode parent )
     {
+        final Book book = (Book) parent.getUnique();
+
         final QTreeWidgetItem authors = new QTreeWidgetItem();
         authors.setText( 0, tr( "Authors" ) );
         final QTreeWidgetItem categories = new QTreeWidgetItem();
         categories.setText( 0, tr( "Categories" ) );
 
-        final Book readingUnit = (Book) parent.getUnique();
-
-        for ( final Category category : readingUnit.getCategories() )
+        for ( final Category category : book.getCategories() )
         {
             categories.addChild( new UniqueNode( category ) );
         }
-        for ( final Author author : readingUnit.getAuthors() )
+        for ( final Author author : book.getAuthors() )
         {
             authors.addChild( new UniqueNode( author ) );
         }
 
-        if ( authors.childCount() > 0 )
-        {
-            parent.addChild( authors );
-        }
-        if ( categories.childCount() > 0 )
-        {
-            parent.addChild( categories );
-        }
+        addToParent( parent, authors );
+        addToParent( parent, categories );
     }
 
     @Override
