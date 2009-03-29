@@ -58,6 +58,11 @@ public abstract class CollectionTree
 
     protected QTreeWidgetItem                   root;
 
+    /**
+     * temporary points to a category, which node is being dragged at the moment
+     */
+    private Category                            draggedCategory;
+
     public static void removeChildren(
         final QTreeWidgetItem parent )
     {
@@ -341,14 +346,16 @@ public abstract class CollectionTree
 
     @Override
     protected void dragEnterEvent(
-        QDragEnterEvent event )
+        final QDragEnterEvent event )
     {
         // allow dragging categories into parents
-        QTreeWidgetItem itemAt = this.itemAt( event.pos() );
+        final QTreeWidgetItem itemAt = this.itemAt( event.pos() );
         if ( itemAt instanceof UniqueNode )
         {
-            if ( ((UniqueNode) itemAt).getUnique() instanceof Category )
+            final Unique unique = ((UniqueNode) itemAt).getUnique();
+            if ( unique instanceof Category )
             {
+                draggedCategory = (Category) unique;
                 event.accept();
             }
         }
@@ -356,18 +363,31 @@ public abstract class CollectionTree
 
     @Override
     protected void dropEvent(
-        QDropEvent event )
+        final QDropEvent event )
     {
         // allow categories accepting children
-        QTreeWidgetItem itemAt = this.itemAt( event.pos() );
+        final QTreeWidgetItem itemAt = this.itemAt( event.pos() );
         if ( itemAt instanceof UniqueNode )
         {
-            if ( ((UniqueNode) itemAt).getUnique() instanceof Category )
+            final UniqueNode node = (UniqueNode) itemAt;
+            if ( node.getUnique() instanceof Category )
             {
-                event.accept();
-                // todo update data
+                final Category destCategory = (Category) node.getUnique();
+                if ( !destCategory.equals( draggedCategory ) && !destCategory.equals( draggedCategory.getParent() ) )
+                { // cannot be a parent of itself
+                    if ( draggedCategory.getParent() == null )
+                    { // remove category from top
+                        Storage.getBookShelf().getCategories().remove( draggedCategory );
+                    }
+                    draggedCategory.setParent( destCategory );
+                    event.accept();
+                    // refresh children
+                    removeChildren( node );
+                    addChildren( node );
+                }
             }
         }
+        draggedCategory = null;
     }
 
     @Override

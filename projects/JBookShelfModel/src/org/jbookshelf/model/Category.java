@@ -36,7 +36,7 @@ public interface Category
     EList<Categorizable> getCategorizables();
 
     /**
-     * Returns the value of the '<em><b>Parent</b></em>' reference.
+     * Returns the value of the '<em><b>Parent</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link org.jbookshelf.model.Category#getChildren <em>Children</em>}'.
      * <!-- begin-user-doc -->
      * <p>
@@ -44,27 +44,27 @@ public interface Category
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Parent</em>' reference.
+     * @return the value of the '<em>Parent</em>' container reference.
      * @see #setParent(Category)
      * @see org.jbookshelf.model.ModelPackage#getCategory_Parent()
      * @see org.jbookshelf.model.Category#getChildren
-     * @model opposite="children"
+     * @model opposite="children" transient="false"
      * @generated
      */
     Category getParent();
 
     /**
-     * Sets the value of the '{@link org.jbookshelf.model.Category#getParent <em>Parent</em>}' reference.
+     * Sets the value of the '{@link org.jbookshelf.model.Category#getParent <em>Parent</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Parent</em>' reference.
+     * @param value the new value of the '<em>Parent</em>' container reference.
      * @see #getParent()
      * @generated
      */
     void setParent(Category value);
 
     /**
-     * Returns the value of the '<em><b>Children</b></em>' reference list.
+     * Returns the value of the '<em><b>Children</b></em>' containment reference list.
      * The list contents are of type {@link org.jbookshelf.model.Category}.
      * It is bidirectional and its opposite is '{@link org.jbookshelf.model.Category#getParent <em>Parent</em>}'.
      * <!-- begin-user-doc -->
@@ -73,10 +73,10 @@ public interface Category
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Children</em>' reference list.
+     * @return the value of the '<em>Children</em>' containment reference list.
      * @see org.jbookshelf.model.ModelPackage#getCategory_Children()
      * @see org.jbookshelf.model.Category#getParent
-     * @model opposite="parent" resolveProxies="false"
+     * @model opposite="parent" containment="true"
      * @generated
      */
     EList<Category> getChildren();

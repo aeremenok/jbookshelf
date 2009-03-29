@@ -17,6 +17,7 @@ package org.jbookshelf.qtgui.widgets.menu;
 
 import java.util.List;
 
+import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Category;
@@ -54,6 +55,12 @@ public class CollectionTreeMenu
         static final QIcon icon = new QIcon( ICONPATH + "document-properties.png" );
         final Unique       unique;
 
+        public static boolean accept(
+            final Unique unique )
+        {
+            return unique instanceof Author || unique instanceof Category;
+        }
+
         public RenameAction(
             final QObject parent,
             final Unique unique )
@@ -67,8 +74,8 @@ public class CollectionTreeMenu
         private void rename()
         {
             String text = unique.getName();
-            text =
-                QInputDialog.getText( MainWindow.getInstance(), text(), tr( "Enter new name" ), EchoMode.Normal, text );
+            final String message = tr( "Enter new name" );
+            text = QInputDialog.getText( MainWindow.getInstance(), text(), message, EchoMode.Normal, text );
             text = text == null ? "" : text;
             unique.setName( text );
             CollectionPanel.getInstance().updateTree();
@@ -122,12 +129,55 @@ public class CollectionTreeMenu
         }
     }
 
+    /**
+     * moves a {@link Category} to top level
+     * 
+     * @author eav
+     */
+    private static class TopCategoryAction
+        extends QAction
+    {
+        static final QIcon     icon = new QIcon( ICONPATH + "go-top.png" );
+        private final Category category;
+
+        public static boolean accept(
+            final Unique unique )
+        {
+            if ( unique instanceof Category )
+            {
+                return ((Category) unique).getParent() != null;
+            }
+            return false;
+        }
+
+        public TopCategoryAction(
+            final QObject parent,
+            final Category category )
+        {
+            super( icon, parent.tr( "Move to top" ), parent );
+            this.category = category;
+            triggered.connect( TopCategoryAction.this, "toTop()" );
+        }
+
+        @SuppressWarnings( "unused" )
+        private void toTop()
+        {
+            category.setParent( null );
+            Storage.getBookShelf().getCategories().add( category );
+            CollectionPanel.getInstance().updateTree();
+        }
+    }
+
     public CollectionTreeMenu(
         final List<Unique> uniques )
     {
-        if ( uniques.size() == 1 && (uniques.get( 0 ) instanceof Author || uniques.get( 0 ) instanceof Category) )
+        if ( uniques.size() == 1 && RenameAction.accept( uniques.get( 0 ) ) )
         { // single author or category selected
             addAction( new RenameAction( this, uniques.get( 0 ) ) );
+            if ( TopCategoryAction.accept( uniques.get( 0 ) ) )
+            {
+                addAction( new TopCategoryAction( this, (Category) uniques.get( 0 ) ) );
+            }
         }
         else
         { // multiple books selected

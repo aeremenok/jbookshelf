@@ -154,7 +154,7 @@ public interface ModelPackage
         EReference CATEGORY__CATEGORIZABLES        = eINSTANCE.getCategory_Categorizables();
 
         /**
-         * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -162,7 +162,7 @@ public interface ModelPackage
         EReference CATEGORY__PARENT = eINSTANCE.getCategory_Parent();
 
         /**
-         * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -765,7 +765,7 @@ public interface ModelPackage
     int          CATEGORY__CATEGORIZABLES         = COMMENTABLE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Parent</b></em>' reference.
+     * The feature id for the '<em><b>Parent</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -774,7 +774,7 @@ public interface ModelPackage
     int CATEGORY__PARENT = COMMENTABLE_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Children</b></em>' reference list.
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1055,10 +1055,10 @@ public interface ModelPackage
     EReference getCategory_Categorizables();
 
     /**
-     * Returns the meta object for the reference '{@link org.jbookshelf.model.Category#getParent <em>Parent</em>}'.
+     * Returns the meta object for the container reference '{@link org.jbookshelf.model.Category#getParent <em>Parent</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Parent</em>'.
+     * @return the meta object for the container reference '<em>Parent</em>'.
      * @see org.jbookshelf.model.Category#getParent()
      * @see #getCategory()
      * @generated
@@ -1066,10 +1066,10 @@ public interface ModelPackage
     EReference getCategory_Parent();
 
     /**
-     * Returns the meta object for the reference list '{@link org.jbookshelf.model.Category#getChildren <em>Children</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.jbookshelf.model.Category#getChildren <em>Children</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Children</em>'.
+     * @return the meta object for the containment reference list '<em>Children</em>'.
      * @see org.jbookshelf.model.Category#getChildren()
      * @see #getCategory()
      * @generated

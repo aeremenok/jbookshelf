@@ -37,6 +37,17 @@ public interface BookShelf
         String name );
 
     /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @model
+     * @generated
+     */
+    Book addBook(
+        String name,
+        Author author,
+        Category category,
+        PhysicalUnit physicalUnit );
+
+    /**
      * @param name new {@link Category} name
      * @return new {@link Category}
      * @model
@@ -45,14 +56,8 @@ public interface BookShelf
         String name );
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @model
-     * @generated
-     */
-    Book addBook(String name, Author author, Category category, PhysicalUnit physicalUnit);
-
-    /**
+     * todo remoplace with addBook()
+     * 
      * @param name new {@link ReadingUnit} name
      * @param author unit's author (optional, if null then will be set "Unknown")
      * @param category units's category (optional)
@@ -97,6 +102,15 @@ public interface BookShelf
      * @model
      * @generated
      */
+    EList<Book> queryBooks(
+        String query,
+        Boolean isRead );
+
+    /**
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @model
+     * @generated
+     */
     EList<Category> queryCategories(
         String query );
 
@@ -107,14 +121,6 @@ public interface BookShelf
      */
     EList<Unique> queryUniques(
         String query );
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @model
-     * @generated
-     */
-    EList<Book> queryBooks(String query, Boolean isRead);
 
     /**
      * @param query search text
