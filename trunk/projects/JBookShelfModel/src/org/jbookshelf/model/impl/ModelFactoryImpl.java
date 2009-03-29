@@ -131,6 +131,7 @@ public class ModelFactoryImpl
             case ModelPackage.COMMENT: return createComment();
             case ModelPackage.PHYSICAL_UNIT: return createPhysicalUnit();
             case ModelPackage.BOOK: return createBook();
+            case ModelPackage.CITATION: return createCitation();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -164,6 +165,17 @@ public class ModelFactoryImpl
     {
         BookImpl book = new BookImpl();
         return book;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Citation createCitation()
+    {
+        CitationImpl citation = new CitationImpl();
+        return citation;
     }
 
     /**

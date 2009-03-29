@@ -330,6 +330,32 @@ public interface ModelPackage
         EReference UNIQUE__RELATED                 = eINSTANCE.getUnique_Related();
 
         /**
+         * The meta object literal for the '{@link org.jbookshelf.model.impl.CitationImpl <em>Citation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.jbookshelf.model.impl.CitationImpl
+         * @see org.jbookshelf.model.impl.ModelPackageImpl#getCitation()
+         * @generated
+         */
+        EClass CITATION = eINSTANCE.getCitation();
+
+        /**
+         * The meta object literal for the '<em><b>Citation</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute CITATION__CITATION = eINSTANCE.getCitation_Citation();
+
+        /**
+         * The meta object literal for the '<em><b>Position</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute CITATION__POSITION = eINSTANCE.getCitation_Position();
+
+        /**
          * The meta object literal for the '<em>File</em>' data type.
          * <!-- begin-user-doc --> <!-- end-user-doc -->
          * @see java.io.File
@@ -924,13 +950,86 @@ public interface ModelPackage
     int BOOK_FEATURE_COUNT = CATEGORIZABLE_FEATURE_COUNT + 3;
 
     /**
+     * The meta object id for the '{@link org.jbookshelf.model.impl.CitationImpl <em>Citation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.jbookshelf.model.impl.CitationImpl
+     * @see org.jbookshelf.model.impl.ModelPackageImpl#getCitation()
+     * @generated
+     */
+    int CITATION = 10;
+
+    /**
+     * The feature id for the '<em><b>Content</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CITATION__CONTENT = COMMENT__CONTENT;
+
+    /**
+     * The feature id for the '<em><b>Creation Date</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CITATION__CREATION_DATE = COMMENT__CREATION_DATE;
+
+    /**
+     * The feature id for the '<em><b>Subject</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CITATION__SUBJECT = COMMENT__SUBJECT;
+
+    /**
+     * The feature id for the '<em><b>Title</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CITATION__TITLE = COMMENT__TITLE;
+
+    /**
+     * The feature id for the '<em><b>Citation</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CITATION__CITATION = COMMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Position</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CITATION__POSITION = COMMENT_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Citation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CITATION_FEATURE_COUNT = COMMENT_FEATURE_COUNT + 2;
+
+    /**
      * The meta object id for the '<em>File</em>' data type.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see java.io.File
      * @see org.jbookshelf.model.impl.ModelPackageImpl#getFile()
      * @generated
      */
-    int          FILE                             = 10;
+    int          FILE                             = 11;
 
     /**
      * Returns the meta object for class '{@link org.jbookshelf.model.ArchiveFile <em>Archive File</em>}'. <!--
@@ -1293,5 +1392,37 @@ public interface ModelPackage
      * @generated
      */
     EReference getUnique_Related();
+
+    /**
+     * Returns the meta object for class '{@link org.jbookshelf.model.Citation <em>Citation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Citation</em>'.
+     * @see org.jbookshelf.model.Citation
+     * @generated
+     */
+    EClass getCitation();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.jbookshelf.model.Citation#getCitation <em>Citation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Citation</em>'.
+     * @see org.jbookshelf.model.Citation#getCitation()
+     * @see #getCitation()
+     * @generated
+     */
+    EAttribute getCitation_Citation();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.jbookshelf.model.Citation#getPosition <em>Position</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Position</em>'.
+     * @see org.jbookshelf.model.Citation#getPosition()
+     * @see #getCitation()
+     * @generated
+     */
+    EAttribute getCitation_Position();
 
 } // ModelPackage

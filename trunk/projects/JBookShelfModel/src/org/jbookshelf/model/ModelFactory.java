@@ -93,6 +93,15 @@ public interface ModelFactory
     Book createBook();
 
     /**
+     * Returns a new object of class '<em>Citation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Citation</em>'.
+     * @generated
+     */
+    Citation createCitation();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @return the package supported by this factory.
