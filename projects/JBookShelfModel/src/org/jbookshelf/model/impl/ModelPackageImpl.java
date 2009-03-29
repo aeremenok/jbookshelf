@@ -31,6 +31,7 @@ import org.jbookshelf.model.Book;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Categorizable;
 import org.jbookshelf.model.Category;
+import org.jbookshelf.model.Citation;
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
 import org.jbookshelf.model.ModelFactory;
@@ -106,6 +107,13 @@ public class ModelPackageImpl
      * @generated
      */
     private EClass         uniqueEClass        = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass citationEClass = null;
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -249,6 +257,10 @@ public class ModelPackageImpl
         uniqueEClass = createEClass(UNIQUE);
         createEAttribute(uniqueEClass, UNIQUE__NAME);
         createEReference(uniqueEClass, UNIQUE__RELATED);
+
+        citationEClass = createEClass(CITATION);
+        createEAttribute(citationEClass, CITATION__CITATION);
+        createEAttribute(citationEClass, CITATION__POSITION);
 
         // Create data types
         fileEDataType = createEDataType(FILE);
@@ -574,6 +586,36 @@ public class ModelPackageImpl
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getCitation()
+    {
+        return citationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getCitation_Citation()
+    {
+        return (EAttribute)citationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getCitation_Position()
+    {
+        return (EAttribute)citationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
      * Complete the initialization of the package and its meta-model.  This
      * method is guarded to have no affect on any invocation but its first.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -608,6 +650,7 @@ public class ModelPackageImpl
         commentableEClass.getESuperTypes().add(theEcorePackage.getEObject());
         bookEClass.getESuperTypes().add(this.getCategorizable());
         bookEClass.getESuperTypes().add(theEcorePackage.getEObject());
+        citationEClass.getESuperTypes().add(this.getComment());
 
         // Initialize classes and features; add operations and parameters
         initEClass(archiveFileEClass, ArchiveFile.class, "ArchiveFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -683,6 +726,10 @@ public class ModelPackageImpl
         initEClass(uniqueEClass, Unique.class, "Unique", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getUnique_Name(), ecorePackage.getEString(), "name", null, 1, 1, Unique.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getUnique_Related(), this.getUnique(), null, "related", null, 0, -1, Unique.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(citationEClass, Citation.class, "Citation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getCitation_Citation(), ecorePackage.getEString(), "citation", null, 0, 1, Citation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getCitation_Position(), ecorePackage.getEFloat(), "position", "0", 1, 1, Citation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize data types
         initEDataType(fileEDataType, File.class, "File", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

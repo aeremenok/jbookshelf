@@ -92,4 +92,9 @@
         eType="#//Unique" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="File" instanceClassName="java.io.File"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Citation" eSuperTypes="#//Comment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="citation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="position" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat" defaultValueLiteral="0"/>
+  </eClassifiers>
 </ecore:EPackage>

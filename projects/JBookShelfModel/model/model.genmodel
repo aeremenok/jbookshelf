@@ -82,5 +82,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Unique/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Unique/related"/>
     </genClasses>
+    <genClasses ecoreClass="model.ecore#//Citation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Citation/citation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Citation/position"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>
