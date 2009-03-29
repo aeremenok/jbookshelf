@@ -23,8 +23,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.jbookshelf.model.Categorizable;
 import org.jbookshelf.model.Category;
@@ -59,16 +61,7 @@ public class CategoryImpl
     protected EList<Categorizable> categorizables;
 
     /**
-     * The cached value of the '{@link #getParent() <em>Parent</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getParent()
-     * @generated
-     * @ordered
-     */
-    protected Category parent;
-    /**
-     * The cached value of the '{@link #getChildren() <em>Children</em>}' reference list.
+     * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getChildren()
@@ -101,8 +94,7 @@ public class CategoryImpl
             case ModelPackage.CATEGORY__CATEGORIZABLES:
                 return getCategorizables();
             case ModelPackage.CATEGORY__PARENT:
-                if (resolve) return getParent();
-                return basicGetParent();
+                return getParent();
             case ModelPackage.CATEGORY__CHILDREN:
                 return getChildren();
         }
@@ -125,8 +117,8 @@ public class CategoryImpl
             case ModelPackage.CATEGORY__CATEGORIZABLES:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getCategorizables()).basicAdd(otherEnd, msgs);
             case ModelPackage.CATEGORY__PARENT:
-                if (parent != null)
-                    msgs = ((InternalEObject)parent).eInverseRemove(this, ModelPackage.CATEGORY__CHILDREN, Category.class, msgs);
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetParent((Category)otherEnd, msgs);
             case ModelPackage.CATEGORY__CHILDREN:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
@@ -157,6 +149,22 @@ public class CategoryImpl
     }
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs)
+    {
+        switch (eContainerFeatureID)
+        {
+            case ModelPackage.CATEGORY__PARENT:
+                return eInternalContainer().eInverseRemove(this, ModelPackage.CATEGORY__CHILDREN, Category.class, msgs);
+        }
+        return super.eBasicRemoveFromContainerFeature(msgs);
+    }
+
+    /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
@@ -169,7 +177,7 @@ public class CategoryImpl
             case ModelPackage.CATEGORY__CATEGORIZABLES:
                 return categorizables != null && !categorizables.isEmpty();
             case ModelPackage.CATEGORY__PARENT:
-                return parent != null;
+                return getParent() != null;
             case ModelPackage.CATEGORY__CHILDREN:
                 return children != null && !children.isEmpty();
         }
@@ -246,27 +254,8 @@ public class CategoryImpl
      */
     public Category getParent()
     {
-        if (parent != null && parent.eIsProxy())
-        {
-            InternalEObject oldParent = (InternalEObject)parent;
-            parent = (Category)eResolveProxy(oldParent);
-            if (parent != oldParent)
-            {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.CATEGORY__PARENT, oldParent, parent));
-            }
-        }
-        return parent;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Category basicGetParent()
-    {
-        return parent;
+        if (eContainerFeatureID != ModelPackage.CATEGORY__PARENT) return null;
+        return (Category)eContainer();
     }
 
     /**
@@ -276,13 +265,7 @@ public class CategoryImpl
      */
     public NotificationChain basicSetParent(Category newParent, NotificationChain msgs)
     {
-        Category oldParent = parent;
-        parent = newParent;
-        if (eNotificationRequired())
-        {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.CATEGORY__PARENT, oldParent, newParent);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
+        msgs = eBasicSetContainer((InternalEObject)newParent, ModelPackage.CATEGORY__PARENT, msgs);
         return msgs;
     }
 
@@ -293,11 +276,13 @@ public class CategoryImpl
      */
     public void setParent(Category newParent)
     {
-        if (newParent != parent)
+        if (newParent != eInternalContainer() || (eContainerFeatureID != ModelPackage.CATEGORY__PARENT && newParent != null))
         {
+            if (EcoreUtil.isAncestor(this, newParent))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
-            if (parent != null)
-                msgs = ((InternalEObject)parent).eInverseRemove(this, ModelPackage.CATEGORY__CHILDREN, Category.class, msgs);
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
             if (newParent != null)
                 msgs = ((InternalEObject)newParent).eInverseAdd(this, ModelPackage.CATEGORY__CHILDREN, Category.class, msgs);
             msgs = basicSetParent(newParent, msgs);
@@ -316,7 +301,7 @@ public class CategoryImpl
     {
         if (children == null)
         {
-            children = new EObjectWithInverseEList<Category>(Category.class, this, ModelPackage.CATEGORY__CHILDREN, ModelPackage.CATEGORY__PARENT);
+            children = new EObjectContainmentWithInverseEList<Category>(Category.class, this, ModelPackage.CATEGORY__CHILDREN, ModelPackage.CATEGORY__PARENT);
         }
         return children;
     }

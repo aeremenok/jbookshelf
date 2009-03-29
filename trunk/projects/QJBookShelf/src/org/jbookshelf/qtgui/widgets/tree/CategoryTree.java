@@ -38,7 +38,7 @@ public class CategoryTree
     public CategoryTree()
     {
         super();
-        List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         list.add( tr( "Name" ) );
         list.add( tr( "Count" ) );
         setHeaderLabels( list );
@@ -49,18 +49,18 @@ public class CategoryTree
 
     @Override
     protected void addChildren(
-        UniqueNode parent )
+        final UniqueNode parent )
     {
-        Category category = (Category) parent.getUnique();
+        final Category category = (Category) parent.getUnique();
 
-        QTreeWidgetItem authors = new QTreeWidgetItem();
+        final QTreeWidgetItem authors = new QTreeWidgetItem();
         authors.setText( 0, tr( "Authors" ) );
-        QTreeWidgetItem books = new QTreeWidgetItem();
+        final QTreeWidgetItem books = new QTreeWidgetItem();
         books.setText( 0, tr( "Books" ) );
 
-        for ( Categorizable categorizable : category.getCategorizables() )
+        for ( final Categorizable categorizable : category.getCategorizables() )
         {
-            UniqueNode node = new UniqueNode( categorizable );
+            final UniqueNode node = new UniqueNode( categorizable );
             if ( categorizable instanceof Book )
             {
                 books.addChild( node );
@@ -74,9 +74,12 @@ public class CategoryTree
         addToParent( parent, books );
         addToParent( parent, authors );
 
-        for ( Category child : category.getChildren() )
+        // display children categories
+        for ( final Category child : category.getChildren() )
         {
-            parent.addChild( new UniqueNode( child ) );
+            final UniqueNode uniqueNode = new UniqueNode( child );
+            parent.addChild( uniqueNode );
+            addChildren( uniqueNode );
         }
     }
 

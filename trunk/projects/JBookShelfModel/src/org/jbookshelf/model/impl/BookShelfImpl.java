@@ -40,12 +40,12 @@ import org.jbookshelf.model.Unique;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.jbookshelf.model.impl.BookShelfImpl#getAuthors <em>Authors</em>}</li>
- *   <li>{@link org.jbookshelf.model.impl.BookShelfImpl#getCategories <em>Categories</em>}</li>
- *   <li>{@link org.jbookshelf.model.impl.BookShelfImpl#getReadingUnits <em>Reading Units</em>}</li>
+ * <li>{@link org.jbookshelf.model.impl.BookShelfImpl#getAuthors <em>Authors</em>}</li>
+ * <li>{@link org.jbookshelf.model.impl.BookShelfImpl#getCategories <em>Categories</em>}</li>
+ * <li>{@link org.jbookshelf.model.impl.BookShelfImpl#getReadingUnits <em>Reading Units</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class BookShelfImpl
@@ -54,9 +54,9 @@ public class BookShelfImpl
         BookShelf
 {
     /**
-     * The cached value of the '{@link #getAuthors() <em>Authors</em>}' containment reference list.
-     * <!-- begin-user-doc
+     * The cached value of the '{@link #getAuthors() <em>Authors</em>}' containment reference list. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
+     * 
      * @see #getAuthors()
      * @generated
      * @ordered
@@ -87,6 +87,7 @@ public class BookShelfImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected BookShelfImpl()
@@ -100,7 +101,7 @@ public class BookShelfImpl
      * @generated NOT
      */
     public Author addAuthor(
-        String name )
+        final String name )
     {
         if ( name == null || "".equals( name ) )
         {
@@ -119,13 +120,14 @@ public class BookShelfImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public Book addBook(
-        String name,
-        Author author,
-        Category category,
-        PhysicalUnit physicalUnit )
+        final String name,
+        final Author author,
+        final Category category,
+        final PhysicalUnit physicalUnit )
     {
         // TODO: implement this method
         // Ensure that you remove @generated or mark it @generated NOT
@@ -138,7 +140,7 @@ public class BookShelfImpl
      * @generated NOT
      */
     public Category addCategory(
-        String name )
+        final String name )
     {
         if ( name == null || "".equals( name ) )
         {
@@ -161,10 +163,10 @@ public class BookShelfImpl
      * @generated NOT
      */
     public Book addReadingUnit(
-        String name,
-        Author author,
-        Category category,
-        PhysicalUnit physicalUnit )
+        final String name,
+        final Author author,
+        final Category category,
+        final PhysicalUnit physicalUnit )
     {
         if ( name == null || "".equals( name ) )
         {
@@ -193,15 +195,16 @@ public class BookShelfImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public Object eGet(
-        int featureID,
-        boolean resolve,
-        boolean coreType )
+        final int featureID,
+        final boolean resolve,
+        final boolean coreType )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.BOOK_SHELF__AUTHORS:
                 return getAuthors();
@@ -210,40 +213,42 @@ public class BookShelfImpl
             case ModelPackage.BOOK_SHELF__READING_UNITS:
                 return getReadingUnits();
         }
-        return super.eGet(featureID, resolve, coreType);
+        return super.eGet( featureID, resolve, coreType );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public NotificationChain eInverseRemove(
-        InternalEObject otherEnd,
-        int featureID,
-        NotificationChain msgs )
+        final InternalEObject otherEnd,
+        final int featureID,
+        final NotificationChain msgs )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.BOOK_SHELF__AUTHORS:
-                return ((InternalEList<?>)getAuthors()).basicRemove(otherEnd, msgs);
+                return ((InternalEList<?>) getAuthors()).basicRemove( otherEnd, msgs );
             case ModelPackage.BOOK_SHELF__CATEGORIES:
-                return ((InternalEList<?>)getCategories()).basicRemove(otherEnd, msgs);
+                return ((InternalEList<?>) getCategories()).basicRemove( otherEnd, msgs );
             case ModelPackage.BOOK_SHELF__READING_UNITS:
-                return ((InternalEList<?>)getReadingUnits()).basicRemove(otherEnd, msgs);
+                return ((InternalEList<?>) getReadingUnits()).basicRemove( otherEnd, msgs );
         }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
+        return super.eInverseRemove( otherEnd, featureID, msgs );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public boolean eIsSet(
-        int featureID )
+        final int featureID )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.BOOK_SHELF__AUTHORS:
                 return authors != null && !authors.isEmpty();
@@ -252,46 +257,48 @@ public class BookShelfImpl
             case ModelPackage.BOOK_SHELF__READING_UNITS:
                 return readingUnits != null && !readingUnits.isEmpty();
         }
-        return super.eIsSet(featureID);
+        return super.eIsSet( featureID );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @SuppressWarnings( "unchecked" )
     @Override
     public void eSet(
-        int featureID,
-        Object newValue )
+        final int featureID,
+        final Object newValue )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.BOOK_SHELF__AUTHORS:
                 getAuthors().clear();
-                getAuthors().addAll((Collection<? extends Author>)newValue);
+                getAuthors().addAll( (Collection<? extends Author>) newValue );
                 return;
             case ModelPackage.BOOK_SHELF__CATEGORIES:
                 getCategories().clear();
-                getCategories().addAll((Collection<? extends Category>)newValue);
+                getCategories().addAll( (Collection<? extends Category>) newValue );
                 return;
             case ModelPackage.BOOK_SHELF__READING_UNITS:
                 getReadingUnits().clear();
-                getReadingUnits().addAll((Collection<? extends Book>)newValue);
+                getReadingUnits().addAll( (Collection<? extends Book>) newValue );
                 return;
         }
-        super.eSet(featureID, newValue);
+        super.eSet( featureID, newValue );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
     public void eUnset(
-        int featureID )
+        final int featureID )
     {
-        switch (featureID)
+        switch ( featureID )
         {
             case ModelPackage.BOOK_SHELF__AUTHORS:
                 getAuthors().clear();
@@ -303,31 +310,34 @@ public class BookShelfImpl
                 getReadingUnits().clear();
                 return;
         }
-        super.eUnset(featureID);
+        super.eUnset( featureID );
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public EList<Author> getAuthors()
     {
-        if (authors == null)
+        if ( authors == null )
         {
-            authors = new EObjectContainmentEList<Author>(Author.class, this, ModelPackage.BOOK_SHELF__AUTHORS);
+            authors = new EObjectContainmentEList<Author>( Author.class, this, ModelPackage.BOOK_SHELF__AUTHORS );
         }
         return authors;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public EList<Category> getCategories()
     {
-        if (categories == null)
+        if ( categories == null )
         {
-            categories = new EObjectContainmentEList<Category>(Category.class, this, ModelPackage.BOOK_SHELF__CATEGORIES);
+            categories =
+                new EObjectContainmentEList<Category>( Category.class, this, ModelPackage.BOOK_SHELF__CATEGORIES );
         }
         return categories;
     }
@@ -345,13 +355,14 @@ public class BookShelfImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public EList<Book> getReadingUnits()
     {
-        if (readingUnits == null)
+        if ( readingUnits == null )
         {
-            readingUnits = new EObjectContainmentEList<Book>(Book.class, this, ModelPackage.BOOK_SHELF__READING_UNITS);
+            readingUnits = new EObjectContainmentEList<Book>( Book.class, this, ModelPackage.BOOK_SHELF__READING_UNITS );
         }
         return readingUnits;
     }
@@ -373,12 +384,12 @@ public class BookShelfImpl
      * @generated NOT
      */
     public EList<Author> queryAuthors(
-        String query )
+        final String query )
     {
-        String lowerCase = query.toLowerCase();
-        EList<Author> result = new BasicEList<Author>();
+        final String lowerCase = query.toLowerCase();
+        final EList<Author> result = new BasicEList<Author>();
 
-        for ( Author author : getAuthors() )
+        for ( final Author author : getAuthors() )
         {
             if ( author.getName().toLowerCase().contains( lowerCase ) )
             {
@@ -391,11 +402,12 @@ public class BookShelfImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public EList<Book> queryBooks(
-        String query,
-        Boolean isRead )
+        final String query,
+        final Boolean isRead )
     {
         // TODO: implement this method
         // Ensure that you remove @generated or mark it @generated NOT
@@ -408,12 +420,12 @@ public class BookShelfImpl
      * @generated NOT
      */
     public EList<Category> queryCategories(
-        String query )
+        final String query )
     {
-        String lowerCase = query.toLowerCase();
-        EList<Category> result = new BasicEList<Category>();
+        final String lowerCase = query.toLowerCase();
+        final EList<Category> result = new BasicEList<Category>();
 
-        for ( Category category : getCategories() )
+        for ( final Category category : getCategories() )
         {
             if ( category.getName().toLowerCase().contains( lowerCase ) )
             {
@@ -430,9 +442,9 @@ public class BookShelfImpl
      * @generated NOT
      */
     public EList<Unique> queryUniques(
-        String query )
+        final String query )
     {
-        EList<Unique> result = new BasicEList<Unique>();
+        final EList<Unique> result = new BasicEList<Unique>();
 
         result.addAll( queryAuthors( query ) );
         result.addAll( queryCategories( query ) );
@@ -447,15 +459,15 @@ public class BookShelfImpl
      * @generated NOT
      */
     public EList<Book> queryUnits(
-        String query,
-        Boolean isRead )
+        final String query,
+        final Boolean isRead )
     {
-        String lowerCase = query.toLowerCase();
-        EList<Book> result = new BasicEList<Book>();
+        final String lowerCase = query.toLowerCase();
+        final EList<Book> result = new BasicEList<Book>();
 
         if ( isRead == null )
         {
-            for ( Book unit : getReadingUnits() )
+            for ( final Book unit : getReadingUnits() )
             {
                 if ( unit.getName().toLowerCase().contains( lowerCase ) )
                 {
@@ -465,9 +477,9 @@ public class BookShelfImpl
         }
         else
         {
-            for ( Book unit : getReadingUnits() )
+            for ( final Book unit : getReadingUnits() )
             {
-                boolean read = !isRead.booleanValue() || isRead.booleanValue() && unit.getRead() == 1;
+                final boolean read = !isRead.booleanValue() || isRead.booleanValue() && unit.getRead() == 1;
                 if ( read && unit.getName().toLowerCase().contains( lowerCase ) )
                 {
                     result.add( unit );
@@ -484,37 +496,37 @@ public class BookShelfImpl
      * @generated NOT
      */
     public void removeUnique(
-        Unique unique )
+        final Unique unique )
     {
         unique.getRelated().clear();
         ((Commentable) unique).getComments().clear();
         if ( unique instanceof Book )
         {
             getReadingUnits().remove( unique );
-            Book readingUnit = (Book) unique;
+            final Book readingUnit = (Book) unique;
             readingUnit.getAuthors().clear();
             readingUnit.getCategories().clear();
         }
         else if ( unique instanceof Author )
         {
             getAuthors().remove( unique );
-            Author author = (Author) unique;
+            final Author author = (Author) unique;
             author.getBooks().clear();
             author.getCategories().clear();
         }
         else if ( unique instanceof Category )
         {
             getCategories().remove( unique );
-            Category category = (Category) unique;
+            final Category category = (Category) unique;
             category.getCategorizables().clear();
         }
     }
 
     private Author getAuthorByName(
-        String name )
+        final String name )
     {
         // todo optimize
-        for ( Author author : getAuthors() )
+        for ( final Author author : getAuthors() )
         {
             if ( name.equals( author.getName() ) )
             {
@@ -525,10 +537,10 @@ public class BookShelfImpl
     }
 
     private Category getCategoryByName(
-        String name )
+        final String name )
     {
         // todo optimize
-        for ( Category category : getCategories() )
+        for ( final Category category : getCategories() )
         {
             if ( name.equals( category.getName() ) )
             {
@@ -539,10 +551,10 @@ public class BookShelfImpl
     }
 
     private Book getReadingUnitByName(
-        String name )
+        final String name )
     {
         // todo optimize
-        for ( Book readingUnit : getReadingUnits() )
+        for ( final Book readingUnit : getReadingUnits() )
         {
             if ( name.equals( readingUnit.getName() ) )
             {
@@ -554,6 +566,7 @@ public class BookShelfImpl
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     @Override
