@@ -46,14 +46,14 @@ public class CompletionDictionary
 
     private CompletionDictionary()
     {
-        File file = new File( getFileName() );
+        final File file = new File( getFileName() );
         if ( file.exists() )
         {
             try
             {
                 completions.load( new FileInputStream( file ) );
             }
-            catch ( Exception e )
+            catch ( final Exception e )
             {
                 e.printStackTrace();
             }
@@ -61,15 +61,15 @@ public class CompletionDictionary
     }
 
     public synchronized void add(
-        String word )
+        final String word )
     {
         completions.put( word, "" );
     }
 
     public void addText(
-        String text )
+        final String text )
     {
-        StringTokenizer tokenizer = new StringTokenizer( text, EOW + " " );
+        final StringTokenizer tokenizer = new StringTokenizer( text, EOW + " " );
         while ( tokenizer.hasMoreTokens() )
         {
             add( tokenizer.nextToken() );
@@ -93,8 +93,8 @@ public class CompletionDictionary
     public List<String> getCompletions()
     {
         // todo optimize
-        List<String> list = new ArrayList<String>();
-        for ( Object object : completions.keySet() )
+        final List<String> list = new ArrayList<String>();
+        for ( final Object object : completions.keySet() )
         {
             list.add( (String) object );
         }
@@ -107,23 +107,23 @@ public class CompletionDictionary
         {
             completions.store( new FileOutputStream( getFileName() ), "completion dictionary" );
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             e.printStackTrace();
         }
     }
 
     private void collectWords(
-        List<? extends Unique> list )
+        final List<? extends Unique> list )
     {
-        for ( Unique unique : list )
+        for ( final Unique unique : list )
         {
             addText( unique.getName() );
             if ( unique instanceof Commentable )
             {
-                for ( Comment comment : ((Commentable) unique).getComments() )
+                for ( final Comment comment : ((Commentable) unique).getComments() )
                 {
-                    addText( comment.getContent() );
+                    addText( comment.getContent() + "" );
                 }
             }
         }
@@ -131,7 +131,7 @@ public class CompletionDictionary
 
     private String getFileName()
     {
-        String folder = Settings.getInstance().getProperty( JBookShelfSettings.JBS_FOLDER );
+        final String folder = Settings.getInstance().getProperty( JBookShelfSettings.JBS_FOLDER );
         return folder + "/" + FILENAME;
     }
 }
