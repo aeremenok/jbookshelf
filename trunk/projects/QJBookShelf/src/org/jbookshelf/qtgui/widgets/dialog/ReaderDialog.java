@@ -7,11 +7,15 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
+import java.util.Date;
 
 import org.jbookshelf.controller.URIOpener;
 import org.jbookshelf.controller.ZIPHandler;
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Book;
+import org.jbookshelf.model.Citation;
+import org.jbookshelf.model.Comment;
+import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.PhysicalUnit;
 import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
@@ -21,14 +25,19 @@ import com.trolltech.qt.core.Qt.WindowState;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QCloseEvent;
 import com.trolltech.qt.gui.QComboBox;
+import com.trolltech.qt.gui.QContextMenuEvent;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QFontComboBox;
 import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QMainWindow;
+import com.trolltech.qt.gui.QMenu;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QScrollBar;
+import com.trolltech.qt.gui.QSplitter;
 import com.trolltech.qt.gui.QTextBrowser;
 import com.trolltech.qt.gui.QToolBar;
+import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
 public class ReaderDialog
@@ -36,7 +45,17 @@ public class ReaderDialog
     implements
         JBookShelfConstants
 {
-    private final QTextBrowser    textEdit        = new QTextBrowser( this );
+    private final QTextBrowser    textEdit        = new QTextBrowser()
+                                                  {
+                                                      @Override
+                                                      protected void contextMenuEvent(
+                                                          final QContextMenuEvent e )
+                                                      {
+                                                          showMenu( e );
+                                                      }
+                                                  };
+
+    private final QWidget         citationPanel   = new QWidget();
     private final QAction         backward        = new QAction( new QIcon( ICONPATH + "go-previous.png" ), "", this );
     private final QAction         forward         = new QAction( new QIcon( ICONPATH + "go-next.png" ), "", this );
     private final QAction         home            = new QAction( new QIcon( ICONPATH + "go-home.png" ), "", this );
@@ -209,6 +228,7 @@ public class ReaderDialog
 
         initComponents();
         initListeners();
+        retranslate();
     }
 
     public void retranslate()
@@ -225,11 +245,23 @@ public class ReaderDialog
 
     @SuppressWarnings( "unused" )
     private void charsetChanged(
-        String charset )
+        final String charset )
     {
         book.getPhysical().setCharset( charset );
         // reload text
         textEdit.setText( getContent() );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void citate()
+    {
+        final Citation cit = ModelFactory.eINSTANCE.createCitation();
+        cit.setCreationDate( new Date() );
+        cit.setTitle( book.getName() + " " + cit.getCreationDate().toLocaleString() );
+        cit.setCitation( textEdit.textCursor().selectedText() );
+        cit.setContent( "" );
+        cit.setSubject( book );
+        book.getComments().add( cit );
     }
 
     @SuppressWarnings( "unused" )
@@ -275,7 +307,13 @@ public class ReaderDialog
         setWindowTitle( book.getName() );
         setWindowState( WindowState.WindowMaximized );
 
-        setCentralWidget( textEdit );
+        citationPanel.setLayout( new QVBoxLayout() );
+        citationPanel.setVisible( false );
+
+        final QSplitter splitter = new QSplitter();
+        splitter.addWidget( textEdit );
+        splitter.addWidget( citationPanel );
+        setCentralWidget( splitter );
 
         final QToolBar toolBar = new QToolBar( this );
         addToolBar( toolBar );
@@ -296,7 +334,7 @@ public class ReaderDialog
         // todo break huge content into parts
         textEdit.setText( getContent() );
 
-        for ( String charsetName : Charset.availableCharsets().keySet() )
+        for ( final String charsetName : Charset.availableCharsets().keySet() )
         {
             charsetComboBox.addItem( Charset.availableCharsets().get( charsetName ).name() );
         }
@@ -324,7 +362,9 @@ public class ReaderDialog
 
         charsetComboBox.currentStringChanged.connect( this, "charsetChanged(String)" );
 
-        // todo bookmark, citation, view
+        citation.triggered.connect( this, "citate()" );
+        view.triggered.connect( this, "viewComments()" );
+        // todo bookmark
     }
 
     @SuppressWarnings( "unused" )
@@ -337,6 +377,31 @@ public class ReaderDialog
         scrollBar.setSliderPosition( (int) (book.getRead() * max) );
     }
 
+    @SuppressWarnings( "unused" )
+    private void viewComments()
+    {// todo refactor and build smooth comment panels
+        citationPanel.setVisible( !citationPanel.isVisible() );
+        final QVBoxLayout layout = (QVBoxLayout) citationPanel.layout();
+        final int count = layout.count();
+        for ( int i = 0; i < count; i++ )
+        {
+            layout.removeItem( layout.itemAt( 0 ) );
+        }
+
+        for ( final Comment comment : book.getComments() )
+        {
+            if ( comment instanceof Citation )
+            {
+                final Citation cit = (Citation) comment;
+                layout.addWidget( new QLabel( cit.getCitation() + "" ) );
+            }
+            else
+            {
+                layout.addWidget( new QLabel( comment.getContent() + "" ) );
+            }
+        }
+    }
+
     @Override
     protected void closeEvent(
         final QCloseEvent arg__1 )
@@ -346,5 +411,15 @@ public class ReaderDialog
         book.setRead( (float) scrollBar.sliderPosition() / (float) scrollBar.maximum() );
 
         super.closeEvent( arg__1 );
+    }
+
+    protected void showMenu(
+        final QContextMenuEvent e )
+    {
+        final QMenu menu = textEdit.createStandardContextMenu();
+        menu.addSeparator();
+        menu.addAction( citation );
+        menu.addAction( bookmark );
+        menu.exec( e.globalPos() );
     }
 }
