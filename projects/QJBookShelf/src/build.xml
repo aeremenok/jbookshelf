@@ -10,7 +10,7 @@
     copy qtjambi-[version].jar and qtjambi-[platform]-[version].jar to ${jambidir}/{$os}
     and rename them to qtjambi.jar and qtjambi-native.jar
  -->
-<project default="create_run_jar" name="Create Runnable Jar for Project QJBookShelf">
+<project default="create_run_jar" name="Create Runnable Jar for Project QJBookShelf" basedir="..">
 
 	<property name="libdir" value="${basedir}/lib" />
 	<property name="targetdir" value="${builddir}/jbookshelf-${os}-${version}" />
@@ -75,6 +75,7 @@
 			<!-- todo specify directories recusrively -->
 			<arg value="${srcdir}/${packagedir}" />
 			<arg value="${srcdir}/${packagedir}/logic" />
+			<arg value="${srcdir}/${packagedir}/reader" />
 			<arg value="${srcdir}/${packagedir}/widgets" />
 			<arg value="${srcdir}/${packagedir}/widgets/completion" />
 			<arg value="${srcdir}/${packagedir}/widgets/dialog" />
