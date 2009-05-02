@@ -2,10 +2,10 @@ package org.jbookshelf.qtgui.reader;
 
 import org.jbookshelf.model.Citation;
 import org.jbookshelf.model.Comment;
+import org.jbookshelf.qtgui.widgets.ext.QGroupBoxExt;
 
-import com.trolltech.qt.gui.QLabel;
-import com.trolltech.qt.gui.QVBoxLayout;
-import com.trolltech.qt.gui.QWidget;
+import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QTextBrowser;
 
 /**
  * displays comments and citations
@@ -13,16 +13,28 @@ import com.trolltech.qt.gui.QWidget;
  * @author eav
  */
 public class CitationPanel
-    extends QWidget
+    extends QGroupBoxExt
 {
+    private class CitationWidget
+        extends QTextBrowser
+    {
+        public CitationWidget(
+            final String text )
+        {
+            super();
+            setText( text );
+            setReadOnly( true );
+        }
+    }
+
     private final ReaderWindow readerWindow;
 
     public CitationPanel(
         final ReaderWindow readerWindow )
     {
         this.readerWindow = readerWindow;
-
-        setLayout( new QVBoxLayout() );
+        setTitle( tr( "Citations" ) );
+        setLayout( new QGridLayout() );
         setVisible( false );
     }
 
@@ -31,7 +43,7 @@ public class CitationPanel
         setVisible( !isVisible() );
         if ( isVisible() )
         { // refresh comments
-            final QVBoxLayout layout = (QVBoxLayout) layout();
+            final QGridLayout layout = (QGridLayout) layout();
             final int count = layout.count();
             for ( int i = 0; i < count; i++ )
             {
@@ -43,11 +55,11 @@ public class CitationPanel
                 if ( comment instanceof Citation )
                 {
                     final Citation cit = (Citation) comment;
-                    layout.addWidget( new QLabel( cit.getCitation() + "" ) );
+                    layout.addWidget( new CitationWidget( cit.getCitation() ) );
                 }
                 else
                 {
-                    layout.addWidget( new QLabel( comment.getContent() + "" ) );
+                    layout.addWidget( new CitationWidget( comment.getContent() ) );
                 }
             }
         }
