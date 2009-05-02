@@ -26,7 +26,7 @@ import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
 
 import com.trolltech.qt.core.QCoreApplication;
-import com.trolltech.qt.core.QRect;
+import com.trolltech.qt.core.Qt.WindowState;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
 import com.trolltech.qt.gui.QIcon;
@@ -57,7 +57,7 @@ public class MainWindow
     }
 
     public static void main(
-        String[] args )
+        final String[] args )
     {
         QApplication.initialize( args );
 
@@ -92,13 +92,10 @@ public class MainWindow
         setWindowTitle( "JBookShelf" );
         setWindowIcon( new QIcon( ICONPATH + "logo-64.png" ) );
 
-        QRect geometry = geometry();
-        geometry.setWidth( 1000 );
-        geometry.setHeight( 700 );
-        setGeometry( geometry );
+        setWindowState( WindowState.WindowMaximized );
         addToolBar( ToolBar.getInstance() );
 
-        QSplitter splitter = new QSplitter();
+        final QSplitter splitter = new QSplitter();
         setCentralWidget( splitter );
         splitter.addWidget( CollectionPanel.getInstance() );
         splitter.addWidget( RelatedPanel.getInstance() );
@@ -109,14 +106,14 @@ public class MainWindow
         String lafName = settings.getProperty( JBookShelfSettings.LAF );
         if ( lafName == null )
         {
-            String os = System.getProperty( "os.name" );
+            final String os = System.getProperty( "os.name" );
             if ( os.toLowerCase().contains( "windows" ) )
             {
                 lafName = "WindowsXP";
             }
             else
             {
-                lafName = "Cleanlooks";
+                lafName = "Plastique";
             }
             // todo mac os
             settings.setProperty( JBookShelfSettings.LAF, lafName );
@@ -131,14 +128,14 @@ public class MainWindow
 
     @Override
     protected void closeEvent(
-        QCloseEvent arg__1 )
+        final QCloseEvent arg__1 )
     {
         try
         {
             Storage.saveCollection();
             CompletionDictionary.getInstance().save();
         }
-        catch ( Throwable e1 )
+        catch ( final Throwable e1 )
         {
             e1.printStackTrace();
         }

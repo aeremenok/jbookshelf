@@ -27,11 +27,11 @@ import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
+import org.jbookshelf.qtgui.reader.ReaderWindow;
 import org.jbookshelf.qtgui.widgets.dialog.AboutDialog;
 import org.jbookshelf.qtgui.widgets.dialog.BookAdditionDialog;
 import org.jbookshelf.qtgui.widgets.dialog.BookEditDialog;
 import org.jbookshelf.qtgui.widgets.dialog.ImportDialog;
-import org.jbookshelf.qtgui.widgets.dialog.ReaderDialog;
 import org.jbookshelf.qtgui.widgets.dialog.SettingsDialog;
 import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
 import org.jbookshelf.qtgui.widgets.ext.QToolBarExt;
@@ -253,7 +253,7 @@ public class ToolBar
         {
             if ( unique instanceof Book )
             {
-                ReaderDialog.open( this, (Book) unique );
+                ReaderWindow.open( this, (Book) unique );
             }
         }
     }

@@ -63,7 +63,10 @@ public class CompletionDictionary
     public synchronized void add(
         final String word )
     {
-        completions.put( word, "" );
+        if ( word.length() > 3 )
+        { // do not store short words
+            completions.put( word, "" );
+        }
     }
 
     public void addText(
