@@ -96,10 +96,9 @@ public class URIOpener
      * @param text to search
      */
     public static void google(
-        String query )
+        final String query )
     {
-        query = query.replaceAll( " ", "+" );
-        browse( "http://www.google.com/search?q=" + query );
+        browse( "http://www.google.com/search?q=" + query.trim().replaceAll( " ", "+" ) );
     }
 
     public static void openFolder(
