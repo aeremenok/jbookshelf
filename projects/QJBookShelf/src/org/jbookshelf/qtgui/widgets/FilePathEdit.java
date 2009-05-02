@@ -16,6 +16,7 @@
 package org.jbookshelf.qtgui.widgets;
 
 import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
 
@@ -49,33 +50,33 @@ public class FilePathEdit
     }
 
     public FilePathEdit(
-        QPrivateConstructor p )
+        final QPrivateConstructor p )
     {
         super( p );
         initComponents();
     }
 
     public FilePathEdit(
-        QWidget parent )
+        final QWidget parent )
     {
         super( parent );
         initComponents();
     }
 
     public void setCaption(
-        String caption )
+        final String caption )
     {
         this.caption = caption;
     }
 
     public void setFileMode(
-        FileMode mode )
+        final FileMode mode )
     {
         this.mode = mode;
     }
 
     public void setText(
-        String text )
+        final String text )
     {
         edit.setText( text );
         saveConfig( text );
@@ -89,7 +90,7 @@ public class FilePathEdit
     @SuppressWarnings( "unused" )
     private void chooseFile()
     {
-        QFileDialogExt fileDialog = new QFileDialogExt( this, caption )
+        final QFileDialogExt fileDialog = new QFileDialogExt( this, caption )
         {
             @Override
             protected void filesSelected()
@@ -110,7 +111,7 @@ public class FilePathEdit
 
     private void initComponents()
     {
-        QHBoxLayout layout = new QHBoxLayout();
+        final QHBoxLayout layout = new QHBoxLayout();
         setLayout( layout );
         layout.addWidget( edit );
         layout.addWidget( button );
@@ -118,7 +119,7 @@ public class FilePathEdit
         button.setIcon( new QIcon( ICONPATH + "document-open-folder.png" ) );
 
         // trying to set the last used path
-        String lastPath = Settings.getInstance().getProperty( getKey() );
+        final String lastPath = Singletons.instance( Settings.class ).getProperty( getKey() );
         if ( lastPath != null )
         {
             edit.setText( lastPath );
@@ -129,14 +130,15 @@ public class FilePathEdit
     }
 
     private void saveConfig(
-        String lastPath )
+        final String lastPath )
     {
-        Settings.getInstance().setProperty( getKey(), lastPath );
-        Settings.getInstance().save();
+        final Settings settings = Singletons.instance( Settings.class );
+        settings.setProperty( getKey(), lastPath );
+        settings.save();
     }
 
     protected void fileSelected(
-        @SuppressWarnings( "unused" ) String fileName )
+        @SuppressWarnings( "unused" ) final String fileName )
     {
     }
 }

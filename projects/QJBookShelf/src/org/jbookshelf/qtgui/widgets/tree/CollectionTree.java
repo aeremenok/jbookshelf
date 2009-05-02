@@ -21,12 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EReference;
+import org.jbookshelf.controller.singleton.Singleton;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.ToolBar;
 import org.jbookshelf.qtgui.logic.SourcesUniqueSelection;
+import org.jbookshelf.qtgui.logic.Translatable;
+import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.menu.CollectionTreeMenu;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
@@ -47,10 +51,11 @@ import com.trolltech.qt.gui.QTreeWidgetItem.ChildIndicatorPolicy;
  * @author eav
  */
 public abstract class CollectionTree
-    // todo implement Translatable
     extends QTreeWidget
     implements
-        SourcesUniqueSelection
+        SourcesUniqueSelection,
+        Singleton,
+        Translatable
 {
     private final List<UniqueSelectionListener> listeners      = new ArrayList<UniqueSelectionListener>();
     private final List<FocusListener>           focusListeners = new ArrayList<FocusListener>();
@@ -74,16 +79,6 @@ public abstract class CollectionTree
         parent.setExpanded( false );
     }
 
-    public CollectionTree()
-    {
-        super();
-
-        initComponents();
-        initListeners();
-
-        ToolBar.getInstance().selectedUniques( new ArrayList<Unique>() );
-    }
-
     public void addFocusListener(
         final FocusListener focusListener )
     {
@@ -100,6 +95,14 @@ public abstract class CollectionTree
         final UniqueSelectionListener listener )
     {
         listeners.add( listener );
+    }
+
+    public void initSingleton()
+    {
+        initComponents();
+        initListeners();
+
+        Translator.addTranslatable( this );
     }
 
     public void removeFocusListener(
@@ -137,6 +140,10 @@ public abstract class CollectionTree
         final UniqueSelectionListener listener )
     {
         listeners.remove( listener );
+    }
+
+    public void retranslate()
+    {
     }
 
     public void selectUnique(
@@ -237,8 +244,8 @@ public abstract class CollectionTree
 
     private void initListeners()
     {
-        addSelectionListener( ToolBar.getInstance() );
-        addSelectionListener( RelatedPanel.getInstance() );
+        addSelectionListener( Singletons.instance( ToolBar.class ) );
+        addSelectionListener( Singletons.instance( RelatedPanel.class ) );
 
         itemDoubleClicked.connect( this, "fireDoubleClicked(QTreeWidgetItem, Integer)" );
         itemSelectionChanged.connect( this, "itemSelectionChanged()" );
@@ -270,7 +277,7 @@ public abstract class CollectionTree
             final QTreeWidgetItem item = selectedItems().get( 0 );
             if ( item instanceof UniqueNode && !item.parent().equals( root ) )
             { // leaf doubleclicked
-                CollectionPanel.getInstance().selectUnique( ((UniqueNode) item).getUnique() );
+                Singletons.instance( CollectionPanel.class ).selectUnique( ((UniqueNode) item).getUnique() );
             }
         }
     }

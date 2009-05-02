@@ -17,10 +17,11 @@ package org.jbookshelf.controller.storage;
 
 import java.io.File;
 
+import org.jbookshelf.controller.singleton.Singleton;
 import org.jbookshelf.model.BookShelf;
 
 /**
- * storage facade, hides physical storage
+ * storage facade, hides physical storage todo make {@link Singleton}
  * 
  * @author eav
  */
@@ -34,7 +35,7 @@ public abstract class Storage
     private static BookShelf         bookShelf;
 
     public static void backupCollection(
-        File file )
+        final File file )
     {
         impl.backupCollection( getBookShelf(), file );
     }
@@ -56,7 +57,7 @@ public abstract class Storage
     }
 
     public static BookShelf restoreCollection(
-        File file )
+        final File file )
     {
         bookShelf = impl.restoreCollection( file );
         return bookShelf;

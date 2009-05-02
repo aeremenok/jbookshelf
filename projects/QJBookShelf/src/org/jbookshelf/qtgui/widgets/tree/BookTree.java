@@ -35,9 +35,11 @@ import com.trolltech.qt.gui.QTreeWidgetItem;
 public class BookTree
     extends CollectionTree
 {
-    public BookTree()
+    @Override
+    public void initSingleton()
     {
-        super();
+        super.initSingleton();
+
         setColumnCount( 3 );
 
         final List<String> list = new ArrayList<String>();

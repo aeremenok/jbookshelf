@@ -26,6 +26,7 @@ import net.sf.jazzlib.ZipInputStreamEncoded;
 
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.mozilla.universalchardet.UniversalDetector;
 
 /**
@@ -42,25 +43,25 @@ public class ZIPHandler
      * @param destDir destination directory name
      */
     public static void extractZipFiles(
-        String srcFilename,
-        String destDir )
+        final String srcFilename,
+        final String destDir )
     {
         try
         {
-            File file = new File( srcFilename );
-            String encoding = guessZipEncoding( file );
-            ZipInputStreamEncoded zise = new ZipInputStreamEncoded( new FileInputStream( file ), encoding );
+            final File file = new File( srcFilename );
+            final String encoding = guessZipEncoding( file );
+            final ZipInputStreamEncoded zise = new ZipInputStreamEncoded( new FileInputStream( file ), encoding );
             ZipEntry entry = zise.getNextEntry();
             while ( entry != null )
             {
-                File f = new File( destDir + File.separator + entry.getName() );
+                final File f = new File( destDir + File.separator + entry.getName() );
                 if ( entry.isDirectory() && !f.exists() )
                 { // a directory doesn't exist, create it
                     f.mkdir();
                 }
                 else if ( !f.exists() || f.length() < entry.getSize() )
                 { // a file doesn't exist or is empty, write it
-                    FileOutputStream fos = new FileOutputStream( f );
+                    final FileOutputStream fos = new FileOutputStream( f );
                     while ( zise.available() > 0 )
                     { // write contents
                         fos.write( zise.read() );
@@ -72,7 +73,7 @@ public class ZIPHandler
 
             zise.close();
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             throw new Error( e );
         }
@@ -85,17 +86,17 @@ public class ZIPHandler
      * @return the biggest file
      */
     public static File getBiggestFile(
-        File dir )
+        final File dir )
     {
         File biggest = dir;
-        File[] listFiles = dir.listFiles( new FileImporter.ExtensionDenyingFilter() );
+        final File[] listFiles = dir.listFiles( new FileImporter.ExtensionDenyingFilter() );
         if ( listFiles != null )
         {
-            for ( File file : listFiles )
+            for ( final File file : listFiles )
             {
                 if ( file.isDirectory() )
                 {
-                    File biggestFile = getBiggestFile( file );
+                    final File biggestFile = getBiggestFile( file );
                     if ( biggestFile.length() > biggest.length() )
                     {
                         biggest = biggestFile;
@@ -111,10 +112,11 @@ public class ZIPHandler
     }
 
     public static File getZippedFileToOpen(
-        File zipFile )
+        final File zipFile )
     {
-        String destDir =
-            Settings.getInstance().getProperty( JBookShelfSettings.TEMP_FOLDER ) + File.separator + zipFile.getName();
+        final Settings settings = Singletons.instance( Settings.class );
+        final String destDir =
+            settings.getProperty( JBookShelfSettings.TEMP_FOLDER ) + File.separator + zipFile.getName();
         new File( destDir ).mkdir();
         extractZipFiles( zipFile.getAbsolutePath(), destDir );
         return getBiggestFile( new File( destDir ) );
@@ -127,25 +129,25 @@ public class ZIPHandler
      * @return approximate encoding
      */
     public static String guessZipEncoding(
-        File file )
+        final File file )
     {
         try
         {
-            ZipInputStream stream = new ZipInputStream( new FileInputStream( file ) );
-            StringBuilder builder = new StringBuilder();
+            final ZipInputStream stream = new ZipInputStream( new FileInputStream( file ) );
+            final StringBuilder builder = new StringBuilder();
             ZipEntry entry = stream.getNextEntry();
             while ( entry != null )
             {
                 builder.append( entry.getName() );
                 entry = stream.getNextEntry();
             }
-            String encoding = guessStringEncoding( builder.toString() );
+            final String encoding = guessStringEncoding( builder.toString() );
             if ( encoding != null )
             {
                 return encoding;
             }
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         { // do not interrupt hoping that the defaultCharset will fit
             e.printStackTrace();
         }
@@ -159,18 +161,18 @@ public class ZIPHandler
      * @return charset name
      */
     private static String guessStringEncoding(
-        String string )
+        final String string )
     {
-        UniversalDetector detector = new UniversalDetector( null );
+        final UniversalDetector detector = new UniversalDetector( null );
         try
         {
-            byte[] bytes = string.getBytes();
+            final byte[] bytes = string.getBytes();
             detector.handleData( bytes, 0, bytes.length - 1 );
             detector.dataEnd();
 
             return detector.getDetectedCharset();
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         { // do not interrupt hoping that the defaultCharset will fit
             e.printStackTrace();
         }

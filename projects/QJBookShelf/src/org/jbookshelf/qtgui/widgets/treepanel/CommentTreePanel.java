@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
@@ -85,10 +86,8 @@ public class CommentTreePanel
 
     private Commentable                   selectedCommentable;
 
-    public CommentTreePanel(
-        final RelatedPanel relatedPanel )
+    public void initSingleton()
     {
-        super( relatedPanel );
         initComponents();
         initListeners();
     }
@@ -126,7 +125,7 @@ public class CommentTreePanel
 
         node.setText( 0, comment.getTitle() );
 
-        CompletionDictionary.getInstance().addText( comment.getContent() );
+        Singletons.instance( CompletionDictionary.class ).addText( comment.getContent() );
     }
 
     @Override
@@ -152,7 +151,7 @@ public class CommentTreePanel
         if ( uniques.size() == 1 )
         {
             editPanel.setVisible( false );
-            relatedPanel.focusLost();
+            Singletons.instance( RelatedPanel.class ).nothingSelected();
 
             selectedCommentable = (Commentable) uniques.get( 0 );
             drawComments( selectedCommentable.getComments() );
@@ -206,7 +205,7 @@ public class CommentTreePanel
         cleanRoot();
 
         editPanel.setVisible( false );
-        relatedPanel.focusLost();
+        Singletons.instance( RelatedPanel.class ).nothingSelected();
     }
 
     @SuppressWarnings( "unused" )
@@ -220,12 +219,12 @@ public class CommentTreePanel
             {
                 editComment( commentNode.getComment() );
             }
-            relatedPanel.focusGained();
+            Singletons.instance( RelatedPanel.class ).itemSelected();
         }
         else
         {
             editPanel.setVisible( false );
-            relatedPanel.focusLost();
+            Singletons.instance( RelatedPanel.class ).nothingSelected();
         }
     }
 
@@ -246,7 +245,7 @@ public class CommentTreePanel
         undoButton.setIcon( new QIcon( ICONPATH + "edit-undo.png" ) );
         undoButton.setToolTip( tr( "Undo" ) );
 
-        final CompletionDictionary dictionary = CompletionDictionary.getInstance();
+        final CompletionDictionary dictionary = Singletons.instance( CompletionDictionary.class );
         dictionary.collectWords( Storage.getBookShelf() );
         commentTextArea.setCompleter( new QCompleter( dictionary.getCompletions() ) );
 

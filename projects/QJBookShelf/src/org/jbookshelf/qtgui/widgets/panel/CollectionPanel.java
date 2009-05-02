@@ -20,6 +20,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import org.jbookshelf.controller.singleton.Singleton;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
@@ -51,31 +53,17 @@ import com.trolltech.qt.gui.QTreeWidgetItem;
 public class CollectionPanel
     extends QWidgetExt
     implements
-        JBookShelfConstants
+        JBookShelfConstants,
+        Singleton
 {
-    private static CollectionPanel instance;
+    private final QPushButton cleanButton     = new QPushButton( this );
+    private final QPushButton searchButton    = new QPushButton( this );
+    private final QComboBox   isReadComboBox  = new QComboBox( this );
 
-    private final CollectionTree   authorTree      = new AuthorTree();
-    private final CollectionTree   bookTree        = new BookTree();
-    private final CollectionTree   categoryTree    = new CategoryTree();
+    private final QLineEdit   searchTextField = new SearchTextField( this );
+    private final QTabWidget  viewTabbedPane  = new QTabWidget( this );
 
-    private final QPushButton      cleanButton     = new QPushButton( this );
-    private final QPushButton      searchButton    = new QPushButton( this );
-    private final QComboBox        isReadComboBox  = new QComboBox( this );
-
-    private final QLineEdit        searchTextField = new SearchTextField( this );
-    private final QTabWidget       viewTabbedPane  = new QTabWidget( this );
-
-    public static CollectionPanel getInstance()
-    {
-        if ( instance == null )
-        {
-            instance = new CollectionPanel();
-        }
-        return instance;
-    }
-
-    public CollectionPanel()
+    public void initSingleton()
     {
         initComponents();
         initListeners();
@@ -186,9 +174,9 @@ public class CollectionPanel
 
         layout.addWidget( viewTabbedPane, 1, 0, 1, 4 );
 
-        viewTabbedPane.addTab( bookTree, "" );
-        viewTabbedPane.addTab( authorTree, "" );
-        viewTabbedPane.addTab( categoryTree, "" );
+        viewTabbedPane.addTab( Singletons.instance( BookTree.class ), "" );
+        viewTabbedPane.addTab( Singletons.instance( AuthorTree.class ), "" );
+        viewTabbedPane.addTab( Singletons.instance( CategoryTree.class ), "" );
 
         updateTree();
     }

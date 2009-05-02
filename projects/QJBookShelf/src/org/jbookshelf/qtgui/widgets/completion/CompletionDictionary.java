@@ -25,6 +25,8 @@ import java.util.StringTokenizer;
 
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.singleton.Singleton;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
@@ -33,32 +35,11 @@ import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 
 public class CompletionDictionary
     implements
-        JBookShelfConstants
+        JBookShelfConstants,
+        Singleton
 {
-    private static final String               FILENAME    = "dictionary";
-    private final static CompletionDictionary instance    = new CompletionDictionary();
-    private final Properties                  completions = new Properties();
-
-    public static CompletionDictionary getInstance()
-    {
-        return instance;
-    }
-
-    private CompletionDictionary()
-    {
-        final File file = new File( getFileName() );
-        if ( file.exists() )
-        {
-            try
-            {
-                completions.load( new FileInputStream( file ) );
-            }
-            catch ( final Exception e )
-            {
-                e.printStackTrace();
-            }
-        }
-    }
+    private static final String FILENAME    = "dictionary";
+    private final Properties    completions = new Properties();
 
     public synchronized void add(
         final String word )
@@ -104,6 +85,22 @@ public class CompletionDictionary
         return list;
     }
 
+    public void initSingleton()
+    {
+        final File file = new File( getFileName() );
+        if ( file.exists() )
+        {
+            try
+            {
+                completions.load( new FileInputStream( file ) );
+            }
+            catch ( final Exception e )
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void save()
     {
         try
@@ -134,7 +131,7 @@ public class CompletionDictionary
 
     private String getFileName()
     {
-        final String folder = Settings.getInstance().getProperty( JBookShelfSettings.JBS_FOLDER );
+        final String folder = Singletons.instance( Settings.class ).getProperty( JBookShelfSettings.JBS_FOLDER );
         return folder + "/" + FILENAME;
     }
 }

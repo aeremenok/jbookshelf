@@ -17,6 +17,7 @@ package org.jbookshelf.qtgui.widgets.dialog;
 
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.FilePathEdit;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
@@ -41,28 +42,28 @@ public class SettingsDialog
     implements
         JBookShelfSettings
 {
-    private Settings     settings       = Settings.getInstance();
+    private final Settings     settings       = Singletons.instance( Settings.class );
 
-    private QPushButton  cancelButton   = new QPushButton( this );
-    private QPushButton  okButton       = new QPushButton( this );
-    private QPushButton  restoreButton  = new QPushButton( this );
-    private QPushButton  saveButton     = new QPushButton( this );
+    private final QPushButton  cancelButton   = new QPushButton( this );
+    private final QPushButton  okButton       = new QPushButton( this );
+    private final QPushButton  restoreButton  = new QPushButton( this );
+    private final QPushButton  saveButton     = new QPushButton( this );
 
-    private QLabel       lafLabel       = new QLabel( this );
-    private QLabel       langLabel      = new QLabel( this );
-    private QLabel       settingsLabel  = new QLabel( this );
+    private final QLabel       lafLabel       = new QLabel( this );
+    private final QLabel       langLabel      = new QLabel( this );
+    private final QLabel       settingsLabel  = new QLabel( this );
 
-    private QComboBox    lafComboBox    = new QComboBox( this );
-    private QComboBox    langComboBox   = new QComboBox( this );
+    private final QComboBox    lafComboBox    = new QComboBox( this );
+    private final QComboBox    langComboBox   = new QComboBox( this );
 
-    private FilePathEdit jbsFolder      = new FilePathEdit( this );
-    private FilePathEdit tmpFolder      = new FilePathEdit( this );
+    private final FilePathEdit jbsFolder      = new FilePathEdit( this );
+    private final FilePathEdit tmpFolder      = new FilePathEdit( this );
 
-    private QLabel       jbsFolderLabel = new QLabel( this );
-    private QLabel       tmpFolderLabel = new QLabel( this );
+    private final QLabel       jbsFolderLabel = new QLabel( this );
+    private final QLabel       tmpFolderLabel = new QLabel( this );
 
     public SettingsDialog(
-        QWidget parent )
+        final QWidget parent )
     {
         super( parent );
 
@@ -106,7 +107,7 @@ public class SettingsDialog
     {
         setModal( true );
 
-        QGridLayout layout = new QGridLayout();
+        final QGridLayout layout = new QGridLayout();
         setLayout( layout );
 
         layout.addWidget( settingsLabel, 0, 0, 1, 5 );
@@ -155,7 +156,7 @@ public class SettingsDialog
     @SuppressWarnings( "unused" )
     private void lafComboBoxActionPerformed()
     {
-        String lafName = lafComboBox.currentText();
+        final String lafName = lafComboBox.currentText();
         settings.setProperty( JBookShelfSettings.LAF, lafName );
 
         QApplication.setStyle( lafName );
@@ -164,7 +165,7 @@ public class SettingsDialog
     @SuppressWarnings( "unused" )
     private void languageChanged()
     {
-        String language = langComboBox.currentText();
+        final String language = langComboBox.currentText();
         settings.setProperty( LANGUAGE, language );
 
         Translator.retranslate( language );

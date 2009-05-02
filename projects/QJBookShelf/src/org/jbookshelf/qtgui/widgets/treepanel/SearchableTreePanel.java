@@ -15,6 +15,8 @@
  */
 package org.jbookshelf.qtgui.widgets.treepanel;
 
+import org.jbookshelf.controller.singleton.Singleton;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
 import org.jbookshelf.qtgui.widgets.menu.RelatedTreeMenu;
@@ -33,7 +35,8 @@ import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
 public abstract class SearchableTreePanel
     extends QWidgetExt
     implements
-        UniqueSelectionListener
+        UniqueSelectionListener,
+        Singleton
 {
     /**
      * tree with context menu
@@ -45,23 +48,19 @@ public abstract class SearchableTreePanel
     {
         @Override
         protected void contextMenuEvent(
-            QContextMenuEvent arg__1 )
+            final QContextMenuEvent arg__1 )
         {
-            QTreeWidgetItem item = itemAt( arg__1.pos() );
+            final QTreeWidgetItem item = itemAt( arg__1.pos() );
             if ( item != null )
             {
                 item.setSelected( true );
 
-                RelatedTreeMenu menu = new RelatedTreeMenu( relatedPanel );
+                final RelatedTreeMenu menu = new RelatedTreeMenu( Singletons.instance( RelatedPanel.class ) );
                 menu.exec( arg__1.globalPos() );
             }
         }
     }
 
-    /**
-     * a panel which contains and controls us
-     */
-    protected final RelatedPanel   relatedPanel;
     /**
      * a working tree
      */
@@ -71,11 +70,8 @@ public abstract class SearchableTreePanel
      */
     protected QTreeWidgetItem      root;
 
-    public SearchableTreePanel(
-        RelatedPanel relatedPanel )
+    public SearchableTreePanel()
     {
-        this.relatedPanel = relatedPanel;
-
         root = searchableTree.invisibleRootItem();
         searchableTree.header().hide();
         searchableTree.setSelectionMode( SelectionMode.SingleSelection );
