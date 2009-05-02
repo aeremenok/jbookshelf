@@ -28,7 +28,9 @@ import org.jbookshelf.model.Book;
 import org.jbookshelf.model.PhysicalUnit;
 import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
+import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.dialog.BookEditDialog;
+import org.jbookshelf.qtgui.widgets.ext.QToolBarExt;
 
 import com.trolltech.qt.core.Qt.ToolButtonStyle;
 import com.trolltech.qt.core.Qt.WindowState;
@@ -40,7 +42,6 @@ import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QSplitter;
-import com.trolltech.qt.gui.QToolBar;
 import com.trolltech.qt.gui.QWidget;
 
 public class ReaderWindow
@@ -48,6 +49,16 @@ public class ReaderWindow
     implements
         JBookShelfConstants
 {
+    private final class ReaderToolBar
+        extends QToolBarExt
+    {
+        public void retranslate()
+        {
+            bookSettings.setText( tr( "Edit book properties" ) );
+            citation.setText( tr( "Add citation" ) );
+            view.setText( tr( "View bookmarks and citations" ) );
+        }
+    }
 
     private final QFontComboBox   fontComboBox    = new QFontComboBox( this );
     private final QAction         bookSettings    =
@@ -69,6 +80,8 @@ public class ReaderWindow
                                                   // todo import rich text
                                                       // , "doc", "odt", "rtf"
                                                       };
+
+    private final QToolBarExt     toolBar         = new ReaderToolBar();
 
     public static void open(
         final QWidget parent,
@@ -150,7 +163,8 @@ public class ReaderWindow
 
         initComponents();
         initListeners();
-        retranslate();
+
+        Translator.addTranslatable( toolBar );
     }
 
     public Book getBook()
@@ -166,13 +180,6 @@ public class ReaderWindow
     public QAction getCitation()
     {
         return citation;
-    }
-
-    public void retranslate()
-    {
-        bookSettings.setText( tr( "Edit book properties" ) );
-        citation.setText( tr( "Add citation" ) );
-        view.setText( tr( "View bookmarks and citations" ) );
     }
 
     @SuppressWarnings( "unused" )
@@ -255,7 +262,6 @@ public class ReaderWindow
         splitter.addWidget( citationPanel );
         setCentralWidget( splitter );
 
-        final QToolBar toolBar = new QToolBar( this );
         toolBar.setToolButtonStyle( ToolButtonStyle.ToolButtonTextUnderIcon );
         addToolBar( toolBar );
         toolBar.addWidget( fontComboBox );

@@ -115,24 +115,42 @@
 <context>
     <name>org.jbookshelf.qtgui.reader.ReaderWindow</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="173"/>
+        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="78"/>
+        <source>Edit book properties</source>
+        <translation type="obsolete">Править свойства книги</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="79"/>
+        <source>Add citation</source>
+        <translation type="obsolete">Добавить цитату</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="80"/>
+        <source>View bookmarks and citations</source>
+        <translation type="obsolete">Показать закладки и цитаты</translation>
+    </message>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="225"/>
+        <source>Error displaying file </source>
+        <translation>Ошибка отображения файла</translation>
+    </message>
+</context>
+<context>
+    <name>org.jbookshelf.qtgui.reader.ReaderWindow$ReaderToolBar</name>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="57"/>
         <source>Edit book properties</source>
         <translation>Править свойства книги</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="174"/>
+        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="58"/>
         <source>Add citation</source>
         <translation>Добавить цитату</translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="175"/>
+        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="59"/>
         <source>View bookmarks and citations</source>
         <translation>Показать закладки и цитаты</translation>
-    </message>
-    <message>
-        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="218"/>
-        <source>Error displaying file </source>
-        <translation>Ошибка отображения файла</translation>
     </message>
 </context>
 <context>
@@ -466,7 +484,7 @@ Use:
 <context>
     <name>org.jbookshelf.qtgui.widgets.menu.CollectionTreeMenu$SetReadAction</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/menu/CollectionTreeMenu.java" line="101"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/menu/CollectionTreeMenu.java" line="103"/>
         <source>Is read</source>
         <translation>Прочитана</translation>
     </message>
@@ -474,7 +492,7 @@ Use:
 <context>
     <name>org.jbookshelf.qtgui.widgets.menu.CollectionTreeMenu$TopCategoryAction</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/menu/CollectionTreeMenu.java" line="161"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/menu/CollectionTreeMenu.java" line="163"/>
         <source>Move to top</source>
         <translation>Переместить наверх</translation>
     </message>
