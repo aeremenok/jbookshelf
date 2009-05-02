@@ -15,8 +15,7 @@
  */
 package org.jbookshelf.qtgui;
 
-import org.jbookshelf.controller.settings.JBookShelfSettings;
-import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.Settings;
 import org.jbookshelf.controller.singleton.Singleton;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
@@ -93,7 +92,7 @@ public class MainWindow
     private void initLAF()
     {
         final Settings settings = Singletons.instance( Settings.class );
-        String lafName = settings.getProperty( JBookShelfSettings.LAF );
+        String lafName = settings.LAF.getValue();
         if ( lafName == null )
         {
             final String os = System.getProperty( "os.name" );
@@ -106,14 +105,14 @@ public class MainWindow
                 lafName = "Plastique";
             }
             // todo mac os
-            settings.setProperty( JBookShelfSettings.LAF, lafName );
+            settings.LAF.setValue( lafName );
         }
         QApplication.setStyle( lafName );
     }
 
     private void initLanguage()
     {
-        Translator.retranslate( Singletons.instance( Settings.class ).getProperty( JBookShelfSettings.LANGUAGE ) );
+        Translator.retranslate( Singletons.instance( Settings.class ).LANGUAGE.getValue() );
     }
 
     @Override

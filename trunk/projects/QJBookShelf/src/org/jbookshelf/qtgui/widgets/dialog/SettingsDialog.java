@@ -15,17 +15,22 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
-import org.jbookshelf.controller.settings.JBookShelfSettings;
-import org.jbookshelf.controller.settings.Settings;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import org.jbookshelf.controller.Settings;
 import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.FilePathEdit;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 
+import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QStyleFactory;
@@ -33,21 +38,19 @@ import com.trolltech.qt.gui.QWidget;
 import com.trolltech.qt.gui.QFileDialog.FileMode;
 
 /**
- * Shows program {@link Settings}, allows edit them, save as defaults and restore from defaults
+ * A dialog for editing program {@link Settings}
  * 
  * @author eav
  */
 public class SettingsDialog
     extends QDialogExt
     implements
-        JBookShelfSettings
+        PropertyChangeListener
 {
     private final Settings     settings       = Singletons.instance( Settings.class );
 
     private final QPushButton  cancelButton   = new QPushButton( this );
     private final QPushButton  okButton       = new QPushButton( this );
-    private final QPushButton  restoreButton  = new QPushButton( this );
-    private final QPushButton  saveButton     = new QPushButton( this );
 
     private final QLabel       lafLabel       = new QLabel( this );
     private final QLabel       langLabel      = new QLabel( this );
@@ -75,6 +78,21 @@ public class SettingsDialog
         retranslate();
     }
 
+    public void propertyChange(
+        final PropertyChangeEvent evt )
+    {
+        // apply new settings when LAF or LANGUAGE are changed
+        final String propertyName = evt.getPropertyName();
+        if ( propertyName.equals( settings.LAF.getKey() ) )
+        {
+            QApplication.setStyle( settings.LAF.getValue() );
+        }
+        else if ( propertyName.equals( settings.LANGUAGE.getKey() ) )
+        {
+            Translator.retranslate( settings.LANGUAGE.getValue() );
+        }
+    }
+
     public void retranslate()
     {
         setWindowTitle( tr( "Settings" ) );
@@ -85,8 +103,6 @@ public class SettingsDialog
         jbsFolderLabel.setText( tr( "JBookShelf folder" ) );
         tmpFolderLabel.setText( tr( "Temp folder" ) );
 
-        saveButton.setText( tr( "Save as defaults" ) );
-        restoreButton.setText( tr( "Restore defaults" ) );
         okButton.setText( tr( "OK" ) );
         cancelButton.setText( tr( "Cancel" ) );
 
@@ -96,39 +112,45 @@ public class SettingsDialog
 
     private void arrangeSettingValues()
     {
-        langComboBox.setCurrentIndex( langComboBox.findText( settings.getProperty( LANGUAGE ) ) );
-        lafComboBox.setCurrentIndex( lafComboBox.findText( settings.getProperty( LAF ) ) );
+        langComboBox.setCurrentIndex( langComboBox.findText( settings.LANGUAGE.getValue() ) );
+        lafComboBox.setCurrentIndex( lafComboBox.findText( settings.LAF.getValue() ) );
 
-        tmpFolder.setText( settings.getProperty( TEMP_FOLDER ) );
-        jbsFolder.setText( settings.getProperty( JBS_FOLDER ) );
+        tmpFolder.setText( settings.TEMP_DIR.getValue() );
+        jbsFolder.setText( settings.JBS_DIR.getValue() );
     }
 
     private void initComponents()
     {
         setModal( true );
 
+        final QRect geometry = geometry();
+        geometry.setWidth( 770 );
+        geometry.setHeight( 300 );
+        geometry.moveCenter( Singletons.instance( MainWindow.class ).geometry().center() );
+        setGeometry( geometry );
+
         final QGridLayout layout = new QGridLayout();
         setLayout( layout );
 
-        layout.addWidget( settingsLabel, 0, 0, 1, 5 );
+        layout.addWidget( settingsLabel, 0, 0, 1, 2 );
 
         layout.addWidget( langLabel, 1, 0 );
-        layout.addWidget( langComboBox, 1, 1, 1, 4 );
+        layout.addWidget( langComboBox, 1, 1 );
 
         layout.addWidget( lafLabel, 2, 0 );
-        layout.addWidget( lafComboBox, 2, 1, 1, 4 );
+        layout.addWidget( lafComboBox, 2, 1 );
 
         layout.addWidget( jbsFolderLabel, 3, 0 );
-        layout.addWidget( jbsFolder, 3, 1, 1, 4 );
+        layout.addWidget( jbsFolder, 3, 1 );
 
         layout.addWidget( tmpFolderLabel, 4, 0 );
-        layout.addWidget( tmpFolder, 4, 1, 1, 4 );
+        layout.addWidget( tmpFolder, 4, 1 );
 
-        layout.addWidget( saveButton, 6, 0 );
-        layout.addWidget( restoreButton, 6, 1 );
-        layout.addWidget( new QLabel( " " ), 6, 2 ); // todo insert spacer
-        layout.addWidget( okButton, 6, 3 );
-        layout.addWidget( cancelButton, 6, 4 );
+        final QWidget buttonWidget = new QWidget();
+        buttonWidget.setLayout( new QHBoxLayout() );
+        buttonWidget.layout().addWidget( okButton );
+        buttonWidget.layout().addWidget( cancelButton );
+        layout.addWidget( buttonWidget, 6, 0, 1, 2 );
 
         settingsLabel.setFont( new QFont( "Tahoma", 14 ) );
 
@@ -143,33 +165,23 @@ public class SettingsDialog
 
     private void initListeners()
     {
-        lafComboBox.currentIndexChanged.connect( this, "lafComboBoxActionPerformed()" );
-        langComboBox.currentIndexChanged.connect( this, "languageChanged()" );
+        lafComboBox.currentStringChanged.connect( settings.LAF, "setValue(Object)" );
+        langComboBox.currentStringChanged.connect( settings.LANGUAGE, "setValue(Object)" );
 
-        cancelButton.released.connect( this, "close()" );
+        cancelButton.released.connect( this, "onCancel()" );
         okButton.released.connect( this, "onOK()" );
 
-        saveButton.released.connect( this, "onSave()" );
-        restoreButton.released.connect( this, "onRestore()" );
+        settings.addPropertyChangeListener( this );
     }
 
     @SuppressWarnings( "unused" )
-    private void lafComboBoxActionPerformed()
+    private void onCancel()
     {
-        final String lafName = lafComboBox.currentText();
-        settings.setProperty( JBookShelfSettings.LAF, lafName );
-
-        QApplication.setStyle( lafName );
-    }
-
-    @SuppressWarnings( "unused" )
-    private void languageChanged()
-    {
-        final String language = langComboBox.currentText();
-        settings.setProperty( LANGUAGE, language );
-
-        Translator.retranslate( language );
-        retranslate();
+        // load the old settings, so they can be applied via PropertyChangeEvent
+        settings.load();
+        settings.firePropertyChange( settings.LAF.getKey(), "", settings.LAF.getValue() );
+        settings.firePropertyChange( settings.LANGUAGE.getKey(), "", settings.LANGUAGE.getValue() );
+        close();
     }
 
     @SuppressWarnings( "unused" )
@@ -180,25 +192,11 @@ public class SettingsDialog
         close();
     }
 
-    @SuppressWarnings( "unused" )
-    private void onRestore()
-    {
-        settings.loadDefaults();
-        arrangeSettingValues();
-    }
-
-    @SuppressWarnings( "unused" )
-    private void onSave()
-    {
-        readSettingValues();
-        settings.saveAsDefaults();
-    }
-
     private void readSettingValues()
     {
-        settings.setProperty( LANGUAGE, langComboBox.currentText() );
-        settings.setProperty( LAF, lafComboBox.currentText() );
-        settings.setProperty( TEMP_FOLDER, tmpFolder.text() );
-        settings.setProperty( JBS_FOLDER, jbsFolder.text() );
+        settings.LANGUAGE.setValue( langComboBox.currentText() );
+        settings.LAF.setValue( lafComboBox.currentText() );
+        settings.TEMP_DIR.setValue( tmpFolder.text() );
+        settings.JBS_DIR.setValue( jbsFolder.text() );
     }
 }

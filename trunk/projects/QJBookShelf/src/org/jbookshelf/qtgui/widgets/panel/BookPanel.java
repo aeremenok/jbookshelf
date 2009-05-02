@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jbookshelf.controller.FileImporter;
-import org.jbookshelf.controller.settings.JBookShelfSettings;
-import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.Settings;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
@@ -350,7 +349,7 @@ public class BookPanel
     private void fileSelected(
         final String fileName )
     {
-        final String mask = Singletons.instance( Settings.class ).getProperty( JBookShelfSettings.IMPORT_MASK );
+        final String mask = Singletons.instance( Settings.class ).IMPORT_MASK.getValue();
         final String[] masks = mask.split( "/" );
         fileImporter.importFiles( masks, Storage.getBookShelf(), new File( fileName ) );
     }
