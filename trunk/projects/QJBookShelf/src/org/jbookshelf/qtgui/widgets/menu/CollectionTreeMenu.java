@@ -25,11 +25,11 @@ import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.ToolBar;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
+import org.jbookshelf.qtgui.widgets.ext.QActionExt;
 import org.jbookshelf.qtgui.widgets.ext.QMenuExt;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 
 import com.trolltech.qt.core.QObject;
-import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QInputDialog;
 import com.trolltech.qt.gui.QLineEdit.EchoMode;
@@ -50,7 +50,7 @@ public class CollectionTreeMenu
      * @author eav
      */
     private static class RenameAction
-        extends QAction
+        extends QActionExt
     {
         static final QIcon icon = new QIcon( ICONPATH + "document-properties.png" );
         final Unique       unique;
@@ -65,7 +65,8 @@ public class CollectionTreeMenu
             final QObject parent,
             final Unique unique )
         {
-            super( icon, parent.tr( "Rename" ), parent );
+            super( icon, "", parent );
+            setText( tr( "Rename" ) );
             this.unique = unique;
             triggered.connect( RenameAction.this, "rename()" );
         }
@@ -76,9 +77,11 @@ public class CollectionTreeMenu
             String text = unique.getName();
             final String message = tr( "Enter new name" );
             text = QInputDialog.getText( MainWindow.getInstance(), text(), message, EchoMode.Normal, text );
-            text = text == null ? "" : text;
-            unique.setName( text );
-            CollectionPanel.getInstance().updateTree();
+            if ( text != null )
+            {
+                unique.setName( text );
+                CollectionPanel.getInstance().updateTree();
+            }
         }
     }
 
@@ -88,7 +91,7 @@ public class CollectionTreeMenu
      * @author eav
      */
     private static class SetReadAction
-        extends QAction
+        extends QActionExt
     {
         final List<Book> books;
 
@@ -96,7 +99,9 @@ public class CollectionTreeMenu
             final QObject parent,
             final List<Book> books )
         {
-            super( parent.tr( "Is read" ), parent );
+            super( "", parent );
+            setText( tr( "Is read" ) );
+
             this.books = books;
 
             setCheckable( true );
@@ -135,7 +140,7 @@ public class CollectionTreeMenu
      * @author eav
      */
     private static class TopCategoryAction
-        extends QAction
+        extends QActionExt
     {
         static final QIcon     icon = new QIcon( ICONPATH + "go-top.png" );
         private final Category category;
@@ -154,7 +159,8 @@ public class CollectionTreeMenu
             final QObject parent,
             final Category category )
         {
-            super( icon, parent.tr( "Move to top" ), parent );
+            super( icon, "", parent );
+            setText( tr( "Move to top" ) );
             this.category = category;
             triggered.connect( TopCategoryAction.this, "toTop()" );
         }
