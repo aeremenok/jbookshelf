@@ -37,6 +37,7 @@ import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
 import org.jbookshelf.qtgui.widgets.ext.QToolBarExt;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 
+import com.trolltech.qt.core.Qt.ToolButtonStyle;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QMessageBox;
@@ -61,6 +62,7 @@ public class ToolBar
     private QAction              editAction;
     private QAction              openAction;
     private QAction              openFolderAction;
+    private QAction              googleAction;
     private QAction              settingsAction;
     private QAction              aboutAction;
     private QAction              restoreAction;
@@ -75,10 +77,10 @@ public class ToolBar
     }
 
     public static List<Book> hasBooks(
-        List<? extends Unique> uniques )
+        final List<? extends Unique> uniques )
     {
-        List<Book> books = new ArrayList<Book>();
-        for ( Unique unique : uniques )
+        final List<Book> books = new ArrayList<Book>();
+        for ( final Unique unique : uniques )
         {
             if ( unique instanceof Book )
             {
@@ -93,12 +95,19 @@ public class ToolBar
         createActions();
         connectActions();
 
+        setToolButtonStyle( ToolButtonStyle.ToolButtonTextUnderIcon );
+
         Translator.addTranslatable( this );
     }
 
     public QAction getEditAction()
     {
         return editAction;
+    }
+
+    public QAction getGoogleAction()
+    {
+        return googleAction;
     }
 
     public QAction getOpenAction()
@@ -131,32 +140,23 @@ public class ToolBar
         backupAction.setText( tr( "&Backup" ) );
         restoreAction.setText( tr( "&Restore" ) );
 
+        googleAction.setText( tr( "&Google this" ) );
         aboutAction.setText( tr( "&About" ) );
     }
 
     public void selectedUniques(
-        List<Unique> uniques )
+        final List<Unique> uniques )
     {
         this.selectedUniques = uniques;
-        if ( uniques.size() > 0 )
-        { // all uniques can be removed
-            removeAction.setEnabled( true );
-            List<Book> books = hasBooks( uniques );
-            if ( books.size() > 0 )
-            { // all books and their folders can be opened
-                openAction.setEnabled( true );
-                openFolderAction.setEnabled( true );
-                // only a single book can be edited
-                editAction.setEnabled( books.size() == 1 );
-            }
-        }
-        else
-        { // nothing selected
-            removeAction.setEnabled( false );
-            openFolderAction.setEnabled( false );
-            openAction.setEnabled( false );
-            editAction.setEnabled( false );
-        }
+        removeAction.setEnabled( uniques.size() > 0 );
+        googleAction.setEnabled( uniques.size() > 0 );
+
+        final List<Book> books = hasBooks( uniques );
+        // all books and their folders can be opened
+        openAction.setEnabled( books.size() > 0 );
+        openFolderAction.setEnabled( books.size() > 0 );
+        // only a single book can be edited
+        editAction.setEnabled( books.size() == 1 );
     }
 
     private void connectActions()
@@ -167,6 +167,7 @@ public class ToolBar
 
         openFolderAction.triggered.connect( this, "onOpenFolder()" );
         openAction.triggered.connect( this, "onOpen()" );
+        googleAction.triggered.connect( this, "onGoogle()" );
 
         settingsAction.triggered.connect( this, "onSettings()" );
 
@@ -187,6 +188,7 @@ public class ToolBar
 
         openAction = addAction( new QIcon( ICONPATH + "document-preview.png" ), "" );
         openFolderAction = addAction( new QIcon( ICONPATH + "document-open-folder.png" ), "" );
+        googleAction = addAction( new QIcon( ICONPATH + "google.png" ), "" );
 
         addSeparator();
 
@@ -218,7 +220,7 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onBackup()
     {
-        QFileDialogExt fileDialog = new QFileDialogExt( this, tr( "Select backup file" ) )
+        final QFileDialogExt fileDialog = new QFileDialogExt( this, tr( "Select backup file" ) )
         {
             @Override
             protected void filesSelected()
@@ -227,7 +229,7 @@ public class ToolBar
             }
         };
 
-        SingleFileStorageImpl storage = (SingleFileStorageImpl) Storage.getImpl();
+        final SingleFileStorageImpl storage = (SingleFileStorageImpl) Storage.getImpl();
         fileDialog.setSelectedFile( storage.getCollectionStorageFile() );
 
         fileDialog.show();
@@ -241,6 +243,15 @@ public class ToolBar
     }
 
     @SuppressWarnings( "unused" )
+    private void onGoogle()
+    {
+        for ( final Unique unique : selectedUniques )
+        {
+            URIOpener.google( unique.getName() );
+        }
+    }
+
+    @SuppressWarnings( "unused" )
     private void onImport()
     {
         new ImportDialog( MainWindow.getInstance() ).show();
@@ -249,7 +260,7 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onOpen()
     {
-        for ( Unique unique : selectedUniques )
+        for ( final Unique unique : selectedUniques )
         {
             if ( unique instanceof Book )
             {
@@ -261,11 +272,11 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onOpenFolder()
     {
-        for ( Unique unique : selectedUniques )
+        for ( final Unique unique : selectedUniques )
         {
             if ( unique instanceof Book )
             {
-                File directory = ((Book) unique).getPhysical().getDirectory();
+                final File directory = ((Book) unique).getPhysical().getDirectory();
                 URIOpener.openFolder( directory );
             }
         }
@@ -274,10 +285,10 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onRemove()
     {
-        String title = tr( "Confirm" );
-        String message = tr( "Remove selected?" );
-        StandardButtons buttons = new StandardButtons( StandardButton.Yes, StandardButton.No );
-        StandardButton button = QMessageBox.question( this, title, message, buttons, StandardButton.Yes );
+        final String title = tr( "Confirm" );
+        final String message = tr( "Remove selected?" );
+        final StandardButtons buttons = new StandardButtons( StandardButton.Yes, StandardButton.No );
+        final StandardButton button = QMessageBox.question( this, title, message, buttons, StandardButton.Yes );
         if ( StandardButton.Yes.equals( button ) )
         {
             CollectionPanel.getInstance().removeSelectedItems();
@@ -287,7 +298,7 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onRestore()
     {
-        QFileDialogExt fileDialog = new QFileDialogExt( this, tr( "Select backup file" ) )
+        final QFileDialogExt fileDialog = new QFileDialogExt( this, tr( "Select backup file" ) )
         {
             @Override
             protected void filesSelected()
@@ -297,7 +308,7 @@ public class ToolBar
             }
         };
 
-        SingleFileStorageImpl storage = (SingleFileStorageImpl) Storage.getImpl();
+        final SingleFileStorageImpl storage = (SingleFileStorageImpl) Storage.getImpl();
         fileDialog.setSelectedFile( storage.getCollectionStorageFile() );
 
         fileDialog.show();

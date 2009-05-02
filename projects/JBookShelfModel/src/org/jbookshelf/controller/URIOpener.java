@@ -31,7 +31,7 @@ public class URIOpener
             throw new UnsupportedOperationException( "Desktop is not supported (fatal)" );
         }
 
-        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+        final java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
         if ( !desktop.isSupported( java.awt.Desktop.Action.BROWSE ) )
         {
             throw new UnsupportedOperationException( "Desktop doesn't support the browse action (fatal)" );
@@ -49,22 +49,22 @@ public class URIOpener
      */
     @Deprecated
     public static void browse(
-        String url )
+        final String url )
     {
-        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+        final java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
         try
         {
-            java.net.URI uri = new java.net.URI( url );
+            final java.net.URI uri = new java.net.URI( url );
             desktop.browse( uri );
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             throw new Error( e );
         }
     }
 
     public static void browseFile(
-        File file )
+        final File file )
     {
         browseFile( file.getAbsolutePath() );
     }
@@ -73,7 +73,7 @@ public class URIOpener
      * @param path must not start with "file:///" or "http://"
      */
     public static void browseFile(
-        String path )
+        final String path )
     {
         String url = "file:///" + path;
         url = url.replaceAll( " ", "%20" );
@@ -85,20 +85,32 @@ public class URIOpener
      * @param url must not start with "http://"
      */
     public static void browseHTTP(
-        String url )
+        final String url )
     {
         browse( "http://" + url );
     }
 
-    public static void openFolder(
-        File file )
+    /**
+     * search text in google
+     * 
+     * @param text to search
+     */
+    public static void google(
+        String query )
     {
-        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+        query = query.replaceAll( " ", "+" );
+        browse( "http://www.google.com/search?q=" + query );
+    }
+
+    public static void openFolder(
+        final File file )
+    {
+        final java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
         try
         {
             desktop.open( file );
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             throw new Error( e );
         }
