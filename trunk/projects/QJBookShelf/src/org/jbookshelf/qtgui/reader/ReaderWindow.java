@@ -1,0 +1,275 @@
+package org.jbookshelf.qtgui.reader;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.SortedMap;
+
+import org.jbookshelf.controller.FileHandler;
+import org.jbookshelf.controller.URIOpener;
+import org.jbookshelf.controller.ZIPHandler;
+import org.jbookshelf.model.ArchiveFile;
+import org.jbookshelf.model.Book;
+import org.jbookshelf.model.PhysicalUnit;
+import org.jbookshelf.qtgui.MainWindow;
+import org.jbookshelf.qtgui.logic.JBookShelfConstants;
+import org.jbookshelf.qtgui.widgets.dialog.BookEditDialog;
+
+import com.trolltech.qt.core.Qt.WindowState;
+import com.trolltech.qt.gui.QAction;
+import com.trolltech.qt.gui.QCloseEvent;
+import com.trolltech.qt.gui.QComboBox;
+import com.trolltech.qt.gui.QFontComboBox;
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QMainWindow;
+import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QSplitter;
+import com.trolltech.qt.gui.QToolBar;
+import com.trolltech.qt.gui.QWidget;
+
+public class ReaderWindow
+    extends QMainWindow
+    implements
+        JBookShelfConstants
+{
+
+    private final QFontComboBox   fontComboBox    = new QFontComboBox( this );
+    private final QAction         bookSettings    =
+                                                      new QAction( new QIcon( ICONPATH + "document-properties.png" ),
+                                                          "", this );
+    private final QAction         bookmark        = new QAction( new QIcon( ICONPATH + "flag-yellow.png" ), "", this );
+    private final QAction         citation        = new QAction( new QIcon( ICONPATH + "knotes.png" ), "", this );
+    private final QAction         view            =
+                                                      new QAction( new QIcon( ICONPATH + "view-pim-notes.png" ), "",
+                                                          this );
+
+    private final QComboBox       charsetComboBox = new QComboBox( this );
+    private final Book            book;
+
+    private final TextBrowser     textBrowser     = new TextBrowser( this );
+    private final CitationPanel   citationPanel   = new CitationPanel( this );
+
+    private byte[]                contentBytes;
+    private final static String[] extensions      = { "txt", "html", "htm", "shtml" };
+
+    public static void open(
+        final QWidget parent,
+        final Book book )
+    {
+        try
+        {
+            final File file = getFile( book );
+            // define which viewer to use
+            String viewer = book.getPhysical().getViewer();
+            if ( viewer == null )
+            {
+                viewer = canBeOpened( file ) ? PhysicalUnit.INTERNAL_VIEWER : PhysicalUnit.SYSTEM_VIEWER;
+                book.getPhysical().setViewer( viewer );
+            }
+
+            if ( PhysicalUnit.INTERNAL_VIEWER.equals( viewer ) )
+            { // internal
+                new ReaderWindow( parent, book ).show();
+            }
+            else
+            { // system default
+                URIOpener.browseFile( file );
+            }
+        }
+        catch ( final Throwable e )
+        {
+            e.printStackTrace();
+            final String string = "Error opening book " + book.getName() + "\n\n" + FileHandler.printThrowable( e );
+            QMessageBox.critical( parent, "Error", string );
+        }
+    }
+
+    private static boolean canBeOpened(
+        final File file )
+    {
+        final String lowerCase = file.getName().toLowerCase();
+        for ( final String string : extensions )
+        {
+            if ( lowerCase.endsWith( "." + string ) )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static File getFile(
+        final Book book )
+    {
+        final PhysicalUnit physical = book.getPhysical();
+        if ( physical instanceof ArchiveFile )
+        {
+            final ArchiveFile archiveFile = (ArchiveFile) physical;
+            if ( archiveFile.getArchiveFile() == null || !archiveFile.getArchiveFile().exists() )
+            { // unpack and remember the file
+                final QMessageBox messageBox = new QMessageBox( MainWindow.getInstance() );
+                messageBox.setWindowTitle( "Unpacking. Please wait..." );
+                messageBox.show();
+
+                final File zippedFileToOpen = ZIPHandler.getZippedFileToOpen( archiveFile.getFile() );
+                archiveFile.setArchiveFile( zippedFileToOpen );
+
+                messageBox.hide();
+            }
+            return archiveFile.getArchiveFile();
+        }
+
+        return physical.getFile();
+    }
+
+    public ReaderWindow(
+        final QWidget parent,
+        final Book book )
+    {
+        super( parent );
+        this.book = book;
+
+        initComponents();
+        initListeners();
+        retranslate();
+    }
+
+    public Book getBook()
+    {
+        return book;
+    }
+
+    public QAction getBookmark()
+    {
+        return bookmark;
+    }
+
+    public QAction getCitation()
+    {
+        return citation;
+    }
+
+    public void retranslate()
+    {
+        bookSettings.setText( tr( "Edit book properties" ) );
+        bookmark.setText( tr( "Add bookmark" ) );
+        citation.setText( tr( "Add citation" ) );
+        view.setText( tr( "View bookmarks and citations" ) );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void charsetChanged(
+        final String charset )
+    {
+        book.getPhysical().setCharset( charset );
+        // reload text
+        textBrowser.setText( getContent() );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void editBook()
+    {
+        new BookEditDialog( this, book ).show();
+    }
+
+    /**
+     * @return book file content
+     */
+    private String getContent()
+    {
+        final File file = getFile( book );
+        try
+        {
+            // define which encoding to use
+            String charset = book.getPhysical().getCharset();
+            if ( charset == null )
+            {
+                charset = FileHandler.guessEncoding( file );
+                book.getPhysical().setCharset( charset );
+            }
+            if ( contentBytes == null )
+            { // cache the contents
+                contentBytes = FileHandler.getBytesFromFile( file );
+            }
+            return new String( contentBytes, charset );
+        }
+        catch ( final IOException e )
+        {
+            e.printStackTrace();
+            return tr( "Error displaying file " ) + file.getAbsolutePath() + "\n\n" + FileHandler.printThrowable( e );
+        }
+    }
+
+    /**
+     * initialize the charsetComboBox
+     */
+    private void initCharsets()
+    {// todo make static
+        charsetComboBox.setEditable( true );
+
+        final SortedMap<String, Charset> availableCharsets = Charset.availableCharsets();
+        for ( final String charsetName : availableCharsets.keySet() )
+        {
+            charsetComboBox.addItem( availableCharsets.get( charsetName ).name() );
+        }
+
+        final String currentCharset = book.getPhysical().getCharset();
+        final int currentCharsetIndex = charsetComboBox.findText( currentCharset );
+        if ( currentCharsetIndex > -1 )
+        {
+            charsetComboBox.setCurrentIndex( currentCharsetIndex );
+        }
+        else
+        { // charset not available (probably, wrong text case)
+            charsetComboBox.addItem( currentCharset );
+            charsetComboBox.setCurrentIndex( charsetComboBox.count() - 1 );
+        }
+    }
+
+    private void initComponents()
+    {
+        setWindowTitle( book.getName() );
+        setWindowState( WindowState.WindowMaximized );
+
+        final QSplitter splitter = new QSplitter();
+        splitter.addWidget( textBrowser );
+        splitter.addWidget( citationPanel );
+        setCentralWidget( splitter );
+
+        final QToolBar toolBar = new QToolBar( this );
+        addToolBar( toolBar );
+        toolBar.addWidget( fontComboBox );
+        toolBar.addWidget( charsetComboBox );
+        toolBar.addSeparator();
+        toolBar.addAction( bookSettings );
+        toolBar.addAction( bookmark );
+        toolBar.addAction( citation );
+        toolBar.addSeparator();
+        toolBar.addAction( view );
+
+        textBrowser.setReadOnly( true );
+        // todo break huge content into parts
+        textBrowser.setText( getContent() );
+        initCharsets();
+    }
+
+    private void initListeners()
+    {
+        fontComboBox.currentFontChanged.connect( textBrowser, "changeFont(QFont)" );
+        charsetComboBox.currentStringChanged.connect( this, "charsetChanged(String)" );
+
+        bookSettings.triggered.connect( this, "editBook()" );
+
+        citation.triggered.connect( textBrowser, "citate()" );
+        view.triggered.connect( citationPanel, "viewComments()" );
+        // todo bookmark
+    }
+
+    @Override
+    protected void closeEvent(
+        final QCloseEvent arg__1 )
+    {
+        textBrowser.onClose();
+        super.closeEvent( arg__1 );
+    }
+}
