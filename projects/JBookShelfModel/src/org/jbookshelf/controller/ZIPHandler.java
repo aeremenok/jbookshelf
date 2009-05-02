@@ -24,8 +24,6 @@ import net.sf.jazzlib.ZipEntry;
 import net.sf.jazzlib.ZipInputStream;
 import net.sf.jazzlib.ZipInputStreamEncoded;
 
-import org.jbookshelf.controller.settings.JBookShelfSettings;
-import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.mozilla.universalchardet.UniversalDetector;
 
@@ -115,8 +113,7 @@ public class ZIPHandler
         final File zipFile )
     {
         final Settings settings = Singletons.instance( Settings.class );
-        final String destDir =
-            settings.getProperty( JBookShelfSettings.TEMP_FOLDER ) + File.separator + zipFile.getName();
+        final String destDir = settings.TEMP_DIR.getValue() + File.separator + zipFile.getName();
         new File( destDir ).mkdir();
         extractZipFiles( zipFile.getAbsolutePath(), destDir );
         return getBiggestFile( new File( destDir ) );

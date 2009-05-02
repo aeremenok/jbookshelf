@@ -8,7 +8,6 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jbookshelf.controller;uses:="org.jbookshelf.model",
- org.jbookshelf.controller.settings,
  org.jbookshelf.controller.storage;uses:="org.jbookshelf.model",
  org.jbookshelf.model;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util",
  org.jbookshelf.model.impl;
