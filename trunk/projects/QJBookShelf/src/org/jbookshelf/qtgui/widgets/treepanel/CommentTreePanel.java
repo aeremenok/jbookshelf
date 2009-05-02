@@ -62,7 +62,7 @@ public class CommentTreePanel
         private final Comment comment;
 
         public CommentNode(
-            Comment comment )
+            final Comment comment )
         {
             setText( 0, comment.getTitle() );
             this.comment = comment;
@@ -76,17 +76,17 @@ public class CommentTreePanel
 
     private static final SimpleDateFormat format          = new SimpleDateFormat( "yyyy-MM-dd HH-mm-ss" );
 
-    private CompletableTextEdit           commentTextArea = new CompletableTextEdit( this );
-    private QLineEdit                     titleTextField  = new QLineEdit();
-    private QLabel                        dateLabel       = new QLabel();
+    private final CompletableTextEdit     commentTextArea = new CompletableTextEdit();
+    private final QLineEdit               titleTextField  = new QLineEdit();
+    private final QLabel                  dateLabel       = new QLabel();
 
-    private QPushButton                   undoButton      = new QPushButton();
-    private QWidget                       editPanel       = new QWidget();
+    private final QPushButton             undoButton      = new QPushButton();
+    private final QWidget                 editPanel       = new QWidget();
 
     private Commentable                   selectedCommentable;
 
     public CommentTreePanel(
-        RelatedPanel relatedPanel )
+        final RelatedPanel relatedPanel )
     {
         super( relatedPanel );
         initComponents();
@@ -96,9 +96,9 @@ public class CommentTreePanel
     @Override
     public void onAdd()
     {
-        Comment comment = ModelFactory.eINSTANCE.createComment();
+        final Comment comment = ModelFactory.eINSTANCE.createComment();
         selectedCommentable.getComments().add( comment );
-        Date value = new Date();
+        final Date value = new Date();
         comment.setCreationDate( value );
         comment.setTitle( format.format( value ) );
         comment.setContent( "" );
@@ -112,15 +112,15 @@ public class CommentTreePanel
     @Override
     public void onRemove()
     {
-        CommentNode commentNode = (CommentNode) searchableTree.selectedItems().get( 0 );
+        final CommentNode commentNode = (CommentNode) searchableTree.selectedItems().get( 0 );
         selectedCommentable.getComments().remove( commentNode.getComment() );
         root.removeChild( commentNode );
     }
 
     public void saveComment()
     {
-        CommentNode node = (CommentNode) searchableTree.selectedItems().get( 0 );
-        Comment comment = node.getComment();
+        final CommentNode node = (CommentNode) searchableTree.selectedItems().get( 0 );
+        final Comment comment = node.getComment();
         comment.setContent( commentTextArea.toPlainText() );
         comment.setTitle( titleTextField.text() );
 
@@ -131,7 +131,7 @@ public class CommentTreePanel
 
     @Override
     public void search(
-        String text )
+        final String text )
     {
         if ( selectedCommentable != null )
         {
@@ -147,7 +147,7 @@ public class CommentTreePanel
     }
 
     public void selectedUniques(
-        List<Unique> uniques )
+        final List<Unique> uniques )
     {
         if ( uniques.size() == 1 )
         {
@@ -163,16 +163,6 @@ public class CommentTreePanel
         }
     }
 
-    private void nothingSelected()
-    {
-        selectedCommentable = null;
-
-        cleanRoot();
-
-        editPanel.setVisible( false );
-        relatedPanel.focusLost();
-    }
-
     private void cleanRoot()
     {
         for ( int i = 0; i < root.childCount(); i++ )
@@ -182,10 +172,10 @@ public class CommentTreePanel
     }
 
     private void drawComments(
-        List<Comment> comments )
+        final List<Comment> comments )
     {
         cleanRoot();
-        for ( Comment comment : comments )
+        for ( final Comment comment : comments )
         {
             root.addChild( new CommentNode( comment ) );
         }
@@ -193,7 +183,7 @@ public class CommentTreePanel
     }
 
     private void editComment(
-        Comment comment )
+        final Comment comment )
     {
         dateLabel.setText( tr( "Created" ) + " " + format.format( comment.getCreationDate() ) );
         titleTextField.setText( comment.getTitle() );
@@ -209,13 +199,23 @@ public class CommentTreePanel
         undoButton.released.connect( commentTextArea, "undo()" );
     }
 
+    private void nothingSelected()
+    {
+        selectedCommentable = null;
+
+        cleanRoot();
+
+        editPanel.setVisible( false );
+        relatedPanel.focusLost();
+    }
+
     @SuppressWarnings( "unused" )
     private void onItemSelection()
     {
-        List<QTreeWidgetItem> selectedItems = searchableTree.selectedItems();
+        final List<QTreeWidgetItem> selectedItems = searchableTree.selectedItems();
         if ( selectedItems.size() > 0 )
         {
-            CommentNode commentNode = (CommentNode) selectedItems.get( 0 );
+            final CommentNode commentNode = (CommentNode) selectedItems.get( 0 );
             if ( commentNode != null )
             {
                 editComment( commentNode.getComment() );
@@ -231,7 +231,7 @@ public class CommentTreePanel
 
     protected void initComponents()
     {
-        QGridLayout editLayout = new QGridLayout();
+        final QGridLayout editLayout = new QGridLayout();
         editPanel.setLayout( editLayout );
         editLayout.addWidget( dateLabel, 0, 0 );
         editLayout.addWidget( titleTextField, 0, 1 );
@@ -246,7 +246,7 @@ public class CommentTreePanel
         undoButton.setIcon( new QIcon( ICONPATH + "edit-undo.png" ) );
         undoButton.setToolTip( tr( "Undo" ) );
 
-        CompletionDictionary dictionary = CompletionDictionary.getInstance();
+        final CompletionDictionary dictionary = CompletionDictionary.getInstance();
         dictionary.collectWords( Storage.getBookShelf() );
         commentTextArea.setCompleter( new QCompleter( dictionary.getCompletions() ) );
 

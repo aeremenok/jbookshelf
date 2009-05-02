@@ -15,18 +15,25 @@
  */
 package org.jbookshelf.qtgui.widgets.completion;
 
+import org.jbookshelf.controller.URIOpener;
+import org.jbookshelf.qtgui.ToolBar;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
+import org.jbookshelf.qtgui.logic.Translatable;
+import org.jbookshelf.qtgui.logic.Translator;
 
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Qt.CaseSensitivity;
 import com.trolltech.qt.core.Qt.Key;
 import com.trolltech.qt.core.Qt.KeyboardModifiers;
+import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QCompleter;
+import com.trolltech.qt.gui.QContextMenuEvent;
+import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QKeyEvent;
+import com.trolltech.qt.gui.QMenu;
 import com.trolltech.qt.gui.QTextCursor;
 import com.trolltech.qt.gui.QTextEdit;
-import com.trolltech.qt.gui.QWidget;
 import com.trolltech.qt.gui.QCompleter.CompletionMode;
 
 /**
@@ -37,42 +44,35 @@ import com.trolltech.qt.gui.QCompleter.CompletionMode;
 public class CompletableTextEdit
     extends QTextEdit
     implements
-        JBookShelfConstants
+        JBookShelfConstants,
+        Translatable
 {
-    private QCompleter c;
+    private QCompleter    c;
+
+    /**
+     * action for googling selected text
+     */
+    private final QAction googleAction = new QAction( new QIcon( ICONPATH + "google.png" ), "", this );
 
     public CompletableTextEdit()
     {
         super();
+
+        googleAction.triggered.connect( this, "google()" );
+
+        copyAvailable.connect( googleAction, "setEnabled(boolean)" );
+        googleAction.setEnabled( false );
+
+        Translator.addTranslatable( this );
     }
 
-    public CompletableTextEdit(
-        QPrivateConstructor p )
+    public void retranslate()
     {
-        super( p );
-    }
-
-    public CompletableTextEdit(
-        QWidget parent )
-    {
-        super( parent );
-    }
-
-    public CompletableTextEdit(
-        String text )
-    {
-        super( text );
-    }
-
-    public CompletableTextEdit(
-        String text,
-        QWidget parent )
-    {
-        super( text, parent );
+        googleAction.setText( ToolBar.getInstance().getGoogleAction().text() );
     }
 
     public void setCompleter(
-        QCompleter completer )
+        final QCompleter completer )
     {
         if ( this.c != null )
         {
@@ -93,11 +93,17 @@ public class CompletableTextEdit
     }
 
     @SuppressWarnings( "unused" )
-    private void insertCompletion(
-        String completion )
+    private void google()
     {
-        QTextCursor tc = textCursor();
-        int extra = completion.length() - c.completionPrefix().length();
+        URIOpener.google( textCursor().selectedText() );
+    }
+
+    @SuppressWarnings( "unused" )
+    private void insertCompletion(
+        final String completion )
+    {
+        final QTextCursor tc = textCursor();
+        final int extra = completion.length() - c.completionPrefix().length();
         tc.movePosition( QTextCursor.MoveOperation.Left );
         tc.movePosition( QTextCursor.MoveOperation.EndOfWord );
         tc.insertText( completion.substring( completion.length() - extra ) );
@@ -106,19 +112,29 @@ public class CompletableTextEdit
 
     private String textUnderCursor()
     {
-        QTextCursor tc = textCursor();
+        final QTextCursor tc = textCursor();
         tc.select( QTextCursor.SelectionType.WordUnderCursor );
         return tc.selectedText();
     }
 
     @Override
+    protected void contextMenuEvent(
+        final QContextMenuEvent e )
+    {
+        final QMenu menu = super.createStandardContextMenu();
+        menu.addSeparator();
+        menu.addAction( googleAction );
+        menu.exec( e.globalPos() );
+    }
+
+    @Override
     protected void keyPressEvent(
-        QKeyEvent e )
+        final QKeyEvent e )
     {
         if ( c != null && c.popup().isVisible() )
         {
             // The following keys are forwarded by the completer to the widget
-            Key key = Qt.Key.resolve( e.key() );
+            final Key key = Qt.Key.resolve( e.key() );
             if ( key.equals( Qt.Key.Key_Enter ) || key.equals( Qt.Key.Key_Return ) || key.equals( Qt.Key.Key_Escape ) ||
                 key.equals( Qt.Key.Key_Tab ) || key.equals( Qt.Key.Key_Backtab ) )
             {
@@ -127,29 +143,30 @@ public class CompletableTextEdit
             }
         }
 
-        KeyboardModifiers modifiers = e.modifiers();
-        boolean isShortcut = modifiers.isSet( Qt.KeyboardModifier.ControlModifier ) && e.key() == Qt.Key.Key_E.value(); // CTRL+E
+        final KeyboardModifiers modifiers = e.modifiers();
+        final boolean isShortcut =
+            modifiers.isSet( Qt.KeyboardModifier.ControlModifier ) && e.key() == Qt.Key.Key_E.value(); // CTRL+E
         if ( c == null || !isShortcut )
         {
             super.keyPressEvent( e );
         }
 
-        boolean ctrlOrShift =
+        final boolean ctrlOrShift =
             modifiers.isSet( Qt.KeyboardModifier.ControlModifier ) ||
                 modifiers.isSet( Qt.KeyboardModifier.ShiftModifier );
-        String text = e.text();
-        boolean empty = text.isEmpty();
+        final String text = e.text();
+        final boolean empty = text.isEmpty();
         if ( c == null || ctrlOrShift && empty )
         {
             return;
         }
 
-        boolean hasModifier = !modifiers.isSet( Qt.KeyboardModifier.NoModifier ) && !ctrlOrShift;
+        final boolean hasModifier = !modifiers.isSet( Qt.KeyboardModifier.NoModifier ) && !ctrlOrShift;
 
-        String prefix = textUnderCursor();
+        final String prefix = textUnderCursor();
 
-        boolean shortPrefix = prefix.length() < 3;
-        boolean hasEndOfWord = EOW.contains( text.substring( text.length() - 1 ) );
+        final boolean shortPrefix = prefix.length() < 3;
+        final boolean hasEndOfWord = EOW.contains( text.substring( text.length() - 1 ) );
         if ( !isShortcut && (hasModifier || empty || shortPrefix || hasEndOfWord) )
         {
             c.popup().hide();
@@ -162,7 +179,7 @@ public class CompletableTextEdit
             c.popup().setCurrentIndex( c.completionModel().index( 0, 0 ) );
         }
 
-        QRect cr = cursorRect();
+        final QRect cr = cursorRect();
         cr.setWidth( c.popup().sizeHintForColumn( 0 ) + c.popup().verticalScrollBar().sizeHint().width() );
         c.complete( cr ); // popup it up!
     }

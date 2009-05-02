@@ -15,6 +15,7 @@ import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.dialog.BookEditDialog;
 
+import com.trolltech.qt.core.Qt.ToolButtonStyle;
 import com.trolltech.qt.core.Qt.WindowState;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QCloseEvent;
@@ -240,6 +241,7 @@ public class ReaderWindow
         setCentralWidget( splitter );
 
         final QToolBar toolBar = new QToolBar( this );
+        toolBar.setToolButtonStyle( ToolButtonStyle.ToolButtonTextUnderIcon );
         addToolBar( toolBar );
         toolBar.addWidget( fontComboBox );
         toolBar.addWidget( charsetComboBox );

@@ -195,5 +195,7 @@ public class CollectionTreeMenu
 
         // all can be removed
         addAction( ToolBar.getInstance().getRemoveAction() );
+        // all can be googled
+        addAction( ToolBar.getInstance().getGoogleAction() );
     }
 }
