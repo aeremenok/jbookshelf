@@ -1,14 +1,16 @@
 package org.jbookshelf.qtgui.widgets.ext;
 
+import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;
 
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QWidget;
 
-public class QGroupBoxExt
+public abstract class QGroupBoxExt
     extends QGroupBox
+    implements
+        Translatable
 {
-
     public QGroupBoxExt()
     {
         super();
