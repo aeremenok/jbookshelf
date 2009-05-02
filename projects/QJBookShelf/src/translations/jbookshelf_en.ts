@@ -84,23 +84,26 @@
 <context>
     <name>org.jbookshelf.qtgui.reader.ReaderWindow</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="173"/>
+        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="225"/>
+        <source>Error displaying file </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>org.jbookshelf.qtgui.reader.ReaderWindow$ReaderToolBar</name>
+    <message>
+        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="57"/>
         <source>Edit book properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="174"/>
+        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="58"/>
         <source>Add citation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="175"/>
+        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="59"/>
         <source>View bookmarks and citations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../org/jbookshelf/qtgui/reader/ReaderWindow.java" line="218"/>
-        <source>Error displaying file </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -360,7 +363,7 @@ Use:
 <context>
     <name>org.jbookshelf.qtgui.widgets.menu.CollectionTreeMenu$SetReadAction</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/menu/CollectionTreeMenu.java" line="101"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/menu/CollectionTreeMenu.java" line="103"/>
         <source>Is read</source>
         <translation type="unfinished"></translation>
     </message>
@@ -368,7 +371,7 @@ Use:
 <context>
     <name>org.jbookshelf.qtgui.widgets.menu.CollectionTreeMenu$TopCategoryAction</name>
     <message>
-        <location filename="../org/jbookshelf/qtgui/widgets/menu/CollectionTreeMenu.java" line="161"/>
+        <location filename="../org/jbookshelf/qtgui/widgets/menu/CollectionTreeMenu.java" line="163"/>
         <source>Move to top</source>
         <translation type="unfinished"></translation>
     </message>
