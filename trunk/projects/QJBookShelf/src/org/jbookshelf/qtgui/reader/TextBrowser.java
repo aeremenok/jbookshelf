@@ -25,14 +25,13 @@ public class TextBrowser
         final ReaderWindow readerWindow )
     {
         this.readerWindow = readerWindow;
+        setReadOnly( true );
 
         // wait for the size to be stabilized to scroll
         verticalScrollBar().rangeChanged.connect( this, "rangeChanged(Integer,Integer)" );
         // selected text needed fot citating and bookmarking
         copyAvailable.connect( readerWindow.getCitation(), "setEnabled(boolean)" );
-        copyAvailable.connect( readerWindow.getBookmark(), "setEnabled(boolean)" );
         readerWindow.getCitation().setEnabled( false );
-        readerWindow.getBookmark().setEnabled( false );
     }
 
     public void changeFont(
@@ -45,13 +44,14 @@ public class TextBrowser
     {
         final Citation cit = ModelFactory.eINSTANCE.createCitation();
         cit.setCreationDate( new Date() );
-        cit.setTitle( readerWindow.getBook().getName() + " " + cit.getCreationDate().toLocaleString() );
         cit.setCitation( textCursor().selectedText() );
+        cit.setTitle( cit.getCitation().substring( 1, 21 ) + "..." );
         cit.setContent( "" );
         cit.setSubject( readerWindow.getBook() );
+        cit.setPosition( textCursor().position() );
     }
 
-    public void onClose()
+    public void savePosition()
     {
         // save current position
         final QScrollBar scrollBar = verticalScrollBar();
@@ -65,7 +65,7 @@ public class TextBrowser
     {
         // todo apply only at first change
         final QScrollBar scrollBar = verticalScrollBar();
-        scrollBar.setSliderPosition( (int) (readerWindow.getBook().getRead() * max) );
+        scrollBar.setSliderPosition( (int) (readerWindow.getBook().getRead() * scrollBar.maximum()) );
     }
 
     @Override
@@ -74,8 +74,9 @@ public class TextBrowser
     {
         final QMenu menu = createStandardContextMenu();
         menu.addSeparator();
+        menu.addAction( readerWindow.getBookSettings() );
+        menu.addSeparator();
         menu.addAction( readerWindow.getCitation() );
-        menu.addAction( readerWindow.getBookmark() );
         menu.exec( e.globalPos() );
     }
 }

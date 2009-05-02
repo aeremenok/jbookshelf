@@ -37,7 +37,6 @@ public class ReaderWindow
     private final QAction         bookSettings    =
                                                       new QAction( new QIcon( ICONPATH + "document-properties.png" ),
                                                           "", this );
-    private final QAction         bookmark        = new QAction( new QIcon( ICONPATH + "flag-yellow.png" ), "", this );
     private final QAction         citation        = new QAction( new QIcon( ICONPATH + "knotes.png" ), "", this );
     private final QAction         view            =
                                                       new QAction( new QIcon( ICONPATH + "view-pim-notes.png" ), "",
@@ -46,11 +45,14 @@ public class ReaderWindow
     private final QComboBox       charsetComboBox = new QComboBox( this );
     private final Book            book;
 
-    private final TextBrowser     textBrowser     = new TextBrowser( this );
+    private final TextBrowser     textBrowser;
     private final CitationPanel   citationPanel   = new CitationPanel( this );
 
     private byte[]                contentBytes;
-    private final static String[] extensions      = { "txt", "html", "htm", "shtml" };
+    private final static String[] extensions      = { "txt", "html", "htm", "shtml"
+                                                  // todo import rich text
+                                                      // , "doc", "odt", "rtf"
+                                                      };
 
     public static void open(
         final QWidget parent,
@@ -128,6 +130,7 @@ public class ReaderWindow
     {
         super( parent );
         this.book = book;
+        textBrowser = new TextBrowser( this );
 
         initComponents();
         initListeners();
@@ -139,9 +142,9 @@ public class ReaderWindow
         return book;
     }
 
-    public QAction getBookmark()
+    public QAction getBookSettings()
     {
-        return bookmark;
+        return bookSettings;
     }
 
     public QAction getCitation()
@@ -152,7 +155,6 @@ public class ReaderWindow
     public void retranslate()
     {
         bookSettings.setText( tr( "Edit book properties" ) );
-        bookmark.setText( tr( "Add bookmark" ) );
         citation.setText( tr( "Add citation" ) );
         view.setText( tr( "View bookmarks and citations" ) );
     }
@@ -162,6 +164,7 @@ public class ReaderWindow
         final String charset )
     {
         book.getPhysical().setCharset( charset );
+        textBrowser.savePosition();
         // reload text
         textBrowser.setText( getContent() );
     }
@@ -242,12 +245,10 @@ public class ReaderWindow
         toolBar.addWidget( charsetComboBox );
         toolBar.addSeparator();
         toolBar.addAction( bookSettings );
-        toolBar.addAction( bookmark );
         toolBar.addAction( citation );
         toolBar.addSeparator();
         toolBar.addAction( view );
 
-        textBrowser.setReadOnly( true );
         // todo break huge content into parts
         textBrowser.setText( getContent() );
         initCharsets();
@@ -262,14 +263,13 @@ public class ReaderWindow
 
         citation.triggered.connect( textBrowser, "citate()" );
         view.triggered.connect( citationPanel, "viewComments()" );
-        // todo bookmark
     }
 
     @Override
     protected void closeEvent(
         final QCloseEvent arg__1 )
     {
-        textBrowser.onClose();
+        textBrowser.savePosition();
         super.closeEvent( arg__1 );
     }
 }
