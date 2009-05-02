@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jbookshelf.controller.FileImporter;
-import org.jbookshelf.controller.settings.JBookShelfSettings;
-import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.Settings;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Book;
@@ -184,7 +183,7 @@ public class ImportDialog
         layout.addWidget( cancel, 4, 3 );
 
         pathEdit.setFileMode( FileMode.DirectoryOnly );
-        maskEdit.setText( Singletons.instance( Settings.class ).getProperty( JBookShelfSettings.IMPORT_MASK ) );
+        maskEdit.setText( Singletons.instance( Settings.class ).IMPORT_MASK.getValue() );
 
         progressBar.setVisible( false );
         progressBar.setMaximum( 100 );
@@ -230,7 +229,6 @@ public class ImportDialog
             {
                 final QTreeWidgetItem leaf = new QTreeWidgetItem( successNode );
                 leaf.setText( 1, book.getName() );
-                // importProcessTree.setItemWidget( leaf, 2, new EditButton( book ) );
                 progressBar.increment();
             }
         }
@@ -240,7 +238,6 @@ public class ImportDialog
             {
                 final QTreeWidgetItem leaf = new QTreeWidgetItem( failureNode );
                 leaf.setText( 1, file.getAbsolutePath() );
-                // importProcessTree.setItemWidget( leaf, 2, new AddButton( file ) );
                 progressBar.increment();
             }
         }
@@ -332,7 +329,7 @@ public class ImportDialog
         final QCloseEvent arg__1 )
     {
         final Settings settings = Singletons.instance( Settings.class );
-        settings.setProperty( JBookShelfSettings.IMPORT_MASK, maskEdit.text() );
+        settings.IMPORT_MASK.setValue( maskEdit.text() );
         settings.save();
 
         super.closeEvent( arg__1 );

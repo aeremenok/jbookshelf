@@ -15,7 +15,7 @@
  */
 package org.jbookshelf.qtgui.widgets;
 
-import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.Settings;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
@@ -119,7 +119,7 @@ public class FilePathEdit
         button.setIcon( new QIcon( ICONPATH + "document-open-folder.png" ) );
 
         // trying to set the last used path
-        final String lastPath = Singletons.instance( Settings.class ).getProperty( getKey() );
+        final String lastPath = Singletons.instance( Settings.class ).get( getKey(), "" );
         if ( lastPath != null )
         {
             edit.setText( lastPath );
@@ -133,7 +133,7 @@ public class FilePathEdit
         final String lastPath )
     {
         final Settings settings = Singletons.instance( Settings.class );
-        settings.setProperty( getKey(), lastPath );
+        settings.put( getKey(), lastPath );
         settings.save();
     }
 

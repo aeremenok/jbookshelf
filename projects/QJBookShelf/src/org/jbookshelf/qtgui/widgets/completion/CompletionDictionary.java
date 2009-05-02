@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import org.jbookshelf.controller.settings.JBookShelfSettings;
-import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.Settings;
 import org.jbookshelf.controller.singleton.Singleton;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.model.BookShelf;
@@ -131,7 +130,7 @@ public class CompletionDictionary
 
     private String getFileName()
     {
-        final String folder = Singletons.instance( Settings.class ).getProperty( JBookShelfSettings.JBS_FOLDER );
-        return folder + "/" + FILENAME;
+        final String dir = Singletons.instance( Settings.class ).JBS_DIR.getValue();
+        return dir + "/" + FILENAME;
     }
 }
