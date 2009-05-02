@@ -21,6 +21,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
+import org.jbookshelf.controller.singleton.Singleton;
+
 /**
  * stores settings
  * 
@@ -28,46 +30,12 @@ import java.util.Properties;
  */
 public class Settings
     implements
-        JBookShelfSettings
+        JBookShelfSettings,
+        Singleton
 {
     private static final String DEFAULTS   = "defaults.properties";
 
-    private static Settings     instance;
-
     private final Properties    properties = new Properties();
-
-    public static Settings getInstance()
-    {
-        if ( instance == null )
-        {
-            instance = new Settings();
-
-            // preparing values
-            instance.loadDefaults();
-
-            File folder = new File( instance.getProperty( JBookShelfSettings.JBS_FOLDER ) );
-            String fileName = instance.getSettingsFile().getAbsolutePath();
-            File file = new File( fileName );
-            if ( file.exists() )
-            {
-                instance.load( fileName );
-            }
-            else
-            {
-                if ( !folder.exists() )
-                {
-                    folder.mkdir();
-                }
-                instance.save( fileName, true );
-            }
-        }
-        return instance;
-    }
-
-    private Settings()
-    {
-        super();
-    }
 
     public File getCollectionFile()
     {
@@ -75,7 +43,7 @@ public class Settings
     }
 
     public String getProperty(
-        String key )
+        final String key )
     {
         return properties.getProperty( key );
     }
@@ -85,14 +53,36 @@ public class Settings
         return new File( getProperty( JBS_FOLDER ) + File.separator + "settings.properties" );
     }
 
+    public void initSingleton()
+    {
+        // preparing values
+        loadDefaults();
+
+        final File folder = new File( getProperty( JBookShelfSettings.JBS_FOLDER ) );
+        final String fileName = getSettingsFile().getAbsolutePath();
+        final File file = new File( fileName );
+        if ( file.exists() )
+        {
+            load( fileName );
+        }
+        else
+        {
+            if ( !folder.exists() )
+            {
+                folder.mkdir();
+            }
+            save( fileName, true );
+        }
+    }
+
     public void load(
-        String file )
+        final String file )
     {
         try
         {
             properties.load( new FileInputStream( file ) );
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             throw new Error( e );
         }
@@ -104,7 +94,7 @@ public class Settings
         {
             load( System.getProperty( "user.dir" ) + File.separator + DEFAULTS );
         }
-        catch ( Error e )
+        catch ( final Error e )
         {
             if ( e.getCause() instanceof FileNotFoundException )
             {
@@ -124,19 +114,19 @@ public class Settings
     }
 
     public void save(
-        String fileName,
-        boolean createNewFile )
+        final String fileName,
+        final boolean createNewFile )
     {
         try
         {
-            File file = new File( fileName );
+            final File file = new File( fileName );
             if ( !file.exists() && createNewFile )
             {
                 file.createNewFile();
             }
             properties.store( new FileOutputStream( file ), "" );
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             System.err.println( "fileName=" + fileName );
             throw new Error( e );
@@ -149,8 +139,8 @@ public class Settings
     }
 
     public Object setProperty(
-        String key,
-        String value )
+        final String key,
+        final String value )
     {
         return properties.setProperty( key, value );
     }
@@ -163,7 +153,7 @@ public class Settings
         properties.setProperty( JBookShelfSettings.JBS_FOLDER, System.getProperty( "user.home" ) + File.separator +
             ".jbookshelf" + File.separator );
 
-        File jbookshelf = new File( getProperty( JBS_FOLDER ) );
+        final File jbookshelf = new File( getProperty( JBS_FOLDER ) );
         if ( !jbookshelf.exists() && !jbookshelf.mkdir() )
         {
             throw new Error( "cannot create jbookshelf folder" );

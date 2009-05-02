@@ -17,6 +17,8 @@ package org.jbookshelf.qtgui;
 
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.singleton.Singleton;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
@@ -41,38 +43,24 @@ import com.trolltech.qt.gui.QSplitter;
 public class MainWindow
     extends QMainWindow
     implements
-        JBookShelfConstants
+        JBookShelfConstants,
+        Singleton
 {
-    private static MainWindow instance;
-
-    private final Settings    settings = Settings.getInstance();
-
-    public static MainWindow getInstance()
-    {
-        if ( instance == null )
-        {
-            instance = new MainWindow();
-        }
-        return instance;
-    }
-
     public static void main(
         final String[] args )
     {
         QApplication.initialize( args );
 
-        QCoreApplication.setApplicationVersion( "0.4b1" );
+        QCoreApplication.setApplicationVersion( "0.4b2" );
         QCoreApplication.setApplicationName( "JBookShelf" );
 
-        getInstance().show();
+        Singletons.instance( MainWindow.class ).show();
 
         QApplication.exec();
     }
 
-    private MainWindow()
+    public void initSingleton()
     {
-        super();
-
         initCollection();
         initLAF();
 
@@ -83,7 +71,8 @@ public class MainWindow
 
     private void initCollection()
     {
-        ((SingleFileStorageImpl) Storage.getImpl()).setCollectionStorageFile( settings.getCollectionFile() );
+        final SingleFileStorageImpl singleFileStorageImpl = (SingleFileStorageImpl) Storage.getImpl();
+        singleFileStorageImpl.setCollectionStorageFile( Singletons.instance( Settings.class ).getCollectionFile() );
         Storage.loadCollection();
     }
 
@@ -93,16 +82,17 @@ public class MainWindow
         setWindowIcon( new QIcon( ICONPATH + "logo-64.png" ) );
 
         setWindowState( WindowState.WindowMaximized );
-        addToolBar( ToolBar.getInstance() );
+        addToolBar( Singletons.instance( ToolBar.class ) );
 
         final QSplitter splitter = new QSplitter();
         setCentralWidget( splitter );
-        splitter.addWidget( CollectionPanel.getInstance() );
-        splitter.addWidget( RelatedPanel.getInstance() );
+        splitter.addWidget( Singletons.instance( CollectionPanel.class ) );
+        splitter.addWidget( Singletons.instance( RelatedPanel.class ) );
     }
 
     private void initLAF()
     {
+        final Settings settings = Singletons.instance( Settings.class );
         String lafName = settings.getProperty( JBookShelfSettings.LAF );
         if ( lafName == null )
         {
@@ -123,7 +113,7 @@ public class MainWindow
 
     private void initLanguage()
     {
-        Translator.retranslate( settings.getProperty( JBookShelfSettings.LANGUAGE ) );
+        Translator.retranslate( Singletons.instance( Settings.class ).getProperty( JBookShelfSettings.LANGUAGE ) );
     }
 
     @Override
@@ -133,7 +123,7 @@ public class MainWindow
         try
         {
             Storage.saveCollection();
-            CompletionDictionary.getInstance().save();
+            Singletons.instance( CompletionDictionary.class ).save();
         }
         catch ( final Throwable e1 )
         {

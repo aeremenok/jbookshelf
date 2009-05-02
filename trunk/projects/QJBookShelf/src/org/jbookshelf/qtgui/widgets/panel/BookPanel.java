@@ -22,6 +22,7 @@ import java.util.List;
 import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
@@ -64,12 +65,12 @@ public class BookPanel
         private final String   viewer;
 
         public Parameters(
-            String bookName,
-            String[] authorNames,
-            String[] categoryNames,
-            File file,
-            boolean isRead,
-            String viewer )
+            final String bookName,
+            final String[] authorNames,
+            final String[] categoryNames,
+            final File file,
+            final boolean isRead,
+            final String viewer )
         {
             super();
             this.bookName = bookName;
@@ -157,16 +158,16 @@ public class BookPanel
     private final List<QWidget> components        = new ArrayList<QWidget>();
 
     public static Book changeBook(
-        Book book,
-        Parameters parameters )
+        final Book book,
+        final Parameters parameters )
     {
         // todo reflective
         book.getAuthors().clear();
-        for ( String name : parameters.getAuthorNames() )
+        for ( final String name : parameters.getAuthorNames() )
         {
             Author author;
-            String trim = name.trim();
-            List<Author> authors = Storage.getBookShelf().queryAuthors( trim );
+            final String trim = name.trim();
+            final List<Author> authors = Storage.getBookShelf().queryAuthors( trim );
             if ( authors.size() > 0 )
             { // todo what if we've found more than 1 author with equal names?
                 author = authors.get( 0 );
@@ -179,11 +180,11 @@ public class BookPanel
         }
 
         book.getCategories().clear();
-        for ( String name : parameters.getCategoryNames() )
+        for ( final String name : parameters.getCategoryNames() )
         {
             Category category;
-            String trim = name.trim();
-            List<Category> authors = Storage.getBookShelf().queryCategories( trim );
+            final String trim = name.trim();
+            final List<Category> authors = Storage.getBookShelf().queryCategories( trim );
             if ( authors.size() > 0 )
             { // todo what if we've found more than 1 author with equal names?
                 category = authors.get( 0 );
@@ -278,8 +279,8 @@ public class BookPanel
 
         final boolean isRead = isReadCheckBox.isChecked();
 
-        int viewerIndex = viewerComboBox.currentIndex();
-        String viewer =
+        final int viewerIndex = viewerComboBox.currentIndex();
+        final String viewer =
             viewerIndex == 0 ? null : viewerIndex == 1 ? PhysicalUnit.INTERNAL_VIEWER : PhysicalUnit.SYSTEM_VIEWER;
         return new Parameters( bookName, authorNames.split( "," ), categoryNames.split( "," ), file, isRead, viewer );
     }
@@ -316,8 +317,8 @@ public class BookPanel
         isReadCheckBox.setChecked( book.getRead() == 1 );
 
         // display viewer
-        String viewer = book.getPhysical().getViewer();
-        int index = viewer == null ? 0 : PhysicalUnit.INTERNAL_VIEWER.equals( viewer ) ? 1 : 2;
+        final String viewer = book.getPhysical().getViewer();
+        final int index = viewer == null ? 0 : PhysicalUnit.INTERNAL_VIEWER.equals( viewer ) ? 1 : 2;
         viewerComboBox.setCurrentIndex( index );
     }
 
@@ -349,7 +350,7 @@ public class BookPanel
     private void fileSelected(
         final String fileName )
     {
-        final String mask = Settings.getInstance().getProperty( JBookShelfSettings.IMPORT_MASK );
+        final String mask = Singletons.instance( Settings.class ).getProperty( JBookShelfSettings.IMPORT_MASK );
         final String[] masks = mask.split( "/" );
         fileImporter.importFiles( masks, Storage.getBookShelf(), new File( fileName ) );
     }

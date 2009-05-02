@@ -35,11 +35,13 @@ import com.trolltech.qt.gui.QTreeWidgetItem;
 public class AuthorTree
     extends CollectionTree
 {
-    public AuthorTree()
+    @Override
+    public void initSingleton()
     {
-        super();
+        super.initSingleton();
+
         setColumnCount( 2 );
-        List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         list.add( tr( "Name" ) );
         list.add( tr( "Category" ) );
         setHeaderLabels( list );
@@ -49,20 +51,20 @@ public class AuthorTree
 
     @Override
     protected void addChildren(
-        UniqueNode parent )
+        final UniqueNode parent )
     {
-        Author author = (Author) parent.getUnique();
+        final Author author = (Author) parent.getUnique();
 
-        QTreeWidgetItem books = new QTreeWidgetItem();
+        final QTreeWidgetItem books = new QTreeWidgetItem();
         books.setText( 0, tr( "Books" ) );
-        QTreeWidgetItem categories = new QTreeWidgetItem();
+        final QTreeWidgetItem categories = new QTreeWidgetItem();
         categories.setText( 0, tr( "Categories" ) );
 
-        for ( Book book : author.getBooks() )
+        for ( final Book book : author.getBooks() )
         {
             books.addChild( new UniqueNode( book ) );
         }
-        for ( Category category : author.getCategories() )
+        for ( final Category category : author.getCategories() )
         {
             categories.addChild( new UniqueNode( category ) );
         }
@@ -73,11 +75,11 @@ public class AuthorTree
 
     @Override
     protected UniqueNode createNode(
-        Unique unique )
+        final Unique unique )
     {
-        UniqueNode node = super.createNode( unique );
-        Author author = (Author) unique;
-        List<Category> categories = author.getCategories();
+        final UniqueNode node = super.createNode( unique );
+        final Author author = (Author) unique;
+        final List<Category> categories = author.getCategories();
         if ( categories.size() > 0 )
         {
             node.setText( 1, categories.get( 0 ).getName() );

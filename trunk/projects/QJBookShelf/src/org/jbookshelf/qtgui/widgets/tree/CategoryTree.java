@@ -34,10 +34,11 @@ import com.trolltech.qt.gui.QTreeWidgetItem;
 public class CategoryTree
     extends CollectionTree
 {
-
-    public CategoryTree()
+    @Override
+    public void initSingleton()
     {
-        super();
+        super.initSingleton();
+
         final List<String> list = new ArrayList<String>();
         list.add( tr( "Name" ) );
         list.add( tr( "Count" ) );

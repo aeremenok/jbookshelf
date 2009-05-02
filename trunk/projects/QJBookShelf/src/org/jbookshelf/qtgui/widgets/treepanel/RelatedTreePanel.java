@@ -18,6 +18,7 @@ package org.jbookshelf.qtgui.widgets.treepanel;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
@@ -38,10 +39,8 @@ public class RelatedTreePanel
 {
     private Unique selectedUnique;
 
-    public RelatedTreePanel(
-        RelatedPanel relatedPanel )
+    public void initSingleton()
     {
-        super( relatedPanel );
         initComponents();
         initListeners();
     }
@@ -50,17 +49,17 @@ public class RelatedTreePanel
     public void onAdd()
     {
         QMessageBox.information( this, tr( "Info" ), tr( "Double click on related item in the collection tree" ) );
-        CollectionPanel.getInstance().selectRelatedUnique( this, selectedUnique );
+        Singletons.instance( CollectionPanel.class ).selectRelatedUnique( this, selectedUnique );
     }
 
     @Override
     public void onRemove()
     {
-        UniqueNode uniqueNode = (UniqueNode) searchableTree.selectedItems().get( 0 );
+        final UniqueNode uniqueNode = (UniqueNode) searchableTree.selectedItems().get( 0 );
         selectedUnique.getRelated().remove( uniqueNode.getUnique() );
         uniqueNode.getUnique().getRelated().remove( selectedUnique );
 
-        int row = root.indexOfChild( uniqueNode );
+        final int row = root.indexOfChild( uniqueNode );
         root.removeChild( uniqueNode );
 
         if ( row > 1 )
@@ -69,13 +68,13 @@ public class RelatedTreePanel
         }
         else
         {
-            relatedPanel.focusLost();
+            Singletons.instance( RelatedPanel.class ).nothingSelected();
         }
     }
 
     public void relatedSelectionFinished(
-        Unique relatedUnique,
-        Unique unique )
+        final Unique relatedUnique,
+        final Unique unique )
     {
         unique.getRelated().add( relatedUnique );
         relatedUnique.getRelated().add( unique );
@@ -90,7 +89,7 @@ public class RelatedTreePanel
 
     @Override
     public void search(
-        String text )
+        final String text )
     {
         if ( selectedUnique != null )
         {
@@ -100,9 +99,9 @@ public class RelatedTreePanel
             }
             else
             {
-                List<Unique> result = new ArrayList<Unique>();
-                String lowerCase = text.toLowerCase();
-                for ( Unique unique : selectedUnique.getRelated() )
+                final List<Unique> result = new ArrayList<Unique>();
+                final String lowerCase = text.toLowerCase();
+                for ( final Unique unique : selectedUnique.getRelated() )
                 {
                     if ( unique.getName().toLowerCase().contains( lowerCase ) )
                     {
@@ -115,7 +114,7 @@ public class RelatedTreePanel
     }
 
     public void selectedUniques(
-        List<Unique> uniques )
+        final List<Unique> uniques )
     {
         if ( uniques.size() == 1 )
         {
@@ -124,7 +123,7 @@ public class RelatedTreePanel
         else
         {
             cleanRoot();
-            relatedPanel.focusLost();
+            Singletons.instance( RelatedPanel.class ).nothingSelected();
         }
     }
 
@@ -137,45 +136,45 @@ public class RelatedTreePanel
     }
 
     private void drawUniques(
-        List<Unique> relatedUniques )
+        final List<Unique> relatedUniques )
     {
         cleanRoot();
-        for ( Unique related : relatedUniques )
+        for ( final Unique related : relatedUniques )
         {
             root.addChild( new UniqueNode( related ) );
         }
         root.setExpanded( true );
     }
 
+    private void initComponents()
+    {
+        setLayout( new QVBoxLayout() );
+        layout().addWidget( searchableTree );
+    }
+
     private void initListeners()
     {
-        searchableTree.activated.connect( relatedPanel, "focusGained()" );
-        searchableTree.itemSelectionChanged.connect( relatedPanel, "focusGained()" );
+        searchableTree.activated.connect( Singletons.instance( RelatedPanel.class ), "itemSelected()" );
+        searchableTree.itemSelectionChanged.connect( Singletons.instance( RelatedPanel.class ), "itemSelected()" );
         searchableTree.doubleClicked.connect( this, "navigate(QModelIndex)" );
     }
 
     @SuppressWarnings( "unused" )
     private void navigate(
-        QModelIndex index )
+        final QModelIndex index )
     {
-        List<QTreeWidgetItem> selectedItems = searchableTree.selectedItems();
+        final List<QTreeWidgetItem> selectedItems = searchableTree.selectedItems();
         if ( selectedItems.size() > 0 && selectedItems.get( 0 ) instanceof UniqueNode )
         {
-            UniqueNode node = (UniqueNode) selectedItems.get( 0 );
-            CollectionPanel.getInstance().selectUnique( node.getUnique() );
+            final UniqueNode node = (UniqueNode) selectedItems.get( 0 );
+            Singletons.instance( CollectionPanel.class ).selectUnique( node.getUnique() );
         }
     }
 
     private void selectedUnique(
-        Unique unique )
+        final Unique unique )
     {
         this.selectedUnique = unique;
         drawUniques( selectedUnique.getRelated() );
-    }
-
-    protected void initComponents()
-    {
-        setLayout( new QVBoxLayout() );
-        layout().addWidget( searchableTree );
     }
 }

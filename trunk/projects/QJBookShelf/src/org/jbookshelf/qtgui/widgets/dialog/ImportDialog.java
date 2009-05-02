@@ -22,6 +22,7 @@ import java.util.List;
 import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.controller.settings.JBookShelfSettings;
 import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.qtgui.MainWindow;
@@ -69,8 +70,8 @@ public class ImportDialog
         @SuppressWarnings( "unused" )
         private void addBook()
         {
-            QTreeWidgetItem item = importProcessTree.selectedItems().get( 0 );
-            File file = failure.get( failureNode.indexOfChild( item ) );
+            final QTreeWidgetItem item = importProcessTree.selectedItems().get( 0 );
+            final File file = failure.get( failureNode.indexOfChild( item ) );
             new BookAdditionDialog( ImportDialog.this, file ).show();
         }
     }
@@ -87,8 +88,8 @@ public class ImportDialog
         @SuppressWarnings( "unused" )
         private void editBook()
         {
-            QTreeWidgetItem item = importProcessTree.selectedItems().get( 0 );
-            Book book = success.get( successNode.indexOfChild( item ) );
+            final QTreeWidgetItem item = importProcessTree.selectedItems().get( 0 );
+            final Book book = success.get( successNode.indexOfChild( item ) );
             new BookEditDialog( ImportDialog.this, book ).show();
         }
     }
@@ -147,7 +148,7 @@ public class ImportDialog
 
         pathEdit.setCaption( tr( "Select a directory to import" ) );
 
-        List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         list.add( "" );
         list.add( tr( "Name" ) );
         list.add( tr( "Count" ) );
@@ -161,7 +162,7 @@ public class ImportDialog
         final QRect geometry = geometry();
         geometry.setWidth( 770 );
         geometry.setHeight( 400 );
-        geometry.moveCenter( MainWindow.getInstance().geometry().center() );
+        geometry.moveCenter( Singletons.instance( MainWindow.class ).geometry().center() );
         setGeometry( geometry );
 
         final QGridLayout layout = new QGridLayout();
@@ -183,7 +184,7 @@ public class ImportDialog
         layout.addWidget( cancel, 4, 3 );
 
         pathEdit.setFileMode( FileMode.DirectoryOnly );
-        maskEdit.setText( Settings.getInstance().getProperty( JBookShelfSettings.IMPORT_MASK ) );
+        maskEdit.setText( Singletons.instance( Settings.class ).getProperty( JBookShelfSettings.IMPORT_MASK ) );
 
         progressBar.setVisible( false );
         progressBar.setMaximum( 100 );
@@ -216,7 +217,7 @@ public class ImportDialog
 
     @SuppressWarnings( "unused" )
     private void onExpand(
-        QTreeWidgetItem item )
+        final QTreeWidgetItem item )
     {
         // preparing job
         progressBar.setVisible( true );
@@ -225,9 +226,9 @@ public class ImportDialog
         // updating the expanded node
         if ( item.equals( successNode ) && successNode.childCount() == 0 )
         {
-            for ( Book book : success )
+            for ( final Book book : success )
             {
-                QTreeWidgetItem leaf = new QTreeWidgetItem( successNode );
+                final QTreeWidgetItem leaf = new QTreeWidgetItem( successNode );
                 leaf.setText( 1, book.getName() );
                 // importProcessTree.setItemWidget( leaf, 2, new EditButton( book ) );
                 progressBar.increment();
@@ -235,9 +236,9 @@ public class ImportDialog
         }
         else if ( item.equals( failureNode ) && failureNode.childCount() == 0 )
         {
-            for ( File file : failure )
+            for ( final File file : failure )
             {
-                QTreeWidgetItem leaf = new QTreeWidgetItem( failureNode );
+                final QTreeWidgetItem leaf = new QTreeWidgetItem( failureNode );
                 leaf.setText( 1, file.getAbsolutePath() );
                 // importProcessTree.setItemWidget( leaf, 2, new AddButton( file ) );
                 progressBar.increment();
@@ -285,7 +286,7 @@ public class ImportDialog
             importer.importFiles( masks, Storage.getBookShelf(), file );
 
             // updating views
-            CollectionPanel.getInstance().updateTree();
+            Singletons.instance( CollectionPanel.class ).updateTree();
             CollectionTree.removeChildren( failureNode );
             CollectionTree.removeChildren( successNode );
             successNode.setText( 2, success.size() + " " + tr( "books" ) );
@@ -304,10 +305,10 @@ public class ImportDialog
 
     private void selected()
     {
-        List<QTreeWidgetItem> selectedItems = importProcessTree.selectedItems();
+        final List<QTreeWidgetItem> selectedItems = importProcessTree.selectedItems();
         if ( selectedItems.size() == 1 )
         {
-            QTreeWidgetItem parent = selectedItems.get( 0 ).parent();
+            final QTreeWidgetItem parent = selectedItems.get( 0 ).parent();
             if ( successNode.equals( parent ) )
             {
                 editButton.setEnabled( true );
@@ -330,8 +331,9 @@ public class ImportDialog
     protected void closeEvent(
         final QCloseEvent arg__1 )
     {
-        Settings.getInstance().setProperty( JBookShelfSettings.IMPORT_MASK, maskEdit.text() );
-        Settings.getInstance().save();
+        final Settings settings = Singletons.instance( Settings.class );
+        settings.setProperty( JBookShelfSettings.IMPORT_MASK, maskEdit.text() );
+        settings.save();
 
         super.closeEvent( arg__1 );
     }

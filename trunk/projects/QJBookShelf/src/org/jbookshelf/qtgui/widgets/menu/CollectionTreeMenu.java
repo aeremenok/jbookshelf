@@ -17,6 +17,7 @@ package org.jbookshelf.qtgui.widgets.menu;
 
 import java.util.List;
 
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
@@ -76,11 +77,12 @@ public class CollectionTreeMenu
         {
             String text = unique.getName();
             final String message = tr( "Enter new name" );
-            text = QInputDialog.getText( MainWindow.getInstance(), text(), message, EchoMode.Normal, text );
+            final MainWindow window = Singletons.instance( MainWindow.class );
+            text = QInputDialog.getText( window, text(), message, EchoMode.Normal, text );
             if ( text != null )
             {
                 unique.setName( text );
-                CollectionPanel.getInstance().updateTree();
+                Singletons.instance( CollectionPanel.class ).updateTree();
             }
         }
     }
@@ -170,13 +172,14 @@ public class CollectionTreeMenu
         {
             category.setParent( null );
             Storage.getBookShelf().getCategories().add( category );
-            CollectionPanel.getInstance().updateTree();
+            Singletons.instance( CollectionPanel.class ).updateTree();
         }
     }
 
     public CollectionTreeMenu(
         final List<Unique> uniques )
     {
+        final ToolBar toolBar = Singletons.instance( ToolBar.class );
         if ( uniques.size() == 1 && RenameAction.accept( uniques.get( 0 ) ) )
         { // single author or category selected
             addAction( new RenameAction( this, uniques.get( 0 ) ) );
@@ -190,9 +193,9 @@ public class CollectionTreeMenu
             final List<Book> books = ToolBar.hasBooks( uniques );
             if ( books.size() > 0 )
             { // only the books can be opened, edited and read
-                addAction( ToolBar.getInstance().getOpenAction() );
-                addAction( ToolBar.getInstance().getOpenFolderAction() );
-                addAction( ToolBar.getInstance().getEditAction() );
+                addAction( toolBar.getOpenAction() );
+                addAction( toolBar.getOpenFolderAction() );
+                addAction( toolBar.getEditAction() );
                 addSeparator();
                 addAction( new SetReadAction( this, books ) );
                 addSeparator();
@@ -200,8 +203,8 @@ public class CollectionTreeMenu
         }
 
         // all can be removed
-        addAction( ToolBar.getInstance().getRemoveAction() );
+        addAction( toolBar.getRemoveAction() );
         // all can be googled
-        addAction( ToolBar.getInstance().getGoogleAction() );
+        addAction( toolBar.getGoogleAction() );
     }
 }

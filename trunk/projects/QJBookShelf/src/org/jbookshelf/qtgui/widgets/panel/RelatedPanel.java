@@ -17,6 +17,8 @@ package org.jbookshelf.qtgui.widgets.panel;
 
 import java.util.List;
 
+import org.jbookshelf.controller.singleton.Singleton;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.logic.Translator;
@@ -40,42 +42,14 @@ public class RelatedPanel
     extends QWidgetExt
     implements
         JBookShelfConstants,
-        UniqueSelectionListener
+        UniqueSelectionListener,
+        Singleton
 {
-    private static final RelatedPanel instance        = new RelatedPanel();
+    private final QPushButton addButton       = new QPushButton( this );
+    private final QPushButton removeButton    = new QPushButton( this );
+    private final QLineEdit   searchTextField = new SearchTextField( this );
 
-    private SearchableTreePanel[]     searchableTreePanels;
-
-    private final QPushButton         addButton       = new QPushButton( this );
-    private final QPushButton         removeButton    = new QPushButton( this );
-    private final QLineEdit           searchTextField = new SearchTextField( this );
-
-    private final QTabWidget          tabbedPane      = new QTabWidget( this );
-    private final SearchableTreePanel commentPanel    = new CommentTreePanel( this );
-    private final SearchableTreePanel relatedPanel    = new RelatedTreePanel( this );
-
-    public static RelatedPanel getInstance()
-    {
-        return instance;
-    }
-
-    public RelatedPanel()
-    {
-        initComponents();
-        initListeners();
-
-        Translator.addTranslatable( this );
-    }
-
-    public void focusGained()
-    {
-        removeButton.setEnabled( true );
-    }
-
-    public void focusLost()
-    {
-        removeButton.setEnabled( false );
-    }
+    private final QTabWidget  tabbedPane      = new QTabWidget( this );
 
     public SearchableTreePanel getActiveTreePanel()
     {
@@ -87,13 +61,22 @@ public class RelatedPanel
         return removeButton;
     }
 
-    public SearchableTreePanel[] getSearchableTreePanels()
+    public void initSingleton()
     {
-        if ( searchableTreePanels == null )
-        {
-            searchableTreePanels = new SearchableTreePanel[] { commentPanel, relatedPanel };
-        }
-        return searchableTreePanels;
+        initComponents();
+        initListeners();
+
+        Translator.addTranslatable( this );
+    }
+
+    public void itemSelected()
+    {
+        removeButton.setEnabled( true );
+    }
+
+    public void nothingSelected()
+    {
+        removeButton.setEnabled( false );
     }
 
     public void retranslate()
@@ -103,7 +86,7 @@ public class RelatedPanel
     }
 
     public void selectedUniques(
-        List<Unique> uniques )
+        final List<Unique> uniques )
     {
         if ( uniques.size() > 0 )
         {
@@ -115,10 +98,8 @@ public class RelatedPanel
             removeButton.setEnabled( false );
         }
 
-        for ( final SearchableTreePanel panel : getSearchableTreePanels() )
-        {
-            panel.selectedUniques( uniques );
-        }
+        Singletons.instance( CommentTreePanel.class ).selectedUniques( uniques );
+        Singletons.instance( RelatedTreePanel.class ).selectedUniques( uniques );
     }
 
     private void initComponents()
@@ -132,8 +113,8 @@ public class RelatedPanel
 
         layout.addWidget( tabbedPane, 1, 0, 1, 3 );
 
-        tabbedPane.addTab( commentPanel, "" );
-        tabbedPane.addTab( relatedPanel, "" );
+        tabbedPane.addTab( Singletons.instance( CommentTreePanel.class ), "" );
+        tabbedPane.addTab( Singletons.instance( RelatedTreePanel.class ), "" );
 
         addButton.setIcon( new QIcon( ICONPATH + "list-add-small.png" ) );
         removeButton.setIcon( new QIcon( ICONPATH + "list-remove-small.png" ) );

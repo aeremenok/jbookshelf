@@ -23,6 +23,7 @@ import java.util.SortedMap;
 import org.jbookshelf.controller.FileHandler;
 import org.jbookshelf.controller.URIOpener;
 import org.jbookshelf.controller.ZIPHandler;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.PhysicalUnit;
@@ -138,7 +139,7 @@ public class ReaderWindow
             final ArchiveFile archiveFile = (ArchiveFile) physical;
             if ( archiveFile.getArchiveFile() == null || !archiveFile.getArchiveFile().exists() )
             { // unpack and remember the file
-                final QMessageBox messageBox = new QMessageBox( MainWindow.getInstance() );
+                final QMessageBox messageBox = new QMessageBox( Singletons.instance( MainWindow.class ) );
                 messageBox.setWindowTitle( "Unpacking. Please wait..." );
                 messageBox.show();
 

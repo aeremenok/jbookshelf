@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jbookshelf.controller.URIOpener;
+import org.jbookshelf.controller.singleton.Singleton;
+import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Book;
@@ -53,28 +55,22 @@ public class ToolBar
     extends QToolBarExt
     implements
         JBookShelfConstants,
-        UniqueSelectionListener
+        UniqueSelectionListener,
+        Singleton
 {
-    private static final ToolBar instance = new ToolBar();
+    private QAction      addAction;
+    private QAction      removeAction;
+    private QAction      editAction;
+    private QAction      openAction;
+    private QAction      openFolderAction;
+    private QAction      googleAction;
+    private QAction      settingsAction;
+    private QAction      aboutAction;
+    private QAction      restoreAction;
+    private QAction      backupAction;
+    private QAction      importAction;
 
-    private QAction              addAction;
-    private QAction              removeAction;
-    private QAction              editAction;
-    private QAction              openAction;
-    private QAction              openFolderAction;
-    private QAction              googleAction;
-    private QAction              settingsAction;
-    private QAction              aboutAction;
-    private QAction              restoreAction;
-    private QAction              backupAction;
-    private QAction              importAction;
-
-    private List<Unique>         selectedUniques;
-
-    public static ToolBar getInstance()
-    {
-        return instance;
-    }
+    private List<Unique> selectedUniques;
 
     public static List<Book> hasBooks(
         final List<? extends Unique> uniques )
@@ -88,16 +84,6 @@ public class ToolBar
             }
         }
         return books;
-    }
-
-    public ToolBar()
-    {
-        createActions();
-        connectActions();
-
-        setToolButtonStyle( ToolButtonStyle.ToolButtonTextUnderIcon );
-
-        Translator.addTranslatable( this );
     }
 
     public QAction getEditAction()
@@ -123,6 +109,17 @@ public class ToolBar
     public QAction getRemoveAction()
     {
         return removeAction;
+    }
+
+    public void initSingleton()
+    {
+        createActions();
+        connectActions();
+
+        setToolButtonStyle( ToolButtonStyle.ToolButtonTextUnderIcon );
+        selectedUniques( new ArrayList<Unique>() );
+
+        Translator.addTranslatable( this );
     }
 
     public void retranslate()
@@ -208,13 +205,13 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onAbout()
     {
-        new AboutDialog( MainWindow.getInstance() ).show();
+        new AboutDialog( Singletons.instance( MainWindow.class ) ).show();
     }
 
     @SuppressWarnings( "unused" )
     private void onAdd()
     {
-        new BookAdditionDialog( MainWindow.getInstance() ).show();
+        new BookAdditionDialog( Singletons.instance( MainWindow.class ) ).show();
     }
 
     @SuppressWarnings( "unused" )
@@ -239,7 +236,7 @@ public class ToolBar
     private void onEdit()
     {
         // todo edit multiple books
-        new BookEditDialog( MainWindow.getInstance(), hasBooks( selectedUniques ).get( 0 ) ).show();
+        new BookEditDialog( Singletons.instance( MainWindow.class ), hasBooks( selectedUniques ).get( 0 ) ).show();
     }
 
     @SuppressWarnings( "unused" )
@@ -254,7 +251,7 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onImport()
     {
-        new ImportDialog( MainWindow.getInstance() ).show();
+        new ImportDialog( Singletons.instance( MainWindow.class ) ).show();
     }
 
     @SuppressWarnings( "unused" )
@@ -291,7 +288,7 @@ public class ToolBar
         final StandardButton button = QMessageBox.question( this, title, message, buttons, StandardButton.Yes );
         if ( StandardButton.Yes.equals( button ) )
         {
-            CollectionPanel.getInstance().removeSelectedItems();
+            Singletons.instance( CollectionPanel.class ).removeSelectedItems();
         }
     }
 
@@ -304,7 +301,7 @@ public class ToolBar
             protected void filesSelected()
             {
                 Storage.restoreCollection( getSelectedFile() );
-                CollectionPanel.getInstance().updateTree();
+                Singletons.instance( CollectionPanel.class ).updateTree();
             }
         };
 
@@ -317,6 +314,6 @@ public class ToolBar
     @SuppressWarnings( "unused" )
     private void onSettings()
     {
-        new SettingsDialog( MainWindow.getInstance() ).setVisible( true );
+        new SettingsDialog( Singletons.instance( MainWindow.class ) ).setVisible( true );
     }
 }
