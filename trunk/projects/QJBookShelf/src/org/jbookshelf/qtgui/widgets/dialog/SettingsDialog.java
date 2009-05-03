@@ -55,15 +55,12 @@ public class SettingsDialog
     private final QLabel       lafLabel       = new QLabel( this );
     private final QLabel       langLabel      = new QLabel( this );
     private final QLabel       settingsLabel  = new QLabel( this );
+    private final QLabel       jbsFolderLabel = new QLabel( this );
 
     private final QComboBox    lafComboBox    = new QComboBox( this );
     private final QComboBox    langComboBox   = new QComboBox( this );
 
     private final FilePathEdit jbsFolder      = new FilePathEdit( this );
-    private final FilePathEdit tmpFolder      = new FilePathEdit( this );
-
-    private final QLabel       jbsFolderLabel = new QLabel( this );
-    private final QLabel       tmpFolderLabel = new QLabel( this );
 
     public SettingsDialog(
         final QWidget parent )
@@ -73,7 +70,7 @@ public class SettingsDialog
         initComponents();
         initListeners();
 
-        arrangeSettingValues();
+        getSettingValues();
 
         retranslate();
     }
@@ -101,21 +98,17 @@ public class SettingsDialog
         langLabel.setText( tr( "Language" ) );
         lafLabel.setText( tr( "Look-and-feel" ) );
         jbsFolderLabel.setText( tr( "JBookShelf folder" ) );
-        tmpFolderLabel.setText( tr( "Temp folder" ) );
 
         okButton.setText( tr( "OK" ) );
         cancelButton.setText( tr( "Cancel" ) );
 
         jbsFolder.setCaption( tr( "Select a folder" ) );
-        tmpFolder.setCaption( tr( "Select a folder" ) );
     }
 
-    private void arrangeSettingValues()
+    private void getSettingValues()
     {
         langComboBox.setCurrentIndex( langComboBox.findText( settings.LANGUAGE.getValue() ) );
         lafComboBox.setCurrentIndex( lafComboBox.findText( settings.LAF.getValue() ) );
-
-        tmpFolder.setText( settings.TEMP_DIR.getValue() );
         jbsFolder.setText( settings.JBS_DIR.getValue() );
     }
 
@@ -125,7 +118,6 @@ public class SettingsDialog
 
         final QRect geometry = geometry();
         geometry.setWidth( 770 );
-        geometry.setHeight( 300 );
         geometry.moveCenter( Singletons.instance( MainWindow.class ).geometry().center() );
         setGeometry( geometry );
 
@@ -143,14 +135,11 @@ public class SettingsDialog
         layout.addWidget( jbsFolderLabel, 3, 0 );
         layout.addWidget( jbsFolder, 3, 1 );
 
-        layout.addWidget( tmpFolderLabel, 4, 0 );
-        layout.addWidget( tmpFolder, 4, 1 );
-
         final QWidget buttonWidget = new QWidget();
         buttonWidget.setLayout( new QHBoxLayout() );
         buttonWidget.layout().addWidget( okButton );
         buttonWidget.layout().addWidget( cancelButton );
-        layout.addWidget( buttonWidget, 6, 0, 1, 2 );
+        layout.addWidget( buttonWidget, 4, 0, 1, 2 );
 
         settingsLabel.setFont( new QFont( "Tahoma", 14 ) );
 
@@ -160,7 +149,6 @@ public class SettingsDialog
         lafComboBox.addItems( QStyleFactory.keys() );
 
         jbsFolder.setFileMode( FileMode.DirectoryOnly );
-        tmpFolder.setFileMode( FileMode.DirectoryOnly );
     }
 
     private void initListeners()
@@ -187,16 +175,15 @@ public class SettingsDialog
     @SuppressWarnings( "unused" )
     private void onOK()
     {
-        readSettingValues();
+        setSettingValues();
         settings.save();
         close();
     }
 
-    private void readSettingValues()
+    private void setSettingValues()
     {
         settings.LANGUAGE.setValue( langComboBox.currentText() );
         settings.LAF.setValue( lafComboBox.currentText() );
-        settings.TEMP_DIR.setValue( tmpFolder.text() );
         settings.JBS_DIR.setValue( jbsFolder.text() );
     }
 }

@@ -34,7 +34,6 @@ public class Settings
 {
     public final StringSetting LANGUAGE;
     public final StringSetting LAF;
-    public final StringSetting TEMP_DIR;
     public final StringSetting JBS_DIR;
     public final StringSetting IMPORT_MASK;
 
@@ -42,7 +41,6 @@ public class Settings
         LANGUAGE = new StringSetting( this, "language", "English" );
         LAF = new StringSetting( this, "laf", "Plastique" );
         IMPORT_MASK = new StringSetting( this, "import_mask", "%b" );
-        TEMP_DIR = new StringSetting( this, "temp_folder", System.getProperty( "java.io.tmpdir" ) );
         final String jbsDir = System.getProperty( "user.home" ) + File.separator + ".jbookshelf" + File.separator;
         JBS_DIR = new StringSetting( this, "jbs_folder", jbsDir );
     }
@@ -50,11 +48,6 @@ public class Settings
     public File getCollectionFile()
     {
         return new File( JBS_DIR.getValue() + File.separator + "collection.xml" );
-    }
-
-    public File getSettingsFile()
-    {
-        return new File( JBS_DIR.getValue() + File.separator + "settings.properties" );
     }
 
     public void initSingleton()
@@ -106,5 +99,10 @@ public class Settings
         {
             throw new Error( e );
         }
+    }
+
+    private File getSettingsFile()
+    {
+        return new File( JBS_DIR.getValue() + File.separator + "settings.properties" );
     }
 }

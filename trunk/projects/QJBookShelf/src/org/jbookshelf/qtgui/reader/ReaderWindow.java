@@ -95,7 +95,7 @@ public class ReaderWindow
             String viewer = book.getPhysical().getViewer();
             if ( viewer == null )
             {
-                viewer = canBeOpened( file ) ? PhysicalUnit.INTERNAL_VIEWER : PhysicalUnit.SYSTEM_VIEWER;
+                viewer = isSupported( file ) ? PhysicalUnit.INTERNAL_VIEWER : PhysicalUnit.SYSTEM_VIEWER;
                 book.getPhysical().setViewer( viewer );
             }
 
@@ -116,20 +116,12 @@ public class ReaderWindow
         }
     }
 
-    private static boolean canBeOpened(
-        final File file )
-    {
-        final String lowerCase = file.getName().toLowerCase();
-        for ( final String string : extensions )
-        {
-            if ( lowerCase.endsWith( "." + string ) )
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
+    /**
+     * get a file with book content
+     * 
+     * @param book a book to open
+     * @return a file with book content
+     */
     private static File getFile(
         final Book book )
     {
@@ -152,6 +144,24 @@ public class ReaderWindow
         }
 
         return physical.getFile();
+    }
+
+    /**
+     * @param file file to check
+     * @return is this file supported by the internal viewer
+     */
+    private static boolean isSupported(
+        final File file )
+    {
+        final String lowerCase = file.getName().toLowerCase();
+        for ( final String string : extensions )
+        {
+            if ( lowerCase.endsWith( "." + string ) )
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ReaderWindow(
@@ -263,7 +273,7 @@ public class ReaderWindow
         splitter.addWidget( citationPanel );
         setCentralWidget( splitter );
 
-        toolBar.setToolButtonStyle( ToolButtonStyle.ToolButtonTextUnderIcon );
+        toolBar.setToolButtonStyle( ToolButtonStyle.ToolButtonTextBesideIcon );
         addToolBar( toolBar );
         toolBar.addWidget( fontComboBox );
         toolBar.addWidget( charsetComboBox );
