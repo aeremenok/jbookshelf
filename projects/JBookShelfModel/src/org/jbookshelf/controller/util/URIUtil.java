@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>. </copyright> $Id$
  */
-package org.jbookshelf.controller;
+package org.jbookshelf.controller.util;
 
 import java.io.File;
 
@@ -22,7 +22,7 @@ import java.io.File;
  * 
  * @author eav
  */
-public class URIOpener
+public class URIUtil
 {
     static
     {
@@ -45,7 +45,7 @@ public class URIOpener
     /**
      * @param url <b>must start with protocol under KDE</b> {@link http
      *            ://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6486393}
-     * @deprecated use {@link URIOpener#browseFile(File)} or {@link URIOpener#browseHTTP(String)}
+     * @deprecated use {@link URIUtil#browseFile(File)} or {@link URIUtil#browseHTTP(String)}
      */
     @Deprecated
     public static void browse(

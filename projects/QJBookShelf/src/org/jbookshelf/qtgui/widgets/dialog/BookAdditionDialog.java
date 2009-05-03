@@ -17,7 +17,7 @@ package org.jbookshelf.qtgui.widgets.dialog;
 
 import java.io.File;
 
-import org.jbookshelf.controller.FileImporter;
+import org.jbookshelf.controller.importer.FileImporter;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Book;

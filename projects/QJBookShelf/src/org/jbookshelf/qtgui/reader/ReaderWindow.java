@@ -20,10 +20,11 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.SortedMap;
 
-import org.jbookshelf.controller.FileHandler;
-import org.jbookshelf.controller.URIOpener;
-import org.jbookshelf.controller.ZIPHandler;
 import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.util.FileUtil;
+import org.jbookshelf.controller.util.StringUtil;
+import org.jbookshelf.controller.util.URIUtil;
+import org.jbookshelf.controller.util.ZIPUtil;
 import org.jbookshelf.model.ArchiveFile;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.PhysicalUnit;
@@ -105,13 +106,13 @@ public class ReaderWindow
             }
             else
             { // system default
-                URIOpener.browseFile( file );
+                URIUtil.browseFile( file );
             }
         }
         catch ( final Throwable e )
         {
             e.printStackTrace();
-            final String string = "Error opening book " + book.getName() + "\n\n" + FileHandler.printThrowable( e );
+            final String string = "Error opening book " + book.getName() + "\n\n" + StringUtil.printThrowable( e );
             QMessageBox.critical( parent, "Error", string );
         }
     }
@@ -135,7 +136,7 @@ public class ReaderWindow
                 messageBox.setWindowTitle( "Unpacking. Please wait..." );
                 messageBox.show();
 
-                final File zippedFileToOpen = ZIPHandler.getZippedFileToOpen( archiveFile.getFile() );
+                final File zippedFileToOpen = ZIPUtil.getZippedFileToOpen( archiveFile.getFile() );
                 archiveFile.setArchiveFile( zippedFileToOpen );
 
                 messageBox.hide();
@@ -221,19 +222,19 @@ public class ReaderWindow
             String charset = book.getPhysical().getCharset();
             if ( charset == null )
             {
-                charset = FileHandler.guessEncoding( file );
+                charset = FileUtil.guessFileEncoding( file );
                 book.getPhysical().setCharset( charset );
             }
             if ( contentBytes == null )
             { // cache the contents
-                contentBytes = FileHandler.getBytesFromFile( file );
+                contentBytes = FileUtil.getBytesFromFile( file );
             }
             return new String( contentBytes, charset );
         }
         catch ( final IOException e )
         {
             e.printStackTrace();
-            return tr( "Error displaying file " ) + file.getAbsolutePath() + "\n\n" + FileHandler.printThrowable( e );
+            return tr( "Error displaying file " ) + file.getAbsolutePath() + "\n\n" + StringUtil.printThrowable( e );
         }
     }
 

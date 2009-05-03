@@ -18,8 +18,8 @@ package org.jbookshelf.qtgui.reader;
 
 import java.util.Date;
 
-import org.jbookshelf.controller.URIOpener;
 import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.Citation;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.qtgui.ToolBar;
@@ -106,7 +106,7 @@ public class TextBrowser
     @SuppressWarnings( "unused" )
     private void google()
     {
-        URIOpener.google( textCursor().selectedText() );
+        URIUtil.google( textCursor().selectedText() );
     }
 
     @SuppressWarnings( "unused" )

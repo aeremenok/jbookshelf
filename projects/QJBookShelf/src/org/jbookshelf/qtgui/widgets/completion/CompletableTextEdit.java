@@ -15,8 +15,8 @@
  */
 package org.jbookshelf.qtgui.widgets.completion;
 
-import org.jbookshelf.controller.URIOpener;
 import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.qtgui.ToolBar;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.logic.Translatable;
@@ -96,7 +96,7 @@ public class CompletableTextEdit
     @SuppressWarnings( "unused" )
     private void google()
     {
-        URIOpener.google( textCursor().selectedText() );
+        URIUtil.google( textCursor().selectedText() );
     }
 
     @SuppressWarnings( "unused" )

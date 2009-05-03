@@ -13,25 +13,25 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>. </copyright> $Id$
  */
-package org.jbookshelf.controller;
+package org.jbookshelf.controller.util;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.charset.Charset;
 
+import org.jbookshelf.controller.importer.FileImporter;
+
 import net.sf.jazzlib.ZipEntry;
 import net.sf.jazzlib.ZipInputStream;
 import net.sf.jazzlib.ZipInputStreamEncoded;
-
-import org.mozilla.universalchardet.UniversalDetector;
 
 /**
  * handles zip-files
  * 
  * @author eav
  */
-public class ZIPHandler
+public class ZIPUtil
 {
     /**
      * extracts the specified zip-file to the specified directory
@@ -47,7 +47,7 @@ public class ZIPHandler
         try
         {
             // create destination directory
-            File destDir = new File( destDirName );
+            final File destDir = new File( destDirName );
             destDir.mkdir();
             // prepare source file
             final File file = new File( zipFilename );
@@ -94,7 +94,7 @@ public class ZIPHandler
         final File dir )
     {
         File biggest = dir;
-        final File[] listFiles = dir.listFiles( new FileImporter.ExtensionDenyingFilter() );
+        final File[] listFiles = dir.listFiles( FileImporter.UNSUPPORTED_EXT_FILTER );
         if ( listFiles != null )
         {
             for ( final File file : listFiles )
@@ -126,7 +126,7 @@ public class ZIPHandler
         final File zipFile )
     {
         final String destDirName = System.getProperty( "java.io.tmpdir" ) + File.separator + zipFile.getName();
-        File destDir = extractZipFileTo( zipFile.getAbsolutePath(), destDirName );
+        final File destDir = extractZipFileTo( zipFile.getAbsolutePath(), destDirName );
         return getBiggestFile( destDir );
     }
 
@@ -149,7 +149,7 @@ public class ZIPHandler
                 builder.append( entry.getName() );
                 entry = stream.getNextEntry();
             }
-            final String encoding = guessStringEncoding( builder.toString() );
+            final String encoding = StringUtil.guessStringEncoding( builder.toString() );
             if ( encoding != null )
             {
                 return encoding;
@@ -158,35 +158,6 @@ public class ZIPHandler
         catch ( final Exception e )
         { // do not interrupt hoping that the defaultCharset will fit
             e.printStackTrace();
-        }
-        return Charset.defaultCharset().name();
-    }
-
-    /**
-     * tries to guess the encoding of the {@link String}
-     * 
-     * @param string a string to guess
-     * @return charset name
-     */
-    private static String guessStringEncoding(
-        final String string )
-    {
-        final UniversalDetector detector = new UniversalDetector( null );
-        try
-        {
-            final byte[] bytes = string.getBytes();
-            detector.handleData( bytes, 0, bytes.length - 1 );
-            detector.dataEnd();
-
-            return detector.getDetectedCharset();
-        }
-        catch ( final Exception e )
-        { // do not interrupt hoping that the defaultCharset will fit
-            e.printStackTrace();
-        }
-        finally
-        {
-            detector.reset();
         }
         return Charset.defaultCharset().name();
     }

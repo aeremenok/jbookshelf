@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>. </copyright> $Id$
  */
-package org.jbookshelf.controller;
+package org.jbookshelf.controller.importer;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -36,7 +36,7 @@ import org.jbookshelf.model.PhysicalUnit;
  */
 public class FileImporter
 {
-    public static class ExtensionDenyingFilter
+    private static class ExtensionDenyingFilter
         implements
             FileFilter
     {
@@ -81,6 +81,8 @@ public class FileImporter
             return b;
         }
     }
+
+    public static final FileFilter UNSUPPORTED_EXT_FILTER = new ExtensionDenyingFilter();
 
     public static PhysicalUnit createPhysicalUnit(
         File file )
@@ -238,7 +240,7 @@ public class FileImporter
             }
             else if ( file.isDirectory() )
             {
-                importFiles( patterns, bookShelf, file.listFiles( new ExtensionDenyingFilter() ) );
+                importFiles( patterns, bookShelf, file.listFiles( UNSUPPORTED_EXT_FILTER ) );
             }
             else
             {

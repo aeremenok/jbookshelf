@@ -19,11 +19,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbookshelf.controller.URIOpener;
 import org.jbookshelf.controller.singleton.Singleton;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
+import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
@@ -244,7 +244,7 @@ public class ToolBar
     {
         for ( final Unique unique : selectedUniques )
         {
-            URIOpener.google( unique.getName() );
+            URIUtil.google( unique.getName() );
         }
     }
 
@@ -274,7 +274,7 @@ public class ToolBar
             if ( unique instanceof Book )
             {
                 final File directory = ((Book) unique).getPhysical().getDirectory();
-                URIOpener.openFolder( directory );
+                URIUtil.openFolder( directory );
             }
         }
     }
