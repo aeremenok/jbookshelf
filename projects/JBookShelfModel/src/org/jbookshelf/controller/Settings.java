@@ -18,7 +18,11 @@ package org.jbookshelf.controller;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+
 import org.jbookshelf.controller.singleton.Singleton;
+import org.xnap.commons.settings.ClassNameSetting;
 import org.xnap.commons.settings.PropertyResource;
 import org.xnap.commons.settings.StringSetting;
 
@@ -32,17 +36,28 @@ public class Settings
     implements
         Singleton
 {
-    public final StringSetting LANGUAGE;
-    public final StringSetting LAF;
-    public final StringSetting JBS_DIR;
-    public final StringSetting IMPORT_MASK;
+    public final StringSetting                 LANGUAGE;
+    public final ClassNameSetting<LookAndFeel> LAF;
+    public final StringSetting                 JBS_DIR;
+    public final StringSetting                 IMPORT_MASK;
 
     {
+        // todo I18N.defaultLang()
         LANGUAGE = new StringSetting( this, "language", "English" );
-        LAF = new StringSetting( this, "laf", "Plastique" );
         IMPORT_MASK = new StringSetting( this, "import_mask", "%b" );
+
         final String jbsDir = System.getProperty( "user.home" ) + File.separator + ".jbookshelf" + File.separator;
         JBS_DIR = new StringSetting( this, "jbs_folder", jbsDir );
+
+        try
+        {
+            final Object laf = Class.forName( UIManager.getSystemLookAndFeelClassName() ).newInstance();
+            LAF = new ClassNameSetting<LookAndFeel>( this, "laf", (LookAndFeel) laf );
+        }
+        catch ( final Exception e )
+        {
+            throw new Error( e );
+        }
     }
 
     public File getCollectionFile()

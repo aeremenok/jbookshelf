@@ -91,23 +91,23 @@ public class MainWindow
 
     private void initLAF()
     {
-        final Settings settings = Singletons.instance( Settings.class );
-        String lafName = settings.LAF.getValue();
-        if ( lafName == null )
-        {
-            final String os = System.getProperty( "os.name" );
-            if ( os.toLowerCase().contains( "windows" ) )
-            {
-                lafName = "WindowsXP";
-            }
-            else
-            {
-                lafName = "Plastique";
-            }
-            // todo mac os
-            settings.LAF.setValue( lafName );
-        }
-        QApplication.setStyle( lafName );
+        // final Settings settings = Singletons.instance( Settings.class );
+        // String lafName = settings.LAF.getValue();
+        // if ( lafName == null )
+        // {
+        // final String os = System.getProperty( "os.name" );
+        // if ( os.toLowerCase().contains( "windows" ) )
+        // {
+        // lafName = "WindowsXP";
+        // }
+        // else
+        // {
+        // lafName = "Plastique";
+        // }
+        // // todo mac os
+        // settings.LAF.setValue( lafName );
+        // }
+        // QApplication.setStyle( lafName );
     }
 
     private void initLanguage()
