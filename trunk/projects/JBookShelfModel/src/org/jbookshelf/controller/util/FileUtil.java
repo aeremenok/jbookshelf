@@ -13,14 +13,12 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>. </copyright> $Id$
  */
-package org.jbookshelf.controller;
+package org.jbookshelf.controller.util;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.nio.charset.Charset;
 
 import org.mozilla.universalchardet.UniversalDetector;
@@ -30,7 +28,7 @@ import org.mozilla.universalchardet.UniversalDetector;
  * 
  * @author eav
  */
-public class FileHandler
+public class FileUtil
 {
     public static byte[] getBytesFromFile(
         final File file )
@@ -69,7 +67,7 @@ public class FileHandler
         return bytes;
     }
 
-    public static String guessEncoding(
+    public static String guessFileEncoding(
         final File file )
     {
         final UniversalDetector detector = new UniversalDetector( null );
@@ -96,13 +94,5 @@ public class FileHandler
             detector.reset();
         }
         return Charset.defaultCharset().name();
-    }
-
-    public static String printThrowable(
-        final Throwable e )
-    {
-        final StringWriter stringWriter = new StringWriter();
-        e.printStackTrace( new PrintWriter( stringWriter ) );
-        return stringWriter.toString();
     }
 }

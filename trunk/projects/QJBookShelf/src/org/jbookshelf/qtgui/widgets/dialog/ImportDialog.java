@@ -19,8 +19,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbookshelf.controller.FileImporter;
 import org.jbookshelf.controller.Settings;
+import org.jbookshelf.controller.importer.FileImporter;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Book;
