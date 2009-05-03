@@ -26,7 +26,6 @@ import org.jbookshelf.qtgui.widgets.FilePathEdit;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 
 import com.trolltech.qt.core.QRect;
-import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QGridLayout;
@@ -82,7 +81,7 @@ public class SettingsDialog
         final String propertyName = evt.getPropertyName();
         if ( propertyName.equals( settings.LAF.getKey() ) )
         {
-            QApplication.setStyle( settings.LAF.getValue() );
+            // QApplication.setStyle( settings.LAF.getValue() );
         }
         else if ( propertyName.equals( settings.LANGUAGE.getKey() ) )
         {
@@ -108,7 +107,7 @@ public class SettingsDialog
     private void getSettingValues()
     {
         langComboBox.setCurrentIndex( langComboBox.findText( settings.LANGUAGE.getValue() ) );
-        lafComboBox.setCurrentIndex( lafComboBox.findText( settings.LAF.getValue() ) );
+        // lafComboBox.setCurrentIndex( lafComboBox.findText( settings.LAF.getValue() ) );
         jbsFolder.setText( settings.JBS_DIR.getValue() );
     }
 
@@ -183,7 +182,7 @@ public class SettingsDialog
     private void setSettingValues()
     {
         settings.LANGUAGE.setValue( langComboBox.currentText() );
-        settings.LAF.setValue( lafComboBox.currentText() );
+        // settings.LAF.setValue( lafComboBox.currentText() );
         settings.JBS_DIR.setValue( jbsFolder.text() );
     }
 }
