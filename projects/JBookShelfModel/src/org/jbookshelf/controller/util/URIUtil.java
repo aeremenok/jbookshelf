@@ -16,6 +16,7 @@
 package org.jbookshelf.controller.util;
 
 import java.io.File;
+import java.util.StringTokenizer;
 
 /**
  * opens urls in default browser using awt
@@ -98,7 +99,7 @@ public class URIUtil
     public static void google(
         final String query )
     {
-        browse( "http://www.google.com/search?q=" + query.trim().replaceAll( " ", "+" ) );
+        browse( "http://www.google.com/search?q=" + toSearchEngineQuery( query ) );
     }
 
     public static void openFolder(
@@ -113,5 +114,25 @@ public class URIUtil
         {
             throw new Error( e );
         }
+    }
+
+    /**
+     * splits the query into tokens and concatenates them using "+", removes unicode paragraph characters
+     * 
+     * @param string query
+     * @return single line query
+     */
+    private static String toSearchEngineQuery(
+        final String string )
+    {
+        final StringBuilder builder = new StringBuilder();
+        final StringTokenizer tokenizer = new StringTokenizer( string );
+        while ( tokenizer.hasMoreTokens() )
+        {
+            // unicode paragraph character may be contained
+            builder.append( tokenizer.nextToken().replaceAll( "\u2029", "" ) );
+            builder.append( "+" );
+        }
+        return builder.toString();
     }
 }
