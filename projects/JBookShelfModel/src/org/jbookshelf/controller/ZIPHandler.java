@@ -24,7 +24,6 @@ import net.sf.jazzlib.ZipEntry;
 import net.sf.jazzlib.ZipInputStream;
 import net.sf.jazzlib.ZipInputStreamEncoded;
 
-import org.jbookshelf.controller.singleton.Singletons;
 import org.mozilla.universalchardet.UniversalDetector;
 
 /**
@@ -37,22 +36,28 @@ public class ZIPHandler
     /**
      * extracts the specified zip-file to the specified directory
      * 
-     * @param srcFilename source file name
-     * @param destDir destination directory name
+     * @param zipFilename source file name
+     * @param destDirName destination directory name
+     * @return destination directory
      */
-    public static void extractZipFiles(
-        final String srcFilename,
-        final String destDir )
+    public static File extractZipFileTo(
+        final String zipFilename,
+        final String destDirName )
     {
         try
         {
-            final File file = new File( srcFilename );
+            // create destination directory
+            File destDir = new File( destDirName );
+            destDir.mkdir();
+            // prepare source file
+            final File file = new File( zipFilename );
             final String encoding = guessZipEncoding( file );
+            // extract
             final ZipInputStreamEncoded zise = new ZipInputStreamEncoded( new FileInputStream( file ), encoding );
             ZipEntry entry = zise.getNextEntry();
             while ( entry != null )
             {
-                final File f = new File( destDir + File.separator + entry.getName() );
+                final File f = new File( destDirName + File.separator + entry.getName() );
                 if ( entry.isDirectory() && !f.exists() )
                 { // a directory doesn't exist, create it
                     f.mkdir();
@@ -70,6 +75,8 @@ public class ZIPHandler
             }
 
             zise.close();
+
+            return destDir;
         }
         catch ( final Exception e )
         {
@@ -109,14 +116,18 @@ public class ZIPHandler
         return biggest;
     }
 
+    /**
+     * unpacks the archive to system temp directory and returns the file to open with viewer
+     * 
+     * @param zipFile zip archive
+     * @return file in {java.io.tmpdir}/zipFile.getName()/ to be opened
+     */
     public static File getZippedFileToOpen(
         final File zipFile )
     {
-        final Settings settings = Singletons.instance( Settings.class );
-        final String destDir = settings.TEMP_DIR.getValue() + File.separator + zipFile.getName();
-        new File( destDir ).mkdir();
-        extractZipFiles( zipFile.getAbsolutePath(), destDir );
-        return getBiggestFile( new File( destDir ) );
+        final String destDirName = System.getProperty( "java.io.tmpdir" ) + File.separator + zipFile.getName();
+        File destDir = extractZipFileTo( zipFile.getAbsolutePath(), destDirName );
+        return getBiggestFile( destDir );
     }
 
     /**
