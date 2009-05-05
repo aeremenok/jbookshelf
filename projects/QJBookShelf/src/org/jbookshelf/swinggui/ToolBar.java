@@ -23,9 +23,10 @@ public class ToolBar
     private class AboutAction
         extends AbstractAction
     {
+
         public AboutAction()
         {
-            super( I18N.tr( "About" ), IMG.icon( "help-about.png" ) );
+            super( I18N.tr( "About" ), IMG.icon( IMG.HELP_ABOUT_PNG ) );
         }
 
         public void actionPerformed(
@@ -40,7 +41,7 @@ public class ToolBar
     {
         public AddAction()
         {
-            super( I18N.tr( "Add" ), IMG.icon( "list-add.png" ) );
+            super( I18N.tr( "Add" ), IMG.icon( IMG.LIST_ADD_PNG ) );
         }
 
         public void actionPerformed(
@@ -53,9 +54,10 @@ public class ToolBar
     private class BackupAction
         extends AbstractAction
     {
+
         public BackupAction()
         {
-            super( I18N.tr( "Backup" ), IMG.icon( "document-save.png" ) );
+            super( I18N.tr( "Backup" ), IMG.icon( IMG.DOCUMENT_SAVE_PNG ) );
         }
 
         public void actionPerformed(
@@ -68,9 +70,10 @@ public class ToolBar
     private class EditAction
         extends AbstractAction
     {
+
         public EditAction()
         {
-            super( I18N.tr( "Edit" ), IMG.icon( "document-properties.png" ) );
+            super( I18N.tr( "Edit" ), IMG.icon( IMG.DOCUMENT_PROPERTIES_PNG ) );
         }
 
         public void actionPerformed(
@@ -83,9 +86,10 @@ public class ToolBar
     private class GoogleAction
         extends AbstractAction
     {
+
         public GoogleAction()
         {
-            super( I18N.tr( "Google" ), IMG.icon( "google.png" ) );
+            super( I18N.tr( "Google" ), IMG.icon( IMG.GOOGLE_PNG ) );
         }
 
         public void actionPerformed(
@@ -98,9 +102,10 @@ public class ToolBar
     private class ImportAction
         extends AbstractAction
     {
+
         public ImportAction()
         {
-            super( I18N.tr( "Import" ), IMG.icon( "document-import.png" ) );
+            super( I18N.tr( "Import" ), IMG.icon( IMG.DOCUMENT_IMPORT_PNG ) );
         }
 
         public void actionPerformed(
@@ -113,9 +118,10 @@ public class ToolBar
     private class OpenAction
         extends AbstractAction
     {
+
         public OpenAction()
         {
-            super( I18N.tr( "Open" ), IMG.icon( "document-preview.png" ) );
+            super( I18N.tr( "Open" ), IMG.icon( IMG.DOCUMENT_PREVIEW_PNG ) );
         }
 
         public void actionPerformed(
@@ -128,9 +134,10 @@ public class ToolBar
     private class OpenDirAction
         extends AbstractAction
     {
+
         public OpenDirAction()
         {
-            super( I18N.tr( "Open Directory" ), IMG.icon( "document-open-folder.png" ) );
+            super( I18N.tr( "Open Directory" ), IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG ) );
         }
 
         public void actionPerformed(
@@ -143,9 +150,10 @@ public class ToolBar
     private class RemoveAction
         extends AbstractAction
     {
+
         public RemoveAction()
         {
-            super( I18N.tr( "Remove" ), IMG.icon( "list-remove.png" ) );
+            super( I18N.tr( "Remove" ), IMG.icon( IMG.LIST_REMOVE_PNG ) );
         }
 
         public void actionPerformed(
@@ -158,9 +166,10 @@ public class ToolBar
     private class RestoreAction
         extends AbstractAction
     {
+
         public RestoreAction()
         {
-            super( I18N.tr( "Restore" ), IMG.icon( "document-revert.png" ) );
+            super( I18N.tr( "Restore" ), IMG.icon( IMG.DOCUMENT_REVERT_PNG ) );
         }
 
         public void actionPerformed(
@@ -175,7 +184,7 @@ public class ToolBar
     {
         public SettingsAction()
         {
-            super( I18N.tr( "Settings" ), IMG.icon( "configure.png" ) );
+            super( I18N.tr( "Settings" ), IMG.icon( IMG.CONFIGURE_PNG ) );
         }
 
         public void actionPerformed(
