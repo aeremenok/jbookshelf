@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -22,8 +21,9 @@ import org.jbookshelf.model.PhysicalUnit;
 import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
+import org.jbookshelf.swinggui.widgets.StretchAction;
 import org.jbookshelf.swinggui.widgets.panel.BookPanel;
-import org.jbookshelf.swinggui.widgets.panel.BookPanel.Parameters;
+import org.jbookshelf.swinggui.widgets.panel.BookParameters;
 
 public class BookAdditionDialog
     extends JDialog
@@ -31,12 +31,12 @@ public class BookAdditionDialog
         Translatable
 {
     private class AddNCloseAction
-        extends AbstractAction
+        extends StretchAction
     {
         public void actionPerformed(
             final ActionEvent e )
         {
-            final Parameters parameters = bookPanel.extractParameters();
+            final BookParameters parameters = bookPanel.extractParameters();
             if ( parameters != null )
             {
                 addBook( parameters );
@@ -46,12 +46,12 @@ public class BookAdditionDialog
     }
 
     private class AddNContinueAction
-        extends AbstractAction
+        extends StretchAction
     {
         public void actionPerformed(
             final ActionEvent e )
         {
-            final Parameters parameters = bookPanel.extractParameters();
+            final BookParameters parameters = bookPanel.extractParameters();
             if ( parameters != null )
             {
                 addBook( parameters );
@@ -61,7 +61,7 @@ public class BookAdditionDialog
     }
 
     private class CloseAction
-        extends AbstractAction
+        extends StretchAction
     {
         public void actionPerformed(
             final ActionEvent e )
@@ -90,7 +90,7 @@ public class BookAdditionDialog
     }
 
     public void addBook(
-        final Parameters parameters )
+        final BookParameters parameters )
     {
         final PhysicalUnit physicalUnit = FileImporter.createPhysicalUnit( parameters.getFile() );
         final Book book = Storage.getBookShelf().addBook( parameters.getBookName(), null, null, physicalUnit );
@@ -103,9 +103,9 @@ public class BookAdditionDialog
     {
         setTitle( I18N.tr( "Add Book" ) );
         headerLabel.setText( I18N.tr( "Add book" ) );
-        addNContinueAction.putValue( Action.NAME, "<html>" + I18N.tr( "Add and continue" ) + "</html>" );
-        addNCloseAction.putValue( Action.NAME, "<html>" + I18N.tr( "Add and close" ) + "</html>" );
-        closeAction.putValue( Action.NAME, "<html>" + I18N.tr( "Close" ) + "</html>" );
+        addNContinueAction.putValue( Action.NAME, I18N.tr( "Add and continue" ) );
+        addNCloseAction.putValue( Action.NAME, I18N.tr( "Add and close" ) );
+        closeAction.putValue( Action.NAME, I18N.tr( "Close" ) );
     }
 
     private void initComponents()
