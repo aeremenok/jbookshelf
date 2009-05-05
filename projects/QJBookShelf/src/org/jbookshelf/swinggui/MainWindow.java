@@ -34,6 +34,9 @@ public class MainWindow
         Singleton,
         JBookShelfConstants
 {
+    public static final String APP_NAME = "JBookShelf";
+    public static final String VERSION = "0.4b2";
+
     public static void main(
         final String[] args )
     {
@@ -43,8 +46,8 @@ public class MainWindow
             {
                 QApplication.initialize( args );
 
-                QCoreApplication.setApplicationVersion( "0.4b2" );
-                QCoreApplication.setApplicationName( "JBookShelf" );
+                QCoreApplication.setApplicationVersion( VERSION );
+                QCoreApplication.setApplicationName( APP_NAME );
 
                 Singletons.instance( MainWindow.class ).setVisible( true );
             }
@@ -68,7 +71,7 @@ public class MainWindow
 
     private void initComponents()
     {
-        setTitle( "JBookShelf" );
+        setTitle( APP_NAME );
         setIconImage( IMG.img( "logo-64.png" ) );
         setDefaultCloseOperation( EXIT_ON_CLOSE );
         setDefaultLookAndFeelDecorated( true );
