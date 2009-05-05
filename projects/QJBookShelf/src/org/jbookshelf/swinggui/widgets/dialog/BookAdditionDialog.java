@@ -1,7 +1,6 @@
 package org.jbookshelf.swinggui.widgets.dialog;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Action;
@@ -9,8 +8,8 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 import org.jbookshelf.controller.importer.FileImporter;
 import org.jbookshelf.controller.singleton.Singletons;
@@ -72,8 +71,6 @@ public class BookAdditionDialog
 
     private final BookPanel bookPanel          = new BookPanel();
 
-    private final JLabel    headerLabel        = new JLabel();
-
     private final Action    addNCloseAction    = new AddNCloseAction();
     private final Action    addNContinueAction = new AddNContinueAction();
     private final Action    closeAction        = new CloseAction();
@@ -102,7 +99,6 @@ public class BookAdditionDialog
     public void retranslate()
     {
         setTitle( I18N.tr( "Add Book" ) );
-        headerLabel.setText( I18N.tr( "Add book" ) );
         addNContinueAction.putValue( Action.NAME, I18N.tr( "Add and continue" ) );
         addNCloseAction.putValue( Action.NAME, I18N.tr( "Add and close" ) );
         closeAction.putValue( Action.NAME, I18N.tr( "Close" ) );
@@ -111,11 +107,10 @@ public class BookAdditionDialog
     private void initComponents()
     {
         setModal( true );
-        headerLabel.setFont( new Font( Font.SERIF, Font.ITALIC | Font.BOLD, 14 ) );
 
         setContentPane( new JPanel( new BorderLayout() ) );
-        add( headerLabel, BorderLayout.NORTH );
         add( bookPanel, BorderLayout.CENTER );
+        bookPanel.setBorder( new TitledBorder( I18N.tr( "Add book to collection" ) ) );
 
         final Box box = Box.createHorizontalBox();
         box.add( new JButton( addNContinueAction ) );
