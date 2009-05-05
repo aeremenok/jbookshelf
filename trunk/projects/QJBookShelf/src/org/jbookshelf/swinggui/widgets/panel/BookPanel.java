@@ -52,9 +52,7 @@ public class BookPanel
     public BookPanel()
     {
         super();
-
         Translator.addTranslatable( this );
-
         initComponents();
     }
 
@@ -113,6 +111,6 @@ public class BookPanel
         Builder.addCompletion( categoryField, new DefaultCompletionModel( bookShelf.getCategories().toArray() ) );
 
         // todo smaller icon
-        fileChooserPanel.getFileChooserAction().putValue( Action.SMALL_ICON, IMG.icon( "document-open-folder.png" ) );
+        fileChooserPanel.getFileChooserAction().putValue( Action.SMALL_ICON, IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG ) );
     }
 }

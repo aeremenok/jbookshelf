@@ -1,14 +1,7 @@
 package org.jbookshelf.swinggui.widgets.dialog;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-
 import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import org.jbookshelf.controller.importer.FileImporter;
@@ -20,73 +13,29 @@ import org.jbookshelf.model.PhysicalUnit;
 import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
-import org.jbookshelf.swinggui.widgets.StretchAction;
 import org.jbookshelf.swinggui.widgets.panel.BookPanel;
 import org.jbookshelf.swinggui.widgets.panel.BookParameters;
+import org.xnap.commons.gui.DefaultDialog;
 
 public class BookAdditionDialog
-    extends JDialog
+    extends DefaultDialog
     implements
         Translatable
 {
-    private class AddNCloseAction
-        extends StretchAction
-    {
-        public void actionPerformed(
-            final ActionEvent e )
-        {
-            final BookParameters parameters = bookPanel.extractParameters();
-            if ( parameters != null )
-            {
-                addBook( parameters );
-                closeAction.actionPerformed( e );
-            }
-        }
-    }
-
-    private class AddNContinueAction
-        extends StretchAction
-    {
-        public void actionPerformed(
-            final ActionEvent e )
-        {
-            final BookParameters parameters = bookPanel.extractParameters();
-            if ( parameters != null )
-            {
-                addBook( parameters );
-                bookPanel.clear( false );
-            }
-        }
-    }
-
-    private class CloseAction
-        extends StretchAction
-    {
-        public void actionPerformed(
-            final ActionEvent e )
-        {
-            dispose();
-        }
-    }
-
-    private final BookPanel bookPanel          = new BookPanel();
-
-    private final Action    addNCloseAction    = new AddNCloseAction();
-    private final Action    addNContinueAction = new AddNContinueAction();
-    private final Action    closeAction        = new CloseAction();
+    private final BookPanel bookPanel = new BookPanel();
 
     public BookAdditionDialog(
         final JFrame owner )
     {
-        super( owner );
-        initComponents();
+        super( owner, BUTTON_OKAY | BUTTON_APPLY | BUTTON_CANCEL );
         Translator.addTranslatable( this );
+        initComponents();
 
         pack();
         setLocationRelativeTo( null );
     }
 
-    public void addBook(
+    public void addBookToCollection(
         final BookParameters parameters )
     {
         final PhysicalUnit physicalUnit = FileImporter.createPhysicalUnit( parameters.getFile() );
@@ -96,26 +45,36 @@ public class BookAdditionDialog
         Singletons.instance( CollectionPanel.class ).updateTree();
     }
 
+    @Override
+    public boolean apply()
+    {
+        final BookParameters parameters = bookPanel.extractParameters();
+        if ( parameters != null )
+        {
+            addBookToCollection( parameters );
+            bookPanel.clear( false );
+        }
+        return true;
+    }
+
     public void retranslate()
     {
         setTitle( I18N.tr( "Add Book" ) );
-        addNContinueAction.putValue( Action.NAME, I18N.tr( "Add and continue" ) );
-        addNCloseAction.putValue( Action.NAME, I18N.tr( "Add and close" ) );
-        closeAction.putValue( Action.NAME, I18N.tr( "Close" ) );
+        getOkayAction().putValue( Action.NAME, I18N.tr( "Add and close" ) );
+        getApplyAction().putValue( Action.NAME, I18N.tr( "Add and continue" ) );
+        getCancelAction().putValue( Action.NAME, I18N.tr( "Close" ) );
+        bookPanel.setBorder( new TitledBorder( I18N.tr( "Add book to collection" ) ) );
     }
 
     private void initComponents()
     {
         setModal( true );
+        setMainComponent( bookPanel );
+    }
 
-        setContentPane( new JPanel( new BorderLayout() ) );
-        add( bookPanel, BorderLayout.CENTER );
-        bookPanel.setBorder( new TitledBorder( I18N.tr( "Add book to collection" ) ) );
-
-        final Box box = Box.createHorizontalBox();
-        box.add( new JButton( addNContinueAction ) );
-        box.add( new JButton( addNCloseAction ) );
-        box.add( new JButton( closeAction ) );
-        add( box, BorderLayout.SOUTH );
+    @Override
+    protected void cancelled()
+    {
+        close();
     }
 }
