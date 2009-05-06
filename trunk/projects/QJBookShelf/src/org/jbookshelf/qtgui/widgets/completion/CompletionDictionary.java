@@ -73,7 +73,12 @@ public class CompletionDictionary
         collectWords( bookShelf.getReadingUnits() );
     }
 
-    public List<String> getCompletions()
+    public Object[] getCompletionArray()
+    {
+        return completions.keySet().toArray();
+    }
+
+    public List<String> getCompletionList()
     {
         // todo optimize
         final List<String> list = new ArrayList<String>();

@@ -52,9 +52,10 @@ public class BookAdditionDialog
         if ( parameters != null )
         {
             addBookToCollection( parameters );
-            bookPanel.clear( false );
+            bookPanel.clear();
+            return true;
         }
-        return true;
+        return false;
     }
 
     public void retranslate()
@@ -70,6 +71,7 @@ public class BookAdditionDialog
     {
         setModal( true );
         setMainComponent( bookPanel );
+        setButtonSeparatorVisible( false );
     }
 
     @Override

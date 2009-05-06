@@ -65,7 +65,7 @@ public class JBSAboutDialog
 
         header.setIcon( IMG.icon( "logo-128.png" ) );
         header.setText( MainWindow.APP_NAME );
-        header.setFont( new Font( Font.SERIF, Font.BOLD | Font.ITALIC, 14 ) );
+        header.setFont( new Font( Font.SERIF, Font.BOLD | Font.ITALIC, 32 ) );
 
         authorLabel.setText( I18N.tr( "Author" ) );
         licenseLabel.setText( I18N.tr( "License" ) );

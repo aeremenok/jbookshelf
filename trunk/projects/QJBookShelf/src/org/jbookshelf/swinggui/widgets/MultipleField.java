@@ -1,5 +1,7 @@
 package org.jbookshelf.swinggui.widgets;
 
+import java.util.List;
+
 import javax.swing.JTextField;
 import javax.swing.text.Document;
 
@@ -43,6 +45,24 @@ public class MultipleField
     {
         super( text, columns );
         // TODO Auto-generated constructor stub
+    }
+
+    public void clear()
+    {
+        setText( "" );
+    }
+
+    public List getValue()
+    {
+        // todo
+        return null;
+    }
+
+    public void setValue(
+        final List objects )
+    {
+        // todo
+        setText( objects.size() > 0 ? objects.get( 0 ).toString() : "" );
     }
 
 }
