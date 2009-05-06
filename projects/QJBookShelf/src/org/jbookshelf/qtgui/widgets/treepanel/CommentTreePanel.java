@@ -247,7 +247,7 @@ public class CommentTreePanel
 
         final CompletionDictionary dictionary = Singletons.instance( CompletionDictionary.class );
         dictionary.collectWords( Storage.getBookShelf() );
-        commentTextArea.setCompleter( new QCompleter( dictionary.getCompletions() ) );
+        commentTextArea.setCompleter( new QCompleter( dictionary.getCompletionList() ) );
 
         nothingSelected();
     }
