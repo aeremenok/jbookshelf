@@ -3,8 +3,9 @@ package org.jbookshelf.swinggui;
 import images.IMG;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
@@ -12,6 +13,10 @@ import javax.swing.JToolBar;
 import org.jbookshelf.controller.singleton.Singleton;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.i18n.I18N;
+import org.jbookshelf.qtgui.logic.Translatable;
+import org.jbookshelf.qtgui.logic.Translator;
+import org.jbookshelf.swinggui.widgets.BookShelfActions;
+import org.jbookshelf.swinggui.widgets.TranslatableAction;
 import org.jbookshelf.swinggui.widgets.dialog.BookAdditionDialog;
 import org.jbookshelf.swinggui.widgets.dialog.JBSAboutDialog;
 import org.jbookshelf.swinggui.widgets.dialog.SettingsDialog;
@@ -19,10 +24,11 @@ import org.jbookshelf.swinggui.widgets.dialog.SettingsDialog;
 public class ToolBar
     extends JToolBar
     implements
-        Singleton
+        Singleton,
+        Translatable
 {
     private class AboutAction
-        extends AbstractAction
+        extends TranslatableAction
     {
 
         public AboutAction()
@@ -38,7 +44,7 @@ public class ToolBar
     }
 
     private class AddAction
-        extends AbstractAction
+        extends TranslatableAction
     {
         public AddAction()
         {
@@ -52,24 +58,8 @@ public class ToolBar
         }
     }
 
-    private class BackupAction
-        extends AbstractAction
-    {
-
-        public BackupAction()
-        {
-            super( I18N.tr( "Backup" ), IMG.icon( IMG.DOCUMENT_SAVE_PNG ) );
-        }
-
-        public void actionPerformed(
-            final ActionEvent e )
-        {
-            // TODO Auto-generated method stub
-        }
-    }
-
     private class EditAction
-        extends AbstractAction
+        extends TranslatableAction
     {
 
         public EditAction()
@@ -85,7 +75,7 @@ public class ToolBar
     }
 
     private class GoogleAction
-        extends AbstractAction
+        extends TranslatableAction
     {
 
         public GoogleAction()
@@ -100,24 +90,8 @@ public class ToolBar
         }
     }
 
-    private class ImportAction
-        extends AbstractAction
-    {
-
-        public ImportAction()
-        {
-            super( I18N.tr( "Import" ), IMG.icon( IMG.DOCUMENT_IMPORT_PNG ) );
-        }
-
-        public void actionPerformed(
-            final ActionEvent e )
-        {
-            // TODO Auto-generated method stub
-        }
-    }
-
     private class OpenAction
-        extends AbstractAction
+        extends TranslatableAction
     {
 
         public OpenAction()
@@ -133,7 +107,7 @@ public class ToolBar
     }
 
     private class OpenDirAction
-        extends AbstractAction
+        extends TranslatableAction
     {
 
         public OpenDirAction()
@@ -149,7 +123,7 @@ public class ToolBar
     }
 
     private class RemoveAction
-        extends AbstractAction
+        extends TranslatableAction
     {
 
         public RemoveAction()
@@ -164,24 +138,8 @@ public class ToolBar
         }
     }
 
-    private class RestoreAction
-        extends AbstractAction
-    {
-
-        public RestoreAction()
-        {
-            super( I18N.tr( "Restore" ), IMG.icon( IMG.DOCUMENT_REVERT_PNG ) );
-        }
-
-        public void actionPerformed(
-            final ActionEvent e )
-        {
-            // TODO Auto-generated method stub
-        }
-    }
-
     private class SettingsAction
-        extends AbstractAction
+        extends TranslatableAction
     {
         public SettingsAction()
         {
@@ -195,21 +153,19 @@ public class ToolBar
         }
     }
 
-    private final Action addAction      = new AddAction();
-    private final Action removeAction   = new RemoveAction();
-    private final Action editAction     = new EditAction();
+    private final Action                   addAction           = new AddAction();
+    private final Action                   removeAction        = new RemoveAction();
+    private final Action                   editAction          = new EditAction();
 
-    private final Action openAction     = new OpenAction();
-    private final Action openDirAction  = new OpenDirAction();
-    private final Action googleAction   = new GoogleAction();
+    private final Action                   openAction          = new OpenAction();
+    private final Action                   openDirAction       = new OpenDirAction();
+    private final Action                   googleAction        = new GoogleAction();
 
-    private final Action importAction   = new ImportAction();
-    private final Action backupAction   = new BackupAction();
-    private final Action restoreAction  = new RestoreAction();
+    private final Action                   aboutAction         = new AboutAction();
 
-    private final Action settingsAction = new SettingsAction();
+    private final Action                   settingsAction      = new SettingsAction();
 
-    private final Action aboutAction    = new AboutAction();
+    private final List<TranslatableAction> translatableActions = new ArrayList<TranslatableAction>();
 
     @Override
     public JButton add(
@@ -217,11 +173,17 @@ public class ToolBar
     {
         final JButton add = super.add( a );
         add.setHideActionText( false );
+        if ( a instanceof TranslatableAction )
+        {
+            translatableActions.add( (TranslatableAction) a );
+        }
         return add;
     }
 
     public void initSingleton()
     {
+        Translator.addTranslatable( this );
+
         add( addAction );
         add( removeAction );
         add( editAction );
@@ -230,13 +192,22 @@ public class ToolBar
         add( openDirAction );
         add( googleAction );
         addSeparator();
-        add( importAction );
-        add( backupAction );
-        add( restoreAction );
+        final BookShelfActions collectionActions = Singletons.instance( BookShelfActions.class );
+        add( collectionActions.IMPORT_ACTION );
+        add( collectionActions.BACKUP_ACTION );
+        add( collectionActions.RESTORE_ACTION );
         addSeparator();
         add( settingsAction );
         addSeparator();
         add( aboutAction );
+    }
+
+    public void retranslate()
+    {
+        for ( final TranslatableAction action : translatableActions )
+        {
+            action.retranslate();
+        }
     }
 
 }
