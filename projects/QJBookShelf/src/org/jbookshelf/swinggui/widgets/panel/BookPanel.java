@@ -1,18 +1,15 @@
 package org.jbookshelf.swinggui.widgets.panel;
 
-import images.IMG;
-
 import java.io.File;
 import java.util.List;
 
-import javax.swing.Action;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import org.jbookshelf.controller.Settings;
 import org.jbookshelf.controller.importer.FileImporter;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
@@ -26,6 +23,8 @@ import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.completion.CompletionDictionary;
+import org.jbookshelf.settings.Settings;
+import org.jbookshelf.swinggui.widgets.FileChooserPanelExt;
 import org.jbookshelf.swinggui.widgets.MultipleField;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
@@ -69,12 +68,13 @@ public class BookPanel
     private final MultipleField                  authorField      = new MultipleField( 50 );
     private final MultipleField                  categoryField    = new MultipleField( 50 );
 
-    private final FileChooserPanel               fileChooserPanel = new FileChooserPanel( 50 )
+    private final FileChooserPanel               fileChooserPanel = new FileChooserPanelExt( 50 )
                                                                   {
                                                                       @Override
                                                                       protected void fileSelected(
                                                                           final File file )
                                                                       {
+                                                                          super.fileSelected( file );
                                                                           onFileSelected( file );
                                                                       }
                                                                   };
@@ -269,6 +269,8 @@ public class BookPanel
 
         add( isReadCheckBox, 5, 1 );
 
+        fileChooserPanel.getFileChooser().setFileSelectionMode( JFileChooser.FILES_AND_DIRECTORIES );
+
         // todo better completion
         final BookShelf bookShelf = Storage.getBookShelf();
         final CompletionDictionary dictionary = Singletons.instance( CompletionDictionary.class );
@@ -276,9 +278,6 @@ public class BookPanel
 
         AutoCompleteDecorator.decorate( authorField, bookShelf.getAuthors(), false, CONVERTER );
         AutoCompleteDecorator.decorate( categoryField, bookShelf.getCategories(), false, CONVERTER );
-
-        fileChooserPanel.getFileChooserAction()
-            .putValue( Action.SMALL_ICON, IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_16_PNG ) );
     }
 
     protected void onFileSelected(

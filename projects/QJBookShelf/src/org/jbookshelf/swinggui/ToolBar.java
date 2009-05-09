@@ -14,6 +14,7 @@ import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.i18n.I18N;
 import org.jbookshelf.swinggui.widgets.dialog.BookAdditionDialog;
 import org.jbookshelf.swinggui.widgets.dialog.JBSAboutDialog;
+import org.jbookshelf.swinggui.widgets.dialog.SettingsDialog;
 
 public class ToolBar
     extends JToolBar
@@ -190,7 +191,7 @@ public class ToolBar
         public void actionPerformed(
             final ActionEvent e )
         {
-            // TODO Auto-generated method stub
+            new SettingsDialog( Singletons.instance( MainWindow.class ) ).setVisible( true );
         }
     }
 

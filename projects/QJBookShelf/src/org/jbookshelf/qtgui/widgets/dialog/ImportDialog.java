@@ -19,7 +19,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbookshelf.controller.Settings;
 import org.jbookshelf.controller.importer.FileImporter;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
@@ -31,6 +30,7 @@ import org.jbookshelf.qtgui.widgets.ext.CyclicProgressBar;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.tree.CollectionTree;
+import org.jbookshelf.settings.Settings;
 
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.gui.QCloseEvent;

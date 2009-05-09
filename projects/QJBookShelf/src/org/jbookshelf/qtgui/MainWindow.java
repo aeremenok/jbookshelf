@@ -15,7 +15,6 @@
  */
 package org.jbookshelf.qtgui;
 
-import org.jbookshelf.controller.Settings;
 import org.jbookshelf.controller.singleton.Singleton;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
@@ -25,6 +24,7 @@ import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.completion.CompletionDictionary;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
+import org.jbookshelf.settings.Settings;
 
 import com.trolltech.qt.core.QCoreApplication;
 import com.trolltech.qt.core.Qt.WindowState;

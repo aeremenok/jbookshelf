@@ -19,7 +19,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbookshelf.controller.Settings;
 import org.jbookshelf.controller.importer.FileImporter;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.Storage;
@@ -32,6 +31,7 @@ import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.widgets.FilePathEdit;
 import org.jbookshelf.qtgui.widgets.completion.CommaSeparatedCompleter;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
+import org.jbookshelf.settings.Settings;
 
 import com.trolltech.qt.gui.QCheckBox;
 import com.trolltech.qt.gui.QComboBox;
