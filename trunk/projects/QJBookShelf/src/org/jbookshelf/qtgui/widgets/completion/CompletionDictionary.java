@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import org.jbookshelf.controller.Settings;
 import org.jbookshelf.controller.singleton.Singleton;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.model.BookShelf;
@@ -31,6 +30,7 @@ import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
+import org.jbookshelf.settings.Settings;
 
 public class CompletionDictionary
     implements

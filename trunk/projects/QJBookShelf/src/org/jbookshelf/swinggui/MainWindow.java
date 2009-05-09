@@ -4,27 +4,29 @@ import images.IMG;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.jbookshelf.controller.Settings;
 import org.jbookshelf.controller.singleton.Singleton;
 import org.jbookshelf.controller.singleton.Singletons;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
-import org.jbookshelf.i18n.I18N;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
-import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.completion.CompletionDictionary;
+import org.jbookshelf.settings.Settings;
+import org.jbookshelf.swinggui.widgets.LookAndFeelComboBoxModel;
 
-import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 import com.trolltech.qt.core.QCoreApplication;
 import com.trolltech.qt.gui.QApplication;
 
@@ -32,10 +34,11 @@ public class MainWindow
     extends JFrame
     implements
         Singleton,
-        JBookShelfConstants
+        JBookShelfConstants,
+        PropertyChangeListener
 {
     public static final String APP_NAME = "JBookShelf";
-    public static final String VERSION = "0.4b2";
+    public static final String VERSION  = "0.5b0";
 
     public static void main(
         final String[] args )
@@ -57,9 +60,27 @@ public class MainWindow
     public void initSingleton()
     {
         initCollection();
-        initLAF();
-        initLanguage();
         initComponents();
+    }
+
+    public void propertyChange(
+        final PropertyChangeEvent evt )
+    {
+        try
+        {
+            UIManager.setLookAndFeel( LookAndFeelComboBoxModel.fromName( evt.getNewValue().toString() ) );
+            SwingUtilities.updateComponentTreeUI( this );
+            final Window[] windows = getOwnedWindows();
+            for ( final Window window : windows )
+            {
+                SwingUtilities.updateComponentTreeUI( window );
+                window.pack();
+            }
+        }
+        catch ( final UnsupportedLookAndFeelException e )
+        {
+            throw new Error( e );
+        }
     }
 
     private void initCollection()
@@ -74,7 +95,6 @@ public class MainWindow
         setTitle( APP_NAME );
         setIconImage( IMG.img( "logo-64.png" ) );
         setDefaultCloseOperation( EXIT_ON_CLOSE );
-        setDefaultLookAndFeelDecorated( true );
 
         setContentPane( new JPanel( new BorderLayout() ) );
         add( Singletons.instance( ToolBar.class ), BorderLayout.NORTH );
@@ -97,28 +117,6 @@ public class MainWindow
 
         pack();
         setExtendedState( MAXIMIZED_BOTH );
-
-        split.setDividerLocation( 0.5 );
-    }
-
-    private void initLAF()
-    {
-        try
-        {
-            final Settings settings = Singletons.instance( Settings.class );
-            UIManager.setLookAndFeel( settings.LAF.getValue() );
-            UIManager.setLookAndFeel( new NimbusLookAndFeel() );
-        }
-        catch ( final UnsupportedLookAndFeelException e )
-        {
-            throw new Error( e );
-        }
-    }
-
-    private void initLanguage()
-    {
-        Translator.retranslate( Singletons.instance( Settings.class ).LANGUAGE.getValue() );
-        I18N.setLanguage( Singletons.instance( Settings.class ).LANGUAGE.getValue() );
     }
 
     protected void onClose()
