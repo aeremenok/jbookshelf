@@ -4,6 +4,7 @@ import images.IMG;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.Action;
 import javax.swing.JFileChooser;
 
 import org.jbookshelf.controller.singleton.Singleton;
@@ -12,6 +13,7 @@ import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.i18n.I18N;
 import org.jbookshelf.swinggui.MainWindow;
+import org.jbookshelf.swinggui.widgets.panel.CollectionPanel;
 
 public class BookShelfActions
     implements
@@ -72,17 +74,16 @@ public class BookShelfActions
             if ( getFileChooser().showOpenDialog( Singletons.instance( MainWindow.class ) ) == JFileChooser.APPROVE_OPTION )
             {
                 Storage.restoreCollection( getFileChooser().getSelectedFile() );
-                // todo
-                // Singletons.instance( CollectionPanel.class ).updateTree();
+                Singletons.instance( CollectionPanel.class ).updateActiveTree();
             }
         }
     }
 
-    public final TranslatableAction RESTORE_ACTION = new RestoreAction();
-    public final TranslatableAction BACKUP_ACTION  = new BackupAction();
-    public final TranslatableAction IMPORT_ACTION  = new ImportAction();
+    public final Action  restoreAction = new RestoreAction();
+    public final Action  backupAction  = new BackupAction();
+    public final Action  importAction  = new ImportAction();
 
-    private JFileChooser            fileChooser;
+    private JFileChooser fileChooser;
 
     public JFileChooser getFileChooser()
     {

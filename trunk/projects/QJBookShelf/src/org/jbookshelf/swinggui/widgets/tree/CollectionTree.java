@@ -2,7 +2,10 @@ package org.jbookshelf.swinggui.widgets.tree;
 
 import java.util.List;
 
+import javax.swing.ListSelectionModel;
 import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeWillExpandListener;
 
 import org.jbookshelf.controller.singleton.Singleton;
@@ -12,6 +15,7 @@ import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jdesktop.swingx.JXTreeTable;
+import org.jdesktop.swingx.treetable.AbstractMutableTreeTableNode;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 import org.jdesktop.swingx.treetable.MutableTreeTableNode;
@@ -21,7 +25,8 @@ public abstract class CollectionTree
     implements
         Singleton,
         Translatable,
-        TreeWillExpandListener
+        TreeWillExpandListener,
+        TreeSelectionListener
 {
     public void initSingleton()
     {
@@ -29,7 +34,8 @@ public abstract class CollectionTree
         setRootVisible( false );
         setSortable( true );
         addTreeWillExpandListener( this );
-        ((DefaultTreeTableModel) getTreeTableModel()).setRoot( new DefaultMutableTreeTableNode() );
+        addTreeSelectionListener( this );
+        setSelectionMode( ListSelectionModel.MULTIPLE_INTERVAL_SELECTION );
     }
 
     public void retranslate()
@@ -42,12 +48,9 @@ public abstract class CollectionTree
         clearSelection();
 
         final DefaultTreeTableModel model = (DefaultTreeTableModel) getTreeTableModel();
-        final MutableTreeTableNode root = (MutableTreeTableNode) model.getRoot();
-
-        for ( int i = 0; i < root.getChildCount(); i++ )
-        {
-            root.remove( 0 );
-        }
+        // fixme memory leakage?
+        final MutableTreeTableNode root = new DefaultMutableTreeTableNode();
+        model.setRoot( root );
 
         for ( int i = 0; i < list.size(); i++ )
         {
@@ -64,8 +67,7 @@ public abstract class CollectionTree
         final TreeExpansionEvent event )
     {
         final Object object = event.getPath().getLastPathComponent();
-        System.out.println( object );
-        if ( object instanceof UniqueNode )
+        if ( object instanceof UniqueNode && ((AbstractMutableTreeTableNode) object).getChildCount() == 0 )
         {
             addChildren( (UniqueNode) object );
         }
@@ -74,6 +76,12 @@ public abstract class CollectionTree
     public void update()
     {
         showResult( getUniques( Storage.getBookShelf() ) );
+    }
+
+    public void valueChanged(
+        final TreeSelectionEvent e )
+    {
+        // todo
     }
 
     protected abstract void addChildren(
