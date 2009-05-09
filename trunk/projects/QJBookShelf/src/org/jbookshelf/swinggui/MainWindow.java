@@ -26,6 +26,7 @@ import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.completion.CompletionDictionary;
 import org.jbookshelf.settings.Settings;
 import org.jbookshelf.swinggui.widgets.LookAndFeelComboBoxModel;
+import org.jbookshelf.swinggui.widgets.panel.CollectionPanel;
 
 import com.trolltech.qt.core.QCoreApplication;
 import com.trolltech.qt.gui.QApplication;
@@ -102,7 +103,7 @@ public class MainWindow
         final JSplitPane split = new JSplitPane();
         add( split, BorderLayout.CENTER );
         split.setOneTouchExpandable( true );
-        split.setLeftComponent( new JLabel( "777" ) );
+        split.setLeftComponent( Singletons.instance( CollectionPanel.class ) );
         split.setRightComponent( new JLabel( "777" ) );
 
         addWindowListener( new WindowAdapter()
