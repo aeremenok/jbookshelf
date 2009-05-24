@@ -18,5 +18,6 @@
 		<mapping class="org.jbookshelf.model.db.Author" />
 		<mapping class="org.jbookshelf.model.db.Category" />
 		<mapping class="org.jbookshelf.model.db.PhysicalBook" />
+		<mapping class="org.jbookshelf.model.db.Word" />
 	</session-factory>
 </hibernate-configuration>

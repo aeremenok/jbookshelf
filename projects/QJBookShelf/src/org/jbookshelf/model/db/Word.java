@@ -10,6 +10,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
@@ -21,7 +23,13 @@ public class Word
     implements
     Serializable
 {
+    @SuppressWarnings( "unused" )
+    @Id
+    @GeneratedValue
+    private Long   id;
+
     @ManyToOne( optional = false )
+    @org.hibernate.annotations.ForeignKey( name = "FK_WORD_BOOK" )
     private Book   book;
 
     @Column( nullable = false, length = Byte.MAX_VALUE )
