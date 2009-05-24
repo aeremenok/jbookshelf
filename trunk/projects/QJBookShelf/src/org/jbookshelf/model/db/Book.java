@@ -18,8 +18,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,7 +27,8 @@ import javax.persistence.TemporalType;
 @Entity
 public class Book
     implements
-    Serializable
+    Serializable,
+    Timestampable
 {
     @SuppressWarnings( "unused" )
     @Id
@@ -63,7 +62,7 @@ public class Book
     @org.hibernate.annotations.ForeignKey( name = "FK_CATEGORY_BOOK", inverseName = "FK_BOOK_CATEGORY" )
     private final Set<Category> categories   = new HashSet<Category>();
 
-    @OneToOne( mappedBy = "book", optional = false )
+    @OneToOne( mappedBy = "book" )
     private PhysicalBook        physicalBook;
 
     public void addAuthor(
@@ -192,8 +191,6 @@ public class Book
         this.read = read;
     }
 
-    @PreUpdate
-    @PrePersist
     public void timestamp()
     {
         changeDate = new Date();
