@@ -12,7 +12,11 @@
 		<property name="hbm2ddl.auto">true</property>
 		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>
+		
 		<mapping class="org.jbookshelf.model.db.Book" />
 		<mapping class="org.jbookshelf.model.db.Note" />
+		<mapping class="org.jbookshelf.model.db.Author" />
+		<mapping class="org.jbookshelf.model.db.Category" />
+		<mapping class="org.jbookshelf.model.db.PhysicalBook" />
 	</session-factory>
 </hibernate-configuration>
