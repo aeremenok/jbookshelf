@@ -3,10 +3,13 @@
  */
 package org.jbookshelf.model.db;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +18,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -23,7 +28,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 public class Book
+    implements
+    Serializable
 {
+    @SuppressWarnings( "unused" )
     @Id
     @GeneratedValue
     private Long                id;
@@ -31,9 +39,10 @@ public class Book
     @Column( nullable = false, unique = true )
     private String              name;
 
-    @Column( nullable = false )
-    private Float               read;
+    @Column
+    private Float               read         = 0f;
 
+    @SuppressWarnings( "unused" )
     @Column( nullable = false )
     @Temporal( TemporalType.TIMESTAMP )
     private Date                changeDate;
@@ -57,6 +66,27 @@ public class Book
     @OneToOne( mappedBy = "book", optional = false )
     private PhysicalBook        physicalBook;
 
+    public void addAuthor(
+        @Nonnull final Author author )
+    {
+        author.getBooks().add( this );
+        getAuthors().add( author );
+    }
+
+    public void addCategory(
+        @Nonnull final Category category )
+    {
+        category.getBooks().add( this );
+        getCategories().add( category );
+    }
+
+    public void addRelatedBook(
+        @Nonnull final Book book )
+    {
+        book.getRelatedBooks().add( this );
+        getRelatedBooks().add( book );
+    }
+
     /**
      * @return the authors
      */
@@ -71,22 +101,6 @@ public class Book
     public Set<Category> getCategories()
     {
         return this.categories;
-    }
-
-    /**
-     * @return the changeDate
-     */
-    public Date getChangeDate()
-    {
-        return this.changeDate;
-    }
-
-    /**
-     * @return the id
-     */
-    public Long getId()
-    {
-        return this.id;
     }
 
     /**
@@ -129,11 +143,32 @@ public class Book
         return this.relatedBooks;
     }
 
+    public void removeAuthor(
+        @Nonnull final Author author )
+    {
+        author.getBooks().remove( this );
+        getAuthors().remove( author );
+    }
+
+    public void removeCategory(
+        @Nonnull final Category category )
+    {
+        category.getBooks().remove( this );
+        getAuthors().remove( category );
+    }
+
+    public void removeRelatedBook(
+        @Nonnull final Book book )
+    {
+        book.getRelatedBooks().remove( this );
+        getRelatedBooks().remove( book );
+    }
+
     /**
      * @param name the name to set
      */
     public void setName(
-        final String name )
+        @Nonnull final String name )
     {
         this.name = name;
     }
@@ -142,17 +177,25 @@ public class Book
      * @param physicalBook the physicalBook to set
      */
     public void setPhysicalBook(
-        final PhysicalBook physicalBook )
+        @Nonnull final PhysicalBook physicalBook )
     {
         this.physicalBook = physicalBook;
+        physicalBook.setBook( this );
     }
 
     /**
      * @param read the read to set
      */
     public void setRead(
-        final Float read )
+        @Nonnull @Nonnegative final Float read )
     {
         this.read = read;
+    }
+
+    @PreUpdate
+    @PrePersist
+    public void timestamp()
+    {
+        changeDate = new Date();
     }
 }

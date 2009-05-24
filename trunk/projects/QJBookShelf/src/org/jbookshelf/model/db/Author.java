@@ -3,15 +3,19 @@
  */
 package org.jbookshelf.model.db;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -20,7 +24,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 public class Author
+    implements
+    Serializable
 {
+    @SuppressWarnings( "unused" )
     @Id
     @GeneratedValue
     private Long            id;
@@ -28,6 +35,7 @@ public class Author
     @Column( nullable = false, unique = true )
     private String          name;
 
+    @SuppressWarnings( "unused" )
     @Column( nullable = false )
     @Temporal( TemporalType.TIMESTAMP )
     private Date            changeDate;
@@ -44,22 +52,6 @@ public class Author
     }
 
     /**
-     * @return the changeDate
-     */
-    public Date getChangeDate()
-    {
-        return this.changeDate;
-    }
-
-    /**
-     * @return the id
-     */
-    public Long getId()
-    {
-        return this.id;
-    }
-
-    /**
      * @return the name
      */
     public String getName()
@@ -71,8 +63,15 @@ public class Author
      * @param name the name to set
      */
     public void setName(
-        final String name )
+        @Nonnull final String name )
     {
         this.name = name;
+    }
+
+    @PreUpdate
+    @PrePersist
+    public void timestamp()
+    {
+        changeDate = new Date();
     }
 }

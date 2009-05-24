@@ -5,12 +5,17 @@ package org.jbookshelf.model.db;
 
 import java.util.Date;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -20,10 +25,12 @@ import javax.persistence.TemporalType;
 @Entity
 public class Note
 {
+    @SuppressWarnings( "unused" )
     @Id
     @GeneratedValue
     private Long   id;
 
+    @SuppressWarnings( "unused" )
     @Column( nullable = false )
     @Temporal( TemporalType.TIMESTAMP )
     private Date   changeDate;
@@ -38,7 +45,7 @@ public class Note
     private String title;
 
     @Column
-    private Float  pos;
+    private Float  pos = 0f;
 
     @ManyToOne( optional = false )
     @JoinColumn( name = "BOOK_ID", nullable = false )
@@ -54,16 +61,9 @@ public class Note
     }
 
     /**
-     * @return the changeDate
-     */
-    public Date getChangeDate()
-    {
-        return this.changeDate;
-    }
-
-    /**
      * @return the citation
      */
+    @Nullable
     public String getCitation()
     {
         return this.citation;
@@ -72,17 +72,10 @@ public class Note
     /**
      * @return the content
      */
+    @Nullable
     public String getContent()
     {
         return this.content;
-    }
-
-    /**
-     * @return the id
-     */
-    public Long getId()
-    {
-        return this.id;
     }
 
     /**
@@ -105,7 +98,7 @@ public class Note
      * @param book the book to set
      */
     public void setBook(
-        final Book book )
+        @Nonnull final Book book )
     {
         this.book = book;
     }
@@ -114,7 +107,7 @@ public class Note
      * @param citation the citation to set
      */
     public void setCitation(
-        final String citation )
+        @Nonnull final String citation )
     {
         this.citation = citation;
     }
@@ -123,7 +116,7 @@ public class Note
      * @param content the content to set
      */
     public void setContent(
-        final String content )
+        @Nonnull final String content )
     {
         this.content = content;
     }
@@ -132,7 +125,7 @@ public class Note
      * @param position the position to set
      */
     public void setPosition(
-        final Float position )
+        @Nonnull @Nonnegative final Float position )
     {
         this.pos = position;
     }
@@ -141,8 +134,15 @@ public class Note
      * @param title the title to set
      */
     public void setTitle(
-        final String title )
+        @Nonnull final String title )
     {
         this.title = title;
+    }
+
+    @PreUpdate
+    @PrePersist
+    public void timestamp()
+    {
+        changeDate = new Date();
     }
 }
