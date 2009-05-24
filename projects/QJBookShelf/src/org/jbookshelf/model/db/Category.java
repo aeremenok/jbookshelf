@@ -3,10 +3,13 @@
  */
 package org.jbookshelf.model.db;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -22,7 +27,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 public class Category
+    implements
+    Serializable
 {
+    @SuppressWarnings( "unused" )
     @Id
     @GeneratedValue
     private Long                id;
@@ -30,6 +38,7 @@ public class Category
     @Column( nullable = false, unique = true )
     private String              name;
 
+    @SuppressWarnings( "unused" )
     @Column( nullable = false )
     @Temporal( TemporalType.TIMESTAMP )
     private Date                changeDate;
@@ -44,6 +53,13 @@ public class Category
     @ManyToMany
     private final Set<Book>     books    = new HashSet<Book>();
 
+    public void addChild(
+        @Nonnull final Category category )
+    {
+        category.setParent( this );
+        getChildren().add( category );
+    }
+
     /**
      * @return the books
      */
@@ -53,27 +69,11 @@ public class Category
     }
 
     /**
-     * @return the changeDate
-     */
-    public Date getChangeDate()
-    {
-        return this.changeDate;
-    }
-
-    /**
      * @return the children
      */
     public Set<Category> getChildren()
     {
         return this.children;
-    }
-
-    /**
-     * @return the id
-     */
-    public Long getId()
-    {
-        return this.id;
     }
 
     /**
@@ -87,16 +87,24 @@ public class Category
     /**
      * @return the parent
      */
+    @Nullable
     public Category getParent()
     {
         return this.parent;
+    }
+
+    public void removeChild(
+        @Nonnull final Category category )
+    {
+        category.setParent( null );
+        getChildren().remove( category );
     }
 
     /**
      * @param name the name to set
      */
     public void setName(
-        final String name )
+        @Nonnull final String name )
     {
         this.name = name;
     }
@@ -105,8 +113,15 @@ public class Category
      * @param parent the parent to set
      */
     public void setParent(
-        final Category parent )
+        @Nullable final Category parent )
     {
         this.parent = parent;
+    }
+
+    @PreUpdate
+    @PrePersist
+    public void timestamp()
+    {
+        changeDate = new Date();
     }
 }

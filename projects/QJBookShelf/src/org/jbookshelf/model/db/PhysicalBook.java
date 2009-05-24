@@ -3,12 +3,20 @@
  */
 package org.jbookshelf.model.db;
 
+import java.util.Date;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * @author eav
@@ -20,6 +28,7 @@ public class PhysicalBook
     public static final String INTERNAL_VIEWER = "internal";
     public static final String SYSTEM_VIEWER   = "system";
 
+    @SuppressWarnings( "unused" )
     @Id
     @GeneratedValue
     private Long               id;
@@ -40,6 +49,11 @@ public class PhysicalBook
     @Column
     private String             unpackedFileName;
 
+    @SuppressWarnings( "unused" )
+    @Column( nullable = false )
+    @Temporal( TemporalType.TIMESTAMP )
+    private Date               changeDate;
+
     /**
      * @return the book
      */
@@ -51,6 +65,7 @@ public class PhysicalBook
     /**
      * @return the charsetName
      */
+    @Nullable
     public String getCharsetName()
     {
         return this.charsetName;
@@ -65,16 +80,9 @@ public class PhysicalBook
     }
 
     /**
-     * @return the id
-     */
-    public Long getId()
-    {
-        return this.id;
-    }
-
-    /**
      * @return the unpackedFileName
      */
+    @Nullable
     public String getUnpackedFileName()
     {
         return this.unpackedFileName;
@@ -83,25 +91,17 @@ public class PhysicalBook
     /**
      * @return the viewer
      */
+    @Nullable
     public String getViewer()
     {
         return this.viewer;
     }
 
     /**
-     * @param book the book to set
-     */
-    public void setBook(
-        final Book book )
-    {
-        this.book = book;
-    }
-
-    /**
      * @param charsetName the charsetName to set
      */
     public void setCharsetName(
-        final String charsetName )
+        @Nonnull final String charsetName )
     {
         this.charsetName = charsetName;
     }
@@ -110,7 +110,7 @@ public class PhysicalBook
      * @param fileName the fileName to set
      */
     public void setFileName(
-        final String fileName )
+        @Nonnull final String fileName )
     {
         this.fileName = fileName;
     }
@@ -119,7 +119,7 @@ public class PhysicalBook
      * @param unpackedFileName the unpackedFileName to set
      */
     public void setUnpackedFileName(
-        final String unpackedFileName )
+        @Nonnull final String unpackedFileName )
     {
         this.unpackedFileName = unpackedFileName;
     }
@@ -128,8 +128,24 @@ public class PhysicalBook
      * @param viewer the viewer to set
      */
     public void setViewer(
-        final String viewer )
+        @Nonnull final String viewer )
     {
         this.viewer = viewer;
+    }
+
+    @PreUpdate
+    @PrePersist
+    public void timestamp()
+    {
+        changeDate = new Date();
+    }
+
+    /**
+     * @param book the book to set
+     */
+    void setBook(
+        @Nonnull final Book book )
+    {
+        this.book = book;
     }
 }
