@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.model.db;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.annotation.Nonnull;
@@ -24,6 +25,9 @@ import javax.persistence.TemporalType;
 @Entity
 @Table( name = "PHYSICAL_BOOK" )
 public class PhysicalBook
+    implements
+    Serializable,
+    Timestampable
 {
     public static final String INTERNAL_VIEWER = "internal";
     public static final String SYSTEM_VIEWER   = "system";
