@@ -3,8 +3,6 @@
  */
 package org.jbookshelf.model.db;
 
-import java.sql.DriverManager;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -20,9 +18,6 @@ public class HibernateUtil
     {
         try
         {
-            Class.forName( "org.hsqldb.jdbcDriver" );
-            DriverManager.getConnection( "jdbc:hsqldb:file:/opt/jbookshelf/db/jbs;shutdown=true", "sa", "" );
-
             final AnnotationConfiguration cfg = new AnnotationConfiguration();
             cfg.getEventListeners().setSaveOrUpdateEventListeners( new SaveOrUpdateEventListener[]
             { new Timestamper() } );
@@ -54,6 +49,7 @@ public class HibernateUtil
             session.saveOrUpdate( book );
             session.saveOrUpdate( physicalBook );
             session.getTransaction().commit();
+
             System.out.println( book.getName() );
         }
         catch ( final Exception e )
