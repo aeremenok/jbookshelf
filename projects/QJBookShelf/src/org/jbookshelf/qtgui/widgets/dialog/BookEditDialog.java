@@ -15,7 +15,7 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
@@ -78,7 +78,7 @@ public class BookEditDialog
         final QRect geometry = geometry();
         geometry.setWidth( 770 );
         geometry.setHeight( 300 );
-        geometry.moveCenter( Singletons.instance( MainWindow.class ).geometry().center() );
+        geometry.moveCenter( Single.instance( MainWindow.class ).geometry().center() );
         setGeometry( geometry );
 
         final QGridLayout layout = new QGridLayout();
@@ -105,7 +105,7 @@ public class BookEditDialog
         if ( parameters != null )
         {
             BookPanel.changeBook( book, parameters );
-            Singletons.instance( CollectionPanel.class ).updateTree();
+            Single.instance( CollectionPanel.class ).updateTree();
             close();
         }
     }

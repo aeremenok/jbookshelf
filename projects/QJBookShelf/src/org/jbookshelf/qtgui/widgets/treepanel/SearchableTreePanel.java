@@ -15,8 +15,7 @@
  */
 package org.jbookshelf.qtgui.widgets.treepanel;
 
-import org.jbookshelf.controller.singleton.Singleton;
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
 import org.jbookshelf.qtgui.widgets.menu.RelatedTreeMenu;
@@ -35,8 +34,7 @@ import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
 public abstract class SearchableTreePanel
     extends QWidgetExt
     implements
-        UniqueSelectionListener,
-        Singleton
+    UniqueSelectionListener
 {
     /**
      * tree with context menu
@@ -55,7 +53,7 @@ public abstract class SearchableTreePanel
             {
                 item.setSelected( true );
 
-                final RelatedTreeMenu menu = new RelatedTreeMenu( Singletons.instance( RelatedPanel.class ) );
+                final RelatedTreeMenu menu = new RelatedTreeMenu( Single.instance( RelatedPanel.class ) );
                 menu.exec( arg__1.globalPos() );
             }
         }
@@ -88,8 +86,7 @@ public abstract class SearchableTreePanel
     public abstract void onRemove();
 
     public void retranslate()
-    {
-    }
+    {}
 
     /**
      * show only items with captions containng text

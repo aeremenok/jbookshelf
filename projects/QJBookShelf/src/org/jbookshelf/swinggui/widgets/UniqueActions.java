@@ -5,10 +5,10 @@ import images.IMG;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.swing.Action;
 
-import org.jbookshelf.controller.singleton.Singleton;
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.i18n.I18N;
 import org.jbookshelf.model.Book;
@@ -19,8 +19,7 @@ import org.jbookshelf.qtgui.reader.ReaderWindow;
 
 public class UniqueActions
     implements
-        Singleton,
-        UniqueSelectionListener
+    UniqueSelectionListener
 {
     private class EditAction
         extends TranslatableAction
@@ -34,7 +33,7 @@ public class UniqueActions
         public void actionPerformed(
             final ActionEvent e )
         {
-            // TODO Auto-generated method stub
+        // TODO Auto-generated method stub
         }
     }
 
@@ -105,11 +104,11 @@ public class UniqueActions
         public void actionPerformed(
             final ActionEvent e )
         {
-            // TODO Auto-generated method stub
+        // TODO Auto-generated method stub
         }
     }
 
-    private final BookShelfMediator mediator      = Singletons.instance( BookShelfMediator.class );
+    private final BookShelfMediator mediator      = Single.instance( BookShelfMediator.class );
 
     public final Action             removeAction  = new RemoveAction();
     public final Action             openAction    = new OpenAction();
@@ -117,6 +116,7 @@ public class UniqueActions
     public final Action             openDirAction = new OpenDirAction();
     public final Action             googleAction  = new GoogleAction();
 
+    @PostConstruct
     public void initSingleton()
     {
         mediator.addUniqueSelectionListener( this );

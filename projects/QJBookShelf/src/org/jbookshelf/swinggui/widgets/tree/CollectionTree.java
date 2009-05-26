@@ -2,13 +2,13 @@ package org.jbookshelf.swinggui.widgets.tree;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeWillExpandListener;
 
-import org.jbookshelf.controller.singleton.Singleton;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Unique;
@@ -23,11 +23,11 @@ import org.jdesktop.swingx.treetable.MutableTreeTableNode;
 public abstract class CollectionTree
     extends JXTreeTable
     implements
-        Singleton,
-        Translatable,
-        TreeWillExpandListener,
-        TreeSelectionListener
+    Translatable,
+    TreeWillExpandListener,
+    TreeSelectionListener
 {
+    @PostConstruct
     public void initSingleton()
     {
         Translator.addTranslatable( this );
@@ -39,8 +39,7 @@ public abstract class CollectionTree
     }
 
     public void retranslate()
-    {
-    }
+    {}
 
     public void showResult(
         final List<? extends Unique> list )
@@ -60,8 +59,7 @@ public abstract class CollectionTree
 
     public void treeWillCollapse(
         final TreeExpansionEvent event )
-    {
-    }
+    {}
 
     public void treeWillExpand(
         final TreeExpansionEvent event )
@@ -81,7 +79,7 @@ public abstract class CollectionTree
     public void valueChanged(
         final TreeSelectionEvent e )
     {
-        // todo
+    // todo
     }
 
     protected abstract void addChildren(

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jbookshelf.controller.importer.FileImporter;
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.qtgui.MainWindow;
@@ -161,7 +161,7 @@ public class ImportDialog
         final QRect geometry = geometry();
         geometry.setWidth( 770 );
         geometry.setHeight( 400 );
-        geometry.moveCenter( Singletons.instance( MainWindow.class ).geometry().center() );
+        geometry.moveCenter( Single.instance( MainWindow.class ).geometry().center() );
         setGeometry( geometry );
 
         final QGridLayout layout = new QGridLayout();
@@ -183,7 +183,7 @@ public class ImportDialog
         layout.addWidget( cancel, 4, 3 );
 
         pathEdit.setFileMode( FileMode.DirectoryOnly );
-        maskEdit.setText( Singletons.instance( Settings.class ).IMPORT_MASK.getValue() );
+        maskEdit.setText( Single.instance( Settings.class ).IMPORT_MASK.getValue() );
 
         progressBar.setVisible( false );
         progressBar.setMaximum( 100 );
@@ -283,7 +283,7 @@ public class ImportDialog
             importer.importFiles( masks, Storage.getBookShelf(), file );
 
             // updating views
-            Singletons.instance( CollectionPanel.class ).updateTree();
+            Single.instance( CollectionPanel.class ).updateTree();
             CollectionTree.removeChildren( failureNode );
             CollectionTree.removeChildren( successNode );
             successNode.setText( 2, success.size() + " " + tr( "books" ) );
@@ -328,7 +328,7 @@ public class ImportDialog
     protected void closeEvent(
         final QCloseEvent arg__1 )
     {
-        final Settings settings = Singletons.instance( Settings.class );
+        final Settings settings = Single.instance( Settings.class );
         settings.IMPORT_MASK.setValue( maskEdit.text() );
         settings.save();
 

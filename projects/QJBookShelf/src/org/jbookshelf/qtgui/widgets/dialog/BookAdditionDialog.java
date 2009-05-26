@@ -18,7 +18,7 @@ package org.jbookshelf.qtgui.widgets.dialog;
 import java.io.File;
 
 import org.jbookshelf.controller.importer.FileImporter;
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.PhysicalUnit;
@@ -76,7 +76,7 @@ public class BookAdditionDialog
         final Book book = Storage.getBookShelf().addReadingUnit( parameters.getBookName(), null, null, physicalUnit );
         BookPanel.changeBook( book, parameters );
 
-        Singletons.instance( CollectionPanel.class ).updateTree();
+        Single.instance( CollectionPanel.class ).updateTree();
     }
 
     public void retranslate()
@@ -119,7 +119,7 @@ public class BookAdditionDialog
         final QRect geometry = geometry();
         geometry.setWidth( 770 );
         geometry.setHeight( 300 );
-        geometry.moveCenter( Singletons.instance( MainWindow.class ).geometry().center() );
+        geometry.moveCenter( Single.instance( MainWindow.class ).geometry().center() );
         setGeometry( geometry );
 
         final QGridLayout layout = new QGridLayout();

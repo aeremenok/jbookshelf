@@ -20,9 +20,10 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.emf.ecore.EReference;
-import org.jbookshelf.controller.singleton.Singleton;
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Category;
@@ -53,21 +54,9 @@ import com.trolltech.qt.gui.QTreeWidgetItem.ChildIndicatorPolicy;
 public abstract class CollectionTree
     extends QTreeWidget
     implements
-        SourcesUniqueSelection,
-        Singleton,
-        Translatable
+    SourcesUniqueSelection,
+    Translatable
 {
-    private final List<UniqueSelectionListener> listeners      = new ArrayList<UniqueSelectionListener>();
-    private final List<FocusListener>           focusListeners = new ArrayList<FocusListener>();
-    private final List<MouseListener>           mouseListeners = new ArrayList<MouseListener>();
-
-    protected QTreeWidgetItem                   root;
-
-    /**
-     * temporary points to a category, which node is being dragged at the moment
-     */
-    private Category                            draggedCategory;
-
     public static void removeChildren(
         final QTreeWidgetItem parent )
     {
@@ -78,6 +67,18 @@ public abstract class CollectionTree
         }
         parent.setExpanded( false );
     }
+
+    private final List<UniqueSelectionListener> listeners      = new ArrayList<UniqueSelectionListener>();
+    private final List<FocusListener>           focusListeners = new ArrayList<FocusListener>();
+
+    private final List<MouseListener>           mouseListeners = new ArrayList<MouseListener>();
+
+    protected QTreeWidgetItem                   root;
+
+    /**
+     * temporary points to a category, which node is being dragged at the moment
+     */
+    private Category                            draggedCategory;
 
     public void addFocusListener(
         final FocusListener focusListener )
@@ -97,6 +98,7 @@ public abstract class CollectionTree
         listeners.add( listener );
     }
 
+    @PostConstruct
     public void initSingleton()
     {
         initComponents();
@@ -143,8 +145,7 @@ public abstract class CollectionTree
     }
 
     public void retranslate()
-    {
-    }
+    {}
 
     public void selectUnique(
         final Unique unique )
@@ -244,8 +245,8 @@ public abstract class CollectionTree
 
     private void initListeners()
     {
-        addSelectionListener( Singletons.instance( ToolBar.class ) );
-        addSelectionListener( Singletons.instance( RelatedPanel.class ) );
+        addSelectionListener( Single.instance( ToolBar.class ) );
+        addSelectionListener( Single.instance( RelatedPanel.class ) );
 
         itemDoubleClicked.connect( this, "fireDoubleClicked(QTreeWidgetItem, Integer)" );
         itemSelectionChanged.connect( this, "itemSelectionChanged()" );
@@ -277,7 +278,7 @@ public abstract class CollectionTree
             final QTreeWidgetItem item = selectedItems().get( 0 );
             if ( item instanceof UniqueNode && !item.parent().equals( root ) )
             { // leaf doubleclicked
-                Singletons.instance( CollectionPanel.class ).selectUnique( ((UniqueNode) item).getUnique() );
+                Single.instance( CollectionPanel.class ).selectUnique( ((UniqueNode) item).getUnique() );
             }
         }
     }

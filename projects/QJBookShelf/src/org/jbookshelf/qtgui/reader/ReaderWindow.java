@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.SortedMap;
 
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.FileUtil;
 import org.jbookshelf.controller.util.StringUtil;
 import org.jbookshelf.controller.util.URIUtil;
@@ -132,7 +132,7 @@ public class ReaderWindow
             final ArchiveFile archiveFile = (ArchiveFile) physical;
             if ( archiveFile.getArchiveFile() == null || !archiveFile.getArchiveFile().exists() )
             { // unpack and remember the file
-                final QMessageBox messageBox = new QMessageBox( Singletons.instance( MainWindow.class ) );
+                final QMessageBox messageBox = new QMessageBox( Single.instance( MainWindow.class ) );
                 messageBox.setWindowTitle( "Unpacking. Please wait..." );
                 messageBox.show();
 

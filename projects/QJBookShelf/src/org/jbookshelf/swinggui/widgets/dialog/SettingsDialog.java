@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.i18n.I18N;
 import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;
@@ -25,7 +25,7 @@ public class SettingsDialog
         Translatable
 {
     private final SettingComponentMediator mediator         = new SettingComponentMediator();
-    private final Settings                 settings         = Singletons.instance( Settings.class );
+    private final Settings                 settings         = Single.instance( Settings.class );
 
     private final JComboBox                langComboBox     = new JComboBox();
     private final JComboBox                lafComboBox      = new JComboBox( new LookAndFeelComboBoxModel() );

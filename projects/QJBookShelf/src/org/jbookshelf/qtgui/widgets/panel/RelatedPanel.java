@@ -17,8 +17,9 @@ package org.jbookshelf.qtgui.widgets.panel;
 
 import java.util.List;
 
-import org.jbookshelf.controller.singleton.Singleton;
-import org.jbookshelf.controller.singleton.Singletons;
+import javax.annotation.PostConstruct;
+
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.logic.Translator;
@@ -41,9 +42,8 @@ import com.trolltech.qt.gui.QTabWidget;
 public class RelatedPanel
     extends QWidgetExt
     implements
-        JBookShelfConstants,
-        UniqueSelectionListener,
-        Singleton
+    JBookShelfConstants,
+    UniqueSelectionListener
 {
     private final QPushButton addButton       = new QPushButton( this );
     private final QPushButton removeButton    = new QPushButton( this );
@@ -61,6 +61,7 @@ public class RelatedPanel
         return removeButton;
     }
 
+    @PostConstruct
     public void initSingleton()
     {
         initComponents();
@@ -98,8 +99,8 @@ public class RelatedPanel
             removeButton.setEnabled( false );
         }
 
-        Singletons.instance( CommentTreePanel.class ).selectedUniques( uniques );
-        Singletons.instance( RelatedTreePanel.class ).selectedUniques( uniques );
+        Single.instance( CommentTreePanel.class ).selectedUniques( uniques );
+        Single.instance( RelatedTreePanel.class ).selectedUniques( uniques );
     }
 
     private void initComponents()
@@ -113,8 +114,8 @@ public class RelatedPanel
 
         layout.addWidget( tabbedPane, 1, 0, 1, 3 );
 
-        tabbedPane.addTab( Singletons.instance( CommentTreePanel.class ), "" );
-        tabbedPane.addTab( Singletons.instance( RelatedTreePanel.class ), "" );
+        tabbedPane.addTab( Single.instance( CommentTreePanel.class ), "" );
+        tabbedPane.addTab( Single.instance( RelatedTreePanel.class ), "" );
 
         addButton.setIcon( new QIcon( ICONPATH + "list-add-small.png" ) );
         removeButton.setIcon( new QIcon( ICONPATH + "list-remove-small.png" ) );

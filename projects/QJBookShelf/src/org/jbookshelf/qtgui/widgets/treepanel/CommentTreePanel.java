@@ -19,7 +19,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.jbookshelf.controller.singleton.Singletons;
+import javax.annotation.PostConstruct;
+
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
@@ -50,7 +52,7 @@ import com.trolltech.qt.gui.QWidget;
 public class CommentTreePanel
     extends SearchableTreePanel
     implements
-        JBookShelfConstants
+    JBookShelfConstants
 {
     /**
      * contains a {@link Comment}
@@ -86,6 +88,7 @@ public class CommentTreePanel
 
     private Commentable                   selectedCommentable;
 
+    @PostConstruct
     public void initSingleton()
     {
         initComponents();
@@ -125,7 +128,7 @@ public class CommentTreePanel
 
         node.setText( 0, comment.getTitle() );
 
-        Singletons.instance( CompletionDictionary.class ).addText( comment.getContent() );
+        Single.instance( CompletionDictionary.class ).addText( comment.getContent() );
     }
 
     @Override
@@ -151,7 +154,7 @@ public class CommentTreePanel
         if ( uniques.size() == 1 )
         {
             editPanel.setVisible( false );
-            Singletons.instance( RelatedPanel.class ).nothingSelected();
+            Single.instance( RelatedPanel.class ).nothingSelected();
 
             selectedCommentable = (Commentable) uniques.get( 0 );
             drawComments( selectedCommentable.getComments() );
@@ -205,7 +208,7 @@ public class CommentTreePanel
         cleanRoot();
 
         editPanel.setVisible( false );
-        Singletons.instance( RelatedPanel.class ).nothingSelected();
+        Single.instance( RelatedPanel.class ).nothingSelected();
     }
 
     @SuppressWarnings( "unused" )
@@ -219,12 +222,12 @@ public class CommentTreePanel
             {
                 editComment( commentNode.getComment() );
             }
-            Singletons.instance( RelatedPanel.class ).itemSelected();
+            Single.instance( RelatedPanel.class ).itemSelected();
         }
         else
         {
             editPanel.setVisible( false );
-            Singletons.instance( RelatedPanel.class ).nothingSelected();
+            Single.instance( RelatedPanel.class ).nothingSelected();
         }
     }
 
@@ -245,7 +248,7 @@ public class CommentTreePanel
         undoButton.setIcon( new QIcon( ICONPATH + "edit-undo.png" ) );
         undoButton.setToolTip( tr( "Undo" ) );
 
-        final CompletionDictionary dictionary = Singletons.instance( CompletionDictionary.class );
+        final CompletionDictionary dictionary = Single.instance( CompletionDictionary.class );
         dictionary.collectWords( Storage.getBookShelf() );
         commentTextArea.setCompleter( new QCompleter( dictionary.getCompletionList() ) );
 

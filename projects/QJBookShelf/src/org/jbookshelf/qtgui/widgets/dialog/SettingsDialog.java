@@ -18,7 +18,7 @@ package org.jbookshelf.qtgui.widgets.dialog;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.FilePathEdit;
@@ -46,7 +46,7 @@ public class SettingsDialog
     implements
         PropertyChangeListener
 {
-    private final Settings     settings       = Singletons.instance( Settings.class );
+    private final Settings     settings       = Single.instance( Settings.class );
 
     private final QPushButton  cancelButton   = new QPushButton( this );
     private final QPushButton  okButton       = new QPushButton( this );
@@ -117,7 +117,7 @@ public class SettingsDialog
 
         final QRect geometry = geometry();
         geometry.setWidth( 770 );
-        geometry.moveCenter( Singletons.instance( MainWindow.class ).geometry().center() );
+        geometry.moveCenter( Single.instance( MainWindow.class ).geometry().center() );
         setGeometry( geometry );
 
         final QGridLayout layout = new QGridLayout();

@@ -15,7 +15,7 @@
  */
 package org.jbookshelf.qtgui.widgets.completion;
 
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.qtgui.ToolBar;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
@@ -69,7 +69,7 @@ public class CompletableTextEdit
 
     public void retranslate()
     {
-        googleAction.setText( Singletons.instance( ToolBar.class ).getGoogleAction().text() );
+        googleAction.setText( Single.instance( ToolBar.class ).getGoogleAction().text() );
     }
 
     public void setCompleter(
