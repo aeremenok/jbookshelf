@@ -18,7 +18,7 @@ package org.jbookshelf.qtgui.reader;
 
 import java.util.Date;
 
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.Citation;
 import org.jbookshelf.model.ModelFactory;
@@ -93,7 +93,7 @@ public class TextBrowser
 
     public void retranslate()
     {
-        googleAction.setText( Singletons.instance( ToolBar.class ).getGoogleAction().text() );
+        googleAction.setText( Single.instance( ToolBar.class ).getGoogleAction().text() );
     }
 
     public void savePosition()

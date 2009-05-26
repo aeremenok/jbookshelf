@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import org.jbookshelf.controller.importer.FileImporter;
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.i18n.I18N;
 import org.jbookshelf.model.Author;
@@ -273,7 +273,7 @@ public class BookPanel
 
         // todo better completion
         final BookShelf bookShelf = Storage.getBookShelf();
-        final CompletionDictionary dictionary = Singletons.instance( CompletionDictionary.class );
+        final CompletionDictionary dictionary = Single.instance( CompletionDictionary.class );
         Builder.addCompletion( bookTextField, new DefaultCompletionModel( dictionary.getCompletionArray() ) );
 
         AutoCompleteDecorator.decorate( authorField, bookShelf.getAuthors(), false, CONVERTER );
@@ -283,7 +283,7 @@ public class BookPanel
     protected void onFileSelected(
         final File file )
     {
-        final String mask = Singletons.instance( Settings.class ).IMPORT_MASK.getValue();
+        final String mask = Single.instance( Settings.class ).IMPORT_MASK.getValue();
         final String[] masks = mask.split( "/" );
         fileImporter.importFiles( masks, Storage.getBookShelf(), file );
     }

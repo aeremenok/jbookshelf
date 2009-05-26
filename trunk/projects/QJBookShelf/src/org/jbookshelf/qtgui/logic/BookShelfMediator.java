@@ -5,13 +5,10 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.jbookshelf.controller.singleton.Singleton;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Unique;
 
 public class BookShelfMediator
-    implements
-        Singleton
 {
     private final List<UniqueSelectionListener> listeners       = new ArrayList<UniqueSelectionListener>();
     private List<Unique>                        selectedUniques = new ArrayList<Unique>();
@@ -42,10 +39,6 @@ public class BookShelfMediator
     public List<Unique> getSelectedUniques()
     {
         return selectedUniques;
-    }
-
-    public void initSingleton()
-    {
     }
 
     public void removeUniqueSelectionListener(

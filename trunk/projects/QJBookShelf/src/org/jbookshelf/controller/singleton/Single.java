@@ -20,21 +20,20 @@ package org.jbookshelf.controller.singleton;
  * 
  * @author eav
  */
-public abstract class Singletons
+public abstract class Single
 {
     private static final SingletonContainer container = new SingletonContainer();
 
-    public static <T extends Singleton> T instance(
+    public static <T> T instance(
         final Class<T> clazz )
     {
         return container.instance( clazz );
     }
 
-    public static <B extends Singleton, D extends B> void setImplementation(
-        final Class<B> abstractClass,
-        final Class<D> concreteClass )
+    public static <B, D extends B> void setImplementation(
+        final Class<B> basicClass,
+        final Class<D> derivedClass )
     {
-        container.setImplementation( abstractClass, concreteClass );
+        container.setImplementation( basicClass, derivedClass );
     }
-
 }

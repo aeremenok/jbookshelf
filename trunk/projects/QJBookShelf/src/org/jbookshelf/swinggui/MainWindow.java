@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.annotation.PostConstruct;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,8 +19,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.jbookshelf.controller.singleton.Singleton;
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.qtgui.logic.JBookShelfConstants;
@@ -34,9 +34,8 @@ import com.trolltech.qt.gui.QApplication;
 public class MainWindow
     extends JFrame
     implements
-        Singleton,
-        JBookShelfConstants,
-        PropertyChangeListener
+    JBookShelfConstants,
+    PropertyChangeListener
 {
     public static final String APP_NAME = "JBookShelf";
     public static final String VERSION  = "0.5b0";
@@ -53,11 +52,12 @@ public class MainWindow
                 QCoreApplication.setApplicationVersion( VERSION );
                 QCoreApplication.setApplicationName( APP_NAME );
 
-                Singletons.instance( MainWindow.class ).setVisible( true );
+                Single.instance( MainWindow.class ).setVisible( true );
             }
         } );
     }
 
+    @PostConstruct
     public void initSingleton()
     {
         initCollection();
@@ -87,7 +87,7 @@ public class MainWindow
     private void initCollection()
     {
         final SingleFileStorageImpl singleFileStorageImpl = (SingleFileStorageImpl) Storage.getImpl();
-        singleFileStorageImpl.setCollectionStorageFile( Singletons.instance( Settings.class ).getCollectionFile() );
+        singleFileStorageImpl.setCollectionStorageFile( Single.instance( Settings.class ).getCollectionFile() );
         Storage.loadCollection();
     }
 
@@ -98,12 +98,12 @@ public class MainWindow
         setDefaultCloseOperation( EXIT_ON_CLOSE );
 
         setContentPane( new JPanel( new BorderLayout() ) );
-        add( Singletons.instance( ToolBar.class ), BorderLayout.NORTH );
+        add( Single.instance( ToolBar.class ), BorderLayout.NORTH );
 
         final JSplitPane split = new JSplitPane();
         add( split, BorderLayout.CENTER );
         split.setOneTouchExpandable( true );
-        split.setLeftComponent( Singletons.instance( CollectionPanel.class ) );
+        split.setLeftComponent( Single.instance( CollectionPanel.class ) );
         split.setRightComponent( new JLabel( "777" ) );
 
         addWindowListener( new WindowAdapter()
@@ -125,7 +125,7 @@ public class MainWindow
         try
         {
             Storage.saveCollection();
-            Singletons.instance( CompletionDictionary.class ).save();
+            Single.instance( CompletionDictionary.class ).save();
         }
         catch ( final Throwable e1 )
         { // todo catch uncaught exceptions

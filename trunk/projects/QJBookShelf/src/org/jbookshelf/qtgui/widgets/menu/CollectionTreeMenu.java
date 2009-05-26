@@ -17,7 +17,7 @@ package org.jbookshelf.qtgui.widgets.menu;
 
 import java.util.List;
 
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
@@ -77,12 +77,12 @@ public class CollectionTreeMenu
         {
             String text = unique.getName();
             final String message = tr( "Enter new name" );
-            final MainWindow window = Singletons.instance( MainWindow.class );
+            final MainWindow window = Single.instance( MainWindow.class );
             text = QInputDialog.getText( window, text(), message, EchoMode.Normal, text );
             if ( text != null )
             {
                 unique.setName( text );
-                Singletons.instance( CollectionPanel.class ).updateTree();
+                Single.instance( CollectionPanel.class ).updateTree();
             }
         }
     }
@@ -172,14 +172,14 @@ public class CollectionTreeMenu
         {
             category.setParent( null );
             Storage.getBookShelf().getCategories().add( category );
-            Singletons.instance( CollectionPanel.class ).updateTree();
+            Single.instance( CollectionPanel.class ).updateTree();
         }
     }
 
     public CollectionTreeMenu(
         final List<Unique> uniques )
     {
-        final ToolBar toolBar = Singletons.instance( ToolBar.class );
+        final ToolBar toolBar = Single.instance( ToolBar.class );
         if ( uniques.size() == 1 && RenameAction.accept( uniques.get( 0 ) ) )
         { // single author or category selected
             addAction( new RenameAction( this, uniques.get( 0 ) ) );

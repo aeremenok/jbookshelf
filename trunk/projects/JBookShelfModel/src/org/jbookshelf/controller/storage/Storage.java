@@ -17,11 +17,10 @@ package org.jbookshelf.controller.storage;
 
 import java.io.File;
 
-import org.jbookshelf.controller.singleton.Singleton;
 import org.jbookshelf.model.BookShelf;
 
 /**
- * storage facade, hides physical storage todo make {@link Singleton}
+ * storage facade, hides physical storage
  * 
  * @author eav
  */

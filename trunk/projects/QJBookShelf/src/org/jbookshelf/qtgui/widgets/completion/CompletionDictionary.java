@@ -23,8 +23,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import org.jbookshelf.controller.singleton.Singleton;
-import org.jbookshelf.controller.singleton.Singletons;
+import javax.annotation.PostConstruct;
+
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
@@ -34,8 +35,7 @@ import org.jbookshelf.settings.Settings;
 
 public class CompletionDictionary
     implements
-        JBookShelfConstants,
-        Singleton
+    JBookShelfConstants
 {
     private static final String FILENAME    = "dictionary";
     private final Properties    completions = new Properties();
@@ -89,6 +89,7 @@ public class CompletionDictionary
         return list;
     }
 
+    @PostConstruct
     public void initSingleton()
     {
         final File file = new File( getFileName() );
@@ -135,7 +136,7 @@ public class CompletionDictionary
 
     private String getFileName()
     {
-        final String dir = Singletons.instance( Settings.class ).JBS_DIR.getValue();
+        final String dir = Single.instance( Settings.class ).JBS_DIR.getValue();
         return dir + "/" + FILENAME;
     }
 }

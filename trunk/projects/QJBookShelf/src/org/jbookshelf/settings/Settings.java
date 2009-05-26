@@ -18,11 +18,11 @@ package org.jbookshelf.settings;
 import java.io.File;
 import java.io.IOException;
 
+import javax.annotation.PostConstruct;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 
-import org.jbookshelf.controller.singleton.Singleton;
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.i18n.I18N;
 import org.jbookshelf.swinggui.MainWindow;
 import org.xnap.commons.settings.PropertyResource;
@@ -37,8 +37,6 @@ import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
  */
 public class Settings
     extends PropertyResource
-    implements
-        Singleton
 {
     public StringSetting LANGUAGE;
     public StringSetting LAF;
@@ -50,13 +48,14 @@ public class Settings
         return new File( JBS_DIR.getValue() + File.separator + "collection.xml" );
     }
 
+    @PostConstruct
     public void initSingleton()
     {
         initDefaults();
         initFile();
 
         addPropertyChangeListener( LANGUAGE.getKey(), I18N.LANGUAGE_LISTENER );
-        addPropertyChangeListener( LAF.getKey(), Singletons.instance( MainWindow.class ) );
+        addPropertyChangeListener( LAF.getKey(), Single.instance( MainWindow.class ) );
 
         firePropertyChange( LANGUAGE.getKey(), "", LANGUAGE.getValue() );
         firePropertyChange( LAF.getKey(), "", LAF.getValue() );

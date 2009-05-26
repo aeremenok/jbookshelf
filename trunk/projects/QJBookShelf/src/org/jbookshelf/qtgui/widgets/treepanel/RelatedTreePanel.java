@@ -18,7 +18,9 @@ package org.jbookshelf.qtgui.widgets.treepanel;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbookshelf.controller.singleton.Singletons;
+import javax.annotation.PostConstruct;
+
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
@@ -39,6 +41,7 @@ public class RelatedTreePanel
 {
     private Unique selectedUnique;
 
+    @PostConstruct
     public void initSingleton()
     {
         initComponents();
@@ -49,7 +52,7 @@ public class RelatedTreePanel
     public void onAdd()
     {
         QMessageBox.information( this, tr( "Info" ), tr( "Double click on related item in the collection tree" ) );
-        Singletons.instance( CollectionPanel.class ).selectRelatedUnique( this, selectedUnique );
+        Single.instance( CollectionPanel.class ).selectRelatedUnique( this, selectedUnique );
     }
 
     @Override
@@ -68,7 +71,7 @@ public class RelatedTreePanel
         }
         else
         {
-            Singletons.instance( RelatedPanel.class ).nothingSelected();
+            Single.instance( RelatedPanel.class ).nothingSelected();
         }
     }
 
@@ -82,8 +85,8 @@ public class RelatedTreePanel
         root.addChild( new UniqueNode( relatedUnique ) );
         searchableTree.setCurrentItem( root.child( root.childCount() - 1 ) );
 
-        QMessageBox.information( this, tr( "Linked" ), relatedUnique.getName() + " " + tr( "now relates to" ) + " " +
-            unique.getName() );
+        QMessageBox.information( this, tr( "Linked" ), relatedUnique.getName() + " " + tr( "now relates to" ) + " "
+            + unique.getName() );
         selectedUnique( selectedUnique );
     }
 
@@ -123,7 +126,7 @@ public class RelatedTreePanel
         else
         {
             cleanRoot();
-            Singletons.instance( RelatedPanel.class ).nothingSelected();
+            Single.instance( RelatedPanel.class ).nothingSelected();
         }
     }
 
@@ -154,8 +157,8 @@ public class RelatedTreePanel
 
     private void initListeners()
     {
-        searchableTree.activated.connect( Singletons.instance( RelatedPanel.class ), "itemSelected()" );
-        searchableTree.itemSelectionChanged.connect( Singletons.instance( RelatedPanel.class ), "itemSelected()" );
+        searchableTree.activated.connect( Single.instance( RelatedPanel.class ), "itemSelected()" );
+        searchableTree.itemSelectionChanged.connect( Single.instance( RelatedPanel.class ), "itemSelected()" );
         searchableTree.doubleClicked.connect( this, "navigate(QModelIndex)" );
     }
 
@@ -167,7 +170,7 @@ public class RelatedTreePanel
         if ( selectedItems.size() > 0 && selectedItems.get( 0 ) instanceof UniqueNode )
         {
             final UniqueNode node = (UniqueNode) selectedItems.get( 0 );
-            Singletons.instance( CollectionPanel.class ).selectUnique( node.getUnique() );
+            Single.instance( CollectionPanel.class ).selectUnique( node.getUnique() );
         }
     }
 

@@ -20,8 +20,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import org.jbookshelf.controller.singleton.Singleton;
-import org.jbookshelf.controller.singleton.Singletons;
+import javax.annotation.PostConstruct;
+
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
@@ -53,8 +54,7 @@ import com.trolltech.qt.gui.QTreeWidgetItem;
 public class CollectionPanel
     extends QWidgetExt
     implements
-        JBookShelfConstants,
-        Singleton
+    JBookShelfConstants
 {
     private final QPushButton cleanButton     = new QPushButton( this );
     private final QPushButton searchButton    = new QPushButton( this );
@@ -63,6 +63,7 @@ public class CollectionPanel
     private final QLineEdit   searchTextField = new SearchTextField( this );
     private final QTabWidget  viewTabbedPane  = new QTabWidget( this );
 
+    @PostConstruct
     public void initSingleton()
     {
         initComponents();
@@ -133,7 +134,9 @@ public class CollectionPanel
     public void selectUnique(
         final Unique unique )
     {
-        final int i = unique instanceof Book ? 0 : unique instanceof Author ? 1 : 2;
+        final int i = unique instanceof Book
+            ? 0 : unique instanceof Author
+                ? 1 : 2;
         viewTabbedPane.setCurrentIndex( i );
         getActiveTree().selectUnique( unique );
     }
@@ -174,9 +177,9 @@ public class CollectionPanel
 
         layout.addWidget( viewTabbedPane, 1, 0, 1, 4 );
 
-        viewTabbedPane.addTab( Singletons.instance( BookTree.class ), "" );
-        viewTabbedPane.addTab( Singletons.instance( AuthorTree.class ), "" );
-        viewTabbedPane.addTab( Singletons.instance( CategoryTree.class ), "" );
+        viewTabbedPane.addTab( Single.instance( BookTree.class ), "" );
+        viewTabbedPane.addTab( Single.instance( AuthorTree.class ), "" );
+        viewTabbedPane.addTab( Single.instance( CategoryTree.class ), "" );
 
         updateTree();
     }

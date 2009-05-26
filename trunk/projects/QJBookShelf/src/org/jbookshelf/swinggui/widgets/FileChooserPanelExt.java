@@ -7,7 +7,7 @@ import java.io.File;
 import javax.swing.Action;
 import javax.swing.JFileChooser;
 
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.settings.Settings;
 import org.xnap.commons.gui.FileChooserPanel;
 
@@ -39,7 +39,7 @@ public class FileChooserPanelExt
         final File file )
     {
         super.fileSelected( file );
-        Singletons.instance( Settings.class ).put( getKey(), getTextField().getText() );
+        Single.instance( Settings.class ).put( getKey(), getTextField().getText() );
     }
 
     @Override

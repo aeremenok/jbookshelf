@@ -6,12 +6,12 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
-import org.jbookshelf.controller.singleton.Singleton;
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.i18n.I18N;
 import org.jbookshelf.qtgui.logic.Translatable;
 import org.jbookshelf.qtgui.logic.Translator;
@@ -25,8 +25,7 @@ import org.jbookshelf.swinggui.widgets.dialog.SettingsDialog;
 public class ToolBar
     extends JToolBar
     implements
-        Singleton,
-        Translatable
+    Translatable
 {
     private class AboutAction
         extends TranslatableAction
@@ -40,7 +39,7 @@ public class ToolBar
         public void actionPerformed(
             final ActionEvent e )
         {
-            new JBSAboutDialog( Singletons.instance( MainWindow.class ) ).setVisible( true );
+            new JBSAboutDialog( Single.instance( MainWindow.class ) ).setVisible( true );
         }
     }
 
@@ -55,7 +54,7 @@ public class ToolBar
         public void actionPerformed(
             final ActionEvent e )
         {
-            new BookAdditionDialog( Singletons.instance( MainWindow.class ) ).setVisible( true );
+            new BookAdditionDialog( Single.instance( MainWindow.class ) ).setVisible( true );
         }
     }
 
@@ -70,7 +69,7 @@ public class ToolBar
         public void actionPerformed(
             final ActionEvent e )
         {
-            new SettingsDialog( Singletons.instance( MainWindow.class ) ).setVisible( true );
+            new SettingsDialog( Single.instance( MainWindow.class ) ).setVisible( true );
         }
     }
 
@@ -94,11 +93,12 @@ public class ToolBar
         return add;
     }
 
+    @PostConstruct
     public void initSingleton()
     {
         Translator.addTranslatable( this );
 
-        final UniqueActions uniqueActions = Singletons.instance( UniqueActions.class );
+        final UniqueActions uniqueActions = Single.instance( UniqueActions.class );
         add( addAction );
         add( uniqueActions.removeAction );
         add( uniqueActions.editAction );
@@ -107,7 +107,7 @@ public class ToolBar
         add( uniqueActions.openDirAction );
         add( uniqueActions.googleAction );
         addSeparator();
-        final BookShelfActions collectionActions = Singletons.instance( BookShelfActions.class );
+        final BookShelfActions collectionActions = Single.instance( BookShelfActions.class );
         add( collectionActions.importAction );
         add( collectionActions.backupAction );
         add( collectionActions.restoreAction );

@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.border.TitledBorder;
 
 import org.jbookshelf.controller.importer.FileImporter;
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.i18n.I18N;
 import org.jbookshelf.model.Book;
@@ -42,7 +42,7 @@ public class BookAdditionDialog
         final Book book = Storage.getBookShelf().addBook( parameters.getBookName(), null, null, physicalUnit );
         BookPanel.changeBook( book, parameters );
 
-        Singletons.instance( CollectionPanel.class ).updateTree();
+        Single.instance( CollectionPanel.class ).updateTree();
     }
 
     @Override

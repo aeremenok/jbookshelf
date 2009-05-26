@@ -5,6 +5,7 @@ import images.IMG;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
+import javax.annotation.PostConstruct;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,8 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.jbookshelf.controller.singleton.Singleton;
-import org.jbookshelf.controller.singleton.Singletons;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.i18n.I18N;
 import org.jbookshelf.qtgui.logic.Translatable;
@@ -30,9 +30,8 @@ import org.jbookshelf.swinggui.widgets.tree.CollectionTree;
 public class CollectionPanel
     extends JPanel
     implements
-        Singleton,
-        Translatable,
-        ChangeListener
+    Translatable,
+    ChangeListener
 {
     private class ClearAction
         extends TranslatableAction
@@ -98,6 +97,7 @@ public class CollectionPanel
 
     private CollectionTree[]   trees;
 
+    @PostConstruct
     public void initSingleton()
     {
         initComponents();
@@ -157,10 +157,11 @@ public class CollectionPanel
         add( searchBox, BorderLayout.NORTH );
         add( viewTabbedPane, BorderLayout.CENTER );
 
-        final BookTree bookTree = Singletons.instance( BookTree.class );
-        final AuthorTree authorTree = Singletons.instance( AuthorTree.class );
-        final CategoryTree categoryTree = Singletons.instance( CategoryTree.class );
-        trees = new CollectionTree[] { bookTree, authorTree, categoryTree };
+        final BookTree bookTree = Single.instance( BookTree.class );
+        final AuthorTree authorTree = Single.instance( AuthorTree.class );
+        final CategoryTree categoryTree = Single.instance( CategoryTree.class );
+        trees = new CollectionTree[]
+        { bookTree, authorTree, categoryTree };
         for ( final CollectionTree tree : trees )
         {
             viewTabbedPane.add( new JScrollPane( tree ) );
