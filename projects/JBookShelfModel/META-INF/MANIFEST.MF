@@ -7,13 +7,7 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: net.sf.jazzlib,
- org.apache.commons.logging,
- org.apache.commons.logging.impl,
- org.jbookshelf.controller.importer,
- org.jbookshelf.controller.storage,
- org.jbookshelf.controller.util,
- org.jbookshelf.model;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util",
+Export-Package: org.jbookshelf.model;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util",
  org.jbookshelf.model.impl;
   uses:="org.eclipse.emf.ecore,
    org.eclipse.emf.common.util,
@@ -24,13 +18,7 @@ Export-Package: net.sf.jazzlib,
   uses:="org.eclipse.emf.ecore,
    org.eclipse.emf.common.notify.impl,
    org.eclipse.emf.common.notify,
-   org.jbookshelf.model",
- org.mozilla.universalchardet,
- org.mozilla.universalchardet.prober,
- org.mozilla.universalchardet.prober.contextanalysis,
- org.mozilla.universalchardet.prober.distributionanalysis,
- org.mozilla.universalchardet.prober.sequence,
- org.mozilla.universalchardet.prober.statemachine
+   org.jbookshelf.model"
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;bundle-version="2.4.1"

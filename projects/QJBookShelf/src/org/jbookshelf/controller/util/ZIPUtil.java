@@ -20,11 +20,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.charset.Charset;
 
-import org.jbookshelf.controller.importer.FileImporter;
-
 import net.sf.jazzlib.ZipEntry;
 import net.sf.jazzlib.ZipInputStream;
 import net.sf.jazzlib.ZipInputStreamEncoded;
+
+import org.jbookshelf.controller.importer.FileImporter;
 
 /**
  * handles zip-files

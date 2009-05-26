@@ -36,7 +36,7 @@ import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QWidget;
 
 /**
- * gets book data from {@link BookPanel} and creates a new {@link ReadingUnit}
+ * gets book data from {@link BookPanel} and creates a new {@link Book}
  * 
  * @author eav
  */

@@ -31,7 +31,7 @@ import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QWidget;
 
 /**
- * Shows book data of existing {@link ReadingUnit} in the {@link BookPanel}. Then updates a {@link ReadingUnit} from the
+ * Shows book data of existing {@link Book} in the {@link BookPanel}. Then updates a {@link Book} from the
  * {@link BookPanel}
  * 
  * @author eav

@@ -28,7 +28,7 @@ import org.jbookshelf.model.Unique;
 import com.trolltech.qt.gui.QTreeWidgetItem;
 
 /**
- * Displays {@link ReadingUnit}
+ * Displays {@link Book}
  * 
  * @author eav
  */
