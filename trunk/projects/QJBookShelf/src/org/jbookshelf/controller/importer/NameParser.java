@@ -19,13 +19,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jbookshelf.model.Author;
+import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Category;
 
 /**
  * pasres strings, described as wildcards, where<br>
  * <br>
  * %a - name of {@link Author} <br>
- * %b - name of {@link ReadingUnit} <br>
+ * %b - name of {@link Book} <br>
  * %c - name of {@link Category} <br>
  * todo treat filenames more softly, now any mismatch to wildcard causes an error<br>
  * todo optimize parsing
@@ -41,7 +42,7 @@ public class NameParser
     private final String                 pattern;
 
     public NameParser(
-        String pattern )
+        final String pattern )
     {
         this.pattern = pattern;
         // prepare delimiters
@@ -72,10 +73,11 @@ public class NameParser
      * extract values from name and put them into map
      * 
      * @param name matches pattern, specified in constructor
+     * @throws Exception cannot parse the name
      */
     @SuppressWarnings( "unused" )
     public void parse(
-        String name )
+        final String name )
         throws Exception
     {
         // cut delimiters at edges
@@ -83,8 +85,8 @@ public class NameParser
 
         for ( int i = 1; i < delims.length - 1; i++ )
         {
-            String delim = delims[i].substring( 1 );
-            String[] split = split( right, delim );
+            final String delim = delims[i].substring( 1 );
+            final String[] split = split( right, delim );
             // left is a wildcard value
             values.put( delims[i].charAt( 0 ), split[0] );
             right = split[1];
@@ -101,11 +103,12 @@ public class NameParser
      * @return array from string's left and right
      */
     private String[] split(
-        String string,
-        String delim )
+        final String string,
+        final String delim )
     {
-        String left = string.substring( 0, string.indexOf( delim ) );
-        String right = string.substring( string.indexOf( delim ) + delim.length() );
-        return new String[] { left, right };
+        final String left = string.substring( 0, string.indexOf( delim ) );
+        final String right = string.substring( string.indexOf( delim ) + delim.length() );
+        return new String[]
+        { left, right };
     }
 }

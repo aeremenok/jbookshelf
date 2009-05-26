@@ -44,8 +44,8 @@ public class URIUtil
     }
 
     /**
-     * @param url <b>must start with protocol under KDE</b> {@link http
-     *            ://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6486393}
+     * @param url <b>must start with protocol under KDE</b>
+     *            {@link "http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6486393"}
      * @deprecated use {@link URIUtil#browseFile(File)} or {@link URIUtil#browseHTTP(String)}
      */
     @Deprecated
@@ -94,7 +94,7 @@ public class URIUtil
     /**
      * search text in google
      * 
-     * @param text to search
+     * @param query text to search
      */
     public static void google(
         final String query )

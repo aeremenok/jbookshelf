@@ -38,15 +38,15 @@ import com.trolltech.qt.gui.QTextEdit;
 import com.trolltech.qt.gui.QCompleter.CompletionMode;
 
 /**
- * ported from this {@link http://doc.trolltech.com/4.2/tools-customcompleter.html}
+ * ported from this {@link "http://doc.trolltech.com/4.2/tools-customcompleter.html"}
  * 
  * @author eav
  */
 public class CompletableTextEdit
     extends QTextEdit
     implements
-        JBookShelfConstants,
-        Translatable
+    JBookShelfConstants,
+    Translatable
 {
     private QCompleter    c;
 
@@ -136,8 +136,8 @@ public class CompletableTextEdit
         {
             // The following keys are forwarded by the completer to the widget
             final Key key = Qt.Key.resolve( e.key() );
-            if ( key.equals( Qt.Key.Key_Enter ) || key.equals( Qt.Key.Key_Return ) || key.equals( Qt.Key.Key_Escape ) ||
-                key.equals( Qt.Key.Key_Tab ) || key.equals( Qt.Key.Key_Backtab ) )
+            if ( key.equals( Qt.Key.Key_Enter ) || key.equals( Qt.Key.Key_Return ) || key.equals( Qt.Key.Key_Escape )
+                || key.equals( Qt.Key.Key_Tab ) || key.equals( Qt.Key.Key_Backtab ) )
             {
                 e.ignore();
                 return; // let the completer do default behavior
@@ -145,16 +145,15 @@ public class CompletableTextEdit
         }
 
         final KeyboardModifiers modifiers = e.modifiers();
-        final boolean isShortcut =
-            modifiers.isSet( Qt.KeyboardModifier.ControlModifier ) && e.key() == Qt.Key.Key_E.value(); // CTRL+E
+        final boolean isShortcut = modifiers.isSet( Qt.KeyboardModifier.ControlModifier )
+            && e.key() == Qt.Key.Key_E.value(); // CTRL+E
         if ( c == null || !isShortcut )
         {
             super.keyPressEvent( e );
         }
 
-        final boolean ctrlOrShift =
-            modifiers.isSet( Qt.KeyboardModifier.ControlModifier ) ||
-                modifiers.isSet( Qt.KeyboardModifier.ShiftModifier );
+        final boolean ctrlOrShift = modifiers.isSet( Qt.KeyboardModifier.ControlModifier )
+            || modifiers.isSet( Qt.KeyboardModifier.ShiftModifier );
         final String text = e.text();
         final boolean empty = text.isEmpty();
         if ( c == null || ctrlOrShift && empty )

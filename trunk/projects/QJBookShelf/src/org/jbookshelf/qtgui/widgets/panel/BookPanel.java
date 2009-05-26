@@ -42,7 +42,7 @@ import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QWidget;
 
 /**
- * Shows book data of {@link ReadingUnit}
+ * Shows book data of {@link Book}
  * 
  * @author eav
  */
@@ -111,51 +111,6 @@ public class BookPanel
         }
     }
 
-    private final QLabel        authorLabel       = new QLabel( this );
-    private final QLabel        categoryLabel     = new QLabel( this );
-    private final QLabel        fileLabel         = new QLabel( this );
-    private final QLabel        bookLabel         = new QLabel( this );
-    private final QLabel        viewerLabel       = new QLabel( this );
-
-    private final QLineEdit     bookTextField     = new QLineEdit( this );
-    private final QLineEdit     authorTextField   = new QLineEdit( this );
-    private final QLineEdit     categoryTextField = new QLineEdit( this );
-    private final QComboBox     viewerComboBox    = new QComboBox( this );
-
-    private final FileImporter  fileImporter      = new FileImporter()
-                                                  {
-                                                      @Override
-                                                      protected void onImportFailure(
-                                                          final File file,
-                                                          final Exception e )
-                                                      {
-                                                          // let user enters the data
-                                                      }
-
-                                                      @Override
-                                                      protected void onImportSuccess(
-                                                          final Book book )
-                                                      {
-                                                          setBook( book );
-                                                      }
-                                                  };
-
-    private final FilePathEdit  filePathEdit      = new FilePathEdit( this )
-                                                  {
-                                                      @Override
-                                                      protected void fileSelected(
-                                                          final String fileName )
-                                                      {
-                                                          super.fileSelected( fileName );
-                                                          // try to parse book data
-                                                          BookPanel.this.fileSelected( fileName );
-                                                      }
-                                                  };
-
-    private final QCheckBox     isReadCheckBox    = new QCheckBox( this );
-
-    private final List<QWidget> components        = new ArrayList<QWidget>();
-
     public static Book changeBook(
         final Book book,
         final Parameters parameters )
@@ -205,10 +160,57 @@ public class BookPanel
         physical.setViewer( parameters.getViewer() );
 
         book.setPhysical( physical );
-        book.setRead( parameters.isRead() ? 1 : 0 );
+        book.setRead( parameters.isRead()
+            ? 1 : 0 );
 
         return book;
     }
+
+    private final QLabel        authorLabel       = new QLabel( this );
+    private final QLabel        categoryLabel     = new QLabel( this );
+    private final QLabel        fileLabel         = new QLabel( this );
+    private final QLabel        bookLabel         = new QLabel( this );
+
+    private final QLabel        viewerLabel       = new QLabel( this );
+    private final QLineEdit     bookTextField     = new QLineEdit( this );
+    private final QLineEdit     authorTextField   = new QLineEdit( this );
+    private final QLineEdit     categoryTextField = new QLineEdit( this );
+
+    private final QComboBox     viewerComboBox    = new QComboBox( this );
+
+    private final FileImporter  fileImporter      = new FileImporter()
+                                                  {
+                                                      @Override
+                                                      protected void onImportFailure(
+                                                          final File file,
+                                                          final Exception e )
+                                                      {
+                                                      // let user enters the data
+                                                      }
+
+                                                      @Override
+                                                      protected void onImportSuccess(
+                                                          final Book book )
+                                                      {
+                                                          setBook( book );
+                                                      }
+                                                  };
+
+    private final FilePathEdit  filePathEdit      = new FilePathEdit( this )
+                                                  {
+                                                      @Override
+                                                      protected void fileSelected(
+                                                          final String fileName )
+                                                      {
+                                                          super.fileSelected( fileName );
+                                                          // try to parse book data
+                                                          BookPanel.this.fileSelected( fileName );
+                                                      }
+                                                  };
+
+    private final QCheckBox     isReadCheckBox    = new QCheckBox( this );
+
+    private final List<QWidget> components        = new ArrayList<QWidget>();
 
     public BookPanel(
         final QWidget parent )
@@ -279,8 +281,9 @@ public class BookPanel
         final boolean isRead = isReadCheckBox.isChecked();
 
         final int viewerIndex = viewerComboBox.currentIndex();
-        final String viewer =
-            viewerIndex == 0 ? null : viewerIndex == 1 ? PhysicalUnit.INTERNAL_VIEWER : PhysicalUnit.SYSTEM_VIEWER;
+        final String viewer = viewerIndex == 0
+            ? null : viewerIndex == 1
+                ? PhysicalUnit.INTERNAL_VIEWER : PhysicalUnit.SYSTEM_VIEWER;
         return new Parameters( bookName, authorNames.split( "," ), categoryNames.split( "," ), file, isRead, viewer );
     }
 
@@ -317,7 +320,9 @@ public class BookPanel
 
         // display viewer
         final String viewer = book.getPhysical().getViewer();
-        final int index = viewer == null ? 0 : PhysicalUnit.INTERNAL_VIEWER.equals( viewer ) ? 1 : 2;
+        final int index = viewer == null
+            ? 0 : PhysicalUnit.INTERNAL_VIEWER.equals( viewer )
+                ? 1 : 2;
         viewerComboBox.setCurrentIndex( index );
     }
 

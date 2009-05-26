@@ -71,8 +71,7 @@ public class MainWindow
         {
             UIManager.setLookAndFeel( LookAndFeelComboBoxModel.fromName( evt.getNewValue().toString() ) );
             SwingUtilities.updateComponentTreeUI( this );
-            final Window[] windows = getOwnedWindows();
-            for ( final Window window : windows )
+            for ( final Window window : getOwnedWindows() )
             {
                 SwingUtilities.updateComponentTreeUI( window );
                 window.pack();
