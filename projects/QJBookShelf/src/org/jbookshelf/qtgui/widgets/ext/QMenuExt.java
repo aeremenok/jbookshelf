@@ -14,7 +14,7 @@
  */
 package org.jbookshelf.qtgui.widgets.ext;
 
-import org.jbookshelf.qtgui.logic.Translator;
+import org.jbookshelf.view.logic.Translator;
 
 import com.trolltech.qt.gui.QMenu;
 import com.trolltech.qt.gui.QWidget;

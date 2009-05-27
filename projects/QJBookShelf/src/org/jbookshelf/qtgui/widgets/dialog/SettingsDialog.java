@@ -18,12 +18,12 @@ package org.jbookshelf.qtgui.widgets.dialog;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.qtgui.MainWindow;
-import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.FilePathEdit;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
-import org.jbookshelf.settings.Settings;
+import org.jbookshelf.view.logic.Translator;
 
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.gui.QComboBox;

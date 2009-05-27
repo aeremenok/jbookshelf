@@ -25,10 +25,10 @@ import org.jbookshelf.model.Category;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.MainWindow;
 import org.jbookshelf.qtgui.ToolBar;
-import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.ext.QActionExt;
 import org.jbookshelf.qtgui.widgets.ext.QMenuExt;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
+import org.jbookshelf.view.logic.JBookShelfConstants;
 
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.gui.QIcon;

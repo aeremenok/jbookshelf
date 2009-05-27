@@ -3,28 +3,30 @@
  */
 package org.jbookshelf.model.db;
 
-import org.hibernate.event.SaveOrUpdateEvent;
-import org.hibernate.event.def.DefaultSaveOrUpdateEventListener;
+import org.hibernate.HibernateException;
+import org.hibernate.event.PersistEvent;
+import org.hibernate.event.def.DefaultPersistEventListener;
 
 /**
  * @author eav
  */
 public class Timestamper
-    extends DefaultSaveOrUpdateEventListener
+    extends DefaultPersistEventListener
 {
     /* (non-Javadoc)
-     * @see org.hibernate.event.def.DefaultSaveOrUpdateEventListener#onSaveOrUpdate(org.hibernate.event.SaveOrUpdateEvent)
+     * @see org.hibernate.event.def.DefaultPersistEventListener#onPersist(org.hibernate.event.PersistEvent)
      */
     @Override
-    public void onSaveOrUpdate(
-        final SaveOrUpdateEvent arg0 )
+    public void onPersist(
+        final PersistEvent event )
+        throws HibernateException
     {
-        final Object entity = arg0.getObject();
+        // TODO Auto-generated method stub
+        final Object entity = event.getObject();
         if ( entity instanceof Timestampable )
         {
             ((Timestampable) entity).timestamp();
         }
-        super.onSaveOrUpdate( arg0 );
+        super.onPersist( event );
     }
-
 }

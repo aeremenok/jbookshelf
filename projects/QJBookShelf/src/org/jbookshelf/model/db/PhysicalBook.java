@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.model.db;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,6 +19,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * @author eav
@@ -76,6 +78,15 @@ public class PhysicalBook
     }
 
     /**
+     * @return
+     */
+    @Transient
+    public File getFile()
+    {
+        return new File( getFileName() );
+    }
+
+    /**
      * @return the fileName
      */
     public String getFileName()
@@ -108,6 +119,17 @@ public class PhysicalBook
         @Nonnull final String charsetName )
     {
         this.charsetName = charsetName;
+    }
+
+    /**
+     * @param file
+     */
+    @Transient
+    public void setFile(
+        final File file )
+    {
+        // todo extract relative path
+        setFileName( file.getAbsolutePath() );
     }
 
     /**

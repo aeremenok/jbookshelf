@@ -21,14 +21,14 @@ import javax.annotation.PostConstruct;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.Unique;
-import org.jbookshelf.qtgui.logic.JBookShelfConstants;
-import org.jbookshelf.qtgui.logic.Translator;
-import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
 import org.jbookshelf.qtgui.widgets.ext.SearchTextField;
 import org.jbookshelf.qtgui.widgets.treepanel.CommentTreePanel;
 import org.jbookshelf.qtgui.widgets.treepanel.RelatedTreePanel;
 import org.jbookshelf.qtgui.widgets.treepanel.SearchableTreePanel;
+import org.jbookshelf.view.logic.JBookShelfConstants;
+import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.logic.UniqueSelectionListener;
 
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QIcon;

@@ -3,11 +3,10 @@
  */
 package org.jbookshelf.model.db;
 
-import org.apache.log4j.PropertyConfigurator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.event.SaveOrUpdateEventListener;
+import org.hibernate.event.PersistEventListener;
 
 /**
  * @author eav
@@ -19,10 +18,8 @@ public class HibernateUtil
     {
         try
         {
-            PropertyConfigurator.configure( HibernateUtil.class.getResource( "log4j.properties" ) );
-
             final AnnotationConfiguration cfg = new AnnotationConfiguration();
-            cfg.getEventListeners().setSaveOrUpdateEventListeners( new SaveOrUpdateEventListener[]
+            cfg.getEventListeners().setPersistEventListeners( new PersistEventListener[]
             { new Timestamper() } );
             factory = cfg.configure().buildSessionFactory();
         }

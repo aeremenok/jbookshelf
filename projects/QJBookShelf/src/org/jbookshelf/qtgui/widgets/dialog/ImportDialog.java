@@ -20,17 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jbookshelf.controller.importer.FileImporter;
+import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.qtgui.MainWindow;
-import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.FilePathEdit;
 import org.jbookshelf.qtgui.widgets.ext.CyclicProgressBar;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.tree.CollectionTree;
-import org.jbookshelf.settings.Settings;
+import org.jbookshelf.view.logic.JBookShelfConstants;
 
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.gui.QCloseEvent;

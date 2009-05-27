@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jbookshelf.model.Unique;
-import org.jbookshelf.qtgui.logic.JBookShelfConstants;
+import org.jbookshelf.view.logic.JBookShelfConstants;
 
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.gui.QCompleter;

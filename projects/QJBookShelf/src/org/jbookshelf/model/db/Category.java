@@ -28,7 +28,9 @@ import javax.persistence.TemporalType;
 @Entity
 public class Category
     implements
-    Serializable
+    Serializable,
+    Timestampable,
+    Unique
 {
     @SuppressWarnings( "unused" )
     @Id

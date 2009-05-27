@@ -16,10 +16,10 @@
 package org.jbookshelf.qtgui.widgets.treepanel;
 
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
 import org.jbookshelf.qtgui.widgets.menu.RelatedTreeMenu;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
+import org.jbookshelf.view.logic.UniqueSelectionListener;
 
 import com.trolltech.qt.gui.QContextMenuEvent;
 import com.trolltech.qt.gui.QTreeWidget;

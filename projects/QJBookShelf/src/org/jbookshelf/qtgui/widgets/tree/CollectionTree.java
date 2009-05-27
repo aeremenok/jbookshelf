@@ -29,13 +29,13 @@ import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Category;
 import org.jbookshelf.model.Unique;
 import org.jbookshelf.qtgui.ToolBar;
-import org.jbookshelf.qtgui.logic.SourcesUniqueSelection;
-import org.jbookshelf.qtgui.logic.Translatable;
-import org.jbookshelf.qtgui.logic.Translator;
-import org.jbookshelf.qtgui.logic.UniqueSelectionListener;
 import org.jbookshelf.qtgui.widgets.menu.CollectionTreeMenu;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
+import org.jbookshelf.view.logic.SourcesUniqueSelection;
+import org.jbookshelf.view.logic.Translatable;
+import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.logic.UniqueSelectionListener;
 
 import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.gui.QContextMenuEvent;

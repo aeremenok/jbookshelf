@@ -1,6 +1,6 @@
 package org.jbookshelf.qtgui.widgets.ext;
 
-import org.jbookshelf.qtgui.logic.Translator;
+import org.jbookshelf.view.logic.Translator;
 
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QWidget;

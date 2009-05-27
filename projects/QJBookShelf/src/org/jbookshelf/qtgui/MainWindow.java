@@ -17,15 +17,15 @@ package org.jbookshelf.qtgui;
 
 import javax.annotation.PostConstruct;
 
+import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.storage.SingleFileStorageImpl;
 import org.jbookshelf.controller.storage.Storage;
-import org.jbookshelf.qtgui.logic.JBookShelfConstants;
-import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.completion.CompletionDictionary;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
-import org.jbookshelf.settings.Settings;
+import org.jbookshelf.view.logic.JBookShelfConstants;
+import org.jbookshelf.view.logic.Translator;
 
 import com.trolltech.qt.core.QCoreApplication;
 import com.trolltech.qt.core.Qt.WindowState;

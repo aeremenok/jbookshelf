@@ -18,9 +18,9 @@ package org.jbookshelf.qtgui.widgets.completion;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.qtgui.ToolBar;
-import org.jbookshelf.qtgui.logic.JBookShelfConstants;
-import org.jbookshelf.qtgui.logic.Translatable;
-import org.jbookshelf.qtgui.logic.Translator;
+import org.jbookshelf.view.logic.JBookShelfConstants;
+import org.jbookshelf.view.logic.Translatable;
+import org.jbookshelf.view.logic.Translator;
 
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.core.Qt;
