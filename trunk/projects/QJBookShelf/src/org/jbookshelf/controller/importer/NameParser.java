@@ -18,9 +18,9 @@ package org.jbookshelf.controller.importer;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jbookshelf.model.Author;
-import org.jbookshelf.model.Book;
-import org.jbookshelf.model.Category;
+import org.jbookshelf.model.db.Author;
+import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.Category;
 
 /**
  * pasres strings, described as wildcards, where<br>

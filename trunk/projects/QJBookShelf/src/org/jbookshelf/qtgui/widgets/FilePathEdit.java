@@ -15,10 +15,10 @@
  */
 package org.jbookshelf.qtgui.widgets;
 
+import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.ext.QFileDialogExt;
-import org.jbookshelf.settings.Settings;
+import org.jbookshelf.view.logic.JBookShelfConstants;
 
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;

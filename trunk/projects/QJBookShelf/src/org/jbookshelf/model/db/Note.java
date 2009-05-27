@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.model.db;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.annotation.Nonnegative;
@@ -24,6 +25,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 public class Note
+    implements
+    Serializable,
+    Timestampable
 {
     @SuppressWarnings( "unused" )
     @Id

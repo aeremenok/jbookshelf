@@ -21,16 +21,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jbookshelf.model.ArchiveFile;
-import org.jbookshelf.model.Author;
-import org.jbookshelf.model.Book;
-import org.jbookshelf.model.BookShelf;
-import org.jbookshelf.model.Category;
-import org.jbookshelf.model.ModelFactory;
-import org.jbookshelf.model.PhysicalUnit;
+import org.hibernate.Session;
+import org.jbookshelf.model.db.Author;
+import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.Category;
+import org.jbookshelf.model.db.HibernateUtil;
+import org.jbookshelf.model.db.PhysicalBook;
 
 /**
- * imports filesystem into {@link BookShelf}
+ * imports filesystem into database
  * 
  * @author eav
  */
@@ -38,15 +37,16 @@ public class FileImporter
 {
     private static class ExtensionDenyingFilter
         implements
-            FileFilter
+        FileFilter
     {
-        String[] extensions = { "gif", "png", "bmp", "jpg", "jpeg", "js", "css", "ini", "db" };
+        String[] extensions =
+                            { "gif", "png", "bmp", "jpg", "jpeg", "js", "css", "ini", "db" };
 
         public boolean accept(
-            File pathname )
+            final File pathname )
         {
-            String name = pathname.getAbsolutePath().toLowerCase();
-            for ( String ext : extensions )
+            final String name = pathname.getAbsolutePath().toLowerCase();
+            for ( final String ext : extensions )
             {
                 if ( name.endsWith( "." + ext ) )
                 {
@@ -59,22 +59,22 @@ public class FileImporter
 
     private static class HtmlFolderFileFilter
         implements
-            FileFilter
+        FileFilter
     {
         File mainFolder;
         File mainFile;
 
         public boolean accept(
-            File pathname )
+            final File pathname )
         {
-            String name = pathname.getName();
-            boolean b = pathname.isDirectory() && name.endsWith( "_files" );
+            final String name = pathname.getName();
+            final boolean b = pathname.isDirectory() && name.endsWith( "_files" );
             if ( b )
             {
                 mainFolder = pathname;
             }
-            else if ( pathname.isFile() &&
-                (name.endsWith( ".htm" ) || name.endsWith( ".html" ) || name.endsWith( ".shtml" )) )
+            else if ( pathname.isFile()
+                && (name.endsWith( ".htm" ) || name.endsWith( ".html" ) || name.endsWith( ".shtml" )) )
             {
                 mainFile = pathname;
             }
@@ -84,19 +84,18 @@ public class FileImporter
 
     public static final FileFilter UNSUPPORTED_EXT_FILTER = new ExtensionDenyingFilter();
 
-    public static PhysicalUnit createPhysicalUnit(
-        File file )
+    public static PhysicalBook createPhysicalUnit(
+        final File file )
     {
-        PhysicalUnit physicalUnit = ModelFactory.eINSTANCE.createPhysicalUnit();
+        final PhysicalBook physicalUnit = new PhysicalBook();
         if ( file.isDirectory() )
         {
-            physicalUnit.setDirectory( file );
-            File[] files = file.listFiles( new FileFilter()
+            final File[] files = file.listFiles( new FileFilter()
             {
                 public boolean accept(
-                    File pathname )
+                    final File pathname )
                 {
-                    String name = pathname.getName().toLowerCase();
+                    final String name = pathname.getName().toLowerCase();
                     return name.equals( "index.html" ) || name.equals( "index.htm" ) || name.equals( "index.shtml" );
                 }
             } );
@@ -107,7 +106,7 @@ public class FileImporter
                 return physicalUnit;
             }
 
-            File[] listFiles = file.listFiles();
+            final File[] listFiles = file.listFiles();
             if ( listFiles.length == 1 && listFiles[0].isFile() &&
             // zip file will be imported later
                 !listFiles[0].getName().toLowerCase().endsWith( ".zip" ) )
@@ -116,7 +115,7 @@ public class FileImporter
                 return physicalUnit;
             }
 
-            File mainFile = getHtmlFile( file );
+            final File mainFile = getHtmlFile( file );
             if ( mainFile != null )
             { // file.html with file_files/
                 physicalUnit.setFile( mainFile );
@@ -129,60 +128,55 @@ public class FileImporter
         // zip file
         if ( file.getName().toLowerCase().endsWith( ".zip" ) )
         {
-            physicalUnit = ModelFactory.eINSTANCE.createArchiveFile();
-            physicalUnit.setDirectory( file.getParentFile() );
             physicalUnit.setFile( file );
             // will be unpacked later
-            ((ArchiveFile) physicalUnit).setArchiveFile( null );
             return physicalUnit;
         }
 
         // single file
-        physicalUnit.setDirectory( file.getParentFile() );
         physicalUnit.setFile( file );
         return physicalUnit;
     }
 
     public static String cutExtension(
-        File file )
+        final String fileName )
     {
-        if ( file.isDirectory() )
+        if ( new File( fileName ).isDirectory() )
         {
-            return file.getName();
+            return fileName;
         }
 
-        String name = file.getName();
-        int lastIndexOf = name.lastIndexOf( '.' );
-        if ( name.length() - lastIndexOf > 5 )
+        final int lastIndexOf = fileName.lastIndexOf( '.' );
+        if ( fileName.length() - lastIndexOf > 5 )
         { // it is probably a part of the name todo which files could have a longer extension?
-            return name;
+            return fileName;
         }
 
-        return name.substring( 0, lastIndexOf );
+        return fileName.substring( 0, lastIndexOf );
     }
 
     public static void main(
-        String[] args )
+        final String[] args )
     {
-        BookShelf bookShelf = ModelFactory.eINSTANCE.createBookShelf();
-        File root = new File( "/home/eav/doc" );
+        final File root = new File( "/home/eav/data/books/оип" );
         new FileImporter()
         {
             @Override
             protected void onImportFailure(
-                File file,
-                Exception e )
+                final File file,
+                final Exception e )
             {
                 System.out.println( "-cannot import file " + file.getAbsolutePath() + " cause: " + e.getMessage() );
             }
 
             @Override
             protected void onImportSuccess(
-                Book book )
+                final Book book )
             {
-                System.out.println( "+imported " + book.getAuthors().get( 0 ).getName() + ". " + book.getName() );
+                System.out.println( "+imported " + book.getName() );
             }
-        }.importFiles( new String[] { "%a. %b" }, bookShelf, root );
+        }.importFiles( new String[]
+        { "%a. %b" }, root );
     }
 
     /**
@@ -192,9 +186,9 @@ public class FileImporter
      * @return main file ("file") or null in case failure
      */
     private static File getHtmlFile(
-        File folder )
+        final File folder )
     {
-        HtmlFolderFileFilter filter = new HtmlFolderFileFilter();
+        final HtmlFolderFileFilter filter = new HtmlFolderFileFilter();
         folder.listFiles( filter );
         if ( filter.mainFolder != null && filter.mainFile != null )
         {
@@ -204,28 +198,27 @@ public class FileImporter
     }
 
     public void importFiles(
-        String[] patterns,
-        BookShelf bookShelf,
-        File... files )
+        final String[] patterns,
+        final File... files )
     {
-        List<NameParser> parsers = new ArrayList<NameParser>();
-        for ( String string : patterns )
+        final List<NameParser> parsers = new ArrayList<NameParser>();
+        for ( final String string : patterns )
         {
-            NameParser nameParser = new NameParser( string );
+            final NameParser nameParser = new NameParser( string );
             parsers.add( nameParser );
         }
 
-        for ( File file : files )
+        for ( final File file : files )
         {
-            PhysicalUnit physicalUnit = createPhysicalUnit( file );
+            final PhysicalBook physicalUnit = createPhysicalUnit( file );
             if ( physicalUnit != null )
             {
                 Book book = null;
-                Iterator<NameParser> iterator = parsers.iterator();
+                final Iterator<NameParser> iterator = parsers.iterator();
                 while ( iterator.hasNext() && book == null )
                 {
-                    NameParser parser = iterator.next();
-                    book = bookFromName( parser, physicalUnit, bookShelf );
+                    final NameParser parser = iterator.next();
+                    book = bookFromName( parser, physicalUnit );
                 }
 
                 if ( book != null )
@@ -240,7 +233,7 @@ public class FileImporter
             }
             else if ( file.isDirectory() )
             {
-                importFiles( patterns, bookShelf, file.listFiles( UNSUPPORTED_EXT_FILTER ) );
+                importFiles( patterns, file.listFiles( UNSUPPORTED_EXT_FILTER ) );
             }
             else
             {
@@ -251,34 +244,70 @@ public class FileImporter
     }
 
     private Book bookFromName(
-        NameParser parser,
-        PhysicalUnit physicalUnit,
-        BookShelf bookShelf )
+        final NameParser parser,
+        final PhysicalBook physicalUnit )
     {
+        final Session session = HibernateUtil.getSession();
         try
         {
-            parser.parse( cutExtension( physicalUnit.getFile() ) );
+            parser.parse( cutExtension( physicalUnit.getFileName() ) );
 
-            Author author = bookShelf.addAuthor( parser.getAuthorName() );
-            Category category = bookShelf.addCategory( parser.getCategoryName() );
-            return bookShelf.addReadingUnit( parser.getBookName(), author, category, physicalUnit );
+            session.beginTransaction();
+
+            final Book book = new Book();
+
+            final String authorName = parser.getAuthorName();
+            if ( authorName != null )
+            {
+                final Author author = new Author();
+                author.setName( authorName );
+                session.persist( author );
+
+                book.addAuthor( author );
+            }
+
+            final String categoryName = parser.getCategoryName();
+            if ( categoryName != null )
+            {
+                final Category category = new Category();
+
+                category.setName( categoryName );
+                session.persist( category );
+
+                book.addCategory( category );
+            }
+
+            book.setPhysicalBook( physicalUnit );
+            book.setName( parser.getBookName() );
+            session.persist( book );
+
+            session.persist( physicalUnit );
+
+            session.getTransaction().commit();
+
+            return book;
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
+            e.printStackTrace();
             return null;
+        }
+        finally
+        {
+            session.close();
         }
     }
 
     protected void onImportFailure(
-        @SuppressWarnings( "unused" ) File file,
-        @SuppressWarnings( "unused" ) Exception e )
+        @SuppressWarnings( "unused" ) final File file,
+        @SuppressWarnings( "unused" ) final Exception e )
     {
-        // override if needed
+    // override if needed
     }
 
     protected void onImportSuccess(
-        @SuppressWarnings( "unused" ) Book book )
+        @SuppressWarnings( "unused" ) final Book book )
     {
-        // override if needed
+    // override if needed
     }
 }

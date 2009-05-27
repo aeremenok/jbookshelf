@@ -27,8 +27,6 @@ import org.jbookshelf.controller.storage.Storage;
 import org.jbookshelf.model.Author;
 import org.jbookshelf.model.Book;
 import org.jbookshelf.model.Unique;
-import org.jbookshelf.qtgui.logic.JBookShelfConstants;
-import org.jbookshelf.qtgui.logic.Translator;
 import org.jbookshelf.qtgui.widgets.ext.QWidgetExt;
 import org.jbookshelf.qtgui.widgets.ext.SearchTextField;
 import org.jbookshelf.qtgui.widgets.tree.AuthorTree;
@@ -37,6 +35,8 @@ import org.jbookshelf.qtgui.widgets.tree.CategoryTree;
 import org.jbookshelf.qtgui.widgets.tree.CollectionTree;
 import org.jbookshelf.qtgui.widgets.tree.UniqueNode;
 import org.jbookshelf.qtgui.widgets.treepanel.RelatedTreePanel;
+import org.jbookshelf.view.logic.JBookShelfConstants;
+import org.jbookshelf.view.logic.Translator;
 
 import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QGridLayout;

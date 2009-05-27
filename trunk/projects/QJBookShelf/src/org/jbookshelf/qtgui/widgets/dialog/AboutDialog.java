@@ -15,8 +15,8 @@
  */
 package org.jbookshelf.qtgui.widgets.dialog;
 
-import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.ext.QDialogExt;
+import org.jbookshelf.view.logic.JBookShelfConstants;
 
 import com.trolltech.qt.core.QCoreApplication;
 import com.trolltech.qt.gui.QFont;

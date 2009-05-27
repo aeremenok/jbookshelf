@@ -27,11 +27,11 @@ import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
 import org.jbookshelf.model.ModelFactory;
 import org.jbookshelf.model.Unique;
-import org.jbookshelf.qtgui.logic.JBookShelfConstants;
 import org.jbookshelf.qtgui.widgets.completion.CompletableTextEdit;
 import org.jbookshelf.qtgui.widgets.completion.CompletionDictionary;
 import org.jbookshelf.qtgui.widgets.panel.CollectionPanel;
 import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
+import org.jbookshelf.view.logic.JBookShelfConstants;
 
 import com.trolltech.qt.gui.QCompleter;
 import com.trolltech.qt.gui.QGridLayout;

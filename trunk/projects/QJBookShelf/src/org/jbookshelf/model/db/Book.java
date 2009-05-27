@@ -28,7 +28,8 @@ import javax.persistence.TemporalType;
 public class Book
     implements
     Serializable,
-    Timestampable
+    Timestampable,
+    Unique
 {
     @SuppressWarnings( "unused" )
     @Id

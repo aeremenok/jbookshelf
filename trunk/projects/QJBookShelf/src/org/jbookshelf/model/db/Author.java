@@ -25,7 +25,9 @@ import javax.persistence.TemporalType;
 @Entity
 public class Author
     implements
-    Serializable
+    Serializable,
+    Timestampable,
+    Unique
 {
     @SuppressWarnings( "unused" )
     @Id

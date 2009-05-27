@@ -25,13 +25,13 @@ import java.util.StringTokenizer;
 
 import javax.annotation.PostConstruct;
 
+import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.BookShelf;
 import org.jbookshelf.model.Comment;
 import org.jbookshelf.model.Commentable;
 import org.jbookshelf.model.Unique;
-import org.jbookshelf.qtgui.logic.JBookShelfConstants;
-import org.jbookshelf.settings.Settings;
+import org.jbookshelf.view.logic.JBookShelfConstants;
 
 public class CompletionDictionary
     implements

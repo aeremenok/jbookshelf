@@ -15,8 +15,8 @@
  */
 package org.jbookshelf.qtgui.widgets.ext;
 
-import org.jbookshelf.qtgui.logic.Translatable;
-import org.jbookshelf.qtgui.logic.Translator;
+import org.jbookshelf.view.logic.Translatable;
+import org.jbookshelf.view.logic.Translator;
 
 import com.trolltech.qt.core.Qt.WindowFlags;
 import com.trolltech.qt.core.Qt.WindowType;
