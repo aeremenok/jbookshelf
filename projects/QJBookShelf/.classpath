@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="lib" path="lib/org.eclipse.emf.common_2.4.0.v200808251517.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.emf.ecore_2.4.1.v200808251517.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.emf.ecore.xmi_2.4.1.v200808251517.jar"/>
 	<classpathentry kind="lib" path="lib/gettext-commons-0.9.6.jar"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/swingx-0.9.7.jar"/>
