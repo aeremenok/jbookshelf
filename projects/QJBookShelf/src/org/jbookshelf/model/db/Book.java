@@ -36,7 +36,7 @@ public class Book
     @GeneratedValue
     private Long                id;
 
-    @Column( nullable = false, unique = true )
+    @Column( nullable = false )
     private String              name;
 
     @Column
@@ -69,22 +69,22 @@ public class Book
     public void addAuthor(
         @Nonnull final Author author )
     {
-        author.getBooks().add( this );
         getAuthors().add( author );
+        author.getBooks().add( this );
     }
 
     public void addCategory(
         @Nonnull final Category category )
     {
-        category.getBooks().add( this );
         getCategories().add( category );
+        category.getBooks().add( this );
     }
 
     public void addRelatedBook(
         @Nonnull final Book book )
     {
-        book.getRelatedBooks().add( this );
         getRelatedBooks().add( book );
+        book.getRelatedBooks().add( this );
     }
 
     /**

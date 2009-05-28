@@ -18,6 +18,9 @@ package org.jbookshelf.controller.importer;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Category;
@@ -42,23 +45,26 @@ public class NameParser
     private final String                 pattern;
 
     public NameParser(
-        final String pattern )
+        @Nonnull final String pattern )
     {
         this.pattern = pattern;
         // prepare delimiters
         delims = pattern.split( "%" );
     }
 
+    @Nullable
     public String getAuthorName()
     {
         return values.get( 'a' );
     }
 
+    @Nullable
     public String getBookName()
     {
         return values.get( 'b' );
     }
 
+    @Nullable
     public String getCategoryName()
     {
         return values.get( 'c' );
@@ -77,7 +83,7 @@ public class NameParser
      */
     @SuppressWarnings( "unused" )
     public void parse(
-        final String name )
+        @Nonnull final String name )
         throws Exception
     {
         // cut delimiters at edges
@@ -103,8 +109,8 @@ public class NameParser
      * @return array from string's left and right
      */
     private String[] split(
-        final String string,
-        final String delim )
+        @Nonnull final String string,
+        @Nonnull final String delim )
     {
         final String left = string.substring( 0, string.indexOf( delim ) );
         final String right = string.substring( string.indexOf( delim ) + delim.length() );

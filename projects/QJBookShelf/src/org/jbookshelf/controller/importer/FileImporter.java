@@ -21,11 +21,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.jbookshelf.model.db.Author;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Category;
-import org.jbookshelf.model.db.HibernateUtil;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.PhysicalBook;
 
 /**
@@ -61,7 +61,9 @@ public class FileImporter
         implements
         FileFilter
     {
+        @Nonnull
         File mainFolder;
+        @Nonnull
         File mainFile;
 
         public boolean accept(
@@ -85,7 +87,7 @@ public class FileImporter
     public static final FileFilter UNSUPPORTED_EXT_FILTER = new ExtensionDenyingFilter();
 
     public static PhysicalBook createPhysicalUnit(
-        final File file )
+        @Nonnull final File file )
     {
         final PhysicalBook physicalUnit = new PhysicalBook();
         if ( file.isDirectory() )
@@ -139,7 +141,7 @@ public class FileImporter
     }
 
     public static String cutExtension(
-        final String fileName )
+        @Nonnull final String fileName )
     {
         if ( new File( fileName ).isDirectory() )
         {
@@ -173,7 +175,7 @@ public class FileImporter
             protected void onImportSuccess(
                 final Book book )
             {
-                System.out.println( "+imported " + book.getName() );
+                System.out.println( "+imported " + book.getPhysicalBook().getFileName() );
             }
         }.importFiles( new String[]
         { "%a. %b" }, root );
@@ -185,8 +187,9 @@ public class FileImporter
      * @param folder folder
      * @return main file ("file") or null in case failure
      */
+    @Nullable
     private static File getHtmlFile(
-        final File folder )
+        @Nonnull final File folder )
     {
         final HtmlFolderFileFilter filter = new HtmlFolderFileFilter();
         folder.listFiles( filter );
@@ -198,14 +201,13 @@ public class FileImporter
     }
 
     public void importFiles(
-        final String[] patterns,
-        final File... files )
+        @Nonnull final String[] patterns,
+        @Nonnull final File... files )
     {
         final List<NameParser> parsers = new ArrayList<NameParser>();
         for ( final String string : patterns )
         {
-            final NameParser nameParser = new NameParser( string );
-            parsers.add( nameParser );
+            parsers.add( new NameParser( string ) );
         }
 
         for ( final File file : files )
@@ -243,58 +245,25 @@ public class FileImporter
         }
     }
 
+    @Nullable
     private Book bookFromName(
-        final NameParser parser,
-        final PhysicalBook physicalUnit )
+        @Nonnull final NameParser parser,
+        @Nonnull final PhysicalBook physicalUnit )
     {
-        final Session session = HibernateUtil.getSession();
         try
         {
             parser.parse( cutExtension( physicalUnit.getFileName() ) );
 
-            session.beginTransaction();
-
-            final Book book = new Book();
-
             final String authorName = parser.getAuthorName();
-            if ( authorName != null )
-            {
-                final Author author = new Author();
-                author.setName( authorName );
-                session.persist( author );
-
-                book.addAuthor( author );
-            }
-
             final String categoryName = parser.getCategoryName();
-            if ( categoryName != null )
-            {
-                final Category category = new Category();
+            final String bookName = parser.getBookName();
 
-                category.setName( categoryName );
-                session.persist( category );
-
-                book.addCategory( category );
-            }
-
-            book.setPhysicalBook( physicalUnit );
-            book.setName( parser.getBookName() );
-            session.persist( book );
-
-            session.persist( physicalUnit );
-
-            session.getTransaction().commit();
-
-            return book;
+            return BookShelf.getBook( bookName, authorName, categoryName, physicalUnit );
         }
         catch ( final Exception e )
         {
             e.printStackTrace();
             return null;
-        }
-        finally
-        {
-            session.close();
         }
     }
 
