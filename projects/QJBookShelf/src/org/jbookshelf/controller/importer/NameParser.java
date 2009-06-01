@@ -38,10 +38,12 @@ import org.jbookshelf.model.db.Category;
  */
 public class NameParser
 {
+    @Nonnull
     private final String[]               delims;
 
     private final Map<Character, String> values = new HashMap<Character, String>();
 
+    @Nonnull
     private final String                 pattern;
 
     public NameParser(
@@ -87,7 +89,8 @@ public class NameParser
         throws Exception
     {
         // cut delimiters at edges
-        String right = name.substring( delims[0].length(), name.length() - delims[delims.length - 1].length() + 1 );
+        @Nonnull String right = name.substring( delims[0].length(), name.length() - delims[delims.length - 1].length()
+            + 1 );
 
         for ( int i = 1; i < delims.length - 1; i++ )
         {
@@ -108,6 +111,7 @@ public class NameParser
      * @param delim delimiter
      * @return array from string's left and right
      */
+    @Nonnull
     private String[] split(
         @Nonnull final String string,
         @Nonnull final String delim )

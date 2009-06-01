@@ -32,7 +32,6 @@ public class Category
     Timestampable,
     Unique
 {
-    @SuppressWarnings( "unused" )
     @Id
     @GeneratedValue
     private Long                id;
@@ -76,6 +75,14 @@ public class Category
     public Set<Category> getChildren()
     {
         return this.children;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId()
+    {
+        return this.id;
     }
 
     /**

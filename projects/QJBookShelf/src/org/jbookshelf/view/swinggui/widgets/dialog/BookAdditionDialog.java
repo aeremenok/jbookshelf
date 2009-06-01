@@ -34,7 +34,7 @@ public class BookAdditionDialog
     public void addBookToCollection(
         final BookParameters parameters )
     {
-        final PhysicalBook physicalUnit = FileImporter.createPhysicalUnit( parameters.getFile() );
+        final PhysicalBook physicalUnit = FileImporter.createPhysicalBook( parameters.getFile() );
         //        final Book book = Storage.getBookShelf().addBook( parameters.getBookName(), null, null, physicalUnit );
         //        BookPanel.changeBook( book, parameters );
         //

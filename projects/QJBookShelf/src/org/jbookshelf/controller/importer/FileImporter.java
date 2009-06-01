@@ -35,12 +35,14 @@ import org.jbookshelf.model.db.PhysicalBook;
  */
 public class FileImporter
 {
-    private static class ExtensionDenyingFilter
+    private static class UnsupportedExtFilter
         implements
         FileFilter
     {
         String[] extensions =
-                            { "gif", "png", "bmp", "jpg", "jpeg", "js", "css", "ini", "db" };
+                            { "gif", "png", "bmp", "jpg", "jpeg", "js", "css", "ini", "db"
+                            // todo ...
+                            };
 
         public boolean accept(
             final File pathname )
@@ -57,87 +59,25 @@ public class FileImporter
         }
     }
 
-    private static class HtmlFolderFileFilter
-        implements
-        FileFilter
-    {
-        @Nonnull
-        File mainFolder;
-        @Nonnull
-        File mainFile;
+    private static PhysicalBookImporter[] importers              =
+                                                                 { new IndexFileImporter(),
+                    new SingleFileDirImporter(), new HtmlFileImporter(), new ZipFileImporter(),
+                    new SingleFileImporter()                    };
 
-        public boolean accept(
-            final File pathname )
-        {
-            final String name = pathname.getName();
-            final boolean b = pathname.isDirectory() && name.endsWith( "_files" );
-            if ( b )
-            {
-                mainFolder = pathname;
-            }
-            else if ( pathname.isFile()
-                && (name.endsWith( ".htm" ) || name.endsWith( ".html" ) || name.endsWith( ".shtml" )) )
-            {
-                mainFile = pathname;
-            }
-            return b;
-        }
-    }
+    public static final FileFilter        UNSUPPORTED_EXT_FILTER = new UnsupportedExtFilter();
 
-    public static final FileFilter UNSUPPORTED_EXT_FILTER = new ExtensionDenyingFilter();
-
-    public static PhysicalBook createPhysicalUnit(
+    @Nullable
+    public static PhysicalBook createPhysicalBook(
         @Nonnull final File file )
     {
-        final PhysicalBook physicalUnit = new PhysicalBook();
-        if ( file.isDirectory() )
+        for ( final PhysicalBookImporter importer : importers )
         {
-            final File[] files = file.listFiles( new FileFilter()
+            if ( importer.accept( file ) )
             {
-                public boolean accept(
-                    final File pathname )
-                {
-                    final String name = pathname.getName().toLowerCase();
-                    return name.equals( "index.html" ) || name.equals( "index.htm" ) || name.equals( "index.shtml" );
-                }
-            } );
-
-            if ( files.length > 1 )
-            { // at least one index file
-                physicalUnit.setFile( files[0] );
-                return physicalUnit;
+                return importer.create( file );
             }
-
-            final File[] listFiles = file.listFiles();
-            if ( listFiles.length == 1 && listFiles[0].isFile() &&
-            // zip file will be imported later
-                !listFiles[0].getName().toLowerCase().endsWith( ".zip" ) )
-            { // simply single file
-                physicalUnit.setFile( listFiles[0] );
-                return physicalUnit;
-            }
-
-            final File mainFile = getHtmlFile( file );
-            if ( mainFile != null )
-            { // file.html with file_files/
-                physicalUnit.setFile( mainFile );
-                return physicalUnit;
-            }
-
-            return null;
         }
-
-        // zip file
-        if ( file.getName().toLowerCase().endsWith( ".zip" ) )
-        {
-            physicalUnit.setFile( file );
-            // will be unpacked later
-            return physicalUnit;
-        }
-
-        // single file
-        physicalUnit.setFile( file );
-        return physicalUnit;
+        return null;
     }
 
     public static String cutExtension(
@@ -160,7 +100,7 @@ public class FileImporter
     public static void main(
         final String[] args )
     {
-        final File root = new File( "/home/eav/data/books/оип" );
+        final File root = new File( args[0] );
         new FileImporter()
         {
             @Override
@@ -181,72 +121,8 @@ public class FileImporter
         { "%a. %b" }, root );
     }
 
-    /**
-     * try to find if folder holds "file" with "file_files/" todo too complex - simplify!
-     * 
-     * @param folder folder
-     * @return main file ("file") or null in case failure
-     */
     @Nullable
-    private static File getHtmlFile(
-        @Nonnull final File folder )
-    {
-        final HtmlFolderFileFilter filter = new HtmlFolderFileFilter();
-        folder.listFiles( filter );
-        if ( filter.mainFolder != null && filter.mainFile != null )
-        {
-            return filter.mainFile;
-        }
-        return null;
-    }
-
-    public void importFiles(
-        @Nonnull final String[] patterns,
-        @Nonnull final File... files )
-    {
-        final List<NameParser> parsers = new ArrayList<NameParser>();
-        for ( final String string : patterns )
-        {
-            parsers.add( new NameParser( string ) );
-        }
-
-        for ( final File file : files )
-        {
-            final PhysicalBook physicalUnit = createPhysicalUnit( file );
-            if ( physicalUnit != null )
-            {
-                Book book = null;
-                final Iterator<NameParser> iterator = parsers.iterator();
-                while ( iterator.hasNext() && book == null )
-                {
-                    final NameParser parser = iterator.next();
-                    book = bookFromName( parser, physicalUnit );
-                }
-
-                if ( book != null )
-                {
-                    onImportSuccess( book );
-                }
-                else
-                {
-                    // todo message
-                    onImportFailure( file, new Exception() );
-                }
-            }
-            else if ( file.isDirectory() )
-            {
-                importFiles( patterns, file.listFiles( UNSUPPORTED_EXT_FILTER ) );
-            }
-            else
-            {
-                onImportFailure( file, new Exception( "unparseable directory" ) // todo specify more info
-                );
-            }
-        }
-    }
-
-    @Nullable
-    private Book bookFromName(
+    private static Book bookFromName(
         @Nonnull final NameParser parser,
         @Nonnull final PhysicalBook physicalUnit )
     {
@@ -267,15 +143,59 @@ public class FileImporter
         }
     }
 
+    public void importFiles(
+        @Nonnull final String[] patterns,
+        @Nonnull final File... files )
+    {
+        final List<NameParser> parsers = new ArrayList<NameParser>();
+        for ( final String string : patterns )
+        {
+            parsers.add( new NameParser( string ) );
+        }
+
+        // recursively process files
+        for ( final File file : files )
+        {
+            final PhysicalBook physicalUnit = createPhysicalBook( file );
+            if ( physicalUnit != null )
+            {
+                Book book = null;
+                final Iterator<NameParser> iterator = parsers.iterator();
+                while ( iterator.hasNext() && book == null )
+                {
+                    final NameParser parser = iterator.next();
+                    book = bookFromName( parser, physicalUnit );
+                }
+
+                if ( book != null )
+                {
+                    onImportSuccess( book );
+                }
+                else
+                {// todo message
+                    onImportFailure( file, new Exception() );
+                }
+            }
+            else if ( file.isDirectory() )
+            {
+                importFiles( patterns, file.listFiles( UNSUPPORTED_EXT_FILTER ) );
+            }
+            else
+            { // todo specify more info
+                onImportFailure( file, new Exception( "unparseable directory" ) );
+            }
+        }
+    }
+
     protected void onImportFailure(
-        @SuppressWarnings( "unused" ) final File file,
-        @SuppressWarnings( "unused" ) final Exception e )
+        @SuppressWarnings( "unused" ) @Nonnull final File file,
+        @SuppressWarnings( "unused" ) @Nonnull final Exception e )
     {
     // override if needed
     }
 
     protected void onImportSuccess(
-        @SuppressWarnings( "unused" ) final Book book )
+        @SuppressWarnings( "unused" ) @Nonnull final Book book )
     {
     // override if needed
     }
