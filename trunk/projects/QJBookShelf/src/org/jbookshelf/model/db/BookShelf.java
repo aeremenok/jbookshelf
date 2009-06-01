@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -17,13 +18,8 @@ import org.hibernate.criterion.Restrictions;
  */
 public class BookShelf
 {
-    /**
-     * @param bookName
-     * @param authorName
-     * @param categoryName
-     * @param physicalUnit
-     * @return
-     */
+    private static final Logger log = Logger.getLogger( BookShelf.class );
+
     @Nullable
     public static Book getBook(
         @Nonnull final String bookName,
@@ -40,11 +36,15 @@ public class BookShelf
 
             if ( authorName != null )
             {
-                book.getAuthors().add( getUnique( Author.class, authorName ) );
+                final Author author = getUnique( Author.class, authorName );
+                session.load( author, author.getId() );
+                book.addAuthor( author );
             }
             if ( categoryName != null )
             {
-                book.getCategories().add( getUnique( Category.class, categoryName ) );
+                final Category category = getUnique( Category.class, categoryName );
+                session.load( category, category.getId() );
+                book.addCategory( category );
             }
 
             session.beginTransaction();
@@ -56,8 +56,8 @@ public class BookShelf
         }
         catch ( final Exception e )
         {
-            e.printStackTrace();
-            return null;
+            log.error( e, e );
+            throw new Error( e );
         }
         finally
         {
@@ -66,6 +66,7 @@ public class BookShelf
     }
 
     @SuppressWarnings( "unchecked" )
+    @Nonnull
     public static <T extends Unique> T getUnique(
         @Nonnull final Class<T> class1,
         @Nonnull final String name )
@@ -92,7 +93,7 @@ public class BookShelf
         }
         catch ( final Exception e )
         {
-            e.printStackTrace();
+            log.error( e, e );
             throw new Error( e );
         }
         finally

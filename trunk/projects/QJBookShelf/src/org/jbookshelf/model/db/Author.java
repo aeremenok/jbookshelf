@@ -29,7 +29,6 @@ public class Author
     Timestampable,
     Unique
 {
-    @SuppressWarnings( "unused" )
     @Id
     @GeneratedValue
     private Long            id;
@@ -51,6 +50,14 @@ public class Author
     public Set<Book> getBooks()
     {
         return this.books;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId()
+    {
+        return this.id;
     }
 
     /**
