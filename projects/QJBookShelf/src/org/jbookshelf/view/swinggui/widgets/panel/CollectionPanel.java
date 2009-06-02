@@ -64,7 +64,7 @@ public class CollectionPanel
             final Boolean isRead = selectedIndex == 0
                 ? null : selectedIndex == 1
                     ? true : false;
-            getActiveTree().search( new SearchParameters( isRead, searchContent.isSelected(), text ) );
+            getActiveTab().search( new SearchParameters( isRead, searchContent.isSelected(), text ) );
         }
     }
 
@@ -108,7 +108,7 @@ public class CollectionPanel
     public void stateChanged(
         final ChangeEvent e )
     {
-        final boolean isBook = getActiveTree() instanceof BookTab;
+        final boolean isBook = getActiveTab() instanceof BookTab;
         isReadComboBox.setEnabled( isBook );
         searchContent.setEnabled( isBook );
 
@@ -120,7 +120,7 @@ public class CollectionPanel
         searchAction.actionPerformed( null );
     }
 
-    private CollectionTab getActiveTree()
+    private CollectionTab getActiveTab()
     {
         return tabs[viewTabbedPane.getSelectedIndex()];
     }

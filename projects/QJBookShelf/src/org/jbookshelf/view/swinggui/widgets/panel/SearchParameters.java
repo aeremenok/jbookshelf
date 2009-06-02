@@ -31,7 +31,7 @@ public class SearchParameters
     /**
      * @return the isRead
      */
-    public Boolean getIsRead()
+    public Boolean isRead()
     {
         return this.isRead;
     }

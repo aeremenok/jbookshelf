@@ -128,7 +128,7 @@ public class FileImporter
     {
         try
         {
-            parser.parse( cutExtension( physicalUnit.getFileName() ) );
+            parser.parse( cutExtension( new File( physicalUnit.getFileName() ).getName() ) );
 
             final String authorName = parser.getAuthorName();
             final String categoryName = parser.getCategoryName();
