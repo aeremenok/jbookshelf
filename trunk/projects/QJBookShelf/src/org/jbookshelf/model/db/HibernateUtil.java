@@ -3,6 +3,8 @@
  */
 package org.jbookshelf.model.db;
 
+import java.sql.Connection;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -27,6 +29,12 @@ public class HibernateUtil
         {
             throw new ExceptionInInitializerError( e );
         }
+    }
+
+    @SuppressWarnings( "deprecation" )
+    public static Connection connection()
+    {
+        return getSession().connection();
     }
 
     public static Session getSession()
