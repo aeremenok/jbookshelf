@@ -1,68 +1,162 @@
 package org.jbookshelf.view.swinggui.widgets;
 
+import images.IMG;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-import javax.swing.JTextField;
-import javax.swing.text.Document;
+import javax.swing.AbstractAction;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
-public class MultipleField
-    // todo extend JPnael with JTextFields
-    extends JTextField
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.Unique;
+import org.jbookshelf.view.i18n.I18N;
+import org.jdesktop.swingx.JXTable;
+
+/**
+ * allows to specify multiple values
+ * 
+ * @author eav 2009
+ * @param <T> value type
+ */
+public class MultipleField<T extends Unique>
+    extends JPanel
 {
-
-    public MultipleField()
+    private final class AddAction
+        extends AbstractAction
     {
-        super();
-        // TODO Auto-generated constructor stub
+        private AddAction()
+        {
+            super( null, IMG.icon( IMG.LIST_ADD_SMALL_PNG ) );
+        }
+
+        @Override
+        public void actionPerformed(
+            final ActionEvent e )
+        {
+            model.addValue( BookShelf.getUnique( clazz, combo.getSelectedItem().toString() ) );
+        }
     }
 
-    public MultipleField(
-        final Document doc,
-        final String text,
-        final int columns )
+    private static class ListTableModel<V>
+        extends DefaultTableModel
     {
-        super( doc, text, columns );
-        // TODO Auto-generated constructor stub
+        private final List<V>         values = new ArrayList<V>();
+
+        private static final String[] names  =
+                                             { I18N.tr( "Name" ), "" };
+
+        public ListTableModel()
+        {
+            super( names, 0 );
+        }
+
+        public void addValue(
+            final V value )
+        {
+            values.add( value );
+            fireTableDataChanged();
+        }
+
+        public void clear()
+        {
+            values.clear();
+            fireTableDataChanged();
+        }
+
+        @Override
+        public int getRowCount()
+        {
+            return values != null
+                ? values.size() : 0;
+        }
+
+        @Override
+        public Object getValueAt(
+            final int row,
+            final int column )
+        {
+            switch ( column )
+            {
+                case 0:
+                    return values.get( row );
+                case 1:
+                    return "-";
+            }
+            return super.getValueAt( row, column );
+        }
+
+        public Collection<V> getValues()
+        {
+            return this.values;
+        }
+
+        @Override
+        public boolean isCellEditable(
+            final int row,
+            final int column )
+        {
+            return false;
+        }
+
+        public void setValues(
+            final Collection<V> objects )
+        {
+            values.clear();
+            values.addAll( objects );
+            fireTableDataChanged();
+        }
     }
 
-    public MultipleField(
-        final int columns )
-    {
-        super( columns );
-        // TODO Auto-generated constructor stub
-    }
+    private final ListTableModel<T> model = new ListTableModel<T>();
+
+    private final JComboBox         combo = new JComboBox();
+
+    private final Class<T>          clazz;
 
     public MultipleField(
-        final String text )
+        final Class<T> clazz )
     {
-        super( text );
-        // TODO Auto-generated constructor stub
-    }
+        super( new BorderLayout() );
+        this.clazz = clazz;
 
-    public MultipleField(
-        final String text,
-        final int columns )
-    {
-        super( text, columns );
-        // TODO Auto-generated constructor stub
+        combo.setEditable( true );
+
+        final Box horizontalBox = Box.createHorizontalBox();
+        horizontalBox.add( combo );
+        horizontalBox.add( new JButton( new AddAction() ) );
+        add( horizontalBox, BorderLayout.NORTH );
+
+        final JXTable table = new JXTable( model );
+        add( new JScrollPane( table ), BorderLayout.CENTER );
+
+        table.setPreferredScrollableViewportSize( new Dimension( 0, 50 ) );
+        table.getColumn( 1 ).setMaxWidth( 40 );
     }
 
     public void clear()
     {
-        setText( "" );
+        model.clear();
     }
 
-    public Collection getValue()
+    public Collection<T> getValues()
     {
-        // todo
-        return null;
+        return model.getValues();
     }
 
-    public void setValue(
-        final Collection objects )
+    public void setValues(
+        final Collection<T> objects )
     {
-        // todo
-        setText( objects.size() + "" );
+        model.setValues( objects );
     }
 
 }

@@ -10,7 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import org.jbookshelf.controller.importer.FileImporter;
+import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.Category;
 import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.Translatable;
@@ -79,49 +81,49 @@ public class BookPanel
         return book;
     }
 
-    private final JLabel           bookLabel        = new JLabel();
-    private final JLabel           authorLabel      = new JLabel();
-    private final JLabel           categoryLabel    = new JLabel();
+    private final JLabel                  bookLabel        = new JLabel();
+    private final JLabel                  authorLabel      = new JLabel();
+    private final JLabel                  categoryLabel    = new JLabel();
 
-    private final JLabel           viewerLabel      = new JLabel();
-    private final JLabel           fileLabel        = new JLabel();
-    private final JTextField       bookTextField    = new JTextField( 50 );
+    private final JLabel                  viewerLabel      = new JLabel();
+    private final JLabel                  fileLabel        = new JLabel();
+    private final JTextField              bookTextField    = new JTextField( 50 );
 
-    private final JCheckBox        isReadCheckBox   = new JCheckBox();
+    private final JCheckBox               isReadCheckBox   = new JCheckBox();
 
-    private final JComboBox        viewerComboBox   = new JComboBox();
-    private final MultipleField    authorField      = new MultipleField( 50 );
+    private final JComboBox               viewerComboBox   = new JComboBox();
 
-    private final MultipleField    categoryField    = new MultipleField( 50 );
+    private final MultipleField<Author>   authorField      = new MultipleField<Author>( Author.class );
+    private final MultipleField<Category> categoryField    = new MultipleField<Category>( Category.class );
 
-    private final FileChooserPanel fileChooserPanel = new FileChooserPanelExt( 50 )
-                                                    {
-                                                        @Override
-                                                        protected void fileSelected(
-                                                            final File file )
-                                                        {
-                                                            super.fileSelected( file );
-                                                            onFileSelected( file );
-                                                        }
-                                                    };
+    private final FileChooserPanel        fileChooserPanel = new FileChooserPanelExt( 50 )
+                                                           {
+                                                               @Override
+                                                               protected void fileSelected(
+                                                                   final File file )
+                                                               {
+                                                                   super.fileSelected( file );
+                                                                   onFileSelected( file );
+                                                               }
+                                                           };
 
-    private final FileImporter     fileImporter     = new FileImporter()
-                                                    {
-                                                        @Override
-                                                        protected void onImportFailure(
-                                                            final File file,
-                                                            final Exception e )
-                                                        {
-                                                        // let user enters the data
-                                                        }
+    private final FileImporter            fileImporter     = new FileImporter()
+                                                           {
+                                                               @Override
+                                                               protected void onImportFailure(
+                                                                   final File file,
+                                                                   final Exception e )
+                                                               {
+                                                               // let user enters the data
+                                                               }
 
-                                                        @Override
-                                                        protected void onImportSuccess(
-                                                            final Book book )
-                                                        {
-                                                            setBook( book );
-                                                        }
-                                                    };
+                                                               @Override
+                                                               protected void onImportSuccess(
+                                                                   final Book book )
+                                                               {
+                                                                   setBook( book );
+                                                               }
+                                                           };
 
     public BookPanel()
     {
@@ -150,22 +152,6 @@ public class BookPanel
             return null;
         }
 
-        final String authorNames = authorField.getText();
-        if ( authorNames.equals( "" ) )
-        {
-            final String tr = I18N.tr( "Author name not specified" );
-            JOptionPane.showMessageDialog( this, tr, title, JOptionPane.ERROR_MESSAGE );
-            return null;
-        }
-
-        final String categoryNames = categoryField.getText();
-        if ( categoryNames.equals( "" ) )
-        {
-            final String tr = I18N.tr( "Category name not specified" );
-            JOptionPane.showMessageDialog( this, tr, title, JOptionPane.ERROR_MESSAGE );
-            return null;
-        }
-
         final File file = fileChooserPanel.getFile();
         if ( file == null || !file.exists() )
         {
@@ -180,7 +166,8 @@ public class BookPanel
         final String viewer = viewerIndex == 0
             ? null : viewerIndex == 1
                 ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER;
-        return new BookParameters( bookName, authorNames.split( "," ), categoryNames.split( "," ), file, isRead, viewer );
+
+        return new BookParameters( bookName, authorField.getValues(), categoryField.getValues(), file, isRead, viewer );
     }
 
     public void retranslate()
@@ -208,8 +195,8 @@ public class BookPanel
     {
         // display book name
         bookTextField.setText( book.getName() );
-        authorField.setValue( book.getAuthors() );
-        categoryField.setValue( book.getCategories() );
+        authorField.setValues( book.getAuthors() );
+        categoryField.setValues( book.getCategories() );
 
         // display file of the physical unit
         fileChooserPanel.setFile( new File( book.getPhysicalBook().getFileName() ) );

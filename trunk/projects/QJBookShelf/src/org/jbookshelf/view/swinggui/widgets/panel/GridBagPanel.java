@@ -39,6 +39,8 @@ public class GridBagPanel
         constraints.gridy = row;
         constraints.gridwidth = colspan;
         constraints.gridheight = rowspan;
+        constraints.weightx = 1;
+        constraints.weighty = 1;
         add( component, constraints );
         return constraints;
     }
