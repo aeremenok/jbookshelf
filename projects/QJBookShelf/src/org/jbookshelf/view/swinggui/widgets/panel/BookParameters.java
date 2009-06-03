@@ -1,6 +1,10 @@
 package org.jbookshelf.view.swinggui.widgets.panel;
 
 import java.io.File;
+import java.util.Collection;
+
+import org.jbookshelf.model.db.Author;
+import org.jbookshelf.model.db.Category;
 
 /**
  * Parameter set to excange between classes
@@ -9,33 +13,36 @@ import java.io.File;
  */
 public class BookParameters
 {
-    private final String   bookName;
-    private final String[] authorNames;
-    private final String[] categoryNames;
-    private final File     file;
-    private final boolean  isRead;
-    private final String   viewer;
+    private final String               bookName;
+    private final Collection<Author>   authors;
+    private final Collection<Category> categories;
+    private final File                 file;
+    private final boolean              isRead;
+    private final String               viewer;
 
     public BookParameters(
         final String bookName,
-        final String[] authorNames,
-        final String[] categoryNames,
+        final Collection<Author> authors,
+        final Collection<Category> categories,
         final File file,
         final boolean isRead,
         final String viewer )
     {
         super();
         this.bookName = bookName;
-        this.authorNames = authorNames;
-        this.categoryNames = categoryNames;
+        this.authors = authors;
+        this.categories = categories;
         this.file = file;
         this.isRead = isRead;
         this.viewer = viewer;
     }
 
-    public String[] getAuthorNames()
+    /**
+     * @return the authors
+     */
+    public Collection<Author> getAuthors()
     {
-        return authorNames;
+        return this.authors;
     }
 
     public String getBookName()
@@ -43,9 +50,12 @@ public class BookParameters
         return bookName;
     }
 
-    public String[] getCategoryNames()
+    /**
+     * @return the categories
+     */
+    public Collection<Category> getCategories()
     {
-        return categoryNames;
+        return this.categories;
     }
 
     public File getFile()
