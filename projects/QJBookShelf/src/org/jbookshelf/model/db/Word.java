@@ -23,7 +23,6 @@ public class Word
     implements
     Serializable
 {
-    @SuppressWarnings( "unused" )
     @Id
     @GeneratedValue
     private Long   id;
@@ -59,6 +58,62 @@ public class Word
         this.pos = pos;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(
+        final Object obj )
+    {
+        if ( this == obj )
+        {
+            return true;
+        }
+        if ( obj == null )
+        {
+            return false;
+        }
+        if ( getClass() != obj.getClass() )
+        {
+            return false;
+        }
+        final Word other = (Word) obj;
+        if ( this.id == null )
+        {
+            if ( other.id != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.id.equals( other.id ) )
+        {
+            return false;
+        }
+        if ( this.pos == null )
+        {
+            if ( other.pos != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.pos.equals( other.pos ) )
+        {
+            return false;
+        }
+        if ( this.word == null )
+        {
+            if ( other.word != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.word.equals( other.word ) )
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * @return the book
      */
@@ -81,5 +136,22 @@ public class Word
     public String getWord()
     {
         return this.word;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (this.id == null
+            ? 0 : this.id.hashCode());
+        result = prime * result + (this.pos == null
+            ? 0 : this.pos.hashCode());
+        result = prime * result + (this.word == null
+            ? 0 : this.word.hashCode());
+        return result;
     }
 }

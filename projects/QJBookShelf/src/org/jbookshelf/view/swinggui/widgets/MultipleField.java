@@ -5,22 +5,21 @@ import images.IMG;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Collection;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JTextField;
 
 import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.Unique;
-import org.jbookshelf.view.i18n.I18N;
 import org.jdesktop.swingx.JXTable;
+import org.xnap.commons.gui.Builder;
 
 /**
  * allows to specify multiple values
@@ -43,84 +42,13 @@ public class MultipleField<T extends Unique>
         public void actionPerformed(
             final ActionEvent e )
         {
-            model.addValue( BookShelf.getUnique( clazz, combo.getSelectedItem().toString() ) );
-        }
-    }
-
-    private static class ListTableModel<V>
-        extends DefaultTableModel
-    {
-        private final List<V>         values = new ArrayList<V>();
-
-        private static final String[] names  =
-                                             { I18N.tr( "Name" ), "" };
-
-        public ListTableModel()
-        {
-            super( names, 0 );
-        }
-
-        public void addValue(
-            final V value )
-        {
-            values.add( value );
-            fireTableDataChanged();
-        }
-
-        public void clear()
-        {
-            values.clear();
-            fireTableDataChanged();
-        }
-
-        @Override
-        public int getRowCount()
-        {
-            return values != null
-                ? values.size() : 0;
-        }
-
-        @Override
-        public Object getValueAt(
-            final int row,
-            final int column )
-        {
-            switch ( column )
-            {
-                case 0:
-                    return values.get( row );
-                case 1:
-                    return "-";
-            }
-            return super.getValueAt( row, column );
-        }
-
-        public Collection<V> getValues()
-        {
-            return this.values;
-        }
-
-        @Override
-        public boolean isCellEditable(
-            final int row,
-            final int column )
-        {
-            return false;
-        }
-
-        public void setValues(
-            final Collection<V> objects )
-        {
-            values.clear();
-            values.addAll( objects );
-            fireTableDataChanged();
+            model.addValue( BookShelf.getUnique( clazz, field.getText() ) );
+            field.setText( "" );
         }
     }
 
     private final ListTableModel<T> model = new ListTableModel<T>();
-
-    private final JComboBox         combo = new JComboBox();
-
+    private final JTextField        field = new JTextField();
     private final Class<T>          clazz;
 
     public MultipleField(
@@ -129,18 +57,40 @@ public class MultipleField<T extends Unique>
         super( new BorderLayout() );
         this.clazz = clazz;
 
-        combo.setEditable( true );
+        field.setEditable( true );
 
         final Box horizontalBox = Box.createHorizontalBox();
-        horizontalBox.add( combo );
+        horizontalBox.add( field );
         horizontalBox.add( new JButton( new AddAction() ) );
         add( horizontalBox, BorderLayout.NORTH );
 
         final JXTable table = new JXTable( model );
         add( new JScrollPane( table ), BorderLayout.CENTER );
 
+        table.setTableHeader( null );
         table.setPreferredScrollableViewportSize( new Dimension( 0, 50 ) );
         table.getColumn( 1 ).setMaxWidth( 40 );
+
+        // allow deletion of rows
+        table.addMouseListener( new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(
+                final MouseEvent e )
+            {
+                if ( e.getButton() == MouseEvent.BUTTON1 )
+                {
+                    final int col = table.columnAtPoint( e.getPoint() );
+                    if ( col == 1 )
+                    {
+                        model.removeRow( table.rowAtPoint( e.getPoint() ) );
+                    }
+                }
+            }
+        } );
+
+        // add name completion
+        Builder.addCompletion( field, new UniqueCompletionModel( clazz ) );
     }
 
     public void clear()

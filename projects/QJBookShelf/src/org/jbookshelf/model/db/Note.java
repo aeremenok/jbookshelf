@@ -29,12 +29,10 @@ public class Note
     Serializable,
     Timestampable
 {
-    @SuppressWarnings( "unused" )
     @Id
     @GeneratedValue
     private Long   id;
 
-    @SuppressWarnings( "unused" )
     @Column( nullable = false )
     @Temporal( TemporalType.TIMESTAMP )
     private Date   changeDate;
@@ -55,6 +53,95 @@ public class Note
     @JoinColumn( name = "BOOK_ID", nullable = false )
     @org.hibernate.annotations.ForeignKey( name = "FK_NOTE_BOOK" )
     private Book   book;
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(
+        final Object obj )
+    {
+        if ( this == obj )
+        {
+            return true;
+        }
+        if ( obj == null )
+        {
+            return false;
+        }
+        if ( getClass() != obj.getClass() )
+        {
+            return false;
+        }
+        final Note other = (Note) obj;
+        if ( this.changeDate == null )
+        {
+            if ( other.changeDate != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.changeDate.equals( other.changeDate ) )
+        {
+            return false;
+        }
+        if ( this.citation == null )
+        {
+            if ( other.citation != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.citation.equals( other.citation ) )
+        {
+            return false;
+        }
+        if ( this.content == null )
+        {
+            if ( other.content != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.content.equals( other.content ) )
+        {
+            return false;
+        }
+        if ( this.id == null )
+        {
+            if ( other.id != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.id.equals( other.id ) )
+        {
+            return false;
+        }
+        if ( this.pos == null )
+        {
+            if ( other.pos != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.pos.equals( other.pos ) )
+        {
+            return false;
+        }
+        if ( this.title == null )
+        {
+            if ( other.title != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.title.equals( other.title ) )
+        {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * @return the book
@@ -96,6 +183,29 @@ public class Note
     public String getTitle()
     {
         return this.title;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (this.changeDate == null
+            ? 0 : this.changeDate.hashCode());
+        result = prime * result + (this.citation == null
+            ? 0 : this.citation.hashCode());
+        result = prime * result + (this.content == null
+            ? 0 : this.content.hashCode());
+        result = prime * result + (this.id == null
+            ? 0 : this.id.hashCode());
+        result = prime * result + (this.pos == null
+            ? 0 : this.pos.hashCode());
+        result = prime * result + (this.title == null
+            ? 0 : this.title.hashCode());
+        return result;
     }
 
     /**
