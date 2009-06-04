@@ -31,7 +31,6 @@ public class Book
     Timestampable,
     Unique
 {
-    @SuppressWarnings( "unused" )
     @Id
     @GeneratedValue
     private Long                id;
@@ -42,7 +41,6 @@ public class Book
     @Column
     private Float               read         = 0f;
 
-    @SuppressWarnings( "unused" )
     @Column( nullable = false )
     @Temporal( TemporalType.TIMESTAMP )
     private Date                changeDate;
@@ -85,6 +83,73 @@ public class Book
     {
         getRelatedBooks().add( book );
         book.getRelatedBooks().add( this );
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(
+        final Object obj )
+    {
+        if ( this == obj )
+        {
+            return true;
+        }
+        if ( obj == null )
+        {
+            return false;
+        }
+        if ( getClass() != obj.getClass() )
+        {
+            return false;
+        }
+        final Book other = (Book) obj;
+        if ( this.changeDate == null )
+        {
+            if ( other.changeDate != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.changeDate.equals( other.changeDate ) )
+        {
+            return false;
+        }
+        if ( this.id == null )
+        {
+            if ( other.id != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.id.equals( other.id ) )
+        {
+            return false;
+        }
+        if ( this.name == null )
+        {
+            if ( other.name != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.name.equals( other.name ) )
+        {
+            return false;
+        }
+        if ( this.read == null )
+        {
+            if ( other.read != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.read.equals( other.read ) )
+        {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -141,6 +206,25 @@ public class Book
     public Set<Book> getRelatedBooks()
     {
         return this.relatedBooks;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (this.changeDate == null
+            ? 0 : this.changeDate.hashCode());
+        result = prime * result + (this.id == null
+            ? 0 : this.id.hashCode());
+        result = prime * result + (this.name == null
+            ? 0 : this.name.hashCode());
+        result = prime * result + (this.read == null
+            ? 0 : this.read.hashCode());
+        return result;
     }
 
     public void removeAuthor(

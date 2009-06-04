@@ -39,7 +39,6 @@ public class Category
     @Column( nullable = false, unique = true )
     private String              name;
 
-    @SuppressWarnings( "unused" )
     @Column( nullable = false )
     @Temporal( TemporalType.TIMESTAMP )
     private Date                changeDate;
@@ -59,6 +58,62 @@ public class Category
     {
         category.setParent( this );
         getChildren().add( category );
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(
+        final Object obj )
+    {
+        if ( this == obj )
+        {
+            return true;
+        }
+        if ( obj == null )
+        {
+            return false;
+        }
+        if ( getClass() != obj.getClass() )
+        {
+            return false;
+        }
+        final Category other = (Category) obj;
+        if ( this.changeDate == null )
+        {
+            if ( other.changeDate != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.changeDate.equals( other.changeDate ) )
+        {
+            return false;
+        }
+        if ( this.id == null )
+        {
+            if ( other.id != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.id.equals( other.id ) )
+        {
+            return false;
+        }
+        if ( this.name == null )
+        {
+            if ( other.name != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.name.equals( other.name ) )
+        {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -100,6 +155,23 @@ public class Category
     public Category getParent()
     {
         return this.parent;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (this.changeDate == null
+            ? 0 : this.changeDate.hashCode());
+        result = prime * result + (this.id == null
+            ? 0 : this.id.hashCode());
+        result = prime * result + (this.name == null
+            ? 0 : this.name.hashCode());
+        return result;
     }
 
     public void removeChild(
