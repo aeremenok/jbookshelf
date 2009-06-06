@@ -19,6 +19,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.HibernateUtil;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
@@ -85,12 +86,7 @@ public class AuthorView
                 final Object node = event.getPath().getLastPathComponent();
                 if ( node instanceof AuthorNode )
                 { // lazy load author's books
-                    final AuthorNode authorNode = (AuthorNode) node;
-                    final Set<Book> books = authorNode.getAuthor().getBooks();
-                    for ( final Book book : books )
-                    {
-                        model.insertNodeInto( new BookNode( book ), authorNode, 0 );
-                    }
+                    loadChildren( (AuthorNode) node );
                 }
             }
         } );
@@ -107,6 +103,7 @@ public class AuthorView
             final List<Author> list = session.createQuery( buildQuery( p ) ).list();
 
             root.removeAllChildren();
+            model.reload( root );
             for ( final Author author : list )
             {
                 model.insertNodeInto( new AuthorNode( author ), root, 0 );
@@ -120,6 +117,26 @@ public class AuthorView
         finally
         {
             session.close();
+        }
+    }
+
+    /**
+     * lazyly load node's chilren
+     * 
+     * @param authorNode node to fill
+     */
+    private void loadChildren(
+        final AuthorNode authorNode )
+    {
+        if ( authorNode.getChildCount() == 0 )
+        { // not loaded yet
+            final Author author = authorNode.getAuthor();
+
+            final Set<Book> books = BookShelf.getBooks( author );
+            for ( final Book book : books )
+            {
+                model.insertNodeInto( new BookNode( book ), authorNode, 0 );
+            }
         }
     }
 

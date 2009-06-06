@@ -16,7 +16,7 @@ public class BookNode
 {
     private final Book book;
 
-    private BookNode(
+    public BookNode(
         @Nonnull final Book book )
     {
         super( book.getName() );

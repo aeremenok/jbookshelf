@@ -28,7 +28,7 @@ public class Author
     implements
     Serializable,
     Timestampable,
-    Unique
+    HasBooks
 {
     @Id
     @GeneratedValue

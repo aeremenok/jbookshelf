@@ -3,8 +3,27 @@
  */
 package org.jbookshelf.view.swinggui.widgets.panel.tab;
 
+import java.awt.BorderLayout;
+import java.util.List;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.swing.JScrollPane;
+import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeWillExpandListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.Category;
+import org.jbookshelf.model.db.HibernateUtil;
 import org.jbookshelf.view.logic.Parameters;
+import org.jbookshelf.view.logic.Parameters.Keys;
+import org.jdesktop.swingx.JXTree;
 
 /**
  * @author eav
@@ -12,35 +31,139 @@ import org.jbookshelf.view.logic.Parameters;
 public class CategoryView
     extends CollectionView
 {
-    private static final Logger log = Logger.getLogger( CategoryView.class );
+    private class CategoryNode
+        extends DefaultMutableTreeNode
+    {
+        private final Category category;
+
+        private CategoryNode(
+            @Nonnull final Category category )
+        {
+            super( category.getName() );
+            this.category = category;
+        }
+
+        /**
+         * @return the category
+         */
+        public Category getCategory()
+        {
+            return this.category;
+        }
+
+        @Override
+        public boolean isLeaf()
+        {
+            return false;
+        }
+    }
+
+    private final DefaultMutableTreeNode root  = new DefaultMutableTreeNode();
+    private final DefaultTreeModel       model = new DefaultTreeModel( root );
+    private final JXTree                 tree  = new JXTree( model );
+
+    private static final Logger          log   = Logger.getLogger( CategoryView.class );
 
     public CategoryView()
     {
         super();
         setName( "Categories" );
+
+        setLayout( new BorderLayout() );
+
+        add( new JScrollPane( tree ), BorderLayout.CENTER );
+
+        tree.setRootVisible( false );
+        tree.addTreeWillExpandListener( new TreeWillExpandListener()
+        {
+            @Override
+            public void treeWillCollapse(
+                final TreeExpansionEvent event )
+            {}
+
+            @Override
+            public void treeWillExpand(
+                final TreeExpansionEvent event )
+            {
+                final Object node = event.getPath().getLastPathComponent();
+                if ( node instanceof CategoryNode )
+                { // lazy load children and books of category
+                    loadChildren( (CategoryNode) node );
+                }
+            }
+
+        } );
     }
 
     /* (non-Javadoc)
      * @see org.jbookshelf.view.swinggui.widgets.panel.CollectionTab#search(org.jbookshelf.view.swinggui.widgets.panel.SearchParameters)
      */
+    @SuppressWarnings( "unchecked" )
     @Override
     public void search(
         final Parameters p )
     {
-    // TODO Auto-generated method stub
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            final List<Category> list = session.createQuery( buildQuery( p ) ).list();
+
+            root.removeAllChildren();
+            model.reload( root );
+            for ( final Category category : list )
+            {
+                model.insertNodeInto( new CategoryNode( category ), root, 0 );
+            }
+        }
+        catch ( final HibernateException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
 
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.widgets.panel.tab.CollectionTab#buildQuery(org.jbookshelf.view.logic.Parameters)
+    /**
+     * lazyly load node's children
+     * 
+     * @param categoryNode node to fill
      */
+    private void loadChildren(
+        final CategoryNode categoryNode )
+    {
+        if ( categoryNode.getChildCount() == 0 )
+        { // not loaded yet
+            final Category category = categoryNode.getCategory();
+
+            final Set<Category> children = BookShelf.getChildren( category );
+            for ( final Category child : children )
+            {
+                model.insertNodeInto( new CategoryNode( child ), categoryNode, 0 );
+            }
+
+            final Set<Book> books = BookShelf.getBooks( category );
+            for ( final Book book : books )
+            {
+                model.insertNodeInto( new BookNode( book ), categoryNode, 0 );
+            }
+        }
+    }
+
     @Override
     protected String buildQuery(
         final Parameters p )
     {
-        log.debug( "buildQuery" );
-        // TODO Auto-generated method stub
-        return null;
+        final String text = p.get( Keys.SEARCH_TEXT );
+        final StringBuilder q = new StringBuilder( "from Category c " );
+        if ( text != null && !"".equals( text ) )
+        {
+            q.append( "where c.name='" ).append( text ).append( "'" );
+        }
+        q.append( " order by c.name desc" );
+        return q.toString();
     }
-
 }

@@ -8,6 +8,8 @@ package org.jbookshelf.model.db;
  */
 public interface Unique
 {
+    Long getId();
+
     String getName();
 
     void setName(
