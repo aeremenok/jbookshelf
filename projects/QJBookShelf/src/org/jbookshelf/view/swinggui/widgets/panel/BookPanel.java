@@ -1,7 +1,9 @@
 package org.jbookshelf.view.swinggui.widgets.panel;
 
 import java.io.File;
+import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -10,13 +12,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import org.jbookshelf.controller.importer.FileImporter;
+import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Category;
 import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.view.i18n.I18N;
+import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.widgets.FileChooserPanelExt;
 import org.jbookshelf.view.swinggui.widgets.MultipleField;
 import org.xnap.commons.gui.FileChooserPanel;
@@ -28,55 +34,31 @@ public class BookPanel
 {
     public static Book changeBook(
         final Book book,
-        final BookParameters parameters )
+        final Parameters parameters )
     {
-        // todo reflective
-        //        book.getAuthors().clear();
-        //        for ( final String name : parameters.getAuthorNames() )
-        //        {
-        //            Author author;
-        //            final String trim = name.trim();
-        //            final List<Author> authors = Storage.getBookShelf().queryAuthors( trim );
-        //            if ( authors.size() > 0 )
-        //            { // todo what if we've found more than 1 author with equal names?
-        //                author = authors.get( 0 );
-        //            }
-        //            else
-        //            {
-        //                author = Storage.getBookShelf().addAuthor( trim );
-        //            }
-        //            book.getAuthors().add( author );
-        //        }
-        //
-        //        book.getCategories().clear();
-        //        for ( final String name : parameters.getCategoryNames() )
-        //        {
-        //            Category category;
-        //            final String trim = name.trim();
-        //            final List<Category> authors = Storage.getBookShelf().queryCategories( trim );
-        //            if ( authors.size() > 0 )
-        //            { // todo what if we've found more than 1 author with equal names?
-        //                category = authors.get( 0 );
-        //            }
-        //            else
-        //            {
-        //                category = Storage.getBookShelf().addCategory( trim );
-        //            }
-        //            book.getCategories().add( category );
-        //        }
-        //
-        //        book.setName( parameters.getBookName() );
-        //
-        //        PhysicalUnit physical = book.getPhysical();
-        //        if ( physical == null || !physical.getFile().equals( parameters.getFile() ) )
-        //        {
-        //            physical = FileImporter.createPhysicalUnit( parameters.getFile() );
-        //        }
-        //        physical.setViewer( parameters.getViewer() );
-        //
-        //        book.setPhysical( physical );
-        //        book.setRead( parameters.isRead()
-        //            ? 1 : 0 );
+        book.getAuthors().clear();
+        final List<Author> authors = parameters.get( Keys.BOOK_AUTHORS );
+        for ( final Author author : authors )
+        {
+            book.getAuthors().add( author );
+        }
+
+        book.getCategories().clear();
+        final List<Category> categories = parameters.get( Keys.BOOK_CATEGORIES );
+        for ( final Category category : categories )
+        {
+            book.getCategories().add( category );
+        }
+
+        book.setName( parameters.<String> get( Keys.BOOK_NAME ) );
+
+        final File file = parameters.get( Keys.BOOK_FILE );
+        final PhysicalBook physical = FileImporter.createPhysicalBook( file );
+        physical.setViewer( parameters.<String> get( Keys.BOOK_VIEWER ) );
+        book.setPhysicalBook( physical );
+
+        book.setRead( parameters.<Boolean> get( Keys.BOOK_IS_READ )
+            ? 1f : 0f );
 
         return book;
     }
@@ -141,14 +123,14 @@ public class BookPanel
         isReadCheckBox.setSelected( false );
     }
 
-    public BookParameters extractParameters()
+    @Nonnull
+    public Parameters extractParameters()
     {
         final String bookName = bookTextField.getText();
-        final String title = I18N.tr( "Error" );
         if ( bookName.equals( "" ) )
         {
             final String tr = I18N.tr( "Book name not specified" );
-            JOptionPane.showMessageDialog( this, tr, title, JOptionPane.ERROR_MESSAGE );
+            JOptionPane.showMessageDialog( this, tr, I18N.tr( "Error" ), JOptionPane.ERROR_MESSAGE );
             return null;
         }
 
@@ -156,18 +138,25 @@ public class BookPanel
         if ( file == null || !file.exists() )
         {
             final String tr = I18N.tr( "File does not exist: " ) + fileChooserPanel.getTextField().getText();
-            JOptionPane.showMessageDialog( this, tr, title, JOptionPane.ERROR_MESSAGE );
+            JOptionPane.showMessageDialog( this, tr, I18N.tr( "Error" ), JOptionPane.ERROR_MESSAGE );
             return null;
         }
-
-        final boolean isRead = isReadCheckBox.isSelected();
 
         final int viewerIndex = viewerComboBox.getSelectedIndex();
         final String viewer = viewerIndex == 0
             ? null : viewerIndex == 1
                 ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER;
 
-        return new BookParameters( bookName, authorField.getValues(), categoryField.getValues(), file, isRead, viewer );
+        final Parameters parameters = new Parameters();
+
+        parameters.put( Keys.BOOK_NAME, bookName );
+        parameters.put( Keys.BOOK_AUTHORS, authorField.getValues() );
+        parameters.put( Keys.BOOK_CATEGORIES, categoryField.getValues() );
+        parameters.put( Keys.BOOK_IS_READ, isReadCheckBox.isSelected() );
+        parameters.put( Keys.BOOK_VIEWER, viewer );
+        parameters.put( Keys.BOOK_FILE, file );
+
+        return parameters;
     }
 
     public void retranslate()
@@ -237,11 +226,13 @@ public class BookPanel
     }
 
     protected void onFileSelected(
-        final File file )
+        @Nonnull final File file )
     {
-    // todo
-    //        final String mask = Single.instance( Settings.class ).IMPORT_MASK.getValue();
-    //        final String[] masks = mask.split( "/" );
-    //        fileImporter.importFiles( masks, Storage.getBookShelf(), file );
+        if ( bookTextField.getText().equals( "" ) )
+        {
+            final String mask = Single.instance( Settings.class ).IMPORT_MASK.getValue();
+            final String[] masks = mask.split( "/" );
+            fileImporter.importFiles( masks, file );
+        }
     }
 }

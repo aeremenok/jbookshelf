@@ -4,13 +4,15 @@ import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.border.TitledBorder;
 
-import org.jbookshelf.controller.importer.FileImporter;
-import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
+import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
 import org.jbookshelf.view.swinggui.widgets.panel.BookPanel;
-import org.jbookshelf.view.swinggui.widgets.panel.BookParameters;
+import org.jbookshelf.view.swinggui.widgets.panel.CollectionPanel;
 import org.xnap.commons.gui.DefaultDialog;
 
 public class BookAdditionDialog
@@ -31,24 +33,17 @@ public class BookAdditionDialog
         setLocationRelativeTo( null );
     }
 
-    public void addBookToCollection(
-        final BookParameters parameters )
-    {
-        final PhysicalBook physicalUnit = FileImporter.createPhysicalBook( parameters.getFile() );
-        //        final Book book = Storage.getBookShelf().addBook( parameters.getBookName(), null, null, physicalUnit );
-        //        BookPanel.changeBook( book, parameters );
-        //
-        //        Single.instance( CollectionPanel.class ).updateTree();
-    }
-
     @Override
     public boolean apply()
     {
-        final BookParameters parameters = bookPanel.extractParameters();
+        final Parameters parameters = bookPanel.extractParameters();
         if ( parameters != null )
         {
-            addBookToCollection( parameters );
+            final Book book = BookPanel.changeBook( new Book(), parameters );
+            BookShelf.persistBook( book );
             bookPanel.clear();
+            Single.instance( CollectionPanel.class ).updateActiveView();
+
             return true;
         }
         return false;

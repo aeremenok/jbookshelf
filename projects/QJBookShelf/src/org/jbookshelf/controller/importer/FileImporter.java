@@ -116,6 +116,7 @@ public class FileImporter
                 final Book book )
             {
                 System.out.println( "+imported " + book.getPhysicalBook().getFileName() );
+                BookShelf.persistBook( book );
             }
         }.importFiles( new String[]
         { "%a. %b" }, root );
@@ -134,9 +135,9 @@ public class FileImporter
             final String categoryName = parser.getCategoryName();
             final String bookName = parser.getBookName();
 
-            if ( bookName != null && "".equals( bookName ) )
+            if ( bookName != null && !"".equals( bookName ) )
             {
-                return BookShelf.addBook( bookName, authorName, categoryName, physicalUnit );
+                return BookShelf.createBook( bookName, authorName, categoryName, physicalUnit );
             }
             return null;
         }

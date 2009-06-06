@@ -94,7 +94,7 @@ public class MultipleField<T extends Unique>
         } );
 
         // add name completion
-        Builder.addCompletion( field, new UniqueCompletionModel( clazz ) );
+        Builder.addCompletion( field, new UniqueCompletionModel( clazz, model ) );
     }
 
     public void clear()

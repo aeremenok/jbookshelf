@@ -22,7 +22,7 @@ import org.jbookshelf.view.i18n.I18N;
  * @author eav 2009
  * @param <V> unique type
  */
-class ListTableModel<V extends Unique>
+public class ListTableModel<V extends Unique>
     extends DefaultTableModel
 {
     /**
