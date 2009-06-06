@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
@@ -41,6 +42,7 @@ public class Author
     private Date            changeDate;
 
     @ManyToMany
+    @OrderBy( "name DESC" )
     private final Set<Book> books = new HashSet<Book>();
 
     /* (non-Javadoc)

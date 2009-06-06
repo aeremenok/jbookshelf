@@ -42,8 +42,12 @@ public class MultipleField<T extends Unique>
         public void actionPerformed(
             final ActionEvent e )
         {
-            model.addValue( BookShelf.getUnique( clazz, field.getText() ) );
-            field.setText( "" );
+            final String text = field.getText();
+            if ( !"".equals( text ) )
+            {
+                model.addValue( BookShelf.getOrAddUnique( clazz, text ) );
+                field.setText( "" );
+            }
         }
     }
 

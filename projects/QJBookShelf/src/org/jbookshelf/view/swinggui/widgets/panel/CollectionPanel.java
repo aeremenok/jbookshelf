@@ -18,13 +18,15 @@ import javax.swing.event.ChangeListener;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
+import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.widgets.TranslatableAction;
-import org.jbookshelf.view.swinggui.widgets.panel.tab.AuthorTab;
-import org.jbookshelf.view.swinggui.widgets.panel.tab.BookTab;
-import org.jbookshelf.view.swinggui.widgets.panel.tab.CategoryTab;
-import org.jbookshelf.view.swinggui.widgets.panel.tab.CollectionTab;
+import org.jbookshelf.view.swinggui.widgets.panel.tab.AuthorView;
+import org.jbookshelf.view.swinggui.widgets.panel.tab.BookView;
+import org.jbookshelf.view.swinggui.widgets.panel.tab.CategoryView;
+import org.jbookshelf.view.swinggui.widgets.panel.tab.CollectionView;
 
 public class CollectionPanel
     extends JPanel
@@ -59,12 +61,17 @@ public class CollectionPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-            final String text = searchTextField.getText();
             final int selectedIndex = isReadComboBox.getSelectedIndex();
             final Boolean isRead = selectedIndex == 0
                 ? null : selectedIndex == 1
                     ? true : false;
-            getActiveTab().search( new SearchParameters( isRead, searchContent.isSelected(), text ) );
+
+            final Parameters parameters = new Parameters();
+            parameters.put( Keys.SEARCH_TEXT, searchTextField.getText() );
+            parameters.put( Keys.SEARCH_IS_READ, isRead );
+            parameters.put( Keys.SEARCH_CONTENT, searchContent.isSelected() );
+
+            getActiveTab().search( parameters );
         }
     }
 
@@ -76,7 +83,7 @@ public class CollectionPanel
     private final JComboBox    isReadComboBox  = new JComboBox();
     private final JCheckBox    searchContent   = new JCheckBox();
 
-    private CollectionTab[]    tabs;
+    private CollectionView[]    tabs;
 
     @PostConstruct
     public void initSingleton()
@@ -108,7 +115,7 @@ public class CollectionPanel
     public void stateChanged(
         final ChangeEvent e )
     {
-        final boolean isBook = getActiveTab() instanceof BookTab;
+        final boolean isBook = getActiveTab() instanceof BookView;
         isReadComboBox.setEnabled( isBook );
         searchContent.setEnabled( isBook );
 
@@ -120,7 +127,7 @@ public class CollectionPanel
         searchAction.actionPerformed( null );
     }
 
-    private CollectionTab getActiveTab()
+    private CollectionView getActiveTab()
     {
         return tabs[viewTabbedPane.getSelectedIndex()];
     }
@@ -143,12 +150,12 @@ public class CollectionPanel
         add( searchBox, BorderLayout.NORTH );
         add( viewTabbedPane, BorderLayout.CENTER );
 
-        final BookTab bookTab = Single.instance( BookTab.class );
-        final AuthorTab authorTab = Single.instance( AuthorTab.class );
-        final CategoryTab categoryTab = Single.instance( CategoryTab.class );
-        tabs = new CollectionTab[]
+        final BookView bookTab = Single.instance( BookView.class );
+        final AuthorView authorTab = Single.instance( AuthorView.class );
+        final CategoryView categoryTab = Single.instance( CategoryView.class );
+        tabs = new CollectionView[]
         { bookTab, authorTab, categoryTab };
-        for ( final CollectionTab tab : tabs )
+        for ( final CollectionView tab : tabs )
         {
             viewTabbedPane.add( tab );
         }

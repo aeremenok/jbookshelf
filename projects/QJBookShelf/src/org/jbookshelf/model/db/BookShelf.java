@@ -21,10 +21,10 @@ public class BookShelf
     private static final Logger log = Logger.getLogger( BookShelf.class );
 
     @Nullable
-    public static Book getBook(
+    public static Book addBook(
         @Nonnull final String bookName,
-        @Nonnull final String authorName,
-        @Nonnull final String categoryName,
+        @Nullable final String authorName,
+        @Nullable final String categoryName,
         @Nonnull final PhysicalBook physicalUnit )
     {
         final Session session = HibernateUtil.getSession();
@@ -34,15 +34,15 @@ public class BookShelf
             book.setName( bookName );
             book.setPhysicalBook( physicalUnit );
 
-            if ( authorName != null )
+            if ( authorName != null && !"".equals( bookName ) )
             {
-                final Author author = getUnique( Author.class, authorName );
+                final Author author = getOrAddUnique( Author.class, authorName );
                 session.load( author, author.getId() );
                 book.addAuthor( author );
             }
-            if ( categoryName != null )
+            if ( categoryName != null && !"".equals( categoryName ) )
             {
-                final Category category = getUnique( Category.class, categoryName );
+                final Category category = getOrAddUnique( Category.class, categoryName );
                 session.load( category, category.getId() );
                 book.addCategory( category );
             }
@@ -57,7 +57,7 @@ public class BookShelf
         catch ( final Exception e )
         {
             log.error( e, e );
-            throw new Error( e );
+            return null;
         }
         finally
         {
@@ -67,7 +67,7 @@ public class BookShelf
 
     @SuppressWarnings( "unchecked" )
     @Nonnull
-    public static <T extends Unique> T getUnique(
+    public static <T extends Unique> T getOrAddUnique(
         @Nonnull final Class<T> class1,
         @Nonnull final String name )
     {
