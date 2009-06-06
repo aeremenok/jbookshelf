@@ -15,7 +15,14 @@ public class Parameters
     {
         SEARCH_TEXT,
         SEARCH_IS_READ,
-        SEARCH_CONTENT;
+        SEARCH_CONTENT,
+
+        BOOK_NAME,
+        BOOK_IS_READ,
+        BOOK_FILE,
+        BOOK_AUTHORS,
+        BOOK_CATEGORIES,
+        BOOK_VIEWER;
     }
 
     private final Map<String, Object> map = new HashMap<String, Object>();

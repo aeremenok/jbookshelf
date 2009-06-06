@@ -5,6 +5,7 @@ package org.jbookshelf.view.swinggui.widgets;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -27,15 +28,19 @@ public class UniqueCompletionModel
     implements
     CompletionModel
 {
-    private static final Logger           log = Logger.getLogger( UniqueCompletionModel.class );
+    private static final Logger                    log = Logger.getLogger( UniqueCompletionModel.class );
 
-    private final Class<? extends Unique> clazz;
+    private final Class<? extends Unique>          clazz;
+
+    private final ListTableModel<? extends Unique> model;
 
     public UniqueCompletionModel(
-        @Nonnull final Class<? extends Unique> clazz )
+        @Nonnull final Class<? extends Unique> clazz,
+        final ListTableModel<? extends Unique> model )
     {
         super();
         this.clazz = clazz;
+        this.model = model;
     }
 
     @SuppressWarnings( "unchecked" )
@@ -47,6 +52,18 @@ public class UniqueCompletionModel
         final StringBuilder q = new StringBuilder( "select name " );
         q.append( " from " ).append( clazz.getSimpleName() );
         q.append( " where upper(name) like '" ).append( prefix.toUpperCase() ).append( "%'" );
+
+        final Collection<? extends Unique> uniques = model.getValues();
+        if ( uniques.size() > 0 )
+        {
+            q.append( " and upper(name) not in (" );
+            for ( final Unique unique : uniques )
+            {
+                q.append( "'" ).append( unique.getName().toUpperCase() ).append( "'," );
+            }
+            q.deleteCharAt( q.length() - 1 );
+            q.append( ")" );
+        }
 
         // run it
         final QueryRunner runner = new QueryRunner();

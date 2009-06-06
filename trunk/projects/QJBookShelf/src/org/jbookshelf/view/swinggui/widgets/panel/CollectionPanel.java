@@ -46,7 +46,7 @@ public class CollectionPanel
             final ActionEvent e )
         {
             searchTextField.setText( "" );
-            updateActiveTree();
+            updateActiveView();
         }
     }
 
@@ -83,14 +83,14 @@ public class CollectionPanel
     private final JComboBox    isReadComboBox  = new JComboBox();
     private final JCheckBox    searchContent   = new JCheckBox();
 
-    private CollectionView[]    tabs;
+    private CollectionView[]   tabs;
 
     @PostConstruct
     public void initSingleton()
     {
         initComponents();
         Translator.addTranslatable( this );
-        updateActiveTree();
+        updateActiveView();
     }
 
     public void retranslate()
@@ -119,10 +119,10 @@ public class CollectionPanel
         isReadComboBox.setEnabled( isBook );
         searchContent.setEnabled( isBook );
 
-        updateActiveTree();
+        updateActiveView();
     }
 
-    public void updateActiveTree()
+    public void updateActiveView()
     {
         searchAction.actionPerformed( null );
     }

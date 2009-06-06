@@ -24,48 +24,26 @@ public class BookShelf
     private static final Logger log = Logger.getLogger( BookShelf.class );
 
     @Nullable
-    public static Book addBook(
+    public static Book createBook(
         @Nonnull final String bookName,
         @Nullable final String authorName,
         @Nullable final String categoryName,
         @Nonnull final PhysicalBook physicalUnit )
     {
-        final Session session = HibernateUtil.getSession();
-        try
-        {
-            final Book book = new Book();
-            book.setName( bookName );
-            book.setPhysicalBook( physicalUnit );
+        final Book book = new Book();
+        book.setName( bookName );
+        book.setPhysicalBook( physicalUnit );
 
-            if ( authorName != null && !"".equals( bookName ) )
-            {
-                final Author author = getOrAddUnique( Author.class, authorName );
-                session.load( author, author.getId() );
-                book.addAuthor( author );
-            }
-            if ( categoryName != null && !"".equals( categoryName ) )
-            {
-                final Category category = getOrAddUnique( Category.class, categoryName );
-                session.load( category, category.getId() );
-                book.addCategory( category );
-            }
-
-            session.beginTransaction();
-            session.persist( book );
-            session.persist( physicalUnit );
-            session.getTransaction().commit();
-
-            return book;
-        }
-        catch ( final Exception e )
+        if ( authorName != null && !"".equals( bookName ) )
         {
-            log.error( e, e );
-            return null;
+            book.getAuthors().add( getOrAddUnique( Author.class, authorName ) );
         }
-        finally
+        if ( categoryName != null && !"".equals( categoryName ) )
         {
-            session.close();
+            book.getCategories().add( getOrAddUnique( Category.class, categoryName ) );
         }
+
+        return book;
     }
 
     public static Set<Book> getBooks(
@@ -144,6 +122,44 @@ public class BookShelf
         {
             log.error( e, e );
             throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+
+    /**
+     * @param book
+     */
+    public static void persistBook(
+        @Nonnull final Book book )
+    {
+        log.debug( "persistBook" );
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            session.beginTransaction();
+            for ( final Author author : book.getAuthors() )
+            {
+                session.load( author, author.getId() );
+                author.getBooks().add( book );
+            }
+
+            for ( final Category category : book.getCategories() )
+            {
+                session.load( category, category.getId() );
+                category.getBooks().add( book );
+            }
+
+            session.persist( book );
+            session.persist( book.getPhysicalBook() );
+
+            session.getTransaction().commit();
+        }
+        catch ( final HibernateException e )
+        {
+            log.error( e, e );
         }
         finally
         {
