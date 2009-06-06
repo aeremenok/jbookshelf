@@ -8,6 +8,7 @@ import javax.swing.Action;
 import javax.swing.JFileChooser;
 
 import org.jbookshelf.view.i18n.I18N;
+import org.jbookshelf.view.swinggui.widgets.dialog.FileImportDialog;
 
 public class BookShelfActions
 {
@@ -45,7 +46,7 @@ public class BookShelfActions
         public void actionPerformed(
             final ActionEvent e )
         {
-        // TODO Auto-generated method stub
+            new FileImportDialog().setVisible( true );
         }
     }
 

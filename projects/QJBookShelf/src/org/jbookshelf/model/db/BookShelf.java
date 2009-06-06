@@ -160,6 +160,7 @@ public class BookShelf
         catch ( final HibernateException e )
         {
             log.error( e, e );
+            throw new Error( e );
         }
         finally
         {

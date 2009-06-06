@@ -39,7 +39,7 @@ public class ToolBar
         public void actionPerformed(
             final ActionEvent e )
         {
-            new JBSAboutDialog( Single.instance( MainWindow.class ) ).setVisible( true );
+            new JBSAboutDialog( ).setVisible( true );
         }
     }
 
@@ -54,7 +54,7 @@ public class ToolBar
         public void actionPerformed(
             final ActionEvent e )
         {
-            new BookAdditionDialog( Single.instance( MainWindow.class ) ).setVisible( true );
+            new BookAdditionDialog( ).setVisible( true );
         }
     }
 
@@ -69,7 +69,7 @@ public class ToolBar
         public void actionPerformed(
             final ActionEvent e )
         {
-            new SettingsDialog( Single.instance( MainWindow.class ) ).setVisible( true );
+            new SettingsDialog( ).setVisible( true );
         }
     }
 

@@ -14,6 +14,8 @@ import org.xnap.commons.gui.FileChooserPanel;
 public class FileChooserPanelExt
     extends FileChooserPanel
 {
+    private String key;
+
     public FileChooserPanelExt(
         final File file,
         final int columns )
@@ -23,15 +25,28 @@ public class FileChooserPanelExt
     }
 
     public FileChooserPanelExt(
-        final int columns )
+        final int columns,
+        final String name )
     {
         this( null, columns );
+        key = name;
+        final Settings settings = Single.instance( Settings.class );
+        final File file = new File( settings.get( getKey(), "" ) );
+        if ( file.exists() )
+        {
+            setFile( file );
+        }
     }
 
     private String getKey()
     {
-        // fixme such a key can be not unique
-        return getParent().getClass().getName() + "/" + getClass().getName();
+        if ( key == null )
+        {
+            // fixme such a key can be non-unique
+            return (getParent() != null
+                ? getParent().getClass().getName() + "/" : "") + getClass().getName();
+        }
+        return key;
     }
 
     @Override

@@ -25,6 +25,7 @@ import org.jbookshelf.view.logic.Translator;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.widgets.FileChooserPanelExt;
 import org.jbookshelf.view.swinggui.widgets.MultipleField;
+import org.jbookshelf.view.swinggui.widgets.MultipleUniqueField;
 import org.xnap.commons.gui.FileChooserPanel;
 
 public class BookPanel
@@ -75,10 +76,10 @@ public class BookPanel
 
     private final JComboBox               viewerComboBox   = new JComboBox();
 
-    private final MultipleField<Author>   authorField      = new MultipleField<Author>( Author.class );
-    private final MultipleField<Category> categoryField    = new MultipleField<Category>( Category.class );
+    private final MultipleField<Author>   authorField      = new MultipleUniqueField<Author>( Author.class );
+    private final MultipleField<Category> categoryField    = new MultipleUniqueField<Category>( Category.class );
 
-    private final FileChooserPanel        fileChooserPanel = new FileChooserPanelExt( 50 )
+    private final FileChooserPanel        fileChooserPanel = new FileChooserPanelExt( 50, "book.file.chooser" )
                                                            {
                                                                @Override
                                                                protected void fileSelected(

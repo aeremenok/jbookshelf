@@ -13,7 +13,6 @@ import javax.swing.Icon;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.commons.collections.list.SetUniqueList;
-import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.view.i18n.I18N;
 
 /**
@@ -22,7 +21,7 @@ import org.jbookshelf.view.i18n.I18N;
  * @author eav 2009
  * @param <V> unique type
  */
-public class ListTableModel<V extends Unique>
+public class ListTableModel<V>
     extends DefaultTableModel
 {
     /**
@@ -81,7 +80,7 @@ public class ListTableModel<V extends Unique>
         switch ( column )
         {
             case 0:
-                return values.get( row ).getName();
+                return values.get( row );
             case 1:
                 return IMG.icon( IMG.LIST_REMOVE_SMALL_PNG );
         }

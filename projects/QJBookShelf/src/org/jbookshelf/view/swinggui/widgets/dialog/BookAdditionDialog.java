@@ -1,7 +1,6 @@
 package org.jbookshelf.view.swinggui.widgets.dialog;
 
 import javax.swing.Action;
-import javax.swing.JFrame;
 import javax.swing.border.TitledBorder;
 
 import org.jbookshelf.controller.singleton.Single;
@@ -11,6 +10,7 @@ import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.swinggui.MainWindow;
 import org.jbookshelf.view.swinggui.widgets.panel.BookPanel;
 import org.jbookshelf.view.swinggui.widgets.panel.CollectionPanel;
 import org.xnap.commons.gui.DefaultDialog;
@@ -22,10 +22,9 @@ public class BookAdditionDialog
 {
     private final BookPanel bookPanel = new BookPanel();
 
-    public BookAdditionDialog(
-        final JFrame owner )
+    public BookAdditionDialog()
     {
-        super( owner, BUTTON_OKAY | BUTTON_APPLY | BUTTON_CANCEL );
+        super( Single.instance( MainWindow.class ), BUTTON_OKAY | BUTTON_APPLY | BUTTON_CANCEL );
         Translator.addTranslatable( this );
         initComponents();
 
