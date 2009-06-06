@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
@@ -30,7 +31,7 @@ public class Category
     implements
     Serializable,
     Timestampable,
-    Unique
+    HasBooks
 {
     @Id
     @GeneratedValue
@@ -47,10 +48,12 @@ public class Category
     private Category            parent;
 
     @OneToMany( mappedBy = "parent" )
+    @OrderBy( "name desc" )
     @org.hibernate.annotations.ForeignKey( name = "FK_PARENT_CATEGORY" )
     private final Set<Category> children = new HashSet<Category>();
 
     @ManyToMany
+    @OrderBy( "name desc" )
     private final Set<Book>     books    = new HashSet<Book>();
 
     public void addChild(

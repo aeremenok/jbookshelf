@@ -4,12 +4,15 @@
 package org.jbookshelf.model.db;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -63,6 +66,52 @@ public class BookShelf
         {
             session.close();
         }
+    }
+
+    public static Set<Book> getBooks(
+        final HasBooks hasBooks )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            // todo remove obsolete query
+            session.load( hasBooks, hasBooks.getId() );
+            Hibernate.initialize( hasBooks.getBooks() );
+            return hasBooks.getBooks();
+        }
+        catch ( final HibernateException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+
+    }
+
+    public static Set<Category> getChildren(
+        final Category category )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            // todo remove obsolete query
+            session.load( category, category.getId() );
+            Hibernate.initialize( category.getChildren() );
+            return category.getChildren();
+        }
+        catch ( final HibernateException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+
     }
 
     @SuppressWarnings( "unchecked" )
