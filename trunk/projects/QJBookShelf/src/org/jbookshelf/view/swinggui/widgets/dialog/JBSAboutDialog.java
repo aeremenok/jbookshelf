@@ -6,9 +6,9 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.net.MalformedURLException;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
@@ -21,18 +21,9 @@ import org.xnap.commons.gui.DefaultDialog;
 public class JBSAboutDialog
     extends DefaultDialog
     implements
-        Translatable
+    Translatable
 {
     private static final OpenBrowserAction GPL_ACTION;
-
-    private final JLabel                   header                = new JLabel();
-
-    private final JLabel                   authorLabel           = new JLabel();
-    private final JLabel                   authorValueLabel      = new JLabel();
-    private final JLabel                   licenseLabel          = new JLabel();
-    private final JXHyperlink              licenseValueHyperLink = new JXHyperlink();
-    private final JLabel                   versionLabel          = new JLabel();
-    private final JLabel                   versionValueLabel     = new JLabel();
 
     static
     {
@@ -46,10 +37,18 @@ public class JBSAboutDialog
         }
     }
 
-    public JBSAboutDialog(
-        final JFrame owner )
+    private final JLabel                   header                = new JLabel();
+    private final JLabel                   authorLabel           = new JLabel();
+    private final JLabel                   authorValueLabel      = new JLabel();
+    private final JLabel                   licenseLabel          = new JLabel();
+    private final JXHyperlink              licenseValueHyperLink = new JXHyperlink();
+    private final JLabel                   versionLabel          = new JLabel();
+
+    private final JLabel                   versionValueLabel     = new JLabel();
+
+    public JBSAboutDialog()
     {
-        super( owner, BUTTON_CLOSE );
+        super( Single.instance( MainWindow.class ), BUTTON_CLOSE );
         setModal( true );
 
         initComponents();

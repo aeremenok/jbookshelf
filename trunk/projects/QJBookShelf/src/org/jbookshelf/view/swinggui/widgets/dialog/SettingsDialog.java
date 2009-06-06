@@ -3,7 +3,6 @@ package org.jbookshelf.view.swinggui.widgets.dialog;
 import javax.swing.Action;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
@@ -12,6 +11,7 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.swinggui.MainWindow;
 import org.jbookshelf.view.swinggui.widgets.FileChooserPanelExt;
 import org.jbookshelf.view.swinggui.widgets.LookAndFeelComboBoxModel;
 import org.jbookshelf.view.swinggui.widgets.panel.GridBagPanel;
@@ -22,23 +22,22 @@ import org.xnap.commons.gui.settings.SettingComponentMediator;
 public class SettingsDialog
     extends DefaultDialog
     implements
-        Translatable
+    Translatable
 {
     private final SettingComponentMediator mediator         = new SettingComponentMediator();
     private final Settings                 settings         = Single.instance( Settings.class );
 
     private final JComboBox                langComboBox     = new JComboBox();
     private final JComboBox                lafComboBox      = new JComboBox( new LookAndFeelComboBoxModel() );
-    private final FileChooserPanel         fileChooserPanel = new FileChooserPanelExt( 50 );
+    private final FileChooserPanel         fileChooserPanel = new FileChooserPanelExt( 50, "jbs.dir.chooser" );
 
     private final JLabel                   langLabel        = new JLabel();
     private final JLabel                   lafLabel         = new JLabel();
     private final JLabel                   dirLabel         = new JLabel();
 
-    public SettingsDialog(
-        final JFrame owner )
+    public SettingsDialog()
     {
-        super( owner, BUTTON_APPLY | BUTTON_DEFAULTS | BUTTON_OKAY | BUTTON_CANCEL );
+        super( Single.instance( MainWindow.class ), BUTTON_APPLY | BUTTON_DEFAULTS | BUTTON_OKAY | BUTTON_CANCEL );
         initComponents();
         Translator.addTranslatable( this );
         mediator.revert();

@@ -23,6 +23,7 @@ public class IMG
     public static final String DOCUMENT_IMPORT_PNG            = "document-import.png";
     public static final String GOOGLE_PNG                     = "google.png";
     public static final String DOCUMENT_PROPERTIES_PNG        = "document-properties.png";
+    public static final String DOCUMENT_PROPERTIES_SMALL_PNG  = "document-properties-small.png";
     public static final String EDIT_CLEAR_LOCATIONBAR_RTL_PNG = "edit-clear-locationbar-rtl.png";
     public static final String EDIT_FIND_PNG                  = "edit-find.png";
 
