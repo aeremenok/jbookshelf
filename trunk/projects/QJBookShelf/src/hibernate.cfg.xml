@@ -13,8 +13,8 @@
 		<!--  
 		<property name="hbm2ddl.auto">validate</property>
 		-->
-		<property name="show_sql">false</property>
-		<property name="format_sql">true</property>
+		<property name="show_sql">true</property>
+		<property name="format_sql">false</property>
 		
 		<mapping class="org.jbookshelf.model.db.Book" />
 		<mapping class="org.jbookshelf.model.db.Note" />

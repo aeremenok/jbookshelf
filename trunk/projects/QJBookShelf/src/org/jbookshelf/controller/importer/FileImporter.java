@@ -134,7 +134,11 @@ public class FileImporter
             final String categoryName = parser.getCategoryName();
             final String bookName = parser.getBookName();
 
-            return BookShelf.getBook( bookName, authorName, categoryName, physicalUnit );
+            if ( bookName != null && "".equals( bookName ) )
+            {
+                return BookShelf.addBook( bookName, authorName, categoryName, physicalUnit );
+            }
+            return null;
         }
         catch ( final Exception e )
         {
