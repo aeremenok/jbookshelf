@@ -48,6 +48,11 @@ public class UniqueCompletionModel
     public boolean complete(
         final String prefix )
     {
+        if ( prefix.length() < 1 )
+        {
+            return false;
+        }
+
         // build query 
         final StringBuilder q = new StringBuilder( "select name " );
         q.append( " from " ).append( clazz.getSimpleName() );
@@ -79,7 +84,7 @@ public class UniqueCompletionModel
             {
                 addElement( object[0] );
             }
-            return true;
+            return items.size() > 0;
         }
         catch ( final SQLException e )
         {

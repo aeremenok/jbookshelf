@@ -1,5 +1,7 @@
 package org.jbookshelf.view.swinggui.widgets.dialog;
 
+import java.io.File;
+
 import javax.swing.Action;
 import javax.swing.border.TitledBorder;
 
@@ -15,6 +17,8 @@ import org.jbookshelf.view.swinggui.widgets.panel.BookPanel;
 import org.jbookshelf.view.swinggui.widgets.panel.CollectionPanel;
 import org.xnap.commons.gui.DefaultDialog;
 
+import com.sun.istack.internal.Nullable;
+
 public class BookAdditionDialog
     extends DefaultDialog
     implements
@@ -22,14 +26,25 @@ public class BookAdditionDialog
 {
     private final BookPanel bookPanel = new BookPanel();
 
+    /**
+     * created book
+     */
+    @Nullable
+    private Book            result;
+
     public BookAdditionDialog()
     {
         super( Single.instance( MainWindow.class ), BUTTON_OKAY | BUTTON_APPLY | BUTTON_CANCEL );
-        Translator.addTranslatable( this );
-        initComponents();
+        init();
+    }
 
-        pack();
-        setLocationRelativeTo( null );
+    public BookAdditionDialog(
+        final FileImportDialog dialog,
+        final File file )
+    {
+        super( dialog, BUTTON_OKAY | BUTTON_CANCEL );
+        init();
+        bookPanel.setFile( file );
     }
 
     @Override
@@ -39,13 +54,28 @@ public class BookAdditionDialog
         if ( parameters != null )
         {
             final Book book = BookPanel.changeBook( new Book(), parameters );
-            BookShelf.persistBook( book );
-            bookPanel.clear();
-            Single.instance( CollectionPanel.class ).updateActiveView();
-
+            if ( getParent() instanceof FileImportDialog )
+            { // let the dialog deal with result
+                result = book;
+            }
+            else
+            { // general addition, persist a new book
+                BookShelf.persistBook( book );
+                bookPanel.clear();
+                Single.instance( CollectionPanel.class ).updateActiveView();
+            }
             return true;
         }
         return false;
+    }
+
+    /**
+     * @return the result
+     */
+    @Nullable
+    public Book getResult()
+    {
+        return this.result;
     }
 
     public void retranslate()
@@ -57,11 +87,16 @@ public class BookAdditionDialog
         bookPanel.setBorder( new TitledBorder( I18N.tr( "Add book to collection" ) ) );
     }
 
-    private void initComponents()
+    private void init()
     {
+        Translator.addTranslatable( this );
+
         setModal( true );
         setMainComponent( bookPanel );
         setButtonSeparatorVisible( false );
+
+        pack();
+        setLocationRelativeTo( null );
     }
 
     @Override

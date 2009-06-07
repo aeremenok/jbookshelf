@@ -24,6 +24,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.PhysicalBook;
@@ -65,6 +66,8 @@ public class FileImporter
                     new SingleFileImporter()                    };
 
     public static final FileFilter        UNSUPPORTED_EXT_FILTER = new UnsupportedExtFilter();
+
+    private static final Logger           log                    = Logger.getLogger( FileImporter.class );
 
     @Nullable
     public static PhysicalBook createPhysicalBook(
@@ -143,7 +146,7 @@ public class FileImporter
         }
         catch ( final Exception e )
         {
-            e.printStackTrace();
+            log.error( e, e );
             return null;
         }
     }

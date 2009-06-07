@@ -5,10 +5,12 @@ package org.jbookshelf.view.swinggui.widgets.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -16,7 +18,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.border.TitledBorder;
@@ -32,12 +33,15 @@ import org.jbookshelf.view.logic.Translator;
 import org.jbookshelf.view.swinggui.MainWindow;
 import org.jbookshelf.view.swinggui.widgets.FileChooserPanelExt;
 import org.jbookshelf.view.swinggui.widgets.MultipleField;
+import org.jbookshelf.view.swinggui.widgets.ProgressBar;
 import org.jbookshelf.view.swinggui.widgets.panel.CollectionPanel;
 import org.jbookshelf.view.swinggui.widgets.panel.GridBagPanel;
 import org.jdesktop.swingx.JXTable;
 import org.xnap.commons.gui.DefaultDialog;
 
 /**
+ * a dialog for importing collection from filesystem
+ * 
  * @author eav 2009
  */
 public class FileImportDialog
@@ -45,14 +49,34 @@ public class FileImportDialog
     implements
     Translatable
 {
-    private final SuccessTableModel     successModel     = new SuccessTableModel();
-    private final FailTableModel        failModel        = new FailTableModel();
+    private final JLabel                fileLabel        = new JLabel();
+    /**
+     * root directory of filesystem
+     */
+    private final FileChooserPanelExt   fileChooserPanel = new FileChooserPanelExt( 50, "import.dir.chooser" );
 
-    private final JXTable               successTable     = new JXTable( successModel );
-    private final JXTable               failTable        = new JXTable( failModel );
-
+    private final JLabel                maskLabel        = new JLabel();
+    /**
+     * masks to parse filenames
+     */
     private final MultipleField<String> maskField        = new MultipleField<String>();
 
+    private final JSplitPane            splitPane        = new JSplitPane();
+
+    private final SuccessTableModel     successModel     = new SuccessTableModel();
+    private final FailTableModel        failModel        = new FailTableModel();
+    /**
+     * displays successfully imported books
+     */
+    private final JXTable               successTable     = new JXTable( successModel );
+    /**
+     * displays unimported files
+     */
+    private final JXTable               failTable        = new JXTable( failModel );
+
+    /**
+     * performs import
+     */
     private final FileImporter          importer         = new FileImporter()
                                                          {
                                                              @Override
@@ -71,20 +95,18 @@ public class FileImportDialog
                                                                  successModel.addBook( book );
                                                              }
                                                          };
-    private final JLabel                fileLabel        = new JLabel();
-    private final JLabel                maskLabel        = new JLabel();
 
-    private final FileChooserPanelExt   fileChooserPanel = new FileChooserPanelExt( 50, "import.dir.chooser" );
-
-    private final JProgressBar          progressBar      = new JProgressBar();
-
-    private final JSplitPane            splitPane        = new JSplitPane();
+    /**
+     * shown while import goes on
+     */
+    private final ProgressBar           progressBar      = new ProgressBar();
 
     public FileImportDialog()
     {
         super( Single.instance( MainWindow.class ), BUTTON_OKAY | BUTTON_CLOSE | BUTTON_DEFAULTS );
 
         initComponents();
+        initListeners();
         Translator.addTranslatable( this );
 
         setPreferredSize( new Dimension( 1024, 768 ) );
@@ -96,10 +118,12 @@ public class FileImportDialog
     @Override
     public boolean apply()
     {
+        // persist all successfully imported books
         for ( final Book book : successModel.getBooks() )
         {
             BookShelf.persistBook( book );
         }
+        // show them
         Single.instance( CollectionPanel.class ).updateActiveView();
         return true;
     }
@@ -107,7 +131,13 @@ public class FileImportDialog
     @Override
     public void close()
     {
-        Single.instance( Settings.class ).save();
+        // save the masks and the chosen directory
+        final Settings settings = Single.instance( Settings.class );
+
+        final String[] masks = maskField.getValues().toArray( new String[maskField.getValues().size()] );
+        settings.IMPORT_MASKS.setValue( masks );
+
+        settings.save();
         super.close();
     }
 
@@ -128,11 +158,13 @@ public class FileImportDialog
 
     private void initComponents()
     {
+        setModal( true );
         setButtonSeparatorVisible( false );
 
         final JPanel panel = new JPanel( new BorderLayout() );
         setMainComponent( panel );
 
+        // add directory chooser and mask field
         final GridBagPanel grid = new GridBagPanel();
         panel.add( grid, BorderLayout.NORTH );
 
@@ -143,6 +175,7 @@ public class FileImportDialog
 
         fileChooserPanel.getFileChooser().setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
 
+        // add two tables
         panel.add( splitPane, BorderLayout.CENTER );
 
         splitPane.setOneTouchExpandable( true );
@@ -153,18 +186,64 @@ public class FileImportDialog
         successTable.getColumn( 1 ).setMaxWidth( 40 );
         failTable.getColumn( 1 ).setMaxWidth( 40 );
 
-        progressBar.setIndeterminate( true );
-        progressBar.setVisible( false );
+        // add progressbar
         panel.add( progressBar, BorderLayout.SOUTH );
 
-        final List<String> maskList = new ArrayList<String>();
-        maskList.add( Single.instance( Settings.class ).IMPORT_MASK.getValue() );
-        maskField.setValues( maskList );
+        // fill masks from settings
+        maskField.setValues( Arrays.asList( Single.instance( Settings.class ).IMPORT_MASKS.getValue() ) );
+    }
+
+    private void initListeners()
+    {
+        successTable.addMouseListener( new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(
+                final MouseEvent e )
+            {
+                if ( e.getButton() == MouseEvent.BUTTON1 )
+                {
+                    final int col = successTable.columnAtPoint( e.getPoint() );
+                    if ( col == 1 || e.getClickCount() == 2 )
+                    {}
+                }
+            }
+        } );
+        failTable.addMouseListener( new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(
+                final MouseEvent e )
+            {
+                if ( e.getButton() == MouseEvent.BUTTON1 )
+                {
+                    final int col = failTable.columnAtPoint( e.getPoint() );
+                    if ( col == 1 || e.getClickCount() == 2 )
+                    {
+                        final int row = failTable.rowAtPoint( e.getPoint() );
+                        final File file = failModel.getFiles().get( row );
+
+                        final BookAdditionDialog dialog = new BookAdditionDialog( FileImportDialog.this, file );
+                        dialog.setVisible( true );
+
+                        final Book result = dialog.getResult();
+                        if ( result != null )
+                        {
+                            successModel.addBook( result );
+                            failModel.removeFile( file );
+                        }
+                    }
+                }
+            }
+        } );
     }
 
     @Override
     protected void defaults()
     {
+        // "Import" button pressed
+
+        // check preconditions
         final File file = fileChooserPanel.getFile();
         if ( file == null || !file.exists() )
         {
@@ -181,11 +260,17 @@ public class FileImportDialog
             return;
         }
 
-        progressBar.setVisible( true );
-        successModel.setBooks( new ArrayList<Book>() );
-        failModel.setFiles( new ArrayList<File>() );
-        importer.importFiles( masks.toArray( new String[masks.size()] ), file );
-        progressBar.setVisible( false );
+        // preconditions are fine, run the import
+        progressBar.invoke( new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                successModel.setBooks( new ArrayList<Book>() );
+                failModel.setFiles( new ArrayList<File>() );
+                importer.importFiles( masks.toArray( new String[masks.size()] ), file );
+            }
+        } );
     }
 
 }

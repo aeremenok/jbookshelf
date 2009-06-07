@@ -31,7 +31,8 @@ public class SuccessTableModel
         final Book book )
     {
         books.add( book );
-        fireTableDataChanged();
+        final int row = books.size() - 1;
+        fireTableRowsInserted( row, row );
     }
 
     /**
