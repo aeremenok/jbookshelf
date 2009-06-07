@@ -26,6 +26,9 @@ public class IMG
     public static final String DOCUMENT_PROPERTIES_SMALL_PNG  = "document-properties-small.png";
     public static final String EDIT_CLEAR_LOCATIONBAR_RTL_PNG = "edit-clear-locationbar-rtl.png";
     public static final String EDIT_FIND_PNG                  = "edit-find.png";
+    public static final String FEED_SUBSCRIBE_PNG             = "feed-subscribe.png";
+    public static final String USER_IDENITY_PNG               = "user-identity.png";
+    public static final String BOOK_PNG                       = "x-office-address-book.png";
 
     public static Icon icon(
         final String fileName )

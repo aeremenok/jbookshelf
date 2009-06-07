@@ -26,9 +26,6 @@ import org.jbookshelf.view.swinggui.widgets.panel.CollectionPanel;
 import org.jdesktop.swingx.JXFrame;
 import org.jdesktop.swingx.JXStatusBar;
 
-import com.trolltech.qt.core.QCoreApplication;
-import com.trolltech.qt.gui.QApplication;
-
 public class MainWindow
     extends JXFrame
     implements
@@ -45,10 +42,10 @@ public class MainWindow
         {
             public void run()
             {
-                QApplication.initialize( args );
-
-                QCoreApplication.setApplicationVersion( VERSION );
-                QCoreApplication.setApplicationName( APP_NAME );
+                //                QApplication.initialize( args );
+                //
+                //                QCoreApplication.setApplicationVersion( VERSION );
+                //                QCoreApplication.setApplicationName( APP_NAME );
 
                 PropertyConfigurator.configure( MainWindow.class.getResource( "log4j.properties" ) );
                 Single.instance( MainWindow.class ).setVisible( true );
