@@ -3,24 +3,33 @@
  */
 package org.jbookshelf.view.swinggui.widgets.panel.tab;
 
+import images.IMG;
+
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.swing.JScrollPane;
 import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeWillExpandListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.Category;
 import org.jbookshelf.model.db.HibernateUtil;
+import org.jbookshelf.model.db.Unique;
+import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jdesktop.swingx.JXTree;
@@ -74,25 +83,10 @@ public class CategoryView
         add( new JScrollPane( tree ), BorderLayout.CENTER );
 
         tree.setRootVisible( false );
-        tree.addTreeWillExpandListener( new TreeWillExpandListener()
-        {
-            @Override
-            public void treeWillCollapse(
-                final TreeExpansionEvent event )
-            {}
-
-            @Override
-            public void treeWillExpand(
-                final TreeExpansionEvent event )
-            {
-                final Object node = event.getPath().getLastPathComponent();
-                if ( node instanceof CategoryNode )
-                { // lazy load children and books of category
-                    loadChildren( (CategoryNode) node );
-                }
-            }
-
-        } );
+        tree.setOpenIcon( IMG.icon( IMG.FEED_SUBSCRIBE_PNG ) );
+        tree.setClosedIcon( IMG.icon( IMG.FEED_SUBSCRIBE_PNG ) );
+        tree.setLeafIcon( IMG.icon( IMG.BOOK_PNG ) );
+        initListeners();
     }
 
     /* (non-Javadoc)
@@ -125,6 +119,52 @@ public class CategoryView
             session.close();
         }
 
+    }
+
+    private void initListeners()
+    {
+        tree.addTreeWillExpandListener( new TreeWillExpandListener()
+        {
+            @Override
+            public void treeWillCollapse(
+                final TreeExpansionEvent event )
+            {}
+
+            @Override
+            public void treeWillExpand(
+                final TreeExpansionEvent event )
+            {
+                final Object node = event.getPath().getLastPathComponent();
+                if ( node instanceof CategoryNode )
+                { // lazy load children and books of category
+                    loadChildren( (CategoryNode) node );
+                }
+            }
+        } );
+
+        tree.addTreeSelectionListener( new TreeSelectionListener()
+        {
+            @Override
+            public void valueChanged(
+                final TreeSelectionEvent e )
+            {
+                final List<Unique> list = new ArrayList<Unique>();
+                for ( final TreePath treePath : tree.getSelectionPaths() )
+                {
+                    final Object object = treePath.getLastPathComponent();
+
+                    if ( object instanceof CategoryNode )
+                    {
+                        list.add( ((CategoryNode) object).getCategory() );
+                    }
+                    else if ( object instanceof BookNode )
+                    {
+                        list.add( ((BookNode) object).getBook() );
+                    }
+                }
+                Single.instance( BookShelfMediator.class ).uniquesSelected( list );
+            }
+        } );
     }
 
     /**
