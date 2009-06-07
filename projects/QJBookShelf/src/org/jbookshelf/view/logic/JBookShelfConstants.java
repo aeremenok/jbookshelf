@@ -22,8 +22,7 @@ package org.jbookshelf.view.logic;
  */
 public interface JBookShelfConstants
 {
-    String ICONPATH       = "classpath:/images/";
-    String SWING_ICONPATH = "images/";
+    String ICONPATH = "classpath:/images/";
     // end of word
-    String EOW            = "~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-=";
+    String EOW      = "~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-=";
 }

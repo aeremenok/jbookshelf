@@ -118,13 +118,22 @@ public class FileImportDialog
     @Override
     public boolean apply()
     {
-        // persist all successfully imported books
-        for ( final Book book : successModel.getBooks() )
+        // close dialog immediately
+        // general progressbar will do this job in a new thread 
+        Single.instance( ProgressBar.class ).invoke( new Runnable()
         {
-            BookShelf.persistBook( book );
-        }
-        // show them
-        Single.instance( CollectionPanel.class ).updateActiveView();
+            @Override
+            public void run()
+            {
+                // persist all successfully imported books
+                for ( final Book book : successModel.getBooks() )
+                {
+                    BookShelf.persistBook( book );
+                }
+                // show them
+                Single.instance( CollectionPanel.class ).updateActiveView();
+            }
+        } );
         return true;
     }
 

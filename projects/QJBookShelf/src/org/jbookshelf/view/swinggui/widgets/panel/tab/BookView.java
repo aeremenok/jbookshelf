@@ -4,18 +4,25 @@
 package org.jbookshelf.view.swinggui.widgets.panel.tab;
 
 import java.awt.BorderLayout;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.model.db.Author;
+import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.Category;
 import org.jbookshelf.model.db.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
+import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jdesktop.swingx.JXTable;
@@ -27,6 +34,8 @@ import org.jdesktop.swingx.JXTable;
  */
 public class BookView
     extends CollectionView
+    implements
+    ListSelectionListener
 {
     private static class BookTableModel
         extends DefaultTableModel
@@ -36,9 +45,30 @@ public class BookView
 
         private List<Object[]>  rows  = new ArrayList<Object[]>();
 
+        private List<Book>      books = new ArrayList<Book>();
+
         public BookTableModel()
         {
             super( names, 0 );
+        }
+
+        /**
+         * @return the books
+         */
+        public List<Book> getBooks()
+        {
+            return this.books;
+        }
+
+        public List<Book> getBooks(
+            final int[] rowNumbers )
+        {
+            final List<Book> list = new ArrayList<Book>();
+            for ( final int i : rowNumbers )
+            {
+                list.add( books.get( i ) );
+            }
+            return list;
         }
 
         @Override
@@ -65,6 +95,31 @@ public class BookView
         }
 
         /**
+         * @param books the books to set
+         */
+        public void setBooks(
+            final List<Book> books )
+        {
+            this.books = books;
+            // todo optimize
+            final List<Object[]> list = new ArrayList<Object[]>();
+            for ( final Book book : books )
+            {
+                final Iterator<Author> aIterator = book.getAuthors().iterator();
+                final String firstAuthorName = aIterator.hasNext()
+                    ? aIterator.next().getName() : "";
+
+                final Iterator<Category> bIterator = book.getCategories().iterator();
+                final String firstCategoryName = bIterator.hasNext()
+                    ? bIterator.next().getName() : "";
+
+                list.add( new Object[]
+                { book.getName(), firstAuthorName, firstCategoryName } );
+            }
+            setRows( list );
+        }
+
+        /**
          * @param rows the rows to set
          */
         public void setRows(
@@ -88,6 +143,8 @@ public class BookView
         add( new JScrollPane( table ), BorderLayout.CENTER );
 
         table.setModel( model );
+
+        table.getSelectionModel().addListSelectionListener( this );
     }
 
     @SuppressWarnings( "unchecked" )
@@ -95,29 +152,39 @@ public class BookView
     public void search(
         final Parameters p )
     {
-        final QueryRunner runner = new QueryRunner();
+        final Session session = HibernateUtil.getSession();
         try
         {
-            final Object rows = runner.query( HibernateUtil.connection(), buildQuery( p ), new ArrayListHandler() );
-            model.setRows( (List<Object[]>) rows );
+            final List<Book> books = session.createQuery( buildQuery( p ) ).list();
+            table.clearSelection();
+            model.setBooks( books );
         }
-        catch ( final SQLException e )
+        catch ( final HibernateException e1 )
         {
-            log.error( e, e );
-            throw new Error( e );
+            log.error( e1, e1 );
+            throw new Error( e1 );
         }
+        finally
+        {
+            session.close();
+        }
+    }
+
+    @Override
+    public void valueChanged(
+        final ListSelectionEvent e )
+    {
+        final int[] selectedRows = table.getSelectedRows();
+        final List<Book> selectedBooks = model.getBooks( selectedRows );
+        Single.instance( BookShelfMediator.class ).booksSelected( selectedBooks );
     }
 
     @Override
     protected String buildQuery(
         final Parameters p )
     {
-        final StringBuilder q = new StringBuilder( "select b.name, a.name, c.name, b.id " );
-        q.append( "from book b " );
-        q.append( "left join author_book ab on ab.books_id = b.id " );
-        q.append( "left join author a on a.id = ab.authors_id " );
-        q.append( "left join category_book cb on cb.books_id = b.id " );
-        q.append( "left join category c on c.id = cb.categories_id " );
+        final StringBuilder q = new StringBuilder();
+        q.append( "from Book b " );
         q.append( "where 1=1 " );
 
         final String text = p.get( Keys.SEARCH_TEXT );
