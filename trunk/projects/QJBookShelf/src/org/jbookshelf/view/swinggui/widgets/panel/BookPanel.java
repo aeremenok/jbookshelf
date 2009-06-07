@@ -202,6 +202,15 @@ public class BookPanel
         viewerComboBox.setSelectedIndex( index );
     }
 
+    /**
+     * @param file file to start addition with
+     */
+    public void setFile(
+        final File file )
+    {
+        fileChooserPanel.setFile( file );
+    }
+
     private void initComponents()
     {
         add( bookLabel, 0, 0 );
@@ -223,7 +232,7 @@ public class BookPanel
 
         fileChooserPanel.getFileChooser().setFileSelectionMode( JFileChooser.FILES_AND_DIRECTORIES );
 
-        // todo completion
+        // todo book name completion
     }
 
     protected void onFileSelected(
@@ -231,8 +240,7 @@ public class BookPanel
     {
         if ( bookTextField.getText().equals( "" ) )
         {
-            final String mask = Single.instance( Settings.class ).IMPORT_MASK.getValue();
-            final String[] masks = mask.split( "/" );
+            final String[] masks = Single.instance( Settings.class ).IMPORT_MASKS.getValue();
             fileImporter.importFiles( masks, file );
         }
     }

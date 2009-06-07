@@ -41,7 +41,7 @@ public class Settings
     public StringSetting LANGUAGE;
     public StringSetting LAF;
     public StringSetting JBS_DIR;
-    public StringSetting IMPORT_MASK;
+    public MasksSetting  IMPORT_MASKS;
 
     public File getCollectionFile()
     {
@@ -60,7 +60,7 @@ public class Settings
         firePropertyChange( LANGUAGE.getKey(), "", LANGUAGE.getValue() );
         firePropertyChange( LAF.getKey(), "", LAF.getValue() );
         firePropertyChange( JBS_DIR.getKey(), "", JBS_DIR.getValue() );
-        firePropertyChange( IMPORT_MASK.getKey(), "", IMPORT_MASK.getValue() );
+        firePropertyChange( IMPORT_MASKS.getKey(), "", IMPORT_MASKS.getValue() );
     }
 
     public void load()
@@ -96,7 +96,8 @@ public class Settings
         throws Error
     {
         LANGUAGE = new StringSetting( this, "language", I18N.defaultLanguage() );
-        IMPORT_MASK = new StringSetting( this, "import_mask", "%b" );
+        IMPORT_MASKS = new MasksSetting( this, "import_masks", new String[]
+        { "%a. %b", "%b" } );
 
         final String jbsDir = System.getProperty( "user.home" ) + File.separator + ".jbookshelf" + File.separator;
         JBS_DIR = new StringSetting( this, "jbs_folder", jbsDir );
