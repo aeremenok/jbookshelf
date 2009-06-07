@@ -18,10 +18,12 @@ import javax.swing.event.ChangeListener;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
+import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
 import org.jbookshelf.view.logic.Parameters.Keys;
+import org.jbookshelf.view.swinggui.widgets.ProgressBar;
 import org.jbookshelf.view.swinggui.widgets.TranslatableAction;
 import org.jbookshelf.view.swinggui.widgets.panel.tab.AuthorView;
 import org.jbookshelf.view.swinggui.widgets.panel.tab.BookView;
@@ -61,17 +63,25 @@ public class CollectionPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-            final int selectedIndex = isReadComboBox.getSelectedIndex();
-            final Boolean isRead = selectedIndex == 0
-                ? null : selectedIndex == 1
-                    ? true : false;
+            Single.instance( BookShelfMediator.class ).nothingSelected();
+            Single.instance( ProgressBar.class ).invoke( new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    final int selectedIndex = isReadComboBox.getSelectedIndex();
+                    final Boolean isRead = selectedIndex == 0
+                        ? null : selectedIndex == 1
+                            ? true : false;
 
-            final Parameters parameters = new Parameters();
-            parameters.put( Keys.SEARCH_TEXT, searchTextField.getText() );
-            parameters.put( Keys.SEARCH_IS_READ, isRead );
-            parameters.put( Keys.SEARCH_CONTENT, searchContent.isSelected() );
+                    final Parameters parameters = new Parameters();
+                    parameters.put( Keys.SEARCH_TEXT, searchTextField.getText() );
+                    parameters.put( Keys.SEARCH_IS_READ, isRead );
+                    parameters.put( Keys.SEARCH_CONTENT, searchContent.isSelected() );
 
-            getActiveTab().search( parameters );
+                    getActiveTab().search( parameters );
+                }
+            } );
         }
     }
 

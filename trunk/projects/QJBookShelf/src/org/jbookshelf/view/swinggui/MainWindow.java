@@ -9,7 +9,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.annotation.PostConstruct;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -22,13 +21,16 @@ import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.swinggui.widgets.LookAndFeelComboBoxModel;
+import org.jbookshelf.view.swinggui.widgets.ProgressBar;
 import org.jbookshelf.view.swinggui.widgets.panel.CollectionPanel;
+import org.jdesktop.swingx.JXFrame;
+import org.jdesktop.swingx.JXStatusBar;
 
 import com.trolltech.qt.core.QCoreApplication;
 import com.trolltech.qt.gui.QApplication;
 
 public class MainWindow
-    extends JFrame
+    extends JXFrame
     implements
     JBookShelfConstants,
     PropertyChangeListener
@@ -70,6 +72,11 @@ public class MainWindow
         split.setOneTouchExpandable( true );
         split.setLeftComponent( Single.instance( CollectionPanel.class ) );
         split.setRightComponent( new JLabel( "todo" ) );
+
+        final JXStatusBar statusBar = new JXStatusBar();
+        statusBar.add( Single.instance( ProgressBar.class ) );
+        statusBar.setResizeHandleEnabled( false );
+        setStatusBar( statusBar );
 
         pack();
         setExtendedState( MAXIMIZED_BOTH );

@@ -3,9 +3,9 @@ package org.jbookshelf.view.swinggui.widgets;
 import images.IMG;
 
 import java.awt.event.ActionEvent;
-import java.util.List;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-import javax.annotation.PostConstruct;
 import javax.swing.Action;
 
 import org.jbookshelf.controller.singleton.Single;
@@ -14,20 +14,20 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
-import org.jbookshelf.view.logic.UniqueSelectionListener;
+import org.jbookshelf.view.logic.BookShelfMediator.Properties;
 import org.jbookshelf.view.qtgui.reader.ReaderWindow;
 
 public class UniqueActions
-    implements
-    UniqueSelectionListener
 {
     private class EditAction
         extends TranslatableAction
+        implements
+        PropertyChangeListener
     {
-
         public EditAction()
         {
             super( I18N.tr( "Edit" ), IMG.icon( IMG.DOCUMENT_PROPERTIES_PNG ) );
+            mediator.addPropertyChangeListener( Properties.BOOKS_SELECTED, this );
         }
 
         public void actionPerformed(
@@ -35,15 +35,25 @@ public class UniqueActions
         {
         // TODO Auto-generated method stub
         }
+
+        @Override
+        public void propertyChange(
+            final PropertyChangeEvent evt )
+        {
+            setEnabled( mediator.getSelectedBooks().size() == 1 );
+        }
     }
 
     private class GoogleAction
         extends TranslatableAction
+        implements
+        PropertyChangeListener
     {
 
         public GoogleAction()
         {
             super( I18N.tr( "Google" ), IMG.icon( IMG.GOOGLE_PNG ) );
+            mediator.addPropertyChangeListener( Properties.UNIQUES_SELECTED, this );
         }
 
         public void actionPerformed(
@@ -54,14 +64,24 @@ public class UniqueActions
                 URIUtil.google( unique.getName() );
             }
         }
+
+        @Override
+        public void propertyChange(
+            final PropertyChangeEvent evt )
+        {
+            setEnabled( mediator.getSelectedUniques().size() > 0 );
+        }
     }
 
     private class OpenAction
         extends TranslatableAction
+        implements
+        PropertyChangeListener
     {
         public OpenAction()
         {
             super( I18N.tr( "Open" ), IMG.icon( IMG.DOCUMENT_PREVIEW_PNG ) );
+            mediator.addPropertyChangeListener( Properties.BOOKS_SELECTED, this );
         }
 
         public void actionPerformed(
@@ -72,14 +92,24 @@ public class UniqueActions
                 ReaderWindow.open( null, book );
             }
         }
+
+        @Override
+        public void propertyChange(
+            final PropertyChangeEvent evt )
+        {
+            setEnabled( mediator.getSelectedBooks().size() > 0 );
+        }
     }
 
     private class OpenDirAction
         extends TranslatableAction
+        implements
+        PropertyChangeListener
     {
         public OpenDirAction()
         {
             super( I18N.tr( "Open Directory" ), IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG ) );
+            mediator.addPropertyChangeListener( Properties.BOOKS_SELECTED, this );
         }
 
         public void actionPerformed(
@@ -90,21 +120,37 @@ public class UniqueActions
                 //                URIUtil.openFolder( book.getPhysical().getDirectory() );
             }
         }
+
+        @Override
+        public void propertyChange(
+            final PropertyChangeEvent evt )
+        {
+            setEnabled( mediator.getSelectedBooks().size() > 0 );
+        }
     }
 
     private class RemoveAction
         extends TranslatableAction
+        implements
+        PropertyChangeListener
     {
-
         public RemoveAction()
         {
             super( I18N.tr( "Remove" ), IMG.icon( IMG.LIST_REMOVE_PNG ) );
+            mediator.addPropertyChangeListener( Properties.UNIQUES_SELECTED, this );
         }
 
         public void actionPerformed(
             final ActionEvent e )
         {
         // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void propertyChange(
+            final PropertyChangeEvent evt )
+        {
+            setEnabled( mediator.getSelectedUniques().size() > 0 );
         }
     }
 
@@ -115,25 +161,4 @@ public class UniqueActions
     public final Action             editAction    = new EditAction();
     public final Action             openDirAction = new OpenDirAction();
     public final Action             googleAction  = new GoogleAction();
-
-    @PostConstruct
-    public void initSingleton()
-    {
-        mediator.addUniqueSelectionListener( this );
-    }
-
-    public void selectedUniques(
-        final List<Unique> uniques )
-    {
-        removeAction.setEnabled( uniques.size() > 0 );
-        googleAction.setEnabled( uniques.size() > 0 );
-
-        final List<Book> books = mediator.getSelectedBooks();
-        // all books and their folders can be opened
-        openAction.setEnabled( books.size() > 0 );
-        openDirAction.setEnabled( books.size() > 0 );
-        // only a single book can be edited
-        editAction.setEnabled( books.size() == 1 );
-    }
-
 }
