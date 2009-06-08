@@ -3,12 +3,14 @@
  */
 package org.jbookshelf.model.db;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.dbutils.QueryRunner;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -165,6 +167,60 @@ public class BookShelf
         finally
         {
             session.close();
+        }
+    }
+
+    /**
+     * @param selectedUniques
+     */
+    public static void remove(
+        final Set<Unique> selectedUniques )
+    {
+        final QueryRunner runner = new QueryRunner();
+        final String q1 = "delete from author_book where books_id=?";
+        final String q2 = "delete from author_book where authors_id=?";
+        final String q3 = "delete from category_book where books_id=?";
+        final String q4 = "delete from category_book where categories_id=?";
+        final String q5 = "delete from book where id=?";
+        final String q6 = "delete from author where id=?";
+        final String q7 = "delete from category where id=?";
+        final String q8 = "delete from physical_book where book_id=?";
+
+        try
+        {
+            for ( final Unique unique : selectedUniques )
+            {
+                if ( unique instanceof Book )
+                {
+                    runner.update( HibernateUtil.connection(), q1, new Object[]
+                    { unique.getId() } );
+                    runner.update( HibernateUtil.connection(), q3, new Object[]
+                    { unique.getId() } );
+                    runner.update( HibernateUtil.connection(), q8, new Object[]
+                    { unique.getId() } );
+                    runner.update( HibernateUtil.connection(), q5, new Object[]
+                    { unique.getId() } );
+                }
+                else if ( unique instanceof Author )
+                {
+                    runner.update( HibernateUtil.connection(), q2, new Object[]
+                    { unique.getId() } );
+                    runner.update( HibernateUtil.connection(), q6, new Object[]
+                    { unique.getId() } );
+                }
+                else
+                {
+                    runner.update( HibernateUtil.connection(), q4, new Object[]
+                    { unique.getId() } );
+                    runner.update( HibernateUtil.connection(), q7, new Object[]
+                    { unique.getId() } );
+                }
+            }
+        }
+        catch ( final SQLException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
         }
     }
 }

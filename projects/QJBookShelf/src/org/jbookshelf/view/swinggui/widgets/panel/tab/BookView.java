@@ -132,8 +132,8 @@ public class BookView
 
     private static final Logger  log   = Logger.getLogger( BookView.class );
 
-    private final JXTable        table = new JXTable();
     private final BookTableModel model = new BookTableModel();
+    private final JXTable        table = new JXTable( model );
 
     public BookView()
     {
@@ -141,8 +141,6 @@ public class BookView
         setName( "Books" );
         setLayout( new BorderLayout() );
         add( new JScrollPane( table ), BorderLayout.CENTER );
-
-        table.setModel( model );
 
         table.getSelectionModel().addListSelectionListener( this );
     }
