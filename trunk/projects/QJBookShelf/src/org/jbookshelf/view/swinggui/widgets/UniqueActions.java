@@ -11,11 +11,13 @@ import javax.swing.Action;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
 import org.jbookshelf.view.qtgui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.widgets.panel.CollectionPanel;
 
 public class UniqueActions
 {
@@ -143,7 +145,8 @@ public class UniqueActions
         public void actionPerformed(
             final ActionEvent e )
         {
-        // TODO Auto-generated method stub
+            BookShelf.remove( mediator.getSelectedUniques() );
+            Single.instance( CollectionPanel.class ).updateActiveView();
         }
 
         @Override
