@@ -20,6 +20,7 @@ import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
 import org.jbookshelf.view.qtgui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.MainWindow;
+import org.jbookshelf.view.swinggui.widgets.dialog.BookEditDialog;
 import org.jbookshelf.view.swinggui.widgets.panel.CollectionPanel;
 
 public class UniqueActions
@@ -35,7 +36,7 @@ public class UniqueActions
         public void actionPerformed(
             final ActionEvent e )
         {
-        // TODO Auto-generated method stub
+            new BookEditDialog( mediator.getSelectedBooks().get( 0 ) ).setVisible( true );
         }
     }
 

@@ -1,0 +1,101 @@
+/**
+ * 
+ */
+package org.jbookshelf.view.swinggui.widgets.dialog;
+
+import javax.swing.border.TitledBorder;
+
+import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.HibernateUtil;
+import org.jbookshelf.view.i18n.I18N;
+import org.jbookshelf.view.logic.Parameters;
+import org.jbookshelf.view.logic.Translatable;
+import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.swinggui.MainWindow;
+import org.jbookshelf.view.swinggui.widgets.panel.BookPanel;
+import org.jbookshelf.view.swinggui.widgets.panel.CollectionPanel;
+import org.xnap.commons.gui.DefaultDialog;
+
+/**
+ * @author eav 2009
+ */
+public class BookEditDialog
+    extends DefaultDialog
+    implements
+    Translatable
+{
+    private final BookPanel     bookPanel = new BookPanel();
+    private final Book          book;
+
+    private static final Logger log       = Logger.getLogger( BookEditDialog.class );
+
+    public BookEditDialog(
+        final Book book )
+    {
+        super( Single.instance( MainWindow.class ), BUTTON_OKAY | BUTTON_CANCEL );
+        this.book = book;
+        bookPanel.setBook( book );
+        init();
+    }
+
+    @Override
+    public boolean apply()
+    {
+        final Parameters parameters = bookPanel.extractParameters();
+        if ( parameters != null )
+        {
+            final Session session = HibernateUtil.getSession();
+            try
+            {
+                session.load( book, book.getId() );
+                BookPanel.changeBook( book, parameters );
+            }
+            catch ( final HibernateException e )
+            {
+                log.error( e, e );
+                throw new Error( e );
+            }
+
+            if ( getParent() instanceof FileImportDialog )
+            { // let the dialog deal with result  
+            }
+            else
+            { // general addition, merge a new book
+                BookShelf.mergeBook( book );
+                Single.instance( CollectionPanel.class ).updateActiveView();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void retranslate()
+    {
+        setTitle( I18N.tr( "Edit book" ) );
+        bookPanel.setBorder( new TitledBorder( I18N.tr( "Edit book properties" ) ) );
+    }
+
+    private void init()
+    {
+        Translator.addTranslatable( this );
+
+        setModal( true );
+        setMainComponent( bookPanel );
+        setButtonSeparatorVisible( false );
+
+        pack();
+        setLocationRelativeTo( null );
+    }
+
+    @Override
+    protected void cancelled()
+    {
+        close();
+    }
+}

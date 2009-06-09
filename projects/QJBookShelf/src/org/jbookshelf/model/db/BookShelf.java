@@ -67,6 +67,28 @@ public class BookShelf
         return book;
     }
 
+    public static Set<Author> getAuthors(
+        final Book book )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            // todo remove obsolete query
+            session.load( book, book.getId() );
+            Hibernate.initialize( book.getAuthors() );
+            return book.getAuthors();
+        }
+        catch ( final HibernateException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+
     public static Set<Book> getBooks(
         final HasBooks hasBooks )
     {
@@ -87,7 +109,28 @@ public class BookShelf
         {
             session.close();
         }
+    }
 
+    public static Set<Category> getCategories(
+        final Book book )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            // todo remove obsolete query
+            session.load( book, book.getId() );
+            Hibernate.initialize( book.getCategories() );
+            return book.getCategories();
+        }
+        catch ( final HibernateException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
     }
 
     public static Set<Category> getChildren(
@@ -153,6 +196,44 @@ public class BookShelf
     /**
      * @param book
      */
+    public static void mergeBook(
+        @Nonnull final Book book )
+    {
+        log.debug( "mergeBook" );
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            session.beginTransaction();
+            for ( final Author author : book.getAuthors() )
+            {
+                session.load( author, author.getId() );
+                author.getBooks().add( book );
+            }
+
+            for ( final Category category : book.getCategories() )
+            {
+                session.load( category, category.getId() );
+                category.getBooks().add( book );
+            }
+            session.merge( book );
+            session.merge( book.getPhysicalBook() );
+
+            session.getTransaction().commit();
+        }
+        catch ( final HibernateException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+
+    /**
+     * @param book
+     */
     public static void persistBook(
         @Nonnull final Book book )
     {
@@ -196,13 +277,17 @@ public class BookShelf
         final Set<Unique> selectedUniques )
     {
         final LogRunner runner = new LogRunner();
+
         final String q1 = "delete from author_book where books_id=?";
         final String q2 = "delete from author_book where authors_id=?";
+
         final String q3 = "delete from category_book where books_id=?";
         final String q4 = "delete from category_book where categories_id=?";
+
         final String q5 = "delete from book where id=?";
         final String q6 = "delete from author where id=?";
         final String q7 = "delete from category where id=?";
+
         final String q8 = "delete from physical_book where book_id=?";
 
         try

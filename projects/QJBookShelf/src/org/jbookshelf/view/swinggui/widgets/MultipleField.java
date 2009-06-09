@@ -5,8 +5,6 @@ import images.IMG;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
@@ -42,13 +40,20 @@ public class MultipleField<T>
         public void actionPerformed(
             final ActionEvent e )
         {
-            addValue();
+            final String text = field.getText();
+            if ( !"".equals( text ) )
+            {
+                model.addValue( fromString( text ) );
+                field.setText( "" );
+            }
         }
     }
 
-    protected final ListTableModel<T> model = new ListTableModel<T>();
-    protected final JXTable           table = new JXTable( model );
-    protected final JTextField        field = new JTextField();
+    protected final ListTableModel<T> model     = new ListTableModel<T>();
+    protected final JXTable           table     = new JXTable( model );
+    protected final JTextField        field     = new JTextField();
+
+    private final AddAction           addAction = new AddAction();
 
     public MultipleField()
     {
@@ -73,24 +78,11 @@ public class MultipleField<T>
         model.setValues( objects );
     }
 
-    /**
-     * 
-     */
-    private void addValue()
-    {
-        final String text = field.getText();
-        if ( !"".equals( text ) )
-        {
-            model.addValue( fromString( text ) );
-            field.setText( "" );
-        }
-    }
-
     private void initComponents()
     {
         final Box horizontalBox = Box.createHorizontalBox();
         horizontalBox.add( field );
-        horizontalBox.add( new JButton( new AddAction() ) );
+        horizontalBox.add( new JButton( addAction ) );
         add( horizontalBox, BorderLayout.NORTH );
 
         add( new JScrollPane( table ), BorderLayout.CENTER );
@@ -120,18 +112,7 @@ public class MultipleField<T>
             }
         } );
 
-        field.addKeyListener( new KeyAdapter()
-        {
-            @Override
-            public void keyReleased(
-                final KeyEvent e )
-            {
-                if ( e.getKeyCode() == KeyEvent.VK_ENTER )
-                {
-                    addValue();
-                }
-            }
-        } );
+        field.addKeyListener( new EnterKeyListener( addAction ) );
     }
 
     /**
