@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.Thread.UncaughtExceptionHandler;
 
 import javax.annotation.PostConstruct;
 import javax.swing.JLabel;
@@ -16,24 +17,30 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.swinggui.widgets.LookAndFeelComboBoxModel;
 import org.jbookshelf.view.swinggui.widgets.ProgressBar;
 import org.jbookshelf.view.swinggui.widgets.panel.CollectionPanel;
+import org.jdesktop.swingx.JXErrorPane;
 import org.jdesktop.swingx.JXFrame;
 import org.jdesktop.swingx.JXStatusBar;
+import org.jdesktop.swingx.error.ErrorInfo;
 
 public class MainWindow
     extends JXFrame
     implements
     JBookShelfConstants,
-    PropertyChangeListener
+    PropertyChangeListener,
+    UncaughtExceptionHandler
 {
     public static final String APP_NAME = "JBookShelf";
     public static final String VERSION  = "0.5b0";
+    private static Logger      log;
 
     public static void main(
         final String[] args )
@@ -48,6 +55,7 @@ public class MainWindow
                 //                QCoreApplication.setApplicationName( APP_NAME );
 
                 PropertyConfigurator.configure( MainWindow.class.getResource( "log4j.properties" ) );
+                log = Logger.getLogger( MainWindow.class );
                 Single.instance( MainWindow.class ).setVisible( true );
             }
         } );
@@ -77,6 +85,8 @@ public class MainWindow
 
         pack();
         setExtendedState( MAXIMIZED_BOTH );
+
+        Thread.setDefaultUncaughtExceptionHandler( this );
     }
 
     public void propertyChange(
@@ -96,5 +106,15 @@ public class MainWindow
         {
             throw new Error( e );
         }
+    }
+
+    @Override
+    public void uncaughtException(
+        final Thread t,
+        final Throwable e )
+    {
+        log.error( e, e );
+        final ErrorInfo info = new ErrorInfo( null, I18N.tr( "Unexpected error" ), null, null, e, null, null );
+        JXErrorPane.showDialog( this, info );
     }
 }
