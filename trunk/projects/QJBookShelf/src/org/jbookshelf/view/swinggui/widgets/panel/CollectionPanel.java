@@ -23,6 +23,7 @@ import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
 import org.jbookshelf.view.logic.Parameters.Keys;
+import org.jbookshelf.view.swinggui.widgets.EnterKeyListener;
 import org.jbookshelf.view.swinggui.widgets.ProgressBar;
 import org.jbookshelf.view.swinggui.widgets.TranslatableAction;
 import org.jbookshelf.view.swinggui.widgets.panel.tab.AuthorView;
@@ -171,5 +172,6 @@ public class CollectionPanel
         }
 
         viewTabbedPane.addChangeListener( this );
+        searchTextField.addKeyListener( new EnterKeyListener( searchAction ) );
     }
 }

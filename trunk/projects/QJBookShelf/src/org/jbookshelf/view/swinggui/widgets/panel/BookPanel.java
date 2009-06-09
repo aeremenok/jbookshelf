@@ -16,6 +16,7 @@ import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.Category;
 import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.view.i18n.I18N;
@@ -185,8 +186,8 @@ public class BookPanel
     {
         // display book name
         bookTextField.setText( book.getName() );
-        authorField.setValues( book.getAuthors() );
-        categoryField.setValues( book.getCategories() );
+        authorField.setValues( BookShelf.getAuthors( book ) );
+        categoryField.setValues( BookShelf.getCategories( book ) );
 
         // display file of the physical unit
         fileChooserPanel.setFile( new File( book.getPhysicalBook().getFileName() ) );

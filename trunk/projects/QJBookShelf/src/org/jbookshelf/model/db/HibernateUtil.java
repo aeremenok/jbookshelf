@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.event.MergeEventListener;
 import org.hibernate.event.PersistEventListener;
 
 /**
@@ -23,8 +24,11 @@ public class HibernateUtil
         try
         {
             final AnnotationConfiguration cfg = new AnnotationConfiguration();
+            final Timestamper timestamper = new Timestamper();
             cfg.getEventListeners().setPersistEventListeners( new PersistEventListener[]
-            { new Timestamper() } );
+            { timestamper } );
+            cfg.getEventListeners().setMergeEventListeners( new MergeEventListener[]
+            { timestamper } );
             final AnnotationConfiguration configure = cfg.configure();
             properties = configure.getProperties();
             factory = configure.buildSessionFactory();
