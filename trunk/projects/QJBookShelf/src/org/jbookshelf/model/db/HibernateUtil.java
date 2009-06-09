@@ -4,6 +4,7 @@
 package org.jbookshelf.model.db;
 
 import java.sql.Connection;
+import java.util.Properties;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,6 +17,7 @@ import org.hibernate.event.PersistEventListener;
 public class HibernateUtil
 {
     private static final SessionFactory factory;
+    private static final Properties     properties;
     static
     {
         try
@@ -23,7 +25,9 @@ public class HibernateUtil
             final AnnotationConfiguration cfg = new AnnotationConfiguration();
             cfg.getEventListeners().setPersistEventListeners( new PersistEventListener[]
             { new Timestamper() } );
-            factory = cfg.configure().buildSessionFactory();
+            final AnnotationConfiguration configure = cfg.configure();
+            properties = configure.getProperties();
+            factory = configure.buildSessionFactory();
         }
         catch ( final Exception e )
         {
@@ -35,6 +39,14 @@ public class HibernateUtil
     public static Connection connection()
     {
         return getSession().connection();
+    }
+
+    /**
+     * @return the properties
+     */
+    public static Properties getProperties()
+    {
+        return properties;
     }
 
     public static Session getSession()

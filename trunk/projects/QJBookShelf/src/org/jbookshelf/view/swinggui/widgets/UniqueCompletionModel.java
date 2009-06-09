@@ -3,7 +3,6 @@
  */
 package org.jbookshelf.view.swinggui.widgets;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
@@ -11,10 +10,9 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.DefaultComboBoxModel;
 
-import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.HibernateUtil;
+import org.jbookshelf.model.db.LogRunner;
 import org.jbookshelf.model.db.Unique;
 import org.xnap.commons.gui.completion.CompletionModel;
 
@@ -71,12 +69,11 @@ public class UniqueCompletionModel
         }
 
         // run it
-        final QueryRunner runner = new QueryRunner();
+        final LogRunner runner = new LogRunner();
         try
         {
             final ArrayListHandler handler = new ArrayListHandler();
-            final Connection connection = HibernateUtil.connection();
-            final List<Object[]> items = (List<Object[]>) runner.query( connection, q.toString(), handler );
+            final List<Object[]> items = (List<Object[]>) runner.query( q.toString(), handler );
 
             // fill the completion popup 
             removeAllElements();

@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.model.db;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +11,6 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.commons.dbutils.QueryRunner;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -24,6 +24,25 @@ import org.hibernate.criterion.Restrictions;
 public class BookShelf
 {
     private static final Logger log = Logger.getLogger( BookShelf.class );
+
+    public static Book bookById(
+        @Nonnull final Object id )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            return (Book) session.get( Book.class, (Serializable) id );
+        }
+        catch ( final Exception e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
 
     @Nullable
     public static Book createBook(
@@ -176,7 +195,7 @@ public class BookShelf
     public static void remove(
         final Set<Unique> selectedUniques )
     {
-        final QueryRunner runner = new QueryRunner();
+        final LogRunner runner = new LogRunner();
         final String q1 = "delete from author_book where books_id=?";
         final String q2 = "delete from author_book where authors_id=?";
         final String q3 = "delete from category_book where books_id=?";
@@ -192,27 +211,27 @@ public class BookShelf
             {
                 if ( unique instanceof Book )
                 {
-                    runner.update( HibernateUtil.connection(), q1, new Object[]
+                    runner.update( q1, new Object[]
                     { unique.getId() } );
-                    runner.update( HibernateUtil.connection(), q3, new Object[]
+                    runner.update( q3, new Object[]
                     { unique.getId() } );
-                    runner.update( HibernateUtil.connection(), q8, new Object[]
+                    runner.update( q8, new Object[]
                     { unique.getId() } );
-                    runner.update( HibernateUtil.connection(), q5, new Object[]
+                    runner.update( q5, new Object[]
                     { unique.getId() } );
                 }
                 else if ( unique instanceof Author )
                 {
-                    runner.update( HibernateUtil.connection(), q2, new Object[]
+                    runner.update( q2, new Object[]
                     { unique.getId() } );
-                    runner.update( HibernateUtil.connection(), q6, new Object[]
+                    runner.update( q6, new Object[]
                     { unique.getId() } );
                 }
                 else
                 {
-                    runner.update( HibernateUtil.connection(), q4, new Object[]
+                    runner.update( q4, new Object[]
                     { unique.getId() } );
-                    runner.update( HibernateUtil.connection(), q7, new Object[]
+                    runner.update( q7, new Object[]
                     { unique.getId() } );
                 }
             }
