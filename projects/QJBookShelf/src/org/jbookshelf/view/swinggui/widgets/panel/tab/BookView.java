@@ -4,7 +4,6 @@
 package org.jbookshelf.view.swinggui.widgets.panel.tab;
 
 import java.awt.BorderLayout;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +48,15 @@ public class BookView
         public BookTableModel()
         {
             super( names, 0 );
+        }
+
+        @Override
+        public void addRow(
+            final Object[] rowData )
+        {
+            rows.add( rowData );
+            final int row = rows.size();
+            fireTableRowsInserted( row, row );
         }
 
         public List<Book> getBooks(
@@ -118,38 +126,50 @@ public class BookView
     public void search(
         final Parameters p )
     {
-        final LogRunner runner = new LogRunner();
-        try
+        table.clearSelection();
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Object[]>, Object[]>()
         {
-            final List<Object[]> books = (List<Object[]>) runner.query( buildQuery( p ), new ArrayListHandler() );
-            final StringBuilder q1 = new StringBuilder( "select a.name from author a " );
-            q1.append( "left join author_book ab on a.id=ab.authors_id " );
-            q1.append( "where ab.books_id=? and rownum<2" );
-
-            final StringBuilder q2 = new StringBuilder( "select c.name from category c " );
-            q2.append( "left join category_book cb on c.id=cb.categories_id " );
-            q2.append( "where cb.books_id=? and rownum<2" );
-            for ( int i = 0; i < books.size(); i++ )
+            @Override
+            protected List<Object[]> doInBackground()
+                throws Exception
             {
-                final Object name = books.get( i )[0];
-                final Object id = books.get( i )[1];
+                final LogRunner runner = new LogRunner();
+                final List<Object[]> books = (List<Object[]>) runner.query( buildQuery( p ), new ArrayListHandler() );
+                final StringBuilder q1 = new StringBuilder( "select a.name from author a " );
+                q1.append( "left join author_book ab on a.id=ab.authors_id " );
+                q1.append( "where ab.books_id=? and rownum<2" );
 
-                final String aname = (String) runner.query( q1.toString(), new ScalarHandler(), new Object[]
-                { id } );
-                final String cname = (String) runner.query( q2.toString(), new ScalarHandler(), new Object[]
-                { id } );
+                final StringBuilder q2 = new StringBuilder( "select c.name from category c " );
+                q2.append( "left join category_book cb on c.id=cb.categories_id " );
+                q2.append( "where cb.books_id=? and rownum<2" );
+                for ( int i = 0; i < books.size(); i++ )
+                {
+                    final Object name = books.get( i )[0];
+                    final Object id = books.get( i )[1];
 
-                books.set( i, new Object[]
-                { name, aname, cname, id } );
+                    final String aname = (String) runner.query( q1.toString(), new ScalarHandler(), new Object[]
+                    { id } );
+                    final String cname = (String) runner.query( q2.toString(), new ScalarHandler(), new Object[]
+                    { id } );
+
+                    final Object[] book = new Object[]
+                    { name, aname, cname, id };
+                    publish( book );
+                    books.set( i, book );
+                }
+                return books;
             }
-            table.clearSelection();
-            model.setRows( books );
-        }
-        catch ( final SQLException e1 )
-        {
-            log.error( e1, e1 );
-            throw new Error( e1 );
-        }
+
+            @Override
+            protected void process(
+                final List<Object[]> chunks )
+            {
+                for ( final Object[] objects : chunks )
+                {
+                    model.addRow( objects );
+                }
+            }
+        } );
     }
 
     @Override

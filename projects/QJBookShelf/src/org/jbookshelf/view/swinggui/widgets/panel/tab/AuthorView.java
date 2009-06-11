@@ -32,6 +32,8 @@ import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
+import org.jbookshelf.view.swinggui.widgets.ProgressBar;
+import org.jbookshelf.view.swinggui.widgets.SafeWorker;
 import org.jdesktop.swingx.JXTree;
 
 /**
@@ -92,27 +94,46 @@ public class AuthorView
     public void search(
         final Parameters p )
     {
-        final Session session = HibernateUtil.getSession();
-        try
+        root.removeAllChildren();
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Author>, AuthorNode>()
         {
-            final List<Author> list = session.createQuery( buildQuery( p ) ).list();
-
-            root.removeAllChildren();
-            model.reload( root );
-            for ( final Author author : list )
+            @Override
+            protected List<Author> doInBackground()
             {
-                model.insertNodeInto( new AuthorNode( author ), root, 0 );
+                final Session session = HibernateUtil.getSession();
+                try
+                {
+                    final List<Author> list = session.createQuery( buildQuery( p ) ).list();
+
+                    model.reload( root );
+                    for ( final Author author : list )
+                    {
+                        publish( new AuthorNode( author ) );
+                    }
+                    return list;
+                }
+                catch ( final HibernateException e )
+                {
+                    log.error( e, e );
+                    throw new Error( e );
+                }
+                finally
+                {
+                    session.close();
+                }
             }
-        }
-        catch ( final HibernateException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-        finally
-        {
-            session.close();
-        }
+
+            @Override
+            protected void process(
+                final List<AuthorNode> chunks )
+            {
+                for ( final AuthorNode authorNode : chunks )
+                {
+                    model.insertNodeInto( authorNode, root, 0 );
+                }
+            }
+        } );
+
     }
 
     private void initListeners()
