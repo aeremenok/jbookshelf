@@ -12,7 +12,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
@@ -37,6 +36,7 @@ public class Book
     private Long                id;
 
     @Column( nullable = false )
+    @org.hibernate.annotations.Index( name = "book_name_ind" )
     private String              name;
 
     @Column
@@ -62,7 +62,7 @@ public class Book
     @org.hibernate.annotations.ForeignKey( name = "FK_CATEGORY_BOOK", inverseName = "FK_BOOK_CATEGORY" )
     private final Set<Category> categories   = new HashSet<Category>();
 
-    @OneToOne( mappedBy = "book", fetch = FetchType.LAZY )
+    @OneToOne( mappedBy = "book" )
     private PhysicalBook        physicalBook;
 
     public void addAuthor(

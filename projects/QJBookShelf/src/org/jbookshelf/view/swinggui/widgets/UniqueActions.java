@@ -108,8 +108,22 @@ public class UniqueActions
             final MainWindow window = Single.instance( MainWindow.class );
             if ( JOptionPane.showConfirmDialog( window, I18N.tr( "Remove selected?" ), "", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION )
             {
-                BookShelf.remove( mediator.getSelectedUniques() );
-                Single.instance( CollectionPanel.class ).updateActiveView();
+                Single.instance( ProgressBar.class ).invoke( new SafeWorker<Object, Object>()
+                {
+                    @Override
+                    protected Object doInBackground()
+                    {
+                        BookShelf.remove( mediator.getSelectedUniques() );
+                        return null;
+                    }
+
+                    @Override
+                    protected void doneSafe()
+                    {
+                        Single.instance( CollectionPanel.class ).updateActiveView();
+                    }
+
+                } );
             }
         }
     }

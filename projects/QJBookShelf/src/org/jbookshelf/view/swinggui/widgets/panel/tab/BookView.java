@@ -127,6 +127,7 @@ public class BookView
         final Parameters p )
     {
         table.clearSelection();
+        model.setRows( new ArrayList<Object[]>() );
         Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Object[]>, Object[]>()
         {
             @Override
