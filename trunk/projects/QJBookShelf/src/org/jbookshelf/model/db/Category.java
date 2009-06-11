@@ -38,6 +38,7 @@ public class Category
     private Long                id;
 
     @Column( nullable = false, unique = true )
+    @org.hibernate.annotations.Index( name = "category_name_ind" )
     private String              name;
 
     @Column( nullable = false )

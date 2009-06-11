@@ -32,6 +32,7 @@ public class Word
     private Book   book;
 
     @Column( nullable = false, length = Byte.MAX_VALUE )
+    @org.hibernate.annotations.Index( name = "word_ind" )
     private String word;
 
     @Column( nullable = false )

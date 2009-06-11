@@ -35,6 +35,7 @@ public class Author
     private Long            id;
 
     @Column( nullable = false, unique = true )
+    @org.hibernate.annotations.Index( name = "author_name_ind" )
     private String          name;
 
     @Column( nullable = false )

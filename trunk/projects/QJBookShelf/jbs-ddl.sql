@@ -119,6 +119,8 @@
         primary key (id)
     );
 
+    create index author_name_ind on Author (name);
+
     alter table Author_Book 
         add constraint FK_BOOK_AUTHOR 
         foreign key (authors_id) 
@@ -128,6 +130,10 @@
         add constraint FK_AUTHOR_BOOK 
         foreign key (books_id) 
         references Book;
+
+    create index book_name_ind on Book (name);
+
+    create index category_name_ind on Category (name);
 
     alter table Category 
         add constraint FK_PARENT_CATEGORY 
@@ -163,6 +169,8 @@
         add constraint FK_RELATED_BOOK 
         foreign key (relatedBooks_id) 
         references Book;
+
+    create index word_ind on Word (word);
 
     alter table Word 
         add constraint FK_WORD_BOOK 
