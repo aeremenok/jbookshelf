@@ -32,6 +32,8 @@ import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
+import org.jbookshelf.view.swinggui.widgets.ProgressBar;
+import org.jbookshelf.view.swinggui.widgets.SafeWorker;
 import org.jdesktop.swingx.JXTree;
 
 /**
@@ -97,28 +99,45 @@ public class CategoryView
     public void search(
         final Parameters p )
     {
-        final Session session = HibernateUtil.getSession();
-        try
+        root.removeAllChildren();
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Category>, CategoryNode>()
         {
-            final List<Category> list = session.createQuery( buildQuery( p ) ).list();
-
-            root.removeAllChildren();
-            model.reload( root );
-            for ( final Category category : list )
+            @Override
+            protected List<Category> doInBackground()
             {
-                model.insertNodeInto( new CategoryNode( category ), root, 0 );
-            }
-        }
-        catch ( final HibernateException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-        finally
-        {
-            session.close();
-        }
+                final Session session = HibernateUtil.getSession();
+                try
+                {
+                    final List<Category> list = session.createQuery( buildQuery( p ) ).list();
 
+                    model.reload( root );
+                    for ( final Category category : list )
+                    {
+                        publish( new CategoryNode( category ) );
+                    }
+                    return list;
+                }
+                catch ( final HibernateException e )
+                {
+                    log.error( e, e );
+                    throw new Error( e );
+                }
+                finally
+                {
+                    session.close();
+                }
+            }
+
+            @Override
+            protected void process(
+                final List<CategoryNode> chunks )
+            {
+                for ( final CategoryNode categoryNode : chunks )
+                {
+                    model.insertNodeInto( categoryNode, root, 0 );
+                }
+            }
+        } );
     }
 
     private void initListeners()
