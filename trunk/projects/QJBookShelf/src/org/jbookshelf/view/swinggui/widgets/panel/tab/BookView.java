@@ -24,6 +24,8 @@ import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
+import org.jbookshelf.view.swinggui.widgets.ProgressBar;
+import org.jbookshelf.view.swinggui.widgets.SafeWorker;
 import org.jdesktop.swingx.JXTable;
 
 /**
@@ -157,8 +159,31 @@ public class BookView
         if ( !e.getValueIsAdjusting() )
         {
             final int[] selectedRows = table.getSelectedRows();
-            final List<Book> selectedBooks = model.getBooks( selectedRows );
-            Single.instance( BookShelfMediator.class ).booksSelected( selectedBooks );
+            Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Book>, Object>()
+            {
+                @Override
+                protected List<Book> doInBackground()
+                {
+                    if ( selectedRows.length == model.getRowCount() )
+                    { // selected all
+                        return BookShelf.allBooks();
+                    }
+
+                    // selected some rows
+                    for ( int i = 0; i < selectedRows.length; i++ )
+                    { // convert in case the table was sorted
+                        final int row = selectedRows[i];
+                        selectedRows[i] = table.convertRowIndexToModel( row );
+                    }
+                    return model.getBooks( selectedRows );
+                }
+
+                @Override
+                protected void doneSafe()
+                {
+                    Single.instance( BookShelfMediator.class ).booksSelected( getQuiet() );
+                }
+            } );
         }
     }
 

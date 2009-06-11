@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.widgets.dialog;
 
+import javax.swing.JDialog;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
@@ -39,7 +40,15 @@ public class BookEditDialog
     {
         super( Single.instance( MainWindow.class ), BUTTON_OKAY | BUTTON_CANCEL );
         this.book = book;
-        bookPanel.setBook( book );
+        init();
+    }
+
+    public BookEditDialog(
+        final JDialog dialog,
+        final Book book )
+    {
+        super( dialog, BUTTON_OKAY | BUTTON_CANCEL );
+        this.book = book;
         init();
     }
 
@@ -49,23 +58,23 @@ public class BookEditDialog
         final Parameters parameters = bookPanel.extractParameters();
         if ( parameters != null )
         {
-            final Session session = HibernateUtil.getSession();
-            try
-            {
-                session.load( book, book.getId() );
-                BookPanel.changeBook( book, parameters );
-            }
-            catch ( final HibernateException e )
-            {
-                log.error( e, e );
-                throw new Error( e );
-            }
-
             if ( getParent() instanceof FileImportDialog )
             { // let the dialog deal with result  
+                BookPanel.changeBook( book, parameters );
             }
             else
             { // general addition, merge a new book
+                final Session session = HibernateUtil.getSession();
+                try
+                {
+                    session.load( book, book.getId() );
+                    BookPanel.changeBook( book, parameters );
+                }
+                catch ( final HibernateException e )
+                {
+                    log.error( e, e );
+                    throw new Error( e );
+                }
                 BookShelf.mergeBook( book );
                 Single.instance( CollectionPanel.class ).updateActiveView();
             }
@@ -83,6 +92,8 @@ public class BookEditDialog
 
     private void init()
     {
+        bookPanel.setBook( book );
+
         Translator.addTranslatable( this );
 
         setModal( true );
