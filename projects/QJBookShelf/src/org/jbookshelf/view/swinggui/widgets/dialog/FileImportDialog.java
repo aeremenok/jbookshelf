@@ -214,7 +214,12 @@ public class FileImportDialog
                 {
                     final int col = successTable.columnAtPoint( e.getPoint() );
                     if ( col == 1 || e.getClickCount() == 2 )
-                    {}
+                    {
+                        final int row = successTable.rowAtPoint( e.getPoint() );
+                        final Book book = successModel.getBooks().get( row );
+
+                        new BookEditDialog( FileImportDialog.this, book ).setVisible( true );
+                    }
                 }
             }
         } );

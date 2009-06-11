@@ -25,6 +25,25 @@ public class BookShelf
 {
     private static final Logger log = Logger.getLogger( BookShelf.class );
 
+    @SuppressWarnings( "unchecked" )
+    public static List<Book> allBooks()
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            return session.createQuery( "from Book" ).list();
+        }
+        catch ( final Exception e2 )
+        {
+            log.error( e2, e2 );
+            throw new Error( e2 );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+
     public static Book bookById(
         @Nonnull final Object id )
     {
@@ -70,23 +89,26 @@ public class BookShelf
     public static Set<Author> getAuthors(
         final Book book )
     {
-        final Session session = HibernateUtil.getSession();
-        try
+        if ( book.getId() != null )
         {
-            // todo remove obsolete query
-            session.load( book, book.getId() );
-            Hibernate.initialize( book.getAuthors() );
-            return book.getAuthors();
+            final Session session = HibernateUtil.getSession();
+            try
+            {
+                // todo remove obsolete query
+                session.load( book, book.getId() );
+                Hibernate.initialize( book.getAuthors() );
+            }
+            catch ( final HibernateException e )
+            {
+                log.error( e, e );
+                throw new Error( e );
+            }
+            finally
+            {
+                session.close();
+            }
         }
-        catch ( final HibernateException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-        finally
-        {
-            session.close();
-        }
+        return book.getAuthors();
     }
 
     public static Set<Book> getBooks(
@@ -114,23 +136,26 @@ public class BookShelf
     public static Set<Category> getCategories(
         final Book book )
     {
-        final Session session = HibernateUtil.getSession();
-        try
+        if ( book.getId() != null )
         {
-            // todo remove obsolete query
-            session.load( book, book.getId() );
-            Hibernate.initialize( book.getCategories() );
-            return book.getCategories();
+            final Session session = HibernateUtil.getSession();
+            try
+            {
+                // todo remove obsolete query
+                session.load( book, book.getId() );
+                Hibernate.initialize( book.getCategories() );
+            }
+            catch ( final HibernateException e )
+            {
+                log.error( e, e );
+                throw new Error( e );
+            }
+            finally
+            {
+                session.close();
+            }
         }
-        catch ( final HibernateException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-        finally
-        {
-            session.close();
-        }
+        return book.getCategories();
     }
 
     public static Set<Category> getChildren(
