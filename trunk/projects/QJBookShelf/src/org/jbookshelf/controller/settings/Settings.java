@@ -41,6 +41,7 @@ public class Settings
     public StringSetting LANGUAGE;
     public StringSetting LAF;
     public StringSetting JBS_DIR;
+    public StringSetting WORKSPACE_DIR;
     public MasksSetting  IMPORT_MASKS;
 
     public File getCollectionFile()
@@ -100,7 +101,8 @@ public class Settings
         { "%a. %b", "%b" } );
 
         final String jbsDir = System.getProperty( "user.home" ) + File.separator + ".jbookshelf" + File.separator;
-        JBS_DIR = new StringSetting( this, "jbs_folder", jbsDir );
+        JBS_DIR = new StringSetting( this, "jbs_dir", jbsDir );
+        WORKSPACE_DIR = new StringSetting( this, "workspace_dir", System.getProperty( "user.home" ) );
 
         String lafName;
         try
@@ -108,7 +110,7 @@ public class Settings
             lafName = new NimbusLookAndFeel().getName();
         }
         catch ( final Throwable e )
-        { // NimbusLookAndFeel does not exist
+        { // NimbusLookAndFeel does not exist, jre < 1.6.10
             try
             {
                 final Object laf = Class.forName( UIManager.getSystemLookAndFeelClassName() ).newInstance();

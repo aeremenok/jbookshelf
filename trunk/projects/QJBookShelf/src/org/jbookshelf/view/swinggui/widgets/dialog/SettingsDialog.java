@@ -24,20 +24,22 @@ public class SettingsDialog
     implements
     Translatable
 {
-    private final SettingComponentMediator mediator         = new SettingComponentMediator();
-    private final Settings                 settings         = Single.instance( Settings.class );
+    private final SettingComponentMediator mediator           = new SettingComponentMediator();
+    private final Settings                 settings           = Single.instance( Settings.class );
 
-    private final JComboBox                langComboBox     = new JComboBox();
-    private final JComboBox                lafComboBox      = new JComboBox( new LookAndFeelComboBoxModel() );
-    private final FileChooserPanel         fileChooserPanel = new FileChooserPanelExt( 50, "jbs.dir.chooser" );
+    private final JComboBox                langComboBox       = new JComboBox();
+    private final JComboBox                lafComboBox        = new JComboBox( new LookAndFeelComboBoxModel() );
+    private final FileChooserPanel         jbsDirChooserPanel = new FileChooserPanelExt( 50, "jbs.dir.chooser" );
+    private final FileChooserPanel         wspDirChooserPanel = new FileChooserPanelExt( 50, "wsp.dir.chooser" );
 
-    private final JLabel                   langLabel        = new JLabel();
-    private final JLabel                   lafLabel         = new JLabel();
-    private final JLabel                   dirLabel         = new JLabel();
+    private final JLabel                   langLabel          = new JLabel();
+    private final JLabel                   lafLabel           = new JLabel();
+    private final JLabel                   jbsDirLabel        = new JLabel();
+    private final JLabel                   wspDirLabel        = new JLabel();
 
     public SettingsDialog()
     {
-        super( Single.instance( MainWindow.class ), BUTTON_APPLY | BUTTON_DEFAULTS | BUTTON_OKAY | BUTTON_CANCEL );
+        super( Single.instance( MainWindow.class ), BUTTON_DEFAULTS | BUTTON_OKAY | BUTTON_CANCEL );
         initComponents();
         Translator.addTranslatable( this );
         mediator.revert();
@@ -65,11 +67,11 @@ public class SettingsDialog
 
         getCancelAction().putValue( Action.NAME, I18N.tr( "Cancel" ) );
         getDefaultsAction().putValue( Action.NAME, I18N.tr( "Defaults" ) );
-        getApplyAction().putValue( Action.NAME, I18N.tr( "Apply" ) );
 
         langLabel.setText( I18N.tr( "Language" ) );
         lafLabel.setText( I18N.tr( "Look and feel" ) );
-        dirLabel.setText( I18N.tr( "JBookShelf directory" ) );
+        jbsDirLabel.setText( I18N.tr( "JBookShelf directory" ) );
+        wspDirLabel.setText( I18N.tr( "Workspace directory" ) );
 
         getMainPanel().setBorder( new TitledBorder( I18N.tr( "JBookShelf settings" ) ) );
     }
@@ -80,9 +82,11 @@ public class SettingsDialog
 
         mediator.add( settings.LANGUAGE, langComboBox.getModel() );
         mediator.add( settings.LAF, lafComboBox.getModel() );
-        mediator.add( settings.JBS_DIR, fileChooserPanel.getTextField() );
+        mediator.add( settings.JBS_DIR, jbsDirChooserPanel.getTextField() );
+        mediator.add( settings.WORKSPACE_DIR, wspDirChooserPanel.getTextField() );
 
-        fileChooserPanel.getFileChooser().setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
+        jbsDirChooserPanel.getFileChooser().setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
+        wspDirChooserPanel.getFileChooser().setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
 
         final GridBagPanel panel = new GridBagPanel();
         setMainComponent( panel );
@@ -93,8 +97,11 @@ public class SettingsDialog
         panel.add( lafLabel, 1, 0 );
         panel.add( lafComboBox, 1, 1 );
 
-        panel.add( dirLabel, 2, 0 );
-        panel.add( fileChooserPanel, 2, 1 );
+        panel.add( jbsDirLabel, 2, 0 );
+        panel.add( jbsDirChooserPanel, 2, 1 );
+
+        panel.add( wspDirLabel, 3, 0 );
+        panel.add( wspDirChooserPanel, 3, 1 );
     }
 
     @Override

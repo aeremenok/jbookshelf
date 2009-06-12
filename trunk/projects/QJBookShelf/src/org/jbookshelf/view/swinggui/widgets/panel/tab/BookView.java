@@ -3,6 +3,8 @@
  */
 package org.jbookshelf.view.swinggui.widgets.panel.tab;
 
+import images.IMG;
+
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
-import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.BookShelf;
@@ -66,7 +67,6 @@ public class BookView
             for ( final int i : rowNumbers )
             {
                 final Object id = rows.get( i )[3];
-                log.debug( id );
                 list.add( BookShelf.bookById( id ) );
             }
             return list;
@@ -106,8 +106,6 @@ public class BookView
         }
     }
 
-    private static final Logger  log   = Logger.getLogger( BookView.class );
-
     private final BookTableModel model = new BookTableModel();
     private final JXTable        table = new JXTable( model );
 
@@ -115,6 +113,7 @@ public class BookView
     {
         super();
         setName( "Books" );
+        setIcon( IMG.icon( IMG.BOOK_PNG ) );
         setLayout( new BorderLayout() );
         add( new JScrollPane( table ), BorderLayout.CENTER );
 

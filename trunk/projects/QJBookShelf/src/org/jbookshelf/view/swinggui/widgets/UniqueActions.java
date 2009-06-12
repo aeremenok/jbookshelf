@@ -18,7 +18,7 @@ import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
-import org.jbookshelf.view.qtgui.reader.ReaderWindow;
+import org.jbookshelf.view.qtgui.reader.Viewer;
 import org.jbookshelf.view.swinggui.MainWindow;
 import org.jbookshelf.view.swinggui.widgets.dialog.BookEditDialog;
 import org.jbookshelf.view.swinggui.widgets.panel.CollectionPanel;
@@ -71,7 +71,7 @@ public class UniqueActions
         {
             for ( final Book book : mediator.getSelectedBooks() )
             {
-                ReaderWindow.open( null, book );
+                Single.instance( Viewer.class ).open( book );
             }
         }
     }
@@ -89,7 +89,7 @@ public class UniqueActions
         {
             for ( final Book book : mediator.getSelectedBooks() )
             {
-                //                URIUtil.openFolder( book.getPhysical().getDirectory() );
+                URIUtil.openFolder( book.getPhysicalBook().getFile().getParentFile() );
             }
         }
     }

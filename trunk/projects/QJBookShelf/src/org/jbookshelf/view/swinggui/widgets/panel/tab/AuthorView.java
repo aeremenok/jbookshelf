@@ -78,6 +78,7 @@ public class AuthorView
     {
         super();
         setName( "Authors" );
+        setIcon( IMG.icon( IMG.USER_IDENITY_PNG ) );
         setLayout( new BorderLayout() );
 
         add( new JScrollPane( tree ), BorderLayout.CENTER );

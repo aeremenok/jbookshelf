@@ -69,14 +69,18 @@ public class BookEditDialog
                 {
                     session.load( book, book.getId() );
                     BookPanel.changeBook( book, parameters );
+                    BookShelf.mergeBook( book );
+                    Single.instance( CollectionPanel.class ).updateActiveView();
                 }
                 catch ( final HibernateException e )
                 {
                     log.error( e, e );
                     throw new Error( e );
                 }
-                BookShelf.mergeBook( book );
-                Single.instance( CollectionPanel.class ).updateActiveView();
+                finally
+                {
+                    session.close();
+                }
             }
             return true;
         }
