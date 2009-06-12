@@ -16,12 +16,11 @@
 package org.jbookshelf.view.qtgui.reader;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.SortedMap;
 
-import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.controller.util.FileUtil;
+import org.apache.log4j.Logger;
 import org.jbookshelf.controller.util.StringUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.i18n.I18N;
@@ -55,30 +54,34 @@ public class ReaderWindow
         }
     }
 
-    private final QFontComboBox fontComboBox    = new QFontComboBox( this );
+    private final QToolBarExt   toolBar         = new ReaderToolBar();
 
     private final QAction       bookSettings    = new QAction( new QIcon( ICONPATH + "document-properties.png" ), "",
                                                     this );
     private final QAction       citation        = new QAction( new QIcon( ICONPATH + "knotes.png" ), "", this );
-
     private final QAction       view            = new QAction( new QIcon( ICONPATH + "view-pim-notes.png" ), "", this );
+
+    private final QFontComboBox fontComboBox    = new QFontComboBox( this );
     private final QComboBox     charsetComboBox = new QComboBox( this );
 
-    private final Book          book;
     private final TextBrowser   textBrowser     = new TextBrowser( this );
 
     private final CitationPanel citationPanel   = new CitationPanel( this );
 
-    private byte[]              contentBytes;
+    private static final Logger log             = Logger.getLogger( ReaderWindow.class );
 
-    private final QToolBarExt   toolBar         = new ReaderToolBar();
+    private final Book          book;
+    private final byte[]        contentBytes;
 
     public ReaderWindow(
-        final Book book )
+        final Book book,
+        final byte[] contentBytes )
     {
         super();
-        setWindowIcon( new QIcon( ICONPATH + "logo-64.png" ) );
+        this.contentBytes = contentBytes;
         this.book = book;
+        log.debug( book.getRead() );
+        setWindowIcon( new QIcon( ICONPATH + "logo-64.png" ) );
 
         initComponents();
         initListeners();
@@ -114,7 +117,17 @@ public class ReaderWindow
     @SuppressWarnings( "unused" )
     private void editBook()
     {
-        new BookEditDialog( book ).setVisible( true );
+        // escape from qt-thread
+        new Thread( new Runnable()
+        {
+            @Override
+            public void run()
+            { // todo switch to another window
+                final BookEditDialog bookEditDialog = new BookEditDialog( book );
+                bookEditDialog.setAlwaysOnTop( true );
+                bookEditDialog.setVisible( true );
+            }
+        } ).start();
     }
 
     /**
@@ -122,26 +135,16 @@ public class ReaderWindow
      */
     private String getContent()
     {
-        final File file = Single.instance( Viewer.class ).getFile( book );
+        final File file = book.getPhysicalBook().getFile();
         try
         {
-            // define which encoding to use
-            String charset = book.getPhysicalBook().getCharsetName();
-            if ( charset == null )
-            {
-                charset = FileUtil.guessFileEncoding( file );
-                book.getPhysicalBook().setCharsetName( charset );
-            }
-            if ( contentBytes == null )
-            { // cache the contents
-                contentBytes = FileUtil.getBytesFromFile( file );
-            }
-            return new String( contentBytes, charset );
+            return new String( contentBytes, book.getPhysicalBook().getCharsetName() );
         }
-        catch ( final IOException e )
+        catch ( final UnsupportedEncodingException e )
         {
-            e.printStackTrace();
-            return tr( "Error displaying file " ) + file.getAbsolutePath() + "\n\n" + StringUtil.printThrowable( e );
+            log.error( e, e );
+            return I18N.tr( "Error displaying file " ) + file.getAbsolutePath() + "\n\n"
+                + StringUtil.printThrowable( e );
         }
     }
 

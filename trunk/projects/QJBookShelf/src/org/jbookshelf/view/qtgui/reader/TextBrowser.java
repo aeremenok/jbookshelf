@@ -16,10 +16,16 @@
 
 package org.jbookshelf.view.qtgui.reader;
 
+import javax.swing.Action;
+
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.swinggui.widgets.ProgressBar;
+import org.jbookshelf.view.swinggui.widgets.UniqueActions;
 
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QContextMenuEvent;
@@ -87,7 +93,7 @@ public class TextBrowser
 
     public void retranslate()
     {
-    //        googleAction.setText( Single.instance( ToolBar.class ).getGoogleAction().text() );
+        googleAction.setText( Single.instance( UniqueActions.class ).googleAction.getValue( Action.NAME ).toString() );
     }
 
     public void savePosition()
@@ -95,6 +101,15 @@ public class TextBrowser
         // save current position
         final QScrollBar scrollBar = verticalScrollBar();
         readerWindow.getBook().setRead( (float) scrollBar.sliderPosition() / (float) scrollBar.maximum() );
+        final Runnable runnable = new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                BookShelf.mergeBook( readerWindow.getBook() );
+            }
+        };
+        Single.instance( ProgressBar.class ).invoke( runnable );
     }
 
     @SuppressWarnings( "unused" )

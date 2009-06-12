@@ -39,7 +39,13 @@ public class IMG
     public static Image img(
         final String fileName )
     {
-        final URL url = IMG.class.getResource( fileName );
+        final URL url = url( fileName );
         return Toolkit.getDefaultToolkit().getImage( url );
+    }
+
+    public static URL url(
+        final String fileName )
+    {
+        return IMG.class.getResource( fileName );
     }
 }
