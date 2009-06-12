@@ -30,8 +30,9 @@ public class FileChooserPanelExt
     {
         this( null, columns );
         key = name;
-        final Settings settings = Single.instance( Settings.class );
-        final File file = new File( settings.get( getKey(), "" ) );
+
+        final String pathname = Single.instance( Settings.class ).get( getKey(), System.getProperty( "user.home" ) );
+        final File file = new File( pathname );
         if ( file.exists() )
         {
             setFile( file );

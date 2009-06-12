@@ -190,7 +190,7 @@ public class BookPanel
         categoryField.setValues( BookShelf.getCategories( book ) );
 
         // display file of the physical unit
-        fileChooserPanel.setFile( new File( book.getPhysicalBook().getFileName() ) );
+        fileChooserPanel.setFile( book.getPhysicalBook().getFile() );
 
         // display whether is read
         isReadCheckBox.setSelected( book.getRead() == 1 );

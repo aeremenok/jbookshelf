@@ -41,19 +41,16 @@ public class MainWindow
     public static final String APP_NAME = "JBookShelf";
     public static final String VERSION  = "0.5b0";
     private static Logger      log;
+    public static String[]     args;
 
     public static void main(
         final String[] args )
     {
+        MainWindow.args = args;
         EventQueue.invokeLater( new Runnable()
         {
             public void run()
             {
-                //                QApplication.initialize( args );
-                //
-                //                QCoreApplication.setApplicationVersion( VERSION );
-                //                QCoreApplication.setApplicationName( APP_NAME );
-
                 PropertyConfigurator.configure( MainWindow.class.getResource( "log4j.properties" ) );
                 log = Logger.getLogger( MainWindow.class );
                 Single.instance( MainWindow.class ).setVisible( true );
@@ -115,6 +112,6 @@ public class MainWindow
     {
         log.error( e, e );
         final ErrorInfo info = new ErrorInfo( null, I18N.tr( "Unexpected error" ), null, null, e, null, null );
-        JXErrorPane.showDialog( this, info );
+        JXErrorPane.showDialog( null, info );
     }
 }

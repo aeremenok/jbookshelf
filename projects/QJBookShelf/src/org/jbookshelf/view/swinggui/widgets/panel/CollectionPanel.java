@@ -160,7 +160,7 @@ public class CollectionPanel
         { bookTab, authorTab, categoryTab };
         for ( final CollectionView tab : tabs )
         {
-            viewTabbedPane.add( tab );
+            viewTabbedPane.addTab( tab.getName(), tab.getIcon(), tab );
         }
 
         viewTabbedPane.addChangeListener( this );

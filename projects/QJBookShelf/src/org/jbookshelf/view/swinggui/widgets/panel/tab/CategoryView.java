@@ -79,6 +79,7 @@ public class CategoryView
     {
         super();
         setName( "Categories" );
+        setIcon( IMG.icon( IMG.FEED_SUBSCRIBE_PNG ) );
 
         setLayout( new BorderLayout() );
 

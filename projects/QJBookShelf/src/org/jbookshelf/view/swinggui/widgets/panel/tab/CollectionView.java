@@ -4,6 +4,7 @@
 package org.jbookshelf.view.swinggui.widgets.panel.tab;
 
 import javax.annotation.Nonnull;
+import javax.swing.Icon;
 import javax.swing.JPanel;
 
 import org.jbookshelf.view.logic.Parameters;
@@ -14,6 +15,13 @@ import org.jbookshelf.view.logic.Parameters;
 public abstract class CollectionView
     extends JPanel
 {
+    private Icon icon;
+
+    public Icon getIcon()
+    {
+        return icon;
+    }
+
     /**
      * display search result
      * 
@@ -21,6 +29,12 @@ public abstract class CollectionView
      */
     public abstract void search(
         @Nonnull Parameters p );
+
+    public void setIcon(
+        final Icon icon )
+    {
+        this.icon = icon;
+    }
 
     /**
      * build query to execute in database

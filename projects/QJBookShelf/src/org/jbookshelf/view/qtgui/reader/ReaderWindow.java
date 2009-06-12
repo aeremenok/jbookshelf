@@ -20,13 +20,14 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.SortedMap;
 
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.FileUtil;
 import org.jbookshelf.controller.util.StringUtil;
-import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.swinggui.widgets.dialog.BookEditDialog;
 
 import com.trolltech.qt.core.Qt.ToolButtonStyle;
 import com.trolltech.qt.core.Qt.WindowState;
@@ -36,9 +37,7 @@ import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QFontComboBox;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QMainWindow;
-import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QSplitter;
-import com.trolltech.qt.gui.QWidget;
 
 public class ReaderWindow
     extends QMainWindow
@@ -50,123 +49,36 @@ public class ReaderWindow
     {
         public void retranslate()
         {
-            bookSettings.setText( tr( "Edit book properties" ) );
-            citation.setText( tr( "Add citation" ) );
-            view.setText( tr( "View bookmarks and citations" ) );
+            bookSettings.setText( I18N.tr( "Edit book properties" ) );
+            citation.setText( I18N.tr( "Add citation" ) );
+            view.setText( I18N.tr( "View bookmarks and citations" ) );
         }
     }
 
-    /**
-     * get a file with book content
-     * 
-     * @param book a book to open
-     * @return a file with book content
-     */
-    private static File getFile(
-        final Book book )
-    {
-        final PhysicalBook physical = book.getPhysicalBook();
-        //        if ( physical instanceof ArchiveFile )
-        //        {
-        //            final ArchiveFile archiveFile = (ArchiveFile) physical;
-        //            if ( archiveFile.getArchiveFile() == null || !archiveFile.getArchiveFile().exists() )
-        //            { // unpack and remember the file
-        //                final QMessageBox messageBox = new QMessageBox( Single.instance( MainWindow.class ) );
-        //                messageBox.setWindowTitle( "Unpacking. Please wait..." );
-        //                messageBox.show();
-        //
-        //                final File zippedFileToOpen = ZIPUtil.getZippedFileToOpen( archiveFile.getFile() );
-        //                archiveFile.setArchiveFile( zippedFileToOpen );
-        //
-        //                messageBox.hide();
-        //            }
-        //            return archiveFile.getArchiveFile();
-        //        }
+    private final QFontComboBox fontComboBox    = new QFontComboBox( this );
 
-        return physical.getFile();
-    }
+    private final QAction       bookSettings    = new QAction( new QIcon( ICONPATH + "document-properties.png" ), "",
+                                                    this );
+    private final QAction       citation        = new QAction( new QIcon( ICONPATH + "knotes.png" ), "", this );
 
-    /**
-     * @param file file to check
-     * @return is this file supported by the internal viewer
-     */
-    private static boolean isSupported(
-        final File file )
-    {
-        final String lowerCase = file.getName().toLowerCase();
-        for ( final String string : extensions )
-        {
-            if ( lowerCase.endsWith( "." + string ) )
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+    private final QAction       view            = new QAction( new QIcon( ICONPATH + "view-pim-notes.png" ), "", this );
+    private final QComboBox     charsetComboBox = new QComboBox( this );
 
-    private final QFontComboBox   fontComboBox    = new QFontComboBox( this );
-    private final QAction         bookSettings    = new QAction( new QIcon( ICONPATH + "document-properties.png" ), "",
-                                                      this );
+    private final Book          book;
+    private final TextBrowser   textBrowser     = new TextBrowser( this );
 
-    private final QAction         citation        = new QAction( new QIcon( ICONPATH + "knotes.png" ), "", this );
-    private final QAction         view            = new QAction( new QIcon( ICONPATH + "view-pim-notes.png" ), "", this );
+    private final CitationPanel citationPanel   = new CitationPanel( this );
 
-    private final QComboBox       charsetComboBox = new QComboBox( this );
-    private final Book            book;
+    private byte[]              contentBytes;
 
-    private final TextBrowser     textBrowser;
-    private final CitationPanel   citationPanel   = new CitationPanel( this );
-
-    private byte[]                contentBytes;
-
-    private final static String[] extensions      =
-                                                  { "txt", "html", "htm", "shtml"
-                                                  // todo import rich text
-                                                  // , "doc", "odt", "rtf"
-                                                  };
-
-    public static void open(
-        final QWidget parent,
-        final Book book )
-    {
-        try
-        {
-            final File file = getFile( book );
-            // define which viewer to use
-            String viewer = book.getPhysicalBook().getViewer();
-            if ( viewer == null )
-            {
-                viewer = isSupported( file )
-                    ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER;
-                book.getPhysicalBook().setViewer( viewer );
-            }
-
-            if ( PhysicalBook.INTERNAL_VIEWER.equals( viewer ) )
-            { // internal
-                new ReaderWindow( parent, book ).show();
-            }
-            else
-            { // system default
-                URIUtil.browseFile( file );
-            }
-        }
-        catch ( final Throwable e )
-        {
-            e.printStackTrace();
-            final String string = "Error opening book " + book.getName() + "\n\n" + StringUtil.printThrowable( e );
-            QMessageBox.critical( parent, "Error", string );
-        }
-    }
-
-    private final QToolBarExt toolBar = new ReaderToolBar();
+    private final QToolBarExt   toolBar         = new ReaderToolBar();
 
     public ReaderWindow(
-        final QWidget parent,
         final Book book )
     {
-        super( parent );
+        super();
+        setWindowIcon( new QIcon( ICONPATH + "logo-64.png" ) );
         this.book = book;
-        textBrowser = new TextBrowser( this );
 
         initComponents();
         initListeners();
@@ -202,7 +114,7 @@ public class ReaderWindow
     @SuppressWarnings( "unused" )
     private void editBook()
     {
-    //        new BookEditDialog( this, book ).show();
+        new BookEditDialog( book ).setVisible( true );
     }
 
     /**
@@ -210,7 +122,7 @@ public class ReaderWindow
      */
     private String getContent()
     {
-        final File file = getFile( book );
+        final File file = Single.instance( Viewer.class ).getFile( book );
         try
         {
             // define which encoding to use

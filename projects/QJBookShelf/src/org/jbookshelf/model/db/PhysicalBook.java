@@ -21,6 +21,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.singleton.Single;
+
 /**
  * @author eav
  */
@@ -165,13 +168,14 @@ public class PhysicalBook
     }
 
     /**
-     * @return
+     * @return file from the relative pathname
      */
     @Transient
     public File getFile()
     {
-        // todo
-        return new File( getFileName() );
+        final String fullPath = Single.instance( Settings.class ).WORKSPACE_DIR.getValue() + File.separator
+            + getFileName();
+        return new File( fullPath );
     }
 
     /**
@@ -233,14 +237,16 @@ public class PhysicalBook
     }
 
     /**
-     * @param file
+     * set a relative pathname by a file
+     * 
+     * @param file a file to relativize
      */
     @Transient
     public void setFile(
         final File file )
     {
-        // todo extract relative path
-        setFileName( file.getAbsolutePath() );
+        final File wsp = new File( Single.instance( Settings.class ).WORKSPACE_DIR.getValue() );
+        setFileName( wsp.toURI().relativize( file.toURI() ).getPath() );
     }
 
     /**
