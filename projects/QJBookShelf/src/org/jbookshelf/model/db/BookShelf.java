@@ -229,19 +229,26 @@ public class BookShelf
         try
         {
             session.beginTransaction();
+
+            session.saveOrUpdate( book );
+            session.saveOrUpdate( book.getPhysicalBook() );
+
+            session.getTransaction().commit();
+
+            session.beginTransaction();
+
+            session.load( book, book.getId() );
+
             for ( final Author author : book.getAuthors() )
             {
-                session.load( author, author.getId() );
                 author.getBooks().add( book );
             }
 
             for ( final Category category : book.getCategories() )
             {
-                session.load( category, category.getId() );
                 category.getBooks().add( book );
             }
-            session.merge( book );
-            session.merge( book.getPhysicalBook() );
+            session.persist( book );
 
             session.getTransaction().commit();
         }

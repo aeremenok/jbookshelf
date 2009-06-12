@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.model.db.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.swinggui.widgets.LookAndFeelComboBoxModel;
@@ -46,14 +47,27 @@ public class MainWindow
     public static void main(
         final String[] args )
     {
+        SplashScreenManager.start();
+
         MainWindow.args = args;
+        PropertyConfigurator.configure( MainWindow.class.getResource( "log4j.properties" ) );
+        SplashScreenManager.setProgress( 10 );
+
+        log = Logger.getLogger( MainWindow.class );
+        SplashScreenManager.setProgress( 25 );
+
+        HibernateUtil.main( args );
+        SplashScreenManager.setProgress( 75 );
+
+        final MainWindow instance = Single.instance( MainWindow.class );
+        SplashScreenManager.setProgress( 99 );
+        SplashScreenManager.stop();
+
         EventQueue.invokeLater( new Runnable()
         {
             public void run()
             {
-                PropertyConfigurator.configure( MainWindow.class.getResource( "log4j.properties" ) );
-                log = Logger.getLogger( MainWindow.class );
-                Single.instance( MainWindow.class ).setVisible( true );
+                instance.setVisible( true );
             }
         } );
     }

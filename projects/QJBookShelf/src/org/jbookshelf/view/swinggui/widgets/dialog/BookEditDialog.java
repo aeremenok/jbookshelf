@@ -69,8 +69,6 @@ public class BookEditDialog
                 {
                     session.load( book, book.getId() );
                     BookPanel.changeBook( book, parameters );
-                    BookShelf.mergeBook( book );
-                    Single.instance( CollectionPanel.class ).updateActiveView();
                 }
                 catch ( final HibernateException e )
                 {
@@ -81,6 +79,8 @@ public class BookEditDialog
                 {
                     session.close();
                 }
+                BookShelf.mergeBook( book );
+                Single.instance( CollectionPanel.class ).updateActiveView();
             }
             return true;
         }

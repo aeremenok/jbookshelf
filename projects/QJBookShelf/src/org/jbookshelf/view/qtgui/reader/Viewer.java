@@ -4,8 +4,10 @@
 package org.jbookshelf.view.qtgui.reader;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.controller.util.FileUtil;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.PhysicalBook;
@@ -60,23 +62,13 @@ public class Viewer
     public void open(
         final Book book )
     {
-        // todo separate cases
-        Single.instance( ProgressBar.class ).invoke( new SafeWorker<File, Object>()
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<byte[], Object>()
         {
             @Override
-            protected File doInBackground()
+            protected byte[] doInBackground()
+                throws Exception
             {
-                final File file = getFile( book );
-                // define which viewer to use
-                String viewer = book.getPhysicalBook().getViewer();
-                if ( viewer == null )
-                {
-                    viewer = isSupported( file )
-                        ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER;
-                    book.getPhysicalBook().setViewer( viewer );
-                }
-
-                return file;
+                return prepareBook( book );
             }
 
             @Override
@@ -85,7 +77,8 @@ public class Viewer
                 final String viewer = book.getPhysicalBook().getViewer();
                 if ( PhysicalBook.INTERNAL_VIEWER.equals( viewer ) )
                 { // internal
-                    new Thread()
+                    // start qt in another thread
+                    new Thread( new Runnable()
                     {
                         @Override
                         public void run()
@@ -93,14 +86,14 @@ public class Viewer
                             QApplication.initialize( MainWindow.args );
                             QCoreApplication.setApplicationVersion( MainWindow.VERSION );
                             QCoreApplication.setApplicationName( MainWindow.APP_NAME );
-                            new ReaderWindow( book ).show();
+                            new ReaderWindow( book, getQuiet() ).show();
                             QApplication.exec();
                         }
-                    }.start();
+                    } ).start();
                 }
                 else
                 { // system default
-                    URIUtil.browseFile( getQuiet() );
+                    URIUtil.browseFile( book.getPhysicalBook().getFile() );
                 }
             }
         } );
@@ -122,5 +115,37 @@ public class Viewer
             }
         }
         return false;
+    }
+
+    private byte[] prepareBook(
+        final Book book )
+        throws IOException
+    {
+        // unpack and define attributes
+        final File file = getFile( book );
+
+        // define which viewer to use
+        String viewer = book.getPhysicalBook().getViewer();
+        if ( viewer == null )
+        {
+            viewer = isSupported( file )
+                ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER;
+            book.getPhysicalBook().setViewer( viewer );
+        }
+
+        if ( PhysicalBook.INTERNAL_VIEWER.equals( viewer ) )
+        {
+            // define which encoding to use
+            String charset = book.getPhysicalBook().getCharsetName();
+            if ( charset == null )
+            {
+                charset = FileUtil.guessFileEncoding( file );
+                book.getPhysicalBook().setCharsetName( charset );
+            }
+            // read the whole book into memory
+            return FileUtil.getBytesFromFile( file );
+        }
+
+        return null;
     }
 }
