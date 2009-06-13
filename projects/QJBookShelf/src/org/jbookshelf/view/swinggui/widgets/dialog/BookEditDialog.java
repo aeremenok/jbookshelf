@@ -58,17 +58,20 @@ public class BookEditDialog
         final Parameters parameters = bookPanel.extractParameters();
         if ( parameters != null )
         {
-            if ( getParent() instanceof FileImportDialog )
-            { // let the dialog deal with result  
+            if ( book.getId() == null )
+            { // let the FileImportDialog deal with result  
                 BookPanel.changeBook( book, parameters );
             }
             else
-            { // general addition, merge a new book
+            { // general addition, merge a book
                 final Session session = HibernateUtil.getSession();
                 try
                 {
                     session.load( book, book.getId() );
                     BookPanel.changeBook( book, parameters );
+                    BookShelf.mergeBook( book, session );
+                    // todo if BookView is active update only one row 
+                    Single.instance( CollectionPanel.class ).updateActiveView();
                 }
                 catch ( final HibernateException e )
                 {
@@ -79,8 +82,6 @@ public class BookEditDialog
                 {
                     session.close();
                 }
-                BookShelf.mergeBook( book );
-                Single.instance( CollectionPanel.class ).updateActiveView();
             }
             return true;
         }

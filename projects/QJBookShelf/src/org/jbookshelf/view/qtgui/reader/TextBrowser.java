@@ -20,11 +20,13 @@ import javax.swing.Action;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
-import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.LogRunner;
 import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
 import org.jbookshelf.view.swinggui.widgets.ProgressBar;
+import org.jbookshelf.view.swinggui.widgets.SafeWorker;
 import org.jbookshelf.view.swinggui.widgets.UniqueActions;
 
 import com.trolltech.qt.gui.QAction;
@@ -100,16 +102,19 @@ public class TextBrowser
     {
         // save current position
         final QScrollBar scrollBar = verticalScrollBar();
-        readerWindow.getBook().setRead( (float) scrollBar.sliderPosition() / (float) scrollBar.maximum() );
-        final Runnable runnable = new Runnable()
+        final Book book = readerWindow.getBook();
+        book.setRead( (float) scrollBar.sliderPosition() / (float) scrollBar.maximum() );
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<Object, Object>()
         {
             @Override
-            public void run()
+            protected Object doInBackground()
+                throws Exception
             {
-                BookShelf.mergeBook( readerWindow.getBook() );
+                final LogRunner runner = new LogRunner();
+                return runner.update( "update book set read=? where id=?", new Object[]
+                { book.getRead(), book.getId() } );
             }
-        };
-        Single.instance( ProgressBar.class ).invoke( runnable );
+        } );
     }
 
     @SuppressWarnings( "unused" )

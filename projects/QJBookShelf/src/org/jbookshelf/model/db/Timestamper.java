@@ -26,6 +26,7 @@ public class Timestamper
     SaveOrUpdateEventListener
 {
     private static final DefaultSaveOrUpdateEventListener SAVE_OR_UPDATE_EVENT_LISTENER = new DefaultSaveOrUpdateEventListener();
+    @SuppressWarnings( "unused" )
     private static final DefaultMergeEventListener        MERGE_EVENT_LISTENER          = new DefaultMergeEventListener();
     private static final DefaultPersistEventListener      PERSIST_EVENT_LISTENER        = new DefaultPersistEventListener();
 
@@ -35,7 +36,7 @@ public class Timestamper
         throws HibernateException
     {
         timestamp( arg0.getResult() );
-        MERGE_EVENT_LISTENER.onMerge( arg0 );
+        //        MERGE_EVENT_LISTENER.onMerge( arg0 );
     }
 
     @Override
@@ -45,7 +46,7 @@ public class Timestamper
         throws HibernateException
     {
         timestamp( arg0.getResult() );
-        MERGE_EVENT_LISTENER.onMerge( arg0, arg1 );
+        //        MERGE_EVENT_LISTENER.onMerge( arg0, arg1 );
     }
 
     @Override

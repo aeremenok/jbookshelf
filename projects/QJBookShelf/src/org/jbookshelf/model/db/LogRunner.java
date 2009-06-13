@@ -62,7 +62,9 @@ public class LogRunner
         throws SQLException
     {
         log( sql, params );
-        return super.update( conn, sql, params );
+        final int update = super.update( conn, sql, params );
+        conn.commit();
+        return update;
     }
 
     private void log(
@@ -75,16 +77,10 @@ public class LogRunner
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.commons.dbutils.QueryRunner#prepareConnection()
-     */
     @Override
     protected Connection prepareConnection()
-        throws SQLException
     {
-        final Connection connection = HibernateUtil.connection();
-        connection.setAutoCommit( true );
-        return connection;
+        return HibernateUtil.connection();
     }
 
 }
