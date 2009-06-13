@@ -53,14 +53,22 @@ public class BookPanel
         }
 
         book.setName( parameters.<String> get( Keys.BOOK_NAME ) );
-
-        final File file = parameters.get( Keys.BOOK_FILE );
-        final PhysicalBook physical = FileImporter.createPhysicalBook( file );
-        physical.setViewer( parameters.<String> get( Keys.BOOK_VIEWER ) );
-        book.setPhysicalBook( physical );
-
         book.setRead( parameters.<Boolean> get( Keys.BOOK_IS_READ )
             ? 1f : 0f );
+
+        final File file = parameters.get( Keys.BOOK_FILE );
+        final PhysicalBook physical;
+        if ( book.getPhysicalBook() == null )
+        {
+            physical = FileImporter.createPhysicalBook( file );
+            book.setPhysicalBook( physical );
+        }
+        else
+        {
+            physical = book.getPhysicalBook();
+            physical.setFile( file );
+        }
+        physical.setViewer( parameters.<String> get( Keys.BOOK_VIEWER ) );
 
         return book;
     }

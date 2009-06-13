@@ -4,12 +4,14 @@
 package org.jbookshelf.model.db;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.connection.ConnectionProvider;
 import org.hibernate.event.MergeEventListener;
 import org.hibernate.event.PersistEventListener;
 import org.hibernate.event.SaveOrUpdateEventListener;
@@ -19,9 +21,10 @@ import org.hibernate.event.SaveOrUpdateEventListener;
  */
 public class HibernateUtil
 {
-    private static final SessionFactory factory;
-    private static final Properties     properties;
-    private static final Logger         log = Logger.getLogger( HibernateUtil.class );
+    private static final SessionFactory     factory;
+    private static final Properties         properties;
+    private static final Logger             log = Logger.getLogger( HibernateUtil.class );
+    private static final ConnectionProvider connectionProvider;
 
     static
     {
@@ -38,6 +41,7 @@ public class HibernateUtil
             final AnnotationConfiguration configure = cfg.configure();
             properties = configure.getProperties();
             factory = configure.buildSessionFactory();
+            connectionProvider = configure.buildSettings().getConnectionProvider();
         }
         catch ( final Exception e )
         {
@@ -45,10 +49,17 @@ public class HibernateUtil
         }
     }
 
-    @SuppressWarnings( "deprecation" )
     public static Connection connection()
     {
-        return getSession().connection();
+        try
+        {
+            return connectionProvider.getConnection();
+        }
+        catch ( final SQLException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
     }
 
     /**

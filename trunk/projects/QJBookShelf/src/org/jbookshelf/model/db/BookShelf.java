@@ -220,47 +220,37 @@ public class BookShelf
 
     /**
      * @param book
+     * @param session
      */
     public static void mergeBook(
-        @Nonnull final Book book )
+        @Nonnull final Book book,
+        @Nonnull final Session session )
     {
         log.debug( "mergeBook" );
-        final Session session = HibernateUtil.getSession();
-        try
+
+        session.beginTransaction();
+
+        for ( final Author author : book.getAuthors() )
         {
-            session.beginTransaction();
-
-            session.saveOrUpdate( book );
-            session.saveOrUpdate( book.getPhysicalBook() );
-
-            session.getTransaction().commit();
-
-            session.beginTransaction();
-
-            session.load( book, book.getId() );
-
-            for ( final Author author : book.getAuthors() )
+            if ( !session.contains( author ) )
             {
-                author.getBooks().add( book );
+                session.load( author, author.getId() );
             }
+            author.getBooks().add( book );
+        }
 
-            for ( final Category category : book.getCategories() )
+        for ( final Category category : book.getCategories() )
+        {
+            if ( !session.contains( category ) )
             {
-                category.getBooks().add( book );
+                session.load( category, category.getId() );
             }
-            session.persist( book );
+            category.getBooks().add( book );
+        }
+        session.merge( book );
+        session.merge( book.getPhysicalBook() );
 
-            session.getTransaction().commit();
-        }
-        catch ( final HibernateException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-        finally
-        {
-            session.close();
-        }
+        session.getTransaction().commit();
     }
 
     /**
