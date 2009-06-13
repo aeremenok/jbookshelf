@@ -54,7 +54,7 @@ public class MainWindow
         SplashScreenManager.setProgress( 10 );
 
         log = Logger.getLogger( MainWindow.class );
-        SplashScreenManager.setProgress( 25 );
+        SplashScreenManager.setProgress( 20 );
 
         HibernateUtil.main( args );
         SplashScreenManager.setProgress( 75 );
