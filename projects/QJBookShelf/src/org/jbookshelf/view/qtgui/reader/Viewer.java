@@ -11,12 +11,8 @@ import org.jbookshelf.controller.util.FileUtil;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.PhysicalBook;
-import org.jbookshelf.view.swinggui.MainWindow;
 import org.jbookshelf.view.swinggui.widgets.ProgressBar;
 import org.jbookshelf.view.swinggui.widgets.SafeWorker;
-
-import com.trolltech.qt.core.QCoreApplication;
-import com.trolltech.qt.gui.QApplication;
 
 /**
  * @author eav 2009
@@ -78,18 +74,14 @@ public class Viewer
                 if ( PhysicalBook.INTERNAL_VIEWER.equals( viewer ) )
                 { // internal
                     // start qt in another thread
-                    new Thread( new Runnable()
+                    Single.instance( QT.class ).invoke( new Runnable()
                     {
                         @Override
                         public void run()
                         {
-                            QApplication.initialize( MainWindow.args );
-                            QCoreApplication.setApplicationVersion( MainWindow.VERSION );
-                            QCoreApplication.setApplicationName( MainWindow.APP_NAME );
                             new ReaderWindow( book, getQuiet() ).show();
-                            QApplication.exec();
                         }
-                    } ).start();
+                    } );
                 }
                 else
                 { // system default

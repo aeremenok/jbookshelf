@@ -80,7 +80,7 @@ public class ReaderWindow
         super();
         this.contentBytes = contentBytes;
         this.book = book;
-        log.debug( book.getRead() );
+
         setWindowIcon( new QIcon( ICONPATH + "logo-64.png" ) );
 
         initComponents();
@@ -122,7 +122,7 @@ public class ReaderWindow
         {
             @Override
             public void run()
-            { // todo switch to another window
+            {
                 final BookEditDialog bookEditDialog = new BookEditDialog( book );
                 bookEditDialog.setAlwaysOnTop( true );
                 bookEditDialog.setVisible( true );
