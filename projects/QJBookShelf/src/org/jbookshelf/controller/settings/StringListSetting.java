@@ -3,6 +3,10 @@
  */
 package org.jbookshelf.controller.settings;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.xnap.commons.settings.AbstractSetting;
 import org.xnap.commons.settings.SettingResource;
 import org.xnap.commons.settings.Validator;
@@ -10,8 +14,8 @@ import org.xnap.commons.settings.Validator;
 /**
  * @author eav 2009
  */
-public class MasksSetting
-    extends AbstractSetting<String[]>
+public class StringListSetting
+    extends AbstractSetting<List<String>>
 {
     /**
      * masks denote filenames, so no mask should contain this char
@@ -23,12 +27,12 @@ public class MasksSetting
      * @param key
      * @param defaultValue
      */
-    public MasksSetting(
+    public StringListSetting(
         final SettingResource backstore,
         final String key,
         final String[] defaultValue )
     {
-        super( backstore, key, defaultValue, null );
+        super( backstore, key, Arrays.asList( defaultValue ), null );
     }
 
     /**
@@ -37,27 +41,27 @@ public class MasksSetting
      * @param defaultValue
      * @param validator
      */
-    public MasksSetting(
+    public StringListSetting(
         final SettingResource backstore,
         final String key,
         final String[] defaultValue,
         final Validator validator )
     {
-        super( backstore, key, defaultValue, validator );
+        super( backstore, key, Arrays.asList( defaultValue ), validator );
     }
 
     /* (non-Javadoc)
      * @see org.xnap.commons.settings.AbstractSetting#fromString(java.lang.String)
      */
     @Override
-    protected String[] fromString(
+    protected List<String> fromString(
         final String string )
     {
         if ( string.length() == 0 )
         {
-            return new String[0];
+            return new ArrayList<String>();
         }
-        return string.split( SEPARATOR );
+        return Arrays.asList( string.split( SEPARATOR ) );
     }
 
     /* (non-Javadoc)
@@ -65,14 +69,14 @@ public class MasksSetting
      */
     @Override
     protected String toString(
-        final String[] strings )
+        final List<String> strings )
     {
         final StringBuilder builder = new StringBuilder();
         for ( final String string : strings )
         {
             builder.append( string ).append( SEPARATOR );
         }
-        if ( strings.length > 0 )
+        if ( strings.size() > 0 )
         {
             builder.deleteCharAt( builder.length() - 1 );
         }

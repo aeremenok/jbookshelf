@@ -15,12 +15,13 @@
  */
 package org.jbookshelf.controller.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.mozilla.universalchardet.UniversalDetector;
 
 /**
@@ -30,54 +31,24 @@ import org.mozilla.universalchardet.UniversalDetector;
  */
 public class FileUtil
 {
-    public static byte[] getBytesFromFile(
-        final File file )
-        throws IOException
-    {
-        final InputStream is = new FileInputStream( file );
+    private static final Logger log = Logger.getLogger( FileUtil.class );
 
-        // Get the size of the file
-        final long length = file.length();
-
-        if ( length > Integer.MAX_VALUE )
-        {
-            // todo break into parts?
-            throw new IOException( "File is too large: " + file.getAbsolutePath() );
-        }
-
-        // Create the byte array to hold the data
-        final byte[] bytes = new byte[(int) length];
-
-        // Read in the bytes
-        int offset = 0;
-        int numRead = 0;
-        while ( offset < bytes.length && (numRead = is.read( bytes, offset, bytes.length - offset )) >= 0 )
-        {
-            offset += numRead;
-        }
-
-        // Ensure all the bytes have been read in
-        if ( offset < bytes.length )
-        {
-            throw new IOException( "Could not completely read file " + file.getName() );
-        }
-
-        // Close the input stream and return bytes
-        is.close();
-        return bytes;
-    }
-
-    public static String guessFileEncoding(
-        final File file )
+    /**
+     * @param content a byte array to check
+     * @return its possible encoding
+     */
+    public static String guessByteArrayEncoding(
+        final byte[] content )
     {
         final UniversalDetector detector = new UniversalDetector( null );
+        InputStream is = null;
         try
         {
+            is = new BufferedInputStream( new ByteArrayInputStream( content ) );
             final byte[] buf = new byte[4096];
-            final FileInputStream fis = new FileInputStream( file );
 
             int nread;
-            while ( (nread = fis.read( buf )) > 0 && !detector.isDone() )
+            while ( (nread = is.read( buf )) > 0 && !detector.isDone() )
             {
                 detector.handleData( buf, 0, nread );
             }
@@ -87,12 +58,14 @@ public class FileUtil
         }
         catch ( final Exception e )
         {
-            e.printStackTrace();
+            log.error( e, e );
         }
         finally
         {
             detector.reset();
+            IOUtils.closeQuietly( is );
         }
+
         return Charset.defaultCharset().name();
     }
 }

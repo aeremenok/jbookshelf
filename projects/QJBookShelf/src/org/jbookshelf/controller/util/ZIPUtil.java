@@ -16,14 +16,16 @@
 package org.jbookshelf.controller.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.nio.charset.Charset;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
 
-import net.sf.jazzlib.ZipEntry;
-import net.sf.jazzlib.ZipInputStream;
-import net.sf.jazzlib.ZipInputStreamEncoded;
-
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.jbookshelf.controller.importer.FileImporter;
 
 /**
@@ -33,6 +35,8 @@ import org.jbookshelf.controller.importer.FileImporter;
  */
 public class ZIPUtil
 {
+    private static final Logger log = Logger.getLogger( ZIPUtil.class );
+
     /**
      * extracts the specified zip-file to the specified directory
      * 
@@ -44,43 +48,61 @@ public class ZIPUtil
         final String zipFilename,
         final String destDirName )
     {
+        InputStream zis = null;
+        FileOutputStream fos = null;
         try
         {
             // create destination directory
             final File destDir = new File( destDirName );
             destDir.mkdir();
-            // prepare source file
-            final File file = new File( zipFilename );
-            final String encoding = guessZipEncoding( file );
-            // extract
-            final ZipInputStreamEncoded zise = new ZipInputStreamEncoded( new FileInputStream( file ), encoding );
-            ZipEntry entry = zise.getNextEntry();
-            while ( entry != null )
+
+            // unzip
+            final ZipFile zipFile = new ZipFile( zipFilename );
+            final Enumeration entries = zipFile.getEntries();
+            while ( entries.hasMoreElements() )
             {
+                final ZipArchiveEntry entry = (ZipArchiveEntry) entries.nextElement();
+                zis = zipFile.getInputStream( entry );
+
                 final File f = new File( destDirName + File.separator + entry.getName() );
-                if ( entry.isDirectory() && !f.exists() )
-                { // a directory doesn't exist, create it
-                    f.mkdir();
+                if ( !f.exists() )
+                { // a file doesn't exist, create it
+                    if ( entry.isDirectory() )
+                    {
+                        f.mkdirs();
+                    }
+                    else
+                    {
+                        FileUtils.touch( f );
+                    }
+
+                    log.debug( "created " + f.getAbsolutePath() );
                 }
-                else if ( !f.exists() || f.length() < entry.getSize() )
-                { // a file doesn't exist or is empty, write it
-                    final FileOutputStream fos = new FileOutputStream( f );
-                    while ( zise.available() > 0 )
+
+                if ( !f.isDirectory() && f.length() < entry.getSize() )
+                { // file is empty
+                    fos = new FileOutputStream( f );
+                    while ( zis.available() > 0 )
                     { // write contents
-                        fos.write( zise.read() );
+                        fos.write( zis.read() );
                     }
                     fos.close();
-                }
-                entry = zise.getNextEntry();
-            }
 
-            zise.close();
+                    log.debug( "written " + f.getAbsolutePath() );
+                }
+            }
 
             return destDir;
         }
-        catch ( final Exception e )
+        catch ( final IOException e1 )
         {
-            throw new Error( e );
+            log.error( e1, e1 );
+            throw new Error( e1 );
+        }
+        finally
+        {
+            IOUtils.closeQuietly( zis );
+            IOUtils.closeQuietly( fos );
         }
     }
 
@@ -126,39 +148,27 @@ public class ZIPUtil
         final File zipFile )
     {
         final String destDirName = System.getProperty( "java.io.tmpdir" ) + File.separator + zipFile.getName();
+
         final File destDir = extractZipFileTo( zipFile.getAbsolutePath(), destDirName );
         return getBiggestFile( destDir );
     }
 
     /**
-     * tries to guess the encoding used by an archive
-     * 
-     * @param file zip-file
-     * @return approximate encoding
+     * @param file a file to check
+     * @return is file a zip archive
      */
-    public static String guessZipEncoding(
+    public static boolean isZip(
         final File file )
     {
         try
         {
-            final ZipInputStream stream = new ZipInputStream( new FileInputStream( file ) );
-            final StringBuilder builder = new StringBuilder();
-            ZipEntry entry = stream.getNextEntry();
-            while ( entry != null )
-            {
-                builder.append( entry.getName() );
-                entry = stream.getNextEntry();
-            }
-            final String encoding = StringUtil.guessStringEncoding( builder.toString() );
-            if ( encoding != null )
-            {
-                return encoding;
-            }
+            final String contentType = file.toURI().toURL().openConnection().getContentType();
+            return "application/zip".equals( contentType );
         }
         catch ( final Exception e )
-        { // do not interrupt hoping that the defaultCharset will fit
-            e.printStackTrace();
+        {
+            log.error( e, e );
+            throw new Error( e );
         }
-        return Charset.defaultCharset().name();
     }
 }

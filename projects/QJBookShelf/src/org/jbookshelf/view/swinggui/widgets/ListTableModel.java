@@ -87,7 +87,7 @@ public class ListTableModel<V>
         return super.getValueAt( row, column );
     }
 
-    public Collection<V> getValues()
+    public List<V> getValues()
     {
         return this.values;
     }

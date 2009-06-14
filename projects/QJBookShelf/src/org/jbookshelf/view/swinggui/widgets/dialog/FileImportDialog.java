@@ -9,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 import javax.swing.Action;
@@ -143,8 +142,7 @@ public class FileImportDialog
         // save the masks and the chosen directory
         final Settings settings = Single.instance( Settings.class );
 
-        final String[] masks = maskField.getValues().toArray( new String[maskField.getValues().size()] );
-        settings.IMPORT_MASKS.setValue( masks );
+        settings.IMPORT_MASKS.setValue( maskField.getValues() );
 
         settings.save();
         super.close();
@@ -199,7 +197,7 @@ public class FileImportDialog
         panel.add( progressBar, BorderLayout.SOUTH );
 
         // fill masks from settings
-        maskField.setValues( Arrays.asList( Single.instance( Settings.class ).IMPORT_MASKS.getValue() ) );
+        maskField.setValues( Single.instance( Settings.class ).IMPORT_MASKS.getValue() );
     }
 
     private void initListeners()
@@ -282,7 +280,7 @@ public class FileImportDialog
             {
                 successModel.setBooks( new ArrayList<Book>() );
                 failModel.setFiles( new ArrayList<File>() );
-                importer.importFiles( masks.toArray( new String[masks.size()] ), file );
+                importer.importFiles( masks, file );
             }
         } );
     }

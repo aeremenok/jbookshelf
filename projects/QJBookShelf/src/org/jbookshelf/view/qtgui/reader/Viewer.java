@@ -5,11 +5,16 @@ package org.jbookshelf.view.qtgui.reader;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.FileUtil;
 import org.jbookshelf.controller.util.URIUtil;
+import org.jbookshelf.controller.util.ZIPUtil;
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.LogRunner;
 import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.view.swinggui.widgets.ProgressBar;
 import org.jbookshelf.view.swinggui.widgets.SafeWorker;
@@ -19,11 +24,26 @@ import org.jbookshelf.view.swinggui.widgets.SafeWorker;
  */
 public class Viewer
 {
-    private final static String[] extensions =
-                                             { "txt", "html", "htm", "shtml"
-                                             // todo import rich text
-                                             // , "doc", "odt", "rtf"
-                                             };
+    private static final Logger log = Logger.getLogger( Viewer.class );
+
+    /**
+     * @param file a file to check
+     * @return is this file supported by the internal viewer
+     */
+    public static boolean isInternallySupported(
+        final File file )
+    {
+        try
+        {
+            final String contentType = file.toURI().toURL().openConnection().getContentType();
+            return contentType.toLowerCase().startsWith( "text" );
+        }
+        catch ( final Exception e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+    }
 
     /**
      * get a file with book content
@@ -35,24 +55,33 @@ public class Viewer
         final Book book )
     {
         final PhysicalBook physical = book.getPhysicalBook();
-        //        if ( physical instanceof ArchiveFile )
-        //        {
-        //            final ArchiveFile archiveFile = (ArchiveFile) physical;
-        //            if ( archiveFile.getArchiveFile() == null || !archiveFile.getArchiveFile().exists() )
-        //            { // unpack and remember the file
-        //                final QMessageBox messageBox = new QMessageBox( Single.instance( MainWindow.class ) );
-        //                messageBox.setWindowTitle( "Unpacking. Please wait..." );
-        //                messageBox.show();
-        //
-        //                final File zippedFileToOpen = ZIPUtil.getZippedFileToOpen( archiveFile.getFile() );
-        //                archiveFile.setArchiveFile( zippedFileToOpen );
-        //
-        //                messageBox.hide();
-        //            }
-        //            return archiveFile.getArchiveFile();
-        //        }
+        if ( physical.getUnpackedFileName() != null && physical.getUnpackedFile().exists() )
+        {
+            return physical.getUnpackedFile();
+        }
 
-        return physical.getFile();
+        final File file = physical.getFile();
+        if ( ZIPUtil.isZip( file ) )
+        {
+            // unpack and remember the file
+            final File zippedFileToOpen = ZIPUtil.getZippedFileToOpen( file );
+            physical.setUnpackedFile( zippedFileToOpen );
+            // save to db
+            try
+            {
+                final LogRunner runner = new LogRunner();
+                runner.update( "update physical_book set unpackedFileName=? where id=?", new Object[]
+                { physical.getUnpackedFileName(), physical.getId() } );
+            }
+            catch ( final SQLException e )
+            {
+                log.error( e, e );
+                throw new Error( e );
+            }
+            return zippedFileToOpen;
+        }
+
+        return file;
     }
 
     public void open(
@@ -91,24 +120,6 @@ public class Viewer
         } );
     }
 
-    /**
-     * @param file file to check
-     * @return is this file supported by the internal viewer
-     */
-    private boolean isSupported(
-        final File file )
-    {
-        final String lowerCase = file.getName().toLowerCase();
-        for ( final String string : extensions )
-        {
-            if ( lowerCase.endsWith( "." + string ) )
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private byte[] prepareBook(
         final Book book )
         throws IOException
@@ -120,22 +131,23 @@ public class Viewer
         String viewer = book.getPhysicalBook().getViewer();
         if ( viewer == null )
         {
-            viewer = isSupported( file )
+            viewer = Viewer.isInternallySupported( file )
                 ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER;
             book.getPhysicalBook().setViewer( viewer );
         }
 
         if ( PhysicalBook.INTERNAL_VIEWER.equals( viewer ) )
         {
+            // read the whole book into memory
+            final byte[] content = FileUtils.readFileToByteArray( file );
             // define which encoding to use
             String charset = book.getPhysicalBook().getCharsetName();
             if ( charset == null )
             {
-                charset = FileUtil.guessFileEncoding( file );
+                charset = FileUtil.guessByteArrayEncoding( content );
                 book.getPhysicalBook().setCharsetName( charset );
             }
-            // read the whole book into memory
-            return FileUtil.getBytesFromFile( file );
+            return content;
         }
 
         return null;

@@ -187,6 +187,25 @@ public class PhysicalBook
     }
 
     /**
+     * @return the id
+     */
+    public Long getId()
+    {
+        return this.id;
+    }
+
+    /**
+     * @return the unpackedFile
+     */
+    @Transient
+    @Nullable
+    public File getUnpackedFile()
+    {
+        final String fullPath = System.getProperty( "java.io.tmpdir" ) + File.separator + getFileName();
+        return new File( fullPath );
+    }
+
+    /**
      * @return the unpackedFileName
      */
     @Nullable
@@ -228,6 +247,15 @@ public class PhysicalBook
     }
 
     /**
+     * @param book the book to set
+     */
+    public void setBook(
+        @Nonnull final Book book )
+    {
+        this.book = book;
+    }
+
+    /**
      * @param charsetName the charsetName to set
      */
     public void setCharsetName(
@@ -243,7 +271,7 @@ public class PhysicalBook
      */
     @Transient
     public void setFile(
-        final File file )
+        @Nonnull final File file )
     {
         final File wsp = new File( Single.instance( Settings.class ).WORKSPACE_DIR.getValue() );
         setFileName( wsp.toURI().relativize( file.toURI() ).getPath() );
@@ -256,6 +284,14 @@ public class PhysicalBook
         @Nonnull final String fileName )
     {
         this.fileName = fileName;
+    }
+
+    @Transient
+    public void setUnpackedFile(
+        @Nonnull final File unpackedFile )
+    {
+        final File tmp = new File( System.getProperty( "java.io.tmpdir" ) );
+        setUnpackedFileName( tmp.toURI().relativize( unpackedFile.toURI() ).getPath() );
     }
 
     /**
@@ -281,14 +317,5 @@ public class PhysicalBook
     public void timestamp()
     {
         changeDate = new Date();
-    }
-
-    /**
-     * @param book the book to set
-     */
-    void setBook(
-        @Nonnull final Book book )
-    {
-        this.book = book;
     }
 }
