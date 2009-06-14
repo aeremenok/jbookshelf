@@ -1,6 +1,6 @@
 package org.jbookshelf.view.swinggui.widgets;
 
-import images.IMG;
+import icons.IMG;
 
 import java.io.File;
 
@@ -21,7 +21,7 @@ public class FileChooserPanelExt
         final int columns )
     {
         super( file, columns );
-        getFileChooserAction().putValue( Action.SMALL_ICON, IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_16_PNG ) );
+        getFileChooserAction().putValue( Action.SMALL_ICON, IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG ) );
     }
 
     public FileChooserPanelExt(

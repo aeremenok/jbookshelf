@@ -3,7 +3,7 @@
  */
 package org.jbookshelf.view.swinggui;
 
-import images.IMG;
+import icons.IMG;
 
 import org.xnap.commons.gui.SplashWindow;
 
@@ -22,8 +22,8 @@ public class SplashScreenManager
 
     public static void start()
     {
-        instance = SplashWindow.createInstance( MainWindow.APP_NAME + " " + MainWindow.VERSION, IMG
-            .icon( "logo-256.png" ) );
+        final String title = MainWindow.APP_NAME + " " + MainWindow.VERSION;
+        instance = SplashWindow.createInstance( title, IMG.icon( IMG.SPLASH_PNG, 256 ) );
         instance.setVisible( true );
     }
 

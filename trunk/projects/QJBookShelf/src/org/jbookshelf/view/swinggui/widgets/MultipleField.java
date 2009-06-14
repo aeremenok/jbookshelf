@@ -1,6 +1,6 @@
 package org.jbookshelf.view.swinggui.widgets;
 
-import images.IMG;
+import icons.IMG;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -34,7 +34,7 @@ public class MultipleField<T>
     {
         private AddAction()
         {
-            super( null, IMG.icon( IMG.LIST_ADD_SMALL_PNG ) );
+            super( null, IMG.icon( IMG.LIST_ADD_PNG ) );
         }
 
         @Override

@@ -3,7 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.widgets.panel.tab;
 
-import images.IMG;
+import icons.IMG;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -118,6 +118,7 @@ public class BookView
         add( new JScrollPane( table ), BorderLayout.CENTER );
 
         table.getSelectionModel().addListSelectionListener( this );
+        table.addMouseListener( new CollectionPopupListener() );
     }
 
     @SuppressWarnings( "unchecked" )

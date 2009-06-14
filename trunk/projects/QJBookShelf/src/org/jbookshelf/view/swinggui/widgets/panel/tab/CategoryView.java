@@ -3,7 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.widgets.panel.tab;
 
-import images.IMG;
+import icons.IMG;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -143,6 +143,8 @@ public class CategoryView
 
     private void initListeners()
     {
+        tree.addMouseListener( new CollectionPopupListener() );
+
         tree.addTreeWillExpandListener( new TreeWillExpandListener()
         {
             @Override

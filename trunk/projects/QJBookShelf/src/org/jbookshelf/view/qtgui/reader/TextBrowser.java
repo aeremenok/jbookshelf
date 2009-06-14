@@ -21,7 +21,7 @@ import javax.swing.Action;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.LogRunner;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
@@ -103,16 +103,19 @@ public class TextBrowser
         // save current position
         final QScrollBar scrollBar = verticalScrollBar();
         final Book book = readerWindow.getBook();
-        book.setRead( (float) scrollBar.sliderPosition() / (float) scrollBar.maximum() );
+        float read = (float) scrollBar.sliderPosition() / (float) scrollBar.maximum();
+        if ( read > 0.999 )
+        {
+            read = 1f;
+        }
+        book.setRead( read );
         Single.instance( ProgressBar.class ).invoke( new SafeWorker<Object, Object>()
         {
             @Override
             protected Object doInBackground()
-                throws Exception
             {
-                final LogRunner runner = new LogRunner();
-                return runner.update( "update book set read=? where id=?", new Object[]
-                { book.getRead(), book.getId() } );
+                BookShelf.updateIsRead( book );
+                return null;
             }
         } );
     }

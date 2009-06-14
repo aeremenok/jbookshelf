@@ -3,7 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.widgets.dialog;
 
-import images.IMG;
+import icons.IMG;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class FailTableModel
             case 0:
                 return files.get( row ).getAbsolutePath();
             case 1:
-                return IMG.icon( IMG.LIST_ADD_SMALL_PNG );
+                return IMG.icon( IMG.LIST_ADD_PNG );
         }
         return super.getValueAt( row, column );
     }

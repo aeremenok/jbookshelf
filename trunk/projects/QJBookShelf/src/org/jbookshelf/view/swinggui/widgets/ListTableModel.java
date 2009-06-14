@@ -3,7 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.widgets;
 
-import images.IMG;
+import icons.IMG;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -82,7 +82,7 @@ public class ListTableModel<V>
             case 0:
                 return values.get( row );
             case 1:
-                return IMG.icon( IMG.LIST_REMOVE_SMALL_PNG );
+                return IMG.icon( IMG.LIST_REMOVE_PNG );
         }
         return super.getValueAt( row, column );
     }

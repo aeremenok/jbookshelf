@@ -3,7 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.widgets.dialog;
 
-import images.IMG;
+import icons.IMG;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +71,7 @@ public class SuccessTableModel
             case 0:
                 return books.get( row ).getName();
             case 1:
-                return IMG.icon( IMG.DOCUMENT_PROPERTIES_SMALL_PNG );
+                return IMG.icon( IMG.DOCUMENT_PROPERTIES_PNG );
         }
         return super.getValueAt( row, column );
     }

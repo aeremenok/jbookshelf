@@ -56,10 +56,11 @@ public class ReaderWindow
 
     private final QToolBarExt   toolBar         = new ReaderToolBar();
 
-    private final QAction       bookSettings    = new QAction( new QIcon( ICONPATH + "document-properties.png" ), "",
+    private final QAction       bookSettings    = new QAction( new QIcon( ICONPATH + "32/document-properties.png" ),
+                                                    "", this );
+    private final QAction       citation        = new QAction( new QIcon( ICONPATH + "16/knotes.png" ), "", this );
+    private final QAction       view            = new QAction( new QIcon( ICONPATH + "16/view-pim-notes.png" ), "",
                                                     this );
-    private final QAction       citation        = new QAction( new QIcon( ICONPATH + "knotes.png" ), "", this );
-    private final QAction       view            = new QAction( new QIcon( ICONPATH + "view-pim-notes.png" ), "", this );
 
     private final QFontComboBox fontComboBox    = new QFontComboBox( this );
     private final QComboBox     charsetComboBox = new QComboBox( this );
@@ -81,7 +82,7 @@ public class ReaderWindow
         this.contentBytes = contentBytes;
         this.book = book;
 
-        setWindowIcon( new QIcon( ICONPATH + "logo-64.png" ) );
+        setWindowIcon( new QIcon( ICONPATH + "64/logo.png" ) );
 
         initComponents();
         initListeners();

@@ -349,4 +349,23 @@ public class BookShelf
             throw new Error( e );
         }
     }
+
+    /**
+     * @param book
+     */
+    public static void updateIsRead(
+        final Book book )
+    {
+        try
+        {
+            final LogRunner runner = new LogRunner();
+            runner.update( "update book set read=? where id=?", new Object[]
+            { book.getRead(), book.getId() } );
+        }
+        catch ( final SQLException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+    }
 }

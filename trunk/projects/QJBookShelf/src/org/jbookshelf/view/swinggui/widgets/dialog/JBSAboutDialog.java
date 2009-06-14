@@ -1,6 +1,6 @@
 package org.jbookshelf.view.swinggui.widgets.dialog;
 
-import images.IMG;
+import icons.IMG;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -62,7 +62,7 @@ public class JBSAboutDialog
     {
         setTitle( I18N.tr( "About" ) );
 
-        header.setIcon( IMG.icon( "logo-128.png" ) );
+        header.setIcon( IMG.icon( IMG.LOGO_PNG, 128 ) );
         header.setText( MainWindow.APP_NAME );
         header.setFont( new Font( Font.SERIF, Font.BOLD | Font.ITALIC, 32 ) );
 

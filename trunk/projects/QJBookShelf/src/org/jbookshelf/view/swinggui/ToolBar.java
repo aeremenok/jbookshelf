@@ -1,6 +1,6 @@
 package org.jbookshelf.view.swinggui;
 
-import images.IMG;
+import icons.IMG;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -33,13 +33,13 @@ public class ToolBar
 
         public AboutAction()
         {
-            super( I18N.tr( "About" ), IMG.icon( IMG.HELP_ABOUT_PNG ) );
+            super( I18N.tr( "About" ), IMG.icon( IMG.HELP_ABOUT_PNG, 32 ) );
         }
 
         public void actionPerformed(
             final ActionEvent e )
         {
-            new JBSAboutDialog( ).setVisible( true );
+            new JBSAboutDialog().setVisible( true );
         }
     }
 
@@ -48,13 +48,13 @@ public class ToolBar
     {
         public AddAction()
         {
-            super( I18N.tr( "Add" ), IMG.icon( IMG.LIST_ADD_PNG ) );
+            super( I18N.tr( "Add" ), IMG.icon( IMG.LIST_ADD_PNG, 32 ) );
         }
 
         public void actionPerformed(
             final ActionEvent e )
         {
-            new BookAdditionDialog( ).setVisible( true );
+            new BookAdditionDialog().setVisible( true );
         }
     }
 
@@ -63,13 +63,13 @@ public class ToolBar
     {
         public SettingsAction()
         {
-            super( I18N.tr( "Settings" ), IMG.icon( IMG.CONFIGURE_PNG ) );
+            super( I18N.tr( "Settings" ), IMG.icon( IMG.CONFIGURE_PNG, 32 ) );
         }
 
         public void actionPerformed(
             final ActionEvent e )
         {
-            new SettingsDialog( ).setVisible( true );
+            new SettingsDialog().setVisible( true );
         }
     }
 
