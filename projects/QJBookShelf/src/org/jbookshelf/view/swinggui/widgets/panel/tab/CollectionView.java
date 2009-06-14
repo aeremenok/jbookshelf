@@ -4,10 +4,16 @@
 package org.jbookshelf.view.swinggui.widgets.panel.tab;
 
 import javax.annotation.Nonnull;
+import javax.annotation.PostConstruct;
 import javax.swing.Icon;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.logic.Parameters;
+import org.jbookshelf.view.swinggui.widgets.SetReadItem;
+import org.jbookshelf.view.swinggui.widgets.UniqueActions;
+import org.xnap.commons.gui.util.PopupListener;
 
 /**
  * @author eav
@@ -15,11 +21,34 @@ import org.jbookshelf.view.logic.Parameters;
 public abstract class CollectionView
     extends JPanel
 {
-    private Icon icon;
+    protected class CollectionPopupListener
+        extends PopupListener
+    {
+        public CollectionPopupListener()
+        {
+            super( menu );
+        }
+    }
+
+    private final JPopupMenu menu = new JPopupMenu();
+
+    private Icon             icon;
 
     public Icon getIcon()
     {
         return icon;
+    }
+
+    @PostConstruct
+    public void initMenu()
+    {
+        final UniqueActions actions = Single.instance( UniqueActions.class );
+        menu.add( actions.openAction );
+        menu.add( actions.editAction );
+        menu.add( actions.openDirAction );
+        menu.add( actions.googleAction );
+        menu.add( actions.removeAction );
+        menu.add( new SetReadItem() );
     }
 
     /**

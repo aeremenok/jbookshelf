@@ -1,6 +1,6 @@
 package org.jbookshelf.view.swinggui;
 
-import images.IMG;
+import icons.IMG;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -31,6 +31,7 @@ import org.jdesktop.swingx.JXErrorPane;
 import org.jdesktop.swingx.JXFrame;
 import org.jdesktop.swingx.JXStatusBar;
 import org.jdesktop.swingx.error.ErrorInfo;
+import org.xnap.commons.util.AWTExceptionHandler;
 
 public class MainWindow
     extends JXFrame
@@ -75,8 +76,11 @@ public class MainWindow
     @PostConstruct
     public void initSingleton()
     {
+        Thread.setDefaultUncaughtExceptionHandler( this );
+        AWTExceptionHandler.install();
+
         setTitle( APP_NAME );
-        setIconImage( IMG.img( "logo-64.png" ) );
+        setIconImage( IMG.img( IMG.LOGO_PNG, 64 ) );
         setDefaultCloseOperation( EXIT_ON_CLOSE );
         Single.instance( Settings.class );
 
@@ -96,8 +100,6 @@ public class MainWindow
 
         pack();
         setExtendedState( MAXIMIZED_BOTH );
-
-        Thread.setDefaultUncaughtExceptionHandler( this );
     }
 
     public void propertyChange(

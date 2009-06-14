@@ -1,6 +1,6 @@
 package org.jbookshelf.view.swinggui.widgets;
 
-import images.IMG;
+import icons.IMG;
 
 import java.awt.event.ActionEvent;
 
@@ -18,7 +18,7 @@ public class BookShelfActions
 
         public BackupAction()
         {
-            super( I18N.tr( "Backup" ), IMG.icon( IMG.DOCUMENT_SAVE_PNG ) );
+            super( I18N.tr( "Backup" ), IMG.icon( IMG.DOCUMENT_SAVE_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -40,7 +40,7 @@ public class BookShelfActions
 
         public ImportAction()
         {
-            super( I18N.tr( "Import" ), IMG.icon( IMG.DOCUMENT_IMPORT_PNG ) );
+            super( I18N.tr( "Import" ), IMG.icon( IMG.DOCUMENT_IMPORT_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -56,7 +56,7 @@ public class BookShelfActions
 
         public RestoreAction()
         {
-            super( I18N.tr( "Restore" ), IMG.icon( IMG.DOCUMENT_REVERT_PNG ) );
+            super( I18N.tr( "Restore" ), IMG.icon( IMG.DOCUMENT_REVERT_PNG, 32 ) );
         }
 
         public void actionPerformed(

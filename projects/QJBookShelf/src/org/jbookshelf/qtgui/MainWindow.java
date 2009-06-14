@@ -79,7 +79,7 @@ public class MainWindow
     private void initComponents()
     {
         setWindowTitle( "JBookShelf" );
-        setWindowIcon( new QIcon( ICONPATH + "logo-64.png" ) );
+        setWindowIcon( new QIcon( ICONPATH + "64/logo-64.png" ) );
 
         setWindowState( WindowState.WindowMaximized );
         addToolBar( Single.instance( ToolBar.class ) );

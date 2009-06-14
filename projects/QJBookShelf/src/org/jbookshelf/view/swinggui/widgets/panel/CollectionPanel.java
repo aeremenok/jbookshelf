@@ -1,11 +1,12 @@
 package org.jbookshelf.view.swinggui.widgets.panel;
 
-import images.IMG;
+import icons.IMG;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
 import javax.annotation.PostConstruct;
+import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -29,6 +30,7 @@ import org.jbookshelf.view.swinggui.widgets.panel.tab.AuthorView;
 import org.jbookshelf.view.swinggui.widgets.panel.tab.BookView;
 import org.jbookshelf.view.swinggui.widgets.panel.tab.CategoryView;
 import org.jbookshelf.view.swinggui.widgets.panel.tab.CollectionView;
+import org.xnap.commons.gui.EraseTextFieldAction;
 
 public class CollectionPanel
     extends JPanel
@@ -36,28 +38,12 @@ public class CollectionPanel
     Translatable,
     ChangeListener
 {
-    private class ClearAction
-        extends TranslatableAction
-    {
-        public ClearAction()
-        {
-            super( I18N.tr( "Clear" ), IMG.icon( IMG.EDIT_CLEAR_LOCATIONBAR_RTL_PNG ) );
-        }
-
-        public void actionPerformed(
-            final ActionEvent e )
-        {
-            searchTextField.setText( "" );
-            updateActiveView();
-        }
-    }
-
     private class SearchAction
         extends TranslatableAction
     {
         public SearchAction()
         {
-            super( I18N.tr( "Search" ), IMG.icon( IMG.EDIT_FIND_PNG ) );
+            super( I18N.tr( "Search" ), IMG.icon( IMG.EDIT_FIND_PNG, 16 ) );
         }
 
         public void actionPerformed(
@@ -79,7 +65,6 @@ public class CollectionPanel
     }
 
     private final SearchAction searchAction    = new SearchAction();
-    private final ClearAction  clearAction     = new ClearAction();
 
     private final JTabbedPane  viewTabbedPane  = new JTabbedPane();
     private final JTextField   searchTextField = new JTextField( 50 );
@@ -106,7 +91,6 @@ public class CollectionPanel
         searchTextField.setToolTipText( I18N.tr( "Type here your search query" ) );
         searchContent.setText( I18N.tr( "Search content" ) );
 
-        clearAction.retranslate();
         searchAction.retranslate();
 
         for ( int i = 0; i < tabs.length; i++ )
@@ -142,7 +126,8 @@ public class CollectionPanel
         final Box searchBox = Box.createHorizontalBox();
         searchBox.add( searchTextField );
 
-        final JButton button = new JButton( clearAction );
+        final JButton button = new JButton( new EraseTextFieldAction( searchTextField ) );
+        button.getAction().putValue( Action.SMALL_ICON, IMG.icon( IMG.EDIT_CLEAR_LOCATIONBAR_RTL_PNG ) );
         button.setHideActionText( true );
         searchBox.add( button );
 

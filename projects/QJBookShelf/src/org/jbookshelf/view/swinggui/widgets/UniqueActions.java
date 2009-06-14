@@ -1,6 +1,6 @@
 package org.jbookshelf.view.swinggui.widgets;
 
-import images.IMG;
+import icons.IMG;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -30,7 +30,7 @@ public class UniqueActions
     {
         public EditAction()
         {
-            super( I18N.tr( "Edit" ), IMG.icon( IMG.DOCUMENT_PROPERTIES_PNG ) );
+            super( I18N.tr( "Edit" ), IMG.icon( IMG.DOCUMENT_PROPERTIES_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -45,7 +45,7 @@ public class UniqueActions
     {
         public GoogleAction()
         {
-            super( I18N.tr( "Google" ), IMG.icon( IMG.GOOGLE_PNG ) );
+            super( I18N.tr( "Google" ), IMG.icon( IMG.GOOGLE_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -63,7 +63,7 @@ public class UniqueActions
     {
         public OpenAction()
         {
-            super( I18N.tr( "Open" ), IMG.icon( IMG.DOCUMENT_PREVIEW_PNG ) );
+            super( I18N.tr( "Open" ), IMG.icon( IMG.DOCUMENT_PREVIEW_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -81,7 +81,7 @@ public class UniqueActions
     {
         public OpenDirAction()
         {
-            super( I18N.tr( "Open Directory" ), IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG ) );
+            super( I18N.tr( "Open Directory" ), IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -99,7 +99,7 @@ public class UniqueActions
     {
         public RemoveAction()
         {
-            super( I18N.tr( "Remove" ), IMG.icon( IMG.LIST_REMOVE_PNG ) );
+            super( I18N.tr( "Remove" ), IMG.icon( IMG.LIST_REMOVE_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -129,7 +129,6 @@ public class UniqueActions
     }
 
     private final BookShelfMediator mediator      = Single.instance( BookShelfMediator.class );
-
     public final Action             removeAction  = new RemoveAction();
     public final Action             openAction    = new OpenAction();
     public final Action             editAction    = new EditAction();
