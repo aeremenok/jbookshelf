@@ -249,8 +249,7 @@ public class BookPanel
     {
         if ( bookTextField.getText().equals( "" ) )
         {
-            final String[] masks = Single.instance( Settings.class ).IMPORT_MASKS.getValue();
-            fileImporter.importFiles( masks, file );
+            fileImporter.importFiles( Single.instance( Settings.class ).IMPORT_MASKS.getValue(), file );
         }
     }
 }

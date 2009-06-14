@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
@@ -67,7 +68,7 @@ public class MultipleField<T>
         model.clear();
     }
 
-    public Collection<T> getValues()
+    public List<T> getValues()
     {
         return model.getValues();
     }

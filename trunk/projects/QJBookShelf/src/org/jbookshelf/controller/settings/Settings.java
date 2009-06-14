@@ -38,11 +38,12 @@ import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 public class Settings
     extends PropertyResource
 {
-    public StringSetting LANGUAGE;
-    public StringSetting LAF;
-    public StringSetting JBS_DIR;
-    public StringSetting WORKSPACE_DIR;
-    public MasksSetting  IMPORT_MASKS;
+    public StringSetting     LANGUAGE;
+    public StringSetting     LAF;
+    public StringSetting     JBS_DIR;
+    public StringSetting     WORKSPACE_DIR;
+    public StringListSetting IMPORT_MASKS;
+    public StringListSetting ZIP_ENCODINGS;
 
     public File getCollectionFile()
     {
@@ -97,8 +98,10 @@ public class Settings
         throws Error
     {
         LANGUAGE = new StringSetting( this, "language", I18N.defaultLanguage() );
-        IMPORT_MASKS = new MasksSetting( this, "import_masks", new String[]
+        IMPORT_MASKS = new StringListSetting( this, "import_masks", new String[]
         { "%a. %b", "%b" } );
+        ZIP_ENCODINGS = new StringListSetting( this, "zip_encodings", new String[]
+        { "cp1251", "cp1252", "IBM866", "KOI8-R", "KOI8-U" } );
 
         final String jbsDir = System.getProperty( "user.home" ) + File.separator + ".jbookshelf" + File.separator;
         JBS_DIR = new StringSetting( this, "jbs_dir", jbsDir );

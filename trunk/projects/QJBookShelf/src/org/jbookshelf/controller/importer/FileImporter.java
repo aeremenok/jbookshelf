@@ -18,12 +18,15 @@ package org.jbookshelf.controller.importer;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.BookShelf;
@@ -40,34 +43,48 @@ public class FileImporter
         implements
         FileFilter
     {
-        String[] extensions =
-                            { "gif", "png", "bmp", "jpg", "jpeg", "js", "css", "ini", "db"
-                            // todo ...
-                            };
+        private final List<String> exts = new ArrayList<String>();
+
+        public UnsupportedExtFilter()
+        {
+            super();
+            exts.add( "gif" );
+            exts.add( "png" );
+            exts.add( "bmp" );
+            exts.add( "jpg" );
+            exts.add( "jpeg" );
+            exts.add( "js" );
+            exts.add( "css" );
+            exts.add( "ini" );
+            exts.add( "db" );
+            // todo ...
+        }
 
         public boolean accept(
             final File pathname )
         {
-            final String name = pathname.getAbsolutePath().toLowerCase();
-            for ( final String ext : extensions )
+            if ( pathname.isDirectory() )
             {
-                if ( name.endsWith( "." + ext ) )
-                {
-                    return false;
-                }
+                return true;
             }
-            return true;
+            final String ext = FilenameUtils.getExtension( pathname.getAbsolutePath() );
+            return !exts.contains( ext );
         }
     }
 
-    private static PhysicalBookImporter[] importers              =
-                                                                 { new IndexFileImporter(),
-                    new SingleFileDirImporter(), new HtmlFileImporter(), new ZipFileImporter(),
-                    new SingleFileImporter()                    };
+    public static final FileFilter            UNSUPPORTED_EXT_FILTER = new UnsupportedExtFilter();
 
-    public static final FileFilter        UNSUPPORTED_EXT_FILTER = new UnsupportedExtFilter();
+    private static List<PhysicalBookImporter> importers              = new ArrayList<PhysicalBookImporter>();
+    private static final Logger               log                    = Logger.getLogger( FileImporter.class );
 
-    private static final Logger           log                    = Logger.getLogger( FileImporter.class );
+    static
+    {
+        importers.add( new IndexFileImporter() );
+        importers.add( new SingleFileDirImporter() );
+        importers.add( new HtmlFileImporter() );
+        importers.add( new ZipFileImporter() );
+        importers.add( new SingleFileImporter() );
+    }
 
     @Nullable
     public static PhysicalBook createPhysicalBook(
@@ -81,23 +98,6 @@ public class FileImporter
             }
         }
         return null;
-    }
-
-    public static String cutExtension(
-        @Nonnull final String fileName )
-    {
-        if ( new File( fileName ).isDirectory() )
-        {
-            return fileName;
-        }
-
-        final int lastIndexOf = fileName.lastIndexOf( '.' );
-        if ( fileName.length() - lastIndexOf > 5 )
-        { // it is probably a part of the name todo which files could have a longer extension?
-            return fileName;
-        }
-
-        return fileName.substring( 0, lastIndexOf );
     }
 
     public static void main(
@@ -132,7 +132,7 @@ public class FileImporter
     {
         try
         {
-            parser.parse( cutExtension( new File( physicalUnit.getFileName() ).getName() ) );
+            parser.parse( FilenameUtils.getBaseName( physicalUnit.getFile().getName() ) );
 
             final String authorName = parser.getAuthorName();
             final String categoryName = parser.getCategoryName();
@@ -152,7 +152,7 @@ public class FileImporter
     }
 
     public void importFiles(
-        @Nonnull final String[] patterns,
+        @Nonnull final Collection<String> patterns,
         @Nonnull final File... files )
     {
         final List<NameParser> parsers = new ArrayList<NameParser>();
@@ -193,6 +193,14 @@ public class FileImporter
                 onImportFailure( file, new Exception( "unparseable directory" ) );
             }
         }
+
+    }
+
+    public void importFiles(
+        @Nonnull final String[] patterns,
+        @Nonnull final File... files )
+    {
+        importFiles( Arrays.asList( patterns ), files );
     }
 
     protected void onImportFailure(
