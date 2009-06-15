@@ -44,10 +44,13 @@ public abstract class CollectionView
     {
         final UniqueActions actions = Single.instance( UniqueActions.class );
         menu.add( actions.openAction );
-        menu.add( actions.editAction );
         menu.add( actions.openDirAction );
-        menu.add( actions.googleAction );
+        menu.addSeparator();
+        menu.add( actions.editAction );
         menu.add( actions.removeAction );
+        menu.addSeparator();
+        menu.add( actions.googleAction );
+        menu.addSeparator();
         menu.add( new SetReadItem() );
     }
 

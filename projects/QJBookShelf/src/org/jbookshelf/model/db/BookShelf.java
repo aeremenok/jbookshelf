@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -60,6 +61,21 @@ public class BookShelf
         finally
         {
             session.close();
+        }
+    }
+
+    public static int bookCount()
+    {
+        try
+        {
+            final LogRunner runner = new LogRunner();
+            final Object object = runner.query( "select count(*) from book", new ScalarHandler() );
+            return Integer.valueOf( object.toString() );
+        }
+        catch ( final SQLException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
         }
     }
 

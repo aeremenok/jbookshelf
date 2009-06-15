@@ -185,7 +185,8 @@ public class BookView
                 @Override
                 protected List<Book> doInBackground()
                 {
-                    if ( selectedRows.length == model.getRowCount() )
+                    // todo optimize
+                    if ( selectedRows.length == BookShelf.bookCount() )
                     { // selected all
                         return BookShelf.allBooks();
                     }

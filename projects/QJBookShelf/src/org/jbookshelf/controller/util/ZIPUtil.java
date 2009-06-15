@@ -19,8 +19,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.SortedMap;
 
+import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.io.FileUtils;
@@ -42,11 +46,15 @@ public class ZIPUtil
      * 
      * @param zipFilename source file name
      * @param destDirName destination directory name
+     * @param encoding
      * @return destination directory
+     * @throws ArchiveException
      */
     public static File extractZipFileTo(
         final String zipFilename,
-        final String destDirName )
+        final String destDirName,
+        final String encoding )
+        throws ArchiveException
     {
         InputStream zis = null;
         FileOutputStream fos = null;
@@ -57,7 +65,8 @@ public class ZIPUtil
             destDir.mkdir();
 
             // unzip
-            final ZipFile zipFile = new ZipFile( zipFilename );
+            final ZipFile zipFile = encoding == null
+                ? new ZipFile( zipFilename ) : new ZipFile( zipFilename, encoding );
             final Enumeration entries = zipFile.getEntries();
             while ( entries.hasMoreElements() )
             {
@@ -97,7 +106,7 @@ public class ZIPUtil
         catch ( final IOException e1 )
         {
             log.error( e1, e1 );
-            throw new Error( e1 );
+            throw new ArchiveException( e1.getMessage() );
         }
         finally
         {
@@ -149,8 +158,24 @@ public class ZIPUtil
     {
         final String destDirName = System.getProperty( "java.io.tmpdir" ) + File.separator + zipFile.getName();
 
-        final File destDir = extractZipFileTo( zipFile.getAbsolutePath(), destDirName );
-        return getBiggestFile( destDir );
+        final SortedMap<String, Charset> availableCharsets = Charset.availableCharsets();
+        final Iterator<String> iterator = availableCharsets.keySet().iterator();
+        String encoding = null;
+        do
+        {
+            try
+            {
+                final File destDir = extractZipFileTo( zipFile.getAbsolutePath(), destDirName, encoding );
+                return getBiggestFile( destDir );
+            }
+            catch ( final ArchiveException e )
+            {
+                encoding = iterator.next();
+            }
+        }
+        while ( iterator.hasNext() );
+
+        return zipFile;
     }
 
     /**
