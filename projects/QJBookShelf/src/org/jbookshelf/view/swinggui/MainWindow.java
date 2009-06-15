@@ -10,7 +10,6 @@ import java.beans.PropertyChangeListener;
 import java.lang.Thread.UncaughtExceptionHandler;
 
 import javax.annotation.PostConstruct;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
@@ -26,6 +25,7 @@ import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.swinggui.widgets.LookAndFeelComboBoxModel;
 import org.jbookshelf.view.swinggui.widgets.ProgressBar;
+import org.jbookshelf.view.swinggui.widgets.panel.AdditionalPanel;
 import org.jbookshelf.view.swinggui.widgets.panel.CollectionPanel;
 import org.jdesktop.swingx.JXErrorPane;
 import org.jdesktop.swingx.JXFrame;
@@ -91,7 +91,8 @@ public class MainWindow
         add( split, BorderLayout.CENTER );
         split.setOneTouchExpandable( true );
         split.setLeftComponent( Single.instance( CollectionPanel.class ) );
-        split.setRightComponent( new JLabel( "todo" ) );
+        split.setRightComponent( Single.instance( AdditionalPanel.class ) );
+        split.setResizeWeight( 0.7 );
 
         final JXStatusBar statusBar = new JXStatusBar();
         statusBar.add( Single.instance( ProgressBar.class ) );

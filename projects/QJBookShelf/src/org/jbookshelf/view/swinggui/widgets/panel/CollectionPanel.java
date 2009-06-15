@@ -128,7 +128,6 @@ public class CollectionPanel
 
         final JButton button = new JButton( new EraseTextFieldAction( searchTextField ) );
         button.getAction().putValue( Action.SMALL_ICON, IMG.icon( IMG.EDIT_CLEAR_LOCATIONBAR_RTL_PNG ) );
-        button.setHideActionText( true );
         searchBox.add( button );
 
         searchBox.add( isReadComboBox );
