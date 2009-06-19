@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * @author eav
@@ -29,7 +30,8 @@ public class Book
     implements
     Serializable,
     Timestampable,
-    Unique
+    Unique,
+    HasBooks
 {
     @Id
     @GeneratedValue
@@ -159,6 +161,16 @@ public class Book
     public Set<Author> getAuthors()
     {
         return this.authors;
+    }
+
+    /* (non-Javadoc)
+     * @see org.jbookshelf.model.db.HasBooks#getBooks()
+     */
+    @Override
+    @Transient
+    public Set<Book> getBooks()
+    {
+        return getRelatedBooks();
     }
 
     /**

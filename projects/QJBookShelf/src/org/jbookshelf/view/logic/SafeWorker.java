@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.widgets;
+package org.jbookshelf.view.logic;
 
 import javax.swing.SwingWorker;
 

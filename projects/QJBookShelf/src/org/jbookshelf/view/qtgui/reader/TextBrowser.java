@@ -23,10 +23,10 @@ import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.view.logic.JBookShelfConstants;
+import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
 import org.jbookshelf.view.swinggui.widgets.ProgressBar;
-import org.jbookshelf.view.swinggui.widgets.SafeWorker;
 import org.jbookshelf.view.swinggui.widgets.UniqueActions;
 
 import com.trolltech.qt.gui.QAction;

@@ -15,10 +15,10 @@ public class BookShelfActions
     private class BackupAction
         extends TranslatableAction
     {
-
         public BackupAction()
         {
             super( I18N.tr( "Backup" ), IMG.icon( IMG.DOCUMENT_SAVE_PNG, 32 ) );
+            setEnabled( false );
         }
 
         public void actionPerformed(
@@ -37,7 +37,6 @@ public class BookShelfActions
     private class ImportAction
         extends TranslatableAction
     {
-
         public ImportAction()
         {
             super( I18N.tr( "Import" ), IMG.icon( IMG.DOCUMENT_IMPORT_PNG, 32 ) );
@@ -53,10 +52,10 @@ public class BookShelfActions
     private class RestoreAction
         extends TranslatableAction
     {
-
         public RestoreAction()
         {
             super( I18N.tr( "Restore" ), IMG.icon( IMG.DOCUMENT_REVERT_PNG, 32 ) );
+            setEnabled( false );
         }
 
         public void actionPerformed(

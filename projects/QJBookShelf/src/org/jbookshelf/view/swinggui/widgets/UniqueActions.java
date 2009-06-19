@@ -17,6 +17,7 @@ import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
+import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
 import org.jbookshelf.view.qtgui.reader.Viewer;
 import org.jbookshelf.view.swinggui.MainWindow;

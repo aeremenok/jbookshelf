@@ -31,9 +31,9 @@ import org.jbookshelf.model.db.HibernateUtil;
 import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
+import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.widgets.ProgressBar;
-import org.jbookshelf.view.swinggui.widgets.SafeWorker;
 import org.jdesktop.swingx.JXTree;
 
 /**

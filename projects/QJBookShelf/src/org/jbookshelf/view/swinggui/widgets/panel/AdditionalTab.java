@@ -16,21 +16,8 @@ public abstract class AdditionalTab
 {
     private static final Logger log = Logger.getLogger( AdditionalTab.class );
 
-    public void onAdd(
-        final Book book )
-    {
-        log.debug( "onAdd" );
-        // TODO Auto-generated method stub
+    public abstract void onAdd(
+        final Book book );
 
-    }
-
-    /**
-     * 
-     */
-    public void onRemove()
-    {
-        log.debug( "onRemove" );
-        // TODO Auto-generated method stub
-
-    }
+    public abstract void onRemove();
 }
