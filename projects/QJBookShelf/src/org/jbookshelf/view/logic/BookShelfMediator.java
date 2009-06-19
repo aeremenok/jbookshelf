@@ -1,7 +1,5 @@
 package org.jbookshelf.view.logic;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -10,6 +8,7 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import org.bushe.swing.event.EventBus;
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Category;
@@ -17,37 +16,22 @@ import org.jbookshelf.model.db.Unique;
 
 public class BookShelfMediator
 {
-    public enum Properties
+    public interface Properties
     {
-        BOOKS_SELECTED,
-        AUTHORS_SELECTED,
-        CATEGORIES_SELECTED,
-        UNIQUES_SELECTED
+        String BOOKS_SELECTED      = "BOOKS_SELECTED";
+        String AUTHORS_SELECTED    = "AUTHORS_SELECTED";
+        String CATEGORIES_SELECTED = "CATEGORIES_SELECTED";
+        String UNIQUES_SELECTED    = "UNIQUES_SELECTED";
     }
 
     @Nonnull
-    private Set<Unique>                 selectedUniques       = new HashSet<Unique>();
+    private Set<Unique>    selectedUniques    = new HashSet<Unique>();
     @Nonnull
-    private List<Book>                  selectedBooks         = new ArrayList<Book>();
+    private List<Book>     selectedBooks      = new ArrayList<Book>();
     @Nonnull
-    private List<Author>                selectedAuthors       = new ArrayList<Author>();
+    private List<Author>   selectedAuthors    = new ArrayList<Author>();
     @Nonnull
-    private List<Category>              selectedCategories    = new ArrayList<Category>();
-
-    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
-
-    /**
-     * @param property
-     * @param listener
-     * @see java.beans.PropertyChangeSupport#addPropertyChangeListener(java.lang.String,
-     *      java.beans.PropertyChangeListener)
-     */
-    public void addPropertyChangeListener(
-        final Properties property,
-        final PropertyChangeListener listener )
-    {
-        this.propertyChangeSupport.addPropertyChangeListener( property.name(), listener );
-    }
+    private List<Category> selectedCategories = new ArrayList<Category>();
 
     public void authorsSelected(
         final List<Author> list )
@@ -120,19 +104,6 @@ public class BookShelfMediator
         fireSelectionChanged();
     }
 
-    /**
-     * @param property
-     * @param listener
-     * @see java.beans.PropertyChangeSupport#removePropertyChangeListener(java.lang.String,
-     *      java.beans.PropertyChangeListener)
-     */
-    public void removePropertyChangeListener(
-        final Properties property,
-        final PropertyChangeListener listener )
-    {
-        this.propertyChangeSupport.removePropertyChangeListener( property.name(), listener );
-    }
-
     public void uniquesSelected(
         final Collection<Unique> list )
     {
@@ -162,25 +133,11 @@ public class BookShelfMediator
         fireSelectionChanged();
     }
 
-    /**
-     * @param property
-     * @param oldValue
-     * @param newValue
-     * @see java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)
-     */
-    private void firePropertyChange(
-        final Properties property,
-        final Object oldValue,
-        final Object newValue )
-    {
-        this.propertyChangeSupport.firePropertyChange( property.name(), oldValue, newValue );
-    }
-
     private void fireSelectionChanged()
     {
-        firePropertyChange( Properties.BOOKS_SELECTED, null, selectedBooks );
-        firePropertyChange( Properties.AUTHORS_SELECTED, null, selectedAuthors );
-        firePropertyChange( Properties.CATEGORIES_SELECTED, null, selectedCategories );
-        firePropertyChange( Properties.UNIQUES_SELECTED, null, selectedUniques );
+        EventBus.publish( Properties.BOOKS_SELECTED, this );
+        EventBus.publish( Properties.AUTHORS_SELECTED, this );
+        EventBus.publish( Properties.CATEGORIES_SELECTED, this );
+        EventBus.publish( Properties.UNIQUES_SELECTED, this );
     }
 }

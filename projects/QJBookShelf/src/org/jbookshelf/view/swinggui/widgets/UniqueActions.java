@@ -3,13 +3,13 @@ package org.jbookshelf.view.swinggui.widgets;
 import icons.IMG;
 
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.annotation.PostConstruct;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
 
+import org.bushe.swing.event.EventBus;
+import org.bushe.swing.event.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
@@ -139,24 +139,24 @@ public class UniqueActions
     @PostConstruct
     public void init()
     {
-        mediator.addPropertyChangeListener( Properties.UNIQUES_SELECTED, new PropertyChangeListener()
+        EventBus.subscribe( Properties.UNIQUES_SELECTED, new EventTopicSubscriber<BookShelfMediator>()
         {
             @Override
-            public void propertyChange(
-                final PropertyChangeEvent evt )
+            public void onEvent(
+                final String string,
+                final BookShelfMediator mediator )
             {
                 final boolean manyUniques = mediator.getSelectedUniques().size() > 0;
                 removeAction.setEnabled( manyUniques );
                 googleAction.setEnabled( manyUniques );
-
             }
         } );
-
-        mediator.addPropertyChangeListener( Properties.BOOKS_SELECTED, new PropertyChangeListener()
+        EventBus.subscribe( Properties.BOOKS_SELECTED, new EventTopicSubscriber<BookShelfMediator>()
         {
             @Override
-            public void propertyChange(
-                final PropertyChangeEvent evt )
+            public void onEvent(
+                final String string,
+                final BookShelfMediator mediator )
             {
                 final boolean manyBooks = mediator.getSelectedBooks().size() > 0;
                 openDirAction.setEnabled( manyBooks );
