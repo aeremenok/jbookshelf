@@ -16,8 +16,8 @@ import org.jbookshelf.controller.util.ZIPUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.LogRunner;
 import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.widgets.ProgressBar;
-import org.jbookshelf.view.swinggui.widgets.SafeWorker;
 
 /**
  * @author eav 2009

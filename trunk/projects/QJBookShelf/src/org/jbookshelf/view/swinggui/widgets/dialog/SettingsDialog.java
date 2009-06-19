@@ -52,6 +52,7 @@ public class SettingsDialog
     public boolean apply()
     {
         mediator.apply();
+        settings.save();
         return true;
     }
 

@@ -157,9 +157,11 @@ public class FileImportDialog
         fileLabel.setText( I18N.tr( "File" ) );
         maskLabel.setText( I18N.tr( "Mask" ) );
 
-        final TitledBorder leftBorder = new TitledBorder( I18N.tr( "Successfully imported books" ) );
+        final TitledBorder leftBorder = new TitledBorder( I18N.tr( "Successfully imported books" ) + "("
+            + successModel.getRowCount() + ")" );
         ((JComponent) splitPane.getLeftComponent()).setBorder( leftBorder );
-        final TitledBorder rightBorder = new TitledBorder( I18N.tr( "Unimported files" ) );
+        final TitledBorder rightBorder = new TitledBorder( I18N.tr( "Unimported files" ) + "("
+            + failModel.getRowCount() + ")" );
         ((JComponent) splitPane.getRightComponent()).setBorder( rightBorder );
     }
 
@@ -243,6 +245,7 @@ public class FileImportDialog
                         {
                             successModel.addBook( result );
                             failModel.removeFile( file );
+                            retranslate();
                         }
                     }
                 }
@@ -281,6 +284,7 @@ public class FileImportDialog
                 successModel.setBooks( new ArrayList<Book>() );
                 failModel.setFiles( new ArrayList<File>() );
                 importer.importFiles( masks, file );
+                retranslate();
             }
         } );
     }

@@ -15,6 +15,7 @@ import javax.swing.SwingWorker;
 import javax.swing.SwingWorker.StateValue;
 
 import org.apache.log4j.Logger;
+import org.jbookshelf.view.logic.SafeWorker;
 
 /**
  * @author eav 2009
