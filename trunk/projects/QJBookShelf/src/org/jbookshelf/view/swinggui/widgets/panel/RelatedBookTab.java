@@ -4,8 +4,6 @@
 package org.jbookshelf.view.swinggui.widgets.panel;
 
 import java.awt.BorderLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
-import org.jbookshelf.controller.singleton.Single;
+import org.bushe.swing.event.EventBus;
+import org.bushe.swing.event.EventTopicSubscriber;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
@@ -27,23 +26,21 @@ import org.jdesktop.swingx.JXTable;
 public class RelatedBookTab
     extends AdditionalTab
     implements
-    PropertyChangeListener
+    EventTopicSubscriber<BookShelfMediator>
 {
     private static class RelatedBookTableModel
         extends DefaultTableModel
         implements
-        PropertyChangeListener
+        EventTopicSubscriber<BookShelfMediator>
     {
-        private static String[]         names    =
-                                                 { I18N.tr( "Name" ) };
-        private List<Book>              books;
-
-        private final BookShelfMediator mediator = Single.instance( BookShelfMediator.class );
+        private static String[] names =
+                                      { I18N.tr( "Name" ) };
+        private List<Book>      books;
 
         public RelatedBookTableModel()
         {
             super( names, 0 );
-            mediator.addPropertyChangeListener( Properties.BOOKS_SELECTED, this );
+            EventBus.subscribe( Properties.BOOKS_SELECTED, this );
         }
 
         @Override
@@ -70,8 +67,9 @@ public class RelatedBookTab
         }
 
         @Override
-        public void propertyChange(
-            final PropertyChangeEvent evt )
+        public void onEvent(
+            final String string,
+            final BookShelfMediator mediator )
         {
             final List<Book> selectedBooks = mediator.getSelectedBooks();
             books = new ArrayList<Book>();
@@ -96,7 +94,7 @@ public class RelatedBookTab
         setLayout( new BorderLayout() );
         add( new JScrollPane( table ), BorderLayout.CENTER );
 
-        Single.instance( BookShelfMediator.class ).addPropertyChangeListener( Properties.BOOKS_SELECTED, this );
+        EventBus.subscribe( Properties.BOOKS_SELECTED, this );
     }
 
     /* (non-Javadoc)
@@ -109,6 +107,14 @@ public class RelatedBookTab
         log.debug( "onAdd" );
     }
 
+    @Override
+    public void onEvent(
+        final String arg0,
+        final BookShelfMediator mediator )
+    {
+        table.setEnabled( mediator.getSelectedBooks().size() == 1 );
+    }
+
     /* (non-Javadoc)
      * @see org.jbookshelf.view.swinggui.widgets.panel.AdditionalTab#onRemove()
      */
@@ -117,12 +123,4 @@ public class RelatedBookTab
     {
         log.debug( "onRemove" );
     }
-
-    @Override
-    public void propertyChange(
-        final PropertyChangeEvent evt )
-    {
-        table.setEnabled( Single.instance( BookShelfMediator.class ).getSelectedBooks().size() == 1 );
-    }
-
 }

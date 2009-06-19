@@ -7,8 +7,6 @@ import icons.IMG;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.annotation.PostConstruct;
 import javax.swing.AbstractAction;
@@ -19,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import org.bushe.swing.event.EventBus;
+import org.bushe.swing.event.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
@@ -30,7 +30,7 @@ import org.xnap.commons.gui.EraseTextFieldAction;
 public class AdditionalPanel
     extends JPanel
     implements
-    PropertyChangeListener
+    EventTopicSubscriber<BookShelfMediator>
 {
     private class AddAction
         extends AbstractAction
@@ -101,14 +101,15 @@ public class AdditionalPanel
             tabbedPane.add( tab );
         }
 
-        Single.instance( BookShelfMediator.class ).addPropertyChangeListener( Properties.BOOKS_SELECTED, this );
+        EventBus.subscribe( Properties.BOOKS_SELECTED, this );
     }
 
     @Override
-    public void propertyChange(
-        final PropertyChangeEvent evt )
+    public void onEvent(
+        final String topic,
+        final BookShelfMediator mediator )
     {
-        addAction.setEnabled( Single.instance( BookShelfMediator.class ).getSelectedBooks().size() == 1 );
+        addAction.setEnabled( mediator.getSelectedBooks().size() == 1 );
     }
 
     private AdditionalTab getActiveTab()

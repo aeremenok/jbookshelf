@@ -5,13 +5,13 @@ package org.jbookshelf.view.swinggui.widgets;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JCheckBoxMenuItem;
 
+import org.bushe.swing.event.EventBus;
+import org.bushe.swing.event.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.BookShelf;
@@ -22,14 +22,14 @@ import org.jbookshelf.view.logic.BookShelfMediator.Properties;
 public class SetReadItem
     extends JCheckBoxMenuItem
     implements
-    PropertyChangeListener,
-    ItemListener
+    ItemListener,
+    EventTopicSubscriber<BookShelfMediator>
 {
     public SetReadItem()
     {
         super( I18N.tr( "Is read" ) );
         addItemListener( this );
-        Single.instance( BookShelfMediator.class ).addPropertyChangeListener( Properties.BOOKS_SELECTED, this );
+        EventBus.subscribe( Properties.BOOKS_SELECTED, this );
     }
 
     @Override
@@ -46,10 +46,11 @@ public class SetReadItem
     }
 
     @Override
-    public void propertyChange(
-        final PropertyChangeEvent evt )
+    public void onEvent(
+        final String topic,
+        final BookShelfMediator mediator )
     {
-        final List<Book> selectedBooks = Single.instance( BookShelfMediator.class ).getSelectedBooks();
+        final List<Book> selectedBooks = mediator.getSelectedBooks();
         setEnabled( selectedBooks.size() > 0 );
 
         boolean allRead = true;
