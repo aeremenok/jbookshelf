@@ -26,8 +26,8 @@ import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Translatable;
 import org.jbookshelf.view.logic.Translator;
-import org.jbookshelf.view.swinggui.widgets.ProgressBar;
-import org.jbookshelf.view.swinggui.widgets.UniqueActions;
+import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.actions.UniqueActions;
 
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QContextMenuEvent;

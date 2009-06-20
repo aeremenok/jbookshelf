@@ -24,7 +24,7 @@ import javax.swing.UIManager;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
-import org.jbookshelf.view.swinggui.MainWindow;
+import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.xnap.commons.settings.PropertyResource;
 import org.xnap.commons.settings.StringSetting;
 

@@ -4,7 +4,7 @@
 package org.jbookshelf.view.qtgui.reader;
 
 import org.jbookshelf.view.logic.JBookShelfConstants;
-import org.jbookshelf.view.swinggui.MainWindow;
+import org.jbookshelf.view.swinggui.main.MainWindow;
 
 import com.trolltech.qt.core.QCoreApplication;
 import com.trolltech.qt.gui.QApplication;
