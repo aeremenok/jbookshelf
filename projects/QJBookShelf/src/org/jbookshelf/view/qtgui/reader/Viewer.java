@@ -17,7 +17,7 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.LogRunner;
 import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.view.logic.SafeWorker;
-import org.jbookshelf.view.swinggui.widgets.ProgressBar;
+import org.jbookshelf.view.swinggui.ProgressBar;
 
 /**
  * @author eav 2009
@@ -68,7 +68,7 @@ public class Viewer
             physical.setUnpackedFile( zippedFileToOpen );
             // save to db
             try
-            {
+            { // todo to BookShelf
                 final LogRunner runner = new LogRunner();
                 runner.update( "update physical_book set unpackedFileName=? where id=?", new Object[]
                 { physical.getUnpackedFileName(), physical.getId() } );

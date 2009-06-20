@@ -26,7 +26,7 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.logic.Translator;
-import org.jbookshelf.view.swinggui.widgets.dialog.BookEditDialog;
+import org.jbookshelf.view.swinggui.dialog.book.BookEditDialog;
 
 import com.trolltech.qt.core.Qt.ToolButtonStyle;
 import com.trolltech.qt.core.Qt.WindowState;
