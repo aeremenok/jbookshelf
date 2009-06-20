@@ -139,7 +139,7 @@ public class UniqueActions
     @PostConstruct
     public void init()
     {
-        EventBus.subscribe( Properties.UNIQUES_SELECTED, new EventTopicSubscriber<BookShelfMediator>()
+        EventBus.subscribeStrongly( Properties.UNIQUES_SELECTED, new EventTopicSubscriber<BookShelfMediator>()
         {
             @Override
             public void onEvent(
@@ -151,7 +151,7 @@ public class UniqueActions
                 googleAction.setEnabled( manyUniques );
             }
         } );
-        EventBus.subscribe( Properties.BOOKS_SELECTED, new EventTopicSubscriber<BookShelfMediator>()
+        EventBus.subscribeStrongly( Properties.BOOKS_SELECTED, new EventTopicSubscriber<BookShelfMediator>()
         {
             @Override
             public void onEvent(
