@@ -197,6 +197,31 @@ public class BookShelf
 
     }
 
+    public static Set<Note> getNotes(
+        final Book book )
+    {
+        if ( book.getId() != null )
+        {
+            final Session session = HibernateUtil.getSession();
+            try
+            {
+                // todo remove obsolete query
+                session.load( book, book.getId() );
+                Hibernate.initialize( book.getNotes() );
+            }
+            catch ( final HibernateException e )
+            {
+                log.error( e, e );
+                throw new Error( e );
+            }
+            finally
+            {
+                session.close();
+            }
+        }
+        return book.getNotes();
+    }
+
     @SuppressWarnings( "unchecked" )
     @Nonnull
     public static <T extends Unique> T getOrAddUnique(
@@ -267,6 +292,33 @@ public class BookShelf
         session.merge( book.getPhysicalBook() );
 
         session.getTransaction().commit();
+    }
+
+    public static void mergeNote(
+        final Note note )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            session.beginTransaction();
+            session.saveOrUpdate( note );
+
+            final Book book = note.getBook();
+            session.load( book, book.getId() );
+            book.getNotes().add( note );
+            session.merge( book );
+
+            session.getTransaction().commit();
+        }
+        catch ( final Throwable e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
     }
 
     /**
@@ -363,6 +415,33 @@ public class BookShelf
         {
             log.error( e, e );
             throw new Error( e );
+        }
+    }
+
+    public static void removeNote(
+        final Note note )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            session.beginTransaction();
+            session.load( note, note.getId() );
+
+            final Book book = note.getBook();
+            book.getNotes().remove( note );
+            session.merge( book );
+
+            session.delete( note );
+            session.getTransaction().commit();
+        }
+        catch ( final Throwable e1 )
+        {
+            log.error( e1, e1 );
+            throw new Error( e1 );
+        }
+        finally
+        {
+            session.close();
         }
     }
 

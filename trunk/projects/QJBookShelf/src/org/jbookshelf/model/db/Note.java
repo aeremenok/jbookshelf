@@ -152,6 +152,14 @@ public class Note
     }
 
     /**
+     * @return the changeDate
+     */
+    public Date getChangeDate()
+    {
+        return this.changeDate;
+    }
+
+    /**
      * @return the citation
      */
     @Nullable
@@ -167,6 +175,14 @@ public class Note
     public String getContent()
     {
         return this.content;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId()
+    {
+        return this.id;
     }
 
     /**

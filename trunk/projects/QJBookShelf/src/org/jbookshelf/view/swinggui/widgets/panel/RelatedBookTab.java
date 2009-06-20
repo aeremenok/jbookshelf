@@ -25,8 +25,6 @@ import org.jdesktop.swingx.JXTable;
  */
 public class RelatedBookTab
     extends AdditionalTab
-    implements
-    EventTopicSubscriber<BookShelfMediator>
 {
     private static class RelatedBookTableModel
         extends DefaultTableModel
@@ -93,8 +91,6 @@ public class RelatedBookTab
 
         setLayout( new BorderLayout() );
         add( new JScrollPane( table ), BorderLayout.CENTER );
-
-        EventBus.subscribe( Properties.BOOKS_SELECTED, this );
     }
 
     /* (non-Javadoc)
@@ -105,22 +101,5 @@ public class RelatedBookTab
         final Book book )
     {
         log.debug( "onAdd" );
-    }
-
-    @Override
-    public void onEvent(
-        final String arg0,
-        final BookShelfMediator mediator )
-    {
-        table.setEnabled( mediator.getSelectedBooks().size() == 1 );
-    }
-
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.widgets.panel.AdditionalTab#onRemove()
-     */
-    @Override
-    public void onRemove()
-    {
-        log.debug( "onRemove" );
     }
 }

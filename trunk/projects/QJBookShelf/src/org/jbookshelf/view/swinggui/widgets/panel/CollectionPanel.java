@@ -79,9 +79,6 @@ public class CollectionPanel
         initComponents();
         Translator.addTranslatable( this );
         updateActiveView();
-
-        // todo search content
-        searchContent.setEnabled( false );
     }
 
     public void retranslate()
@@ -107,7 +104,9 @@ public class CollectionPanel
     {
         final boolean isBook = getActiveTab() instanceof BookView;
         isReadComboBox.setEnabled( isBook );
-        searchContent.setEnabled( isBook );
+        // todo search content
+        //        searchContent.setEnabled( isBook );
+        searchContent.setEnabled( false );
 
         updateActiveView();
     }
