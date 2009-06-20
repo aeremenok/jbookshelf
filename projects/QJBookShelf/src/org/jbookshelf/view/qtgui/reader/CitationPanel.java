@@ -16,7 +16,7 @@
 package org.jbookshelf.view.qtgui.reader;
 
 import org.jbookshelf.view.i18n.I18N;
-import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.i18n.Translator;
 
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QTextBrowser;

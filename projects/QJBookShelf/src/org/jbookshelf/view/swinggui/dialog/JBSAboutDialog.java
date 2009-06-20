@@ -10,8 +10,8 @@ import javax.swing.JLabel;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
-import org.jbookshelf.view.logic.Translatable;
-import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.i18n.Translatable;
+import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.swinggui.GridBagPanel;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jdesktop.swingx.JXHyperlink;

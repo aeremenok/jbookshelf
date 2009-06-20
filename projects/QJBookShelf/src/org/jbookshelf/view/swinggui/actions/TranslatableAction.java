@@ -4,7 +4,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Icon;
 
 import org.jbookshelf.view.i18n.I18N;
-import org.jbookshelf.view.logic.Translatable;
+import org.jbookshelf.view.i18n.Translatable;
 
 public abstract class TranslatableAction
     extends AbstractAction

@@ -13,8 +13,8 @@ import javax.swing.JToolBar;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
-import org.jbookshelf.view.logic.Translatable;
-import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.i18n.Translatable;
+import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.swinggui.actions.BookShelfActions;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.actions.UniqueActions;

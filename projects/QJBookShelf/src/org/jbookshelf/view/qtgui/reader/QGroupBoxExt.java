@@ -1,7 +1,7 @@
 package org.jbookshelf.view.qtgui.reader;
 
-import org.jbookshelf.view.logic.Translatable;
-import org.jbookshelf.view.logic.Translator;
+import org.jbookshelf.view.i18n.Translatable;
+import org.jbookshelf.view.i18n.Translator;
 
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QWidget;
