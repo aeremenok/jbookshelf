@@ -7,6 +7,8 @@ import icons.IMG;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.annotation.PostConstruct;
 import javax.swing.AbstractAction;
@@ -20,7 +22,10 @@ import javax.swing.JTextField;
 import org.bushe.swing.event.EventBus;
 import org.bushe.swing.event.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
+import org.jbookshelf.view.logic.Translatable;
+import org.jbookshelf.view.logic.Translator;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
 import org.xnap.commons.gui.EraseTextFieldAction;
 
@@ -30,7 +35,8 @@ import org.xnap.commons.gui.EraseTextFieldAction;
 public class AdditionalPanel
     extends JPanel
     implements
-    EventTopicSubscriber<BookShelfMediator>
+    EventTopicSubscriber<BookShelfMediator>,
+    Translatable
 {
     private class AddAction
         extends AbstractAction
@@ -38,6 +44,7 @@ public class AdditionalPanel
         public AddAction()
         {
             super( null, IMG.icon( IMG.LIST_ADD_PNG ) );
+            setEnabled( false );
         }
 
         @Override
@@ -58,7 +65,7 @@ public class AdditionalPanel
     public AdditionalPanel()
     {
         super( new BorderLayout() );
-        addAction.setEnabled( false );
+        Translator.addTranslatable( this );
     }
 
     @PostConstruct
@@ -83,6 +90,16 @@ public class AdditionalPanel
         }
 
         EventBus.subscribe( Properties.BOOKS_SELECTED, this );
+
+        searchTextField.addKeyListener( new KeyAdapter()
+        {
+            @Override
+            public void keyReleased(
+                final KeyEvent e )
+            {
+                getActiveTab().onSearch( searchTextField.getText() );
+            }
+        } );
     }
 
     @Override
@@ -91,6 +108,12 @@ public class AdditionalPanel
         final BookShelfMediator mediator )
     {
         addAction.setEnabled( mediator.getSelectedBooks().size() == 1 );
+    }
+
+    @Override
+    public void retranslate()
+    {
+        searchTextField.setToolTipText( I18N.tr( "Start typing to filter" ) );
     }
 
     private AdditionalTab getActiveTab()

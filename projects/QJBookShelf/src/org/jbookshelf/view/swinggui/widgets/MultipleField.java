@@ -44,8 +44,12 @@ public class MultipleField<T>
             final String text = field.getText();
             if ( !"".equals( text ) )
             {
-                model.addValue( fromString( text ) );
-                field.setText( "" );
+                final T fromString = fromString( text );
+                if ( fromString != null )
+                {
+                    model.addValue( fromString );
+                    field.setText( "" );
+                }
             }
         }
     }

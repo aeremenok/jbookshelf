@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -54,6 +55,29 @@ public class BookShelf
             return (Book) session.get( Book.class, (Serializable) id );
         }
         catch ( final Exception e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+
+    public static Book bookByName(
+        final String name )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            final Query query = session.createQuery( "from Book b where b.name=:p" );
+            query.setString( "p", name );
+            final List list = query.list();
+            return list.size() > 0
+                ? (Book) list.get( 0 ) : null;
+        }
+        catch ( final HibernateException e )
         {
             log.error( e, e );
             throw new Error( e );
@@ -311,6 +335,33 @@ public class BookShelf
             session.getTransaction().commit();
         }
         catch ( final Throwable e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+
+    public static void mergeRelatedBooks(
+        final Book book,
+        final List<Book> relatedBooks )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            session.beginTransaction();
+            session.load( book, book.getId() );
+            book.getRelatedBooks().clear();
+            book.getRelatedBooks().addAll( relatedBooks );
+
+            session.merge( book );
+
+            session.getTransaction().commit();
+        }
+        catch ( final HibernateException e )
         {
             log.error( e, e );
             throw new Error( e );
