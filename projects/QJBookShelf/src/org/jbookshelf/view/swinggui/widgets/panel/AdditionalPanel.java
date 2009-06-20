@@ -49,34 +49,16 @@ public class AdditionalPanel
         }
     }
 
-    private class RemoveAction
-        extends AbstractAction
-    {
-        public RemoveAction()
-        {
-            super( null, IMG.icon( IMG.LIST_REMOVE_PNG ) );
-        }
+    private final JTextField  searchTextField = new JTextField();
+    private final JTabbedPane tabbedPane      = new JTabbedPane();
+    private final AddAction   addAction       = new AddAction();
 
-        @Override
-        public void actionPerformed(
-            final ActionEvent e )
-        {
-            getActiveTab().onRemove();
-        }
-    }
-
-    private final JTextField   searchTextField = new JTextField();
-    private final JTabbedPane  tabbedPane      = new JTabbedPane();
-    private final AddAction    addAction       = new AddAction();
-    private final RemoveAction removeAction    = new RemoveAction();
-
-    private AdditionalTab[]    tabs;
+    private AdditionalTab[]   tabs;
 
     public AdditionalPanel()
     {
         super( new BorderLayout() );
         addAction.setEnabled( false );
-        removeAction.setEnabled( false );
     }
 
     @PostConstruct
@@ -84,7 +66,6 @@ public class AdditionalPanel
     {
         final Box controlPanel = Box.createHorizontalBox();
         controlPanel.add( new JButton( addAction ) );
-        controlPanel.add( new JButton( removeAction ) );
         controlPanel.add( searchTextField );
 
         final JButton button = new JButton( new EraseTextFieldAction( searchTextField ) );
