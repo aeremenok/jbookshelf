@@ -4,21 +4,27 @@
 package org.jbookshelf.view.swinggui.widgets.panel;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.log4j.Logger;
 import org.bushe.swing.event.EventBus;
 import org.bushe.swing.event.EventTopicSubscriber;
+import org.bushe.swing.event.annotation.AnnotationProcessor;
+import org.bushe.swing.event.annotation.EventSubscriber;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
+import org.jbookshelf.view.swinggui.widgets.panel.RelatedBookDialog.RelatedBookEvent;
 import org.jdesktop.swingx.JXTable;
+import org.jdesktop.swingx.decorator.FilterPipeline;
 
 /**
  * @author eav 2009
@@ -39,6 +45,14 @@ public class RelatedBookTab
         {
             super( names, 0 );
             EventBus.subscribe( Properties.BOOKS_SELECTED, this );
+            AnnotationProcessor.process( this );
+        }
+
+        @EventSubscriber( eventClass = RelatedBookEvent.class )
+        public void booksChanged(
+            @SuppressWarnings( "unused" ) final RelatedBookEvent event )
+        {
+            onEvent( Properties.BOOKS_SELECTED, Single.instance( BookShelfMediator.class ) );
         }
 
         @Override
@@ -80,9 +94,7 @@ public class RelatedBookTab
         }
     }
 
-    private final JXTable       table = new JXTable( new RelatedBookTableModel() );
-
-    private static final Logger log   = Logger.getLogger( RelatedBookTab.class );
+    private final JXTable table = new JXTable( new RelatedBookTableModel() );
 
     public RelatedBookTab()
     {
@@ -91,15 +103,27 @@ public class RelatedBookTab
 
         setLayout( new BorderLayout() );
         add( new JScrollPane( table ), BorderLayout.CENTER );
+
+        table.setFilters( new FilterPipeline( filter ) );
+
+        table.addMouseListener( new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(
+                final MouseEvent e )
+            {
+                if ( e.getClickCount() == 2 )
+                {
+                    onAdd( Single.instance( BookShelfMediator.class ).getSelectedBooks().get( 0 ) );
+                }
+            }
+        } );
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.widgets.panel.AdditionalTab#onAdd(org.jbookshelf.model.db.Book)
-     */
     @Override
     public void onAdd(
         final Book book )
     {
-        log.debug( "onAdd" );
+        new RelatedBookDialog( book ).setVisible( true );
     }
 }

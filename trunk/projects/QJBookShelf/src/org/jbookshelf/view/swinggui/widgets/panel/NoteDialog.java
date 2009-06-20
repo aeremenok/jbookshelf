@@ -6,6 +6,7 @@ package org.jbookshelf.view.swinggui.widgets.panel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
@@ -72,10 +73,12 @@ public class NoteDialog
     {
         citation.setBorder( new TitledBorder( I18N.tr( "Citation" ) ) );
         content.setBorder( new TitledBorder( I18N.tr( "Note" ) ) );
+        getCancelAction().putValue( Action.NAME, I18N.tr( "Cancel" ) );
     }
 
     private void init()
     {
+        setButtonSeparatorVisible( false );
         final JPanel panel = new JPanel( new BorderLayout() );
         setMainComponent( panel );
 

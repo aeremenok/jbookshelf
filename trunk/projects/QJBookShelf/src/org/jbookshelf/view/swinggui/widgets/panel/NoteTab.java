@@ -28,6 +28,7 @@ import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
 import org.jdesktop.swingx.JXTable;
+import org.jdesktop.swingx.decorator.FilterPipeline;
 
 /**
  * @author eav 2009
@@ -136,6 +137,7 @@ public class NoteTab
         add( new JScrollPane( table ), BorderLayout.CENTER );
 
         table.getColumn( 2 ).setMaxWidth( 40 );
+        table.setFilters( new FilterPipeline( filter ) );
 
         table.addMouseListener( new MouseAdapter()
         {

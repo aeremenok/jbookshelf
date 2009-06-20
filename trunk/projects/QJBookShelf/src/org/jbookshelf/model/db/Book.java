@@ -67,6 +67,8 @@ public class Book
     @OneToOne( mappedBy = "book" )
     private PhysicalBook        physicalBook;
 
+    public static final String       RELATED = "related";
+
     public void addAuthor(
         @Nonnull final Author author )
     {
