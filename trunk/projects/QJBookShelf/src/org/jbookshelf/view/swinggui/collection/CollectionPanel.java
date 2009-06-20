@@ -19,10 +19,10 @@ import javax.swing.event.ChangeListener;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
+import org.jbookshelf.view.i18n.Translatable;
+import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
-import org.jbookshelf.view.logic.Translatable;
-import org.jbookshelf.view.logic.Translator;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.actions.EnterKeyListener;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;

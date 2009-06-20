@@ -13,42 +13,14 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see
  * <http://www.gnu.org/licenses/>. </copyright>
  */
-package org.jbookshelf.qtgui.widgets.menu;
-
-import org.jbookshelf.qtgui.widgets.ext.QMenuExt;
-import org.jbookshelf.qtgui.widgets.panel.RelatedPanel;
-
-import com.trolltech.qt.gui.QAction;
-import com.trolltech.qt.gui.QPushButton;
+package org.jbookshelf.view.i18n;
 
 /**
- * popups over related panel's trees
+ * Something that contains text able to be translated many times
  * 
  * @author eav
  */
-public class RelatedTreeMenu
-    extends QMenuExt
+public interface Translatable
 {
-    public RelatedTreeMenu(
-        RelatedPanel relatedPanel )
-    {
-        buttonToAction( relatedPanel.getRemoveButton() );
-    }
-
-    private QAction buttonToAction(
-        QPushButton button )
-    {
-        // extract some text from button
-        String text = button.text();
-        if ( "".equals( text ) )
-        {
-            text = button.toolTip();
-        }
-
-        QAction action = addAction( button.icon(), text );
-        // action causes button to press
-        action.triggered.connect( button.released );
-
-        return action;
-    }
+    void retranslate();
 }

@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import org.jbookshelf.view.logic.Translator;
 
 public class I18N
 {
