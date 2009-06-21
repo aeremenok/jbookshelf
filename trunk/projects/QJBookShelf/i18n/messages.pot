@@ -1,0 +1,301 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-06-21 16:28+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/org/jbookshelf/view/qtgui/reader/CitationPanel.java:59
+msgid "Citations"
+msgstr ""
+
+#: src/org/jbookshelf/view/qtgui/reader/ReaderWindow.java:51
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookEditDialog.java:94
+msgid "Edit book properties"
+msgstr ""
+
+#: src/org/jbookshelf/view/qtgui/reader/ReaderWindow.java:52
+msgid "Add citation"
+msgstr ""
+
+#: src/org/jbookshelf/view/qtgui/reader/ReaderWindow.java:53
+msgid "View bookmarks and citations"
+msgstr ""
+
+#: src/org/jbookshelf/view/qtgui/reader/ReaderWindow.java:147
+msgid "Error displaying file "
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/SetReadItem.java:30
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:175
+msgid "Is read"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/actions/BookShelfActions.java:20
+msgid "Backup"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/actions/BookShelfActions.java:42
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:158
+msgid "Import"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/actions/BookShelfActions.java:57
+msgid "Restore"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:35
+msgid "Edit"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:50
+msgid "Google"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:68
+msgid "Open"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:86
+msgid "Open Directory"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:104
+msgid "Remove"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:111
+msgid "Remove selected?"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/additional/AdditionalPanel.java:116
+msgid "Start typing to filter"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/additional/NoteTab.java:46
+msgid "Title"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/additional/NoteTab.java:46
+msgid "Date"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/additional/NoteTab.java:135
+msgid "Notes"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/additional/RelatedBookTab.java:42
+#: src/org/jbookshelf/view/swinggui/collection/tab/BookTableModel.java:19
+#: src/org/jbookshelf/view/swinggui/multiedit/ListTableModel.java:37
+msgid "Name"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/additional/RelatedBookTab.java:103
+msgid "Related Books"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:46
+msgid "Search"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:88
+msgid "All"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:89
+msgid "Read"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:90
+msgid "Unread"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:92
+msgid "Type here your search query"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:93
+msgid "Search content"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/collection/tab/BookTableModel.java:19
+#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:69
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:177
+msgid "Author"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/collection/tab/BookTableModel.java:19
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:178
+msgid "Category"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:63
+#: src/org/jbookshelf/view/swinggui/main/ToolBar.java:36
+msgid "About"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:70
+msgid "License"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:71
+msgid "Version"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:73
+msgid "Andrey Yeremenok (eav1986_at_gmail_com)"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:74
+msgid "Citation"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:75
+msgid "Note"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:76
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:69
+msgid "Cancel"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/RelatedBookDialog.java:100
+msgid "Select books to be related"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:61
+#: src/org/jbookshelf/view/swinggui/main/ToolBar.java:66
+msgid "Settings"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:70
+msgid "Defaults"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:72
+msgid "Language"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:73
+msgid "Look and feel"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:74
+msgid "JBookShelf directory"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:75
+msgid "Workspace directory"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:77
+msgid "JBookShelf settings"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:83
+msgid "Add Book"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:84
+msgid "Add and close"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:85
+msgid "Add and continue"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:86
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:157
+msgid "Close"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:87
+msgid "Add book to collection"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookEditDialog.java:93
+msgid "Edit book"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:143
+msgid "Book name not specified"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:144
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:152
+msgid "Error"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:151
+msgid "File does not exist: "
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:176
+#: src/org/jbookshelf/view/swinggui/dialog/importer/SuccessTableModel.java:21
+msgid "Book"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:179
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FailTableModel.java:25
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:159
+msgid "File"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:180
+msgid "Viewer"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:183
+msgid "Auto"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:184
+msgid "Internal"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:185
+msgid "System"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:156
+msgid "Import Files"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:160
+msgid "Mask"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:162
+msgid "Successfully imported books"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:165
+msgid "Unimported files"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:269
+msgid "File not found: "
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:276
+msgid "Specify at least one mask"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/main/MainWindow.java:133
+msgid "Unexpected error"
+msgstr ""
+
+#: src/org/jbookshelf/view/swinggui/main/ToolBar.java:51
+msgid "Add"
+msgstr ""
