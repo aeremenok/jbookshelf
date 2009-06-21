@@ -10,13 +10,10 @@
     copy qtjambi-[version].jar and qtjambi-[platform]-[version].jar to ${jambidir}/{$os}
     and rename them to qtjambi.jar and qtjambi-native.jar
  -->
-<project default="create_run_jar"
-         name="Create Runnable Jar for Project QJBookShelf"
-         basedir="..">
+<project default="create_run_jar" name="Create Runnable Jar for Project QJBookShelf" basedir=".">
 
     <property name="libdir" value="${basedir}/lib" />
-    <property name="targetdir"
-              value="${builddir}/jbookshelf-${os}-${version}" />
+    <property name="targetdir" value="${builddir}/jbookshelf-${os}-${version}" />
     <property name="modeldir" value="${basedir}/../JBookShelfModel" />
     <property name="jambidir-os" value="${jambidir}/${os}" />
 
@@ -33,8 +30,7 @@
             <fileset dir="${basedir}/../JBookShelfModel/lib" />
         </copy>
         <copy todir="${targetdir}/lib" file="${jambidir-os}/qtjambi.jar" />
-        <copy todir="${targetdir}/lib"
-              file="${jambidir-os}/qtjambi-native.jar" />
+        <copy todir="${targetdir}/lib" file="${jambidir-os}/qtjambi-native.jar" />
     </target>
 
     <target name="create_run_jar" depends="clean, copyfiles">
@@ -47,8 +43,7 @@
         <jar destfile="${targetdir}/jbookshelf.jar">
             <manifest>
                 <attribute name="Built-By" value="${user.name}" />
-                <attribute name="Main-Class"
-                           value="org.jbookshelf.qtgui.MainWindow" />
+                <attribute name="Main-Class" value="org.jbookshelf.qtgui.MainWindow" />
                 <attribute name="Class-Path" value="${libpath}" />
             </manifest>
 
@@ -72,45 +67,53 @@
     <property name="srcdir" value="${basedir}/src" />
     <property name="packagedir" value="org/jbookshelf/qtgui" />
 
-    <target name="lupdate">
-        <exec executable="${jambidir}/${os}/bin/lupdate">
-            <arg value="-extensions" />
-            <arg value="java" />
+    <!-- translation -->
+    <path id="antlib.cp">
+        <fileset dir="${basedir}/antlib" />
+    </path>
 
-            <!-- todo specify directories recusrively -->
-            <arg value="${srcdir}/${packagedir}" />
-            <arg value="${srcdir}/${packagedir}/logic" />
-            <arg value="${srcdir}/${packagedir}/reader" />
-            <arg value="${srcdir}/${packagedir}/widgets" />
-            <arg value="${srcdir}/${packagedir}/widgets/completion" />
-            <arg value="${srcdir}/${packagedir}/widgets/dialog" />
-            <arg value="${srcdir}/${packagedir}/widgets/ext" />
-            <arg value="${srcdir}/${packagedir}/widgets/menu" />
-            <arg value="${srcdir}/${packagedir}/widgets/panel" />
-            <arg value="${srcdir}/${packagedir}/widgets/tree" />
-            <arg value="${srcdir}/${packagedir}/widgets/treepanel" />
+    <!-- collect words -->
+    <target name="gettext">
+        <taskdef name="extract" classname="org.xnap.commons.ant.gettext.GettextExtractKeysTask">
+            <classpath refid="antlib.cp" />
+        </taskdef>
 
-            <arg value="-ts" />
-            <arg value="${basedir}/src/translations/jbookshelf_ru.ts" />
-            <arg value="-ts" />
-            <arg value="${basedir}/src/translations/jbookshelf_en.ts" />
-        </exec>
+        <extract keysFile="messages.pot" poDirectory="i18n" keywords="-ktr">
+            <fileset dir="src" includes="**/*.java" />
+        </extract>
     </target>
 
-    <target name="lrelease">
-        <exec executable="${jambidir}/${os}/bin/lrelease">
-            <arg value="${basedir}/src/translations/jbookshelf_ru.ts" />
-            <arg value="-qm" />
-            <arg value="${basedir}/src/translations/jbookshelf_ru.qm" />
-        </exec>
-
-        <exec executable="${jambidir}/${os}/bin/lrelease">
-            <arg value="${basedir}/src/translations/jbookshelf_en.ts" />
-            <arg value="-qm" />
-            <arg value="${basedir}/src/translations/jbookshelf_en.qm" />
-        </exec>
+    <!-- prepare files -->
+    <target name="merge">
+        <taskdef name="gettext-merge"
+                 classname="org.xnap.commons.ant.gettext.GettextMergeKeysTask"
+                 classpathref="antlib.cp" />
+        <gettext-merge keysFile="messages.pot" poDirectory="i18n" />
     </target>
 
-    <target name="translate" depends="lupdate, lrelease" />
+    <target name="translate" depends="gettext, merge" />
+    <!-- use poedit to translate -->
+
+    <!-- create bundle .class files and assemble jar-->
+    <target name="bundle">
+        <taskdef name="gettext-generate-default"
+                 classname="org.xnap.commons.ant.gettext.GenerateDefaultBundleTask"
+                 classpathref="antlib.cp" />
+        <gettext-generate-default targetBundle="org.jbookshelf.view.i18n.Messages"
+                                  outputDirectory="i18n/bin"
+                                  potfile="i18n/messages.pot" />
+
+        <taskdef name="gettext-dist" 
+                 classname="org.xnap.commons.ant.gettext.GettextDistTask"
+                 classpathref="antlib.cp" />
+        <gettext-dist targetBundle="org.jbookshelf.view.i18n.Messages" poDirectory="i18n" outputDirectory="i18n/bin" />
+
+        <jar destfile="${libdir}/jbs-i18n.jar">
+            <fileset dir="i18n/bin" />
+        </jar>
+
+        <delete dir="i18n/bin/org" />
+    </target>
+
 
 </project>
