@@ -99,6 +99,8 @@ public class MainWindow
         statusBar.setResizeHandleEnabled( false );
         setStatusBar( statusBar );
 
+        initSettings();
+
         pack();
         setExtendedState( MAXIMIZED_BOTH );
     }
@@ -130,5 +132,14 @@ public class MainWindow
         log.error( e, e );
         final ErrorInfo info = new ErrorInfo( null, I18N.tr( "Unexpected error" ), null, null, e, null, null );
         JXErrorPane.showDialog( null, info );
+    }
+
+    private void initSettings()
+    {
+        final Settings settings = Single.instance( Settings.class );
+        settings.addPropertyChangeListener( settings.LANGUAGE.getKey(), I18N.LANGUAGE_LISTENER );
+        settings.addPropertyChangeListener( settings.LAF.getKey(), this );
+
+        settings.fireRefresh();
     }
 }
