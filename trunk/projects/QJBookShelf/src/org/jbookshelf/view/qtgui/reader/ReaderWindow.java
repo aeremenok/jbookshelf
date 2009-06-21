@@ -46,7 +46,7 @@ public class ReaderWindow
     private final class ReaderToolBar
         extends QToolBarExt
     {
-        public void retranslate(
+        public void translate(
             final I18n i18n )
         {
             bookSettings.setText( i18n.tr( "Edit book properties" ) );
@@ -145,7 +145,7 @@ public class ReaderWindow
         catch ( final UnsupportedEncodingException e )
         {
             log.error( e, e );
-            return I18N.tr( "Error displaying file ", getClass() ) + file.getAbsolutePath() + "\n\n"
+            return I18N.tr( "Error displaying file " ) + file.getAbsolutePath() + "\n\n"
                 + StringUtil.printThrowable( e );
         }
     }

@@ -111,7 +111,7 @@ public class AdditionalPanel
     }
 
     @Override
-    public void retranslate(
+    public void translate(
         final I18n i18n )
     {
         searchTextField.setToolTipText( i18n.tr( "Start typing to filter" ) );

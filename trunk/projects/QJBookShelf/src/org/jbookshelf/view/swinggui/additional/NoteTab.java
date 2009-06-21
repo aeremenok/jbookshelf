@@ -43,7 +43,7 @@ public class NoteTab
         implements
         EventTopicSubscriber<BookShelfMediator>
     {
-        private static final I18n             i18n   = I18N.i18n( NoteTableModel.class );
+        private static final I18n             i18n   = I18N.i18n( );
         private static final String[]         names  =
                                                      { i18n.tr( "Title" ), i18n.tr( "Date" ), "" };
         private static final SimpleDateFormat format = new SimpleDateFormat( "yy-MM-dd HH:mm" );
@@ -134,7 +134,7 @@ public class NoteTab
     {
         super();
 
-        setName( I18N.tr( "Notes", getClass() ) );
+        setName( I18N.tr( "Notes" ) );
 
         setLayout( new BorderLayout() );
         add( new JScrollPane( table ), BorderLayout.CENTER );

@@ -16,7 +16,7 @@ import org.xnap.commons.i18n.I18n;
 public class BookTableModel
     extends DefaultTableModel
 {
-    private static final I18n i18n  = I18N.i18n( BookTableModel.class );
+    private static final I18n i18n  = I18N.i18n( );
     private static String[]   names =
                                     { i18n.tr( "Name" ), i18n.tr( "Author" ), i18n.tr( "Category" ) };
 

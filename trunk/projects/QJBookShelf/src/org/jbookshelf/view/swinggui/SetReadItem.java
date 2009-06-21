@@ -27,7 +27,7 @@ public class SetReadItem
 {
     public SetReadItem()
     {
-        super( I18N.tr( "Is read", SetReadItem.class ) );
+        super( I18N.tr( "Is read" ) );
         addItemListener( this );
         EventBus.subscribe( Properties.BOOKS_SELECTED, this );
     }

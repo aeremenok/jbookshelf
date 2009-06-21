@@ -24,5 +24,5 @@ import org.xnap.commons.i18n.I18n;
  */
 public interface Translatable
 {
-    void retranslate(I18n i18n);
+    void translate(I18n i18n);
 }

@@ -16,7 +16,7 @@ public abstract class TranslatableAction
     public TranslatableAction(
         final String name )
     {
-        putValue( NAME, I18N.tr( name, getClass() ) );
+        putValue( NAME, I18N.tr( name ) );
     }
 
     public TranslatableAction(
@@ -24,6 +24,6 @@ public abstract class TranslatableAction
         final Icon icon )
     {
         super( name, icon );
-        putValue( NAME, I18N.tr( name, getClass() ) );
+        putValue( NAME, I18N.tr( name ) );
     }
 }

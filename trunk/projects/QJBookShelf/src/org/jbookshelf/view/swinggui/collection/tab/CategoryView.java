@@ -29,6 +29,7 @@ import org.jbookshelf.model.db.Category;
 import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.model.db.util.HibernateUtil;
+import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
@@ -78,7 +79,7 @@ public class CategoryView
     public CategoryView()
     {
         super();
-        setName( "Categories" );
+        setName( I18N.tr( "Categories" ) );
         setIcon( IMG.icon( IMG.FEED_SUBSCRIBE_PNG ) );
 
         setLayout( new BorderLayout() );

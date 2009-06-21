@@ -34,7 +34,7 @@ public class ListTableModel<V>
      * column names
      */
     private static final String[] names  =
-                                         { I18N.tr( "Name", ListTableModel.class ), "" };
+                                         { I18N.tr( "Name" ), "" };
 
     public ListTableModel()
     {

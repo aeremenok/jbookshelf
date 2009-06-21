@@ -54,7 +54,7 @@ public class CitationPanel
         I18N.translate( this );
     }
 
-    public void retranslate(
+    public void translate(
         final I18n i18n )
     {
         setTitle( i18n.tr( "Citations" ) );

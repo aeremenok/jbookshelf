@@ -151,7 +151,7 @@ public class FileImportDialog
     }
 
     @Override
-    public void retranslate(
+    public void translate(
         final I18n i18n )
     {
         setTitle( i18n.tr( "Import Files" ) );
@@ -248,7 +248,7 @@ public class FileImportDialog
                         {
                             successModel.addBook( result );
                             failModel.removeFile( file );
-                            retranslate( null );
+                            translate( null );
                         }
                     }
                 }
@@ -267,7 +267,7 @@ public class FileImportDialog
         {
             final String path = file != null
                 ? file.getAbsolutePath() : "";
-            JOptionPane.showMessageDialog( this, I18N.tr( "File not found: ", getClass() ) + path, "",
+            JOptionPane.showMessageDialog( this, I18N.tr( "File not found: " ) + path, "",
                 JOptionPane.ERROR_MESSAGE );
             return;
         }
@@ -275,7 +275,7 @@ public class FileImportDialog
         final Collection<String> masks = maskField.getValues();
         if ( masks.size() == 0 )
         {
-            JOptionPane.showMessageDialog( this, I18N.tr( "Specify at least one mask", getClass() ), "",
+            JOptionPane.showMessageDialog( this, I18N.tr( "Specify at least one mask" ), "",
                 JOptionPane.ERROR_MESSAGE );
             return;
         }
@@ -289,7 +289,7 @@ public class FileImportDialog
                 successModel.setBooks( new ArrayList<Book>() );
                 failModel.setFiles( new ArrayList<File>() );
                 importer.importFiles( masks, file );
-                retranslate( null );
+                translate( null );
             }
         } );
     }
