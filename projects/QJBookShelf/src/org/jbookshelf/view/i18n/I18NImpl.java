@@ -3,12 +3,12 @@
  */
 package org.jbookshelf.view.i18n;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
+
+import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.singleton.Single;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
@@ -16,67 +16,37 @@ import org.xnap.commons.i18n.I18nFactory;
  * @author eav 2009
  */
 public class I18NImpl
-    implements
-    PropertyChangeListener
 {
-    private static String      defaultLanguage;
-    private final List<String> localizedLanguages = new ArrayList<String>();
+    private Locale currentLocale;
 
-    public I18NImpl()
+    public I18n i18n()
     {
-        super();
-        localizedLanguages.add( Locale.ENGLISH.getDisplayLanguage( Locale.ENGLISH ) );
-        localizedLanguages.add( "Russian" );
-    }
-
-    public String defaultLanguage()
-    {
-        if ( defaultLanguage == null )
+        if ( currentLocale == null )
         {
-            defaultLanguage = Locale.getDefault().getDisplayLanguage( Locale.ENGLISH );
-            if ( !I18N.getLocalizedLanguages().contains( defaultLanguage ) )
-            {
-                defaultLanguage = I18N.getLocalizedLanguages().get( 0 );
-            }
+            return I18nFactory.getI18n( getClass(), "org.jbookshelf.view.i18n.Messages" );
         }
-        return defaultLanguage;
+        return I18nFactory.getI18n( getClass(), "org.jbookshelf.view.i18n.Messages", currentLocale );
     }
 
-    public List<String> getLocalizedLanguages()
+    @PostConstruct
+    public void init()
     {
-        return this.localizedLanguages;
-    }
-
-    public I18n i18n(
-        final Class<?> class1 )
-    {
-        return I18nFactory.getI18n( class1, "org.jbookshelf.view.i18n.Messages" );
-    }
-
-    public void propertyChange(
-        final PropertyChangeEvent evt )
-    {
-        setLanguage( evt.getNewValue().toString() );
+        final String language = Single.instance( Settings.class ).LANGUAGE.getValue();
+        // todo reorder
+        currentLocale = I18N.getLocalizedLanguages().get( 0 ).equals( language )
+            ? Locale.ENGLISH : null;
     }
 
     public String tr(
-        final String string,
-        final Class<?> class1 )
+        final String string )
     {
-        return i18n( class1 ).tr( string );
+        return i18n().tr( string );
     }
 
     public void translate(
         final Translatable translatable )
     {
-        final I18n i18n = i18n( translatable.getClass() );
-        translatable.retranslate( i18n );
-    }
-
-    private void setLanguage(
-        @SuppressWarnings( "unused" ) final String language )
-    {
-    // TODO Auto-generated method stub
-    //        Translator.retranslate( language );
+        final I18n i18n = i18n();
+        translatable.translate( i18n );
     }
 }

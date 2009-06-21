@@ -140,17 +140,17 @@ public class BookPanel
         final String bookName = bookTextField.getText();
         if ( bookName.equals( "" ) )
         {
-            final String tr = I18N.tr( "Book name not specified", getClass() );
-            JOptionPane.showMessageDialog( this, tr, I18N.tr( "Error", getClass() ), JOptionPane.ERROR_MESSAGE );
+            final String tr = I18N.tr( "Book name not specified" );
+            JOptionPane.showMessageDialog( this, tr, I18N.tr( "Error" ), JOptionPane.ERROR_MESSAGE );
             return null;
         }
 
         final File file = fileChooserPanel.getFile();
         if ( file == null || !file.exists() )
         {
-            final String tr = I18N.tr( "File does not exist: ", getClass() )
+            final String tr = I18N.tr( "File does not exist: " )
                 + fileChooserPanel.getTextField().getText();
-            JOptionPane.showMessageDialog( this, tr, I18N.tr( "Error", getClass() ), JOptionPane.ERROR_MESSAGE );
+            JOptionPane.showMessageDialog( this, tr, I18N.tr( "Error" ), JOptionPane.ERROR_MESSAGE );
             return null;
         }
 
@@ -171,7 +171,7 @@ public class BookPanel
         return parameters;
     }
 
-    public void retranslate(
+    public void translate(
         final I18n i18n )
     {
         isReadCheckBox.setText( i18n.tr( "Is read" ) );

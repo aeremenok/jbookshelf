@@ -78,7 +78,7 @@ public class BookAdditionDialog
         return this.result;
     }
 
-    public void retranslate(
+    public void translate(
         final I18n i18n )
     {
         setTitle( i18n.tr( "Add Book" ) );

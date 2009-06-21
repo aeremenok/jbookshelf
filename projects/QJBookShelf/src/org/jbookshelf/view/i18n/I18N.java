@@ -1,42 +1,55 @@
 package org.jbookshelf.view.i18n;
 
-import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import org.jbookshelf.controller.singleton.Single;
 import org.xnap.commons.i18n.I18n;
 
 public class I18N
 {
-    private static final I18NImpl              impl                      = new I18NImpl();
+    private static final List<String> localizedLanguages = new ArrayList<String>();
+    private static String             defaultLanguage;
 
-    public static final PropertyChangeListener LANGUAGE_SETTING_LISTENER = impl;
+    static
+    {
+        localizedLanguages.add( Locale.ENGLISH.getDisplayLanguage( Locale.ENGLISH ) );
+        localizedLanguages.add( "Russian" );
+    }
 
     public static String defaultLanguage()
     {
-        return impl.defaultLanguage();
+        if ( defaultLanguage == null )
+        {
+            defaultLanguage = Locale.getDefault().getDisplayLanguage( Locale.ENGLISH );
+            if ( !I18N.getLocalizedLanguages().contains( defaultLanguage ) )
+            {
+                defaultLanguage = getLocalizedLanguages().get( 0 );
+            }
+        }
+        return defaultLanguage;
     }
 
     public static List<String> getLocalizedLanguages()
     {
-        return impl.getLocalizedLanguages();
+        return localizedLanguages;
     }
 
-    public static I18n i18n(
-        final Class<?> class1 )
+    public static I18n i18n()
     {
-        return I18N.impl.i18n( class1 );
+        return Single.instance( I18NImpl.class ).i18n();
     }
 
     public static String tr(
-        final String string,
-        final Class<?> clazz )
+        final String string )
     {
-        return impl.tr( string, clazz );
+        return Single.instance( I18NImpl.class ).tr( string );
     }
 
     public static void translate(
         final Translatable translatable )
     {
-        impl.translate( translatable );
+        Single.instance( I18NImpl.class ).translate( translatable );
     }
 }

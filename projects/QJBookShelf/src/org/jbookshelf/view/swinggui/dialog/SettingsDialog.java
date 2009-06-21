@@ -56,7 +56,7 @@ public class SettingsDialog
         return true;
     }
 
-    public void retranslate(
+    public void translate(
         final I18n i18n )
     {
         setTitle( i18n.tr( "Settings" ) );

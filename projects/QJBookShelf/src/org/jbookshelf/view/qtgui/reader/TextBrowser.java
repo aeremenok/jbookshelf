@@ -94,7 +94,7 @@ public class TextBrowser
     //        cit.setPosition( textCursor().position() );
     }
 
-    public void retranslate(I18n i18n)
+    public void translate(I18n i18n)
     {
         googleAction.setText( Single.instance( UniqueActions.class ).googleAction.getValue( Action.NAME ).toString() );
     }

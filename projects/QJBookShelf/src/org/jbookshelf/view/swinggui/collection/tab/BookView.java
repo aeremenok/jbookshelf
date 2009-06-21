@@ -19,6 +19,7 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.model.db.util.LogRunner;
+import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
@@ -42,7 +43,7 @@ public class BookView
     public BookView()
     {
         super();
-        setName( "Books" );
+        setName( I18N.tr( "Books" ) );
         setIcon( IMG.icon( IMG.BOOK_PNG ) );
         setLayout( new BorderLayout() );
         add( new JScrollPane( table ), BorderLayout.CENTER );

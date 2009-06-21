@@ -29,6 +29,7 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.model.db.util.HibernateUtil;
+import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
@@ -77,7 +78,7 @@ public class AuthorView
     public AuthorView()
     {
         super();
-        setName( "Authors" );
+        setName( I18N.tr( "Authors" ) );
         setIcon( IMG.icon( IMG.USER_IDENITY_PNG ) );
         setLayout( new BorderLayout() );
 

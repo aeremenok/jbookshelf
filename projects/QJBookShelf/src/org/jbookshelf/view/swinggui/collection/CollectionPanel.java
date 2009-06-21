@@ -82,7 +82,7 @@ public class CollectionPanel
         searchContent.setEnabled( false );
     }
 
-    public void retranslate(
+    public void translate(
         final I18n i18n )
     {
         isReadComboBox.removeAllItems();

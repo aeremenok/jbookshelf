@@ -95,7 +95,7 @@ public class RelatedBookDialog
     }
 
     @Override
-    public void retranslate(
+    public void translate(
         final I18n i18n )
     {
         ((JComponent) books.getParent()).setBorder( new TitledBorder( i18n.tr( "Select books to be related" ) ) );

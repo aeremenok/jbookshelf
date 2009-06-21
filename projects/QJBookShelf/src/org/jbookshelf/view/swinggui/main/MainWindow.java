@@ -130,7 +130,7 @@ public class MainWindow
         final Throwable e )
     {
         log.error( e, e );
-        final String message = I18N.tr( "Unexpected error", MainWindow.class );
+        final String message = I18N.tr( "Unexpected error" );
         final ErrorInfo info = new ErrorInfo( null, message, null, null, e, null, null );
         JXErrorPane.showDialog( null, info );
     }
@@ -138,9 +138,7 @@ public class MainWindow
     private void initSettings()
     {
         final Settings settings = Single.instance( Settings.class );
-        settings.addPropertyChangeListener( settings.LANGUAGE.getKey(), I18N.LANGUAGE_SETTING_LISTENER );
         settings.addPropertyChangeListener( settings.LAF.getKey(), this );
-
         settings.fireRefresh();
     }
 }
