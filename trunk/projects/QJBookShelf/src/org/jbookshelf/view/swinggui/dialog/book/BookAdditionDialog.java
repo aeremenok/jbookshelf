@@ -10,12 +10,12 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.swinggui.collection.CollectionPanel;
 import org.jbookshelf.view.swinggui.dialog.importer.FileImportDialog;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.xnap.commons.gui.DefaultDialog;
+import org.xnap.commons.i18n.I18n;
 
 import com.sun.istack.internal.Nullable;
 
@@ -78,18 +78,19 @@ public class BookAdditionDialog
         return this.result;
     }
 
-    public void retranslate()
+    public void retranslate(
+        final I18n i18n )
     {
-        setTitle( I18N.tr( "Add Book" ) );
-        getOkayAction().putValue( Action.NAME, I18N.tr( "Add and close" ) );
-        getApplyAction().putValue( Action.NAME, I18N.tr( "Add and continue" ) );
-        getCancelAction().putValue( Action.NAME, I18N.tr( "Close" ) );
-        bookPanel.setBorder( new TitledBorder( I18N.tr( "Add book to collection" ) ) );
+        setTitle( i18n.tr( "Add Book" ) );
+        getOkayAction().putValue( Action.NAME, i18n.tr( "Add and close" ) );
+        getApplyAction().putValue( Action.NAME, i18n.tr( "Add and continue" ) );
+        getCancelAction().putValue( Action.NAME, i18n.tr( "Close" ) );
+        bookPanel.setBorder( new TitledBorder( i18n.tr( "Add book to collection" ) ) );
     }
 
     private void init()
     {
-        Translator.addTranslatable( this );
+        I18N.translate( this );
 
         setModal( true );
         setMainComponent( bookPanel );

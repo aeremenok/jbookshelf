@@ -28,7 +28,6 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.swinggui.FileChooserPanelExt;
 import org.jbookshelf.view.swinggui.GridBagPanel;
 import org.jbookshelf.view.swinggui.ProgressBar;
@@ -39,6 +38,7 @@ import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jbookshelf.view.swinggui.multiedit.MultipleField;
 import org.jdesktop.swingx.JXTable;
 import org.xnap.commons.gui.DefaultDialog;
+import org.xnap.commons.i18n.I18n;
 
 /**
  * a dialog for importing collection from filesystem
@@ -108,7 +108,7 @@ public class FileImportDialog
 
         initComponents();
         initListeners();
-        Translator.addTranslatable( this );
+        I18N.translate( this );
 
         setPreferredSize( new Dimension( 1024, 768 ) );
 
@@ -151,18 +151,19 @@ public class FileImportDialog
     }
 
     @Override
-    public void retranslate()
+    public void retranslate(
+        final I18n i18n )
     {
-        setTitle( I18N.tr( "Import Files" ) );
-        getCloseAction().putValue( Action.NAME, I18N.tr( "Close" ) );
-        getDefaultsAction().putValue( Action.NAME, I18N.tr( "Import" ) );
-        fileLabel.setText( I18N.tr( "File" ) );
-        maskLabel.setText( I18N.tr( "Mask" ) );
+        setTitle( i18n.tr( "Import Files" ) );
+        getCloseAction().putValue( Action.NAME, i18n.tr( "Close" ) );
+        getDefaultsAction().putValue( Action.NAME, i18n.tr( "Import" ) );
+        fileLabel.setText( i18n.tr( "File" ) );
+        maskLabel.setText( i18n.tr( "Mask" ) );
 
-        final TitledBorder leftBorder = new TitledBorder( I18N.tr( "Successfully imported books" ) + "("
+        final TitledBorder leftBorder = new TitledBorder( i18n.tr( "Successfully imported books" ) + "("
             + successModel.getRowCount() + ")" );
         ((JComponent) splitPane.getLeftComponent()).setBorder( leftBorder );
-        final TitledBorder rightBorder = new TitledBorder( I18N.tr( "Unimported files" ) + "("
+        final TitledBorder rightBorder = new TitledBorder( i18n.tr( "Unimported files" ) + "("
             + failModel.getRowCount() + ")" );
         ((JComponent) splitPane.getRightComponent()).setBorder( rightBorder );
     }
@@ -247,7 +248,7 @@ public class FileImportDialog
                         {
                             successModel.addBook( result );
                             failModel.removeFile( file );
-                            retranslate();
+                            retranslate( null );
                         }
                     }
                 }
@@ -266,14 +267,16 @@ public class FileImportDialog
         {
             final String path = file != null
                 ? file.getAbsolutePath() : "";
-            JOptionPane.showMessageDialog( this, I18N.tr( "File not found: " ) + path, "", JOptionPane.ERROR_MESSAGE );
+            JOptionPane.showMessageDialog( this, I18N.tr( "File not found: ", getClass() ) + path, "",
+                JOptionPane.ERROR_MESSAGE );
             return;
         }
 
         final Collection<String> masks = maskField.getValues();
         if ( masks.size() == 0 )
         {
-            JOptionPane.showMessageDialog( this, I18N.tr( "Specify at least one mask" ), "", JOptionPane.ERROR_MESSAGE );
+            JOptionPane.showMessageDialog( this, I18N.tr( "Specify at least one mask", getClass() ), "",
+                JOptionPane.ERROR_MESSAGE );
             return;
         }
 
@@ -286,7 +289,7 @@ public class FileImportDialog
                 successModel.setBooks( new ArrayList<Book>() );
                 failModel.setFiles( new ArrayList<File>() );
                 importer.importFiles( masks, file );
-                retranslate();
+                retranslate( null );
             }
         } );
     }

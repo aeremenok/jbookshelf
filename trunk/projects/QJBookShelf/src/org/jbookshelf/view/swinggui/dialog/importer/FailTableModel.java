@@ -22,7 +22,7 @@ public class FailTableModel
     extends DefaultTableModel
 {
     private static final String[] names =
-                                        { I18N.tr( "File" ), "" };
+                                        { I18N.tr( "File", FailTableModel.class ), "" };
     private List<File>            files = new ArrayList<File>();
 
     public FailTableModel()

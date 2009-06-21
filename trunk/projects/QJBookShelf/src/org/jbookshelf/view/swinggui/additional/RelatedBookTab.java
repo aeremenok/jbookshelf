@@ -39,7 +39,7 @@ public class RelatedBookTab
         EventTopicSubscriber<BookShelfMediator>
     {
         private static String[] names =
-                                      { I18N.tr( "Name" ) };
+                                      { I18N.tr( "Name", RelatedBookTableModel.class ) };
         private List<Book>      books;
 
         public RelatedBookTableModel()
@@ -100,7 +100,7 @@ public class RelatedBookTab
     public RelatedBookTab()
     {
         super();
-        setName( I18N.tr( "Related Books" ) );
+        setName( "Related Books" );
 
         setLayout( new BorderLayout() );
         add( new JScrollPane( table ), BorderLayout.CENTER );

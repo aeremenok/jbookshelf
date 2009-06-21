@@ -18,10 +18,10 @@ import org.jbookshelf.model.db.Note;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jdesktop.swingx.JXEditorPane;
 import org.xnap.commons.gui.DefaultDialog;
+import org.xnap.commons.i18n.I18n;
 
 /**
  * @author eav 2009
@@ -42,7 +42,7 @@ public class NoteDialog
     {
         super( Single.instance( MainWindow.class ), BUTTON_OKAY | BUTTON_CANCEL );
         this.note = note;
-        Translator.addTranslatable( this );
+        I18N.translate( this );
         init();
 
         title.setText( note.getTitle() );
@@ -69,11 +69,12 @@ public class NoteDialog
     }
 
     @Override
-    public void retranslate()
+    public void retranslate(
+        final I18n i18n )
     {
-        citation.setBorder( new TitledBorder( I18N.tr( "Citation" ) ) );
-        content.setBorder( new TitledBorder( I18N.tr( "Note" ) ) );
-        getCancelAction().putValue( Action.NAME, I18N.tr( "Cancel" ) );
+        citation.setBorder( new TitledBorder( i18n.tr( "Citation" ) ) );
+        content.setBorder( new TitledBorder( i18n.tr( "Note" ) ) );
+        getCancelAction().putValue( Action.NAME, i18n.tr( "Cancel" ) );
     }
 
     private void init()

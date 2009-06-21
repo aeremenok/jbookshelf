@@ -18,7 +18,7 @@ public class SuccessTableModel
     extends DefaultTableModel
 {
     private static final String[] names =
-                                        { I18N.tr( "Book" ), "" };
+                                        { I18N.tr( "Book", SuccessTableModel.class ), "" };
 
     private List<Book>            books = new ArrayList<Book>();
 

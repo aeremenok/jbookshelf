@@ -15,6 +15,8 @@
  */
 package org.jbookshelf.view.i18n;
 
+import org.xnap.commons.i18n.I18n;
+
 /**
  * Something that contains text able to be translated many times
  * 
@@ -22,5 +24,5 @@ package org.jbookshelf.view.i18n;
  */
 public interface Translatable
 {
-    void retranslate();
+    void retranslate(I18n i18n);
 }

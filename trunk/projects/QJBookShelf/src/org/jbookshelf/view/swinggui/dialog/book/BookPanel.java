@@ -21,7 +21,6 @@ import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.FileChooserPanelExt;
@@ -29,6 +28,7 @@ import org.jbookshelf.view.swinggui.GridBagPanel;
 import org.jbookshelf.view.swinggui.multiedit.MultipleField;
 import org.jbookshelf.view.swinggui.multiedit.MultipleUniqueField;
 import org.xnap.commons.gui.FileChooserPanel;
+import org.xnap.commons.i18n.I18n;
 
 public class BookPanel
     extends GridBagPanel
@@ -121,7 +121,7 @@ public class BookPanel
     public BookPanel()
     {
         super();
-        Translator.addTranslatable( this );
+        I18N.translate( this );
         initComponents();
     }
 
@@ -140,16 +140,17 @@ public class BookPanel
         final String bookName = bookTextField.getText();
         if ( bookName.equals( "" ) )
         {
-            final String tr = I18N.tr( "Book name not specified" );
-            JOptionPane.showMessageDialog( this, tr, I18N.tr( "Error" ), JOptionPane.ERROR_MESSAGE );
+            final String tr = I18N.tr( "Book name not specified", getClass() );
+            JOptionPane.showMessageDialog( this, tr, I18N.tr( "Error", getClass() ), JOptionPane.ERROR_MESSAGE );
             return null;
         }
 
         final File file = fileChooserPanel.getFile();
         if ( file == null || !file.exists() )
         {
-            final String tr = I18N.tr( "File does not exist: " ) + fileChooserPanel.getTextField().getText();
-            JOptionPane.showMessageDialog( this, tr, I18N.tr( "Error" ), JOptionPane.ERROR_MESSAGE );
+            final String tr = I18N.tr( "File does not exist: ", getClass() )
+                + fileChooserPanel.getTextField().getText();
+            JOptionPane.showMessageDialog( this, tr, I18N.tr( "Error", getClass() ), JOptionPane.ERROR_MESSAGE );
             return null;
         }
 
@@ -170,19 +171,20 @@ public class BookPanel
         return parameters;
     }
 
-    public void retranslate()
+    public void retranslate(
+        final I18n i18n )
     {
-        isReadCheckBox.setText( I18N.tr( "Is read" ) );
-        bookLabel.setText( I18N.tr( "Book" ) );
-        authorLabel.setText( I18N.tr( "Author" ) );
-        categoryLabel.setText( I18N.tr( "Category" ) );
-        fileLabel.setText( I18N.tr( "File" ) );
-        viewerLabel.setText( I18N.tr( "Viewer" ) );
+        isReadCheckBox.setText( i18n.tr( "Is read" ) );
+        bookLabel.setText( i18n.tr( "Book" ) );
+        authorLabel.setText( i18n.tr( "Author" ) );
+        categoryLabel.setText( i18n.tr( "Category" ) );
+        fileLabel.setText( i18n.tr( "File" ) );
+        viewerLabel.setText( i18n.tr( "Viewer" ) );
 
         viewerComboBox.removeAllItems();
-        viewerComboBox.addItem( I18N.tr( "Auto" ) );
-        viewerComboBox.addItem( I18N.tr( "Internal" ) );
-        viewerComboBox.addItem( I18N.tr( "System" ) );
+        viewerComboBox.addItem( i18n.tr( "Auto" ) );
+        viewerComboBox.addItem( i18n.tr( "Internal" ) );
+        viewerComboBox.addItem( i18n.tr( "System" ) );
     }
 
     /**

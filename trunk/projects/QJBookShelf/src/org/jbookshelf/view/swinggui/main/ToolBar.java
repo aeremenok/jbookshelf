@@ -12,9 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.view.i18n.I18N;
-import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.swinggui.actions.BookShelfActions;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.actions.UniqueActions;
@@ -24,16 +21,13 @@ import org.jbookshelf.view.swinggui.dialog.book.BookAdditionDialog;
 
 public class ToolBar
     extends JToolBar
-    implements
-    Translatable
 {
     private class AboutAction
         extends TranslatableAction
     {
-
         public AboutAction()
         {
-            super( I18N.tr( "About" ), IMG.icon( IMG.HELP_ABOUT_PNG, 32 ) );
+            super( "About", IMG.icon( IMG.HELP_ABOUT_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -48,7 +42,7 @@ public class ToolBar
     {
         public AddAction()
         {
-            super( I18N.tr( "Add" ), IMG.icon( IMG.LIST_ADD_PNG, 32 ) );
+            super( "Add", IMG.icon( IMG.LIST_ADD_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -63,7 +57,7 @@ public class ToolBar
     {
         public SettingsAction()
         {
-            super( I18N.tr( "Settings" ), IMG.icon( IMG.CONFIGURE_PNG, 32 ) );
+            super( "Settings", IMG.icon( IMG.CONFIGURE_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -96,8 +90,6 @@ public class ToolBar
     @PostConstruct
     public void initSingleton()
     {
-        Translator.addTranslatable( this );
-
         final UniqueActions uniqueActions = Single.instance( UniqueActions.class );
         add( addAction );
         add( uniqueActions.removeAction );
@@ -115,13 +107,5 @@ public class ToolBar
         add( settingsAction );
         addSeparator();
         add( aboutAction );
-    }
-
-    public void retranslate()
-    {
-        for ( final TranslatableAction action : translatableActions )
-        {
-            action.retranslate();
-        }
     }
 }

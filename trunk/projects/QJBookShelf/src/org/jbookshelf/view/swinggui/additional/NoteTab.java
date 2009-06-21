@@ -30,6 +30,7 @@ import org.jbookshelf.view.logic.BookShelfMediator.Properties;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.FilterPipeline;
+import org.xnap.commons.i18n.I18n;
 
 /**
  * @author eav 2009
@@ -42,10 +43,11 @@ public class NoteTab
         implements
         EventTopicSubscriber<BookShelfMediator>
     {
-        private static String[]         names  =
-                                               { I18N.tr( "Title" ), I18N.tr( "Date" ), "" };
-        private static SimpleDateFormat format = new SimpleDateFormat( "yy-MM-dd HH:mm" );
-        private List<Note>              notes;
+        private static final I18n             i18n   = I18N.i18n( NoteTableModel.class );
+        private static final String[]         names  =
+                                                     { i18n.tr( "Title" ), i18n.tr( "Date" ), "" };
+        private static final SimpleDateFormat format = new SimpleDateFormat( "yy-MM-dd HH:mm" );
+        private List<Note>                    notes;
 
         public NoteTableModel()
         {
@@ -132,7 +134,7 @@ public class NoteTab
     {
         super();
 
-        setName( I18N.tr( "Notes" ) );
+        setName( I18N.tr( "Notes", getClass() ) );
 
         setLayout( new BorderLayout() );
         add( new JScrollPane( table ), BorderLayout.CENTER );

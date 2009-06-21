@@ -20,7 +20,6 @@ import javax.swing.event.ChangeListener;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
@@ -31,6 +30,7 @@ import org.jbookshelf.view.swinggui.collection.tab.BookView;
 import org.jbookshelf.view.swinggui.collection.tab.CategoryView;
 import org.jbookshelf.view.swinggui.collection.tab.CollectionView;
 import org.xnap.commons.gui.EraseTextFieldAction;
+import org.xnap.commons.i18n.I18n;
 
 public class CollectionPanel
     extends JPanel
@@ -43,7 +43,7 @@ public class CollectionPanel
     {
         public SearchAction()
         {
-            super( I18N.tr( "Search" ), IMG.icon( IMG.EDIT_FIND_PNG, 16 ) );
+            super( "Search", IMG.icon( IMG.EDIT_FIND_PNG, 16 ) );
         }
 
         public void actionPerformed(
@@ -77,26 +77,25 @@ public class CollectionPanel
     public void initSingleton()
     {
         initComponents();
-        Translator.addTranslatable( this );
+        I18N.translate( this );
         updateActiveView();
         searchContent.setEnabled( false );
     }
 
-    public void retranslate()
+    public void retranslate(
+        final I18n i18n )
     {
         isReadComboBox.removeAllItems();
-        isReadComboBox.addItem( I18N.tr( "All" ) );
-        isReadComboBox.addItem( I18N.tr( "Read" ) );
-        isReadComboBox.addItem( I18N.tr( "Unread" ) );
+        isReadComboBox.addItem( i18n.tr( "All" ) );
+        isReadComboBox.addItem( i18n.tr( "Read" ) );
+        isReadComboBox.addItem( i18n.tr( "Unread" ) );
 
-        searchTextField.setToolTipText( I18N.tr( "Type here your search query" ) );
-        searchContent.setText( I18N.tr( "Search content" ) );
-
-        searchAction.retranslate();
+        searchTextField.setToolTipText( i18n.tr( "Type here your search query" ) );
+        searchContent.setText( i18n.tr( "Search content" ) );
 
         for ( int i = 0; i < tabs.length; i++ )
         {
-            viewTabbedPane.setTitleAt( i, I18N.tr( tabs[i].getName() ) );
+            viewTabbedPane.setTitleAt( i, i18n.tr( tabs[i].getName() ) );
         }
     }
 

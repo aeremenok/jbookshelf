@@ -11,12 +11,12 @@ import javax.swing.JLabel;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.swinggui.GridBagPanel;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.action.OpenBrowserAction;
 import org.xnap.commons.gui.DefaultDialog;
+import org.xnap.commons.i18n.I18n;
 
 public class JBSAboutDialog
     extends DefaultDialog
@@ -52,25 +52,26 @@ public class JBSAboutDialog
         setModal( true );
 
         initComponents();
-        Translator.addTranslatable( this );
+        I18N.translate( this );
 
         pack();
         setLocationRelativeTo( null );
     }
 
-    public void retranslate()
+    public void retranslate(
+        final I18n i18n )
     {
-        setTitle( I18N.tr( "About" ) );
+        setTitle( i18n.tr( "About" ) );
 
         header.setIcon( IMG.icon( IMG.LOGO_PNG, 128 ) );
         header.setText( MainWindow.APP_NAME );
         header.setFont( new Font( Font.SERIF, Font.BOLD | Font.ITALIC, 32 ) );
 
-        authorLabel.setText( I18N.tr( "Author" ) );
-        licenseLabel.setText( I18N.tr( "License" ) );
-        versionLabel.setText( I18N.tr( "Version" ) );
+        authorLabel.setText( i18n.tr( "Author" ) );
+        licenseLabel.setText( i18n.tr( "License" ) );
+        versionLabel.setText( i18n.tr( "Version" ) );
 
-        authorValueLabel.setText( I18N.tr( "Andrey Yeremenok (eav1986_at_gmail_com)" ) );
+        authorValueLabel.setText( i18n.tr( "Andrey Yeremenok (eav1986_at_gmail_com)" ) );
         licenseValueHyperLink.setAction( GPL_ACTION );
         licenseValueHyperLink.setText( "GPL v.3" );
         versionValueLabel.setText( MainWindow.VERSION );
