@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.model.db;
+package org.jbookshelf.model.db.util;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -19,6 +19,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.jbookshelf.model.db.Author;
+import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.Category;
+import org.jbookshelf.model.db.HasBooks;
+import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.Unique;
 
 /**
  * @author eav
@@ -324,6 +331,7 @@ public class BookShelf
         final Session session = HibernateUtil.getSession();
         try
         {
+            note.timestamp();
             session.beginTransaction();
             session.saveOrUpdate( note );
 
@@ -378,7 +386,6 @@ public class BookShelf
     public static void persistBook(
         @Nonnull final Book book )
     {
-        log.debug( "persistBook" );
         final Session session = HibernateUtil.getSession();
         try
         {

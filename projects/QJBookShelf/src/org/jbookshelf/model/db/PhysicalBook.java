@@ -5,7 +5,6 @@ package org.jbookshelf.model.db;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,11 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.jbookshelf.controller.settings.Settings;
@@ -31,9 +26,9 @@ import org.jbookshelf.controller.singleton.Single;
 @Table( name = "PHYSICAL_BOOK" )
 public class PhysicalBook
     implements
-    Serializable,
-    Timestampable
+    Serializable
 {
+    // todo enum
     public static final String INTERNAL_VIEWER = "internal";
     public static final String SYSTEM_VIEWER   = "system";
 
@@ -57,10 +52,6 @@ public class PhysicalBook
     @Column
     private String             unpackedFileName;
 
-    @Column( nullable = false )
-    @Temporal( TemporalType.TIMESTAMP )
-    private Date               changeDate;
-
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -81,17 +72,6 @@ public class PhysicalBook
             return false;
         }
         final PhysicalBook other = (PhysicalBook) obj;
-        if ( this.changeDate == null )
-        {
-            if ( other.changeDate != null )
-            {
-                return false;
-            }
-        }
-        else if ( !this.changeDate.equals( other.changeDate ) )
-        {
-            return false;
-        }
         if ( this.charsetName == null )
         {
             if ( other.charsetName != null )
@@ -231,8 +211,6 @@ public class PhysicalBook
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (this.changeDate == null
-            ? 0 : this.changeDate.hashCode());
         result = prime * result + (this.charsetName == null
             ? 0 : this.charsetName.hashCode());
         result = prime * result + (this.fileName == null
@@ -310,12 +288,5 @@ public class PhysicalBook
         @Nonnull final String viewer )
     {
         this.viewer = viewer;
-    }
-
-    @PreUpdate
-    @PrePersist
-    public void timestamp()
-    {
-        changeDate = new Date();
     }
 }

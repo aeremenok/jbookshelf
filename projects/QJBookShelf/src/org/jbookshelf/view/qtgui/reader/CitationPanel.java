@@ -29,6 +29,7 @@ import com.trolltech.qt.gui.QTextBrowser;
 public class CitationPanel
     extends QGroupBoxExt
 {
+    @SuppressWarnings( "unused" )
     private class CitationWidget
         extends QTextBrowser
     {
@@ -41,6 +42,7 @@ public class CitationPanel
         }
     }
 
+    @SuppressWarnings( "unused" )
     private final ReaderWindow readerWindow;
 
     public CitationPanel(
