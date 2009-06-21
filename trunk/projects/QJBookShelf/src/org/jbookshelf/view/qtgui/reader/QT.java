@@ -3,7 +3,6 @@
  */
 package org.jbookshelf.view.qtgui.reader;
 
-import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 
 import com.trolltech.qt.core.QCoreApplication;
@@ -13,8 +12,6 @@ import com.trolltech.qt.gui.QApplication;
  * @author eav 2009
  */
 public class QT
-    implements
-    JBookShelfConstants
 {
     public void invoke(
         final Runnable runnable )

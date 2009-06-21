@@ -22,7 +22,6 @@ import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.util.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
-import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.swinggui.LookAndFeelComboBoxModel;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.additional.AdditionalPanel;
@@ -36,7 +35,6 @@ import org.xnap.commons.util.AWTExceptionHandler;
 public class MainWindow
     extends JXFrame
     implements
-    JBookShelfConstants,
     PropertyChangeListener,
     UncaughtExceptionHandler
 {
@@ -82,9 +80,13 @@ public class MainWindow
         setTitle( APP_NAME );
         setIconImage( IMG.img( IMG.LOGO_PNG, 64 ) );
         setDefaultCloseOperation( EXIT_ON_CLOSE );
-        Single.instance( Settings.class );
 
         setContentPane( new JPanel( new BorderLayout() ) );
+
+        final Settings settings = Single.instance( Settings.class );
+        settings.addPropertyChangeListener( settings.LAF.getKey(), this );
+        propertyChange( null );
+
         add( Single.instance( ToolBar.class ), BorderLayout.NORTH );
 
         final JSplitPane split = new JSplitPane();
@@ -99,8 +101,6 @@ public class MainWindow
         statusBar.setResizeHandleEnabled( false );
         setStatusBar( statusBar );
 
-        initSettings();
-
         pack();
         setExtendedState( MAXIMIZED_BOTH );
     }
@@ -110,7 +110,8 @@ public class MainWindow
     {
         try
         {
-            UIManager.setLookAndFeel( LookAndFeelComboBoxModel.fromName( evt.getNewValue().toString() ) );
+            final String laf = Single.instance( Settings.class ).LAF.getValue();
+            UIManager.setLookAndFeel( LookAndFeelComboBoxModel.fromName( laf ) );
             SwingUtilities.updateComponentTreeUI( this );
             for ( final Window window : getOwnedWindows() )
             {
@@ -133,12 +134,5 @@ public class MainWindow
         final String message = I18N.tr( "Unexpected error" );
         final ErrorInfo info = new ErrorInfo( null, message, null, null, e, null, null );
         JXErrorPane.showDialog( null, info );
-    }
-
-    private void initSettings()
-    {
-        final Settings settings = Single.instance( Settings.class );
-        settings.addPropertyChangeListener( settings.LAF.getKey(), this );
-        settings.fireRefresh();
     }
 }
