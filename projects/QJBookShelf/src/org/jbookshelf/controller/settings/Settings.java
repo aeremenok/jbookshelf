@@ -22,9 +22,7 @@ import javax.annotation.PostConstruct;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 
-import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
-import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.xnap.commons.settings.PropertyResource;
 import org.xnap.commons.settings.StringSetting;
 
@@ -43,7 +41,15 @@ public class Settings
     public StringSetting     JBS_DIR;
     public StringSetting     WORKSPACE_DIR;
     public StringListSetting IMPORT_MASKS;
-    public StringListSetting ZIP_ENCODINGS;
+
+    public void fireRefresh()
+    {
+        firePropertyChange( LANGUAGE.getKey(), "", LANGUAGE.getValue() );
+        firePropertyChange( LAF.getKey(), "", LAF.getValue() );
+        firePropertyChange( JBS_DIR.getKey(), "", JBS_DIR.getValue() );
+        firePropertyChange( IMPORT_MASKS.getKey(), "", IMPORT_MASKS.getValue() );
+        firePropertyChange( WORKSPACE_DIR.getKey(), "", WORKSPACE_DIR.getValue() );
+    }
 
     public File getCollectionFile()
     {
@@ -55,14 +61,6 @@ public class Settings
     {
         initDefaults();
         initFile();
-
-        addPropertyChangeListener( LANGUAGE.getKey(), I18N.LANGUAGE_LISTENER );
-        addPropertyChangeListener( LAF.getKey(), Single.instance( MainWindow.class ) );
-
-        firePropertyChange( LANGUAGE.getKey(), "", LANGUAGE.getValue() );
-        firePropertyChange( LAF.getKey(), "", LAF.getValue() );
-        firePropertyChange( JBS_DIR.getKey(), "", JBS_DIR.getValue() );
-        firePropertyChange( IMPORT_MASKS.getKey(), "", IMPORT_MASKS.getValue() );
     }
 
     public void load()
@@ -100,8 +98,6 @@ public class Settings
         LANGUAGE = new StringSetting( this, "language", I18N.defaultLanguage() );
         IMPORT_MASKS = new StringListSetting( this, "import_masks", new String[]
         { "%a. %b", "%b" } );
-        ZIP_ENCODINGS = new StringListSetting( this, "zip_encodings", new String[]
-        { "cp1251", "cp1252", "IBM866", "KOI8-R", "KOI8-U" } );
 
         final String jbsDir = System.getProperty( "user.home" ) + File.separator + ".jbookshelf" + File.separator;
         JBS_DIR = new StringSetting( this, "jbs_dir", jbsDir );

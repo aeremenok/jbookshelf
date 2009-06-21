@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.model.db.util;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -11,7 +12,10 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Environment;
 import org.hibernate.connection.ConnectionProvider;
+import org.jbookshelf.controller.settings.Settings;
+import org.jbookshelf.controller.singleton.Single;
 
 /**
  * @author eav
@@ -27,11 +31,14 @@ public class HibernateUtil
     {
         try
         {
-            final AnnotationConfiguration cfg = new AnnotationConfiguration();
-            final AnnotationConfiguration configure = cfg.configure();
-            properties = configure.getProperties();
-            factory = configure.buildSessionFactory();
-            connectionProvider = configure.buildSettings().getConnectionProvider();
+            final AnnotationConfiguration cfg = new AnnotationConfiguration().configure();
+            properties = cfg.getProperties();
+
+            setupStorageDir();
+            cfg.addProperties( properties );
+
+            factory = cfg.buildSessionFactory();
+            connectionProvider = cfg.buildSettings().getConnectionProvider();
         }
         catch ( final Exception e )
         {
@@ -69,5 +76,14 @@ public class HibernateUtil
         final String[] args )
     {
         log.debug( "db initialized" );
+    }
+
+    private static void setupStorageDir()
+    {
+        final String dir = Single.instance( Settings.class ).JBS_DIR.getValue() + File.separator + "db";
+        String url = properties.getProperty( Environment.URL );
+        url = url.replaceFirst( "/opt/jbookshelf/db", dir );
+        log.debug( "db storage url: " + url );
+        properties.put( Environment.URL, url );
     }
 }
