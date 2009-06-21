@@ -1,15 +1,30 @@
 #labels Featured
 =Screenshots=
 
- # main window
-   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/main_window(rus).jpg
- # add book dialog
-   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/add(rus).jpg
- # edit book dialog
-   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/edit(rus).jpg
- # about 
-   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/about(rus).jpg
- # settings
-   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/settings(rus).jpg
- # comments
-   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/comment(rus).jpg
+==main window / book collection==
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/main.png
+
+==main window / authors==
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/main-authors.png
+
+==main window / authors==
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/main-categories.png
+
+==file import dialog==
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/import.png
+
+==edit book dialog==
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/edit.png
+
+==notes==
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/note.png
+
+==related books==
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/related.png
+
+==settings==
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/settings.png
+
+==about==
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/about.png
+
