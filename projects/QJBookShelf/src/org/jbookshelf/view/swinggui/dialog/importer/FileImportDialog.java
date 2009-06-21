@@ -267,16 +267,14 @@ public class FileImportDialog
         {
             final String path = file != null
                 ? file.getAbsolutePath() : "";
-            JOptionPane.showMessageDialog( this, I18N.tr( "File not found: " ) + path, "",
-                JOptionPane.ERROR_MESSAGE );
+            JOptionPane.showMessageDialog( this, I18N.tr( "File not found: " ) + path, "", JOptionPane.ERROR_MESSAGE );
             return;
         }
 
         final Collection<String> masks = maskField.getValues();
         if ( masks.size() == 0 )
         {
-            JOptionPane.showMessageDialog( this, I18N.tr( "Specify at least one mask" ), "",
-                JOptionPane.ERROR_MESSAGE );
+            JOptionPane.showMessageDialog( this, I18N.tr( "Specify at least one mask" ), "", JOptionPane.ERROR_MESSAGE );
             return;
         }
 
@@ -289,9 +287,8 @@ public class FileImportDialog
                 successModel.setBooks( new ArrayList<Book>() );
                 failModel.setFiles( new ArrayList<File>() );
                 importer.importFiles( masks, file );
-                translate( null );
+                translate( I18N.i18n() );
             }
         } );
     }
-
 }
