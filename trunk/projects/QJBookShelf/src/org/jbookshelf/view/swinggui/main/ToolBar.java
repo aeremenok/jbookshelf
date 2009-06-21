@@ -27,7 +27,7 @@ public class ToolBar
     {
         public AboutAction()
         {
-            super( "About", IMG.icon( IMG.HELP_ABOUT_PNG, 32 ) );
+            super( tr( "About" ), IMG.icon( IMG.HELP_ABOUT_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -42,7 +42,7 @@ public class ToolBar
     {
         public AddAction()
         {
-            super( "Add", IMG.icon( IMG.LIST_ADD_PNG, 32 ) );
+            super( tr( "Add" ), IMG.icon( IMG.LIST_ADD_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -57,7 +57,7 @@ public class ToolBar
     {
         public SettingsAction()
         {
-            super( "Settings", IMG.icon( IMG.CONFIGURE_PNG, 32 ) );
+            super( tr( "Settings" ), IMG.icon( IMG.CONFIGURE_PNG, 32 ) );
         }
 
         public void actionPerformed(

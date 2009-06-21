@@ -5,7 +5,6 @@ import icons.IMG;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Action;
-import javax.swing.JFileChooser;
 
 import org.jbookshelf.view.swinggui.dialog.importer.FileImportDialog;
 
@@ -16,21 +15,13 @@ public class BookShelfActions
     {
         public BackupAction()
         {
-            super( "Backup", IMG.icon( IMG.DOCUMENT_SAVE_PNG, 32 ) );
+            super( tr( "Backup" ), IMG.icon( IMG.DOCUMENT_SAVE_PNG, 32 ) );
             setEnabled( false );
         }
 
         public void actionPerformed(
             final ActionEvent e )
-        {
-        //            final SingleFileStorageImpl storage = (SingleFileStorageImpl) Storage.getImpl();
-        //            getFileChooser().setSelectedFile( storage.getCollectionStorageFile() );
-        //
-        //            if ( getFileChooser().showSaveDialog( Single.instance( MainWindow.class ) ) == JFileChooser.APPROVE_OPTION )
-        //            {
-        //                Storage.backupCollection( getFileChooser().getSelectedFile() );
-        //            }
-        }
+        {}
     }
 
     private class ImportAction
@@ -38,7 +29,7 @@ public class BookShelfActions
     {
         public ImportAction()
         {
-            super( "Import", IMG.icon( IMG.DOCUMENT_IMPORT_PNG, 32 ) );
+            super( tr( "Import" ), IMG.icon( IMG.DOCUMENT_IMPORT_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -53,35 +44,16 @@ public class BookShelfActions
     {
         public RestoreAction()
         {
-            super( "Restore", IMG.icon( IMG.DOCUMENT_REVERT_PNG, 32 ) );
+            super( tr( "Restore" ), IMG.icon( IMG.DOCUMENT_REVERT_PNG, 32 ) );
             setEnabled( false );
         }
 
         public void actionPerformed(
             final ActionEvent e )
-        {
-        //            final SingleFileStorageImpl storage = (SingleFileStorageImpl) Storage.getImpl();
-        //            getFileChooser().setSelectedFile( storage.getCollectionStorageFile() );
-        //            if ( getFileChooser().showOpenDialog( Single.instance( MainWindow.class ) ) == JFileChooser.APPROVE_OPTION )
-        //            {
-        //                Storage.restoreCollection( getFileChooser().getSelectedFile() );
-        //                Single.instance( CollectionPanel.class ).updateActiveTree();
-        //            }
-        }
+        {}
     }
 
-    public final Action  restoreAction = new RestoreAction();
-    public final Action  backupAction  = new BackupAction();
-    public final Action  importAction  = new ImportAction();
-
-    private JFileChooser fileChooser;
-
-    public JFileChooser getFileChooser()
-    {
-        if ( fileChooser == null )
-        {
-            fileChooser = new JFileChooser();
-        }
-        return fileChooser;
-    }
+    public final Action restoreAction = new RestoreAction();
+    public final Action backupAction  = new BackupAction();
+    public final Action importAction  = new ImportAction();
 }

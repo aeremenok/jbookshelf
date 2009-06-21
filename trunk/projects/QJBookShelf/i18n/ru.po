@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JBookShelf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-21 16:28+0400\n"
+"POT-Creation-Date: 2009-06-21 20:45+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: eav <eav1986@gmail.com>\n"
@@ -13,87 +13,87 @@ msgstr ""
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: src/org/jbookshelf/view/qtgui/reader/CitationPanel.java:59
+#: src/org/jbookshelf/view/qtgui/reader/CitationPanel.java:60
 msgid "Citations"
 msgstr "Цитаты"
 
-#: src/org/jbookshelf/view/qtgui/reader/ReaderWindow.java:51
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookEditDialog.java:94
+#: src/org/jbookshelf/view/qtgui/reader/ReaderWindow.java:52
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookEditDialog.java:95
 msgid "Edit book properties"
 msgstr "Правка свойств книги"
 
-#: src/org/jbookshelf/view/qtgui/reader/ReaderWindow.java:52
+#: src/org/jbookshelf/view/qtgui/reader/ReaderWindow.java:53
 msgid "Add citation"
 msgstr "Добавить цитату"
 
-#: src/org/jbookshelf/view/qtgui/reader/ReaderWindow.java:53
+#: src/org/jbookshelf/view/qtgui/reader/ReaderWindow.java:54
 msgid "View bookmarks and citations"
 msgstr "Показать закладки и цитаты"
 
-#: src/org/jbookshelf/view/qtgui/reader/ReaderWindow.java:147
+#: src/org/jbookshelf/view/qtgui/reader/ReaderWindow.java:148
 msgid "Error displaying file "
 msgstr "Ошибка отображения файла"
 
 #: src/org/jbookshelf/view/swinggui/SetReadItem.java:30
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:175
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:177
 msgid "Is read"
 msgstr "Прочитана"
 
-#: src/org/jbookshelf/view/swinggui/actions/BookShelfActions.java:20
+#: src/org/jbookshelf/view/swinggui/actions/BookShelfActions.java:18
 msgid "Backup"
 msgstr "Сохранить"
 
-#: src/org/jbookshelf/view/swinggui/actions/BookShelfActions.java:42
-#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:158
+#: src/org/jbookshelf/view/swinggui/actions/BookShelfActions.java:32
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:159
 msgid "Import"
 msgstr "Импорт"
 
-#: src/org/jbookshelf/view/swinggui/actions/BookShelfActions.java:57
+#: src/org/jbookshelf/view/swinggui/actions/BookShelfActions.java:47
 msgid "Restore"
 msgstr "Восстановить"
 
-#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:35
+#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:34
 msgid "Edit"
 msgstr "Правка"
 
-#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:50
+#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:49
 msgid "Google"
 msgstr "Гуглить"
 
-#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:68
+#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:67
 msgid "Open"
 msgstr "Открыть"
 
-#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:86
+#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:85
 msgid "Open Directory"
 msgstr "Открыть папку"
 
-#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:104
+#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:103
 msgid "Remove"
 msgstr "Удалить"
 
-#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:111
+#: src/org/jbookshelf/view/swinggui/actions/UniqueActions.java:110
 msgid "Remove selected?"
 msgstr "Удалить выбранное?"
 
-#: src/org/jbookshelf/view/swinggui/additional/AdditionalPanel.java:116
+#: src/org/jbookshelf/view/swinggui/additional/AdditionalPanel.java:117
 msgid "Start typing to filter"
 msgstr "Начните печатать для фильтрации"
 
-#: src/org/jbookshelf/view/swinggui/additional/NoteTab.java:46
+#: src/org/jbookshelf/view/swinggui/additional/NoteTab.java:48
 msgid "Title"
 msgstr "Заголовок"
 
-#: src/org/jbookshelf/view/swinggui/additional/NoteTab.java:46
+#: src/org/jbookshelf/view/swinggui/additional/NoteTab.java:48
 msgid "Date"
 msgstr "Дата"
 
-#: src/org/jbookshelf/view/swinggui/additional/NoteTab.java:135
+#: src/org/jbookshelf/view/swinggui/additional/NoteTab.java:137
 msgid "Notes"
 msgstr "Заметки"
 
 #: src/org/jbookshelf/view/swinggui/additional/RelatedBookTab.java:42
-#: src/org/jbookshelf/view/swinggui/collection/tab/BookTableModel.java:19
+#: src/org/jbookshelf/view/swinggui/collection/tab/BookTableModel.java:21
 #: src/org/jbookshelf/view/swinggui/multiedit/ListTableModel.java:37
 msgid "Name"
 msgstr "Имя"
@@ -102,126 +102,134 @@ msgstr "Имя"
 msgid "Related Books"
 msgstr "Связанные книги"
 
-#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:46
-msgid "Search"
-msgstr "Поиск"
-
-#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:88
+#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:89
 msgid "All"
 msgstr "Все"
 
-#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:89
+#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:90
 msgid "Read"
 msgstr "Прочитанные"
 
-#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:90
+#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:91
 msgid "Unread"
 msgstr "Непрочитанные"
 
-#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:92
+#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:93
 msgid "Type here your search query"
 msgstr "Введите поисковый запрос"
 
-#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:93
+#: src/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:94
 msgid "Search content"
 msgstr "Поиск по содержимому"
 
-#: src/org/jbookshelf/view/swinggui/collection/tab/BookTableModel.java:19
-#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:69
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:177
+#: src/org/jbookshelf/view/swinggui/collection/tab/AuthorView.java:81
+msgid "Authors"
+msgstr "Авторы"
+
+#: src/org/jbookshelf/view/swinggui/collection/tab/BookTableModel.java:21
+#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:70
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:179
 msgid "Author"
 msgstr "Автор"
 
-#: src/org/jbookshelf/view/swinggui/collection/tab/BookTableModel.java:19
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:178
+#: src/org/jbookshelf/view/swinggui/collection/tab/BookTableModel.java:21
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:180
 msgid "Category"
 msgstr "Категория"
 
-#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:63
-#: src/org/jbookshelf/view/swinggui/main/ToolBar.java:36
+#: src/org/jbookshelf/view/swinggui/collection/tab/BookView.java:46
+msgid "Books"
+msgstr "Книги"
+
+#: src/org/jbookshelf/view/swinggui/collection/tab/CategoryView.java:82
+msgid "Categories"
+msgstr "Категории"
+
+#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:64
+#: src/org/jbookshelf/view/swinggui/main/ToolBar.java:30
 msgid "About"
 msgstr "О программе"
 
-#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:70
+#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:71
 msgid "License"
 msgstr "Лицензия"
 
-#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:71
+#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:72
 msgid "Version"
 msgstr "Версия"
 
-#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:73
+#: src/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:74
 msgid "Andrey Yeremenok (eav1986_at_gmail_com)"
 msgstr "Андрей Ерёменок (eav1986_at_gmail_com)"
 
-#: src/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:74
+#: src/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:75
 msgid "Citation"
 msgstr "Цитата"
 
-#: src/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:75
+#: src/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:76
 msgid "Note"
 msgstr "Заметка"
 
-#: src/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:76
-#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:69
+#: src/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:77
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:70
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/org/jbookshelf/view/swinggui/dialog/RelatedBookDialog.java:100
+#: src/org/jbookshelf/view/swinggui/dialog/RelatedBookDialog.java:101
 msgid "Select books to be related"
 msgstr "Выберите связанные книги"
 
-#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:61
-#: src/org/jbookshelf/view/swinggui/main/ToolBar.java:66
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:62
+#: src/org/jbookshelf/view/swinggui/main/ToolBar.java:60
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:70
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:71
 msgid "Defaults"
 msgstr "По умолчанию"
 
-#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:72
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:73
 msgid "Language"
 msgstr "Язык"
 
-#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:73
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:74
 msgid "Look and feel"
 msgstr "Внешний вид"
 
-#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:74
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:75
 msgid "JBookShelf directory"
 msgstr "Папка JBookShelf"
 
-#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:75
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:76
 msgid "Workspace directory"
 msgstr "Рабочая папка"
 
-#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:77
+#: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:78
 msgid "JBookShelf settings"
 msgstr "Настройки JBookShelf"
 
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:83
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:84
 msgid "Add Book"
 msgstr "Добавить книгу"
 
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:84
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:85
 msgid "Add and close"
 msgstr "Добавить и закрыть"
 
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:85
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:86
 msgid "Add and continue"
 msgstr "Добавить и продолжить"
 
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:86
-#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:157
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:87
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:158
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:87
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:88
 msgid "Add book to collection"
 msgstr "Добавление книги в коллекцию"
 
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookEditDialog.java:93
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookEditDialog.java:94
 msgid "Edit book"
 msgstr "Править книгу"
 
@@ -230,7 +238,7 @@ msgid "Book name not specified"
 msgstr "Название книги не указано"
 
 #: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:144
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:152
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:153
 msgid "Error"
 msgstr "Ошибка"
 
@@ -238,54 +246,54 @@ msgstr "Ошибка"
 msgid "File does not exist: "
 msgstr "Файл не существует:"
 
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:176
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:178
 #: src/org/jbookshelf/view/swinggui/dialog/importer/SuccessTableModel.java:21
 msgid "Book"
 msgstr "Книга"
 
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:179
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:181
 #: src/org/jbookshelf/view/swinggui/dialog/importer/FailTableModel.java:25
-#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:159
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:160
 msgid "File"
 msgstr "Файл"
 
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:180
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:182
 msgid "Viewer"
 msgstr "Программа просмотра"
 
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:183
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:185
 msgid "Auto"
 msgstr "Автоматически"
 
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:184
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:186
 msgid "Internal"
 msgstr "Внутренняя"
 
-#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:185
+#: src/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:187
 msgid "System"
 msgstr "Системная"
 
-#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:156
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:157
 msgid "Import Files"
 msgstr "Импортировать файлы"
 
-#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:160
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:161
 msgid "Mask"
 msgstr "Маска"
 
-#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:162
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:163
 msgid "Successfully imported books"
 msgstr "Успешно импортированные книги"
 
-#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:165
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:166
 msgid "Unimported files"
 msgstr "Неимпортированные файлы"
 
-#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:269
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:270
 msgid "File not found: "
 msgstr "Файл не найден:"
 
-#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:276
+#: src/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:277
 msgid "Specify at least one mask"
 msgstr "Укажите хотя бы одну маску"
 
@@ -293,7 +301,9 @@ msgstr "Укажите хотя бы одну маску"
 msgid "Unexpected error"
 msgstr "Непредвиденная ошибка"
 
-#: src/org/jbookshelf/view/swinggui/main/ToolBar.java:51
+#: src/org/jbookshelf/view/swinggui/main/ToolBar.java:45
 msgid "Add"
 msgstr "Добавить"
 
+#~ msgid "Search"
+#~ msgstr "Поиск"

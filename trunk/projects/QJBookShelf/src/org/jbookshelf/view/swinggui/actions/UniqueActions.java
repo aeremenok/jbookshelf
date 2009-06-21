@@ -31,7 +31,7 @@ public class UniqueActions
     {
         public EditAction()
         {
-            super( "Edit", IMG.icon( IMG.DOCUMENT_PROPERTIES_PNG, 32 ) );
+            super( tr( "Edit" ), IMG.icon( IMG.DOCUMENT_PROPERTIES_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -46,7 +46,7 @@ public class UniqueActions
     {
         public GoogleAction()
         {
-            super( "Google", IMG.icon( IMG.GOOGLE_PNG, 32 ) );
+            super( tr( "Google" ), IMG.icon( IMG.GOOGLE_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -64,7 +64,7 @@ public class UniqueActions
     {
         public OpenAction()
         {
-            super( "Open", IMG.icon( IMG.DOCUMENT_PREVIEW_PNG, 32 ) );
+            super( tr( "Open" ), IMG.icon( IMG.DOCUMENT_PREVIEW_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -82,7 +82,7 @@ public class UniqueActions
     {
         public OpenDirAction()
         {
-            super( "Open Directory", IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG, 32 ) );
+            super( tr( "Open Directory" ), IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -100,14 +100,14 @@ public class UniqueActions
     {
         public RemoveAction()
         {
-            super( "Remove", IMG.icon( IMG.LIST_REMOVE_PNG, 32 ) );
+            super( tr( "Remove" ), IMG.icon( IMG.LIST_REMOVE_PNG, 32 ) );
         }
 
         public void actionPerformed(
             final ActionEvent e )
         {
             final MainWindow window = Single.instance( MainWindow.class );
-            if ( JOptionPane.showConfirmDialog( window, "Remove selected?", "", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION )
+            if ( JOptionPane.showConfirmDialog( window, tr( "Remove selected?" ), "", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION )
             {
                 Single.instance( ProgressBar.class ).invoke( new SafeWorker<Object, Object>()
                 {
