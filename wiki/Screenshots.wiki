@@ -5,9 +5,6 @@
 =main window / authors=
    http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/main-authors.png
 
-=main window / authors=
-   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/main-categories.png
-
 =file import dialog=
    http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/import.png
 
