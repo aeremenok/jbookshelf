@@ -21,7 +21,7 @@ import javax.swing.Action;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.logic.JBookShelfConstants;

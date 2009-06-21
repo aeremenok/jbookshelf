@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 
 public class BookTableModel

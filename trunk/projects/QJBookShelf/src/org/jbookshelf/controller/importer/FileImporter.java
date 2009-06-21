@@ -29,8 +29,8 @@ import javax.annotation.Nullable;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.util.BookShelf;
 
 /**
  * imports filesystem into database

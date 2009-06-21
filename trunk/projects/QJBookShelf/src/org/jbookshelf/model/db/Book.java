@@ -4,7 +4,6 @@
 package org.jbookshelf.model.db;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,8 +17,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 /**
@@ -29,7 +26,6 @@ import javax.persistence.Transient;
 public class Book
     implements
     Serializable,
-    Timestampable,
     Unique,
     HasBooks
 {
@@ -43,10 +39,6 @@ public class Book
 
     @Column
     private Float               read         = 0f;
-
-    @Column( nullable = false )
-    @Temporal( TemporalType.TIMESTAMP )
-    private Date                changeDate;
 
     @OneToMany( mappedBy = "book" )
     private final Set<Note>     notes        = new HashSet<Note>();
@@ -67,7 +59,7 @@ public class Book
     @OneToOne( mappedBy = "book" )
     private PhysicalBook        physicalBook;
 
-    public static final String       RELATED = "related";
+    public static final String  RELATED      = "related";
 
     public void addAuthor(
         @Nonnull final Author author )
@@ -110,17 +102,6 @@ public class Book
             return false;
         }
         final Book other = (Book) obj;
-        if ( this.changeDate == null )
-        {
-            if ( other.changeDate != null )
-            {
-                return false;
-            }
-        }
-        else if ( !this.changeDate.equals( other.changeDate ) )
-        {
-            return false;
-        }
         if ( this.id == null )
         {
             if ( other.id != null )
@@ -239,8 +220,6 @@ public class Book
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (this.changeDate == null
-            ? 0 : this.changeDate.hashCode());
         result = prime * result + (this.id == null
             ? 0 : this.id.hashCode());
         result = prime * result + (this.name == null
@@ -297,11 +276,6 @@ public class Book
         @Nonnull @Nonnegative final Float read )
     {
         this.read = read;
-    }
-
-    public void timestamp()
-    {
-        changeDate = new Date();
     }
 
     /* (non-Javadoc)

@@ -15,8 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -26,8 +24,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class Note
     implements
-    Serializable,
-    Timestampable
+    Serializable
 {
     @Id
     @GeneratedValue
@@ -269,8 +266,6 @@ public class Note
         this.title = title;
     }
 
-    @PreUpdate
-    @PrePersist
     public void timestamp()
     {
         changeDate = new Date();

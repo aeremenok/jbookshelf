@@ -14,8 +14,8 @@ import org.jbookshelf.controller.util.FileUtil;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.controller.util.ZIPUtil;
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.LogRunner;
 import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.util.LogRunner;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 

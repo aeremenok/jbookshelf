@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.model.db;
+package org.jbookshelf.model.db.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -3,8 +3,8 @@
  */
 package org.jbookshelf.view.swinggui.multiedit;
 
-import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.Unique;
+import org.jbookshelf.model.db.util.BookShelf;
 import org.xnap.commons.gui.Builder;
 
 /**

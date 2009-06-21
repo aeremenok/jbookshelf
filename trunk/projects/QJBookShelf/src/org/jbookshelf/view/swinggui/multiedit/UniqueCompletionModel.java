@@ -12,8 +12,8 @@ import javax.swing.DefaultComboBoxModel;
 
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.LogRunner;
 import org.jbookshelf.model.db.Unique;
+import org.jbookshelf.model.db.util.LogRunner;
 import org.xnap.commons.gui.completion.CompletionModel;
 
 /**

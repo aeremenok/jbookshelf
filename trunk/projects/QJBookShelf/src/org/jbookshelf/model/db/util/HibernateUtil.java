@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.model.db;
+package org.jbookshelf.model.db.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,9 +12,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.connection.ConnectionProvider;
-import org.hibernate.event.MergeEventListener;
-import org.hibernate.event.PersistEventListener;
-import org.hibernate.event.SaveOrUpdateEventListener;
 
 /**
  * @author eav
@@ -31,13 +28,6 @@ public class HibernateUtil
         try
         {
             final AnnotationConfiguration cfg = new AnnotationConfiguration();
-            final Timestamper timestamper = new Timestamper();
-            cfg.getEventListeners().setPersistEventListeners( new PersistEventListener[]
-            { timestamper } );
-            cfg.getEventListeners().setMergeEventListeners( new MergeEventListener[]
-            { timestamper } );
-            cfg.getEventListeners().setSaveOrUpdateEventListeners( new SaveOrUpdateEventListener[]
-            { timestamper } );
             final AnnotationConfiguration configure = cfg.configure();
             properties = configure.getProperties();
             factory = configure.buildSessionFactory();

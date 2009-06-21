@@ -4,7 +4,6 @@
 package org.jbookshelf.model.db;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,10 +17,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * @author eav
@@ -30,7 +25,6 @@ import javax.persistence.TemporalType;
 public class Category
     implements
     Serializable,
-    Timestampable,
     HasBooks
 {
     @Id
@@ -40,10 +34,6 @@ public class Category
     @Column( nullable = false, unique = true )
     @org.hibernate.annotations.Index( name = "category_name_ind" )
     private String              name;
-
-    @Column( nullable = false )
-    @Temporal( TemporalType.TIMESTAMP )
-    private Date                changeDate;
 
     @ManyToOne
     private Category            parent;
@@ -84,17 +74,6 @@ public class Category
             return false;
         }
         final Category other = (Category) obj;
-        if ( this.changeDate == null )
-        {
-            if ( other.changeDate != null )
-            {
-                return false;
-            }
-        }
-        else if ( !this.changeDate.equals( other.changeDate ) )
-        {
-            return false;
-        }
         if ( this.id == null )
         {
             if ( other.id != null )
@@ -114,6 +93,17 @@ public class Category
             }
         }
         else if ( !this.name.equals( other.name ) )
+        {
+            return false;
+        }
+        if ( this.parent == null )
+        {
+            if ( other.parent != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.parent.equals( other.parent ) )
         {
             return false;
         }
@@ -169,12 +159,12 @@ public class Category
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (this.changeDate == null
-            ? 0 : this.changeDate.hashCode());
         result = prime * result + (this.id == null
             ? 0 : this.id.hashCode());
         result = prime * result + (this.name == null
             ? 0 : this.name.hashCode());
+        result = prime * result + (this.parent == null
+            ? 0 : this.parent.hashCode());
         return result;
     }
 
@@ -201,13 +191,6 @@ public class Category
         @Nullable final Category parent )
     {
         this.parent = parent;
-    }
-
-    @PreUpdate
-    @PrePersist
-    public void timestamp()
-    {
-        changeDate = new Date();
     }
 
     /* (non-Javadoc)
