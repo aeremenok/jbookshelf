@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- 
+    specify variables:
+    
+    ${builddir} - where to build
+    ${version}  - release version
+    ${os}       - linux/windows
+    
+    ! qt-jambi is platform-dependent, so 
+    copy qtjambi-[version].jar and qtjambi-[platform]-[version].jar to ${jambidir}/{$os}
+    and rename them to qtjambi.jar and qtjambi-native.jar
+ -->
+<project default="create_run_jar"
+         name="Create Runnable Jar for Project QJBookShelf"
+         basedir="..">
+
+    <property name="libdir" value="${basedir}/lib" />
+    <property name="targetdir"
+              value="${builddir}/jbookshelf-${os}-${version}" />
+    <property name="modeldir" value="${basedir}/../JBookShelfModel" />
+    <property name="jambidir-os" value="${jambidir}/${os}" />
+
+    <target name="clean">
+        <mkdir dir="${targetdir}" />
+        <delete>
+            <fileset dir="${targetdir}" />
+        </delete>
+    </target>
+
+    <target name="copyfiles">
+        <copy todir="${targetdir}/lib">
+            <fileset dir="${libdir}" />
+            <fileset dir="${basedir}/../JBookShelfModel/lib" />
+        </copy>
+        <copy todir="${targetdir}/lib" file="${jambidir-os}/qtjambi.jar" />
+        <copy todir="${targetdir}/lib"
+              file="${jambidir-os}/qtjambi-native.jar" />
+    </target>
+
+    <target name="create_run_jar" depends="clean, copyfiles">
+
+        <pathconvert property="libpath" pathsep=" ">
+            <fileset dir="${targetdir}/lib" />
+            <map from="${targetdir}/lib" to="lib" />
+        </pathconvert>
+
+        <jar destfile="${targetdir}/jbookshelf.jar">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Main-Class"
+                           value="org.jbookshelf.qtgui.MainWindow" />
+                <attribute name="Class-Path" value="${libpath}" />
+            </manifest>
+
+            <fileset dir="${basedir}/bin" />
+            <fileset dir="${modeldir}/bin" />
+        </jar>
+
+        <copy todir="${targetdir}" overwrite="true">
+            <fileset dir="${basedir}/../../build/misc">
+                <exclude name=".svn" />
+            </fileset>
+        </copy>
+
+        <chmod perm="+x" file="${targetdir}/run.sh" />
+
+        <zip destfile="${targetdir}.zip">
+            <zipfileset dir="${targetdir}" prefix="jbookshelf" />
+        </zip>
+    </target>
+
+    <property name="srcdir" value="${basedir}/src" />
+    <property name="packagedir" value="org/jbookshelf/qtgui" />
+
+    <target name="lupdate">
+        <exec executable="${jambidir}/${os}/bin/lupdate">
+            <arg value="-extensions" />
+            <arg value="java" />
+
+            <!-- todo specify directories recusrively -->
+            <arg value="${srcdir}/${packagedir}" />
+            <arg value="${srcdir}/${packagedir}/logic" />
+            <arg value="${srcdir}/${packagedir}/reader" />
+            <arg value="${srcdir}/${packagedir}/widgets" />
+            <arg value="${srcdir}/${packagedir}/widgets/completion" />
+            <arg value="${srcdir}/${packagedir}/widgets/dialog" />
+            <arg value="${srcdir}/${packagedir}/widgets/ext" />
+            <arg value="${srcdir}/${packagedir}/widgets/menu" />
+            <arg value="${srcdir}/${packagedir}/widgets/panel" />
+            <arg value="${srcdir}/${packagedir}/widgets/tree" />
+            <arg value="${srcdir}/${packagedir}/widgets/treepanel" />
+
+            <arg value="-ts" />
+            <arg value="${basedir}/src/translations/jbookshelf_ru.ts" />
+            <arg value="-ts" />
+            <arg value="${basedir}/src/translations/jbookshelf_en.ts" />
+        </exec>
+    </target>
+
+    <target name="lrelease">
+        <exec executable="${jambidir}/${os}/bin/lrelease">
+            <arg value="${basedir}/src/translations/jbookshelf_ru.ts" />
+            <arg value="-qm" />
+            <arg value="${basedir}/src/translations/jbookshelf_ru.qm" />
+        </exec>
+
+        <exec executable="${jambidir}/${os}/bin/lrelease">
+            <arg value="${basedir}/src/translations/jbookshelf_en.ts" />
+            <arg value="-qm" />
+            <arg value="${basedir}/src/translations/jbookshelf_en.qm" />
+        </exec>
+    </target>
+
+    <target name="translate" depends="lupdate, lrelease" />
+
+</project>
