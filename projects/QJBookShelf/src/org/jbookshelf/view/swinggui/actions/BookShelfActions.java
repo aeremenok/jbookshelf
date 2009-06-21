@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import javax.swing.JFileChooser;
 
-import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.swinggui.dialog.importer.FileImportDialog;
 
 public class BookShelfActions
@@ -17,7 +16,7 @@ public class BookShelfActions
     {
         public BackupAction()
         {
-            super( I18N.tr( "Backup" ), IMG.icon( IMG.DOCUMENT_SAVE_PNG, 32 ) );
+            super( "Backup", IMG.icon( IMG.DOCUMENT_SAVE_PNG, 32 ) );
             setEnabled( false );
         }
 
@@ -39,7 +38,7 @@ public class BookShelfActions
     {
         public ImportAction()
         {
-            super( I18N.tr( "Import" ), IMG.icon( IMG.DOCUMENT_IMPORT_PNG, 32 ) );
+            super( "Import", IMG.icon( IMG.DOCUMENT_IMPORT_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -54,7 +53,7 @@ public class BookShelfActions
     {
         public RestoreAction()
         {
-            super( I18N.tr( "Restore" ), IMG.icon( IMG.DOCUMENT_REVERT_PNG, 32 ) );
+            super( "Restore", IMG.icon( IMG.DOCUMENT_REVERT_PNG, 32 ) );
             setEnabled( false );
         }
 

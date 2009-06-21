@@ -16,7 +16,7 @@
 package org.jbookshelf.view.qtgui.reader;
 
 import org.jbookshelf.view.i18n.I18N;
-import org.jbookshelf.view.i18n.Translator;
+import org.xnap.commons.i18n.I18n;
 
 import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QTextBrowser;
@@ -51,12 +51,13 @@ public class CitationPanel
         this.readerWindow = readerWindow;
         setLayout( new QGridLayout() );
         setVisible( false );
-        Translator.addTranslatable( this );
+        I18N.translate( this );
     }
 
-    public void retranslate()
+    public void retranslate(
+        final I18n i18n )
     {
-        setTitle( I18N.tr( "Citations" ) );
+        setTitle( i18n.tr( "Citations" ) );
     }
 
     public void viewComments()

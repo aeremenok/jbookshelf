@@ -17,11 +17,11 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jbookshelf.view.swinggui.multiedit.MultipleField;
 import org.jbookshelf.view.swinggui.multiedit.MultipleUniqueField;
 import org.xnap.commons.gui.DefaultDialog;
+import org.xnap.commons.i18n.I18n;
 
 /**
  * @author eav 2009
@@ -72,7 +72,7 @@ public class RelatedBookDialog
 
         books.setValues( BookShelf.getBooks( book ) );
 
-        Translator.addTranslatable( this );
+        I18N.translate( this );
         setButtonSeparatorVisible( false );
         setPreferredSize( new Dimension( 640, 480 ) );
         pack();
@@ -95,9 +95,10 @@ public class RelatedBookDialog
     }
 
     @Override
-    public void retranslate()
+    public void retranslate(
+        final I18n i18n )
     {
-        ((JComponent) books.getParent()).setBorder( new TitledBorder( I18N.tr( "Select books to be related" ) ) );
+        ((JComponent) books.getParent()).setBorder( new TitledBorder( i18n.tr( "Select books to be related" ) ) );
     }
 
 }

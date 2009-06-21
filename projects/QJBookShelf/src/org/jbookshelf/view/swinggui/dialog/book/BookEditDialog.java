@@ -15,11 +15,11 @@ import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.model.db.util.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.swinggui.collection.CollectionPanel;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.xnap.commons.gui.DefaultDialog;
+import org.xnap.commons.i18n.I18n;
 
 /**
  * @author eav 2009
@@ -88,17 +88,18 @@ public class BookEditDialog
     }
 
     @Override
-    public void retranslate()
+    public void retranslate(
+        final I18n i18n )
     {
-        setTitle( I18N.tr( "Edit book" ) );
-        bookPanel.setBorder( new TitledBorder( I18N.tr( "Edit book properties" ) ) );
+        setTitle( i18n.tr( "Edit book" ) );
+        bookPanel.setBorder( new TitledBorder( i18n.tr( "Edit book properties" ) ) );
     }
 
     private void init()
     {
         bookPanel.setBook( book );
 
-        Translator.addTranslatable( this );
+        I18N.translate( this );
 
         setModal( true );
         setMainComponent( bookPanel );

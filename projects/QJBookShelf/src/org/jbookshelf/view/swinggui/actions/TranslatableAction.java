@@ -1,15 +1,12 @@
 package org.jbookshelf.view.swinggui.actions;
 
-import javax.swing.AbstractAction;
 import javax.swing.Icon;
 
 import org.jbookshelf.view.i18n.I18N;
-import org.jbookshelf.view.i18n.Translatable;
+import org.jdesktop.swingx.action.AbstractActionExt;
 
 public abstract class TranslatableAction
-    extends AbstractAction
-    implements
-        Translatable
+    extends AbstractActionExt
 {
     public TranslatableAction()
     {
@@ -19,7 +16,7 @@ public abstract class TranslatableAction
     public TranslatableAction(
         final String name )
     {
-        super( name );
+        putValue( NAME, I18N.tr( name, getClass() ) );
     }
 
     public TranslatableAction(
@@ -27,10 +24,6 @@ public abstract class TranslatableAction
         final Icon icon )
     {
         super( name, icon );
-    }
-
-    public void retranslate()
-    {
-        putValue( NAME, I18N.tr( getValue( NAME ).toString() ) );
+        putValue( NAME, I18N.tr( name, getClass() ) );
     }
 }

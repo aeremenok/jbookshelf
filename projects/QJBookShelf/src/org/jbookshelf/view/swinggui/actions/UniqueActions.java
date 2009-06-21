@@ -15,7 +15,6 @@ import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.model.db.util.BookShelf;
-import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
@@ -32,7 +31,7 @@ public class UniqueActions
     {
         public EditAction()
         {
-            super( I18N.tr( "Edit" ), IMG.icon( IMG.DOCUMENT_PROPERTIES_PNG, 32 ) );
+            super( "Edit", IMG.icon( IMG.DOCUMENT_PROPERTIES_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -47,7 +46,7 @@ public class UniqueActions
     {
         public GoogleAction()
         {
-            super( I18N.tr( "Google" ), IMG.icon( IMG.GOOGLE_PNG, 32 ) );
+            super( "Google", IMG.icon( IMG.GOOGLE_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -65,7 +64,7 @@ public class UniqueActions
     {
         public OpenAction()
         {
-            super( I18N.tr( "Open" ), IMG.icon( IMG.DOCUMENT_PREVIEW_PNG, 32 ) );
+            super( "Open", IMG.icon( IMG.DOCUMENT_PREVIEW_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -83,7 +82,7 @@ public class UniqueActions
     {
         public OpenDirAction()
         {
-            super( I18N.tr( "Open Directory" ), IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG, 32 ) );
+            super( "Open Directory", IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG, 32 ) );
         }
 
         public void actionPerformed(
@@ -101,14 +100,14 @@ public class UniqueActions
     {
         public RemoveAction()
         {
-            super( I18N.tr( "Remove" ), IMG.icon( IMG.LIST_REMOVE_PNG, 32 ) );
+            super( "Remove", IMG.icon( IMG.LIST_REMOVE_PNG, 32 ) );
         }
 
         public void actionPerformed(
             final ActionEvent e )
         {
             final MainWindow window = Single.instance( MainWindow.class );
-            if ( JOptionPane.showConfirmDialog( window, I18N.tr( "Remove selected?" ), "", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION )
+            if ( JOptionPane.showConfirmDialog( window, "Remove selected?", "", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION )
             {
                 Single.instance( ProgressBar.class ).invoke( new SafeWorker<Object, Object>()
                 {

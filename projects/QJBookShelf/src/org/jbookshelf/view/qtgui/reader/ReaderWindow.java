@@ -24,9 +24,9 @@ import org.apache.log4j.Logger;
 import org.jbookshelf.controller.util.StringUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.i18n.I18N;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.swinggui.dialog.book.BookEditDialog;
+import org.xnap.commons.i18n.I18n;
 
 import com.trolltech.qt.core.Qt.ToolButtonStyle;
 import com.trolltech.qt.core.Qt.WindowState;
@@ -46,11 +46,12 @@ public class ReaderWindow
     private final class ReaderToolBar
         extends QToolBarExt
     {
-        public void retranslate()
+        public void retranslate(
+            final I18n i18n )
         {
-            bookSettings.setText( I18N.tr( "Edit book properties" ) );
-            citation.setText( I18N.tr( "Add citation" ) );
-            view.setText( I18N.tr( "View bookmarks and citations" ) );
+            bookSettings.setText( i18n.tr( "Edit book properties" ) );
+            citation.setText( i18n.tr( "Add citation" ) );
+            view.setText( i18n.tr( "View bookmarks and citations" ) );
         }
     }
 
@@ -87,7 +88,7 @@ public class ReaderWindow
         initComponents();
         initListeners();
 
-        Translator.addTranslatable( toolBar );
+        I18N.translate( toolBar );
     }
 
     public Book getBook()
@@ -144,7 +145,7 @@ public class ReaderWindow
         catch ( final UnsupportedEncodingException e )
         {
             log.error( e, e );
-            return I18N.tr( "Error displaying file " ) + file.getAbsolutePath() + "\n\n"
+            return I18N.tr( "Error displaying file ", getClass() ) + file.getAbsolutePath() + "\n\n"
                 + StringUtil.printThrowable( e );
         }
     }

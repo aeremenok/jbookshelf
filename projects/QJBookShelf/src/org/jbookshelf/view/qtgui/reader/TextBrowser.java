@@ -22,12 +22,13 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.logic.JBookShelfConstants;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.UniqueActions;
+import org.xnap.commons.i18n.I18n;
 
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QContextMenuEvent;
@@ -73,7 +74,7 @@ public class TextBrowser
 
         googleAction.triggered.connect( this, "google()" );
 
-        Translator.addTranslatable( this );
+        I18N.translate( this );
     }
 
     public void changeFont(
@@ -93,7 +94,7 @@ public class TextBrowser
     //        cit.setPosition( textCursor().position() );
     }
 
-    public void retranslate()
+    public void retranslate(I18n i18n)
     {
         googleAction.setText( Single.instance( UniqueActions.class ).googleAction.getValue( Action.NAME ).toString() );
     }

@@ -10,7 +10,6 @@ import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.swinggui.FileChooserPanelExt;
 import org.jbookshelf.view.swinggui.GridBagPanel;
 import org.jbookshelf.view.swinggui.LookAndFeelComboBoxModel;
@@ -18,6 +17,7 @@ import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.xnap.commons.gui.DefaultDialog;
 import org.xnap.commons.gui.FileChooserPanel;
 import org.xnap.commons.gui.settings.SettingComponentMediator;
+import org.xnap.commons.i18n.I18n;
 
 public class SettingsDialog
     extends DefaultDialog
@@ -41,7 +41,7 @@ public class SettingsDialog
     {
         super( Single.instance( MainWindow.class ), BUTTON_DEFAULTS | BUTTON_OKAY | BUTTON_CANCEL );
         initComponents();
-        Translator.addTranslatable( this );
+        I18N.translate( this );
         mediator.revert();
 
         pack();
@@ -56,25 +56,26 @@ public class SettingsDialog
         return true;
     }
 
-    public void retranslate()
+    public void retranslate(
+        final I18n i18n )
     {
-        setTitle( I18N.tr( "Settings" ) );
+        setTitle( i18n.tr( "Settings" ) );
 
         langComboBox.removeAllItems();
-        for ( final String lang : I18N.LOCALIZED_LANGUAGES )
+        for ( final String lang : I18N.getLocalizedLanguages() )
         {
             langComboBox.addItem( lang );
         }
 
-        getCancelAction().putValue( Action.NAME, I18N.tr( "Cancel" ) );
-        getDefaultsAction().putValue( Action.NAME, I18N.tr( "Defaults" ) );
+        getCancelAction().putValue( Action.NAME, i18n.tr( "Cancel" ) );
+        getDefaultsAction().putValue( Action.NAME, i18n.tr( "Defaults" ) );
 
-        langLabel.setText( I18N.tr( "Language" ) );
-        lafLabel.setText( I18N.tr( "Look and feel" ) );
-        jbsDirLabel.setText( I18N.tr( "JBookShelf directory" ) );
-        wspDirLabel.setText( I18N.tr( "Workspace directory" ) );
+        langLabel.setText( i18n.tr( "Language" ) );
+        lafLabel.setText( i18n.tr( "Look and feel" ) );
+        jbsDirLabel.setText( i18n.tr( "JBookShelf directory" ) );
+        wspDirLabel.setText( i18n.tr( "Workspace directory" ) );
 
-        getMainPanel().setBorder( new TitledBorder( I18N.tr( "JBookShelf settings" ) ) );
+        getMainPanel().setBorder( new TitledBorder( i18n.tr( "JBookShelf settings" ) ) );
     }
 
     private void initComponents()

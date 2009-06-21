@@ -11,14 +11,16 @@ import javax.swing.table.DefaultTableModel;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
+import org.xnap.commons.i18n.I18n;
 
 public class BookTableModel
     extends DefaultTableModel
 {
-    private static String[] names =
-                                  { I18N.tr( "Name" ), I18N.tr( "Author" ), I18N.tr( "Category" ) };
+    private static final I18n i18n  = I18N.i18n( BookTableModel.class );
+    private static String[]   names =
+                                    { i18n.tr( "Name" ), i18n.tr( "Author" ), i18n.tr( "Category" ) };
 
-    private List<Object[]>  rows  = new ArrayList<Object[]>();
+    private List<Object[]>    rows  = new ArrayList<Object[]>();
 
     public BookTableModel()
     {

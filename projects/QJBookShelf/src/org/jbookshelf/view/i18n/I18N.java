@@ -1,56 +1,42 @@
 package org.jbookshelf.view.i18n;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
+import org.xnap.commons.i18n.I18n;
 
 public class I18N
 {
-    public static final PropertyChangeListener LANGUAGE_LISTENER   = new PropertyChangeListener()
-                                                                   {
-                                                                       public void propertyChange(
-                                                                           final PropertyChangeEvent evt )
-                                                                       {
-                                                                           setLanguage( evt.getNewValue().toString() );
-                                                                       }
-                                                                   };
+    private static final I18NImpl              impl                      = new I18NImpl();
 
-    public final static List<String>           LOCALIZED_LANGUAGES =
-                                                                       Arrays.asList( new String[] {
-                    Locale.ENGLISH.getDisplayLanguage( Locale.ENGLISH ),
-                    // todo
-                    "Russian"                                         } );
-
-    private static String                      defaultLanguage;
+    public static final PropertyChangeListener LANGUAGE_SETTING_LISTENER = impl;
 
     public static String defaultLanguage()
     {
-        if ( defaultLanguage == null )
-        {
-            defaultLanguage = Locale.getDefault().getDisplayLanguage( Locale.ENGLISH );
-            if ( !LOCALIZED_LANGUAGES.contains( defaultLanguage ) )
-            {
-                defaultLanguage = LOCALIZED_LANGUAGES.get( 0 );
-            }
-        }
-        return defaultLanguage;
+        return impl.defaultLanguage();
     }
 
-    public static void setLanguage(
-        final String language )
+    public static List<String> getLocalizedLanguages()
     {
-        // TODO Auto-generated method stub
-        Translator.retranslate( language );
+        return impl.getLocalizedLanguages();
+    }
+
+    public static I18n i18n(
+        final Class<?> class1 )
+    {
+        return I18N.impl.i18n( class1 );
     }
 
     public static String tr(
-        final String string )
+        final String string,
+        final Class<?> clazz )
     {
-        // todo
-        return string;
+        return impl.tr( string, clazz );
     }
 
+    public static void translate(
+        final Translatable translatable )
+    {
+        impl.translate( translatable );
+    }
 }

@@ -24,10 +24,10 @@ import org.bushe.swing.event.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
 import org.xnap.commons.gui.EraseTextFieldAction;
+import org.xnap.commons.i18n.I18n;
 
 /**
  * @author eav 2009
@@ -65,7 +65,7 @@ public class AdditionalPanel
     public AdditionalPanel()
     {
         super( new BorderLayout() );
-        Translator.addTranslatable( this );
+        I18N.translate( this );
     }
 
     @PostConstruct
@@ -111,9 +111,10 @@ public class AdditionalPanel
     }
 
     @Override
-    public void retranslate()
+    public void retranslate(
+        final I18n i18n )
     {
-        searchTextField.setToolTipText( I18N.tr( "Start typing to filter" ) );
+        searchTextField.setToolTipText( i18n.tr( "Start typing to filter" ) );
     }
 
     private AdditionalTab getActiveTab()

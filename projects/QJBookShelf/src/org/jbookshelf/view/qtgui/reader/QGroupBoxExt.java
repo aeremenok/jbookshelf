@@ -1,7 +1,6 @@
 package org.jbookshelf.view.qtgui.reader;
 
 import org.jbookshelf.view.i18n.Translatable;
-import org.jbookshelf.view.i18n.Translator;
 
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QWidget;
@@ -45,7 +44,7 @@ public abstract class QGroupBoxExt
     public String tr(
         final String source )
     {
-        return Translator.tr( getClass().getName(), source );
+        return source;
     }
 
 }
