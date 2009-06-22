@@ -1,4 +1,4 @@
-#labels Phase-Requirements
+#labels Phase-Requirements,Deprecated
 Not all goals succeeded, so it's time to change the Plan.
 
 = Goals =
