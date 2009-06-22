@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
@@ -18,6 +19,7 @@ import org.jbookshelf.model.db.Note;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
+import org.jbookshelf.view.swinggui.WrapperPanel;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jdesktop.swingx.JXEditorPane;
 import org.xnap.commons.gui.DefaultDialog;
@@ -42,8 +44,8 @@ public class NoteDialog
     {
         super( Single.instance( MainWindow.class ), BUTTON_OKAY | BUTTON_CANCEL );
         this.note = note;
-        I18N.translate( this );
         init();
+        I18N.translate( this );
 
         title.setText( note.getTitle() );
         content.setText( note.getContent() );
@@ -72,8 +74,9 @@ public class NoteDialog
     public void translate(
         final I18n i18n )
     {
-        citation.setBorder( new TitledBorder( i18n.tr( "Citation" ) ) );
-        content.setBorder( new TitledBorder( i18n.tr( "Note" ) ) );
+        setTitle( note.getBook().getName() );
+        ((JComponent) citation.getParent()).setBorder( new TitledBorder( i18n.tr( "Citation" ) ) );
+        ((JComponent) content.getParent()).setBorder( new TitledBorder( i18n.tr( "Note" ) ) );
         getCancelAction().putValue( Action.NAME, i18n.tr( "Cancel" ) );
     }
 
@@ -86,8 +89,8 @@ public class NoteDialog
         panel.add( title, BorderLayout.NORTH );
         final JSplitPane split = new JSplitPane( JSplitPane.VERTICAL_SPLIT );
         panel.add( split );
-        split.setTopComponent( citation );
-        split.setBottomComponent( content );
+        split.setTopComponent( new WrapperPanel( citation ) );
+        split.setBottomComponent( new WrapperPanel( content ) );
 
         split.setResizeWeight( 0.5 );
 
