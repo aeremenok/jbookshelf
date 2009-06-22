@@ -54,7 +54,9 @@ public class RelatedBookDialog
                                                 protected Book fromString(
                                                     final String text )
                                                 {
-                                                    return BookShelf.bookByName( text );
+                                                    final Book bookByName = BookShelf.bookByName( text );
+                                                    return book.equals( bookByName )
+                                                        ? null : bookByName;
                                                 }
                                             };
 
