@@ -6,14 +6,18 @@
 
 ==Changes==
 
- * Fixed "Googling the multiline paragraphs may cause an error"
- * "Tempdir" setting removed as obsolete
- * Some code reorgainizing
+ * Moved back to Java Swing [http://code.google.com/p/jbookshelf/issues/detail?id=81 see]
+ * Memory storage and xml persistence using EMF replaced with DB persistence using [http://www.h2database.com/ H2 DB] and Hibernate
+ * GUI and features review
+ * Huge code reorganizing
+
+==Fixed==
+
+ * Opening the file zipped with a nonsystem encoding may cause an error
 
 ==Known issues==
 
- * Opening the file zipped with a nonsystem encoding may cause an error
- * Other [http://code.google.com/p/jbookshelf/issues/list issues]
+ * [http://code.google.com/p/jbookshelf/issues/list Issues]
 
 ----
 
