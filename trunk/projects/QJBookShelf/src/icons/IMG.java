@@ -2,7 +2,6 @@ package icons;
 
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.File;
 import java.net.URL;
 
 import javax.swing.Icon;
@@ -46,7 +45,7 @@ public class IMG
         final String fileName,
         final int size )
     {
-        final URL url = IMG.class.getResource( size + File.separator + fileName );
+        final URL url = IMG.class.getResource( size + "/" + fileName );
         return Toolkit.getDefaultToolkit().getImage( url );
     }
 }
