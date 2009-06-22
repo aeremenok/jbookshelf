@@ -8,6 +8,7 @@
 
  * Moved back to Java Swing [http://code.google.com/p/jbookshelf/issues/detail?id=81 see]
  * Memory storage and xml persistence using EMF replaced with DB persistence using [http://www.h2database.com/ H2 DB] and Hibernate
+ * Model simplyfied
  * GUI and features review
  * Huge code reorganizing
 
