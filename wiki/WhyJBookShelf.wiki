@@ -1,4 +1,4 @@
-#labels Featured
+#labels Featured,Deprecated
 Digital books are spreading more rapidly every day. With a transition from an old media to the new - appear new ways of structuring (and that means - of understanding) the information contained by those media. Computers with their developing organization are attracting us to elaborate those new ways. Such a demand is clearly seen today. 
 
 [http://code.google.com/p/jbookshelf/wiki/Analogs Look at this list]: many OO-coders had an idea of developing a book-organizing program last year. The work is slow for some reasons. However at least one such program has been accomplished couple of years ago. The result showed that such projects are effective and can be further developed. It also provided examples how to do and how not to do.
