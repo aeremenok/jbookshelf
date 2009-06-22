@@ -100,6 +100,7 @@ public class RelatedBookDialog
     public void translate(
         final I18n i18n )
     {
+        setTitle( book.getName() );
         ((JComponent) books.getParent()).setBorder( new TitledBorder( i18n.tr( "Select books to be related" ) ) );
     }
 

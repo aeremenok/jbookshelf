@@ -20,8 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.swinggui.actions.EnterKeyListener;
 import org.jdesktop.swingx.JXTable;
+import org.xnap.commons.i18n.I18n;
 
 /**
  * allows to specify multiple values
@@ -31,6 +33,8 @@ import org.jdesktop.swingx.JXTable;
  */
 public class MultipleField<T>
     extends JPanel
+    implements
+    Translatable
 {
     private final class AddAction
         extends AbstractAction
@@ -86,6 +90,13 @@ public class MultipleField<T>
         model.setValues( objects );
     }
 
+    @Override
+    public void translate(
+        final I18n i18n )
+    {
+        field.setToolTipText( i18n.tr( "Type here to begin addition" ) );
+    }
+
     private void initComponents()
     {
         final Box horizontalBox = Box.createHorizontalBox();
@@ -130,6 +141,7 @@ public class MultipleField<T>
                 addAction.setEnabled( !"".equals( field.getText() ) );
             }
         } );
+        addAction.setEnabled( false );
     }
 
     /**
