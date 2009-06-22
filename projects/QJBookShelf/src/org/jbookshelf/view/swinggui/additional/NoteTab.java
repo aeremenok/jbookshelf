@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -43,11 +44,10 @@ public class NoteTab
         implements
         EventTopicSubscriber<BookShelfMediator>
     {
-        private static final I18n             i18n   = I18N.i18n( );
-        private static final String[]         names  =
-                                                     { i18n.tr( "Title" ), i18n.tr( "Date" ), "" };
-        private static final SimpleDateFormat format = new SimpleDateFormat( "yy-MM-dd HH:mm" );
-        private List<Note>                    notes;
+        private static final I18n     i18n  = I18N.i18n();
+        private static final String[] names =
+                                            { i18n.tr( "Title" ), i18n.tr( "Date" ), "" };
+        private List<Note>            notes;
 
         public NoteTableModel()
         {
@@ -127,8 +127,9 @@ public class NoteTab
         }
     }
 
-    private final NoteTableModel model = new NoteTableModel();
-    private final JXTable        table = new JXTable( model );
+    private static final SimpleDateFormat format = new SimpleDateFormat( "yy-MM-dd HH:mm" );
+    private final NoteTableModel          model  = new NoteTableModel();
+    private final JXTable                 table  = new JXTable( model );
 
     public NoteTab()
     {
@@ -169,6 +170,7 @@ public class NoteTab
     {
         final Note note = new Note();
         note.setBook( book );
+        note.setTitle( I18N.tr( "Note" ) + " " + format.format( new Date() ) );
         new NoteDialog( note ).setVisible( true );
     }
 }
