@@ -5,6 +5,8 @@ import icons.IMG;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
@@ -119,6 +121,15 @@ public class MultipleField<T>
         } );
 
         field.addKeyListener( new EnterKeyListener( addAction ) );
+        field.addKeyListener( new KeyAdapter()
+        {
+            @Override
+            public void keyReleased(
+                final KeyEvent e )
+            {
+                addAction.setEnabled( !"".equals( field.getText() ) );
+            }
+        } );
     }
 
     /**
