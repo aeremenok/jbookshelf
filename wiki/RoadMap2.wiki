@@ -1,4 +1,4 @@
-#labels Featured,Phase-Requirements
+#labels Deprecated,Phase-Requirements
 =Project Stage Details=
 
 || *Stage (version) * || *Substage* || *Status* || *Begin Date* || *Possible End Date* || *Artifact link* ||
