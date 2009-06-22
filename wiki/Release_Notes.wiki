@@ -1,5 +1,5 @@
 #labels Featured
-=JBookShelf 0.5b2=
+=JBookShelf 0.5b0=
 
 [http://jbookshelf.googlecode.com/files/jbookshelf-linux-0.5b0.zip Download for Linux] 
 [http://jbookshelf.googlecode.com/files/jbookshelf-windows-0.5b0.zip Download for Windows]
