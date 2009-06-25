@@ -22,9 +22,10 @@ import org.jbookshelf.controller.singleton.Single;
  */
 public class HibernateUtil
 {
+    private static final Logger             log = Logger.getLogger( HibernateUtil.class );
+
     private static final SessionFactory     factory;
     private static final Properties         properties;
-    private static final Logger             log = Logger.getLogger( HibernateUtil.class );
     private static final ConnectionProvider connectionProvider;
 
     static

@@ -33,7 +33,7 @@ import org.jdesktop.swingx.decorator.FilterPipeline;
 public class RelatedBookTab
     extends AdditionalTab
 {
-    private static class RelatedBookTableModel
+    public static class RelatedBookTableModel
         extends DefaultTableModel
         implements
         EventTopicSubscriber<BookShelfMediator>

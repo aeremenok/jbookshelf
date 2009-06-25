@@ -51,11 +51,6 @@ public class Settings
         firePropertyChange( WORKSPACE_DIR.getKey(), "", WORKSPACE_DIR.getValue() );
     }
 
-    public File getCollectionFile()
-    {
-        return new File( JBS_DIR.getValue() + File.separator + "collection.xml" );
-    }
-
     @PostConstruct
     public void initSingleton()
     {
