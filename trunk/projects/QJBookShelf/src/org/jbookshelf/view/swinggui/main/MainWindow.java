@@ -7,9 +7,14 @@ import java.awt.EventQueue;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
@@ -39,7 +44,7 @@ public class MainWindow
     UncaughtExceptionHandler
 {
     public static final String APP_NAME = "JBookShelf";
-    public static final String VERSION  = "0.5b0";
+    public static final String VERSION  = "0.5b1";
     private static Logger      log;
     public static String[]     args;
 
@@ -123,6 +128,48 @@ public class MainWindow
         {
             throw new Error( e );
         }
+    }
+
+    /**
+     * copied from {@link "http://cplusadd.blogspot.com/2009/04/java-application-and-self-restart.html"}
+     * 
+     * @return false if not restarted
+     */
+    public boolean restartApplication()
+    {
+        final String javaBin = System.getProperty( "java.home" ) + "/bin/java";
+        try
+        {
+            final URI uri = getClass().getProtectionDomain().getCodeSource().getLocation().toURI();
+            final File jarFile = new File( uri );
+            if ( jarFile.getName().endsWith( ".jar" ) )
+            { // not debugging with an IDE
+                final List<String> toExec = new ArrayList<String>();
+                toExec.add( javaBin );
+                toExec.add( "-jar" );
+                toExec.add( jarFile.getPath() );
+
+                for ( final String arg : args )
+                {
+                    toExec.add( arg );
+                }
+
+                Runtime.getRuntime().exec( toExec.toArray( new String[toExec.size()] ) );
+
+                System.exit( 0 );
+
+                // not reachable
+                return true;
+            }
+        }
+        catch ( final Throwable e )
+        {
+            log.error( e, e );
+        }
+
+        // probably debugging with an IDE
+        JOptionPane.showMessageDialog( null, I18N.tr( "Unable to restart automatically. Please restart manually." ) );
+        return false;
     }
 
     @Override
