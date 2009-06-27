@@ -6,6 +6,7 @@ package org.jbookshelf.view.swinggui.multiedit;
 import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.xnap.commons.gui.Builder;
+import org.xnap.commons.gui.completion.CompletionModel;
 
 /**
  * allows to specify multiple {@link Unique}s
@@ -16,7 +17,7 @@ import org.xnap.commons.gui.Builder;
 public class MultipleUniqueField<T extends Unique>
     extends MultipleField<T>
 {
-    private final Class<T> clazz;
+    protected final Class<T> clazz;
 
     /**
      * @param clazz class of T to work with database
@@ -26,8 +27,14 @@ public class MultipleUniqueField<T extends Unique>
     {
         super();
         this.clazz = clazz;
-        // add name completion
-        Builder.addCompletion( field, new UniqueCompletionModel( clazz, model ) );
+        // add name completion 
+        Builder.addCompletion( field, createCompletionModel( clazz ) );
+    }
+
+    protected CompletionModel createCompletionModel(
+        final Class<T> clazz )
+    {
+        return new UniqueCompletionModel( clazz, model );
     }
 
     /* (non-Javadoc)

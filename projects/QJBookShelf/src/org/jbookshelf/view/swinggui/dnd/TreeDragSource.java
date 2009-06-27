@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.dnd;
 
+import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragGestureRecognizer;
@@ -39,20 +40,17 @@ public class TreeDragSource
     private final DragGestureRecognizer recognizer;
 
     public TreeDragSource(
-        final JTree tree,
-        final int actions )
+        final JTree tree )
     {
         sourceTree = tree;
         source = new DragSource();
-        recognizer = source.createDefaultDragGestureRecognizer( sourceTree, actions, this );
+        recognizer = source.createDefaultDragGestureRecognizer( sourceTree, DnDConstants.ACTION_MOVE, this );
     }
 
     public void dragDropEnd(
         final DragSourceDropEvent dsde )
     {
-        /*
-         * to support move only... 
-         */
+        // support move only 
         if ( dsde.getDropSuccess() )
         {
             ((DefaultTreeModel) sourceTree.getModel()).removeNodeFromParent( oldNode );
@@ -76,7 +74,6 @@ public class TreeDragSource
     public void dragGestureRecognized(
         final DragGestureEvent dge )
     {
-        System.out.println( "TreeDragSource.dragGestureRecognized()" );
         final TreePath path = sourceTree.getSelectionPath();
         if ( path == null || path.getPathCount() <= 1 )
         {
@@ -85,7 +82,7 @@ public class TreeDragSource
         }
         oldNode = (DefaultMutableTreeNode) path.getLastPathComponent();
         transferable = new TransferableTreeNode( path );
-        source.startDrag( dge, DragSource.DefaultMoveNoDrop, transferable, this );
+        source.startDrag( dge, DragSource.DefaultMoveDrop, transferable, this );
     }
 
     public void dragOver(
@@ -94,9 +91,5 @@ public class TreeDragSource
 
     public void dropActionChanged(
         final DragSourceDragEvent dsde )
-    {
-        System.out.println( "Action: " + dsde.getDropAction() );
-        System.out.println( "Target Action: " + dsde.getTargetActions() );
-        System.out.println( "User Action: " + dsde.getUserAction() );
-    }
+    {}
 }

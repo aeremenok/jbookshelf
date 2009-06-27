@@ -6,7 +6,6 @@ package org.jbookshelf.view.swinggui.collection.tab;
 import icons.IMG;
 
 import java.awt.BorderLayout;
-import java.awt.dnd.DnDConstants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +46,7 @@ public class CategoryView
     extends CollectionView
 {
     public static class CategoryNode
-        extends DefaultMutableTreeNode
+        extends DefaultMutableLazyNode
     {
         private final Category category;
 
@@ -84,7 +83,7 @@ public class CategoryView
     private final DefaultTreeModel model      = new DefaultTreeModel( root );
     private final JXTree           tree       = new JXTree( model );
     @SuppressWarnings( "unused" )
-    private final TreeDragSource   dragSource = new TreeDragSource( tree, DnDConstants.ACTION_MOVE );
+    private final TreeDragSource   dragSource = new TreeDragSource( tree );
     @SuppressWarnings( "unused" )
     private final TreeDropTarget   dropTarget = new TreeDropTarget( tree )
                                               {
@@ -94,14 +93,8 @@ public class CategoryView
                                                       final DefaultMutableTreeNode node,
                                                       final DefaultTreeModel model )
                                                   {
-                                                      final Category parentCategory = ((CategoryNode) parent)
-                                                          .getCategory();
-                                                      final Category childCategory = ((CategoryNode) node)
-                                                          .getCategory();
-
-                                                      BookShelf.setParent( parentCategory, childCategory );
-
-                                                      if ( parent.getChildCount() > 0 )
+                                                      dataChange( parent, node );
+                                                      if ( ((LazyNode) parent).isInitialized() )
                                                       {
                                                           super.dropDataChange( parent, node, model );
                                                       }
@@ -185,6 +178,27 @@ public class CategoryView
         } );
     }
 
+    private void dataChange(
+        final DefaultMutableTreeNode parent,
+        final DefaultMutableTreeNode node )
+    {
+        final Category parentCategory = ((CategoryNode) parent).getCategory();
+        if ( node instanceof CategoryNode )
+        {
+            final Category childCategory = ((CategoryNode) node).getCategory();
+            BookShelf.setParent( parentCategory, childCategory );
+        }
+        else
+        {
+            final BookNode bookNode = (BookNode) node;
+            final Book book = bookNode.getBook();
+
+            final CategoryNode oldCategoryNode = (CategoryNode) node.getParent();
+            final Category oldCategory = oldCategoryNode.getCategory();
+            BookShelf.moveBook( book, oldCategory, parentCategory );
+        }
+    }
+
     private void initListeners()
     {
         tree.addMouseListener( new CollectionPopupListener() );
@@ -245,7 +259,7 @@ public class CategoryView
     private void loadChildren(
         final CategoryNode categoryNode )
     {
-        if ( categoryNode.getChildCount() == 0 )
+        if ( !categoryNode.isInitialized() )
         { // not loaded yet
             final Category category = categoryNode.getCategory();
 
@@ -260,6 +274,7 @@ public class CategoryView
             {
                 model.insertNodeInto( new CategoryNode( child ), categoryNode, 0 );
             }
+            categoryNode.setInitialized( true );
         }
     }
 

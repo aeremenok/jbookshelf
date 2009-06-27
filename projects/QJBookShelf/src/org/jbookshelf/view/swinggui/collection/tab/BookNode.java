@@ -4,7 +4,6 @@
 package org.jbookshelf.view.swinggui.collection.tab;
 
 import javax.annotation.Nonnull;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jbookshelf.model.db.Book;
 
@@ -12,7 +11,7 @@ import org.jbookshelf.model.db.Book;
  * @author eav 2009
  */
 public class BookNode
-    extends DefaultMutableTreeNode
+    extends DefaultMutableLazyNode
 {
     private final Book book;
 

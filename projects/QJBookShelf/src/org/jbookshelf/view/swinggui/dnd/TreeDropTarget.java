@@ -6,7 +6,6 @@ package org.jbookshelf.view.swinggui.dnd;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetContext;
 import java.awt.dnd.DropTargetDragEvent;
@@ -50,9 +49,7 @@ public class TreeDropTarget
         }
         else
         {
-            // start by supporting move operations
-            dtde.acceptDrag( DnDConstants.ACTION_MOVE );
-            //            dtde.acceptDrag( dtde.getDropAction() );
+            dtde.acceptDrag( dtde.getDropAction() );
         }
     }
 
@@ -70,9 +67,7 @@ public class TreeDropTarget
         }
         else
         {
-            // start by supporting move operations
-            dtde.acceptDrag( DnDConstants.ACTION_MOVE );
-            //            dtde.acceptDrag( dtde.getDropAction() );
+            dtde.acceptDrag( dtde.getDropAction() );
         }
     }
 

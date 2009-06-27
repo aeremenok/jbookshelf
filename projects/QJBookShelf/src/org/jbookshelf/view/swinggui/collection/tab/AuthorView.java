@@ -46,7 +46,7 @@ public class AuthorView
     extends CollectionView
 {
     private class AuthorNode
-        extends DefaultMutableTreeNode
+        extends DefaultMutableLazyNode
     {
         private final Author author;
 
@@ -194,7 +194,7 @@ public class AuthorView
     private void loadChildren(
         final AuthorNode authorNode )
     {
-        if ( authorNode.getChildCount() == 0 )
+        if ( !authorNode.isInitialized() )
         { // not loaded yet
             final Author author = authorNode.getAuthor();
 
@@ -203,6 +203,7 @@ public class AuthorView
             {
                 model.insertNodeInto( new BookNode( book ), authorNode, 0 );
             }
+            authorNode.setInitialized( true );
         }
     }
 

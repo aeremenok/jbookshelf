@@ -32,11 +32,7 @@ import org.jbookshelf.model.db.Unique;
  */
 public class BookShelf
 {
-    /**
-     * 
-     */
-    private static final String ROOT = "!ROOT!";
-    private static final Logger log  = Logger.getLogger( BookShelf.class );
+    private static final Logger log = Logger.getLogger( BookShelf.class );
 
     @SuppressWarnings( "unchecked" )
     public static List<Book> allBooks()
@@ -281,7 +277,7 @@ public class BookShelf
             session.persist( unique );
             session.getTransaction().commit();
 
-            if ( unique instanceof Category && !ROOT.equals( unique.getName() ) )
+            if ( unique instanceof Category && !Category.ROOT.equals( unique.getName() ) )
             {
                 final Category category = (Category) unique;
                 final Category rootCategory = rootCategory();
@@ -381,6 +377,36 @@ public class BookShelf
             session.getTransaction().commit();
         }
         catch ( final HibernateException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+
+    public static void moveBook(
+        final Book book,
+        final Category oldCategory,
+        final Category newCategory )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            getBooks( oldCategory ).remove( book );
+            getBooks( newCategory ).add( book );
+            getCategories( book ).remove( oldCategory );
+            getCategories( book ).add( newCategory );
+
+            session.beginTransaction();
+            session.merge( book );
+            session.merge( oldCategory );
+            session.merge( newCategory );
+            session.getTransaction().commit();
+        }
+        catch ( final Exception e )
         {
             log.error( e, e );
             throw new Error( e );
@@ -491,7 +517,7 @@ public class BookShelf
     public static Category rootCategory()
     { // todo cache?
         // todo name confilct is possible 
-        return getOrAddUnique( Category.class, ROOT );
+        return getOrAddUnique( Category.class, Category.ROOT );
     }
 
     public static void setParent(
