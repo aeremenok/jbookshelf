@@ -6,6 +6,7 @@ package org.jbookshelf.view.swinggui.collection.tab;
 import icons.IMG;
 
 import java.awt.BorderLayout;
+import java.awt.dnd.DnDConstants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +36,8 @@ import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.dnd.TreeDragSource;
+import org.jbookshelf.view.swinggui.dnd.TreeDropTarget;
 import org.jdesktop.swingx.JXTree;
 
 /**
@@ -43,15 +46,22 @@ import org.jdesktop.swingx.JXTree;
 public class CategoryView
     extends CollectionView
 {
-    private class CategoryNode
+    public static class CategoryNode
         extends DefaultMutableTreeNode
     {
         private final Category category;
 
+        public CategoryNode()
+        {
+            super();
+            category = null;
+        }
+
         private CategoryNode(
             @Nonnull final Category category )
         {
-            super( category.getName() );
+            super( category.equals( BookShelf.rootCategory() )
+                ? I18N.tr( "All categories" ) : category.getName() );
             this.category = category;
         }
 
@@ -70,11 +80,35 @@ public class CategoryView
         }
     }
 
-    private final DefaultMutableTreeNode root  = new DefaultMutableTreeNode();
-    private final DefaultTreeModel       model = new DefaultTreeModel( root );
-    private final JXTree                 tree  = new JXTree( model );
+    private final CategoryNode     root       = new CategoryNode( BookShelf.rootCategory() );
+    private final DefaultTreeModel model      = new DefaultTreeModel( root );
+    private final JXTree           tree       = new JXTree( model );
+    @SuppressWarnings( "unused" )
+    private final TreeDragSource   dragSource = new TreeDragSource( tree, DnDConstants.ACTION_MOVE );
+    @SuppressWarnings( "unused" )
+    private final TreeDropTarget   dropTarget = new TreeDropTarget( tree )
+                                              {
+                                                  @Override
+                                                  protected void dropDataChange(
+                                                      final DefaultMutableTreeNode parent,
+                                                      final DefaultMutableTreeNode node,
+                                                      final DefaultTreeModel model )
+                                                  {
+                                                      final Category parentCategory = ((CategoryNode) parent)
+                                                          .getCategory();
+                                                      final Category childCategory = ((CategoryNode) node)
+                                                          .getCategory();
 
-    private static final Logger          log   = Logger.getLogger( CategoryView.class );
+                                                      BookShelf.setParent( parentCategory, childCategory );
+
+                                                      if ( parent.getChildCount() > 0 )
+                                                      {
+                                                          super.dropDataChange( parent, node, model );
+                                                      }
+                                                  }
+                                              };
+
+    private static final Logger    log        = Logger.getLogger( CategoryView.class );
 
     public CategoryView()
     {
@@ -86,7 +120,6 @@ public class CategoryView
 
         add( new JScrollPane( tree ), BorderLayout.CENTER );
 
-        tree.setRootVisible( false );
         tree.setOpenIcon( IMG.icon( IMG.FEED_SUBSCRIBE_PNG ) );
         tree.setClosedIcon( IMG.icon( IMG.FEED_SUBSCRIBE_PNG ) );
         tree.setLeafIcon( IMG.icon( IMG.BOOK_PNG ) );
@@ -115,7 +148,11 @@ public class CategoryView
                     model.reload( root );
                     for ( final Category category : list )
                     {
-                        publish( new CategoryNode( category ) );
+                        final Category rootCategory = BookShelf.rootCategory();
+                        if ( !rootCategory.equals( category ) && rootCategory.equals( category.getParent() ) )
+                        {
+                            publish( new CategoryNode( category ) );
+                        }
                     }
                     return list;
                 }
@@ -128,6 +165,12 @@ public class CategoryView
                 {
                     session.close();
                 }
+            }
+
+            @Override
+            protected void doneSafe()
+            {
+                tree.expandRow( 0 );
             }
 
             @Override
@@ -178,7 +221,11 @@ public class CategoryView
 
                     if ( object instanceof CategoryNode )
                     {
-                        list.add( ((CategoryNode) object).getCategory() );
+                        final Category category = ((CategoryNode) object).getCategory();
+                        if ( !BookShelf.rootCategory().equals( category ) )
+                        {
+                            list.add( category );
+                        }
                     }
                     else if ( object instanceof BookNode )
                     {
@@ -202,16 +249,16 @@ public class CategoryView
         { // not loaded yet
             final Category category = categoryNode.getCategory();
 
-            final Set<Category> children = BookShelf.getChildren( category );
-            for ( final Category child : children )
-            {
-                model.insertNodeInto( new CategoryNode( child ), categoryNode, 0 );
-            }
-
             final Set<Book> books = BookShelf.getBooks( category );
             for ( final Book book : books )
             {
                 model.insertNodeInto( new BookNode( book ), categoryNode, 0 );
+            }
+
+            final Set<Category> children = BookShelf.getChildren( category );
+            for ( final Category child : children )
+            {
+                model.insertNodeInto( new CategoryNode( child ), categoryNode, 0 );
             }
         }
     }

@@ -47,6 +47,11 @@ public class Category
     @OrderBy( "name desc" )
     private final Set<Book>     books    = new HashSet<Book>();
 
+    public Category()
+    {
+        super();
+    }
+
     public void addChild(
         @Nonnull final Category category )
     {

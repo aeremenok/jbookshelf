@@ -9,8 +9,6 @@ import java.io.FileFilter;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import junit.framework.Assert;
-
 import org.jbookshelf.model.db.PhysicalBook;
 
 /**
@@ -61,7 +59,7 @@ public class IndexFileImporter
         @Nonnull final File file )
     {
         final PhysicalBook book = new PhysicalBook();
-        Assert.assertNotNull( currentIndexFile );
+        assert currentIndexFile != null;
         book.setFile( currentIndexFile );
         return book;
     }

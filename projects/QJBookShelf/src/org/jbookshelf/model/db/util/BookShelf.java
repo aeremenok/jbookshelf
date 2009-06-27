@@ -32,7 +32,11 @@ import org.jbookshelf.model.db.Unique;
  */
 public class BookShelf
 {
-    private static final Logger log = Logger.getLogger( BookShelf.class );
+    /**
+     * 
+     */
+    private static final String ROOT = "!ROOT!";
+    private static final Logger log  = Logger.getLogger( BookShelf.class );
 
     @SuppressWarnings( "unchecked" )
     public static List<Book> allBooks()
@@ -277,6 +281,13 @@ public class BookShelf
             session.persist( unique );
             session.getTransaction().commit();
 
+            if ( unique instanceof Category && !ROOT.equals( unique.getName() ) )
+            {
+                final Category category = (Category) unique;
+                final Category rootCategory = rootCategory();
+                setParent( rootCategory, category );
+            }
+
             return unique;
         }
         catch ( final Exception e )
@@ -424,19 +435,6 @@ public class BookShelf
     public static void remove(
         final Set<Unique> selectedUniques )
     {
-        final LogRunner runner = new LogRunner();
-
-        final String q1 = "delete from author_book where books_id=?";
-        final String q2 = "delete from author_book where authors_id=?";
-
-        final String q3 = "delete from category_book where books_id=?";
-        final String q4 = "delete from category_book where categories_id=?";
-
-        final String q5 = "delete from book where id=?";
-        final String q6 = "delete from author where id=?";
-        final String q7 = "delete from category where id=?";
-
-        final String q8 = "delete from physical_book where book_id=?";
 
         try
         {
@@ -444,28 +442,15 @@ public class BookShelf
             {
                 if ( unique instanceof Book )
                 {
-                    runner.update( q1, new Object[]
-                    { unique.getId() } );
-                    runner.update( q3, new Object[]
-                    { unique.getId() } );
-                    runner.update( q8, new Object[]
-                    { unique.getId() } );
-                    runner.update( q5, new Object[]
-                    { unique.getId() } );
+                    removeBook( (Book) unique );
                 }
                 else if ( unique instanceof Author )
                 {
-                    runner.update( q2, new Object[]
-                    { unique.getId() } );
-                    runner.update( q6, new Object[]
-                    { unique.getId() } );
+                    removeAuthor( (Author) unique );
                 }
                 else
                 {
-                    runner.update( q4, new Object[]
-                    { unique.getId() } );
-                    runner.update( q7, new Object[]
-                    { unique.getId() } );
+                    removeCategory( (Category) unique );
                 }
             }
         }
@@ -503,6 +488,49 @@ public class BookShelf
         }
     }
 
+    public static Category rootCategory()
+    { // todo cache?
+        // todo name confilct is possible 
+        return getOrAddUnique( Category.class, ROOT );
+    }
+
+    public static void setParent(
+        @Nonnull final Category parentCategory,
+        @Nonnull final Category childCategory )
+    {
+        log.debug( "addChild" );
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            session.load( childCategory, childCategory.getId() );
+            final Category oldParent = childCategory.getParent();
+            childCategory.setParent( parentCategory );
+
+            if ( oldParent != null )
+            {
+                getChildren( oldParent ).remove( childCategory );
+            }
+            getChildren( parentCategory ).add( childCategory );
+
+            session.beginTransaction();
+            session.merge( childCategory );
+            if ( parentCategory != null )
+            {
+                session.merge( parentCategory );
+            }
+            session.getTransaction().commit();
+        }
+        catch ( final Throwable e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+
     /**
      * @param book
      */
@@ -520,5 +548,60 @@ public class BookShelf
             log.error( e, e );
             throw new Error( e );
         }
+    }
+
+    private static void removeAuthor(
+        final Author author )
+        throws SQLException
+    {
+        final LogRunner runner = new LogRunner();
+
+        final String q2 = "delete from author_book where authors_id=?";
+        final String q6 = "delete from author where id=?";
+
+        runner.update( q2, new Object[]
+        { author.getId() } );
+        runner.update( q6, new Object[]
+        { author.getId() } );
+    }
+
+    private static void removeBook(
+        final Book unique )
+        throws SQLException
+    {
+        final LogRunner runner = new LogRunner();
+
+        final String q1 = "delete from author_book where books_id=?";
+        final String q3 = "delete from category_book where books_id=?";
+        final String q5 = "delete from book where id=?";
+        final String q8 = "delete from physical_book where book_id=?";
+
+        runner.update( q1, new Object[]
+        { unique.getId() } );
+        runner.update( q3, new Object[]
+        { unique.getId() } );
+        runner.update( q8, new Object[]
+        { unique.getId() } );
+        runner.update( q5, new Object[]
+        { unique.getId() } );
+    }
+
+    private static void removeCategory(
+        final Category category )
+        throws SQLException
+    {
+        final LogRunner runner = new LogRunner();
+
+        final String q4 = "delete from category_book where categories_id=?";
+        // move all children up
+        final String q9 = "update category set parent_id=(select parent_id from category where id=?) where parent_id=?";
+        final String q7 = "delete from category where id=?";
+
+        runner.update( q4, new Object[]
+        { category.getId() } );
+        runner.update( q9, new Object[]
+        { category.getId(), category.getId() } );
+        runner.update( q7, new Object[]
+        { category.getId() } );
     }
 }

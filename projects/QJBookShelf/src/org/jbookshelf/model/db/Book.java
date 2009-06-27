@@ -61,6 +61,11 @@ public class Book
 
     public static final String  RELATED      = "related";
 
+    public Book()
+    {
+        super();
+    }
+
     public void addAuthor(
         @Nonnull final Author author )
     {
