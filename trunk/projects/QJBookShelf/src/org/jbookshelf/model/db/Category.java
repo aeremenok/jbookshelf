@@ -47,6 +47,8 @@ public class Category
     @OrderBy( "name desc" )
     private final Set<Book>     books    = new HashSet<Book>();
 
+    public static final String  ROOT = "!ROOT!";
+
     public Category()
     {
         super();

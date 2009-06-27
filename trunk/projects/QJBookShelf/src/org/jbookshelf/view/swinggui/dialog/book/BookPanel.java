@@ -25,6 +25,7 @@ import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.FileChooserPanelExt;
 import org.jbookshelf.view.swinggui.GridBagPanel;
+import org.jbookshelf.view.swinggui.multiedit.CategoryMultipleField;
 import org.jbookshelf.view.swinggui.multiedit.MultipleField;
 import org.jbookshelf.view.swinggui.multiedit.MultipleUniqueField;
 import org.xnap.commons.gui.FileChooserPanel;
@@ -87,7 +88,7 @@ public class BookPanel
     private final JComboBox               viewerComboBox   = new JComboBox();
 
     private final MultipleField<Author>   authorField      = new MultipleUniqueField<Author>( Author.class );
-    private final MultipleField<Category> categoryField    = new MultipleUniqueField<Category>( Category.class );
+    private final MultipleField<Category> categoryField    = new CategoryMultipleField();
 
     private final FileChooserPanel        fileChooserPanel = new FileChooserPanelExt( 50, "book.file.chooser" )
                                                            {
@@ -148,8 +149,7 @@ public class BookPanel
         final File file = fileChooserPanel.getFile();
         if ( file == null || !file.exists() )
         {
-            final String tr = I18N.tr( "File does not exist: " )
-                + fileChooserPanel.getTextField().getText();
+            final String tr = I18N.tr( "File does not exist: " ) + fileChooserPanel.getTextField().getText();
             JOptionPane.showMessageDialog( this, tr, I18N.tr( "Error" ), JOptionPane.ERROR_MESSAGE );
             return null;
         }
@@ -169,22 +169,6 @@ public class BookPanel
         parameters.put( Keys.BOOK_FILE, file );
 
         return parameters;
-    }
-
-    public void translate(
-        final I18n i18n )
-    {
-        isReadCheckBox.setText( i18n.tr( "Is read" ) );
-        bookLabel.setText( i18n.tr( "Book" ) );
-        authorLabel.setText( i18n.tr( "Author" ) );
-        categoryLabel.setText( i18n.tr( "Category" ) );
-        fileLabel.setText( i18n.tr( "File" ) );
-        viewerLabel.setText( i18n.tr( "Viewer" ) );
-
-        viewerComboBox.removeAllItems();
-        viewerComboBox.addItem( i18n.tr( "Auto" ) );
-        viewerComboBox.addItem( i18n.tr( "Internal" ) );
-        viewerComboBox.addItem( i18n.tr( "System" ) );
     }
 
     /**
@@ -221,6 +205,22 @@ public class BookPanel
         final File file )
     {
         fileChooserPanel.setFile( file );
+    }
+
+    public void translate(
+        final I18n i18n )
+    {
+        isReadCheckBox.setText( i18n.tr( "Is read" ) );
+        bookLabel.setText( i18n.tr( "Book" ) );
+        authorLabel.setText( i18n.tr( "Author" ) );
+        categoryLabel.setText( i18n.tr( "Category" ) );
+        fileLabel.setText( i18n.tr( "File" ) );
+        viewerLabel.setText( i18n.tr( "Viewer" ) );
+
+        viewerComboBox.removeAllItems();
+        viewerComboBox.addItem( i18n.tr( "Auto" ) );
+        viewerComboBox.addItem( i18n.tr( "Internal" ) );
+        viewerComboBox.addItem( i18n.tr( "System" ) );
     }
 
     private void initComponents()

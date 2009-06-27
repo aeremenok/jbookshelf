@@ -81,7 +81,7 @@ public class UniqueCompletionModel
             {
                 addElement( object[0] );
             }
-            return items.size() > 0;
+            return getSize() > 0;
         }
         catch ( final SQLException e )
         {
