@@ -7,8 +7,6 @@ import java.io.File;
 
 import javax.annotation.Nullable;
 
-import junit.framework.Assert;
-
 import org.jbookshelf.model.db.PhysicalBook;
 
 /**
@@ -54,7 +52,7 @@ public class SingleFileDirImporter
         final File file )
     {
         final PhysicalBook book = new PhysicalBook();
-        Assert.assertNotNull( currentFile );
+        assert currentFile != null;
         book.setFile( currentFile );
         return book;
     }

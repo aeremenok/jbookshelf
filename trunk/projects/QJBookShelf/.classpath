@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="lib" path="lib/gettext-commons-0.9.6.jar"/>
-	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/swingx-0.9.7.jar"/>
 	<classpathentry kind="lib" path="lib/swingx-beaninfo-0.9.7.jar"/>
 	<classpathentry kind="lib" path="lib/xnap-commons-0.9.6.jar"/>

@@ -16,6 +16,12 @@ public class BookNode
 {
     private final Book book;
 
+    public BookNode()
+    {
+        super();
+        book = null;
+    }
+
     public BookNode(
         @Nonnull final Book book )
     {
