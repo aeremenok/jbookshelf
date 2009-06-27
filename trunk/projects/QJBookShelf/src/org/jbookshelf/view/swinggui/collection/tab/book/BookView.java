@@ -9,7 +9,6 @@ import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -26,6 +25,9 @@ import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.collection.tab.CollectionView;
+import org.jbookshelf.view.swinggui.widget.tables.ExpandScrollPane;
+import org.jbookshelf.view.swinggui.widget.tables.ExpandTableModel;
+import org.jbookshelf.view.swinggui.widget.tables.RecordFactory;
 import org.jdesktop.swingx.JXTable;
 
 /**
@@ -36,10 +38,15 @@ import org.jdesktop.swingx.JXTable;
 public class BookView
     extends CollectionView
     implements
-    ListSelectionListener
+    ListSelectionListener,
+    RecordFactory<BookRecord>
 {
-    private final BookTableModel model = new BookTableModel();
-    private final JXTable        table = new JXTable( model );
+    private final ExpandTableModel<BookRecord> model  = new ExpandTableModel<BookRecord>( BookRecord.class, this, 70 );
+    private final JXTable                      table  = new JXTable( model );
+
+    private final LogRunner                    runner = new LogRunner();
+
+    private List<Object[]>                     books;
 
     public BookView()
     {
@@ -47,10 +54,47 @@ public class BookView
         setName( I18N.tr( "Books" ) );
         setIcon( IMG.icon( IMG.BOOK_PNG ) );
         setLayout( new BorderLayout() );
-        add( new JScrollPane( table ), BorderLayout.CENTER );
+        add( new ExpandScrollPane( table, model ), BorderLayout.CENTER );
 
         table.getSelectionModel().addListSelectionListener( this );
         table.addMouseListener( new CollectionPopupListener() );
+    }
+
+    /* (non-Javadoc)
+     * @see org.jbookshelf.view.swinggui.widget.tables.RecordFactory#createRecord(int)
+     */
+    @Override
+    public BookRecord createRecord(
+        final int i )
+        throws Exception
+    {
+        final StringBuilder q1 = new StringBuilder( "select a.name from author a " );
+        q1.append( "left join author_book ab on a.id=ab.authors_id " );
+        q1.append( "where ab.books_id=? and rownum<2" );
+
+        final StringBuilder q2 = new StringBuilder( "select c.name from category c " );
+        q2.append( "left join category_book cb on c.id=cb.categories_id " );
+        q2.append( "where cb.books_id=? and rownum<2" );
+
+        final Object name = books.get( i )[0];
+        final Object id = books.get( i )[1];
+
+        final String aname = (String) runner.query( q1.toString(), new ScalarHandler(), new Object[]
+        { id } );
+        final String cname = (String) runner.query( q2.toString(), new ScalarHandler(), new Object[]
+        { id } );
+
+        return new BookRecord( id, name, aname, cname );
+    }
+
+    /* (non-Javadoc)
+     * @see org.jbookshelf.view.swinggui.widget.tables.RecordFactory#recordCount()
+     */
+    @Override
+    public int recordCount()
+    {
+        return books != null
+            ? books.size() : 0;
     }
 
     @SuppressWarnings( "unchecked" )
@@ -59,48 +103,21 @@ public class BookView
         final Parameters p )
     {
         table.clearSelection();
-        model.setRows( new ArrayList<Object[]>() );
         Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Object[]>, Object[]>()
         {
             @Override
             protected List<Object[]> doInBackground()
                 throws Exception
             {
-                final LogRunner runner = new LogRunner();
-                final List<Object[]> books = (List<Object[]>) runner.query( buildQuery( p ), new ArrayListHandler() );
-                final StringBuilder q1 = new StringBuilder( "select a.name from author a " );
-                q1.append( "left join author_book ab on a.id=ab.authors_id " );
-                q1.append( "where ab.books_id=? and rownum<2" );
-
-                final StringBuilder q2 = new StringBuilder( "select c.name from category c " );
-                q2.append( "left join category_book cb on c.id=cb.categories_id " );
-                q2.append( "where cb.books_id=? and rownum<2" );
-                for ( int i = 0; i < books.size(); i++ )
-                {
-                    final Object name = books.get( i )[0];
-                    final Object id = books.get( i )[1];
-
-                    final String aname = (String) runner.query( q1.toString(), new ScalarHandler(), new Object[]
-                    { id } );
-                    final String cname = (String) runner.query( q2.toString(), new ScalarHandler(), new Object[]
-                    { id } );
-
-                    final Object[] book = new Object[]
-                    { name, aname, cname, id };
-                    publish( book );
-                    books.set( i, book );
-                }
+                books = (List<Object[]>) runner.query( buildQuery( p ), new ArrayListHandler() );
+                model.reset();
                 return books;
             }
 
             @Override
-            protected void process(
-                final List<Object[]> chunks )
+            protected void doneSafe()
             {
-                for ( final Object[] objects : chunks )
-                {
-                    model.addRow( objects );
-                }
+                table.packAll();
             }
         } );
     }
@@ -117,7 +134,7 @@ public class BookView
                 @Override
                 protected List<Book> doInBackground()
                 {
-                    // todo optimize
+                    // todo optimize and catch ctrl+a
                     if ( selectedRows.length == BookShelf.bookCount() )
                     { // selected all
                         return BookShelf.allBooks();
@@ -129,7 +146,7 @@ public class BookView
                         final int row = selectedRows[i];
                         selectedRows[i] = table.convertRowIndexToModel( row );
                     }
-                    return model.getBooks( selectedRows );
+                    return getBooks( selectedRows );
                 }
 
                 @Override
@@ -139,6 +156,18 @@ public class BookView
                 }
             } );
         }
+    }
+
+    private List<Book> getBooks(
+        final int[] selectedRows )
+    {
+        final List<Book> list = new ArrayList<Book>();
+        for ( final int i : selectedRows )
+        {
+            final Object id = books.get( i )[1];
+            list.add( BookShelf.bookById( id ) );
+        }
+        return list;
     }
 
     @Override
