@@ -36,7 +36,7 @@ public class ExpandTableModel<T extends Record>
     private final List<T>          window = new ArrayList<T>();
     private final RecordFactory<T> factory;
     private final int              pageSize;
-    private final int              recordCount;
+    private int                    recordCount;
 
     public ExpandTableModel(
         final Class<T> recordClass,
@@ -53,15 +53,23 @@ public class ExpandTableModel<T extends Record>
 
     public void expand()
     {
-        final int offset = window.size();
-        final int end = Math.min( offset + pageSize, recordCount );
-        for ( int windowIndex = offset; windowIndex < end; windowIndex++ )
+        try
         {
-            final T record = factory.createRecord( windowIndex );
-            window.add( record );
-        }
+            final int offset = window.size();
+            final int end = Math.min( offset + pageSize, recordCount );
+            for ( int windowIndex = offset; windowIndex < end; windowIndex++ )
+            {
+                final T record = factory.createRecord( windowIndex );
+                window.add( record );
+            }
 
-        fireTableRowsInserted( offset, window.size() - 1 );
+            fireTableRowsInserted( offset, window.size() - 1 );
+        }
+        catch ( final Exception e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
     }
 
     @Override
@@ -85,5 +93,13 @@ public class ExpandTableModel<T extends Record>
         final int column )
     {
         return false;
+    }
+
+    public void reset()
+    {
+        window.clear();
+        fireTableDataChanged();
+        recordCount = factory.recordCount();
+        expand();
     }
 }

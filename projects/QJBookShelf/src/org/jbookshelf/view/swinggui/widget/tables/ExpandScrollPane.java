@@ -22,14 +22,15 @@ public class ExpandScrollPane
 {
     private static final double     TRESHOLD = 0.8;
 
-    private final ExpandTableModel       model;
+    private final ExpandTableModel  model;
     private final BoundedRangeModel boundedRangeModel;
 
     public ExpandScrollPane(
-        final JTable table )
+        final JTable table,
+        final ExpandTableModel model )
     {
         super( table );
-        model = (ExpandTableModel) table.getModel();
+        this.model = model;
         boundedRangeModel = getVerticalScrollBar().getModel();
         boundedRangeModel.addChangeListener( this );
     }
@@ -39,8 +40,8 @@ public class ExpandScrollPane
         final ChangeEvent e )
     {
         final int value = boundedRangeModel.getValue();
-        final int maximum = boundedRangeModel.getMaximum();
-        if ( value / maximum > TRESHOLD )
+        final int maximum = boundedRangeModel.getMaximum() - boundedRangeModel.getExtent();
+        if ( maximum > 0 && value / maximum > TRESHOLD )
         {
             Single.instance( ProgressBar.class ).invoke( new Runnable()
             {

@@ -10,7 +10,8 @@ package org.jbookshelf.view.swinggui.widget.tables;
 public interface RecordFactory<T extends Record>
 {
     T createRecord(
-        int index );
+        int index )
+        throws Exception;
 
     int recordCount();
 }
