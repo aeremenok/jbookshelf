@@ -26,9 +26,9 @@ import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.actions.EnterKeyListener;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.collection.tab.AuthorView;
-import org.jbookshelf.view.swinggui.collection.tab.BookView;
 import org.jbookshelf.view.swinggui.collection.tab.CategoryView;
 import org.jbookshelf.view.swinggui.collection.tab.CollectionView;
+import org.jbookshelf.view.swinggui.collection.tab.book.BookView;
 import org.xnap.commons.gui.EraseTextFieldAction;
 import org.xnap.commons.i18n.I18n;
 

@@ -1,4 +1,4 @@
-package org.jbookshelf.view.swinggui;
+package org.jbookshelf.view.swinggui.widget;
 
 import icons.IMG;
 

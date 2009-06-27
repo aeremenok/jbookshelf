@@ -35,6 +35,7 @@ import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.collection.tab.book.BookNode;
 import org.jdesktop.swingx.JXTree;
 
 /**

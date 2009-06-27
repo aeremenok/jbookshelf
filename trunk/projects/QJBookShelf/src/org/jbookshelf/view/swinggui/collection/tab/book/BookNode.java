@@ -1,11 +1,12 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.collection.tab;
+package org.jbookshelf.view.swinggui.collection.tab.book;
 
 import javax.annotation.Nonnull;
 
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.view.swinggui.collection.tab.DefaultMutableLazyNode;
 
 /**
  * @author eav 2009

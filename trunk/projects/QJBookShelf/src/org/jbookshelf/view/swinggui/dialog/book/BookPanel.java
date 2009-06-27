@@ -23,11 +23,11 @@ import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
-import org.jbookshelf.view.swinggui.FileChooserPanelExt;
-import org.jbookshelf.view.swinggui.GridBagPanel;
 import org.jbookshelf.view.swinggui.multiedit.CategoryMultipleField;
 import org.jbookshelf.view.swinggui.multiedit.MultipleField;
 import org.jbookshelf.view.swinggui.multiedit.MultipleUniqueField;
+import org.jbookshelf.view.swinggui.widget.FileChooserPanelExt;
+import org.jbookshelf.view.swinggui.widget.GridBagPanel;
 import org.xnap.commons.gui.FileChooserPanel;
 import org.xnap.commons.i18n.I18n;
 
