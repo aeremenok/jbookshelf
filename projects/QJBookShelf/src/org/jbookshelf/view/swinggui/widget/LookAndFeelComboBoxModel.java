@@ -1,4 +1,4 @@
-package org.jbookshelf.view.swinggui;
+package org.jbookshelf.view.swinggui.widget;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.LookAndFeel;

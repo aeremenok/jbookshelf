@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui;
+package org.jbookshelf.view.swinggui.widget;
 
 import java.awt.BorderLayout;
 

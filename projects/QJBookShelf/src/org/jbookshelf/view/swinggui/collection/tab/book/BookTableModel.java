@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.collection.tab;
+package org.jbookshelf.view.swinggui.collection.tab.book;
 
 import java.util.ArrayList;
 import java.util.List;

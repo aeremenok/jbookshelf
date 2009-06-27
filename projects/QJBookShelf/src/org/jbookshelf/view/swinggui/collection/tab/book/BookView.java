@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.collection.tab;
+package org.jbookshelf.view.swinggui.collection.tab.book;
 
 import icons.IMG;
 
@@ -25,6 +25,7 @@ import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.collection.tab.CollectionView;
 import org.jdesktop.swingx.JXTable;
 
 /**
