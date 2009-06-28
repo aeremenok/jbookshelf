@@ -35,6 +35,7 @@ import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.collection.CollectionPanel;
 import org.jbookshelf.view.swinggui.collection.tab.book.BookNode;
 import org.jdesktop.swingx.JXTree;
 
@@ -127,6 +128,12 @@ public class AuthorView
             }
 
             @Override
+            protected void doneSafe()
+            {
+                Single.instance( CollectionPanel.class ).setResultCount( getQuiet().size() );
+            }
+
+            @Override
             protected void process(
                 final List<AuthorNode> chunks )
             {
@@ -136,7 +143,6 @@ public class AuthorView
                 }
             }
         } );
-
     }
 
     private void initListeners()

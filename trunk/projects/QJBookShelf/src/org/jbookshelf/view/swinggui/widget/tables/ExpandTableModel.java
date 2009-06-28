@@ -51,7 +51,7 @@ public class ExpandTableModel<T extends Record>
         this.recordCount = factory.recordCount();
     }
 
-    public void expand()
+    public synchronized void expand()
     {
         try
         {

@@ -82,6 +82,24 @@ public class CollectionPanel
         searchContent.setEnabled( false );
     }
 
+    public void setResultCount(
+        final int count )
+    {
+        final int selectedIndex = viewTabbedPane.getSelectedIndex();
+        viewTabbedPane.setTitleAt( selectedIndex, tabs[selectedIndex].getName() + " (" + count + ") " );
+    }
+
+    public void stateChanged(
+        final ChangeEvent e )
+    {
+        final boolean isBook = getActiveTab() instanceof BookView;
+        isReadComboBox.setEnabled( isBook );
+        // todo search content
+        //        searchContent.setEnabled( isBook );
+
+        updateActiveView();
+    }
+
     public void translate(
         final I18n i18n )
     {
@@ -97,17 +115,6 @@ public class CollectionPanel
         {
             viewTabbedPane.setTitleAt( i, i18n.tr( tabs[i].getName() ) );
         }
-    }
-
-    public void stateChanged(
-        final ChangeEvent e )
-    {
-        final boolean isBook = getActiveTab() instanceof BookView;
-        isReadComboBox.setEnabled( isBook );
-        // todo search content
-        //        searchContent.setEnabled( isBook );
-
-        updateActiveView();
     }
 
     public void updateActiveView()
