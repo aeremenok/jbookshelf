@@ -28,6 +28,11 @@ public class IMG
     public static final String SPLASH_PNG                     = "splash.png";
     public static final String LOGO_PNG                       = "logo.png";
 
+    public static final String PREVIOUS_PNG                   = "go-previous-view.png";
+    public static final String NEXT_PNG                       = "go-next-view.png";
+    public static final String LAST_PNG                       = "go-last-view.png";
+    public static final String FIRST_PNG                      = "go-first-view.png";
+
     public static Icon icon(
         final String fileName )
     {
