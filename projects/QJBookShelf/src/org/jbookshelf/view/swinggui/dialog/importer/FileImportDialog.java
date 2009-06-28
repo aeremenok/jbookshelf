@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 import org.jbookshelf.controller.importer.FileImporter;
@@ -51,12 +52,12 @@ public class FileImportDialog
     Translatable
 {
     private final JLabel                fileLabel        = new JLabel();
+    private final JLabel                maskLabel        = new JLabel();
+    private final JLabel                infoLabel        = new JLabel();
     /**
      * root directory of filesystem
      */
     private final FileChooserPanelExt   fileChooserPanel = new FileChooserPanelExt( 50, "import.dir.chooser" );
-
-    private final JLabel                maskLabel        = new JLabel();
     /**
      * masks to parse filenames
      */
@@ -160,12 +161,16 @@ public class FileImportDialog
         fileLabel.setText( i18n.tr( "File" ) );
         maskLabel.setText( i18n.tr( "Mask" ) );
 
-        final TitledBorder leftBorder = new TitledBorder( i18n.tr( "Successfully imported books" ) + "("
-            + successModel.getRowCount() + ")" );
+        final TitledBorder leftBorder = new TitledBorder( i18n.tr( "Successfully imported books" ) + " ("
+            + successModel.getRowCount() + ") " );
         ((JComponent) splitPane.getLeftComponent()).setBorder( leftBorder );
-        final TitledBorder rightBorder = new TitledBorder( i18n.tr( "Unimported files" ) + "("
-            + failModel.getRowCount() + ")" );
+        final TitledBorder rightBorder = new TitledBorder( i18n.tr( "Unimported files" ) + " ("
+            + failModel.getRowCount() + ") " );
         ((JComponent) splitPane.getRightComponent()).setBorder( rightBorder );
+
+        infoLabel
+            .setText( i18n
+                .tr( "<html><i>File names will be parsed using these masks. <b>%a</b> = author, <b>%b</b> = book, <b>%c</b> = category</i></html>" ) );
     }
 
     private void initComponents()
@@ -182,8 +187,11 @@ public class FileImportDialog
 
         grid.add( fileLabel, 0, 0 );
         grid.add( fileChooserPanel, 0, 1 );
-        grid.add( maskLabel, 1, 0 );
-        grid.add( maskField, 1, 1 );
+        grid.add( infoLabel, 1, 0, 1, 2 );
+        grid.add( maskLabel, 2, 0 );
+        grid.add( maskField, 2, 1 );
+
+        infoLabel.setHorizontalAlignment( SwingConstants.CENTER );
 
         fileChooserPanel.getFileChooser().setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
 

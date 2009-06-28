@@ -35,6 +35,7 @@ import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.collection.CollectionPanel;
 import org.jbookshelf.view.swinggui.collection.tab.book.BookNode;
 import org.jbookshelf.view.swinggui.dnd.TreeDragSource;
 import org.jbookshelf.view.swinggui.dnd.TreeDropTarget;
@@ -148,6 +149,7 @@ public class CategoryView
                             publish( new CategoryNode( category ) );
                         }
                     }
+
                     return list;
                 }
                 catch ( final HibernateException e )
@@ -165,6 +167,7 @@ public class CategoryView
             protected void doneSafe()
             {
                 tree.expandRow( 0 );
+                Single.instance( CollectionPanel.class ).setResultCount( getQuiet().size() - 1 );
             }
 
             @Override

@@ -24,6 +24,7 @@ import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.collection.CollectionPanel;
 import org.jbookshelf.view.swinggui.collection.tab.CollectionView;
 import org.jbookshelf.view.swinggui.widget.tables.ExpandScrollPane;
 import org.jbookshelf.view.swinggui.widget.tables.ExpandTableModel;
@@ -118,6 +119,7 @@ public class BookView
             protected void doneSafe()
             {
                 table.packAll();
+                Single.instance( CollectionPanel.class ).setResultCount( getQuiet().size() );
             }
         } );
     }
