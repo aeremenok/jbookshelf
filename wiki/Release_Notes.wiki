@@ -1,4 +1,24 @@
 #labels Featured
+=JBookShelf 0.5b1=
+
+[http://jbookshelf.googlecode.com/files/jbookshelf-linux-0.5b1.zip Download for Linux] 
+[http://jbookshelf.googlecode.com/files/jbookshelf-windows-0.5b1.zip Download for Windows]
+
+[http://code.google.com/p/jbookshelf/wiki/Screenshots Screenshots]
+
+==Changes==
+
+ * Hierarchical Categories
+ * Book table lazy scrolling 
+ * Note dialog polished
+ * Auto restart after language setting change
+
+==Known issues==
+
+ * [http://code.google.com/p/jbookshelf/issues/list Issues]
+
+----
+
 =JBookShelf 0.5b0=
 
 [http://jbookshelf.googlecode.com/files/jbookshelf-linux-0.5b0.zip Download for Linux] 
