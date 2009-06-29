@@ -9,8 +9,12 @@ import java.awt.Frame;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.log4j.Logger;
+
+import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 
 /**
  * @author eav 2009
@@ -24,7 +28,15 @@ public class ReaderWindow
     public static void main(
         final String[] args )
     {
-        new ReaderWindow().setVisible( true );
+        try
+        {
+            UIManager.setLookAndFeel( new NimbusLookAndFeel() );
+            new ReaderWindow().setVisible( true );
+        }
+        catch ( final UnsupportedLookAndFeelException e )
+        {
+            e.printStackTrace();
+        }
     }
 
     private final ReaderToolBar      toolBar           = new ReaderToolBar( this );

@@ -33,6 +33,11 @@ public class IMG
     public static final String LAST_PNG                       = "go-last-view.png";
     public static final String FIRST_PNG                      = "go-first-view.png";
 
+    public static final String RIGHT_NEW_PNG                  = "view-right-new.png";
+    public static final String RIGHT_CLOSE_PNG                = "view-right-close.png";
+    public static final String ZOOM_IN_PNG                    = "zoom-in.png";
+    public static final String ZOOM_OUT_PNG                   = "zoom-out.png";
+
     public static Icon icon(
         final String fileName )
     {

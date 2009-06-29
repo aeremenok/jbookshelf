@@ -17,7 +17,7 @@ public class ReaderToolBar
     private static final Logger log       = Logger.getLogger( ReaderToolBar.class );
     private final ReaderWindow  readerWindow;
 
-    private final Scalator      scalator  = new Scalator();
+    private final Scalator      scalator  = new Scalator( 50, 200, 50 );
     private final Paginator     paginator = new Paginator()
                                           {
                                               @Override

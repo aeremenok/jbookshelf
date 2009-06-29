@@ -3,7 +3,12 @@
  */
 package org.jbookshelf.view.swinggui.reader;
 
+import icons.IMG;
+
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeSupport;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,19 +24,29 @@ import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 public class Scalator
     extends JPanel
 {
+    public static enum Layout
+    {
+        ONE_PAGE,
+        TWO_PAGES
+    }
+
     private class LayoutAction
         extends TranslatableAction
     {
         public LayoutAction()
         {
-            super( tr( "Change layout" ) );
+            super();
         }
 
         @Override
         public void actionPerformed(
             final ActionEvent e )
         {
-        // todo
+            final boolean isOne = getPageLayout() == Layout.ONE_PAGE;
+            setPageLayout( isOne
+                ? Layout.TWO_PAGES : Layout.ONE_PAGE );
+            putValue( SMALL_ICON, IMG.icon( isOne
+                ? IMG.RIGHT_CLOSE_PNG : IMG.RIGHT_NEW_PNG ) );
         }
     }
 
@@ -40,14 +55,18 @@ public class Scalator
     {
         public ZoomInAction()
         {
-            super( tr( "Zoom In" ) );
+            super( null, IMG.icon( IMG.ZOOM_IN_PNG ) );
         }
 
         @Override
         public void actionPerformed(
             final ActionEvent e )
         {
-        // todo
+            final int selectedIndex = scaleComboBox.getSelectedIndex();
+            if ( selectedIndex < scaleComboBox.getItemCount() - 1 )
+            {
+                scaleComboBox.setSelectedIndex( selectedIndex + 1 );
+            }
         }
     }
 
@@ -56,38 +75,152 @@ public class Scalator
     {
         public ZoomOutAction()
         {
-            super( tr( "Zoom Out" ) );
+            super( null, IMG.icon( IMG.ZOOM_OUT_PNG ) );
         }
 
         @Override
         public void actionPerformed(
             final ActionEvent e )
         {
-        // todo
+            final int selectedIndex = scaleComboBox.getSelectedIndex();
+            if ( selectedIndex > 0 )
+            {
+                scaleComboBox.setSelectedIndex( selectedIndex - 1 );
+            }
         }
     }
 
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
+
     @SuppressWarnings( "unused" )
-    private static final Logger log           = Logger.getLogger( Scalator.class );
+    private static final Logger         log                   = Logger.getLogger( Scalator.class );
+    public static final String          SCALE                 = "scale";
+    public static final String          LAYOUT                = "layout";
 
-    public final JComboBox      scaleComboBox = new JComboBox();
+    public final JComboBox              scaleComboBox         = new JComboBox();
 
-    public Scalator()
+    private int                         scale;
+
+    private int                         max;
+    private int                         min;
+    private int                         step;
+
+    private Layout                      pageLayout;
+
+    private final ZoomOutAction         zoomOutAction         = new ZoomOutAction();
+    private final ZoomInAction          zoomInAction          = new ZoomInAction();
+
+    public Scalator(
+        final int min,
+        final int max,
+        final int step )
+    {
+        this();
+        setScaleBounds( min, max, step );
+    }
+
+    private Scalator()
     {
         setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
 
-        scaleComboBox.addItem( "50%" );
-        scaleComboBox.addItem( "100%" );
-        scaleComboBox.addItem( "150%" );
-        scaleComboBox.addItem( "200%" );
-
-        add( new JButton( new ZoomOutAction() ) );
+        add( new JButton( zoomOutAction ) );
         add( scaleComboBox );
-        add( new JButton( new ZoomInAction() ) );
-        add( new JButton( new LayoutAction() ) );
+        add( new JButton( zoomInAction ) );
+        final LayoutAction layoutAction = new LayoutAction();
+        add( new JButton( layoutAction ) );
+
+        scaleComboBox.addItemListener( new ItemListener()
+        {
+            @Override
+            public void itemStateChanged(
+                final ItemEvent e )
+            {
+                setScale( min + scaleComboBox.getSelectedIndex() * step );
+            }
+        } );
+
+        layoutAction.actionPerformed( null );
     }
 
-    protected void scaleChanged(
-        @SuppressWarnings( "unused" ) final int scale )
-    {}
+    /**
+     * @return the pageLayout
+     */
+    public Layout getPageLayout()
+    {
+        return this.pageLayout;
+    }
+
+    /**
+     * @return the propertyChangeSupport
+     */
+    public PropertyChangeSupport getPropertyChangeSupport()
+    {
+        return this.propertyChangeSupport;
+    }
+
+    /**
+     * @return the scale
+     */
+    public int getScale()
+    {
+        return this.scale;
+    }
+
+    /**
+     * @param pageLayout the pageLayout to set
+     */
+    public void setPageLayout(
+        final Layout pageLayout )
+    {
+        final Layout oldLayout = this.pageLayout;
+        this.pageLayout = pageLayout;
+        propertyChangeSupport.firePropertyChange( LAYOUT, oldLayout, pageLayout );
+    }
+
+    /**
+     * @param scale the scale to set
+     */
+    public void setScale(
+        int scale )
+    {
+        if ( scale < min )
+        {
+            scale = min;
+        }
+        else if ( scale > max )
+        {
+            scale = max;
+        }
+
+        if ( this.scale == scale )
+        {
+            return;
+        }
+
+        final int oldScale = this.scale;
+        this.scale = scale;
+        propertyChangeSupport.firePropertyChange( SCALE, oldScale, scale );
+        zoomInAction.setEnabled( scale < max );
+        zoomOutAction.setEnabled( scale > min );
+    }
+
+    public void setScaleBounds(
+        final int min,
+        final int max,
+        final int step )
+    {
+        if ( max - min < 0 )
+        {
+            throw new IllegalArgumentException();
+        }
+        this.min = min;
+        this.max = max;
+        this.step = step;
+        scaleComboBox.removeAllItems();
+        for ( int i = min; i <= max; i += step )
+        {
+            scaleComboBox.addItem( i + "%" );
+        }
+        setScale( min );
+    }
 }
