@@ -22,7 +22,9 @@ public class Parameters
         BOOK_FILE,
         BOOK_AUTHORS,
         BOOK_CATEGORIES,
-        BOOK_VIEWER;
+        BOOK_VIEWER,
+
+        SEARCH_DIRECTION
     }
 
     private final Map<String, Object> map = new HashMap<String, Object>();
