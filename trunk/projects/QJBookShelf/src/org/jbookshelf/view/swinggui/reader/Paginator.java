@@ -6,6 +6,7 @@ package org.jbookshelf.view.swinggui.reader;
 import icons.IMG;
 
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeSupport;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -84,14 +85,18 @@ public class Paginator
         }
     }
 
-    private int                  pageCount;
-    private int                  currentPage;
-    private final JTextField     pageSelector   = new JTextField( 3 );
+    public static final String          PAGE                  = "page";
 
-    private final FirstAction    firstAction    = new FirstAction();
-    private final PreviousAction previousAction = new PreviousAction();
-    private final NextAction     nextAction     = new NextAction();
-    private final LastAction     lastAction     = new LastAction();
+    private int                         pageCount;
+    private int                         currentPage;
+    private final JTextField            pageSelector          = new JTextField( 3 );
+
+    private final FirstAction           firstAction           = new FirstAction();
+    private final PreviousAction        previousAction        = new PreviousAction();
+    private final NextAction            nextAction            = new NextAction();
+    private final LastAction            lastAction            = new LastAction();
+
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
 
     public Paginator()
     {
@@ -120,27 +125,37 @@ public class Paginator
         return this.pageCount;
     }
 
+    public PropertyChangeSupport getPropertyChangeSupport()
+    {
+        return propertyChangeSupport;
+    }
+
     public void setCurrentPage(
-        final int currentPage )
+        int currentPage )
     {
         if ( currentPage < 1 )
         {
-            this.currentPage = 1;
+            currentPage = 1;
         }
         else if ( currentPage > pageCount )
         {
-            this.currentPage = pageCount;
+            currentPage = pageCount;
         }
-        else
+
+        if ( this.currentPage == currentPage )
         {
-            this.currentPage = currentPage;
+            return;
         }
+
+        final int oldPage = this.currentPage;
+        this.currentPage = currentPage;
         firstAction.setEnabled( this.currentPage != 1 );
         previousAction.setEnabled( this.currentPage != 1 );
         nextAction.setEnabled( this.currentPage != pageCount );
         lastAction.setEnabled( this.currentPage != pageCount );
         pageSelector.setText( this.currentPage - 1 + "" );
-        pageChanged( this.currentPage );
+
+        propertyChangeSupport.firePropertyChange( PAGE, oldPage, currentPage );
     }
 
     public void setPageCount(
@@ -152,8 +167,4 @@ public class Paginator
         setCurrentPage( oldCount > pageCount
             ? pageCount : 1 );
     }
-
-    protected void pageChanged(
-        @SuppressWarnings( "unused" ) final int page )
-    {}
 }
