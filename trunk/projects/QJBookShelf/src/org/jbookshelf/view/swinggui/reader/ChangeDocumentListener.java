@@ -3,18 +3,18 @@
  */
 package org.jbookshelf.view.swinggui.reader;
 
-import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.JTextComponent;
 
 public abstract class ChangeDocumentListener
     implements
     DocumentListener
 {
-    private final JTextField textField;
+    private final JTextComponent textField;
 
     public ChangeDocumentListener(
-        final JTextField textField )
+        final JTextComponent textField )
     {
         this.textField = textField;
     }

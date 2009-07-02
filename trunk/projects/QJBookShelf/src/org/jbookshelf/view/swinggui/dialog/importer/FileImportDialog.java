@@ -3,6 +3,8 @@
  */
 package org.jbookshelf.view.swinggui.dialog.importer;
 
+import icons.IMG;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
@@ -192,6 +194,7 @@ public class FileImportDialog
         grid.add( maskField, 2, 1 );
 
         infoLabel.setHorizontalAlignment( SwingConstants.CENTER );
+        infoLabel.setIcon( IMG.icon( IMG.KTIP_PNG ) );
 
         fileChooserPanel.getFileChooser().setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
 

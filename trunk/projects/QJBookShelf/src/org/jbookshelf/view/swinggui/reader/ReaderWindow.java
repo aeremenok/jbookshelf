@@ -13,6 +13,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.log4j.Logger;
+import org.jbookshelf.model.db.Book;
 
 import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 
@@ -31,7 +32,9 @@ public class ReaderWindow
         try
         {
             UIManager.setLookAndFeel( new NimbusLookAndFeel() );
-            new ReaderWindow().setVisible( true );
+            final Book book = new Book();
+            book.setName( "test" );
+            new ReaderWindow( book ).setVisible( true );
         }
         catch ( final UnsupportedLookAndFeelException e )
         {
@@ -42,10 +45,13 @@ public class ReaderWindow
     private final ReaderToolBar      toolBar           = new ReaderToolBar( this );
     private final ReaderContentPanel leftContentPanel  = new ReaderContentPanel( this );
     private final ReaderContentPanel rightContentPanel = new ReaderContentPanel( this );
+    private final Book               book;
 
-    public ReaderWindow()
+    public ReaderWindow(
+        final Book book )
     {
         super();
+        this.book = book;
         setContentPane( new JPanel( new BorderLayout() ) );
 
         add( toolBar, BorderLayout.NORTH );
@@ -55,8 +61,17 @@ public class ReaderWindow
         splitPane.setLeftComponent( leftContentPanel );
         splitPane.setRightComponent( rightContentPanel );
 
+        setTitle( book.getName() );
+
         pack();
         setExtendedState( Frame.MAXIMIZED_BOTH );
     }
 
+    /**
+     * @return the book
+     */
+    public Book getBook()
+    {
+        return this.book;
+    }
 }

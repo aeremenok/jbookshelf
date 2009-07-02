@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -90,6 +91,7 @@ public class Paginator
     private int                         pageCount;
     private int                         currentPage;
     private final JTextField            pageSelector          = new JTextField( 3 );
+    private final JLabel                pageCountLabel        = new JLabel();
 
     private final FirstAction           firstAction           = new FirstAction();
     private final PreviousAction        previousAction        = new PreviousAction();
@@ -106,13 +108,21 @@ public class Paginator
         add( new JButton( firstAction ) );
         add( new JButton( previousAction ) );
         add( pageSelector );
+        add( pageCountLabel );
         add( new JButton( nextAction ) );
         add( new JButton( lastAction ) );
 
-        // todo add listener to pageSelector
+        pageSelector.getDocument().addDocumentListener( new ChangeDocumentListener( pageSelector )
+        {
+            @Override
+            public void onChange(
+                final String newText )
+            {
+                setCurrentPage( Integer.valueOf( newText.trim() ) - 1 );
+            }
+        } );
 
         setPageCount( 1 );
-        setCurrentPage( 1 );
     }
 
     public int getCurrentPage()
@@ -133,27 +143,22 @@ public class Paginator
     public void setCurrentPage(
         int currentPage )
     {
-        if ( currentPage < 1 )
+        if ( currentPage < 0 )
         {
-            currentPage = 1;
+            currentPage = 0;
         }
-        else if ( currentPage > pageCount )
+        else if ( currentPage > pageCount - 1 )
         {
-            currentPage = pageCount;
-        }
-
-        if ( this.currentPage == currentPage )
-        {
-            return;
+            currentPage = pageCount - 1;
         }
 
         final int oldPage = this.currentPage;
         this.currentPage = currentPage;
-        firstAction.setEnabled( this.currentPage != 1 );
-        previousAction.setEnabled( this.currentPage != 1 );
-        nextAction.setEnabled( this.currentPage != pageCount );
-        lastAction.setEnabled( this.currentPage != pageCount );
-        pageSelector.setText( this.currentPage - 1 + "" );
+        firstAction.setEnabled( this.currentPage > 0 );
+        previousAction.setEnabled( this.currentPage > 0 );
+        nextAction.setEnabled( this.currentPage < pageCount - 1 );
+        lastAction.setEnabled( this.currentPage < pageCount - 1 );
+        pageSelector.setText( this.currentPage + 1 + "" );
 
         propertyChangeSupport.firePropertyChange( PAGE, oldPage, currentPage );
     }
@@ -163,8 +168,9 @@ public class Paginator
     {
         final int oldCount = this.pageCount;
         this.pageCount = pageCount;
+        pageCountLabel.setText( "/ " + pageCount );
 
         setCurrentPage( oldCount > pageCount
-            ? pageCount : 1 );
+            ? pageCount : 0 );
     }
 }
