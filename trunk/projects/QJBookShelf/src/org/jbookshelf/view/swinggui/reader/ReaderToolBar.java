@@ -61,6 +61,17 @@ public class ReaderToolBar
         add( new WrapperPanel( new JButton( new EditBookAction() ) ) );
     }
 
+    /**
+     * @return the contentActionsPanel
+     */
+    public ContentActionsPanel getContentActionsPanel()
+    {
+        return this.contentActionsPanel;
+    }
+
+    /**
+     * @return the paginator
+     */
     public Paginator getPaginator()
     {
         return paginator;
@@ -74,11 +85,17 @@ public class ReaderToolBar
         return this.readerWindow;
     }
 
+    /**
+     * @return the scalator
+     */
     public Scalator getScalator()
     {
         return scalator;
     }
 
+    /**
+     * @return the text finder
+     */
     public TextFinder getTextFinder()
     {
         return textFinder;

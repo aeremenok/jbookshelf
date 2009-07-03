@@ -118,7 +118,7 @@ public class Paginator
             public void onChange(
                 final String newText )
             {
-                setCurrentPage( Integer.valueOf( newText.trim() ) - 1 );
+                setCurrentPageImpl( Integer.valueOf( newText.trim() ) - 1 );
             }
         } );
 
@@ -143,24 +143,8 @@ public class Paginator
     public void setCurrentPage(
         int currentPage )
     {
-        if ( currentPage < 0 )
-        {
-            currentPage = 0;
-        }
-        else if ( currentPage > pageCount - 1 )
-        {
-            currentPage = pageCount - 1;
-        }
-
-        final int oldPage = this.currentPage;
-        this.currentPage = currentPage;
-        firstAction.setEnabled( this.currentPage > 0 );
-        previousAction.setEnabled( this.currentPage > 0 );
-        nextAction.setEnabled( this.currentPage < pageCount - 1 );
-        lastAction.setEnabled( this.currentPage < pageCount - 1 );
+        currentPage = setCurrentPageImpl( currentPage );
         pageSelector.setText( this.currentPage + 1 + "" );
-
-        propertyChangeSupport.firePropertyChange( PAGE, oldPage, currentPage );
     }
 
     public void setPageCount(
@@ -172,5 +156,32 @@ public class Paginator
 
         setCurrentPage( oldCount > pageCount
             ? pageCount : 0 );
+    }
+
+    /**
+     * @param currentPage
+     * @return
+     */
+    private int setCurrentPageImpl(
+        int currentPage )
+    {
+        if ( currentPage < 0 )
+        {
+            currentPage = 0;
+        }
+        else if ( currentPage > pageCount - 1 )
+        {
+            currentPage = pageCount - 1;
+        }
+
+        this.currentPage = currentPage;
+        firstAction.setEnabled( this.currentPage > 0 );
+        previousAction.setEnabled( this.currentPage > 0 );
+        nextAction.setEnabled( this.currentPage < pageCount - 1 );
+        lastAction.setEnabled( this.currentPage < pageCount - 1 );
+
+        propertyChangeSupport.firePropertyChange( PAGE, -1, currentPage );
+
+        return currentPage;
     }
 }

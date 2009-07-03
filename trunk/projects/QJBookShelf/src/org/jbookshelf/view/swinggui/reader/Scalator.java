@@ -8,7 +8,6 @@ import icons.IMG;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeSupport;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -90,25 +89,23 @@ public class Scalator
         }
     }
 
-    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
-
     @SuppressWarnings( "unused" )
-    private static final Logger         log                   = Logger.getLogger( Scalator.class );
-    public static final String          SCALE                 = "scale";
-    public static final String          LAYOUT                = "layout";
+    private static final Logger log           = Logger.getLogger( Scalator.class );
+    public static final String  SCALE         = "scale";
+    public static final String  LAYOUT        = "layout";
 
-    public final JComboBox              scaleComboBox         = new JComboBox();
+    public final JComboBox      scaleComboBox = new JComboBox();
 
-    private int                         scale;
+    private int                 scale;
 
-    private int                         max;
-    private int                         min;
-    private int                         step;
+    private int                 max;
+    private int                 min;
+    private int                 step;
 
-    private Layout                      pageLayout;
+    private Layout              pageLayout;
 
-    private final ZoomOutAction         zoomOutAction         = new ZoomOutAction();
-    private final ZoomInAction          zoomInAction          = new ZoomInAction();
+    private final ZoomOutAction zoomOutAction = new ZoomOutAction();
+    private final ZoomInAction  zoomInAction  = new ZoomInAction();
 
     public Scalator(
         final int min,
@@ -151,14 +148,6 @@ public class Scalator
     }
 
     /**
-     * @return the propertyChangeSupport
-     */
-    public PropertyChangeSupport getPropertyChangeSupport()
-    {
-        return this.propertyChangeSupport;
-    }
-
-    /**
      * @return the scale
      */
     public int getScale()
@@ -172,9 +161,8 @@ public class Scalator
     public void setPageLayout(
         final Layout pageLayout )
     {
-        final Layout oldLayout = this.pageLayout;
         this.pageLayout = pageLayout;
-        propertyChangeSupport.firePropertyChange( LAYOUT, oldLayout, pageLayout );
+        firePropertyChange( LAYOUT, null, pageLayout );
     }
 
     /**
@@ -192,14 +180,8 @@ public class Scalator
             scale = max;
         }
 
-        if ( this.scale == scale )
-        {
-            return;
-        }
-
-        final int oldScale = this.scale;
         this.scale = scale;
-        propertyChangeSupport.firePropertyChange( SCALE, oldScale, scale );
+        firePropertyChange( SCALE, null, scale );
         zoomInAction.setEnabled( scale < max );
         zoomOutAction.setEnabled( scale > min );
     }
