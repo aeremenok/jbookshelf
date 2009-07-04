@@ -40,11 +40,21 @@ public class FileUtil
     public static String guessByteArrayEncoding(
         final byte[] content )
     {
+        return guessStreamEncoding( new ByteArrayInputStream( content ) );
+    }
+
+    /**
+     * @param in a stream to check
+     * @return its possible encoding
+     */
+    public static String guessStreamEncoding(
+        final ByteArrayInputStream in )
+    {
         final UniversalDetector detector = new UniversalDetector( null );
         InputStream is = null;
         try
         {
-            is = new BufferedInputStream( new ByteArrayInputStream( content ) );
+            is = new BufferedInputStream( in );
             final byte[] buf = new byte[4096];
 
             int nread;

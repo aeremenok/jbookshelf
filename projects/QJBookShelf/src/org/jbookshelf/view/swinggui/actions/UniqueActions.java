@@ -18,11 +18,11 @@ import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
-import org.jbookshelf.view.qtgui.reader.Viewer;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.collection.CollectionPanel;
 import org.jbookshelf.view.swinggui.dialog.book.BookEditDialog;
 import org.jbookshelf.view.swinggui.main.MainWindow;
+import org.jbookshelf.view.swinggui.reader.Viewer;
 
 public class UniqueActions
 {
