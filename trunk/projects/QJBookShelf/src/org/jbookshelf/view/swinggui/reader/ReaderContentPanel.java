@@ -3,34 +3,33 @@
  */
 package org.jbookshelf.view.swinggui.reader;
 
-import javax.swing.JPanel;
+import java.awt.BorderLayout;
 
-import org.apache.log4j.Logger;
+import javax.swing.JPanel;
 
 /**
  * @author eav 2009
+ * @param <T>
  */
-public class ReaderContentPanel
+public abstract class ReaderContentPanel<T>
     extends JPanel
 {
-    private static final Logger log = Logger.getLogger( ReaderContentPanel.class );
-    @SuppressWarnings( "unused" )
-    private final ReaderWindow  readerWindow;
+    // todo unused?
+    protected final ReaderWindow<T> readerWindow;
 
     public ReaderContentPanel(
-        final ReaderWindow readerWindow )
+        final ReaderWindow<T> readerWindow )
     {
+        super( new BorderLayout() );
         this.readerWindow = readerWindow;
     }
+
+    public abstract void setContent(
+        T content );
 
     /**
      * @param scale
      */
-    public void setScale(
-        @SuppressWarnings( "unused" ) final int scale )
-    {
-        log.debug( "setScale" );
-        // TODO Auto-generated method stub
-
-    }
+    public abstract void setScale(
+        final int scale );
 }

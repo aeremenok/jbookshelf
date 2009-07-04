@@ -6,13 +6,13 @@ package org.jbookshelf.view.swinggui.reader.toolbar;
 import icons.IMG;
 
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeSupport;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
 
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.widget.ChangeDocumentListener;
@@ -89,19 +89,17 @@ public class Paginator
         }
     }
 
-    public static final String          PAGE                  = "page";
+    public static final String   PAGE           = "page";
 
-    private int                         pageCount;
-    private int                         currentPage;
-    private final JTextField            pageSelector          = new JTextField( 3 );
-    private final JLabel                pageCountLabel        = new JLabel();
+    private int                  pageCount;
+    private int                  currentPage;
+    private final JTextField     pageSelector   = new JTextField( 3 );
+    private final JLabel         pageCountLabel = new JLabel();
 
-    private final FirstAction           firstAction           = new FirstAction();
-    private final PreviousAction        previousAction        = new PreviousAction();
-    private final NextAction            nextAction            = new NextAction();
-    private final LastAction            lastAction            = new LastAction();
-
-    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
+    private final FirstAction    firstAction    = new FirstAction();
+    private final PreviousAction previousAction = new PreviousAction();
+    private final NextAction     nextAction     = new NextAction();
+    private final LastAction     lastAction     = new LastAction();
 
     public Paginator()
     {
@@ -121,8 +119,13 @@ public class Paginator
             public void onChange(
                 final String newText )
             {
-                setCurrentPageImpl( Integer.valueOf( newText.trim() ) - 1 );
+                setCurrentPageImpl( Integer.valueOf( pageSelector.getText() ) - 1 );
             }
+
+            @Override
+            public void removeUpdate(
+                final DocumentEvent e )
+            {}
         } );
 
         setPageCount( 1 );
@@ -138,11 +141,6 @@ public class Paginator
         return this.pageCount;
     }
 
-    public PropertyChangeSupport getPropertyChangeSupport()
-    {
-        return propertyChangeSupport;
-    }
-
     /**
      * set currentPage and the value of pageSelector
      * 
@@ -151,8 +149,8 @@ public class Paginator
     public void setCurrentPage(
         final int currentPage )
     {
-        setCurrentPageImpl( currentPage );
-        pageSelector.setText( this.currentPage + 1 + "" );
+        final String t = currentPage + 1 + "";
+        pageSelector.setText( t );
     }
 
     public void setPageCount(
@@ -189,6 +187,6 @@ public class Paginator
         nextAction.setEnabled( this.currentPage < pageCount - 1 );
         lastAction.setEnabled( this.currentPage < pageCount - 1 );
 
-        propertyChangeSupport.firePropertyChange( PAGE, -1, currentPage );
+        firePropertyChange( PAGE, -1, currentPage );
     }
 }

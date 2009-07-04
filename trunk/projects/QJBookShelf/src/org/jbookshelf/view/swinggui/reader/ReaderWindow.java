@@ -8,11 +8,8 @@ import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
@@ -25,48 +22,38 @@ import org.jbookshelf.view.swinggui.reader.toolbar.TextFinder;
 import org.jbookshelf.view.swinggui.reader.toolbar.Scalator.Layout;
 import org.jdesktop.swingx.JXFrame;
 
-import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
-
 /**
  * book reader main window
  * 
  * @author eav 2009
+ * @param <T>
  */
-public class ReaderWindow
+public class ReaderWindow<T>
     extends JXFrame
 {
-    private static final Logger log = Logger.getLogger( ReaderWindow.class );
+    private static final Logger         log       = Logger.getLogger( ReaderWindow.class );
 
-    public static void main(
-        final String[] args )
-    {
-        try
-        {
-            UIManager.setLookAndFeel( new NimbusLookAndFeel() );
-            final Book book = new Book();
-            book.setName( "test" );
-            final ReaderWindow readerWindow = new ReaderWindow( book );
-            readerWindow.setVisible( true );
-            readerWindow.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        }
-        catch ( final UnsupportedLookAndFeelException e )
-        {
-            e.printStackTrace();
-        }
-    }
+    private final Book                  book;
 
-    private final ReaderToolBar      toolBar           = new ReaderToolBar( this );
-    private final ReaderContentPanel leftContentPanel  = new ReaderContentPanel( this );
-    private final ReaderContentPanel rightContentPanel = new ReaderContentPanel( this );
-    private final Book               book;
+    private final ReaderToolBar         toolBar;
+    private final ReaderContentPanel<T> leftContentPanel;
+    private final ReaderContentPanel<T> rightContentPanel;
+    private final BookContent<T>        bookContent;
 
-    private final JSplitPane         splitPane         = new JSplitPane();
+    private final JSplitPane            splitPane = new JSplitPane();
 
     public ReaderWindow(
-        final Book book )
+        final Book book,
+        final ReaderFactory<T> factory )
     {
         super();
         this.book = book;
+
+        toolBar = factory.createReaderToolBar( this );
+        leftContentPanel = factory.createReaderContentPanel( this );
+        rightContentPanel = factory.createReaderContentPanel( this );
+        bookContent = factory.createBookContent( book.getPhysicalBook().getFile() );
+
         setContentPane( new JPanel( new BorderLayout() ) );
 
         add( toolBar, BorderLayout.NORTH );
@@ -78,6 +65,8 @@ public class ReaderWindow
         setTitle( book.getName() );
 
         initListeners();
+
+        toolBar.getPaginator().setPageCount( bookContent.getPageCount() );
 
         pack();
         setExtendedState( Frame.MAXIMIZED_BOTH );
@@ -128,11 +117,12 @@ public class ReaderWindow
      * @param pageNumber a number of a page to display
      */
     public void setPage(
-        @SuppressWarnings( "unused" ) final int pageNumber )
+        final int pageNumber )
     {
-        log.debug( "setPage" );
-        // TODO Auto-generated method stub
-
+        final T leftPage = bookContent.getPage( pageNumber );
+        leftContentPanel.setContent( leftPage );
+        final T rightPage = bookContent.getPage( pageNumber + 1 );
+        rightContentPanel.setContent( rightPage );
     }
 
     /**

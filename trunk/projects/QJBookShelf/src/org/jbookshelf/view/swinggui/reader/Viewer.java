@@ -1,16 +1,13 @@
 /**
  * 
  */
-package org.jbookshelf.view.qtgui.reader;
+package org.jbookshelf.view.swinggui.reader;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.controller.util.FileUtil;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.controller.util.ZIPUtil;
 import org.jbookshelf.model.db.Book;
@@ -18,6 +15,7 @@ import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.util.LogRunner;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.reader.txt.TxtReaderFactory;
 
 /**
  * @author eav 2009
@@ -51,7 +49,7 @@ public class Viewer
      * @param book a book to open
      * @return a file with book content
      */
-    public File getFile(
+    public File prepareFile(
         final Book book )
     {
         final PhysicalBook physical = book.getPhysicalBook();
@@ -87,69 +85,43 @@ public class Viewer
     public void open(
         final Book book )
     {
-        Single.instance( ProgressBar.class ).invoke( new SafeWorker<byte[], Object>()
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<ReaderWindow, Object>()
         {
             @Override
-            protected byte[] doInBackground()
-                throws Exception
+            protected ReaderWindow doInBackground()
             {
-                return prepareBook( book );
+                // unpack and define attributes
+                final File file = prepareFile( book );
+
+                // define which viewer to use
+                String viewer = book.getPhysicalBook().getViewer();
+                if ( viewer == null )
+                {
+                    viewer = Viewer.isInternallySupported( file )
+                        ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER;
+                    book.getPhysicalBook().setViewer( viewer );
+                }
+
+                if ( PhysicalBook.INTERNAL_VIEWER.equals( viewer ) )
+                { // todo define factory 
+                    return new ReaderWindow<String>( book, new TxtReaderFactory() );
+                }
+
+                return null;
             }
 
             @Override
             protected void doneSafe()
             {
-                final String viewer = book.getPhysicalBook().getViewer();
-                if ( PhysicalBook.INTERNAL_VIEWER.equals( viewer ) )
-                { // internal
-                    // start qt in another thread
-                    Single.instance( QT.class ).invoke( new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            new ReaderWindow( book, getQuiet() ).show();
-                        }
-                    } );
-                }
-                else
+                if ( getQuiet() == null )
                 { // system default
                     URIUtil.browseFile( book.getPhysicalBook().getFile() );
                 }
+                else
+                { // internal
+                    getQuiet().setVisible( true );
+                }
             }
         } );
-    }
-
-    private byte[] prepareBook(
-        final Book book )
-        throws IOException
-    {
-        // unpack and define attributes
-        final File file = getFile( book );
-
-        // define which viewer to use
-        String viewer = book.getPhysicalBook().getViewer();
-        if ( viewer == null )
-        {
-            viewer = Viewer.isInternallySupported( file )
-                ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER;
-            book.getPhysicalBook().setViewer( viewer );
-        }
-
-        if ( PhysicalBook.INTERNAL_VIEWER.equals( viewer ) )
-        {
-            // read the whole book into memory
-            final byte[] content = FileUtils.readFileToByteArray( file );
-            // define which encoding to use
-            String charset = book.getPhysicalBook().getCharsetName();
-            if ( charset == null )
-            {
-                charset = FileUtil.guessByteArrayEncoding( content );
-                book.getPhysicalBook().setCharsetName( charset );
-            }
-            return content;
-        }
-
-        return null;
     }
 }
