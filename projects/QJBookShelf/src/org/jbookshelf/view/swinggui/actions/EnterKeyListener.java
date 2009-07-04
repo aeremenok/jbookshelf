@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.Action;
 
 /**
+ * performs an action when the enter key is released
+ * 
  * @author eav 2009
  */
 public class EnterKeyListener

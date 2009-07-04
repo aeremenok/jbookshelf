@@ -32,6 +32,11 @@ import org.jbookshelf.view.swinggui.collection.tab.book.BookView;
 import org.xnap.commons.gui.EraseTextFieldAction;
 import org.xnap.commons.i18n.I18n;
 
+/**
+ * switches views of collection, controls search
+ * 
+ * @author eav 2009
+ */
 public class CollectionPanel
     extends JPanel
     implements

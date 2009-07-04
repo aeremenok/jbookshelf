@@ -28,6 +28,8 @@ import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.FilterPipeline;
 
 /**
+ * displays {@link Book#getRelatedBooks()}
+ * 
  * @author eav 2009
  */
 public class RelatedBookTab

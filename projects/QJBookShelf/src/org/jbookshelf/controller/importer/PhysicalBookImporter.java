@@ -4,20 +4,30 @@
 package org.jbookshelf.controller.importer;
 
 import java.io.File;
-import java.io.FileFilter;
 
 import javax.annotation.Nonnull;
 
 import org.jbookshelf.model.db.PhysicalBook;
 
 /**
+ * imports certain types of files
+ * 
  * @author eav
  */
-public abstract class PhysicalBookImporter
-    implements
-    FileFilter
+public interface PhysicalBookImporter
 {
+    /**
+     * @param pathname a file to import
+     * @return file can be imported
+     */
+    boolean accept(
+        @Nonnull File pathname );
+
+    /**
+     * @param file a file to import
+     * @return imported book implementation
+     */
     @Nonnull
-    public abstract PhysicalBook create(
+    PhysicalBook create(
         @Nonnull File file );
 }

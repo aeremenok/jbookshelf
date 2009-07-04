@@ -19,6 +19,11 @@ import org.jbookshelf.view.swinggui.dialog.JBSAboutDialog;
 import org.jbookshelf.view.swinggui.dialog.SettingsDialog;
 import org.jbookshelf.view.swinggui.dialog.book.BookAdditionDialog;
 
+/**
+ * main window toolbar. dispatches the main actions
+ * 
+ * @author eav 2009
+ */
 public class ToolBar
     extends JToolBar
 {

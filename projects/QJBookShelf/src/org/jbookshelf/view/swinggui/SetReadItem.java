@@ -19,6 +19,11 @@ import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
 
+/**
+ * a menu item to edit {@link Book#getRead()} property
+ * 
+ * @author eav 2009
+ */
 public class SetReadItem
     extends JCheckBoxMenuItem
     implements

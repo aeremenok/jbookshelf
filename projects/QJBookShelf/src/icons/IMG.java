@@ -7,6 +7,11 @@ import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+/**
+ * creates {@link Icon}s and {@link Image}s from the files that reside in its directory todo add cache?
+ * 
+ * @author eav 2009
+ */
 public class IMG
 {
     public static final String CONFIGURE_PNG                  = "configure.png";

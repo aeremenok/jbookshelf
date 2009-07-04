@@ -11,39 +11,38 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
 
 /**
+ * table model that shows only the head {@link Record} collection and can be expanded further
+ * 
  * @author eav 2009
- * @param <T>
+ * @param <T> record type
  */
 public class ExpandTableModel<T extends Record>
     extends DefaultTableModel
 {
-    private static final Logger log = Logger.getLogger( ExpandTableModel.class );
+    private static final Logger    log    = Logger.getLogger( ExpandTableModel.class );
 
-    private static <T> T newInstance(
-        final Class<T> clazz )
-    {
-        try
-        {
-            return clazz.newInstance();
-        }
-        catch ( final Exception e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-    }
-
+    /**
+     * displayed records
+     */
     private final List<T>          window = new ArrayList<T>();
+    /**
+     * creates records
+     */
     private final RecordFactory<T> factory;
+    /**
+     * number of records to expand at every time
+     */
     private final int              pageSize;
+    /**
+     * total number of records
+     */
     private int                    recordCount;
 
     public ExpandTableModel(
-        final Class<T> recordClass,
         final RecordFactory<T> factory,
         final int pageSize )
     {
-        super( newInstance( recordClass ).getColumnNames(), 0 );
+        super( factory.getColumnNames(), 0 );
 
         this.factory = factory;
         this.pageSize = pageSize;
@@ -95,7 +94,7 @@ public class ExpandTableModel<T extends Record>
         return false;
     }
 
-    public void reset()
+    public synchronized void reset()
     {
         window.clear();
         fireTableDataChanged();

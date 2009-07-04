@@ -13,12 +13,17 @@ import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
 /**
+ * translates words
+ * 
  * @author eav 2009
  */
 public class I18NImpl
 {
     private Locale currentLocale;
 
+    /**
+     * @return a common translator
+     */
     public I18n i18n()
     {
         if ( currentLocale == null )
@@ -37,12 +42,21 @@ public class I18NImpl
             ? Locale.ENGLISH : null;
     }
 
+    /**
+     * @param string source string (en)
+     * @return its translation
+     */
     public String tr(
         final String string )
     {
         return i18n().tr( string );
     }
 
+    /**
+     * start a translation of component
+     * 
+     * @param translatable a component to translate
+     */
     public void translate(
         final Translatable translatable )
     {

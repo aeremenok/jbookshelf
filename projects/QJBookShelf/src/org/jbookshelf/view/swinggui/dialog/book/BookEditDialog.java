@@ -22,6 +22,8 @@ import org.xnap.commons.gui.DefaultDialog;
 import org.xnap.commons.i18n.I18n;
 
 /**
+ * a dialog to edit existing {@link Book}s
+ * 
  * @author eav 2009
  */
 public class BookEditDialog

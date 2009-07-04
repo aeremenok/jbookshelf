@@ -18,6 +18,11 @@ import org.jdesktop.swingx.action.OpenBrowserAction;
 import org.xnap.commons.gui.DefaultDialog;
 import org.xnap.commons.i18n.I18n;
 
+/**
+ * displays "about" info
+ * 
+ * @author eav 2009
+ */
 public class JBSAboutDialog
     extends DefaultDialog
     implements

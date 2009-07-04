@@ -6,14 +6,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import org.bushe.swing.event.EventBus;
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Category;
 import org.jbookshelf.model.db.Unique;
 
+/**
+ * manages the selection of bookshelf objects todo simplify
+ * 
+ * @author eav 2009
+ */
 public class BookShelfMediator
 {
     public interface Properties
@@ -24,13 +27,9 @@ public class BookShelfMediator
         String UNIQUES_SELECTED    = "UNIQUES_SELECTED";
     }
 
-    @Nonnull
     private Set<Unique>    selectedUniques    = new HashSet<Unique>();
-    @Nonnull
     private List<Book>     selectedBooks      = new ArrayList<Book>();
-    @Nonnull
     private List<Author>   selectedAuthors    = new ArrayList<Author>();
-    @Nonnull
     private List<Category> selectedCategories = new ArrayList<Category>();
 
     public void authorsSelected(

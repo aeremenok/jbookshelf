@@ -10,10 +10,13 @@ import javax.annotation.Nonnull;
 import org.jbookshelf.model.db.PhysicalBook;
 
 /**
+ * imports single files
+ * 
  * @author eav
  */
 public class SingleFileImporter
-    extends PhysicalBookImporter
+    implements
+    PhysicalBookImporter
 {
 
     /* (non-Javadoc)

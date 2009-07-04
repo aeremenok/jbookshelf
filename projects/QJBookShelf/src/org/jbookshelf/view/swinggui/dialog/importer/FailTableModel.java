@@ -16,6 +16,8 @@ import javax.swing.table.DefaultTableModel;
 import org.jbookshelf.view.i18n.I18N;
 
 /**
+ * contains files that failed to be imported
+ * 
  * @author eav 2009
  */
 public class FailTableModel

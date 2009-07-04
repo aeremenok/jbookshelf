@@ -12,6 +12,8 @@ import org.xnap.commons.settings.SettingResource;
 import org.xnap.commons.settings.Validator;
 
 /**
+ * stores list of strings (i.e. import masks)
+ * 
  * @author eav 2009
  */
 public class StringListSetting
@@ -22,11 +24,6 @@ public class StringListSetting
      */
     private static final String SEPARATOR = ":";
 
-    /**
-     * @param backstore
-     * @param key
-     * @param defaultValue
-     */
     public StringListSetting(
         final SettingResource backstore,
         final String key,
@@ -35,12 +32,6 @@ public class StringListSetting
         super( backstore, key, Arrays.asList( defaultValue ), null );
     }
 
-    /**
-     * @param backstore
-     * @param key
-     * @param defaultValue
-     * @param validator
-     */
     public StringListSetting(
         final SettingResource backstore,
         final String key,

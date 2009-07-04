@@ -38,9 +38,10 @@ import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.collection.CollectionPanel;
 import org.jbookshelf.view.swinggui.collection.tab.book.BookNode;
 import org.jdesktop.swingx.JXTree;
+import org.xnap.commons.gui.util.PopupListener;
 
 /**
- * displays authors in a tree
+ * displays {@link Author}s in a tree
  * 
  * @author eav
  */
@@ -48,7 +49,7 @@ public class AuthorView
     extends CollectionView
 {
     private class AuthorNode
-        extends DefaultMutableLazyNode
+        extends DefaultLazyNode
     {
         private final Author author;
 
@@ -147,7 +148,7 @@ public class AuthorView
 
     private void initListeners()
     {
-        tree.addMouseListener( new CollectionPopupListener() );
+        tree.addMouseListener( new PopupListener( menu ) );
 
         tree.addTreeWillExpandListener( new TreeWillExpandListener()
         {

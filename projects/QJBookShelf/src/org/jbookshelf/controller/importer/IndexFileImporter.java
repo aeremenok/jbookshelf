@@ -12,10 +12,13 @@ import javax.annotation.Nullable;
 import org.jbookshelf.model.db.PhysicalBook;
 
 /**
+ * imports directories with index.html
+ * 
  * @author eav
  */
 public class IndexFileImporter
-    extends PhysicalBookImporter
+    implements
+    PhysicalBookImporter
 {
     @Nullable
     private File currentIndexFile;

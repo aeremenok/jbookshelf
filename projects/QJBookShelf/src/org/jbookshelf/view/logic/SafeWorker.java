@@ -8,9 +8,12 @@ import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
 
 /**
+ * {@link SwingWorker} that ensures when is done safely
+ * 
  * @author eav 2009
- * @param <T>
- * @param <V>
+ * @param <T> the result type returned by this {@code SwingWorker's} {@code doInBackground} and {@code get} methods
+ * @param <V> the type used for carrying out intermediate results by this {@code SwingWorker's} {@code publish} and
+ *            {@code process} methods
  */
 public abstract class SafeWorker<T, V>
     extends SwingWorker<T, V>
@@ -35,13 +38,16 @@ public abstract class SafeWorker<T, V>
             result = get();
             doneSafe();
         }
-        catch ( final Exception e )
+        catch ( final Throwable e )
         {
             log.error( e, e );
             throw new Error( e );
         }
     }
 
+    /**
+     * called when is done and no exceptions occured
+     */
     protected void doneSafe()
     {}
 }

@@ -11,6 +11,11 @@ import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.xnap.commons.gui.FileChooserPanel;
 
+/**
+ * a {@link FileChooserPanel} that stores in {@link Settings} the last opened file
+ * 
+ * @author eav 2009
+ */
 public class FileChooserPanelExt
     extends FileChooserPanel
 {

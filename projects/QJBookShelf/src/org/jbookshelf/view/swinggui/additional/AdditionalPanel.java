@@ -30,6 +30,8 @@ import org.xnap.commons.gui.EraseTextFieldAction;
 import org.xnap.commons.i18n.I18n;
 
 /**
+ * displays different additional data
+ * 
  * @author eav 2009
  */
 public class AdditionalPanel
@@ -38,6 +40,11 @@ public class AdditionalPanel
     EventTopicSubscriber<BookShelfMediator>,
     Translatable
 {
+    /**
+     * add an additional data entry
+     * 
+     * @author eav 2009
+     */
     private class AddAction
         extends AbstractAction
     {

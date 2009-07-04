@@ -31,6 +31,11 @@ import org.jbookshelf.view.swinggui.widget.GridBagPanel;
 import org.xnap.commons.gui.FileChooserPanel;
 import org.xnap.commons.i18n.I18n;
 
+/**
+ * a panel to display book data
+ * 
+ * @author eav 2009
+ */
 public class BookPanel
     extends GridBagPanel
     implements

@@ -90,7 +90,7 @@ public class UniqueActions
         {
             for ( final Book book : mediator.getSelectedBooks() )
             {
-                URIUtil.openFolder( book.getPhysicalBook().getFile().getParentFile() );
+                URIUtil.openDir( book.getPhysicalBook().getFile().getParentFile() );
             }
         }
     }

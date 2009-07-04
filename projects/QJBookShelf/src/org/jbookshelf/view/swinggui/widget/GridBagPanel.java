@@ -6,6 +6,11 @@ import java.awt.GridBagLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+/**
+ * a {@link JPanel} with {@link GridBagLayout} and convenience methods for cell addition
+ * 
+ * @author eav 2009
+ */
 public class GridBagPanel
     extends JPanel
 {
