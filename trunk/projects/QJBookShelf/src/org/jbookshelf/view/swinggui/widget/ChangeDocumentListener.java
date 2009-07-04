@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader;
+package org.jbookshelf.view.swinggui.widget;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;

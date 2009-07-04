@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader;
+package org.jbookshelf.view.swinggui.reader.toolbar;
 
 import icons.IMG;
 
@@ -15,8 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.widget.ChangeDocumentListener;
 
 /**
+ * a panel for page navigation
+ * 
  * @author eav 2009
  */
 public class Paginator
@@ -140,10 +143,15 @@ public class Paginator
         return propertyChangeSupport;
     }
 
+    /**
+     * set currentPage and the value of pageSelector
+     * 
+     * @param currentPage new currentPage
+     */
     public void setCurrentPage(
-        int currentPage )
+        final int currentPage )
     {
-        currentPage = setCurrentPageImpl( currentPage );
+        setCurrentPageImpl( currentPage );
         pageSelector.setText( this.currentPage + 1 + "" );
     }
 
@@ -159,10 +167,11 @@ public class Paginator
     }
 
     /**
-     * @param currentPage
-     * @return
+     * set current page, but not affect the {@link Paginator#pageSelector}
+     * 
+     * @param currentPage new current page
      */
-    private int setCurrentPageImpl(
+    private void setCurrentPageImpl(
         int currentPage )
     {
         if ( currentPage < 0 )
@@ -181,7 +190,5 @@ public class Paginator
         lastAction.setEnabled( this.currentPage < pageCount - 1 );
 
         propertyChangeSupport.firePropertyChange( PAGE, -1, currentPage );
-
-        return currentPage;
     }
 }

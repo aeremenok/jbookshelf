@@ -18,6 +18,8 @@ import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 
 /**
+ * loads the database using hibernate
+ * 
  * @author eav
  */
 public class HibernateUtil
