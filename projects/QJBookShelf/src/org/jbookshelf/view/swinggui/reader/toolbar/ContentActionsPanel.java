@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader;
+package org.jbookshelf.view.swinggui.reader.toolbar;
 
 import icons.IMG;
 
@@ -15,6 +15,8 @@ import org.apache.log4j.Logger;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 
 /**
+ * a panel for control basic content actions
+ * 
  * @author eav 2009
  */
 public class ContentActionsPanel

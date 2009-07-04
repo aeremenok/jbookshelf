@@ -5,8 +5,6 @@ import icons.IMG;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
@@ -22,6 +20,7 @@ import javax.swing.JTextField;
 
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.swinggui.actions.EnterKeyListener;
+import org.jbookshelf.view.swinggui.widget.ChangeDocumentListener;
 import org.jdesktop.swingx.JXTable;
 import org.xnap.commons.i18n.I18n;
 
@@ -132,13 +131,13 @@ public class MultipleField<T>
         } );
 
         field.addKeyListener( new EnterKeyListener( addAction ) );
-        field.addKeyListener( new KeyAdapter()
+        field.getDocument().addDocumentListener( new ChangeDocumentListener( field )
         {
             @Override
-            public void keyReleased(
-                final KeyEvent e )
+            public void onChange(
+                final String newText )
             {
-                addAction.setEnabled( !"".equals( field.getText() ) );
+                addAction.setEnabled( !"".equals( newText ) );
             }
         } );
         addAction.setEnabled( false );

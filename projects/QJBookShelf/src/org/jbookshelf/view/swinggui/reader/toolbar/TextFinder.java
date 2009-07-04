@@ -1,4 +1,4 @@
-package org.jbookshelf.view.swinggui.reader;
+package org.jbookshelf.view.swinggui.reader.toolbar;
 
 import icons.IMG;
 
@@ -13,7 +13,13 @@ import javax.swing.JTextField;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.widget.ChangeDocumentListener;
 
+/**
+ * a panel for control the text search
+ * 
+ * @author eav 2009
+ */
 public class TextFinder
     extends JPanel
 {
@@ -40,9 +46,7 @@ public class TextFinder
     {
         public FindNextAction()
         {
-            super( null, IMG.icon( IMG.NEXT_PNG )
-            // todo
-            );
+            super( null, IMG.icon( IMG.ARROW_DOWN_PNG ) );
         }
 
         public void actionPerformed(
@@ -60,9 +64,7 @@ public class TextFinder
     {
         public FindPreviousAction()
         {
-            super( null, IMG.icon( IMG.PREVIOUS_PNG )
-            // todo
-            );
+            super( null, IMG.icon( IMG.ARROW_UP_PNG ) );
         }
 
         public void actionPerformed(

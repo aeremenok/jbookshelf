@@ -28,11 +28,14 @@ import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.Unique;
 
 /**
+ * performs operations with database todo should be refactored
+ * 
  * @author eav
  */
 public class BookShelf
 {
-    private static final Logger log = Logger.getLogger( BookShelf.class );
+    private static final Logger    log    = Logger.getLogger( BookShelf.class );
+    private static final LogRunner runner = new LogRunner();
 
     @SuppressWarnings( "unchecked" )
     public static List<Book> allBooks()
@@ -99,7 +102,6 @@ public class BookShelf
     {
         try
         {
-            final LogRunner runner = new LogRunner();
             final Object object = runner.query( "select count(*) from book", new ScalarHandler() );
             return Integer.valueOf( object.toString() );
         }
@@ -225,7 +227,6 @@ public class BookShelf
         {
             session.close();
         }
-
     }
 
     public static Set<Note> getNotes(
@@ -461,7 +462,6 @@ public class BookShelf
     public static void remove(
         final Set<Unique> selectedUniques )
     {
-
         try
         {
             for ( final Unique unique : selectedUniques )
@@ -565,7 +565,6 @@ public class BookShelf
     {
         try
         {
-            final LogRunner runner = new LogRunner();
             runner.update( "update book set read=? where id=?", new Object[]
             { book.getRead(), book.getId() } );
         }
@@ -580,8 +579,6 @@ public class BookShelf
         final Author author )
         throws SQLException
     {
-        final LogRunner runner = new LogRunner();
-
         final String q2 = "delete from author_book where authors_id=?";
         final String q6 = "delete from author where id=?";
 
@@ -595,8 +592,6 @@ public class BookShelf
         final Book unique )
         throws SQLException
     {
-        final LogRunner runner = new LogRunner();
-
         final String q1 = "delete from author_book where books_id=?";
         final String q3 = "delete from category_book where books_id=?";
         final String q5 = "delete from book where id=?";
@@ -616,8 +611,6 @@ public class BookShelf
         final Category category )
         throws SQLException
     {
-        final LogRunner runner = new LogRunner();
-
         final String q4 = "delete from category_book where categories_id=?";
         // move all children up
         final String q9 = "update category set parent_id=(select parent_id from category where id=?) where parent_id=?";

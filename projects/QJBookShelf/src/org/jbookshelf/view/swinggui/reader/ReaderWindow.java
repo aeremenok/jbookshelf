@@ -8,6 +8,7 @@ import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
@@ -17,12 +18,18 @@ import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
-import org.jbookshelf.view.swinggui.reader.Scalator.Layout;
+import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
+import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
+import org.jbookshelf.view.swinggui.reader.toolbar.Scalator;
+import org.jbookshelf.view.swinggui.reader.toolbar.TextFinder;
+import org.jbookshelf.view.swinggui.reader.toolbar.Scalator.Layout;
 import org.jdesktop.swingx.JXFrame;
 
 import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 
 /**
+ * book reader main window
+ * 
  * @author eav 2009
  */
 public class ReaderWindow
@@ -38,7 +45,9 @@ public class ReaderWindow
             UIManager.setLookAndFeel( new NimbusLookAndFeel() );
             final Book book = new Book();
             book.setName( "test" );
-            new ReaderWindow( book ).setVisible( true );
+            final ReaderWindow readerWindow = new ReaderWindow( book );
+            readerWindow.setVisible( true );
+            readerWindow.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         }
         catch ( final UnsupportedLookAndFeelException e )
         {
@@ -75,7 +84,9 @@ public class ReaderWindow
     }
 
     /**
-     * @param layout
+     * change the layout between one and two pages
+     * 
+     * @param layout new {@link Layout}
      */
     public void changeLayout(
         final Layout layout )
@@ -96,7 +107,10 @@ public class ReaderWindow
     }
 
     /**
-     * @param parameters
+     * search text in the displayed book and go to its position if its found
+     * 
+     * @param parameters text and direction to search ( {@link Boolean#TRUE} - forward, {@link Boolean#FALSE} -
+     *            backward, null - forward from start )
      */
     public void searchText(
         final Parameters parameters )
@@ -109,16 +123,21 @@ public class ReaderWindow
     }
 
     /**
-     * @param i
+     * display a page of the specified number
+     * 
+     * @param pageNumber a number of a page to display
      */
     public void setPage(
-        @SuppressWarnings( "unused" ) final int i )
+        @SuppressWarnings( "unused" ) final int pageNumber )
     {
         log.debug( "setPage" );
         // TODO Auto-generated method stub
 
     }
 
+    /**
+     * @param scale new scale of displayed text
+     */
     public void setScale(
         final int scale )
     {

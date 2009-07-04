@@ -43,6 +43,9 @@ public class IMG
     public static final String ZOOM_IN_PNG                    = "zoom-in.png";
     public static final String ZOOM_OUT_PNG                   = "zoom-out.png";
 
+    public static final String ARROW_UP_PNG                   = "arrow-up.png";
+    public static final String ARROW_DOWN_PNG                 = "arrow-down.png";
+
     public static final String KTIP_PNG                       = "ktip.png";
 
     public static final String BOOKMARKS_PNG                  = "bookmarks.png";

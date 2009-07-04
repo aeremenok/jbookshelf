@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader;
+package org.jbookshelf.view.swinggui.reader.toolbar;
 
 import icons.IMG;
 
@@ -13,9 +13,12 @@ import javax.swing.JToolBar;
 import org.apache.log4j.Logger;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.book.BookEditDialog;
+import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 
 /**
+ * reader window toolbar, dispatches viewer actions
+ * 
  * @author eav 2009
  */
 public class ReaderToolBar

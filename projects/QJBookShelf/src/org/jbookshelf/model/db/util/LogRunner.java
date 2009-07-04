@@ -11,6 +11,8 @@ import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.log4j.Logger;
 
 /**
+ * performs native SQL queries
+ * 
  * @author eav 2009
  */
 public class LogRunner
