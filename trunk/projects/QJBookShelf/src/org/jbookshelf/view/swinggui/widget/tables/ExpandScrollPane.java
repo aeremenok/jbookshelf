@@ -13,6 +13,8 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.ProgressBar;
 
 /**
+ * listens for the vertical scrollbar changes. if its position reaches TRESHOLD - expands the table model
+ * 
  * @author eav 2009
  */
 public class ExpandScrollPane

@@ -6,27 +6,29 @@ package org.jbookshelf.view.swinggui.collection.tab;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
+ * default implementation of {@link LazyNode}
+ * 
  * @author eav 2009
  */
-public class DefaultMutableLazyNode
+public class DefaultLazyNode
     extends DefaultMutableTreeNode
     implements
     LazyNode
 {
     private boolean initalized = false;
 
-    public DefaultMutableLazyNode()
+    public DefaultLazyNode()
     {
         super();
     }
 
-    public DefaultMutableLazyNode(
+    public DefaultLazyNode(
         final Object userObject )
     {
         super( userObject );
     }
 
-    public DefaultMutableLazyNode(
+    public DefaultLazyNode(
         final Object userObject,
         final boolean allowsChildren )
     {

@@ -10,10 +10,13 @@ import javax.annotation.Nullable;
 import org.jbookshelf.model.db.PhysicalBook;
 
 /**
+ * imports directories with single non-zip files
+ * 
  * @author eav
  */
 public class SingleFileDirImporter
-    extends PhysicalBookImporter
+    implements
+    PhysicalBookImporter
 {
     @Nullable
     private File currentFile;

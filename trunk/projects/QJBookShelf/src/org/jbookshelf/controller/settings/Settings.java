@@ -42,15 +42,6 @@ public class Settings
     public StringSetting     WORKSPACE_DIR;
     public StringListSetting IMPORT_MASKS;
 
-    public void fireRefresh()
-    {
-        firePropertyChange( LANGUAGE.getKey(), "", LANGUAGE.getValue() );
-        firePropertyChange( LAF.getKey(), "", LAF.getValue() );
-        firePropertyChange( JBS_DIR.getKey(), "", JBS_DIR.getValue() );
-        firePropertyChange( IMPORT_MASKS.getKey(), "", IMPORT_MASKS.getValue() );
-        firePropertyChange( WORKSPACE_DIR.getKey(), "", WORKSPACE_DIR.getValue() );
-    }
-
     @PostConstruct
     public void initSingleton()
     {
@@ -82,13 +73,18 @@ public class Settings
         }
     }
 
+    /**
+     * @return a file that stores settings
+     */
     private File getSettingsFile()
     {
         return new File( JBS_DIR.getValue() + File.separator + "settings.properties" );
     }
 
+    /**
+     * creates default values
+     */
     private void initDefaults()
-        throws Error
     {
         LANGUAGE = new StringSetting( this, "language", I18N.defaultLanguage() );
         IMPORT_MASKS = new StringListSetting( this, "import_masks", new String[]
@@ -118,8 +114,10 @@ public class Settings
         LAF = new StringSetting( this, "laf", lafName );
     }
 
+    /**
+     * read the settings file if it exists. if not - create it
+     */
     private void initFile()
-        throws Error
     {
         // preparing values
         final File dir = new File( JBS_DIR.getValue() );

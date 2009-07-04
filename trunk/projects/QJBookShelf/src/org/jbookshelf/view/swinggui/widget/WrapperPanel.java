@@ -9,6 +9,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 /**
+ * simply wraps components to a center of {@link JPanel} with {@link BorderLayout}
+ * 
  * @author eav 2009
  */
 public class WrapperPanel

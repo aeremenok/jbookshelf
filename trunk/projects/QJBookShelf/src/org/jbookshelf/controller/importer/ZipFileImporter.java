@@ -10,10 +10,13 @@ import javax.annotation.Nonnull;
 import org.jbookshelf.model.db.PhysicalBook;
 
 /**
+ * imports zip files
+ * 
  * @author eav
  */
 public class ZipFileImporter
-    extends PhysicalBookImporter
+    implements
+    PhysicalBookImporter
 {
 
     /* (non-Javadoc)

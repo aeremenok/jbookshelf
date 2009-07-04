@@ -3,22 +3,23 @@
  */
 package org.jbookshelf.view.swinggui.collection.tab.book;
 
-import org.jbookshelf.view.i18n.I18N;
+import org.jbookshelf.model.db.Book;
+import org.jbookshelf.view.swinggui.widget.tables.ExpandTableModel;
 import org.jbookshelf.view.swinggui.widget.tables.Record;
 
+/**
+ * a row of {@link ExpandTableModel}, representing a {@link Book}
+ * 
+ * @author eav 2009
+ */
 public class BookRecord
     implements
     Record
 {
-    private Object id;
-    private Object bookName;
-    private String authorName;
-    private String categoryName;
-
-    public BookRecord()
-    {
-        super();
-    }
+    private final Object id;
+    private final Object bookName;
+    private final String authorName;
+    private final String categoryName;
 
     public BookRecord(
         final Object id,
@@ -54,16 +55,6 @@ public class BookRecord
     public String getCategoryName()
     {
         return this.categoryName;
-    }
-
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.widget.tables.Record#getColumnNames()
-     */
-    @Override
-    public String[] getColumnNames()
-    {
-        return new String[]
-        { I18N.tr( "Name" ), I18N.tr( "Author" ), I18N.tr( "Category" ) };
     }
 
     /**

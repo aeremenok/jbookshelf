@@ -8,6 +8,8 @@ import icons.IMG;
 import org.xnap.commons.gui.SplashWindow;
 
 /**
+ * displays a splash screen
+ * 
  * @author eav 2009
  */
 public class SplashScreenManager

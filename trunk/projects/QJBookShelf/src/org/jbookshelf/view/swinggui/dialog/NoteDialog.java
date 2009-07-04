@@ -26,6 +26,8 @@ import org.xnap.commons.gui.DefaultDialog;
 import org.xnap.commons.i18n.I18n;
 
 /**
+ * a dialog for note editing
+ * 
  * @author eav 2009
  */
 public class NoteDialog

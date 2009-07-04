@@ -46,9 +46,9 @@ public class ZIPUtil
      * 
      * @param zipFilename source file name
      * @param destDirName destination directory name
-     * @param encoding
+     * @param encoding an encoding to open archive. if null - default used
      * @return destination directory
-     * @throws ArchiveException
+     * @throws ArchiveException extraction failed (i.e. wrong encoding)
      */
     public static File extractZipFileTo(
         final String zipFilename,

@@ -34,6 +34,8 @@ import org.jdesktop.swingx.decorator.FilterPipeline;
 import org.xnap.commons.i18n.I18n;
 
 /**
+ * displays {@link Note}s
+ * 
  * @author eav 2009
  */
 public class NoteTab

@@ -8,6 +8,11 @@ import javax.swing.Action;
 
 import org.jbookshelf.view.swinggui.dialog.importer.FileImportDialog;
 
+/**
+ * applied to the whole collection
+ * 
+ * @author eav 2009
+ */
 public class BookShelfActions
 {
     private class BackupAction

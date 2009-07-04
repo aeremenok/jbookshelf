@@ -37,6 +37,11 @@ import org.jdesktop.swingx.JXStatusBar;
 import org.jdesktop.swingx.error.ErrorInfo;
 import org.xnap.commons.util.AWTExceptionHandler;
 
+/**
+ * JBookShelf main window and entry point
+ * 
+ * @author eav 2009
+ */
 public class MainWindow
     extends JXFrame
     implements
@@ -131,6 +136,7 @@ public class MainWindow
     }
 
     /**
+     * restarts the app. restart can only be performed from the jar-file<br>
      * copied from {@link "http://cplusadd.blogspot.com/2009/04/java-application-and-self-restart.html"}
      * 
      * @return false if not restarted
@@ -157,9 +163,7 @@ public class MainWindow
                 Runtime.getRuntime().exec( toExec.toArray( new String[toExec.size()] ) );
 
                 System.exit( 0 );
-
-                // not reachable
-                return true;
+                // not reachable - here the app dies
             }
         }
         catch ( final Throwable e )

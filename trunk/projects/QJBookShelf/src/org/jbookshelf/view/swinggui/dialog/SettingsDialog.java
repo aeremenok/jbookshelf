@@ -20,6 +20,11 @@ import org.xnap.commons.gui.DefaultDialog;
 import org.xnap.commons.gui.FileChooserPanel;
 import org.xnap.commons.i18n.I18n;
 
+/**
+ * a dialog to edit {@link Settings}
+ * 
+ * @author eav 2009
+ */
 public class SettingsDialog
     extends DefaultDialog
     implements

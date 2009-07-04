@@ -12,11 +12,19 @@ import javax.annotation.Nullable;
 import org.jbookshelf.model.db.PhysicalBook;
 
 /**
+ * imports html-files
+ * 
  * @author eav
  */
 public class HtmlFileImporter
-    extends PhysicalBookImporter
+    implements
+    PhysicalBookImporter
 {
+    /**
+     * accepts a directory if it holds "file" with "file_files/"
+     * 
+     * @author eav 2009
+     */
     private static class HtmlFolderFileFilter
         implements
         FileFilter

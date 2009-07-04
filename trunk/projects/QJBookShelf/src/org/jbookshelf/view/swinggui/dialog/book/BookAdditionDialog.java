@@ -19,6 +19,11 @@ import org.xnap.commons.i18n.I18n;
 
 import com.sun.istack.internal.Nullable;
 
+/**
+ * a dialog to create new {@link Book}s
+ * 
+ * @author eav 2009
+ */
 public class BookAdditionDialog
     extends DefaultDialog
     implements

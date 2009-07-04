@@ -14,6 +14,11 @@ import javax.swing.table.DefaultTableModel;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.i18n.I18N;
 
+/**
+ * contains successfully imported {@link Book}s
+ * 
+ * @author eav 2009
+ */
 public class SuccessTableModel
     extends DefaultTableModel
 {

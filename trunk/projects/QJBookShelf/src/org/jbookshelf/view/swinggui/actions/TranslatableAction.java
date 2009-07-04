@@ -5,6 +5,11 @@ import javax.swing.Icon;
 
 import org.jbookshelf.view.i18n.I18N;
 
+/**
+ * able to translate its text
+ * 
+ * @author eav 2009
+ */
 public abstract class TranslatableAction
     extends AbstractAction
 {

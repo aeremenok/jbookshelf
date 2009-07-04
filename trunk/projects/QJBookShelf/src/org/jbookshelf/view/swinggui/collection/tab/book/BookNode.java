@@ -6,13 +6,15 @@ package org.jbookshelf.view.swinggui.collection.tab.book;
 import javax.annotation.Nonnull;
 
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.view.swinggui.collection.tab.DefaultMutableLazyNode;
+import org.jbookshelf.view.swinggui.collection.tab.DefaultLazyNode;
 
 /**
+ * tree node representing a {@link Book}
+ * 
  * @author eav 2009
  */
 public class BookNode
-    extends DefaultMutableLazyNode
+    extends DefaultLazyNode
 {
     private final Book book;
 

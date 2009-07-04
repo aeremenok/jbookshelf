@@ -19,7 +19,7 @@ import org.jbookshelf.view.i18n.I18N;
  * contains uniques for multi-edit table with no duplicates
  * 
  * @author eav 2009
- * @param <V> unique type
+ * @param <V> unique type ( {@link Object#toString()} used for displaying the values )
  */
 public class ListTableModel<V>
     extends DefaultTableModel

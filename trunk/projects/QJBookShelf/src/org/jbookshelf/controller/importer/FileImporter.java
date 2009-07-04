@@ -39,6 +39,11 @@ import org.jbookshelf.model.db.util.BookShelf;
  */
 public class FileImporter
 {
+    /**
+     * rejects files with extensions from the given list
+     * 
+     * @author eav 2009
+     */
     private static class UnsupportedExtFilter
         implements
         FileFilter
@@ -73,7 +78,6 @@ public class FileImporter
     }
 
     public static final FileFilter            UNSUPPORTED_EXT_FILTER = new UnsupportedExtFilter();
-
     private static List<PhysicalBookImporter> importers              = new ArrayList<PhysicalBookImporter>();
     private static final Logger               log                    = Logger.getLogger( FileImporter.class );
 
@@ -86,6 +90,12 @@ public class FileImporter
         importers.add( new SingleFileImporter() );
     }
 
+    /**
+     * guess the type of the file and create a {@link Book} implementation
+     * 
+     * @param file a file to import
+     * @return a book implementation
+     */
     @Nullable
     public static PhysicalBook createPhysicalBook(
         @Nonnull final File file )
@@ -125,6 +135,13 @@ public class FileImporter
         { "%a. %b" }, root );
     }
 
+    /**
+     * parse book name and create a book
+     * 
+     * @param parser parses name
+     * @param physicalUnit physical book implementation
+     * @return logical book
+     */
     @Nullable
     private static Book bookFromName(
         @Nonnull final NameParser parser,
@@ -151,17 +168,44 @@ public class FileImporter
         }
     }
 
+    private final List<NameParser> parsers = new ArrayList<NameParser>();
+
+    /**
+     * scan directories recursively and import files
+     * 
+     * @param patterns patterns to scan file names
+     * @param files directories to scan
+     */
     public void importFiles(
         @Nonnull final Collection<String> patterns,
         @Nonnull final File... files )
     {
-        final List<NameParser> parsers = new ArrayList<NameParser>();
+        parsers.clear();
+        // prepare parsers
         for ( final String string : patterns )
         {
             parsers.add( new NameParser( string ) );
         }
 
         // recursively process files
+        importFilesImpl( files );
+    }
+
+    public void importFiles(
+        @Nonnull final String[] patterns,
+        @Nonnull final File... files )
+    {
+        importFiles( Arrays.asList( patterns ), files );
+    }
+
+    /**
+     * recursively scans directories and imports files
+     * 
+     * @param files directories to scan
+     */
+    private void importFilesImpl(
+        final File... files )
+    {
         for ( final File file : files )
         {
             final PhysicalBook physicalUnit = createPhysicalBook( file );
@@ -185,31 +229,34 @@ public class FileImporter
                 }
             }
             else if ( file.isDirectory() )
-            {
-                importFiles( patterns, file.listFiles( UNSUPPORTED_EXT_FILTER ) );
+            { // here goes the recursion
+                importFilesImpl( file.listFiles( UNSUPPORTED_EXT_FILTER ) );
             }
             else
             { // todo specify more info
                 onImportFailure( file, new Exception( "unparseable directory" ) );
             }
         }
-
     }
 
-    public void importFiles(
-        @Nonnull final String[] patterns,
-        @Nonnull final File... files )
-    {
-        importFiles( Arrays.asList( patterns ), files );
-    }
-
+    /**
+     * called when file import failed
+     * 
+     * @param file a file
+     * @param cause a failure cause
+     */
     protected void onImportFailure(
         @SuppressWarnings( "unused" ) @Nonnull final File file,
-        @SuppressWarnings( "unused" ) @Nonnull final Exception e )
+        @SuppressWarnings( "unused" ) @Nonnull final Exception cause )
     {
     // override if needed
     }
 
+    /**
+     * called when file import succeeded
+     * 
+     * @param book an imported book
+     */
     protected void onImportSuccess(
         @SuppressWarnings( "unused" ) @Nonnull final Book book )
     {

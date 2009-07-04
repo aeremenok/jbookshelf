@@ -33,7 +33,7 @@ public class MultipleUniqueField<T extends Unique>
 
     protected CompletionModel createCompletionModel(
         final Class<T> clazz )
-    {
+    { // can be overriden 
         return new UniqueCompletionModel( clazz, model );
     }
 

@@ -153,7 +153,7 @@ public class MultipleField<T>
     @SuppressWarnings( "unchecked" )
     protected T fromString(
         @Nonnull final String text )
-    {
+    { // can be overriden
         return (T) text;
     }
 }

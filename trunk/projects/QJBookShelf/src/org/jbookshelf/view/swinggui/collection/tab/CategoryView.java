@@ -40,15 +40,18 @@ import org.jbookshelf.view.swinggui.collection.tab.book.BookNode;
 import org.jbookshelf.view.swinggui.dnd.TreeDragSource;
 import org.jbookshelf.view.swinggui.dnd.TreeDropTarget;
 import org.jdesktop.swingx.JXTree;
+import org.xnap.commons.gui.util.PopupListener;
 
 /**
+ * displays {@link Category}s in a tree
+ * 
  * @author eav
  */
 public class CategoryView
     extends CollectionView
 {
     public static class CategoryNode
-        extends DefaultMutableLazyNode
+        extends DefaultLazyNode
     {
         private final Category category;
 
@@ -205,7 +208,7 @@ public class CategoryView
 
     private void initListeners()
     {
-        tree.addMouseListener( new CollectionPopupListener() );
+        tree.addMouseListener( new PopupListener( menu ) );
 
         tree.addTreeWillExpandListener( new TreeWillExpandListener()
         {

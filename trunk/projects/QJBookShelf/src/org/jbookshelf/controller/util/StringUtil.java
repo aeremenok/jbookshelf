@@ -6,6 +6,11 @@ import java.nio.charset.Charset;
 
 import org.mozilla.universalchardet.UniversalDetector;
 
+/**
+ * performs basic string operations
+ * 
+ * @author eav 2009
+ */
 public class StringUtil
 {
     /**
@@ -37,6 +42,10 @@ public class StringUtil
         return Charset.defaultCharset().name();
     }
 
+    /**
+     * @param e a {@link Throwable}
+     * @return its stacktrace
+     */
     public static String printThrowable(
         final Throwable e )
     {

@@ -13,26 +13,18 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.swinggui.SetReadItem;
 import org.jbookshelf.view.swinggui.actions.UniqueActions;
-import org.xnap.commons.gui.util.PopupListener;
 
 /**
+ * displays some view of collection
+ * 
  * @author eav
  */
 public abstract class CollectionView
     extends JPanel
 {
-    protected class CollectionPopupListener
-        extends PopupListener
-    {
-        public CollectionPopupListener()
-        {
-            super( menu );
-        }
-    }
+    protected final JPopupMenu menu = new JPopupMenu();
 
-    private final JPopupMenu menu = new JPopupMenu();
-
-    private Icon             icon;
+    private Icon               icon;
 
     public Icon getIcon()
     {

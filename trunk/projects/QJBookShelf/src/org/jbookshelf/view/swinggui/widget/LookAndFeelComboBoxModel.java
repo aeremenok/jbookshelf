@@ -5,12 +5,23 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+/**
+ * contains the installed {@link LookAndFeel}s
+ * 
+ * @author eav 2009
+ */
 public class LookAndFeelComboBoxModel
     extends DefaultComboBoxModel
 // todo make immutable
 {
     private static final LookAndFeelInfo[] lafs = UIManager.getInstalledLookAndFeels();
 
+    /**
+     * creates {@link LookAndFeel} from name
+     * 
+     * @param name {@link LookAndFeel} name
+     * @return the lookandfeel
+     */
     public static LookAndFeel fromName(
         final String name )
     {

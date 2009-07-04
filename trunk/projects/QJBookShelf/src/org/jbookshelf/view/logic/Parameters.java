@@ -7,10 +7,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * universal parameter container to pass between objects
+ * 
  * @author eav 2009
  */
 public class Parameters
 {
+    /**
+     * parametes keys
+     * 
+     * @author eav 2009
+     */
     public enum Keys
     {
         SEARCH_TEXT,

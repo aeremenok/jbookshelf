@@ -11,6 +11,8 @@ import org.jbookshelf.model.db.Book;
 import org.jdesktop.swingx.decorator.PatternFilter;
 
 /**
+ * displays some kind of additional data
+ * 
  * @author eav 2009
  */
 public abstract class AdditionalTab
@@ -18,6 +20,11 @@ public abstract class AdditionalTab
 {
     protected final PatternFilter filter = new PatternFilter( ".*", 0, 0 );
 
+    /**
+     * data entry added to the book
+     * 
+     * @param book a book to add entry
+     */
     public abstract void onAdd(
         final Book book );
 

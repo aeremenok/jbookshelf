@@ -30,6 +30,7 @@ import org.jbookshelf.view.swinggui.widget.tables.ExpandScrollPane;
 import org.jbookshelf.view.swinggui.widget.tables.ExpandTableModel;
 import org.jbookshelf.view.swinggui.widget.tables.RecordFactory;
 import org.jdesktop.swingx.JXTable;
+import org.xnap.commons.gui.util.PopupListener;
 
 /**
  * displays books in a table
@@ -42,7 +43,7 @@ public class BookView
     ListSelectionListener,
     RecordFactory<BookRecord>
 {
-    private final ExpandTableModel<BookRecord> model  = new ExpandTableModel<BookRecord>( BookRecord.class, this, 70 );
+    private final ExpandTableModel<BookRecord> model  = new ExpandTableModel<BookRecord>( this, 70 );
     private final JXTable                      table  = new JXTable( model );
 
     private final LogRunner                    runner = new LogRunner();
@@ -58,7 +59,7 @@ public class BookView
         add( new ExpandScrollPane( table, model ), BorderLayout.CENTER );
 
         table.getSelectionModel().addListSelectionListener( this );
-        table.addMouseListener( new CollectionPopupListener() );
+        table.addMouseListener( new PopupListener( menu ) );
     }
 
     /* (non-Javadoc)
@@ -86,6 +87,16 @@ public class BookView
         { id } );
 
         return new BookRecord( id, name, aname, cname );
+    }
+
+    /* (non-Javadoc)
+     * @see org.jbookshelf.view.swinggui.widget.tables.RecordFactory#getColumnNames()
+     */
+    @Override
+    public String[] getColumnNames()
+    {
+        return new String[]
+        { I18N.tr( "Name" ), I18N.tr( "Author" ), I18N.tr( "Category" ) };
     }
 
     /* (non-Javadoc)

@@ -24,6 +24,8 @@ import org.xnap.commons.gui.DefaultDialog;
 import org.xnap.commons.i18n.I18n;
 
 /**
+ * a dialog for book relation editing
+ * 
  * @author eav 2009
  */
 public class RelatedBookDialog

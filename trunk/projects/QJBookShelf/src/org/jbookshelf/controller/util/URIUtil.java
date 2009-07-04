@@ -102,13 +102,16 @@ public class URIUtil
         browse( "http://www.google.com/search?q=" + toSearchEngineQuery( query ) );
     }
 
-    public static void openFolder(
-        final File file )
+    /**
+     * @param directory a directory to open with system file manager
+     */
+    public static void openDir(
+        final File directory )
     {
         final java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
         try
         {
-            desktop.open( file );
+            desktop.open( directory );
         }
         catch ( final Exception e )
         {

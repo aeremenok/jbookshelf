@@ -18,6 +18,8 @@ import org.apache.log4j.Logger;
 import org.jbookshelf.view.logic.SafeWorker;
 
 /**
+ * shows {@link JProgressBar} while the job is being performed by a {@link SwingWorker}
+ * 
  * @author eav 2009
  */
 public class ProgressBar

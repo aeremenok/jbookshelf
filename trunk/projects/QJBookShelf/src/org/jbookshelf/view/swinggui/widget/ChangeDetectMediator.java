@@ -18,6 +18,8 @@ import org.xnap.commons.settings.Setting;
 import org.xnap.commons.settings.StringSetting;
 
 /**
+ * a {@link SettingComponentMediator} that can detect if some setting value is changed but not saved
+ * 
  * @author eav 2009
  */
 public class ChangeDetectMediator
@@ -72,6 +74,7 @@ public class ChangeDetectMediator
         final Setting setting )
     {
         final Object oldValue = oldValues.get( setting );
+        // todo avoid NPE
         return !setting.getValue().equals( oldValue );
     }
 }
