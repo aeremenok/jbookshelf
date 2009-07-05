@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
-import org.apache.log4j.Logger;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.book.BookEditDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
@@ -40,12 +39,10 @@ public class ReaderToolBar
         }
     }
 
-    @SuppressWarnings( "unused" )
-    private static final Logger       log                 = Logger.getLogger( ReaderToolBar.class );
     private final ReaderWindow        readerWindow;
 
-    private final Scalator            scalator            = new Scalator( 50, 200, 50 );
-    private final Paginator           paginator           = new Paginator();
+    private final Scalator            scalator            = new Scalator( 50, 200, 50, 100 );
+    private final Paginator           paginator           = new Paginator( this );
     private final TextFinder          textFinder          = new TextFinder();
     private final ContentActionsPanel contentActionsPanel = new ContentActionsPanel();
 
