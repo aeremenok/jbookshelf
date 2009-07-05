@@ -43,6 +43,7 @@ public class Scalator
         public void actionPerformed(
             final ActionEvent e )
         {
+            // change the layout
             final boolean isOne = getPageLayout() == Layout.ONE_PAGE;
             setPageLayout( isOne
                 ? Layout.TWO_PAGES : Layout.ONE_PAGE );
@@ -104,7 +105,7 @@ public class Scalator
     private int                 min;
     private int                 step;
 
-    private Layout              pageLayout;
+    private Layout              pageLayout    = Layout.ONE_PAGE;
 
     private final ZoomOutAction zoomOutAction = new ZoomOutAction();
     private final ZoomInAction  zoomInAction  = new ZoomInAction();
@@ -112,10 +113,12 @@ public class Scalator
     public Scalator(
         final int min,
         final int max,
-        final int step )
+        final int step,
+        final int start )
     {
         this();
         setScaleBounds( min, max, step );
+        scaleComboBox.setSelectedItem( start + "%" );
     }
 
     private Scalator()

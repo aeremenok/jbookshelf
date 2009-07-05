@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.reader.toolbar.Scalator.Layout;
 import org.jbookshelf.view.swinggui.widget.ChangeDocumentListener;
 
 /**
@@ -37,7 +38,7 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            setCurrentPage( 1 );
+            setCurrentPage( 0 );
         }
     }
 
@@ -53,7 +54,11 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            setCurrentPage( pageCount );
+            final int newPage = readerToolBar.getScalator().getPageLayout() == Layout.ONE_PAGE
+                ? pageCount - 1 : pageCount % 2 == 0
+                    // odd page left, even page right 
+                    ? pageCount - 2 : pageCount - 1;
+            setCurrentPage( newPage );
         }
     }
 
@@ -69,7 +74,9 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            setCurrentPage( ++currentPage );
+            currentPage += readerToolBar.getScalator().getPageLayout() == Layout.ONE_PAGE
+                ? 1 : 2;
+            setCurrentPage( currentPage );
         }
     }
 
@@ -85,7 +92,9 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            setCurrentPage( --currentPage );
+            currentPage -= readerToolBar.getScalator().getPageLayout() == Layout.ONE_PAGE
+                ? 1 : 2;
+            setCurrentPage( currentPage );
         }
     }
 
@@ -101,9 +110,13 @@ public class Paginator
     private final NextAction     nextAction     = new NextAction();
     private final LastAction     lastAction     = new LastAction();
 
-    public Paginator()
+    private final ReaderToolBar  readerToolBar;
+
+    public Paginator(
+        final ReaderToolBar readerToolBar )
     {
         super();
+        this.readerToolBar = readerToolBar;
         setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
 
         add( new JButton( firstAction ) );

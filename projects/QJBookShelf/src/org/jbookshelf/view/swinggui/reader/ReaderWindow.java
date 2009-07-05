@@ -3,6 +3,8 @@
  */
 package org.jbookshelf.view.swinggui.reader;
 
+import icons.IMG;
+
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
@@ -61,8 +63,10 @@ public class ReaderWindow<T>
         add( splitPane );
         splitPane.setLeftComponent( leftContentPanel );
         splitPane.setRightComponent( rightContentPanel );
+        splitPane.setResizeWeight( 0.5 );
 
         setTitle( book.getName() );
+        setIconImage( IMG.img( IMG.LOGO_PNG, 64 ) );
 
         initListeners();
 
@@ -119,10 +123,18 @@ public class ReaderWindow<T>
     public void setPage(
         final int pageNumber )
     {
-        final T leftPage = bookContent.getPage( pageNumber );
-        leftContentPanel.setContent( leftPage );
-        final T rightPage = bookContent.getPage( pageNumber + 1 );
-        rightContentPanel.setContent( rightPage );
+        try
+        {
+            final T leftPage = bookContent.getPage( pageNumber );
+            leftContentPanel.setContent( leftPage );
+            final T rightPage = bookContent.getPage( pageNumber + 1 );
+            rightContentPanel.setContent( rightPage );
+        }
+        catch ( final Exception e )
+        {
+            log.error( e, e );
+            e.printStackTrace();
+        }
     }
 
     /**

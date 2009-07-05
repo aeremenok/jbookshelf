@@ -39,10 +39,18 @@ public class TxtBookContent
 
     @Override
     public String getPage(
-        final int pageNumber )
-    {
+        int pageNumber )
+    { // todo cache?
+        if ( pageNumber > pageCount - 1 )
+        {
+            return "";
+        }
+        if ( pageNumber < 0 )
+        {
+            pageNumber = 0;
+        }
         final int start = pageNumber * CHARS_IN_PAGE;
-        final int end = (pageNumber + 1) * CHARS_IN_PAGE;
+        final int end = Math.min( (pageNumber + 1) * CHARS_IN_PAGE, plainText.length() - 1 );
         return plainText.substring( start, end );
     }
 }
