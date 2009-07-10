@@ -21,6 +21,11 @@ public abstract class BookContent<T>
         this.file = file;
     }
 
+    public abstract int findText(
+        final String text,
+        final Boolean direction,
+        final int currentPage );
+
     public abstract T getPage(
         int pageNumber );
 

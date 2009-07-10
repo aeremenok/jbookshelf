@@ -6,6 +6,7 @@ package org.jbookshelf.view.swinggui.reader;
 import icons.IMG;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -13,7 +14,6 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
@@ -33,8 +33,6 @@ import org.jdesktop.swingx.JXFrame;
 public class ReaderWindow<T>
     extends JXFrame
 {
-    private static final Logger         log       = Logger.getLogger( ReaderWindow.class );
-
     private final Book                  book;
 
     private final ReaderToolBar         toolBar;
@@ -110,9 +108,21 @@ public class ReaderWindow<T>
     {
         final String text = parameters.get( Keys.SEARCH_TEXT );
         final Boolean direction = parameters.get( Keys.SEARCH_DIRECTION );
-        log.debug( "searchText=" + text );
-        log.debug( "searchDirection=" + direction );
-        // todo
+
+        final Paginator paginator = toolBar.getPaginator();
+        final int page = bookContent.findText( text, direction, paginator.getCurrentPage() );
+        if ( page > -1 )
+        {
+            paginator.setCurrentPage( page );
+            EventQueue.invokeLater( new Runnable()
+            {
+                public void run()
+                {
+                    leftContentPanel.highlightText( text );
+                    rightContentPanel.highlightText( text );
+                }
+            } );
+        }
     }
 
     /**
@@ -123,18 +133,10 @@ public class ReaderWindow<T>
     public void setPage(
         final int pageNumber )
     {
-        try
-        {
-            final T leftPage = bookContent.getPage( pageNumber );
-            leftContentPanel.setContent( leftPage );
-            final T rightPage = bookContent.getPage( pageNumber + 1 );
-            rightContentPanel.setContent( rightPage );
-        }
-        catch ( final Exception e )
-        {
-            log.error( e, e );
-            e.printStackTrace();
-        }
+        final T leftPage = bookContent.getPage( pageNumber );
+        leftContentPanel.setContent( leftPage );
+        final T rightPage = bookContent.getPage( pageNumber + 1 );
+        rightContentPanel.setContent( rightPage );
     }
 
     /**

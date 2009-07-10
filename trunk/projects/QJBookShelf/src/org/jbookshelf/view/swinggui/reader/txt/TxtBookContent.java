@@ -19,6 +19,7 @@ public class TxtBookContent
     private final static int    CHARS_IN_PAGE = 2700;
     private static final Logger log           = Logger.getLogger( TxtBookContent.class );
     private final String        plainText;
+    private final String        plainTextLowerCase;
 
     public TxtBookContent(
         final File file )
@@ -28,6 +29,7 @@ public class TxtBookContent
         { // todo encoding
             // todo lazy loading
             plainText = FileUtils.readFileToString( file, "ibm866" );
+            plainTextLowerCase = plainText.toLowerCase();
             pageCount = plainText.length() / CHARS_IN_PAGE + 1;
         }
         catch ( final IOException e )
@@ -35,6 +37,39 @@ public class TxtBookContent
             log.error( e, e );
             throw new Error( e );
         }
+    }
+
+    @Override
+    public int findText(
+        String text,
+        final Boolean direction,
+        final int startPage )
+    {
+        text = text.toLowerCase();
+        int indexOf;
+        final int fromIndex = startPage * CHARS_IN_PAGE;
+        if ( Boolean.TRUE.equals( direction ) )
+        { // search forward
+            indexOf = plainTextLowerCase.indexOf( text, fromIndex );
+        }
+        if ( Boolean.FALSE.equals( direction ) )
+        { // search backward
+            final String substring = plainTextLowerCase.substring( 0, fromIndex - 1 );
+            indexOf = substring.lastIndexOf( text );
+        }
+        else
+        { // search forward from start
+            indexOf = plainTextLowerCase.indexOf( text );
+        }
+
+        log.debug( startPage + " " + text + " " + indexOf );
+
+        if ( indexOf > -1 )
+        {
+            return indexOf / CHARS_IN_PAGE;
+        }
+
+        return -1;
     }
 
     @Override
