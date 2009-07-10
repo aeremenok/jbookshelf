@@ -24,6 +24,9 @@ public abstract class ReaderContentPanel<T>
         this.readerWindow = readerWindow;
     }
 
+    public abstract void highlightText(
+        String text );
+
     public abstract void setContent(
         T content );
 
