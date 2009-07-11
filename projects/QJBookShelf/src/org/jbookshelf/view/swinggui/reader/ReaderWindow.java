@@ -110,7 +110,12 @@ public class ReaderWindow<T>
         final Boolean direction = parameters.get( Keys.SEARCH_DIRECTION );
 
         final Paginator paginator = toolBar.getPaginator();
-        final int page = bookContent.findText( text, direction, paginator.getCurrentPage() );
+        int startPage = paginator.getCurrentPage();
+        if ( toolBar.getScalator().getPageLayout() == Layout.TWO_PAGES )
+        { // skip one more page
+            startPage++;
+        }
+        final int page = bookContent.findText( text, direction, startPage );
         if ( page > -1 )
         {
             paginator.setCurrentPage( page );

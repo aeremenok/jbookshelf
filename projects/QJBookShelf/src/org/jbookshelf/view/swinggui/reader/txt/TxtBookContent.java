@@ -19,7 +19,6 @@ public class TxtBookContent
     private final static int    CHARS_IN_PAGE = 2700;
     private static final Logger log           = Logger.getLogger( TxtBookContent.class );
     private final String        plainText;
-    private final String        plainTextLowerCase;
 
     public TxtBookContent(
         final File file )
@@ -29,7 +28,6 @@ public class TxtBookContent
         { // todo encoding
             // todo lazy loading
             plainText = FileUtils.readFileToString( file, "ibm866" );
-            plainTextLowerCase = plainText.toLowerCase();
             pageCount = plainText.length() / CHARS_IN_PAGE + 1;
         }
         catch ( final IOException e )
@@ -43,30 +41,36 @@ public class TxtBookContent
     public int findText(
         String text,
         final Boolean direction,
-        final int startPage )
+        int startPage )
     {
         text = text.toLowerCase();
-        int indexOf;
-        final int fromIndex = startPage * CHARS_IN_PAGE;
-        if ( Boolean.TRUE.equals( direction ) )
-        { // search forward
-            indexOf = plainTextLowerCase.indexOf( text, fromIndex );
-        }
+
         if ( Boolean.FALSE.equals( direction ) )
-        { // search backward
-            final String substring = plainTextLowerCase.substring( 0, fromIndex - 1 );
-            indexOf = substring.lastIndexOf( text );
+        { // backward
+            for ( int p = startPage - 1; p > -1; p-- )
+            {
+                final String page = getPage( p ).toLowerCase();
+                if ( page.contains( text ) )
+                {
+                    return p;
+                }
+            }
         }
         else
-        { // search forward from start
-            indexOf = plainTextLowerCase.indexOf( text );
-        }
+        { // forward
+            if ( direction == null )
+            { // forward from start
+                startPage = -1;
+            }
 
-        log.debug( startPage + " " + text + " " + indexOf );
-
-        if ( indexOf > -1 )
-        {
-            return indexOf / CHARS_IN_PAGE;
+            for ( int p = startPage + 1; p < pageCount; p++ )
+            {
+                final String page = getPage( p ).toLowerCase();
+                if ( page.contains( text ) )
+                {
+                    return p;
+                }
+            }
         }
 
         return -1;

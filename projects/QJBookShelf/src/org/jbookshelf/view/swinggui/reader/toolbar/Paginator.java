@@ -54,11 +54,7 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            final int newPage = readerToolBar.getScalator().getPageLayout() == Layout.ONE_PAGE
-                ? pageCount - 1 : pageCount % 2 == 0
-                    // odd page left, even page right 
-                    ? pageCount - 2 : pageCount - 1;
-            setCurrentPage( newPage );
+            setCurrentPage( pageCount - 1 );
         }
     }
 
@@ -155,13 +151,18 @@ public class Paginator
     }
 
     /**
-     * set currentPage and the value of pageSelector
+     * set currentPage [0,pageCount-1] and the value of pageSelector [1,pageCount]
      * 
      * @param currentPage new currentPage
      */
     public void setCurrentPage(
-        final int currentPage )
+        int currentPage )
     {
+        currentPage = readerToolBar.getScalator().getPageLayout() == Layout.ONE_PAGE
+            ? currentPage : currentPage % 2 == 0
+                // odd page left, even page right 
+                ? currentPage : currentPage - 1;
+
         final String t = currentPage + 1 + "";
         pageSelector.setText( t );
     }
