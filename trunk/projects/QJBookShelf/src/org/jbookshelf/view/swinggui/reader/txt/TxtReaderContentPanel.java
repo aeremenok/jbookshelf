@@ -51,6 +51,7 @@ public class TxtReaderContentPanel
     {
         try
         {
+            editorPane.getCaret().setSelectionVisible( true );
             final String lowerCase = document.getText( 0, document.getLength() ).toLowerCase();
             final int search = lowerCase.indexOf( text.toLowerCase() );
             if ( search > -1 )
