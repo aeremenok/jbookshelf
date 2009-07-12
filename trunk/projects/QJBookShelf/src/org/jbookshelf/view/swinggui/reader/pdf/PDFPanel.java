@@ -14,12 +14,12 @@ import com.sun.pdfview.PagePanel;
 /**
  * @author eav 2009
  */
-public class PDFReaderContentPanel
+public class PDFPanel
     extends ReaderContentPanel<PDFPage>
 {
     private final PagePanel pagePanel = new PagePanel();
 
-    public PDFReaderContentPanel(
+    public PDFPanel(
         final ReaderWindow<PDFPage> readerWindow )
     {
         super( readerWindow );

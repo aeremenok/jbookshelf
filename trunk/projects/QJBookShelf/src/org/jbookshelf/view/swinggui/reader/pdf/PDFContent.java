@@ -17,13 +17,13 @@ import com.sun.pdfview.PDFPage;
 /**
  * @author eav 2009
  */
-public class PDFBookContent
+public class PDFContent
     extends BookContent<PDFPage>
 {
-    private static final Logger log = Logger.getLogger( PDFBookContent.class );
+    private static final Logger log = Logger.getLogger( PDFContent.class );
     private final PDFFile       pdffile;
 
-    public PDFBookContent(
+    public PDFContent(
         final Book book )
     {
         super( book );

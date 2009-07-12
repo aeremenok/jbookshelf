@@ -23,14 +23,14 @@ public class PDFReaderFactory
     public BookContent<PDFPage> createBookContent(
         final Book book )
     {
-        return new PDFBookContent( book );
+        return new PDFContent( book );
     }
 
     @Override
     public ReaderContentPanel<PDFPage> createReaderContentPanel(
         final ReaderWindow<PDFPage> readerWindow )
     {
-        return new PDFReaderContentPanel( readerWindow );
+        return new PDFPanel( readerWindow );
     }
 
     @Override
