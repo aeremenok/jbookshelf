@@ -17,7 +17,8 @@ import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
-import org.jbookshelf.view.swinggui.reader.txt.TxtReaderFactory;
+import org.jbookshelf.view.swinggui.reader.pdf.PDFReaderFactory;
+import org.jbookshelf.view.swinggui.reader.txt.PlainTextReaderFactory;
 
 /**
  * @author eav 2009
@@ -28,7 +29,8 @@ public class Viewer
 
     private final Map<String, ReaderFactory> factories = new HashMap<String, ReaderFactory>();
     {
-        factories.put( "text/plain", new TxtReaderFactory() );
+        factories.put( "text/plain", new PlainTextReaderFactory() );
+        factories.put( "application/pdf", new PDFReaderFactory() );
     }
 
     public void open(

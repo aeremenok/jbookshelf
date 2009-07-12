@@ -9,16 +9,16 @@ import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 
 /**
  * @author eav 2009
- * @param <T>
+ * @param <PageType>
  */
-public interface ReaderFactory<T>
+public interface ReaderFactory<PageType>
 {
-    BookContent<T> createBookContent(
+    BookContent<PageType> createBookContent(
         Book book );
 
-    ReaderContentPanel<T> createReaderContentPanel(
-        ReaderWindow<T> readerWindow );
+    ReaderContentPanel<PageType> createReaderContentPanel(
+        ReaderWindow<PageType> readerWindow );
 
     ReaderToolBar createReaderToolBar(
-        ReaderWindow<T> readerWindow );
+        ReaderWindow<PageType> readerWindow );
 }

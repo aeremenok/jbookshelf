@@ -9,16 +9,16 @@ import javax.swing.JPanel;
 
 /**
  * @author eav 2009
- * @param <T>
+ * @param <PageType>
  */
-public abstract class ReaderContentPanel<T>
+public abstract class ReaderContentPanel<PageType>
     extends JPanel
 {
     // todo unused?
-    protected final ReaderWindow<T> readerWindow;
+    protected final ReaderWindow<PageType> readerWindow;
 
     public ReaderContentPanel(
-        final ReaderWindow<T> readerWindow )
+        final ReaderWindow<PageType> readerWindow )
     {
         super( new BorderLayout() );
         this.readerWindow = readerWindow;
@@ -28,7 +28,7 @@ public abstract class ReaderContentPanel<T>
         String text );
 
     public abstract void setContent(
-        T content );
+        PageType content );
 
     /**
      * @param scale
