@@ -3,8 +3,8 @@
  */
 package org.jbookshelf.view.swinggui.reader;
 
-import java.io.File;
 
+import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 
 /**
@@ -14,7 +14,7 @@ import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 public interface ReaderFactory<T>
 {
     BookContent<T> createBookContent(
-        File file );
+        Book book );
 
     ReaderContentPanel<T> createReaderContentPanel(
         ReaderWindow<T> readerWindow );

@@ -3,11 +3,11 @@
  */
 package org.jbookshelf.view.swinggui.reader.txt;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 
 /**
@@ -21,13 +21,13 @@ public class TxtBookContent
     private final String        plainText;
 
     public TxtBookContent(
-        final File file )
+        final Book book )
     {
-        super( file );
+        super( book.getPhysicalBook().getFile() );
         try
         { // todo encoding
             // todo lazy loading
-            plainText = FileUtils.readFileToString( file, "ibm866" );
+            plainText = FileUtils.readFileToString( file, book.getPhysicalBook().getCharsetName() );
             pageCount = plainText.length() / CHARS_IN_PAGE + 1;
         }
         catch ( final IOException e )

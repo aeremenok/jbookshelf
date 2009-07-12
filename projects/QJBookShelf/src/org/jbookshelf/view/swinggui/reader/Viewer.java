@@ -4,15 +4,17 @@
 package org.jbookshelf.view.swinggui.reader;
 
 import java.io.File;
-import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.controller.util.FileUtil;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.controller.util.ZIPUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.PhysicalBook;
-import org.jbookshelf.model.db.util.LogRunner;
+import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.txt.TxtReaderFactory;
@@ -22,64 +24,11 @@ import org.jbookshelf.view.swinggui.reader.txt.TxtReaderFactory;
  */
 public class Viewer
 {
-    private static final Logger log = Logger.getLogger( Viewer.class );
+    private static final Logger              log       = Logger.getLogger( Viewer.class );
 
-    /**
-     * @param file a file to check
-     * @return is this file supported by the internal viewer
-     */
-    public static boolean isInternallySupported(
-        final File file )
+    private final Map<String, ReaderFactory> factories = new HashMap<String, ReaderFactory>();
     {
-        try
-        {
-            final String contentType = file.toURI().toURL().openConnection().getContentType();
-            return contentType.toLowerCase().startsWith( "text" );
-        }
-        catch ( final Exception e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-    }
-
-    /**
-     * get a file with book content
-     * 
-     * @param book a book to open
-     * @return a file with book content
-     */
-    public File prepareFile(
-        final Book book )
-    {
-        final PhysicalBook physical = book.getPhysicalBook();
-        if ( physical.getUnpackedFileName() != null && physical.getUnpackedFile().exists() )
-        {
-            return physical.getUnpackedFile();
-        }
-
-        final File file = physical.getFile();
-        if ( ZIPUtil.isZip( file ) )
-        {
-            // unpack and remember the file
-            final File zippedFileToOpen = ZIPUtil.getZippedFileToOpen( file );
-            physical.setUnpackedFile( zippedFileToOpen );
-            // save to db
-            try
-            { // todo to BookShelf
-                final LogRunner runner = new LogRunner();
-                runner.update( "update physical_book set unpackedFileName=? where id=?", new Object[]
-                { physical.getUnpackedFileName(), physical.getId() } );
-            }
-            catch ( final SQLException e )
-            {
-                log.error( e, e );
-                throw new Error( e );
-            }
-            return zippedFileToOpen;
-        }
-
-        return file;
+        factories.put( "text/plain", new TxtReaderFactory() );
     }
 
     public void open(
@@ -87,24 +36,17 @@ public class Viewer
     {
         Single.instance( ProgressBar.class ).invoke( new SafeWorker<ReaderWindow, Object>()
         {
+            @SuppressWarnings( "unchecked" )
             @Override
             protected ReaderWindow doInBackground()
             {
-                // unpack and define attributes
-                final File file = prepareFile( book );
-
+                final PhysicalBook physical = book.getPhysicalBook();
+                initPhysicalBook( physical );
                 // define which viewer to use
-                String viewer = book.getPhysicalBook().getViewer();
-                if ( viewer == null )
+                if ( PhysicalBook.INTERNAL_VIEWER.equals( physical.getViewer() ) )
                 {
-                    viewer = Viewer.isInternallySupported( file )
-                        ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER;
-                    book.getPhysicalBook().setViewer( viewer );
-                }
-
-                if ( PhysicalBook.INTERNAL_VIEWER.equals( viewer ) )
-                { // todo define factory 
-                    return new ReaderWindow<String>( book, new TxtReaderFactory() );
+                    final ReaderFactory factory = getReaderFactory( getFile( physical ) );
+                    return new ReaderWindow( book, factory );
                 }
 
                 return null;
@@ -123,5 +65,62 @@ public class Viewer
                 }
             }
         } );
+    }
+
+    private File getFile(
+        final PhysicalBook physical )
+    {
+        if ( physical.getUnpackedFileName() != null )
+        {
+            if ( !physical.getUnpackedFile().exists() )
+            {
+                throw new IllegalStateException();
+            }
+
+            return physical.getUnpackedFile();
+        }
+        return physical.getFile();
+    }
+
+    private ReaderFactory getReaderFactory(
+        final File file )
+    {
+        try
+        {
+            final String contentType = file.toURI().toURL().openConnection().getContentType();
+            return factories.get( contentType.toLowerCase() );
+        }
+        catch ( final Exception e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+    }
+
+    private void initPhysicalBook(
+        final PhysicalBook physical )
+    {
+        File file = physical.getFile();
+        if ( ZIPUtil.isZip( file ) && (physical.getUnpackedFile() == null || !physical.getUnpackedFile().exists()) )
+        { // unpack and remember the file
+            final File unpackedFileToOpen = ZIPUtil.getZippedFileToOpen( file );
+            physical.setUnpackedFile( unpackedFileToOpen );
+            file = unpackedFileToOpen;
+        }
+
+        if ( physical.getViewer() == null )
+        { // viewer undefined
+            final ReaderFactory factory = getReaderFactory( file );
+            physical.setViewer( factory != null
+                ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER );
+        }
+
+        if ( PhysicalBook.INTERNAL_VIEWER.equals( physical.getViewer() ) && physical.getCharsetName() == null )
+        { // encoding for the internal viewer undefined
+            final String encoding = FileUtil.guessFileEncoding( file );
+            physical.setCharsetName( encoding );
+        }
+
+        BookShelf.updatePhysical( physical );
     }
 }

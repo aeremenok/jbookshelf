@@ -17,6 +17,9 @@ package org.jbookshelf.controller.util;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
@@ -44,11 +47,29 @@ public class FileUtil
     }
 
     /**
+     * @param file a file to check
+     * @return its possible encoding
+     */
+    public static String guessFileEncoding(
+        final File file )
+    {
+        try
+        {
+            return guessStreamEncoding( new FileInputStream( file ) );
+        }
+        catch ( final FileNotFoundException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+    }
+
+    /**
      * @param in a stream to check
      * @return its possible encoding
      */
     public static String guessStreamEncoding(
-        final ByteArrayInputStream in )
+        final InputStream in )
     {
         final UniversalDetector detector = new UniversalDetector( null );
         InputStream is = null;

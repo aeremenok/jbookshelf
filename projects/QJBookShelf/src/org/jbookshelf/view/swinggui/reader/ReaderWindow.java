@@ -52,7 +52,7 @@ public class ReaderWindow<T>
         toolBar = factory.createReaderToolBar( this );
         leftContentPanel = factory.createReaderContentPanel( this );
         rightContentPanel = factory.createReaderContentPanel( this );
-        bookContent = factory.createBookContent( book.getPhysicalBook().getFile() );
+        bookContent = factory.createBookContent( book );
 
         setContentPane( new JPanel( new BorderLayout() ) );
 

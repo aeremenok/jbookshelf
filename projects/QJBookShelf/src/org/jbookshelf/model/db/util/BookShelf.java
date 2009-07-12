@@ -575,6 +575,30 @@ public class BookShelf
         }
     }
 
+    /**
+     * @param physical
+     */
+    public static void updatePhysical(
+        final PhysicalBook physical )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            session.beginTransaction();
+            session.merge( physical );
+            session.getTransaction().commit();
+        }
+        catch ( final Exception e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+
     private static void removeAuthor(
         final Author author )
         throws SQLException
