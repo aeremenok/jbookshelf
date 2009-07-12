@@ -54,4 +54,7 @@ public abstract class BookContent<PageType>
     {
         return this.pageCount;
     }
+
+    public void onClose()
+    {}
 }
