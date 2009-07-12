@@ -3,8 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.reader.txt;
 
-import java.io.File;
-
+import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
@@ -23,9 +22,9 @@ public class TxtReaderFactory
      */
     @Override
     public BookContent<String> createBookContent(
-        final File file )
+        final Book book )
     {
-        return new TxtBookContent( file );
+        return new TxtBookContent( book );
     }
 
     /* (non-Javadoc) 
