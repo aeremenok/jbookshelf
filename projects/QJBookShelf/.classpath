@@ -27,6 +27,7 @@
 	<classpathentry kind="lib" path="lib/eventbus-1.3.jar"/>
 	<classpathentry kind="lib" path="lib/jbs-i18n.jar"/>
 	<classpathentry kind="lib" path="lib/PDFRenderer.jar"/>
+	<classpathentry kind="lib" path="lib/PDFBox-0.7.3.jar"/>
 	<classpathentry excluding="org/jbookshelf/qtgui/" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>

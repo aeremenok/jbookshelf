@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.reader.pdf;
 
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -10,6 +11,8 @@ import java.nio.channels.FileChannel;
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.reader.BookContent;
+import org.pdfbox.pdmodel.PDDocument;
+import org.pdfbox.util.PDFTextStripper;
 
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
@@ -22,6 +25,7 @@ public class PDFContent
 {
     private static final Logger log = Logger.getLogger( PDFContent.class );
     private final PDFFile       pdffile;
+    private PDDocument          pdDocument;
 
     public PDFContent(
         final Book book )
@@ -44,18 +48,96 @@ public class PDFContent
 
     @Override
     public int findText(
-        final String text,
+        String text,
         final Boolean direction,
-        final int currentPage )
+        int startPage )
     {
-        // TODO use iText
-        return 0;
+        text = text.toLowerCase();
+        try
+        {
+            final PDFTextStripper stripper = new PDFTextStripper();
+            if ( Boolean.FALSE.equals( direction ) )
+            { // backward
+                for ( int p = startPage - 1; p > -1; p-- )
+                {
+                    stripper.setStartPage( p );
+                    stripper.setEndPage( p );
+                    final String page = stripper.getText( getPdDocument() ).toLowerCase();
+                    if ( page.contains( text ) )
+                    {
+                        return p;
+                    }
+                }
+            }
+            else
+            { // forward
+                if ( direction == null )
+                { // forward from start
+                    startPage = -1;
+                }
+
+                for ( int p = startPage + 1; p < pageCount; p++ )
+                {
+                    stripper.setStartPage( p );
+                    stripper.setEndPage( p );
+                    final String page = stripper.getText( getPdDocument() ).toLowerCase();
+                    if ( page.contains( text ) )
+                    {
+                        return p;
+                    }
+                }
+            }
+
+            return -1;
+        }
+        catch ( final Throwable e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
     }
 
     @Override
     public PDFPage getPage(
         final int pageNumber )
     {
-        return pdffile.getPage( pageNumber );
+        return pdffile.getPage( pageNumber + 1 );
+    }
+
+    @Override
+    public void onClose()
+    {
+        if ( pdDocument != null )
+        {
+            try
+            {
+                pdDocument.close();
+            }
+            catch ( final IOException e )
+            {
+                log.error( e, e );
+                throw new Error( e );
+            }
+        }
+    }
+
+    /**
+     * @return the pdDocument
+     */
+    private PDDocument getPdDocument()
+    {
+        if ( pdDocument == null )
+        {
+            try
+            {
+                pdDocument = PDDocument.load( file );
+            }
+            catch ( final IOException e )
+            {
+                log.error( e, e );
+                throw new Error( e );
+            }
+        }
+        return pdDocument;
     }
 }

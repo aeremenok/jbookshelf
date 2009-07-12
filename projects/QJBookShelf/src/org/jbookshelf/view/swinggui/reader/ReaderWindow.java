@@ -8,6 +8,8 @@ import icons.IMG;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -68,10 +70,18 @@ public class ReaderWindow<T>
 
         initListeners();
 
-        toolBar.getPaginator().setPageCount( bookContent.getPageCount() );
-
         pack();
         setExtendedState( Frame.MAXIMIZED_BOTH );
+
+        addWindowListener( new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(
+                final WindowEvent e )
+            { // clear content data, close streams, etc...  
+                bookContent.onClose();
+            }
+        } );
     }
 
     /**
@@ -152,6 +162,18 @@ public class ReaderWindow<T>
     {
         leftContentPanel.setScale( scale );
         rightContentPanel.setScale( scale );
+    }
+
+    @Override
+    public void setVisible(
+        final boolean visible )
+    {
+        super.setVisible( visible );
+        if ( visible )
+        { // render the content
+            // todo remember the starting page
+            toolBar.getPaginator().setPageCount( bookContent.getPageCount() );
+        }
     }
 
     private void initListeners()
