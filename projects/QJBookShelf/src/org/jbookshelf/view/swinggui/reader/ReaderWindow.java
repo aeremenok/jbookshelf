@@ -6,7 +6,6 @@ package org.jbookshelf.view.swinggui.reader;
 import icons.IMG;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -18,6 +17,7 @@ import javax.swing.JSplitPane;
 
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.logic.Parameters;
+import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
@@ -40,9 +40,11 @@ public class ReaderWindow<T>
     private final ReaderToolBar         toolBar;
     private final ReaderContentPanel<T> leftContentPanel;
     private final ReaderContentPanel<T> rightContentPanel;
-    private final BookContent<T>        bookContent;
+    private BookContent<T>              bookContent;
 
     private final JSplitPane            splitPane = new JSplitPane();
+
+    private final ReaderFactory<T>      factory;
 
     public ReaderWindow(
         final Book book,
@@ -50,6 +52,7 @@ public class ReaderWindow<T>
     {
         super();
         this.book = book;
+        this.factory = factory;
 
         toolBar = factory.createReaderToolBar( this );
         leftContentPanel = factory.createReaderContentPanel( this );
@@ -108,6 +111,20 @@ public class ReaderWindow<T>
     }
 
     /**
+     * @return the toolBar
+     */
+    public ReaderToolBar getReaderToolBar()
+    {
+        return this.toolBar;
+    }
+
+    public void reloadContent()
+    {
+        bookContent = factory.createBookContent( book );
+        setPage( toolBar.getPaginator().getCurrentPage() );
+    }
+
+    /**
      * search text in the displayed book and go to its position if its found
      * 
      * @param parameters text and direction to search ( {@link Boolean#TRUE} - forward, {@link Boolean#FALSE} -
@@ -117,27 +134,36 @@ public class ReaderWindow<T>
         final Parameters parameters )
     {
         final String text = parameters.get( Keys.SEARCH_TEXT );
-        final Boolean direction = parameters.get( Keys.SEARCH_DIRECTION );
-
         final Paginator paginator = toolBar.getPaginator();
-        int startPage = paginator.getCurrentPage();
-        if ( toolBar.getScalator().getPageLayout() == Layout.TWO_PAGES )
-        { // skip one more page
-            startPage++;
-        }
-        final int page = bookContent.findText( text, direction, startPage );
-        if ( page > -1 )
+
+        toolBar.getProgressBar().invoke( new SafeWorker<Integer, Object>()
         {
-            paginator.setCurrentPage( page );
-            EventQueue.invokeLater( new Runnable()
+            @Override
+            protected Integer doInBackground()
             {
-                public void run()
+                final Boolean direction = parameters.get( Keys.SEARCH_DIRECTION );
+
+                int startPage = paginator.getCurrentPage();
+                if ( toolBar.getScalator().getPageLayout() == Layout.TWO_PAGES )
+                { // skip one more page
+                    startPage++;
+                }
+                final int page = bookContent.findText( text, direction, startPage );
+                return page;
+            }
+
+            @Override
+            protected void doneSafe()
+            {
+                final int page = getQuiet();
+                if ( page > -1 )
                 {
+                    paginator.setCurrentPage( page );
                     leftContentPanel.highlightText( text );
                     rightContentPanel.highlightText( text );
                 }
-            } );
-        }
+            }
+        } );
     }
 
     /**

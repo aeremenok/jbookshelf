@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
+import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.book.BookEditDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
@@ -23,7 +24,7 @@ import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 public class ReaderToolBar
     extends JToolBar
 {
-    private class EditBookAction
+    protected class EditBookAction
         extends TranslatableAction
     {
         public EditBookAction()
@@ -39,26 +40,22 @@ public class ReaderToolBar
         }
     }
 
-    private final ReaderWindow        readerWindow;
+    protected final ReaderWindow        readerWindow;
 
-    private final Scalator            scalator            = new Scalator( 50, 200, 50, 100 );
-    private final Paginator           paginator           = new Paginator( this );
-    private final TextFinder          textFinder          = new TextFinder();
-    private final ContentActionsPanel contentActionsPanel = new ContentActionsPanel();
+    protected final Scalator            scalator            = new Scalator( 50, 200, 50, 100 );
+    protected final Paginator           paginator           = new Paginator( this );
+    protected final TextFinder          textFinder          = new TextFinder();
+    protected final ContentActionsPanel contentActionsPanel = new ContentActionsPanel();
+    protected final ProgressBar         progressBar         = new ProgressBar();
 
     public ReaderToolBar(
         final ReaderWindow readerWindow )
     {
+        super();
         this.readerWindow = readerWindow;
-        add( contentActionsPanel );
+        init();
         addSeparator();
-        add( scalator );
-        addSeparator();
-        add( paginator );
-        addSeparator();
-        add( textFinder );
-        addSeparator();
-        add( new WrapperPanel( new JButton( new EditBookAction() ) ) );
+        add( new WrapperPanel( progressBar ) );
     }
 
     /**
@@ -75,6 +72,14 @@ public class ReaderToolBar
     public Paginator getPaginator()
     {
         return paginator;
+    }
+
+    /**
+     * @return the progressBar
+     */
+    public ProgressBar getProgressBar()
+    {
+        return this.progressBar;
     }
 
     /**
@@ -99,5 +104,19 @@ public class ReaderToolBar
     public TextFinder getTextFinder()
     {
         return textFinder;
+    }
+
+    protected void init()
+    {
+        // todo 
+        //        add( contentActionsPanel );
+        //        addSeparator();
+        add( scalator );
+        addSeparator();
+        add( paginator );
+        addSeparator();
+        add( textFinder );
+        addSeparator();
+        add( new WrapperPanel( new JButton( new EditBookAction() ) ) );
     }
 }

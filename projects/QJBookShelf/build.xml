@@ -4,17 +4,12 @@
     
     ${builddir} - where to build
     ${version}  - release version
-    ${os}       - linux/windows
     
-    ! qt-jambi is platform-dependent, so 
-    copy qtjambi-[version].jar and qtjambi-[platform]-[version].jar to ${jambidir}/{$os}
-    and rename them to qtjambi.jar and qtjambi-native.jar
  -->
 <project default="create_run_jar" name="Create Runnable Jar for Project QJBookShelf" basedir=".">
 
     <property name="libdir" value="${basedir}/lib" />
-    <property name="targetdir" value="${builddir}/jbookshelf-${os}-${version}" />
-    <property name="jambidir-os" value="${jambidir}/${os}" />
+    <property name="targetdir" value="${builddir}/jbookshelf-${version}" />
 
     <target name="clean">
         <mkdir dir="${targetdir}" />
@@ -27,8 +22,6 @@
         <copy todir="${targetdir}/lib">
             <fileset dir="${libdir}" />
         </copy>
-        <copy todir="${targetdir}/lib" file="${jambidir-os}/qtjambi.jar" />
-        <copy todir="${targetdir}/lib" file="${jambidir-os}/qtjambi-native.jar" />
     </target>
 
     <target name="create_run_jar" depends="clean, copyfiles">
@@ -43,6 +36,7 @@
                 <attribute name="Built-By" value="${user.name}" />
                 <attribute name="Main-Class" value="org.jbookshelf.view.swinggui.main.MainWindow" />
                 <attribute name="Class-Path" value="${libpath}" />
+                <attribute name="Manifest-Version" value="${version}" /> 
             </manifest>
 
             <fileset dir="${basedir}/bin" />

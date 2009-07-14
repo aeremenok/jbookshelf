@@ -52,6 +52,7 @@ public class IMG
     public static final String KNOTES_PNG                     = "knotes.png";
     public static final String VIEW_PREVIEW_PNG               = "view-preview.png";
     public static final String TOC_PNG                        = "format-justify-left.png";
+    public static final String FONT_PNG                       = "font.png";
 
     public static Icon icon(
         final String fileName )
