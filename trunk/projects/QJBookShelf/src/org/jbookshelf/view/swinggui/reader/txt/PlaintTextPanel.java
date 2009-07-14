@@ -6,6 +6,8 @@ package org.jbookshelf.view.swinggui.reader.txt;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JScrollPane;
 import javax.swing.text.BadLocationException;
@@ -22,13 +24,11 @@ import org.jdesktop.swingx.JXEditorPane;
 public class PlaintTextPanel
     extends ReaderContentPanel<String>
 {
-    private final JXEditorPane  editorPane      = new JXEditorPane();
-    private final PlainDocument document        = new PlainDocument();
-    private final JScrollPane   scrollPane      = new JScrollPane( editorPane );
+    private final JXEditorPane  editorPane = new JXEditorPane();
+    private final PlainDocument document   = new PlainDocument();
+    private final JScrollPane   scrollPane = new JScrollPane( editorPane );
 
-    private final int           initialFontSize = 20;
-
-    private static final Logger log             = Logger.getLogger( PlaintTextPanel.class );
+    private static final Logger log        = Logger.getLogger( PlaintTextPanel.class );
 
     public PlaintTextPanel(
         final ReaderWindow<String> readerWindow )
@@ -39,13 +39,22 @@ public class PlaintTextPanel
         editorPane.setDocument( document );
         editorPane.getCaret().setSelectionVisible( true );
 
-        final Font oldFont = editorPane.getFont();
-        editorPane.setFont( new Font( oldFont.getName(), oldFont.getStyle(), initialFontSize ) );
+        editorPane.setFont( FontChooser.DEFAULT_FONT );
+
+        final PlainTextToolBar plainTextToolBar = (PlainTextToolBar) readerWindow.getReaderToolBar();
+        plainTextToolBar.getFontChooser().addPropertyChangeListener( FontChooser.FONT_SELECTED,
+            new PropertyChangeListener()
+            {
+                @Override
+                public void propertyChange(
+                    final PropertyChangeEvent evt )
+                {
+                    final Font newFont = (Font) evt.getNewValue();
+                    editorPane.setFont( newFont );
+                }
+            } );
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.reader.ReaderContentPanel#highloghtText(java.lang.String)
-     */
     @Override
     public void highlightText(
         final String text )
@@ -67,9 +76,6 @@ public class PlaintTextPanel
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.reader.ReaderContentPanel#setContent(java.lang.Object)
-     */
     @Override
     public void setContent(
         final String content )
@@ -84,14 +90,11 @@ public class PlaintTextPanel
         } );
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.reader.ReaderContentPanel#setScale(int)
-     */
     @Override
     public void setScale(
         final int scale )
     {
         final Font oldFont = editorPane.getFont();
-        editorPane.setFont( new Font( oldFont.getName(), oldFont.getStyle(), initialFontSize * scale / 100 ) );
+        editorPane.setFont( new Font( oldFont.getName(), oldFont.getStyle(), FontChooser.INITIAL_SIZE * scale / 100 ) );
     }
 }

@@ -9,12 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
-import org.apache.log4j.Logger;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 
 /**
@@ -92,23 +92,21 @@ public class Scalator
         }
     }
 
-    @SuppressWarnings( "unused" )
-    private static final Logger log           = Logger.getLogger( Scalator.class );
-    public static final String  SCALE         = "scale";
-    public static final String  LAYOUT        = "layout";
+    public static final String SCALE         = "scale";
+    public static final String LAYOUT        = "layout";
 
-    public final JComboBox      scaleComboBox = new JComboBox();
+    public final JComboBox     scaleComboBox = new JComboBox();
 
-    private int                 scale;
+    private int                scale;
 
-    private int                 max;
-    private int                 min;
-    private int                 step;
+    private int                max;
+    private int                min;
+    private int                step;
 
-    private Layout              pageLayout    = Layout.ONE_PAGE;
+    private Layout             pageLayout    = Layout.ONE_PAGE;
 
-    private final ZoomOutAction zoomOutAction = new ZoomOutAction();
-    private final ZoomInAction  zoomInAction  = new ZoomInAction();
+    public final Action        zoomOutAction = new ZoomOutAction();
+    public final Action        zoomInAction  = new ZoomInAction();
 
     public Scalator(
         final int min,

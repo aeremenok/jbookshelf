@@ -37,6 +37,6 @@ public class PDFReaderFactory
     public ReaderToolBar createReaderToolBar(
         final ReaderWindow<PDFPage> readerWindow )
     {
-        return new ReaderToolBar( readerWindow );
+        return new PDFReaderToolBar( readerWindow );
     }
 }

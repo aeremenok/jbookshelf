@@ -35,7 +35,6 @@ public class PlainTextReaderFactory
     public ReaderToolBar createReaderToolBar(
         final ReaderWindow readerWindow )
     {
-        // todo add font setting
-        return new ReaderToolBar( readerWindow );
+        return new PlainTextToolBar( readerWindow );
     }
 }
