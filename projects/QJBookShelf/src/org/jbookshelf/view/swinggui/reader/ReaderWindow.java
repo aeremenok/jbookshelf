@@ -198,6 +198,7 @@ public class ReaderWindow<T>
         if ( visible )
         { // render the content
             // todo remember the starting page
+            changeLayout( Layout.ONE_PAGE );
             toolBar.getPaginator().setPageCount( bookContent.getPageCount() );
         }
     }

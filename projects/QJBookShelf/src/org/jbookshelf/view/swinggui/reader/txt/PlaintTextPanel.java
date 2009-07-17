@@ -16,6 +16,7 @@ import javax.swing.text.PlainDocument;
 import org.apache.log4j.Logger;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.widget.FontChooser;
 import org.jdesktop.swingx.JXEditorPane;
 
 /**

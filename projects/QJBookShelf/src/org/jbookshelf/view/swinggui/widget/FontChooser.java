@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.txt;
+package org.jbookshelf.view.swinggui.widget;
 
 import icons.IMG;
 

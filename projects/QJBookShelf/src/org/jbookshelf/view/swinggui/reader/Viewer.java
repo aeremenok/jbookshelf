@@ -18,6 +18,7 @@ import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.pdf.PDFReaderFactory;
+import org.jbookshelf.view.swinggui.reader.rtf.RTFReaderFactory;
 import org.jbookshelf.view.swinggui.reader.txt.PlainTextReaderFactory;
 
 /**
@@ -30,6 +31,7 @@ public class Viewer
     private final Map<String, ReaderFactory> factories = new HashMap<String, ReaderFactory>();
     {
         factories.put( "text/plain", new PlainTextReaderFactory() );
+        factories.put( "application/rtf", new RTFReaderFactory() );
         factories.put( "application/pdf", new PDFReaderFactory() );
     }
 
@@ -89,7 +91,9 @@ public class Viewer
     {
         try
         {
+            log.debug( "getting mimetype of file " + file.getAbsolutePath() );
             final String contentType = file.toURI().toURL().openConnection().getContentType();
+            log.debug( "mimetype=" + contentType );
             return factories.get( contentType.toLowerCase() );
         }
         catch ( final Exception e )
