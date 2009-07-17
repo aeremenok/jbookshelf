@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.FileUtil;
@@ -17,6 +18,7 @@ import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.reader.html.HTMLReaderFactory;
 import org.jbookshelf.view.swinggui.reader.pdf.PDFReaderFactory;
 import org.jbookshelf.view.swinggui.reader.rtf.RTFReaderFactory;
 import org.jbookshelf.view.swinggui.reader.txt.PlainTextReaderFactory;
@@ -30,9 +32,23 @@ public class Viewer
 
     private final Map<String, ReaderFactory> factories = new HashMap<String, ReaderFactory>();
     {
-        factories.put( "text/plain", new PlainTextReaderFactory() );
-        factories.put( "application/rtf", new RTFReaderFactory() );
-        factories.put( "application/pdf", new PDFReaderFactory() );
+        final PlainTextReaderFactory txtFactory = new PlainTextReaderFactory();
+        final HTMLReaderFactory htmlFactory = new HTMLReaderFactory();
+        final RTFReaderFactory rtfFactory = new RTFReaderFactory();
+        final PDFReaderFactory pdfFactory = new PDFReaderFactory();
+
+        factories.put( "text/plain", txtFactory );
+        factories.put( "text/html", htmlFactory );
+        factories.put( "application/rtf", rtfFactory );
+        factories.put( "application/pdf", pdfFactory );
+
+        // try extensions if the mime is broken
+        factories.put( "txt", txtFactory );
+        factories.put( "html", htmlFactory );
+        factories.put( "htm", htmlFactory );
+        factories.put( "shtml", htmlFactory );
+        factories.put( "rtf", rtfFactory );
+        factories.put( "pdf", pdfFactory );
     }
 
     public void open(
@@ -94,7 +110,13 @@ public class Viewer
             log.debug( "getting mimetype of file " + file.getAbsolutePath() );
             final String contentType = file.toURI().toURL().openConnection().getContentType();
             log.debug( "mimetype=" + contentType );
-            return factories.get( contentType.toLowerCase() );
+            ReaderFactory factory = factories.get( contentType.toLowerCase() );
+            if ( factory == null )
+            {
+                final String extension = FilenameUtils.getExtension( file.getName() );
+                factory = factories.get( extension );
+            }
+            return factory;
         }
         catch ( final Exception e )
         {
