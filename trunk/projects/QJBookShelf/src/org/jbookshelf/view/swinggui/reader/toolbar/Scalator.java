@@ -107,6 +107,7 @@ public class Scalator
 
     public final Action        zoomOutAction = new ZoomOutAction();
     public final Action        zoomInAction  = new ZoomInAction();
+    public final Action        layoutAction  = new LayoutAction();
 
     public Scalator(
         final int min,
@@ -126,7 +127,6 @@ public class Scalator
         add( new JButton( zoomOutAction ) );
         add( scaleComboBox );
         add( new JButton( zoomInAction ) );
-        final LayoutAction layoutAction = new LayoutAction();
         add( new JButton( layoutAction ) );
 
         scaleComboBox.addItemListener( new ItemListener()

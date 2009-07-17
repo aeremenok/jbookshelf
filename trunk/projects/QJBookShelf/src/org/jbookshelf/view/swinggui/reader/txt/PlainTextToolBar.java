@@ -12,6 +12,7 @@ import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.toolbar.CharsetChooser;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
+import org.jbookshelf.view.swinggui.widget.FontChooser;
 
 /**
  * @author eav 2009
