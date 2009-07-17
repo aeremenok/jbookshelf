@@ -1,6 +1,7 @@
 package org.jbookshelf.view.swinggui.reader.rtf;
 
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 
 import javax.swing.text.DefaultStyledDocument;
@@ -24,9 +25,11 @@ public class RTFContent
     {
         super( book );
         Reader reader = null;
+        FileInputStream fis = null;
         try
         {
-            reader = new FileReader( file );
+            fis = new FileInputStream( file );
+            reader = new InputStreamReader( fis, book.getPhysicalBook().getCharsetName() );
             kit.read( reader, document, 0 );
             pageCount = 1;
         }
@@ -37,6 +40,7 @@ public class RTFContent
         }
         finally
         {
+            IOUtils.closeQuietly( fis );
             IOUtils.closeQuietly( reader );
         }
     }
