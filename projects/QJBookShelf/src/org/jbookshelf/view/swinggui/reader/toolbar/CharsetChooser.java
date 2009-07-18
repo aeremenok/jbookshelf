@@ -48,7 +48,7 @@ public class CharsetChooser
     public void itemStateChanged(
         final ItemEvent e )
     {
-        if ( e.getStateChange() == ItemEvent.SELECTED )
+        if ( ItemEvent.SELECTED == e.getStateChange() )
         {
             EventQueue.invokeLater( new Runnable()
             {

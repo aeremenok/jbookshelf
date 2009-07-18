@@ -12,11 +12,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
 
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
-import org.jbookshelf.view.swinggui.widget.ChangeDocumentListener;
 
 /**
  * a panel for page navigation
@@ -117,23 +115,6 @@ public class Paginator
         add( pageCountLabel );
         add( new JButton( nextAction ) );
         add( new JButton( lastAction ) );
-
-        pageSelector.getDocument().addDocumentListener( new ChangeDocumentListener( pageSelector )
-        {
-            @Override
-            public void onChange(
-                final String newText )
-            {
-                setCurrentPageImpl( Integer.valueOf( pageSelector.getText() ) - 1 );
-            }
-
-            @Override
-            public void removeUpdate(
-                final DocumentEvent e )
-            {}
-        } );
-
-        //        setPageCount( 1 );
     }
 
     public int getCurrentPage()
@@ -161,6 +142,7 @@ public class Paginator
 
         final String t = currentPage + 1 + "";
         pageSelector.setText( t );
+        setCurrentPageImpl( currentPage );
     }
 
     public void setPageCount(
@@ -202,7 +184,7 @@ public class Paginator
         previousAction.setEnabled( this.currentPage > 0 );
         nextAction.setEnabled( this.currentPage < pageCount - 1 );
         lastAction.setEnabled( this.currentPage < pageCount - 1 );
-        System.out.println( "Paginator.setCurrentPageImpl()" + currentPage );
+
         firePropertyChange( Features.PAGING, -1, currentPage );
     }
 }

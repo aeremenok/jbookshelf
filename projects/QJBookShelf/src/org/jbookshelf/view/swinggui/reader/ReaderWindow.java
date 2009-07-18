@@ -194,7 +194,10 @@ public class ReaderWindow<T>
                 {
                     paginator.setCurrentPage( page );
                     leftContentPanel.highlightText( text );
-                    rightContentPanel.highlightText( text );
+                    if ( toolBar.getLayouter().getPageLayout() == PageLayout.TWO_PAGES )
+                    {
+                        rightContentPanel.highlightText( text );
+                    }
                 }
             }
         } );
@@ -218,18 +221,23 @@ public class ReaderWindow<T>
     public void setPage(
         final int pageNumber )
     {
-        System.out.println( "ReaderWindow.setPage()" + pageNumber );
         final T leftPage = bookContent.getPage( pageNumber );
         leftContentPanel.setContent( leftPage );
-        final T rightPage = bookContent.getPage( pageNumber + 1 );
-        rightContentPanel.setContent( rightPage );
+        if ( toolBar.getLayouter().getPageLayout() == PageLayout.TWO_PAGES )
+        {
+            final T rightPage = bookContent.getPage( pageNumber + 1 );
+            rightContentPanel.setContent( rightPage );
+        }
     }
 
     public void setReaderFont(
         final Font font )
     {
         leftContentPanel.setReaderFont( font );
-        rightContentPanel.setReaderFont( font );
+        if ( toolBar.getLayouter().getPageLayout() == PageLayout.TWO_PAGES )
+        {
+            rightContentPanel.setReaderFont( font );
+        }
     }
 
     /**
@@ -239,7 +247,10 @@ public class ReaderWindow<T>
         final int scale )
     {
         leftContentPanel.setScale( scale );
-        rightContentPanel.setScale( scale );
+        if ( toolBar.getLayouter().getPageLayout() == PageLayout.TWO_PAGES )
+        {
+            rightContentPanel.setScale( scale );
+        }
     }
 
     @Override
