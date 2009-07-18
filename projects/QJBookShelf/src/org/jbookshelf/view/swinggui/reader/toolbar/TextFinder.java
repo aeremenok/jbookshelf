@@ -36,7 +36,7 @@ public class TextFinder
             final Parameters parameters = new Parameters();
             parameters.put( Keys.SEARCH_TEXT, searchTextField.getText() );
             parameters.put( Keys.SEARCH_DIRECTION, null );
-            TextFinder.this.firePropertyChange( SEARCH_TEXT, null, parameters );
+            TextFinder.this.firePropertyChange( Features.SEARCH, null, parameters );
         }
     }
 
@@ -54,7 +54,7 @@ public class TextFinder
             final Parameters parameters = new Parameters();
             parameters.put( Keys.SEARCH_TEXT, searchTextField.getText() );
             parameters.put( Keys.SEARCH_DIRECTION, true );
-            TextFinder.this.firePropertyChange( SEARCH_TEXT, null, parameters );
+            TextFinder.this.firePropertyChange( Features.SEARCH, null, parameters );
         }
     }
 
@@ -72,11 +72,9 @@ public class TextFinder
             final Parameters parameters = new Parameters();
             parameters.put( Keys.SEARCH_TEXT, searchTextField.getText() );
             parameters.put( Keys.SEARCH_DIRECTION, false );
-            TextFinder.this.firePropertyChange( SEARCH_TEXT, null, parameters );
+            TextFinder.this.firePropertyChange( Features.SEARCH, null, parameters );
         }
     }
-
-    public static final String       SEARCH_TEXT        = "search_text";
 
     private final JTextField         searchTextField    = new JTextField( 20 );
     private final FindNextAction     findNextAction     = new FindNextAction();

@@ -7,6 +7,7 @@ import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 
 public class RTFReaderFactory
@@ -29,7 +30,6 @@ public class RTFReaderFactory
     public ReaderToolBar createReaderToolBar(
         final ReaderWindow<StyledDocument> readerWindow )
     {
-        return new RTFToolBar( readerWindow );
+        return new ReaderToolBar( readerWindow, Features.SCALING, Features.SEARCH, Features.CHARSET );
     }
-
 }

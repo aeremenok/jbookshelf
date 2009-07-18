@@ -2,16 +2,14 @@ package org.jbookshelf.view.swinggui.reader.rtf;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.JScrollPane;
 import javax.swing.text.StyledDocument;
 
+import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.txt.PlainTextToolBar;
-import org.jbookshelf.view.swinggui.widget.FontChooser;
+import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
 import org.jdesktop.swingx.JXEditorPane;
 
 public class RTFPanel
@@ -29,19 +27,6 @@ public class RTFPanel
         editorPane.getCaret().setSelectionVisible( true );
 
         editorPane.setFont( FontChooser.DEFAULT_FONT );
-
-        final PlainTextToolBar plainTextToolBar = (PlainTextToolBar) readerWindow.getReaderToolBar();
-        plainTextToolBar.getFontChooser().addPropertyChangeListener( FontChooser.FONT_SELECTED,
-            new PropertyChangeListener()
-            {
-                @Override
-                public void propertyChange(
-                    final PropertyChangeEvent evt )
-                {
-                    final Font newFont = (Font) evt.getNewValue();
-                    editorPane.setFont( newFont );
-                }
-            } );
     }
 
     @Override
@@ -55,15 +40,25 @@ public class RTFPanel
     public void setContent(
         final StyledDocument content )
     {
-        final Runnable runnable = new Runnable()
+        System.out.println( "RTFPanel.setContent()" );
+        final SafeWorker<JXEditorPane, Object> worker = new SafeWorker<JXEditorPane, Object>()
         {
-            public void run()
+            @Override
+            protected JXEditorPane doInBackground()
             {
                 editorPane.setDocument( content );
                 scrollPane.getVerticalScrollBar().setValue( 0 );
+                return editorPane;
             }
         };
-        readerWindow.getReaderToolBar().getProgressBar().invoke( runnable );
+        readerWindow.getReaderToolBar().getProgressBar().invoke( worker );
+    }
+
+    @Override
+    public void setReaderFont(
+        final Font font )
+    {
+        editorPane.setFont( font );
     }
 
     @Override

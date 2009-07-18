@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.widget;
+package org.jbookshelf.view.swinggui.reader.toolbar;
 
 import icons.IMG;
 
@@ -82,7 +82,7 @@ public class FontChooser
                 public boolean apply()
                 {
                     selectedFont = fontChooser.getSelectedFont();
-                    FontChooser.this.firePropertyChange( FONT_SELECTED, null, selectedFont );
+                    FontChooser.this.firePropertyChange( Features.FONT, null, selectedFont );
                     return true;
                 }
             };
@@ -90,16 +90,15 @@ public class FontChooser
         }
     }
 
-    public final static int    INITIAL_SIZE  = 20;
-    public final static Font   DEFAULT_FONT;
-    public final static String FONT_SELECTED = "FONT_SELECTED";
+    public final static int  INITIAL_SIZE = 20;
+    public final static Font DEFAULT_FONT;
     static
     {
         final Font oldFont = new JEditorPane().getFont();
         DEFAULT_FONT = new Font( oldFont.getName(), oldFont.getStyle(), INITIAL_SIZE );
     }
 
-    private Font               selectedFont  = DEFAULT_FONT;
+    private Font             selectedFont = DEFAULT_FONT;
 
     public FontChooser()
     {

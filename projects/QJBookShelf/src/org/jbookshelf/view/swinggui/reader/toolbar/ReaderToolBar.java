@@ -5,7 +5,10 @@ package org.jbookshelf.view.swinggui.reader.toolbar;
 
 import icons.IMG;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JToolBar;
@@ -24,19 +27,6 @@ import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 public class ReaderToolBar
     extends JToolBar
 {
-    public static interface Features
-    {
-        String PAGING     = "PAGING";
-        String SCALING    = "SCALING";
-        String LAYOUT     = "LAYOUT";
-        String SEARCH     = "SEARCH";
-        String FONT       = "FONT";
-        String CHARSET    = "CHARSET";
-        String NOTES      = "NOTES";
-        String THUMBNAILS = "THUMBNAILS";
-        String BOOKMARKS  = "BOOKMARKS";
-    }
-
     protected class EditBookAction
         extends TranslatableAction
     {
@@ -53,22 +43,45 @@ public class ReaderToolBar
         }
     }
 
-    protected final ReaderWindow        readerWindow;
+    protected final ReaderWindow  readerWindow;
+    protected final ProgressBar   progressBar = new ProgressBar();
 
-    protected final Scalator            scalator            = new Scalator( 50, 200, 50, 100 );
-    protected final Paginator           paginator           = new Paginator( this );
-    protected final TextFinder          textFinder          = new TextFinder();
-    protected final ContentActionsPanel contentActionsPanel = new ContentActionsPanel();
-    protected final ProgressBar         progressBar         = new ProgressBar();
+    protected ContentActionsPanel contentActionsPanel;
+    protected Scalator            scalator;
+    protected Layouter            layouter;
+    protected Paginator           paginator   = new Paginator();
+    protected TextFinder          textFinder;
+    protected CharsetChooser      charsetChooser;
+    protected FontChooser         fontChooser;
 
     public ReaderToolBar(
-        final ReaderWindow readerWindow )
+        final ReaderWindow readerWindow,
+        final String... featureNames )
     {
         super();
         this.readerWindow = readerWindow;
-        init();
-        addSeparator();
+
+        initFeatures( Arrays.asList( featureNames ) );
+
+        addComponent( new WrapperPanel( new JButton( new EditBookAction() ) ) );
         add( new WrapperPanel( progressBar ) );
+
+    }
+
+    public void addComponent(
+        final Component comp )
+    {
+        add( comp );
+        addSeparator();
+        comp.addPropertyChangeListener( readerWindow );
+    }
+
+    /**
+     * @return the charsetChooser
+     */
+    public CharsetChooser getCharsetChooser()
+    {
+        return this.charsetChooser;
     }
 
     /**
@@ -77,6 +90,22 @@ public class ReaderToolBar
     public ContentActionsPanel getContentActionsPanel()
     {
         return this.contentActionsPanel;
+    }
+
+    /**
+     * @return the fontChooser
+     */
+    public FontChooser getFontChooser()
+    {
+        return this.fontChooser;
+    }
+
+    /**
+     * @return the layouter
+     */
+    public Layouter getLayouter()
+    {
+        return this.layouter;
     }
 
     /**
@@ -119,17 +148,42 @@ public class ReaderToolBar
         return textFinder;
     }
 
-    protected void init()
+    /**
+     * @param features
+     */
+    private void initFeatures(
+        final List<String> features )
     {
-        // todo 
-        //        add( contentActionsPanel );
-        //        addSeparator();
-        add( scalator );
-        addSeparator();
-        add( paginator );
-        addSeparator();
-        add( textFinder );
-        addSeparator();
-        add( new WrapperPanel( new JButton( new EditBookAction() ) ) );
+        if ( features.contains( Features.NOTES ) || features.contains( Features.BOOKMARKS )
+            || features.contains( Features.THUMBNAILS ) )
+        {
+            addComponent( contentActionsPanel = new ContentActionsPanel() );
+        }
+        if ( features.contains( Features.SCALING ) )
+        {
+            addComponent( scalator = new Scalator( 50, 200, 50, 100 ) );
+        }
+        if ( features.contains( Features.LAYOUT ) )
+        {
+            addComponent( layouter = new Layouter() );
+        }
+        if ( features.contains( Features.PAGING ) )
+        {
+            addComponent( paginator );
+        }
+        if ( features.contains( Features.SEARCH ) )
+        {
+            addComponent( textFinder = new TextFinder() );
+        }
+        if ( features.contains( Features.CHARSET ) )
+        {
+            addComponent( charsetChooser = new CharsetChooser() );
+            final String charsetName = readerWindow.getBook().getPhysicalBook().getCharsetName();
+            charsetChooser.setCharset( charsetName );
+        }
+        if ( features.contains( Features.FONT ) )
+        {
+            addComponent( fontChooser = new FontChooser() );
+        }
     }
 }

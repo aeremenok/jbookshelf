@@ -19,9 +19,10 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  */
 public class CharsetChooser
     extends JPanel
+    implements
+    ItemListener
 {
-    public static final String CURRENT_CHARSET = "CURRENT_CHARSET";
-    private final JComboBox    comboBox        = new JComboBox();
+    private final JComboBox comboBox = new JComboBox();
 
     public CharsetChooser()
     {
@@ -32,25 +33,7 @@ public class CharsetChooser
             comboBox.addItem( name );
         }
 
-        comboBox.addItemListener( new ItemListener()
-        {
-            @Override
-            public void itemStateChanged(
-                final ItemEvent e )
-            {
-                if ( e.getStateChange() == ItemEvent.SELECTED )
-                {
-                    EventQueue.invokeLater( new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            firePropertyChange( CURRENT_CHARSET, null, getCharset() );
-                        }
-                    } );
-                }
-            }
-        } );
+        comboBox.addItemListener( this );
 
         comboBox.setEditable( true );
         AutoCompleteDecorator.decorate( comboBox );
@@ -59,6 +42,23 @@ public class CharsetChooser
     public Charset getCharset()
     {
         return Charset.availableCharsets().get( comboBox.getSelectedItem() );
+    }
+
+    @Override
+    public void itemStateChanged(
+        final ItemEvent e )
+    {
+        if ( e.getStateChange() == ItemEvent.SELECTED )
+        {
+            EventQueue.invokeLater( new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    firePropertyChange( Features.CHARSET, null, getCharset() );
+                }
+            } );
+        }
     }
 
     public void setCharset(
@@ -70,6 +70,8 @@ public class CharsetChooser
     public void setCharset(
         final String charsetName )
     {
+        comboBox.removeItemListener( this );
         comboBox.setSelectedItem( charsetName );
+        comboBox.addItemListener( this );
     }
 }

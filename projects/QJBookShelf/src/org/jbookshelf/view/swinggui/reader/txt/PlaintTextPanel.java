@@ -6,8 +6,6 @@ package org.jbookshelf.view.swinggui.reader.txt;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.JScrollPane;
 import javax.swing.text.BadLocationException;
@@ -16,7 +14,7 @@ import javax.swing.text.PlainDocument;
 import org.apache.log4j.Logger;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.widget.FontChooser;
+import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
 import org.jdesktop.swingx.JXEditorPane;
 
 /**
@@ -41,19 +39,6 @@ public class PlaintTextPanel
         editorPane.getCaret().setSelectionVisible( true );
 
         editorPane.setFont( FontChooser.DEFAULT_FONT );
-
-        final PlainTextToolBar plainTextToolBar = (PlainTextToolBar) readerWindow.getReaderToolBar();
-        plainTextToolBar.getFontChooser().addPropertyChangeListener( FontChooser.FONT_SELECTED,
-            new PropertyChangeListener()
-            {
-                @Override
-                public void propertyChange(
-                    final PropertyChangeEvent evt )
-                {
-                    final Font newFont = (Font) evt.getNewValue();
-                    editorPane.setFont( newFont );
-                }
-            } );
     }
 
     @Override
@@ -89,6 +74,13 @@ public class PlaintTextPanel
                 scrollPane.getVerticalScrollBar().setValue( 0 );
             }
         } );
+    }
+
+    @Override
+    public void setReaderFont(
+        final Font font )
+    {
+        editorPane.setFont( font );
     }
 
     @Override

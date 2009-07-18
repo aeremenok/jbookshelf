@@ -8,6 +8,7 @@ import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 
 import com.sun.pdfview.PDFPage;
@@ -37,6 +38,6 @@ public class PDFReaderFactory
     public ReaderToolBar createReaderToolBar(
         final ReaderWindow<PDFPage> readerWindow )
     {
-        return new PDFReaderToolBar( readerWindow );
+        return new ReaderToolBar( readerWindow, Features.PAGING, Features.LAYOUT, Features.SEARCH );
     }
 }

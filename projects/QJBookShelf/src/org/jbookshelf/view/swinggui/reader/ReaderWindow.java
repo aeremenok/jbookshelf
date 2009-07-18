@@ -6,24 +6,28 @@ package org.jbookshelf.view.swinggui.reader;
 import icons.IMG;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.nio.charset.Charset;
 
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
+import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
-import org.jbookshelf.view.swinggui.reader.toolbar.Scalator;
-import org.jbookshelf.view.swinggui.reader.toolbar.TextFinder;
-import org.jbookshelf.view.swinggui.reader.toolbar.Scalator.Layout;
+import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
 import org.jdesktop.swingx.JXFrame;
 
 /**
@@ -34,6 +38,8 @@ import org.jdesktop.swingx.JXFrame;
  */
 public class ReaderWindow<T>
     extends JXFrame
+    implements
+    PropertyChangeListener
 {
     private final Book                  book;
 
@@ -45,6 +51,8 @@ public class ReaderWindow<T>
     private final JSplitPane            splitPane = new JSplitPane();
 
     private final ReaderFactory<T>      factory;
+
+    private static final Logger         log       = Logger.getLogger( ReaderWindow.class );
 
     public ReaderWindow(
         final Book book,
@@ -71,8 +79,6 @@ public class ReaderWindow<T>
         setTitle( book.getName() );
         setIconImage( IMG.img( IMG.LOGO_PNG, 64 ) );
 
-        initListeners();
-
         pack();
         setExtendedState( Frame.MAXIMIZED_BOTH );
 
@@ -90,16 +96,17 @@ public class ReaderWindow<T>
     /**
      * change the layout between one and two pages
      * 
-     * @param layout new {@link Layout}
+     * @param layout new {@link PageLayout}
      */
     public void changeLayout(
-        final Layout layout )
+        final PageLayout layout )
     {
-        rightContentPanel.setVisible( layout == Layout.TWO_PAGES );
+        rightContentPanel.setVisible( layout == PageLayout.TWO_PAGES );
         if ( rightContentPanel.isVisible() )
         {
             splitPane.setDividerLocation( 0.5 );
         }
+        toolBar.getPaginator().setPageLayout( layout );
     }
 
     /**
@@ -118,10 +125,38 @@ public class ReaderWindow<T>
         return this.toolBar;
     }
 
-    public void reloadContent()
+    @Override
+    public void propertyChange(
+        final PropertyChangeEvent evt )
     {
-        bookContent = factory.createBookContent( book );
-        setPage( toolBar.getPaginator().getCurrentPage() );
+        final String propertyName = evt.getPropertyName();
+        final Object newValue = evt.getNewValue();
+        log.debug( "property changed " + propertyName + "=" + newValue );
+
+        if ( Features.PAGING.equals( propertyName ) )
+        {
+            setPage( (Integer) newValue );
+        }
+        else if ( Features.SCALING.equals( propertyName ) )
+        {
+            setScale( (Integer) newValue );
+        }
+        else if ( Features.LAYOUT.equals( propertyName ) )
+        {
+            changeLayout( (PageLayout) newValue );
+        }
+        else if ( Features.SEARCH.equals( propertyName ) )
+        {
+            searchText( (Parameters) newValue );
+        }
+        else if ( Features.FONT.equals( propertyName ) )
+        {
+            setReaderFont( (Font) newValue );
+        }
+        else if ( Features.CHARSET.equals( propertyName ) )
+        {
+            setCharset( (Charset) newValue );
+        }
     }
 
     /**
@@ -144,12 +179,11 @@ public class ReaderWindow<T>
                 final Boolean direction = parameters.get( Keys.SEARCH_DIRECTION );
 
                 int startPage = paginator.getCurrentPage();
-                if ( toolBar.getScalator().getPageLayout() == Layout.TWO_PAGES )
+                if ( toolBar.getLayouter().getPageLayout() == PageLayout.TWO_PAGES )
                 { // skip one more page
                     startPage++;
                 }
-                final int page = bookContent.findText( text, direction, startPage );
-                return page;
+                return bookContent.findText( text, direction, startPage );
             }
 
             @Override
@@ -166,6 +200,16 @@ public class ReaderWindow<T>
         } );
     }
 
+    public void setCharset(
+        final Charset charset )
+    {
+        final PhysicalBook physicalBook = getBook().getPhysicalBook();
+        physicalBook.setCharsetName( charset.name() );
+        BookShelf.updatePhysical( physicalBook );
+        bookContent = factory.createBookContent( book );
+        setPage( toolBar.getPaginator().getCurrentPage() );
+    }
+
     /**
      * display a page of the specified number
      * 
@@ -174,10 +218,18 @@ public class ReaderWindow<T>
     public void setPage(
         final int pageNumber )
     {
+        System.out.println( "ReaderWindow.setPage()" + pageNumber );
         final T leftPage = bookContent.getPage( pageNumber );
         leftContentPanel.setContent( leftPage );
         final T rightPage = bookContent.getPage( pageNumber + 1 );
         rightContentPanel.setContent( rightPage );
+    }
+
+    public void setReaderFont(
+        final Font font )
+    {
+        leftContentPanel.setReaderFont( font );
+        rightContentPanel.setReaderFont( font );
     }
 
     /**
@@ -198,50 +250,8 @@ public class ReaderWindow<T>
         if ( visible )
         { // render the content
             // todo remember the starting page
-            changeLayout( Layout.ONE_PAGE );
+            changeLayout( PageLayout.ONE_PAGE );
             toolBar.getPaginator().setPageCount( bookContent.getPageCount() );
         }
-    }
-
-    private void initListeners()
-    {
-        toolBar.getScalator().addPropertyChangeListener( Scalator.LAYOUT, new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(
-                final PropertyChangeEvent evt )
-            {
-                changeLayout( (Layout) evt.getNewValue() );
-            }
-        } );
-        toolBar.getScalator().addPropertyChangeListener( Scalator.SCALE, new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(
-                final PropertyChangeEvent evt )
-            {
-                setScale( (Integer) evt.getNewValue() );
-            }
-        } );
-
-        toolBar.getPaginator().addPropertyChangeListener( Paginator.PAGE, new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(
-                final PropertyChangeEvent evt )
-            {
-                setPage( (Integer) evt.getNewValue() );
-            }
-        } );
-
-        toolBar.getTextFinder().addPropertyChangeListener( TextFinder.SEARCH_TEXT, new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(
-                final PropertyChangeEvent evt )
-            {
-                searchText( (Parameters) evt.getNewValue() );
-            }
-        } );
     }
 }
