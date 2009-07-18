@@ -24,6 +24,19 @@ import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 public class ReaderToolBar
     extends JToolBar
 {
+    public static interface Features
+    {
+        String PAGING     = "PAGING";
+        String SCALING    = "SCALING";
+        String LAYOUT     = "LAYOUT";
+        String SEARCH     = "SEARCH";
+        String FONT       = "FONT";
+        String CHARSET    = "CHARSET";
+        String NOTES      = "NOTES";
+        String THUMBNAILS = "THUMBNAILS";
+        String BOOKMARKS  = "BOOKMARKS";
+    }
+
     protected class EditBookAction
         extends TranslatableAction
     {
