@@ -24,6 +24,7 @@ public class RTFContent
         final Book book )
     {
         super( book );
+        log.debug( "parsing file " + file );
         Reader reader = null;
         FileInputStream fis = null;
         try
@@ -43,6 +44,7 @@ public class RTFContent
             IOUtils.closeQuietly( fis );
             IOUtils.closeQuietly( reader );
         }
+        log.debug( "file parsed" );
     }
 
     @Override

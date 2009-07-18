@@ -8,6 +8,7 @@ import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 
 /**
@@ -35,6 +36,7 @@ public class PlainTextReaderFactory
     public ReaderToolBar createReaderToolBar(
         final ReaderWindow readerWindow )
     {
-        return new PlainTextToolBar( readerWindow );
+        return new ReaderToolBar( readerWindow, Features.PAGING, Features.SCALING, Features.LAYOUT, Features.SEARCH,
+            Features.FONT, Features.CHARSET );
     }
 }

@@ -25,33 +25,6 @@ import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 public class Scalator
     extends JPanel
 {
-    public static enum Layout
-    {
-        ONE_PAGE,
-        TWO_PAGES
-    }
-
-    private class LayoutAction
-        extends TranslatableAction
-    {
-        public LayoutAction()
-        {
-            super();
-        }
-
-        @Override
-        public void actionPerformed(
-            final ActionEvent e )
-        {
-            // change the layout
-            final boolean isOne = getPageLayout() == Layout.ONE_PAGE;
-            setPageLayout( isOne
-                ? Layout.TWO_PAGES : Layout.ONE_PAGE );
-            putValue( SMALL_ICON, IMG.icon( isOne
-                ? IMG.RIGHT_CLOSE_PNG : IMG.RIGHT_NEW_PNG ) );
-        }
-    }
-
     private class ZoomInAction
         extends TranslatableAction
     {
@@ -92,22 +65,16 @@ public class Scalator
         }
     }
 
-    public static final String SCALE         = "scale";
-    public static final String LAYOUT        = "layout";
+    public final JComboBox scaleComboBox = new JComboBox();
 
-    public final JComboBox     scaleComboBox = new JComboBox();
+    private int            scale;
 
-    private int                scale;
+    private int            max;
+    private int            min;
+    private int            step;
 
-    private int                max;
-    private int                min;
-    private int                step;
-
-    private Layout             pageLayout    = Layout.ONE_PAGE;
-
-    public final Action        zoomOutAction = new ZoomOutAction();
-    public final Action        zoomInAction  = new ZoomInAction();
-    public final Action        layoutAction  = new LayoutAction();
+    public final Action    zoomOutAction = new ZoomOutAction();
+    public final Action    zoomInAction  = new ZoomInAction();
 
     public Scalator(
         final int min,
@@ -127,7 +94,6 @@ public class Scalator
         add( new JButton( zoomOutAction ) );
         add( scaleComboBox );
         add( new JButton( zoomInAction ) );
-        add( new JButton( layoutAction ) );
 
         scaleComboBox.addItemListener( new ItemListener()
         {
@@ -138,16 +104,6 @@ public class Scalator
                 setScale( min + scaleComboBox.getSelectedIndex() * step );
             }
         } );
-
-        layoutAction.actionPerformed( null );
-    }
-
-    /**
-     * @return the pageLayout
-     */
-    public Layout getPageLayout()
-    {
-        return this.pageLayout;
     }
 
     /**
@@ -156,16 +112,6 @@ public class Scalator
     public int getScale()
     {
         return this.scale;
-    }
-
-    /**
-     * @param pageLayout the pageLayout to set
-     */
-    public void setPageLayout(
-        final Layout pageLayout )
-    {
-        this.pageLayout = pageLayout;
-        firePropertyChange( LAYOUT, null, pageLayout );
     }
 
     /**
@@ -184,7 +130,7 @@ public class Scalator
         }
 
         this.scale = scale;
-        firePropertyChange( SCALE, null, scale );
+        firePropertyChange( Features.SCALING, null, scale );
         zoomInAction.setEnabled( scale < max );
         zoomOutAction.setEnabled( scale > min );
     }

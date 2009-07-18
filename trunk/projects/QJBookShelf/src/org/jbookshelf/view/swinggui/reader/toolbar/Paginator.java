@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
-import org.jbookshelf.view.swinggui.reader.toolbar.Scalator.Layout;
+import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
 import org.jbookshelf.view.swinggui.widget.ChangeDocumentListener;
 
 /**
@@ -70,7 +70,7 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            currentPage += readerToolBar.getScalator().getPageLayout() == Layout.ONE_PAGE
+            currentPage += pageLayout == PageLayout.ONE_PAGE
                 ? 1 : 2;
             setCurrentPage( currentPage );
         }
@@ -88,13 +88,11 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            currentPage -= readerToolBar.getScalator().getPageLayout() == Layout.ONE_PAGE
+            currentPage -= pageLayout == PageLayout.ONE_PAGE
                 ? 1 : 2;
             setCurrentPage( currentPage );
         }
     }
-
-    public static final String   PAGE           = "page";
 
     private int                  pageCount;
     private int                  currentPage;
@@ -106,13 +104,11 @@ public class Paginator
     private final NextAction     nextAction     = new NextAction();
     private final LastAction     lastAction     = new LastAction();
 
-    private final ReaderToolBar  readerToolBar;
+    private PageLayout           pageLayout     = PageLayout.DEFAULT_LAYOUT;
 
-    public Paginator(
-        final ReaderToolBar readerToolBar )
+    public Paginator()
     {
         super();
-        this.readerToolBar = readerToolBar;
         setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
 
         add( new JButton( firstAction ) );
@@ -137,7 +133,7 @@ public class Paginator
             {}
         } );
 
-        setPageCount( 1 );
+        //        setPageCount( 1 );
     }
 
     public int getCurrentPage()
@@ -158,7 +154,7 @@ public class Paginator
     public void setCurrentPage(
         int currentPage )
     {
-        currentPage = readerToolBar.getScalator().getPageLayout() == Layout.ONE_PAGE
+        currentPage = pageLayout == PageLayout.ONE_PAGE
             ? currentPage : currentPage % 2 == 0
                 // odd page left, even page right 
                 ? currentPage : currentPage - 1;
@@ -172,10 +168,16 @@ public class Paginator
     {
         final int oldCount = this.pageCount;
         this.pageCount = pageCount;
-        pageCountLabel.setText( "/ " + pageCount );
+        this.pageCountLabel.setText( "/ " + pageCount );
 
         setCurrentPage( oldCount > pageCount
             ? pageCount : 0 );
+    }
+
+    public void setPageLayout(
+        final PageLayout pageLayout )
+    {
+        this.pageLayout = pageLayout;
     }
 
     /**
@@ -200,7 +202,7 @@ public class Paginator
         previousAction.setEnabled( this.currentPage > 0 );
         nextAction.setEnabled( this.currentPage < pageCount - 1 );
         lastAction.setEnabled( this.currentPage < pageCount - 1 );
-
-        firePropertyChange( PAGE, -1, currentPage );
+        System.out.println( "Paginator.setCurrentPageImpl()" + currentPage );
+        firePropertyChange( Features.PAGING, -1, currentPage );
     }
 }

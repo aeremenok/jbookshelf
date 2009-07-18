@@ -4,6 +4,7 @@
 package org.jbookshelf.view.swinggui.reader;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 
 import javax.swing.JPanel;
 
@@ -14,7 +15,6 @@ import javax.swing.JPanel;
 public abstract class ReaderContentPanel<PageType>
     extends JPanel
 {
-    // todo unused?
     protected final ReaderWindow<PageType> readerWindow;
 
     public ReaderContentPanel(
@@ -30,9 +30,10 @@ public abstract class ReaderContentPanel<PageType>
     public abstract void setContent(
         PageType content );
 
-    /**
-     * @param scale
-     */
+    public void setReaderFont(
+        @SuppressWarnings( "unused" ) final Font font )
+    {}
+
     public abstract void setScale(
         final int scale );
 }
