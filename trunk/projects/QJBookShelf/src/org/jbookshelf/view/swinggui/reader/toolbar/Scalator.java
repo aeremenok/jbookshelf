@@ -101,7 +101,10 @@ public class Scalator
             public void itemStateChanged(
                 final ItemEvent e )
             {
-                setScale( min + scaleComboBox.getSelectedIndex() * step );
+                if ( ItemEvent.SELECTED == e.getStateChange() )
+                {
+                    setScale( min + scaleComboBox.getSelectedIndex() * step );
+                }
             }
         } );
     }

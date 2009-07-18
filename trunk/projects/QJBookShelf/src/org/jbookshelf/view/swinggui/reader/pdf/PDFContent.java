@@ -104,7 +104,10 @@ public class PDFContent
     public PDFPage getPage(
         final int pageNumber )
     {
-        return pdffile.getPage( pageNumber + 1 );
+        log.debug( "getting page " + pageNumber );
+        final PDFPage page = pdffile.getPage( pageNumber + 1 );
+        log.debug( "page got" );
+        return page;
     }
 
     @Override
