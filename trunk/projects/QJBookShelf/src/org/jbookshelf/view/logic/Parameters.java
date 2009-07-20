@@ -5,6 +5,7 @@ package org.jbookshelf.view.logic;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * universal parameter container to pass between objects
@@ -64,4 +65,14 @@ public class Parameters
         return (T) this.map.put( key.name(), value );
     }
 
+    @Override
+    public String toString()
+    {
+        final StringBuilder builder = new StringBuilder();
+        for ( final Entry<String, Object> entry : map.entrySet() )
+        {
+            builder.append( entry.getKey() ).append( " -> " ).append( entry.getValue() ).append( "\n" );
+        }
+        return builder.toString();
+    }
 }

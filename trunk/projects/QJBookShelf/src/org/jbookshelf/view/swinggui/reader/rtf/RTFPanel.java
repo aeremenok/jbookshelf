@@ -16,6 +16,7 @@ public class RTFPanel
     extends ReaderContentPanel<StyledDocument>
 {
     private final JXEditorPane editorPane = new JXEditorPane();
+
     private final JScrollPane  scrollPane = new JScrollPane( editorPane );
 
     public RTFPanel(
@@ -33,14 +34,13 @@ public class RTFPanel
     public void highlightText(
         final String text )
     {
-    // TODO Auto-generated method stub
+        editorPane.getSearchable().search( "(?iu).*" + text + ".*" );
     }
 
     @Override
     public void setContent(
         final StyledDocument content )
     {
-        System.out.println( "RTFPanel.setContent()" );
         final SafeWorker<JXEditorPane, Object> worker = new SafeWorker<JXEditorPane, Object>()
         {
             @Override
@@ -65,7 +65,8 @@ public class RTFPanel
     public void setScale(
         final int scale )
     {
-    // TODO Auto-generated method stub
+        final Font oldFont = editorPane.getFont();
+        editorPane.setFont( new Font( oldFont.getName(), oldFont.getStyle(), FontChooser.INITIAL_SIZE * scale / 100 ) );
     }
 
 }

@@ -53,8 +53,7 @@ public class RTFContent
         final Boolean direction,
         final int currentPage )
     {
-        // TODO Auto-generated method stub
-        return -1;
+        return 0;
     }
 
     @Override
