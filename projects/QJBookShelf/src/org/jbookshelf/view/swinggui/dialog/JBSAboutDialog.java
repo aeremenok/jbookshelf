@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.net.MalformedURLException;
 
+import javax.swing.Action;
 import javax.swing.JLabel;
 
 import org.jbookshelf.controller.singleton.Single;
@@ -80,6 +81,8 @@ public class JBSAboutDialog
         licenseValueHyperLink.setAction( GPL_ACTION );
         licenseValueHyperLink.setText( "GPL v.3" );
         versionValueLabel.setText( MainWindow.VERSION );
+
+        getCloseAction().putValue( Action.NAME, i18n.tr( "Close" ) );
     }
 
     private void initComponents()

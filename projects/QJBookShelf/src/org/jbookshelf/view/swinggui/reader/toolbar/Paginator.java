@@ -6,6 +6,8 @@ package org.jbookshelf.view.swinggui.reader.toolbar;
 import icons.IMG;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -115,6 +117,21 @@ public class Paginator
         add( pageCountLabel );
         add( new JButton( nextAction ) );
         add( new JButton( lastAction ) );
+
+        pageSelector.addKeyListener( new KeyAdapter()
+        {
+            @Override
+            public void keyPressed(
+                final KeyEvent e )
+            {
+                final char keyChar = e.getKeyChar();
+                if ( keyChar == '\n' || keyChar == '\r' || keyChar == '\t' )
+                {
+                    final Integer page = Integer.valueOf( pageSelector.getText().trim() );
+                    setCurrentPageImpl( page - 1 );
+                }
+            }
+        } );
     }
 
     public int getCurrentPage()
