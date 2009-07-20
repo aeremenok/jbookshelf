@@ -8,10 +8,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.JScrollPane;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
-import org.apache.log4j.Logger;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
@@ -26,8 +24,6 @@ public class PlaintTextPanel
     private final JXEditorPane  editorPane = new JXEditorPane();
     private final PlainDocument document   = new PlainDocument();
     private final JScrollPane   scrollPane = new JScrollPane( editorPane );
-
-    private static final Logger log        = Logger.getLogger( PlaintTextPanel.class );
 
     public PlaintTextPanel(
         final ReaderWindow<String> readerWindow )
@@ -45,21 +41,7 @@ public class PlaintTextPanel
     public void highlightText(
         final String text )
     {
-        try
-        {
-            editorPane.getCaret().setSelectionVisible( true );
-            final String lowerCase = document.getText( 0, document.getLength() ).toLowerCase();
-            final int search = lowerCase.indexOf( text.toLowerCase() );
-            if ( search > -1 )
-            {
-                editorPane.select( search, search + text.length() );
-            }
-        }
-        catch ( final BadLocationException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
+        editorPane.getSearchable().search( "(?iu).*" + text + ".*" );
     }
 
     @Override

@@ -13,6 +13,7 @@ import javax.xml.parsers.DocumentBuilder;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.jbookshelf.controller.util.DOMTextFinder;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.lobobrowser.html.gui.HtmlPanel;
@@ -20,6 +21,7 @@ import org.lobobrowser.html.parser.DocumentBuilderImpl;
 import org.lobobrowser.html.test.SimpleHtmlRendererContext;
 import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
 /**
@@ -38,6 +40,8 @@ public class HTMLReaderPanel
     private final SimpleHtmlRendererContext rcontext;
     private final DocumentBuilder           documentBuilder;
 
+    private Document                        doc;
+
     public HTMLReaderPanel(
         final ReaderWindow<HTMLContentContainer> readerWindow )
     {
@@ -54,8 +58,12 @@ public class HTMLReaderPanel
     public void highlightText(
         final String text )
     {
-        log.debug( "highlightText" );
-        // TODO Auto-generated method stub
+        final Node node = new DOMTextFinder( doc, text ).find();
+        if ( node != null )
+        {
+            log.debug( "text found " + text );
+            htmlPanel.scrollTo( node );
+        }
     }
 
     @Override
@@ -73,7 +81,7 @@ public class HTMLReaderPanel
                     reader = new StringReader( content.getContent() );
                     final InputSource source = new InputSource( reader );
 
-                    final Document doc = documentBuilder.parse( source );
+                    doc = documentBuilder.parse( source );
                     htmlPanel.setDocument( doc, rcontext );
                 }
                 catch ( final Exception e )

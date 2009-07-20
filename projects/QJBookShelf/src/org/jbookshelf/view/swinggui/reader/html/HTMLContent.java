@@ -43,8 +43,6 @@ public class HTMLContent
         final Boolean direction,
         final int currentPage )
     {
-        log.debug( "findText" );
-        // TODO Auto-generated method stub
         return 0;
     }
 
