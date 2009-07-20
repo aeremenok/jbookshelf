@@ -1,6 +1,25 @@
 #labels Featured
 =JBookShelf 0.5b1=
 
+[http://jbookshelf.googlecode.com/files/jbookshelf-0.6b1.zip Download for all platforms] 
+
+[http://code.google.com/p/jbookshelf/wiki/Screenshots Screenshots]
+
+==Changes==
+
+ * Plain Text viewer
+ * RTF viewer
+ * PDF viewer (https://pdf-renderer.dev.java.net used)
+ * HTML viewer (http://lobobrowser.org/cobra.jsp used)
+
+==Known issues==
+
+ * [http://code.google.com/p/jbookshelf/issues/list Issues]
+
+----
+
+=JBookShelf 0.5b1=
+
 [http://jbookshelf.googlecode.com/files/jbookshelf-linux-0.5b1.zip Download for Linux] 
 [http://jbookshelf.googlecode.com/files/jbookshelf-windows-0.5b1.zip Download for Windows]
 
