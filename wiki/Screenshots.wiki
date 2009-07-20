@@ -5,6 +5,18 @@
 =main window / authors=
    http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/main-authors.png
 
+=plain text viewer=
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/viewer-txt.png
+
+=RTF viewer=
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/viewer-rtf.png
+
+=HTML viewer=
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/viewer-html.png
+
+=PDF viewer=
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/viewer-pdf.png
+
 =file import dialog=
    http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/import.png
 
