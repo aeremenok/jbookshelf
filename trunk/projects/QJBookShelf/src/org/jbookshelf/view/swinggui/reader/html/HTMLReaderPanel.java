@@ -13,7 +13,6 @@ import javax.xml.parsers.DocumentBuilder;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.jbookshelf.controller.util.DOMTextFinder;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.lobobrowser.html.gui.HtmlPanel;
@@ -21,7 +20,6 @@ import org.lobobrowser.html.parser.DocumentBuilderImpl;
 import org.lobobrowser.html.test.SimpleHtmlRendererContext;
 import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
 /**
@@ -58,12 +56,13 @@ public class HTMLReaderPanel
     public void highlightText(
         final String text )
     {
-        final Node node = new DOMTextFinder( doc, text ).find();
-        if ( node != null )
-        {
-            log.debug( "text found " + text );
-            htmlPanel.scrollTo( node );
-        }
+    // todo node can be too large
+    //        final Node node = new DOMTextFinder( doc, text ).find();
+    //        if ( node != null )
+    //        {
+    //            log.debug( "text found " + text );
+    //            htmlPanel.scrollTo( node );
+    //        }
     }
 
     @Override
@@ -99,8 +98,5 @@ public class HTMLReaderPanel
     @Override
     public void setScale(
         final int scale )
-    {
-        log.debug( "setScale" );
-        // TODO Auto-generated method stub
-    }
+    {}
 }

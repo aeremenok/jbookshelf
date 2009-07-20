@@ -27,7 +27,7 @@ public class PlainTextContent
     {
         super( book );
         try
-        { // todo encoding
+        {
             // todo lazy loading
             plainText = FileUtils.readFileToString( file, book.getPhysicalBook().getCharsetName() );
             pageCount = plainText.length() / CHARS_IN_PAGE + 1;

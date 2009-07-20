@@ -101,10 +101,12 @@ public class ReaderWindow<T>
     public void changeLayout(
         final PageLayout layout )
     {
-        rightContentPanel.setVisible( layout == PageLayout.TWO_PAGES );
-        if ( rightContentPanel.isVisible() )
+        final boolean isTwo = layout == PageLayout.TWO_PAGES;
+        rightContentPanel.setVisible( isTwo );
+        if ( isTwo )
         {
             splitPane.setDividerLocation( 0.5 );
+            setPage( toolBar.getPaginator().getCurrentPage() );
         }
         toolBar.getPaginator().setPageLayout( layout );
     }

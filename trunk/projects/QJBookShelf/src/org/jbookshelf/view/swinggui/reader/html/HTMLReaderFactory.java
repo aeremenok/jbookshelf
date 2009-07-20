@@ -36,6 +36,9 @@ public class HTMLReaderFactory
     public ReaderToolBar createReaderToolBar(
         final ReaderWindow<HTMLContentContainer> readerWindow )
     {
-        return new ReaderToolBar( readerWindow, Features.SCALING, Features.SEARCH, Features.CHARSET );
+        return new ReaderToolBar( readerWindow,
+        // todo implement
+            //            Features.SCALING, Features.SEARCH,
+            Features.CHARSET );
     }
 }
