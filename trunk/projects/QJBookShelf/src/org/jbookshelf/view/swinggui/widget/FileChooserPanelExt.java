@@ -2,6 +2,7 @@ package org.jbookshelf.view.swinggui.widget;
 
 import icons.IMG;
 
+import java.awt.Dimension;
 import java.io.File;
 
 import javax.swing.Action;
@@ -66,11 +67,13 @@ public class FileChooserPanelExt
     @Override
     protected boolean showChooser()
     {
-        getFileChooser().setSelectedFile( getFile() );
+        final JFileChooser fileChooser = getFileChooser();
+        fileChooser.setPreferredSize( new Dimension( 800, 600 ) );
+        fileChooser.setSelectedFile( getFile() );
         // todo make constants for different modes and choosers
-        if ( getFileChooser().showDialog( getParent(), getFileChooser().getApproveButtonText() ) == JFileChooser.APPROVE_OPTION )
+        if ( fileChooser.showDialog( getParent(), fileChooser.getApproveButtonText() ) == JFileChooser.APPROVE_OPTION )
         {
-            setFile( getFileChooser().getSelectedFile() );
+            setFile( fileChooser.getSelectedFile() );
             return true;
         }
         return false;
