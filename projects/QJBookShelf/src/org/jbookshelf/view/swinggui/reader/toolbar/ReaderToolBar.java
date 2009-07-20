@@ -13,6 +13,8 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
+import org.jbookshelf.controller.util.URIUtil;
+import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.book.BookEditDialog;
@@ -43,6 +45,23 @@ public class ReaderToolBar
         }
     }
 
+    protected class OpenDirAction
+        extends TranslatableAction
+    {
+        public OpenDirAction()
+        {
+            super( null, IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG ) );
+        }
+
+        @Override
+        public void actionPerformed(
+            final ActionEvent e )
+        {
+            final Book book = readerWindow.getBook();
+            URIUtil.openDir( book.getPhysicalBook().getFile().getParentFile() );
+        }
+    }
+
     protected final ReaderWindow  readerWindow;
     protected final ProgressBar   progressBar = new ProgressBar();
 
@@ -64,6 +83,7 @@ public class ReaderToolBar
         initFeatures( Arrays.asList( featureNames ) );
 
         add( new WrapperPanel( new JButton( new EditBookAction() ) ) );
+        add( new WrapperPanel( new JButton( new OpenDirAction() ) ) );
         addSeparator();
         add( new WrapperPanel( progressBar ) );
 
