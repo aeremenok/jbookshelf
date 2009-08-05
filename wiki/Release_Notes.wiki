@@ -1,5 +1,5 @@
 #labels Featured
-=JBookShelf 0.5b1=
+=JBookShelf 0.6b1=
 
 [http://jbookshelf.googlecode.com/files/jbookshelf-0.6b1.zip Download for all platforms] 
 
