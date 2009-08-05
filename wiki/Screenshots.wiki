@@ -31,6 +31,3 @@
 
 =settings=
    http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/settings.png
-
-=about=
-   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/about.png
