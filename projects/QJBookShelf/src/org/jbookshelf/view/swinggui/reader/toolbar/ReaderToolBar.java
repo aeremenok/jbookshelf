@@ -182,7 +182,7 @@ public class ReaderToolBar
         }
         if ( features.contains( Features.SCALING ) )
         {
-            addComponent( scalator = new Scalator( 50, 200, 50, 100 ) );
+            addComponent( scalator = new Scalator( 50, 200, 25, 100 ) );
             scalator.addPropertyChangeListener( readerWindow );
         }
         if ( features.contains( Features.LAYOUT ) )

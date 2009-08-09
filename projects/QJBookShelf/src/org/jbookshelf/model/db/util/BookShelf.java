@@ -514,6 +514,28 @@ public class BookShelf
         }
     }
 
+    public static void rename(
+        final Unique unique,
+        final String newName )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            session.beginTransaction();
+            unique.setName( newName );
+            session.update( unique );
+            session.getTransaction().commit();
+        }
+        catch ( final Exception e )
+        {
+            log.error( e, e );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+
     public static Category rootCategory()
     { // todo cache?
         // todo name confilct is possible 

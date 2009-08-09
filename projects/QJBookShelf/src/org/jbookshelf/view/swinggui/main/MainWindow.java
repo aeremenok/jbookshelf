@@ -49,7 +49,7 @@ public class MainWindow
     UncaughtExceptionHandler
 {
     public static final String APP_NAME = "JBookShelf";
-    public static final String VERSION  = "0.6b1";
+    public static final String VERSION  = "0.6b2";
     private static Logger      log;
     public static String[]     args;
 
@@ -104,7 +104,7 @@ public class MainWindow
         split.setOneTouchExpandable( true );
         split.setLeftComponent( Single.instance( CollectionPanel.class ) );
         split.setRightComponent( Single.instance( AdditionalPanel.class ) );
-        split.setResizeWeight( 0.7 );
+        split.setResizeWeight( 0.6 );
 
         final JXStatusBar statusBar = new JXStatusBar();
         statusBar.add( Single.instance( ProgressBar.class ) );

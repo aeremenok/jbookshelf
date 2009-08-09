@@ -3,6 +3,7 @@ package org.jbookshelf.view.swinggui.actions;
 import icons.IMG;
 
 import java.awt.event.ActionEvent;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.swing.Action;
@@ -129,12 +130,36 @@ public class UniqueActions
         }
     }
 
+    private class RenameUniqueAction
+        extends TranslatableAction
+    {
+        public RenameUniqueAction()
+        {
+            super( tr( "Rename" ), IMG.icon( IMG.DOCUMENT_PROPERTIES_PNG, 32 ) );
+        }
+
+        public void actionPerformed(
+            final ActionEvent e )
+        {
+            final Set<Unique> selectedUniques = mediator.getSelectedUniques();
+            final Unique unique = selectedUniques.iterator().next();
+            final String newName = JOptionPane.showInputDialog( Single.instance( MainWindow.class ),
+                tr( "Enter new name" ), unique.getName() );
+            if ( newName != null && !"".equals( newName ) && !newName.equals( unique.getName() ) )
+            {
+                BookShelf.rename( unique, newName );
+                Single.instance( CollectionPanel.class ).updateActiveView();
+            }
+        }
+    }
+
     private final BookShelfMediator mediator      = Single.instance( BookShelfMediator.class );
     public final Action             removeAction  = new RemoveAction();
     public final Action             openAction    = new OpenAction();
     public final Action             editAction    = new EditAction();
     public final Action             openDirAction = new OpenDirAction();
     public final Action             googleAction  = new GoogleAction();
+    public final Action             renameAction  = new RenameUniqueAction();
 
     @PostConstruct
     public void init()
