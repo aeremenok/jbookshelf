@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.dialog.book;
 
+import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.border.TitledBorder;
 
@@ -95,6 +96,7 @@ public class BookEditDialog
     {
         setTitle( i18n.tr( "Edit book" ) );
         bookPanel.setBorder( new TitledBorder( i18n.tr( "Edit book properties" ) ) );
+        getCancelAction().putValue( Action.NAME, i18n.tr( "Cancel" ) );
     }
 
     private void init()

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.PostConstruct;
 import javax.swing.JScrollPane;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeSelectionEvent;
@@ -35,6 +36,7 @@ import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.actions.UniqueActions;
 import org.jbookshelf.view.swinggui.collection.CollectionPanel;
 import org.jbookshelf.view.swinggui.collection.tab.book.BookNode;
 import org.jdesktop.swingx.JXTree;
@@ -92,6 +94,16 @@ public class AuthorView
         tree.setClosedIcon( IMG.icon( IMG.USER_IDENITY_PNG ) );
         tree.setLeafIcon( IMG.icon( IMG.BOOK_PNG ) );
         initListeners();
+    }
+
+    @Override
+    @PostConstruct
+    public void initMenu()
+    {
+        final UniqueActions actions = Single.instance( UniqueActions.class );
+        menu.add( actions.renameAction );
+        menu.add( actions.googleAction );
+        menu.add( actions.removeAction );
     }
 
     @SuppressWarnings( "unchecked" )
