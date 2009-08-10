@@ -90,9 +90,10 @@ public class Settings
         IMPORT_MASKS = new StringListSetting( this, "import_masks", new String[]
         { "%a. %b", "%b" } );
 
-        final String jbsDir = System.getProperty( "user.home" ) + File.separator + ".jbookshelf" + File.separator;
+        final String home = System.getProperty( "user.home" ).replaceAll( "\\\\", "/" );
+        final String jbsDir = home + "/.jbookshelf/";
         JBS_DIR = new StringSetting( this, "jbs_dir", jbsDir );
-        WORKSPACE_DIR = new StringSetting( this, "workspace_dir", System.getProperty( "user.home" ) );
+        WORKSPACE_DIR = new StringSetting( this, "workspace_dir", home );
 
         String lafName;
         try
