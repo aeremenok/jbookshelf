@@ -104,7 +104,6 @@ public class MainWindow
         split.setOneTouchExpandable( true );
         split.setLeftComponent( Single.instance( CollectionPanel.class ) );
         split.setRightComponent( Single.instance( AdditionalPanel.class ) );
-        split.setResizeWeight( 0.6 );
 
         final JXStatusBar statusBar = new JXStatusBar();
         statusBar.add( Single.instance( ProgressBar.class ) );
@@ -113,6 +112,8 @@ public class MainWindow
 
         pack();
         setExtendedState( MAXIMIZED_BOTH );
+
+        split.setDividerLocation( 0.8 );
     }
 
     public void propertyChange(

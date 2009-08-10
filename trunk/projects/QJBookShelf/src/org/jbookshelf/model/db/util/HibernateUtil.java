@@ -3,7 +3,6 @@
  */
 package org.jbookshelf.model.db.util;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -83,7 +82,7 @@ public class HibernateUtil
 
     private static void setupStorageDir()
     {
-        final String dir = Single.instance( Settings.class ).JBS_DIR.getValue() + File.separator + "db";
+        final String dir = Single.instance( Settings.class ).JBS_DIR.getValue() + "/db";
         String url = properties.getProperty( Environment.URL );
         url = url.replaceFirst( "/opt/jbookshelf/db", dir );
         log.debug( "db storage url: " + url );
