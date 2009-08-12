@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import org.apache.commons.io.FilenameUtils;
 import org.jbookshelf.controller.importer.FileImporter;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
@@ -83,13 +84,14 @@ public class BookPanel
     private final JLabel                  bookLabel        = new JLabel();
     private final JLabel                  authorLabel      = new JLabel();
     private final JLabel                  categoryLabel    = new JLabel();
-
     private final JLabel                  viewerLabel      = new JLabel();
     private final JLabel                  fileLabel        = new JLabel();
+
+    private final JLabel                  typeField        = new JLabel();
+    private final JLabel                  sizeField        = new JLabel();
+
     private final JTextField              bookTextField    = new JTextField( 50 );
-
     private final JCheckBox               isReadCheckBox   = new JCheckBox();
-
     private final JComboBox               viewerComboBox   = new JComboBox();
 
     private final MultipleField<Author>   authorField      = new MultipleUniqueField<Author>( Author.class );
@@ -97,6 +99,14 @@ public class BookPanel
 
     private final FileChooserPanel        fileChooserPanel = new FileChooserPanelExt( 50, "book.file.chooser" )
                                                            {
+                                                               @Override
+                                                               public void setFile(
+                                                                   final File file )
+                                                               {
+                                                                   super.setFile( file );
+                                                                   onSetFile( file );
+                                                               }
+
                                                                @Override
                                                                protected void fileSelected(
                                                                    final File file )
@@ -231,21 +241,24 @@ public class BookPanel
     private void initComponents()
     {
         add( bookLabel, 0, 0 );
-        add( bookTextField, 0, 1 );
+        add( bookTextField, 0, 1, 1, 2 );
 
         add( authorLabel, 1, 0 );
-        add( authorField, 1, 1 );
+        add( authorField, 1, 1, 1, 2 );
 
         add( categoryLabel, 2, 0 );
-        add( categoryField, 2, 1 );
+        add( categoryField, 2, 1, 1, 2 );
 
         add( viewerLabel, 3, 0 );
-        add( viewerComboBox, 3, 1 );
+        add( viewerComboBox, 3, 1, 1, 2 );
 
-        add( fileLabel, 4, 0 );
-        add( fileChooserPanel, 4, 1 );
+        add( isReadCheckBox, 4, 1, 1, 2 );
 
-        add( isReadCheckBox, 5, 1 );
+        add( fileLabel, 5, 0 );
+        add( fileChooserPanel, 5, 1, 1, 2 );
+
+        add( sizeField, 6, 1 );
+        add( typeField, 6, 2 );
 
         fileChooserPanel.getFileChooser().setFileSelectionMode( JFileChooser.FILES_AND_DIRECTORIES );
 
@@ -258,6 +271,23 @@ public class BookPanel
         if ( bookTextField.getText().equals( "" ) )
         {
             fileImporter.importFiles( Single.instance( Settings.class ).IMPORT_MASKS.getValue(), file );
+        }
+    }
+
+    protected void onSetFile(
+        final File file )
+    {
+        final String size = I18N.tr( "Size" ) + ": ";
+        final String type = I18N.tr( "Type" ) + ": ";
+        if ( file != null && file.isFile() )
+        {
+            sizeField.setText( size + file.length() / 1024 + I18N.tr( " kb" ) );
+            typeField.setText( type + FilenameUtils.getExtension( file.getName() ).toUpperCase() );
+        }
+        else
+        {
+            sizeField.setText( size );
+            typeField.setText( type );
         }
     }
 }
