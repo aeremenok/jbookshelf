@@ -3,8 +3,6 @@ package org.jbookshelf.view.swinggui.main;
 import icons.IMG;
 
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.swing.Action;
@@ -15,6 +13,7 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.BookShelfActions;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.actions.UniqueActions;
+import org.jbookshelf.view.swinggui.dialog.BugReportDialog;
 import org.jbookshelf.view.swinggui.dialog.JBSAboutDialog;
 import org.jbookshelf.view.swinggui.dialog.SettingsDialog;
 import org.jbookshelf.view.swinggui.dialog.book.BookAdditionDialog;
@@ -57,6 +56,21 @@ public class ToolBar
         }
     }
 
+    private class BugReportAction
+        extends TranslatableAction
+    {
+        public BugReportAction()
+        {
+            super( tr( "Report a bug" ), IMG.icon( IMG.BUG_REPORT_PNG, 32 ) );
+        }
+
+        public void actionPerformed(
+            final ActionEvent e )
+        {
+            new BugReportDialog().setVisible( true );
+        }
+    }
+
     private class SettingsAction
         extends TranslatableAction
     {
@@ -72,21 +86,15 @@ public class ToolBar
         }
     }
 
-    private final Action                   addAction           = new AddAction();
-    private final Action                   aboutAction         = new AboutAction();
-    private final Action                   settingsAction      = new SettingsAction();
-
-    private final List<TranslatableAction> translatableActions = new ArrayList<TranslatableAction>();
+    private final Action addAction       = new AddAction();
+    private final Action aboutAction     = new AboutAction();
+    private final Action bugReportAction = new BugReportAction();
+    private final Action settingsAction  = new SettingsAction();
 
     @Override
     public JButton add(
         final Action a )
     {
-        if ( a instanceof TranslatableAction )
-        {
-            translatableActions.add( (TranslatableAction) a );
-        }
-
         final JButton add = super.add( a );
         add.setHideActionText( false );
         return add;
@@ -112,5 +120,6 @@ public class ToolBar
         add( settingsAction );
         addSeparator();
         add( aboutAction );
+        add( bugReportAction );
     }
 }

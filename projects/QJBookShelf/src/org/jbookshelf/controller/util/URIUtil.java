@@ -15,8 +15,13 @@
  */
 package org.jbookshelf.controller.util;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.net.URI;
+import java.net.URLEncoder;
 import java.util.StringTokenizer;
+
+import org.apache.log4j.Logger;
 
 /**
  * opens urls in default browser using awt
@@ -25,23 +30,7 @@ import java.util.StringTokenizer;
  */
 public class URIUtil
 {
-    static
-    {
-        if ( !java.awt.Desktop.isDesktopSupported() )
-        {
-            throw new UnsupportedOperationException( "Desktop is not supported (fatal)" );
-        }
-
-        final java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-        if ( !desktop.isSupported( java.awt.Desktop.Action.BROWSE ) )
-        {
-            throw new UnsupportedOperationException( "Desktop doesn't support the browse action (fatal)" );
-        }
-        if ( !desktop.isSupported( java.awt.Desktop.Action.OPEN ) )
-        {
-            throw new UnsupportedOperationException( "Desktop doesn't support the open action (fatal)" );
-        }
-    }
+    private static final Logger log = Logger.getLogger( URIUtil.class );
 
     /**
      * @param url <b>must start with protocol under KDE</b>
@@ -60,6 +49,7 @@ public class URIUtil
         }
         catch ( final Exception e )
         {
+            log.error( e, e );
             throw new Error( e );
         }
     }
@@ -102,6 +92,26 @@ public class URIUtil
         browse( "http://www.google.com/search?q=" + toSearchEngineQuery( query ) );
     }
 
+    @SuppressWarnings( "deprecation" )
+    public static void mail(
+        final String subject,
+        final String body )
+    {
+        try
+        {
+            final StringBuilder uri = new StringBuilder( "mailto:eav1986@gmail.com?" );
+            uri.append( "subject=" ).append( subject );
+            uri.append( "&body=" ).append( URLEncoder.encode( body ).replaceAll( "\\+", "%20" ) );
+
+            Desktop.getDesktop().mail( URI.create( uri.toString() ) );
+        }
+        catch ( final Exception e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+    }
+
     /**
      * @param directory a directory to open with system file manager
      */
@@ -115,6 +125,7 @@ public class URIUtil
         }
         catch ( final Exception e )
         {
+            log.error( e, e );
             throw new Error( e );
         }
     }
