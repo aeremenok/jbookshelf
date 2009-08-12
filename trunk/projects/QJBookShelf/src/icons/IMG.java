@@ -21,6 +21,7 @@ public class IMG
     public static final String DOCUMENT_PREVIEW_PNG           = "document-preview.png";
     public static final String LIST_ADD_PNG                   = "list-add.png";
     public static final String HELP_ABOUT_PNG                 = "help-about.png";
+    public static final String BUG_REPORT_PNG                 = "kbugbuster.png";
     public static final String DOCUMENT_SAVE_PNG              = "document-save.png";
     public static final String DOCUMENT_IMPORT_PNG            = "document-import.png";
     public static final String GOOGLE_PNG                     = "google.png";
