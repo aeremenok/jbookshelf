@@ -3,11 +3,15 @@
  */
 package org.jbookshelf.view.swinggui.dialog;
 
+import icons.IMG;
+
 import java.awt.Dimension;
 
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
@@ -44,6 +48,8 @@ public class BugReportDialog
     private final WrapperPanel  expectedPanel                         = new WrapperPanel( expected, true );
     private final WrapperPanel  actualPanel                           = new WrapperPanel( actual, true );
 
+    private final JLabel        infoLabel                             = new JLabel();
+
     public BugReportDialog(
         final JDialog dialog )
     {
@@ -54,9 +60,13 @@ public class BugReportDialog
 
         final Box box = Box.createVerticalBox();
         setMainComponent( box );
+        box.add( infoLabel );
         box.add( descriptionPanel );
         box.add( expectedPanel );
         box.add( actualPanel );
+
+        infoLabel.setHorizontalAlignment( SwingConstants.CENTER );
+        infoLabel.setIcon( IMG.icon( IMG.KTIP_PNG ) );
 
         setPreferredSize( new Dimension( 800, 600 ) );
 
@@ -93,13 +103,17 @@ public class BugReportDialog
     public void translate(
         final I18n i18n )
     {
-        setTitle( i18n.tr( "Describe a bug" ) );
+        setTitle( i18n.tr( "Describe an issue" ) );
 
-        getOkayAction().putValue( Action.NAME, i18n.tr( "Send" ) );
+        getOkayAction().putValue( Action.NAME, i18n.tr( "Send..." ) );
         getCloseAction().putValue( Action.NAME, i18n.tr( "Cancel" ) );
 
         descriptionPanel.setBorder( new TitledBorder( i18n.tr( WHAT_STEPS_WILL_REPRODUCE_THE_PROBLEM ) ) );
         expectedPanel.setBorder( new TitledBorder( i18n.tr( WHAT_IS_THE_EXPECTED_OUTPUT ) ) );
         actualPanel.setBorder( new TitledBorder( i18n.tr( WHAT_DO_YOU_SEE_INSTEAD ) ) );
+
+        infoLabel
+            .setText( i18n
+                .tr( "<html><i>Please describe a bug or a suggestion. Click 'Send...' to send a report via e-mail.</i></html>" ) );
     }
 }

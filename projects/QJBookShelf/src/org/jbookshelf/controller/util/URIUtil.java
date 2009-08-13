@@ -41,11 +41,10 @@ public class URIUtil
     public static void browse(
         final String url )
     {
-        final java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
         try
         {
             final java.net.URI uri = new java.net.URI( url );
-            desktop.browse( uri );
+            Desktop.getDesktop().browse( uri );
         }
         catch ( final Exception e )
         {
@@ -119,10 +118,9 @@ public class URIUtil
     public static void openDir(
         final File directory )
     {
-        final java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
         try
         {
-            desktop.open( directory );
+            Desktop.getDesktop().open( directory );
         }
         catch ( final Exception e )
         {
