@@ -42,6 +42,13 @@ public class StringUtil
         return Charset.defaultCharset().name();
     }
 
+    public static String incrementNumber(
+        final String name )
+    {
+        // todo
+        return name + System.currentTimeMillis();
+    }
+
     /**
      * @param e a {@link Throwable}
      * @return its stacktrace

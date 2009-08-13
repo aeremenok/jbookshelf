@@ -116,7 +116,7 @@ public class MainWindow
         pack();
         setExtendedState( MAXIMIZED_BOTH );
 
-        split.setDividerLocation( 0.8 );
+        //        split.setDividerLocation( 0.8 );
     }
 
     public void propertyChange(

@@ -5,6 +5,7 @@ package org.jbookshelf.model.db.util;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -132,7 +133,41 @@ public class BookShelf
             book.getCategories().add( getOrAddUnique( Category.class, categoryName ) );
         }
 
+        final Category category = createCategory( physicalUnit );
+        book.getCategories().add( category );
+
         return book;
+    }
+
+    public static Category createCategory(
+        final PhysicalBook physicalBook )
+    {
+        final List<Category> categories = new ArrayList<Category>();
+
+        final String fileName = physicalBook.getFileName();
+        final String[] dirsNames = fileName.split( "/" );
+
+        for ( int i = 0; i < dirsNames.length - 1; i++ )
+        {
+            final String dirName = dirsNames[i];
+            Category category;
+            // todo avoid conflicts
+            //            = getUnique( Category.class, dirName );
+            //            if ( category != null )
+            //            {
+            //                dirName = StringUtil.incrementNumber( dirName );
+            //            }
+            category = getOrAddUnique( Category.class, dirName );
+            categories.add( category );
+
+            if ( i > 1 )
+            {
+                final Category parent = categories.get( i - 1 );
+                setParent( parent, category );
+            }
+        }
+
+        return categories.get( categories.size() - 1 );
     }
 
     public static Set<Author> getAuthors(
@@ -436,9 +471,6 @@ public class BookShelf
         }
     }
 
-    /**
-     * @param book
-     */
     public static void persistBook(
         @Nonnull final Book book )
     {
@@ -598,9 +630,6 @@ public class BookShelf
         }
     }
 
-    /**
-     * @param book
-     */
     public static void updateIsRead(
         final Book book )
     {
@@ -616,9 +645,6 @@ public class BookShelf
         }
     }
 
-    /**
-     * @param physical
-     */
     public static void updatePhysical(
         final PhysicalBook physical )
     {

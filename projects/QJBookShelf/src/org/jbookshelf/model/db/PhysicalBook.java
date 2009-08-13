@@ -153,7 +153,7 @@ public class PhysicalBook
     @Transient
     public File getFile()
     {
-        final String fullPath = Single.instance( Settings.class ).WORKSPACE_DIR.getValue() + File.separator + fileName;
+        final String fullPath = Single.instance( Settings.class ).WORKSPACE_DIR.getValue() + "/" + fileName;
         return new File( fullPath );
     }
 
@@ -184,7 +184,7 @@ public class PhysicalBook
         {
             return null;
         }
-        final String fullPath = System.getProperty( "java.io.tmpdir" ) + File.separator + unpackedFileName;
+        final String fullPath = System.getProperty( "java.io.tmpdir" ) + "/" + unpackedFileName;
         return new File( fullPath );
     }
 
