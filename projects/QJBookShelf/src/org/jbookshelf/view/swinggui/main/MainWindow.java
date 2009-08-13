@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -30,11 +31,13 @@ import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.additional.AdditionalPanel;
 import org.jbookshelf.view.swinggui.collection.CollectionPanel;
+import org.jbookshelf.view.swinggui.dialog.BugReportDialog;
 import org.jbookshelf.view.swinggui.widget.LookAndFeelComboBoxModel;
 import org.jdesktop.swingx.JXErrorPane;
 import org.jdesktop.swingx.JXFrame;
 import org.jdesktop.swingx.JXStatusBar;
 import org.jdesktop.swingx.error.ErrorInfo;
+import org.jdesktop.swingx.error.ErrorReporter;
 import org.xnap.commons.util.AWTExceptionHandler;
 
 /**
@@ -183,8 +186,24 @@ public class MainWindow
         final Throwable e )
     {
         log.error( e, e );
+
         final String message = I18N.tr( "Unexpected error" );
+
         final ErrorInfo info = new ErrorInfo( null, message, null, null, e, null, null );
-        JXErrorPane.showDialog( null, info );
+        final JXErrorPane pane = new JXErrorPane();
+        pane.setErrorInfo( info );
+        final JDialog errorDialog = JXErrorPane.createDialog( null, pane );
+
+        pane.setErrorReporter( new ErrorReporter()
+        {
+            public void reportError(
+                final ErrorInfo info1 )
+                throws NullPointerException
+            {
+                new BugReportDialog( errorDialog, info ).setVisible( true );
+            }
+        } );
+
+        errorDialog.setVisible( true );
     }
 }

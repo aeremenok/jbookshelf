@@ -91,8 +91,8 @@ public class NoteDialog
         panel.add( title, BorderLayout.NORTH );
         final JSplitPane split = new JSplitPane( JSplitPane.VERTICAL_SPLIT );
         panel.add( split );
-        split.setTopComponent( new WrapperPanel( citation ) );
-        split.setBottomComponent( new WrapperPanel( content ) );
+        split.setTopComponent( new WrapperPanel( citation, true ) );
+        split.setBottomComponent( new WrapperPanel( content, true ) );
 
         split.setResizeWeight( 0.5 );
 

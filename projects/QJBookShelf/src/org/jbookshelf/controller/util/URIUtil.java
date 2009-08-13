@@ -94,12 +94,13 @@ public class URIUtil
 
     @SuppressWarnings( "deprecation" )
     public static void mail(
+        final String address,
         final String subject,
         final String body )
     {
         try
         {
-            final StringBuilder uri = new StringBuilder( "mailto:eav1986@gmail.com?" );
+            final StringBuilder uri = new StringBuilder( "mailto:" ).append( address ).append( "?" );
             uri.append( "subject=" ).append( subject );
             uri.append( "&body=" ).append( URLEncoder.encode( body ).replaceAll( "\\+", "%20" ) );
 
