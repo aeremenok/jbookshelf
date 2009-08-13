@@ -16,6 +16,7 @@ import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Unique;
 import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
@@ -147,8 +148,17 @@ public class UniqueActions
                 tr( "Enter new name" ), unique.getName() );
             if ( newName != null && !"".equals( newName ) && !newName.equals( unique.getName() ) )
             {
-                BookShelf.rename( unique, newName );
-                Single.instance( CollectionPanel.class ).updateActiveView();
+                final Unique candidate = BookShelf.getUnique( unique.getClass(), newName );
+                if ( candidate != null )
+                {
+                    final String message = newName + " " + I18N.tr( " already exists" );
+                    JOptionPane.showMessageDialog( Single.instance( MainWindow.class ), message );
+                }
+                else
+                {
+                    BookShelf.rename( unique, newName );
+                    Single.instance( CollectionPanel.class ).updateActiveView();
+                }
             }
         }
     }
