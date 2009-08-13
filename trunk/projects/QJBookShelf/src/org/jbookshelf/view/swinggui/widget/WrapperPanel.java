@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  * simply wraps components to a center of {@link JPanel} with {@link BorderLayout}
@@ -21,9 +22,23 @@ public class WrapperPanel
     public WrapperPanel(
         final JComponent component )
     {
+        this( component, false );
+    }
+
+    public WrapperPanel(
+        final JComponent component,
+        final boolean scroll )
+    {
         super( new BorderLayout() );
         this.component = component;
-        add( component, BorderLayout.CENTER );
+        if ( scroll )
+        {
+            add( new JScrollPane( component ), BorderLayout.CENTER );
+        }
+        else
+        {
+            add( component, BorderLayout.CENTER );
+        }
     }
 
     /**
