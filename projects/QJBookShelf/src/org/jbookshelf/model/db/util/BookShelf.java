@@ -298,16 +298,34 @@ public class BookShelf
         }
     }
 
-    /**
-     * @param book
-     * @param session
-     */
+    @SuppressWarnings( "unchecked" )
+    public static <T extends Unique> T getUnique(
+        final Class<T> clazz,
+        final String name )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            final Criteria criteria = session.createCriteria( clazz ).add( Restrictions.eq( "name", name ) );
+            final List list = criteria.list();
+            return list.size() > 0
+                ? (T) list.get( 0 ) : null;
+        }
+        catch ( final Throwable e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+
     public static void mergeBook(
         @Nonnull final Book book,
         @Nonnull final Session session )
     {
-        log.debug( "mergeBook" );
-
         session.beginTransaction();
 
         for ( final Author author : book.getAuthors() )
@@ -529,6 +547,7 @@ public class BookShelf
         catch ( final Exception e )
         {
             log.error( e, e );
+            throw new Error( e );
         }
         finally
         {
