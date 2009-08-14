@@ -7,13 +7,17 @@ import icons.IMG;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.Action;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -24,13 +28,19 @@ import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import org.jbookshelf.controller.importer.DirCategoriesStrategy;
+import org.jbookshelf.controller.importer.FileImportStrategy;
 import org.jbookshelf.controller.importer.FileImporter;
+import org.jbookshelf.controller.importer.UseDirsStrategy;
+import org.jbookshelf.controller.importer.UseMasksStrategy;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
+import org.jbookshelf.view.logic.Parameters;
+import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.collection.CollectionPanel;
 import org.jbookshelf.view.swinggui.dialog.book.BookAdditionDialog;
@@ -53,57 +63,60 @@ public class FileImportDialog
     implements
     Translatable
 {
-    private final JLabel                fileLabel        = new JLabel();
-    private final JLabel                maskLabel        = new JLabel();
-    private final JLabel                infoLabel        = new JLabel();
+    private final JLabel                fileLabel          = new JLabel();
+    private final JLabel                maskLabel          = new JLabel();
+    private final JLabel                infoLabel          = new JLabel();
+    private final JLabel                categoriesLabel    = new JLabel();
+
+    private final JComboBox             categoriesComboBox = new JComboBox();
     /**
      * root directory of filesystem
      */
-    private final FileChooserPanelExt   fileChooserPanel = new FileChooserPanelExt( 50, "import.dir.chooser" );
+    private final FileChooserPanelExt   fileChooserPanel   = new FileChooserPanelExt( 50, "import.dir.chooser" );
     /**
      * masks to parse filenames
      */
-    private final MultipleField<String> maskField        = new MultipleField<String>();
+    private final MultipleField<String> maskField          = new MultipleField<String>();
 
-    private final JSplitPane            splitPane        = new JSplitPane();
+    private final JSplitPane            splitPane          = new JSplitPane();
 
-    private final SuccessTableModel     successModel     = new SuccessTableModel();
-    private final FailTableModel        failModel        = new FailTableModel();
+    private final SuccessTableModel     successModel       = new SuccessTableModel();
+    private final FailTableModel        failModel          = new FailTableModel();
     /**
      * displays successfully imported books
      */
-    private final JXTable               successTable     = new JXTable( successModel );
+    private final JXTable               successTable       = new JXTable( successModel );
     /**
      * displays unimported files
      */
-    private final JXTable               failTable        = new JXTable( failModel );
+    private final JXTable               failTable          = new JXTable( failModel );
 
     /**
      * performs import
      */
-    private final FileImporter          importer         = new FileImporter()
-                                                         {
-                                                             @Override
-                                                             protected void onImportFailure(
-                                                                 final File file,
-                                                                 final Exception e )
-                                                             {
-                                                                 failModel.addFile( file );
-                                                                 // todo e as tooltip
-                                                             }
+    private final FileImporter          importer           = new FileImporter()
+                                                           {
+                                                               @Override
+                                                               protected void onImportFailure(
+                                                                   final File file,
+                                                                   final Exception e )
+                                                               {
+                                                                   failModel.addFile( file );
+                                                                   // todo e as tooltip
+                                                               }
 
-                                                             @Override
-                                                             protected void onImportSuccess(
-                                                                 final Book book )
-                                                             {
-                                                                 successModel.addBook( book );
-                                                             }
-                                                         };
+                                                               @Override
+                                                               protected void onImportSuccess(
+                                                                   final Book book )
+                                                               {
+                                                                   successModel.addBook( book );
+                                                               }
+                                                           };
 
     /**
      * shown while import goes on
      */
-    private final ProgressBar           progressBar      = new ProgressBar();
+    private final ProgressBar           progressBar        = new ProgressBar();
 
     public FileImportDialog()
     {
@@ -173,6 +186,11 @@ public class FileImportDialog
         infoLabel
             .setText( i18n
                 .tr( "<html><i>File names will be parsed using these masks. <b>%a</b> = author, <b>%b</b> = book, <b>%c</b> = category</i></html>" ) );
+
+        categoriesComboBox.removeAllItems();
+        categoriesComboBox.addItem( i18n.tr( "Do not import directories" ) );
+        categoriesComboBox.addItem( i18n.tr( "Import directories" ) );
+        categoriesComboBox.addItem( i18n.tr( "Import directories, the deepest one is author" ) );
     }
 
     private void initComponents()
@@ -192,6 +210,8 @@ public class FileImportDialog
         grid.add( infoLabel, 1, 0, 1, 2 );
         grid.add( maskLabel, 2, 0 );
         grid.add( maskField, 2, 1 );
+        grid.add( categoriesLabel, 3, 0 );
+        grid.add( categoriesComboBox, 3, 1 );
 
         infoLabel.setHorizontalAlignment( SwingConstants.CENTER );
         infoLabel.setIcon( IMG.icon( IMG.KTIP_PNG ) );
@@ -265,11 +285,24 @@ public class FileImportDialog
                 }
             }
         } );
+        categoriesComboBox.addItemListener( new ItemListener()
+        {
+            public void itemStateChanged(
+                final ItemEvent e )
+            {
+                if ( e.getStateChange() == ItemEvent.SELECTED )
+                {
+                    maskField.setEnabled( categoriesComboBox.getSelectedIndex() != 2 );
+                }
+            }
+        } );
     }
 
     @Override
     protected void defaults()
     {
+        final Parameters parameters = new Parameters();
+        final FileImportStrategy strategy;
         // "Import" button pressed
 
         // check preconditions
@@ -282,12 +315,31 @@ public class FileImportDialog
             return;
         }
 
-        final Collection<String> masks = maskField.getValues();
-        if ( masks.size() == 0 )
+        final List<File> files = new ArrayList<File>();
+        files.add( file );
+        parameters.put( Keys.IMPORT_ROOTS, file );
+
+        if ( categoriesComboBox.getSelectedIndex() == 0 )
         {
-            JOptionPane.showMessageDialog( this, I18N.tr( "Specify at least one mask" ), "", JOptionPane.ERROR_MESSAGE );
-            return;
+            final Collection<String> masks = maskField.getValues();
+            if ( masks.size() == 0 )
+            {
+                JOptionPane.showMessageDialog( this, I18N.tr( "Specify at least one mask" ), "",
+                    JOptionPane.ERROR_MESSAGE );
+                return;
+            }
+            strategy = new UseMasksStrategy( masks.toArray( new String[masks.size()] ) );
         }
+        else if ( categoriesComboBox.getSelectedIndex() == 1 )
+        {
+            strategy = new DirCategoriesStrategy();
+        }
+        else
+        {
+            strategy = new UseDirsStrategy();
+        }
+
+        parameters.put( Keys.IMPORT_STRATEGY, strategy );
 
         // preconditions are fine, run the import
         progressBar.invoke( new Runnable()
@@ -297,7 +349,7 @@ public class FileImportDialog
             {
                 successModel.setBooks( new ArrayList<Book>() );
                 failModel.setFiles( new ArrayList<File>() );
-                importer.importFiles( masks, file );
+                importer.importFiles( parameters );
                 translate( I18N.i18n() );
             }
         } );
