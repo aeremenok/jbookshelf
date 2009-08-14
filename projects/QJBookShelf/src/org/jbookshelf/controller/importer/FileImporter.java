@@ -19,8 +19,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -30,7 +28,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.PhysicalBook;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.view.logic.Parameters;
+import org.jbookshelf.view.logic.Parameters.Keys;
 
 /**
  * imports filesystem into database
@@ -77,9 +76,10 @@ public class FileImporter
         }
     }
 
-    public static final FileFilter            UNSUPPORTED_EXT_FILTER = new UnsupportedExtFilter();
-    private static List<PhysicalBookImporter> importers              = new ArrayList<PhysicalBookImporter>();
-    private static final Logger               log                    = Logger.getLogger( FileImporter.class );
+    public static final FileFilter                  UNSUPPORTED_EXT_FILTER = new UnsupportedExtFilter();
+    private static final List<PhysicalBookImporter> importers              = new ArrayList<PhysicalBookImporter>();
+    @SuppressWarnings( "unused" )
+    private static final Logger                     log                    = Logger.getLogger( FileImporter.class );
 
     static
     {
@@ -110,115 +110,31 @@ public class FileImporter
         return null;
     }
 
-    public static void main(
-        final String[] args )
-    {
-        final File root = new File( args[0] );
-        new FileImporter()
-        {
-            @Override
-            protected void onImportFailure(
-                final File file,
-                final Exception e )
-            {
-                System.out.println( "-cannot import file " + file.getAbsolutePath() + " cause: " + e.getMessage() );
-            }
-
-            @Override
-            protected void onImportSuccess(
-                final Book book )
-            {
-                System.out.println( "+imported " + book.getPhysicalBook().getFileName() );
-                BookShelf.persistBook( book );
-            }
-        }.importFiles( new String[]
-        { "%a. %b" }, root );
-    }
-
-    /**
-     * parse book name and create a book
-     * 
-     * @param parser parses name
-     * @param physicalUnit physical book implementation
-     * @return logical book
-     */
-    @Nullable
-    private static Book bookFromName(
-        @Nonnull final NameParser parser,
-        @Nonnull final PhysicalBook physicalUnit )
-    {
-        try
-        {
-            parser.parse( FilenameUtils.getBaseName( physicalUnit.getFile().getName() ) );
-
-            final String authorName = parser.getAuthorName();
-            final String categoryName = parser.getCategoryName();
-            final String bookName = parser.getBookName();
-
-            if ( bookName != null && !"".equals( bookName ) )
-            {
-                return BookShelf.createBook( bookName, authorName, categoryName, physicalUnit );
-            }
-            return null;
-        }
-        catch ( final Exception e )
-        {
-            log.error( e, e );
-            return null;
-        }
-    }
-
-    private final List<NameParser> parsers = new ArrayList<NameParser>();
-
-    /**
-     * scan directories recursively and import files
-     * 
-     * @param patterns patterns to scan file names
-     * @param files directories to scan
-     */
     public void importFiles(
-        @Nonnull final Collection<String> patterns,
-        @Nonnull final File... files )
+        final Parameters parameters )
     {
-        parsers.clear();
-        // prepare parsers
-        for ( final String string : patterns )
-        {
-            parsers.add( new NameParser( string ) );
-        }
-
-        // recursively process files
-        importFilesImpl( files );
+        final List<File> roots = parameters.get( Keys.IMPORT_ROOTS );
+        final FileImportStrategy strategy = parameters.get( Keys.IMPORT_STRATEGY );
+        importFilesImpl( roots, strategy );
     }
 
-    public void importFiles(
-        @Nonnull final String[] patterns,
-        @Nonnull final File... files )
-    {
-        importFiles( Arrays.asList( patterns ), files );
-    }
-
-    /**
-     * recursively scans directories and imports files
-     * 
-     * @param files directories to scan
-     */
     private void importFilesImpl(
-        final File... files )
+        final File[] roots,
+        final FileImportStrategy strategy )
     {
-        for ( final File file : files )
+        importFilesImpl( Arrays.asList( roots ), strategy );
+    }
+
+    private void importFilesImpl(
+        final List<File> roots,
+        final FileImportStrategy strategy )
+    {
+        for ( final File file : roots )
         {
             final PhysicalBook physicalUnit = createPhysicalBook( file );
             if ( physicalUnit != null )
             {
-                Book book = null;
-                final Iterator<NameParser> iterator = parsers.iterator();
-                while ( iterator.hasNext() && book == null )
-                {
-                    final NameParser parser = iterator.next();
-                    book = bookFromName( parser, physicalUnit );
-                }
-
+                final Book book = strategy.importBook( physicalUnit );
                 if ( book != null )
                 {
                     onImportSuccess( book );
@@ -230,7 +146,7 @@ public class FileImporter
             }
             else if ( file.isDirectory() )
             { // here goes the recursion
-                importFilesImpl( file.listFiles( UNSUPPORTED_EXT_FILTER ) );
+                importFilesImpl( file.listFiles( UNSUPPORTED_EXT_FILTER ), strategy );
             }
             else
             { // todo specify more info

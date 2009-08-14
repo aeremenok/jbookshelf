@@ -133,9 +133,6 @@ public class BookShelf
             book.getCategories().add( getOrAddUnique( Category.class, categoryName ) );
         }
 
-        final Category category = createCategory( physicalUnit );
-        book.getCategories().add( category );
-
         return book;
     }
 

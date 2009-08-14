@@ -32,7 +32,11 @@ public class Parameters
         BOOK_CATEGORIES,
         BOOK_VIEWER,
 
-        SEARCH_DIRECTION
+        SEARCH_DIRECTION,
+
+        IMPORT_MASKS,
+        IMPORT_ROOTS,
+        IMPORT_STRATEGY
     }
 
     private final Map<String, Object> map = new HashMap<String, Object>();
