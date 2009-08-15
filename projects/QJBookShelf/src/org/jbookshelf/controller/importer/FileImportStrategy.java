@@ -7,4 +7,6 @@ public interface FileImportStrategy
 {
     Book importBook(
         PhysicalBook physicalBook );
+
+    String longDescription();
 }

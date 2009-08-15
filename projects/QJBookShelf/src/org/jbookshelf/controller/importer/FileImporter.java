@@ -18,7 +18,6 @@ package org.jbookshelf.controller.importer;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -113,20 +112,13 @@ public class FileImporter
     public void importFiles(
         final Parameters parameters )
     {
-        final List<File> roots = parameters.get( Keys.IMPORT_ROOTS );
+        final File[] roots = parameters.get( Keys.IMPORT_ROOTS );
         final FileImportStrategy strategy = parameters.get( Keys.IMPORT_STRATEGY );
         importFilesImpl( roots, strategy );
     }
 
     private void importFilesImpl(
         final File[] roots,
-        final FileImportStrategy strategy )
-    {
-        importFilesImpl( Arrays.asList( roots ), strategy );
-    }
-
-    private void importFilesImpl(
-        final List<File> roots,
         final FileImportStrategy strategy )
     {
         for ( final File file : roots )
