@@ -8,24 +8,15 @@ import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.view.i18n.I18N;
 
 public class UseMasksStrategy
     implements
     FileImportStrategy
 {
     private static final Logger    log     = Logger.getLogger( FileImporter.class );
-    private final List<NameParser> parsers = new ArrayList<NameParser>();
 
-    public UseMasksStrategy(
-        final String[] patterns )
-    {
-        super();
-        // prepare parsers
-        for ( final String string : patterns )
-        {
-            parsers.add( new NameParser( string ) );
-        }
-    }
+    private final List<NameParser> parsers = new ArrayList<NameParser>();
 
     public Book importBook(
         final PhysicalBook physicalUnit )
@@ -41,6 +32,29 @@ public class UseMasksStrategy
         return null;
     }
 
+    @Override
+    public String longDescription()
+    {
+        return I18N
+            .tr( "<html>File names will be parsed using these masks: <b>%a</b> = author, <b>%b</b> = book, <b>%c</b> = category</html>" );
+    }
+
+    public void setMasks(
+        final List<String> masks )
+    {
+        // prepare parsers
+        for ( final String string : masks )
+        {
+            parsers.add( new NameParser( string ) );
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return I18N.tr( "Use masks only" );
+    }
+
     /**
      * parse book name and create a book
      * 
@@ -54,7 +68,7 @@ public class UseMasksStrategy
     {
         try
         {
-            parser.parse( FilenameUtils.getBaseName( physicalUnit.getFile().getName() ) );
+            parser.parse( FilenameUtils.getBaseName( physicalUnit.getFileName() ) );
 
             final String authorName = parser.getAuthorName();
             final String categoryName = parser.getCategoryName();

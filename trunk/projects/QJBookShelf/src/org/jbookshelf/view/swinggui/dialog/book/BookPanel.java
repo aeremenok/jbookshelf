@@ -1,7 +1,6 @@
 package org.jbookshelf.view.swinggui.dialog.book;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -13,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import org.apache.commons.io.FilenameUtils;
-import org.jbookshelf.controller.importer.FileImportStrategy;
 import org.jbookshelf.controller.importer.FileImporter;
 import org.jbookshelf.controller.importer.UseMasksStrategy;
 import org.jbookshelf.controller.settings.Settings;
@@ -45,59 +43,6 @@ public class BookPanel
     implements
     Translatable
 {
-    private final JLabel                  bookLabel        = new JLabel();
-
-    private final JLabel                  authorLabel      = new JLabel();
-    private final JLabel                  categoryLabel    = new JLabel();
-    private final JLabel                  viewerLabel      = new JLabel();
-    private final JLabel                  fileLabel        = new JLabel();
-    private final JLabel                  typeField        = new JLabel();
-
-    private final JLabel                  sizeField        = new JLabel();
-    private final JTextField              bookTextField    = new JTextField( 50 );
-
-    private final JCheckBox               isReadCheckBox   = new JCheckBox();
-    private final JComboBox               viewerComboBox   = new JComboBox();
-    private final MultipleField<Author>   authorField      = new MultipleUniqueField<Author>( Author.class );
-
-    private final MultipleField<Category> categoryField    = new CategoryMultipleField();
-    private final FileChooserPanel        fileChooserPanel = new FileChooserPanelExt( 50, "book.file.chooser" )
-                                                           {
-                                                               @Override
-                                                               public void setFile(
-                                                                   final File file )
-                                                               {
-                                                                   super.setFile( file );
-                                                                   onSetFile( file );
-                                                               }
-
-                                                               @Override
-                                                               protected void fileSelected(
-                                                                   final File file )
-                                                               {
-                                                                   super.fileSelected( file );
-                                                                   onFileSelected( file );
-                                                               }
-                                                           };
-
-    private final FileImporter            fileImporter     = new FileImporter()
-                                                           {
-                                                               @Override
-                                                               protected void onImportFailure(
-                                                                   final File file,
-                                                                   final Exception e )
-                                                               {
-                                                               // let user enters the data
-                                                               }
-
-                                                               @Override
-                                                               protected void onImportSuccess(
-                                                                   final Book book )
-                                                               {
-                                                                   setBook( book );
-                                                               }
-                                                           };
-
     public static Book changeBook(
         final Book book,
         final Parameters parameters )
@@ -136,6 +81,59 @@ public class BookPanel
 
         return book;
     }
+
+    private final JLabel                  bookLabel        = new JLabel();
+    private final JLabel                  authorLabel      = new JLabel();
+    private final JLabel                  categoryLabel    = new JLabel();
+    private final JLabel                  viewerLabel      = new JLabel();
+    private final JLabel                  fileLabel        = new JLabel();
+
+    private final JLabel                  typeField        = new JLabel();
+    private final JLabel                  sizeField        = new JLabel();
+
+    private final JTextField              bookTextField    = new JTextField( 50 );
+    private final JCheckBox               isReadCheckBox   = new JCheckBox();
+    private final JComboBox               viewerComboBox   = new JComboBox();
+
+    private final MultipleField<Author>   authorField      = new MultipleUniqueField<Author>( Author.class );
+    private final MultipleField<Category> categoryField    = new CategoryMultipleField();
+
+    private final FileChooserPanel        fileChooserPanel = new FileChooserPanelExt( 50, "book.file.chooser" )
+                                                           {
+                                                               @Override
+                                                               public void setFile(
+                                                                   final File file )
+                                                               {
+                                                                   super.setFile( file );
+                                                                   onSetFile( file );
+                                                               }
+
+                                                               @Override
+                                                               protected void fileSelected(
+                                                                   final File file )
+                                                               {
+                                                                   super.fileSelected( file );
+                                                                   onFileSelected( file );
+                                                               }
+                                                           };
+
+    private final FileImporter            fileImporter     = new FileImporter()
+                                                           {
+                                                               @Override
+                                                               protected void onImportFailure(
+                                                                   final File file,
+                                                                   final Exception e )
+                                                               {
+                                                               // let user enters the data
+                                                               }
+
+                                                               @Override
+                                                               protected void onImportSuccess(
+                                                                   final Book book )
+                                                               {
+                                                                   setBook( book );
+                                                               }
+                                                           };
 
     public BookPanel()
     {
@@ -274,13 +272,12 @@ public class BookPanel
         if ( bookTextField.getText().equals( "" ) )
         {
             final Parameters parameters = new Parameters();
-            final List<File> files = new ArrayList<File>();
-            files.add( file );
-            final List<String> masks = Single.instance( Settings.class ).IMPORT_MASKS.getValue();
-            final FileImportStrategy strategy = new UseMasksStrategy( masks.toArray( new String[masks.size()] ) );
 
-            parameters.put( Keys.IMPORT_ROOTS, file );
+            final UseMasksStrategy strategy = new UseMasksStrategy();
+            strategy.setMasks( Single.instance( Settings.class ).IMPORT_MASKS.getValue() );
             parameters.put( Keys.IMPORT_STRATEGY, strategy );
+            parameters.put( Keys.IMPORT_ROOTS, new File[]
+            { file } );
 
             fileImporter.importFiles( parameters );
         }

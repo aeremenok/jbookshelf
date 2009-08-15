@@ -34,7 +34,6 @@ public class Parameters
 
         SEARCH_DIRECTION,
 
-        IMPORT_MASKS,
         IMPORT_ROOTS,
         IMPORT_STRATEGY
     }
