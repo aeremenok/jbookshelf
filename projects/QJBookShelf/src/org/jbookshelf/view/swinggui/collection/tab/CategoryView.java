@@ -129,10 +129,9 @@ public class CategoryView
     @PostConstruct
     public void initMenu()
     {
+        super.initMenu();
         final UniqueActions actions = Single.instance( UniqueActions.class );
         menu.add( actions.renameAction );
-        menu.add( actions.googleAction );
-        menu.add( actions.removeAction );
     }
 
     /* (non-Javadoc)

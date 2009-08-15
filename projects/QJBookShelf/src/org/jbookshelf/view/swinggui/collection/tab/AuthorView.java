@@ -100,10 +100,9 @@ public class AuthorView
     @PostConstruct
     public void initMenu()
     {
+        super.initMenu();
         final UniqueActions actions = Single.instance( UniqueActions.class );
         menu.add( actions.renameAction );
-        menu.add( actions.googleAction );
-        menu.add( actions.removeAction );
     }
 
     @SuppressWarnings( "unchecked" )

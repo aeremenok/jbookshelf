@@ -183,7 +183,9 @@ public class UniqueActions
             {
                 final boolean manyUniques = mediator.getSelectedUniques().size() > 0;
                 removeAction.setEnabled( manyUniques );
-                googleAction.setEnabled( manyUniques );
+                googleAction.setEnabled( mediator.getSelectedUniques().size() == 1 );
+                renameAction.setEnabled( mediator.getSelectedUniques().size() == 1
+                    && mediator.getSelectedBooks().size() == 0 );
             }
         } );
         EventBus.subscribeStrongly( Properties.BOOKS_SELECTED, new EventTopicSubscriber<BookShelfMediator>()
