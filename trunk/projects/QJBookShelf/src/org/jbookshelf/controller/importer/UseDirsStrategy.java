@@ -21,6 +21,12 @@ public class UseDirsStrategy
     @SuppressWarnings( "unused" )
     private static final Logger log = Logger.getLogger( UseDirsStrategy.class );
 
+    public String[] dirNames(
+        final PhysicalBook physicalBook )
+    {
+        return physicalBook.getFileName().split( "/" );
+    }
+
     public Book importBook(
         final PhysicalBook physicalBook )
     {
@@ -29,7 +35,7 @@ public class UseDirsStrategy
         book.setName( FilenameUtils.getBaseName( physicalBook.getFile().getName() ) );
         book.setPhysicalBook( physicalBook );
 
-        final String[] dirNames = physicalBook.getFileName().split( "/" );
+        final String[] dirNames = dirNames( physicalBook );
         final Author author = BookShelf.getOrAddUnique( Author.class, dirNames[dirNames.length - 2] );
         book.getAuthors().add( author );
 
@@ -42,21 +48,8 @@ public class UseDirsStrategy
         return book;
     }
 
-    @Override
-    public String longDescription()
-    {
-        return I18N
-            .tr( "<html>Directory, where a book resides, will be imported as the author's name<br>Its parents will be imported as categories</html>" );
-    }
-
-    @Override
-    public String toString()
-    {
-        return I18N.tr( "Import directories only, the deepest one is author" );
-    }
-
     @Nullable
-    private Category lastCategory(
+    public Category lastCategory(
         final String[] dirNames )
     {
         final List<Category> categories = new ArrayList<Category>();
@@ -70,6 +63,19 @@ public class UseDirsStrategy
             categories.add( category );
         }
         return category;
+    }
+
+    @Override
+    public String longDescription()
+    {
+        return I18N
+            .tr( "<html>Directory, where a book resides, will be imported as the author's name<br>Its parents will be imported as categories</html>" );
+    }
+
+    @Override
+    public String toString()
+    {
+        return I18N.tr( "Import directories only, the deepest one is author" );
     }
 
 }
