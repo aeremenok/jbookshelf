@@ -66,30 +66,6 @@ public class Book
         super();
     }
 
-    public void addAuthor(
-        @Nonnull final Author author )
-    {
-        getAuthors().add( author );
-        author.getBooks().add( this );
-    }
-
-    public void addCategory(
-        @Nonnull final Category category )
-    {
-        getCategories().add( category );
-        category.getBooks().add( this );
-    }
-
-    public void addRelatedBook(
-        @Nonnull final Book book )
-    {
-        getRelatedBooks().add( book );
-        book.getRelatedBooks().add( this );
-    }
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(
         final Object obj )
@@ -143,17 +119,11 @@ public class Book
         return true;
     }
 
-    /**
-     * @return the authors
-     */
     public Set<Author> getAuthors()
     {
         return this.authors;
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.model.db.HasBooks#getBooks()
-     */
     @Override
     @Transient
     public Set<Book> getBooks()
@@ -161,65 +131,41 @@ public class Book
         return getRelatedBooks();
     }
 
-    /**
-     * @return the categories
-     */
     public Set<Category> getCategories()
     {
         return this.categories;
     }
 
-    /**
-     * @return the id
-     */
     public Long getId()
     {
         return this.id;
     }
 
-    /**
-     * @return the name
-     */
     public String getName()
     {
         return this.name;
     }
 
-    /**
-     * @return the comments
-     */
     public Set<Note> getNotes()
     {
         return this.notes;
     }
 
-    /**
-     * @return the physicalBook
-     */
     public PhysicalBook getPhysicalBook()
     {
         return this.physicalBook;
     }
 
-    /**
-     * @return the read
-     */
     public Float getRead()
     {
         return this.read;
     }
 
-    /**
-     * @return the relatedBooks
-     */
     public Set<Book> getRelatedBooks()
     {
         return this.relatedBooks;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode()
     {
@@ -234,39 +180,12 @@ public class Book
         return result;
     }
 
-    public void removeAuthor(
-        @Nonnull final Author author )
-    {
-        author.getBooks().remove( this );
-        getAuthors().remove( author );
-    }
-
-    public void removeCategory(
-        @Nonnull final Category category )
-    {
-        category.getBooks().remove( this );
-        getAuthors().remove( category );
-    }
-
-    public void removeRelatedBook(
-        @Nonnull final Book book )
-    {
-        book.getRelatedBooks().remove( this );
-        getRelatedBooks().remove( book );
-    }
-
-    /**
-     * @param name the name to set
-     */
     public void setName(
         @Nonnull final String name )
     {
         this.name = name;
     }
 
-    /**
-     * @param physicalBook the physicalBook to set
-     */
     public void setPhysicalBook(
         @Nonnull final PhysicalBook physicalBook )
     {
@@ -274,18 +193,12 @@ public class Book
         physicalBook.setBook( this );
     }
 
-    /**
-     * @param read the read to set
-     */
     public void setRead(
         @Nonnull @Nonnegative final Float read )
     {
         this.read = read;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString()
     {
