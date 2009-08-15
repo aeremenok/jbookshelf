@@ -43,10 +43,12 @@ public class BookView
     ListSelectionListener,
     RecordFactory<BookRecord>
 {
-    private final ExpandTableModel<BookRecord> model  = new ExpandTableModel<BookRecord>( this, 70 );
-    private final JXTable                      table  = new JXTable( model );
+    public static final int                    PAGE_SIZE = 70;
 
-    private final LogRunner                    runner = new LogRunner();
+    private final ExpandTableModel<BookRecord> model     = new ExpandTableModel<BookRecord>( this, PAGE_SIZE );
+    private final JXTable                      table     = new JXTable( model );
+
+    private final LogRunner                    runner    = new LogRunner();
 
     private List<Object[]>                     books;
 

@@ -8,7 +8,8 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -102,6 +103,7 @@ public class FileImportDialog
     @Override
     public boolean apply()
     {
+        final List<Book> successBooks = successModel.getBooks();
         // close dialog immediately
         // general progressbar will do this job in a new thread 
         Single.instance( ProgressBar.class ).invoke( new Runnable()
@@ -110,11 +112,14 @@ public class FileImportDialog
             public void run()
             {
                 // persist all successfully imported books
-                for ( final Book book : successModel.getBooks() )
+                while ( successBooks.size() > 0 )
                 {
+                    final Book book = successBooks.get( 0 );
                     BookShelf.persistBook( book );
+                    // surrender a book to GC
+                    successBooks.remove( book );
                 }
-                // show them
+                // refresh collection view
                 Single.instance( CollectionPanel.class ).updateActiveView();
             }
         } );
@@ -235,8 +240,8 @@ public class FileImportDialog
                 @Override
                 public void run()
                 {
-                    successModel.setBooks( new ArrayList<Book>() );
-                    failModel.setFiles( new ArrayList<File>() );
+                    successModel.setBooks( new LinkedList<Book>() );
+                    failModel.setFiles( new LinkedList<File>() );
                     importer.importFiles( parameters );
                     translate( I18N.i18n() );
                 }

@@ -31,7 +31,7 @@ public class Category
     @GeneratedValue
     private Long                id;
 
-    @Column( nullable = false, unique = true )
+    @Column( nullable = false )
     @org.hibernate.annotations.Index( name = "category_name_ind" )
     private String              name;
 
@@ -47,23 +47,13 @@ public class Category
     @OrderBy( "name desc" )
     private final Set<Book>     books    = new HashSet<Book>();
 
-    public static final String  ROOT = "!ROOT!";
+    public static final String  ROOT     = "!ROOT!";
 
     public Category()
     {
         super();
     }
 
-    public void addChild(
-        @Nonnull final Category category )
-    {
-        category.setParent( this );
-        getChildren().add( category );
-    }
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(
         final Object obj )
@@ -117,50 +107,32 @@ public class Category
         return true;
     }
 
-    /**
-     * @return the books
-     */
     public Set<Book> getBooks()
     {
         return this.books;
     }
 
-    /**
-     * @return the children
-     */
     public Set<Category> getChildren()
     {
         return this.children;
     }
 
-    /**
-     * @return the id
-     */
     public Long getId()
     {
         return this.id;
     }
 
-    /**
-     * @return the name
-     */
     public String getName()
     {
         return this.name;
     }
 
-    /**
-     * @return the parent
-     */
     @Nullable
     public Category getParent()
     {
         return this.parent;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode()
     {
@@ -175,34 +147,18 @@ public class Category
         return result;
     }
 
-    public void removeChild(
-        @Nonnull final Category category )
-    {
-        category.setParent( null );
-        getChildren().remove( category );
-    }
-
-    /**
-     * @param name the name to set
-     */
     public void setName(
         @Nonnull final String name )
     {
         this.name = name;
     }
 
-    /**
-     * @param parent the parent to set
-     */
     public void setParent(
         @Nullable final Category parent )
     {
         this.parent = parent;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString()
     {

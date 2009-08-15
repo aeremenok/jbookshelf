@@ -5,7 +5,6 @@ package org.jbookshelf.model.db.util;
 
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -136,37 +135,6 @@ public class BookShelf
         return book;
     }
 
-    public static Category createCategory(
-        final PhysicalBook physicalBook )
-    {
-        final List<Category> categories = new ArrayList<Category>();
-
-        final String fileName = physicalBook.getFileName();
-        final String[] dirsNames = fileName.split( "/" );
-
-        for ( int i = 0; i < dirsNames.length - 1; i++ )
-        {
-            final String dirName = dirsNames[i];
-            Category category;
-            // todo avoid conflicts
-            //            = getUnique( Category.class, dirName );
-            //            if ( category != null )
-            //            {
-            //                dirName = StringUtil.incrementNumber( dirName );
-            //            }
-            category = getOrAddUnique( Category.class, dirName );
-            categories.add( category );
-
-            if ( i > 1 )
-            {
-                final Category parent = categories.get( i - 1 );
-                setParent( parent, category );
-            }
-        }
-
-        return categories.get( categories.size() - 1 );
-    }
-
     public static Set<Author> getAuthors(
         final Book book )
     {
@@ -284,6 +252,43 @@ public class BookShelf
             }
         }
         return book.getNotes();
+    }
+
+    public static Category getOrAddCategory(
+        final String name,
+        final Category parent )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            final Criteria criteria = session.createCriteria( Category.class );
+            criteria.add( Restrictions.eq( "name", name ) );
+            criteria.add( Restrictions.eq( "parent", parent ) );
+            final List list = criteria.list();
+            if ( list.size() == 1 )
+            {
+                return (Category) list.get( 0 );
+            }
+
+            final Category category = new Category();
+            category.setName( name );
+
+            session.beginTransaction();
+            session.persist( category );
+            session.getTransaction().commit();
+
+            setParent( parent, category );
+            return category;
+        }
+        catch ( final Exception e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
     }
 
     @SuppressWarnings( "unchecked" )

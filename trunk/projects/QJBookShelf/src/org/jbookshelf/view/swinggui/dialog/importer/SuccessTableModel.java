@@ -5,7 +5,7 @@ package org.jbookshelf.view.swinggui.dialog.importer;
 
 import icons.IMG;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -25,7 +25,7 @@ public class SuccessTableModel
     private static final String[] names =
                                         { I18N.tr( "Book" ), "" };
 
-    private List<Book>            books = new ArrayList<Book>();
+    private List<Book>            books = new LinkedList<Book>();
 
     public SuccessTableModel()
     {
