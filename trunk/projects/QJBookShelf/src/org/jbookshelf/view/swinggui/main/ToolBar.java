@@ -46,7 +46,7 @@ public class ToolBar
     {
         public AddAction()
         {
-            super( tr( "Add" ), IMG.icon( IMG.LIST_ADD_PNG, 32 ) );
+            super( tr( "Add" ), IMG.icon( IMG.BOOK_NEW, 32 ) );
         }
 
         public void actionPerformed(
