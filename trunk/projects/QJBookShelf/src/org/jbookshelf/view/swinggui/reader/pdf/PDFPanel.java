@@ -17,9 +17,11 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 import org.apache.log4j.Logger;
+import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.widget.WrapperPanel;
@@ -70,7 +72,21 @@ public class PDFPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-        // todo
+            getProgressBar().invoke( new SafeWorker<Note, Object>()
+            {
+                @Override
+                protected Note doInBackground()
+                {
+                    final String text = extractText();
+                    return createNote( text );
+                }
+
+                @Override
+                protected void doneSafe()
+                {
+                    new NoteDialog( readerWindow, getQuiet() ).setVisible( true );
+                }
+            } );
         }
     }
 
@@ -97,7 +113,7 @@ public class PDFPanel
                 @Override
                 protected void doneSafe()
                 {
-                    new ExtractedTextDialog( readerWindow, getQuiet() ).setVisible( true );
+                    new ExtractedTextDialog( readerWindow, getQuiet(), PDFPanel.this ).setVisible( true );
                 }
             } );
         }
@@ -123,6 +139,25 @@ public class PDFPanel
         menu.add( new ExtractAndCopyAction() );
 
         pagePanel.addMouseListener( new PopupListener( menu ) );
+    }
+
+    public Note createNote(
+        final String text )
+    {
+        final Note note = new Note();
+
+        note.setCitation( text );
+        note.setPage( pagePanel.getPage().getPageNumber() );
+
+        note.setPageCount( readerWindow.getBookContent().getPageCount() );
+        final float page = note.getPage();
+        final float pos = page / note.getPageCount();
+        note.setPosition( pos );
+
+        note.setBook( readerWindow.getBook() );
+        note.setTitle( NoteDialog.createTitle() );
+
+        return note;
     }
 
     @Override

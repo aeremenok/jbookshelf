@@ -8,9 +8,7 @@ import icons.IMG;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -29,6 +27,7 @@ import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
+import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.FilterPipeline;
 import org.xnap.commons.i18n.I18n;
@@ -91,7 +90,7 @@ public class NoteTab
                 case 0:
                     return notes.get( row ).getTitle();
                 case 1:
-                    return format.format( notes.get( row ).getChangeDate() );
+                    return NoteDialog.format.format( notes.get( row ).getChangeDate() );
                 case 2:
                     return IMG.icon( IMG.LIST_REMOVE_PNG );
             }
@@ -129,9 +128,8 @@ public class NoteTab
         }
     }
 
-    private static final SimpleDateFormat format = new SimpleDateFormat( "yy-MM-dd HH:mm" );
-    private final NoteTableModel          model  = new NoteTableModel();
-    private final JXTable                 table  = new JXTable( model );
+    private final NoteTableModel model = new NoteTableModel();
+    private final JXTable        table = new JXTable( model );
 
     public NoteTab()
     {
@@ -155,7 +153,7 @@ public class NoteTab
                 final Note note = model.getNotes().get( table.convertRowIndexToModel( row ) );
                 if ( e.getClickCount() == 2 )
                 {
-                    new NoteDialog( note ).setVisible( true );
+                    new NoteDialog( Single.instance( MainWindow.class ), note ).setVisible( true );
                 }
                 else if ( table.columnAtPoint( e.getPoint() ) == 2 )
                 {
@@ -172,7 +170,7 @@ public class NoteTab
     {
         final Note note = new Note();
         note.setBook( book );
-        note.setTitle( I18N.tr( "Note" ) + " " + format.format( new Date() ) );
-        new NoteDialog( note ).setVisible( true );
+        note.setTitle( NoteDialog.createTitle() );
+        new NoteDialog( Single.instance( MainWindow.class ), note ).setVisible( true );
     }
 }
