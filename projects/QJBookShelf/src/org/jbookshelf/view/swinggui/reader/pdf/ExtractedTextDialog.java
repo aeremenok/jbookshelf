@@ -16,9 +16,11 @@ import javax.swing.JPopupMenu;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.util.URIUtil;
+import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 import org.jdesktop.swingx.JXEditorPane;
 import org.xnap.commons.gui.DefaultDialog;
@@ -63,8 +65,9 @@ public class ExtractedTextDialog
         public void actionPerformed(
             final ActionEvent e )
         {
-            @SuppressWarnings( "unused" ) final String text = editorPane.getSelectedText();
-            // todo
+            final String text = editorPane.getSelectedText();
+            final Note note = pdfPanel.createNote( text );
+            new NoteDialog( ExtractedTextDialog.this, note ).setVisible( true );
         }
     }
 
@@ -88,12 +91,15 @@ public class ExtractedTextDialog
     @SuppressWarnings( "unused" )
     private static final Logger log        = Logger.getLogger( ExtractedTextDialog.class );
     private final JXEditorPane  editorPane = new JXEditorPane();
+    private final PDFPanel      pdfPanel;
 
     public ExtractedTextDialog(
         final JFrame parent,
-        final String text )
+        final String text,
+        final PDFPanel pdfPanel )
     {
         super( parent, BUTTON_CLOSE );
+        this.pdfPanel = pdfPanel;
         I18N.translate( this );
 
         setMainComponent( new WrapperPanel( editorPane, true ) );
@@ -111,6 +117,7 @@ public class ExtractedTextDialog
     public void translate(
         final I18n i18n )
     {
+        setTitle( i18n.tr( "Extracted text from PDF" ) );
         getCloseAction().putValue( Action.NAME, i18n.tr( "Close" ) );
     }
 

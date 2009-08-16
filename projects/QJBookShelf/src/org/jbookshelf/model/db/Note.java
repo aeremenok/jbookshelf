@@ -28,32 +28,38 @@ public class Note
 {
     @Id
     @GeneratedValue
-    private Long   id;
+    private Long    id;
 
     @Column( nullable = false )
     @Temporal( TemporalType.TIMESTAMP )
-    private Date   changeDate;
+    private Date    changeDate;
 
     @Column( length = Short.MAX_VALUE )
-    private String content;
+    private String  content;
 
     @Column( length = Short.MAX_VALUE )
-    private String citation;
+    private String  citation;
 
     @Column( nullable = false )
-    private String title;
+    private String  title;
 
     @Column
-    private Float  pos = 0f;
+    private Float   position = 0f;
+
+    @Column
+    private Integer page;
+
+    /**
+     * todo allows to recalculate the position in case of format conversion
+     */
+    @Column
+    private Integer pageCount;
 
     @ManyToOne( optional = false )
     @JoinColumn( name = "BOOK_ID", nullable = false )
     @org.hibernate.annotations.ForeignKey( name = "FK_NOTE_BOOK" )
-    private Book   book;
+    private Book    book;
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(
         final Object obj )
@@ -115,14 +121,25 @@ public class Note
         {
             return false;
         }
-        if ( this.pos == null )
+        if ( this.page == null )
         {
-            if ( other.pos != null )
+            if ( other.page != null )
             {
                 return false;
             }
         }
-        else if ( !this.pos.equals( other.pos ) )
+        else if ( !this.page.equals( other.page ) )
+        {
+            return false;
+        }
+        if ( this.position == null )
+        {
+            if ( other.position != null )
+            {
+                return false;
+            }
+        }
+        else if ( !this.position.equals( other.position ) )
         {
             return false;
         }
@@ -140,67 +157,53 @@ public class Note
         return true;
     }
 
-    /**
-     * @return the book
-     */
     public Book getBook()
     {
         return this.book;
     }
 
-    /**
-     * @return the changeDate
-     */
     public Date getChangeDate()
     {
         return this.changeDate;
     }
 
-    /**
-     * @return the citation
-     */
     @Nullable
     public String getCitation()
     {
         return this.citation;
     }
 
-    /**
-     * @return the content
-     */
     @Nullable
     public String getContent()
     {
         return this.content;
     }
 
-    /**
-     * @return the id
-     */
     public Long getId()
     {
         return this.id;
     }
 
-    /**
-     * @return the position
-     */
-    public Float getPosition()
+    public Integer getPage()
     {
-        return this.pos;
+        return this.page;
     }
 
-    /**
-     * @return the title
-     */
+    public Integer getPageCount()
+    {
+        return this.pageCount;
+    }
+
+    public Float getPosition()
+    {
+        return this.position;
+    }
+
     public String getTitle()
     {
         return this.title;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode()
     {
@@ -214,52 +217,51 @@ public class Note
             ? 0 : this.content.hashCode());
         result = prime * result + (this.id == null
             ? 0 : this.id.hashCode());
-        result = prime * result + (this.pos == null
-            ? 0 : this.pos.hashCode());
+        result = prime * result + (this.page == null
+            ? 0 : this.page.hashCode());
+        result = prime * result + (this.position == null
+            ? 0 : this.position.hashCode());
         result = prime * result + (this.title == null
             ? 0 : this.title.hashCode());
         return result;
     }
 
-    /**
-     * @param book the book to set
-     */
     public void setBook(
         @Nonnull final Book book )
     {
         this.book = book;
     }
 
-    /**
-     * @param citation the citation to set
-     */
     public void setCitation(
         @Nonnull final String citation )
     {
         this.citation = citation;
     }
 
-    /**
-     * @param content the content to set
-     */
     public void setContent(
         @Nonnull final String content )
     {
         this.content = content;
     }
 
-    /**
-     * @param position the position to set
-     */
+    public void setPage(
+        @Nonnull @Nonnegative final Integer page )
+    {
+        this.page = page;
+    }
+
+    public void setPageCount(
+        final Integer pageCount )
+    {
+        this.pageCount = pageCount;
+    }
+
     public void setPosition(
         @Nonnull @Nonnegative final Float position )
     {
-        this.pos = position;
+        this.position = position;
     }
 
-    /**
-     * @param title the title to set
-     */
     public void setTitle(
         @Nonnull final String title )
     {
