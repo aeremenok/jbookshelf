@@ -67,9 +67,9 @@ public class PlaintTextPanel
 
     @Override
     public void setScale(
-        final int scale )
+        final int scalePercentage )
     {
         final Font oldFont = editorPane.getFont();
-        editorPane.setFont( new Font( oldFont.getName(), oldFont.getStyle(), FontChooser.INITIAL_SIZE * scale / 100 ) );
+        editorPane.setFont( new Font( oldFont.getName(), oldFont.getStyle(), FontChooser.INITIAL_SIZE * scalePercentage / 100 ) );
     }
 }

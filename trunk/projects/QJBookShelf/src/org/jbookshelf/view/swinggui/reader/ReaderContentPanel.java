@@ -27,6 +27,9 @@ public abstract class ReaderContentPanel<PageType>
     public abstract void highlightText(
         String text );
 
+    public void reset()
+    {}
+
     public abstract void setContent(
         PageType content );
 
@@ -34,6 +37,7 @@ public abstract class ReaderContentPanel<PageType>
         @SuppressWarnings( "unused" ) final Font font )
     {}
 
-    public abstract void setScale(
-        final int scale );
+    public void setScale(
+        @SuppressWarnings( "unused" ) final int scalePercentage )
+    {}
 }

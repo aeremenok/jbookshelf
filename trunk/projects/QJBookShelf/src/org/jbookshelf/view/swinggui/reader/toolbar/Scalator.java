@@ -76,6 +76,8 @@ public class Scalator
     public final Action    zoomOutAction = new ZoomOutAction();
     public final Action    zoomInAction  = new ZoomInAction();
 
+    private int            start;
+
     public Scalator(
         final int min,
         final int max,
@@ -83,8 +85,9 @@ public class Scalator
         final int start )
     {
         this();
+        this.start = start;
         setScaleBounds( min, max, step );
-        scaleComboBox.setSelectedItem( start + "%" );
+        reset();
     }
 
     private Scalator()
@@ -109,18 +112,37 @@ public class Scalator
         } );
     }
 
-    /**
-     * @return the scale
-     */
     public int getScale()
     {
         return this.scale;
     }
 
-    /**
-     * @param scale the scale to set
-     */
-    public void setScale(
+    public void reset()
+    {
+        scaleComboBox.setSelectedItem( start + "%" );
+    }
+
+    public void setScaleBounds(
+        final int min,
+        final int max,
+        final int step )
+    {
+        if ( max - min < 0 )
+        {
+            throw new IllegalArgumentException( "max = " + max + ", min = " + min );
+        }
+        this.min = min;
+        this.max = max;
+        this.step = step;
+        scaleComboBox.removeAllItems();
+        for ( int i = min; i <= max; i += step )
+        {
+            scaleComboBox.addItem( i + "%" );
+        }
+        setScale( min );
+    }
+
+    private void setScale(
         int scale )
     {
         if ( scale < min )
@@ -136,25 +158,5 @@ public class Scalator
         firePropertyChange( Features.SCALING, null, scale );
         zoomInAction.setEnabled( scale < max );
         zoomOutAction.setEnabled( scale > min );
-    }
-
-    public void setScaleBounds(
-        final int min,
-        final int max,
-        final int step )
-    {
-        if ( max - min < 0 )
-        {
-            throw new IllegalArgumentException();
-        }
-        this.min = min;
-        this.max = max;
-        this.step = step;
-        scaleComboBox.removeAllItems();
-        for ( int i = min; i <= max; i += step )
-        {
-            scaleComboBox.addItem( i + "%" );
-        }
-        setScale( min );
     }
 }
