@@ -94,9 +94,4 @@ public class HTMLReaderPanel
             }
         } );
     }
-
-    @Override
-    public void setScale(
-        final int scale )
-    {}
 }

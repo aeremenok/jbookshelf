@@ -38,6 +38,6 @@ public class PDFReaderFactory
     public ReaderToolBar createReaderToolBar(
         final ReaderWindow<PDFPage> readerWindow )
     {
-        return new ReaderToolBar( readerWindow, Features.PAGING, Features.LAYOUT, Features.SEARCH );
+        return new ReaderToolBar( readerWindow, Features.PAGING, Features.LAYOUT, Features.SEARCH, Features.SCALING );
     }
 }

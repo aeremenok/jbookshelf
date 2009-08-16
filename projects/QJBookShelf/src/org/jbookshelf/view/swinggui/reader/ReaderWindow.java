@@ -24,6 +24,7 @@ import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
+import org.jbookshelf.view.swinggui.reader.pdf.PDFPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
@@ -101,6 +102,11 @@ public class ReaderWindow<T>
     public void changeLayout(
         final PageLayout layout )
     {
+        if ( leftContentPanel instanceof PDFPanel )
+        {
+            toolBar.getScalator().reset();
+            leftContentPanel.reset();
+        }
         final boolean isTwo = layout == PageLayout.TWO_PAGES;
         rightContentPanel.setVisible( isTwo );
         if ( isTwo )
