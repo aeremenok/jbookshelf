@@ -3,31 +3,32 @@ package org.jbookshelf.view.swinggui.reader.rtf;
 import java.awt.BorderLayout;
 import java.awt.Font;
 
+import javax.swing.BoundedRangeModel;
 import javax.swing.JScrollPane;
 import javax.swing.text.StyledDocument;
 
+import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.logic.SafeWorker;
-import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.reader.SelectableTextPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
 import org.jdesktop.swingx.JXEditorPane;
 
 public class RTFPanel
-    extends ReaderContentPanel<StyledDocument>
+    extends SelectableTextPanel<StyledDocument>
 {
     private final JXEditorPane editorPane = new JXEditorPane();
-
-    private final JScrollPane  scrollPane = new JScrollPane( editorPane );
+    private final JScrollPane  scroll     = new JScrollPane( editorPane );
 
     public RTFPanel(
         final ReaderWindow<StyledDocument> readerWindow )
     {
         super( readerWindow );
-        add( scrollPane, BorderLayout.CENTER );
+        add( scroll, BorderLayout.CENTER );
         editorPane.setEditable( false );
         editorPane.getCaret().setSelectionVisible( true );
-
         editorPane.setFont( FontChooser.DEFAULT_FONT );
+        editorPane.addMouseListener( popupListener );
     }
 
     @Override
@@ -47,7 +48,8 @@ public class RTFPanel
             protected JXEditorPane doInBackground()
             {
                 editorPane.setDocument( content );
-                scrollPane.getVerticalScrollBar().setValue( 0 );
+                // todo remember position
+                scroll.getVerticalScrollBar().setValue( 0 );
                 return editorPane;
             }
         };
@@ -66,7 +68,23 @@ public class RTFPanel
         final int scalePercentage )
     {
         final Font oldFont = editorPane.getFont();
-        editorPane.setFont( new Font( oldFont.getName(), oldFont.getStyle(), FontChooser.INITIAL_SIZE * scalePercentage / 100 ) );
+        editorPane.setFont( new Font( oldFont.getName(), oldFont.getStyle(), FontChooser.INITIAL_SIZE * scalePercentage
+            / 100 ) );
     }
 
+    @Override
+    protected float getPosition(
+        final Note note )
+    {
+        final BoundedRangeModel model = scroll.getVerticalScrollBar().getModel();
+        final float value = model.getValue();
+        final float max = model.getMaximum() - model.getExtent();
+        return value / max;
+    }
+
+    @Override
+    protected String getSelectedText()
+    {
+        return editorPane.getSelectedText();
+    }
 }

@@ -96,81 +96,51 @@ public class ReaderToolBar
         addSeparator();
     }
 
-    /**
-     * @return the charsetChooser
-     */
     public CharsetChooser getCharsetChooser()
     {
         return this.charsetChooser;
     }
 
-    /**
-     * @return the contentActionsPanel
-     */
     public ContentActionsPanel getContentActionsPanel()
     {
         return this.contentActionsPanel;
     }
 
-    /**
-     * @return the fontChooser
-     */
     public FontChooser getFontChooser()
     {
         return this.fontChooser;
     }
 
-    /**
-     * @return the layouter
-     */
     public Layouter getLayouter()
     {
         return this.layouter;
     }
 
-    /**
-     * @return the paginator
-     */
     public Paginator getPaginator()
     {
         return paginator;
     }
 
-    /**
-     * @return the progressBar
-     */
     public ProgressBar getProgressBar()
     {
         return this.progressBar;
     }
 
-    /**
-     * @return the readerWindow
-     */
     public ReaderWindow getReaderWindow()
     {
         return this.readerWindow;
     }
 
-    /**
-     * @return the scalator
-     */
     public Scalator getScalator()
     {
         return scalator;
     }
 
-    /**
-     * @return the text finder
-     */
     public TextFinder getTextFinder()
     {
         return textFinder;
     }
 
-    /**
-     * @param features
-     */
     private void initFeatures(
         final List<String> features )
     {
