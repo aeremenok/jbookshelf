@@ -10,8 +10,9 @@ import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.text.PlainDocument;
 
-import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
+import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.reader.SelectableTextPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
 import org.jdesktop.swingx.JXEditorPane;
 
@@ -19,7 +20,7 @@ import org.jdesktop.swingx.JXEditorPane;
  * @author eav 2009
  */
 public class PlaintTextPanel
-    extends ReaderContentPanel<String>
+    extends SelectableTextPanel<String>
 {
     private final JXEditorPane  editorPane = new JXEditorPane();
     private final PlainDocument document   = new PlainDocument();
@@ -33,8 +34,8 @@ public class PlaintTextPanel
         editorPane.setEditable( false );
         editorPane.setDocument( document );
         editorPane.getCaret().setSelectionVisible( true );
-
         editorPane.setFont( FontChooser.DEFAULT_FONT );
+        editorPane.addMouseListener( popupListener );
     }
 
     @Override
@@ -70,6 +71,21 @@ public class PlaintTextPanel
         final int scalePercentage )
     {
         final Font oldFont = editorPane.getFont();
-        editorPane.setFont( new Font( oldFont.getName(), oldFont.getStyle(), FontChooser.INITIAL_SIZE * scalePercentage / 100 ) );
+        editorPane.setFont( new Font( oldFont.getName(), oldFont.getStyle(), FontChooser.INITIAL_SIZE * scalePercentage
+            / 100 ) );
+    }
+
+    @Override
+    protected float getPosition(
+        final Note note )
+    {
+        final float page = note.getPage();
+        return page / note.getPageCount();
+    }
+
+    @Override
+    protected String getSelectedText()
+    {
+        return editorPane.getSelectedText();
     }
 }

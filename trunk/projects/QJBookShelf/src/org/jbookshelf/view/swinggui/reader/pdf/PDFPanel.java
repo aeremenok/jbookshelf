@@ -141,25 +141,6 @@ public class PDFPanel
         pagePanel.addMouseListener( new PopupListener( menu ) );
     }
 
-    public Note createNote(
-        final String text )
-    {
-        final Note note = new Note();
-
-        note.setCitation( text );
-        note.setPage( pagePanel.getPage().getPageNumber() );
-
-        note.setPageCount( readerWindow.getBookContent().getPageCount() );
-        final float page = note.getPage();
-        final float pos = page / note.getPageCount();
-        note.setPosition( pos );
-
-        note.setBook( readerWindow.getBook() );
-        note.setTitle( NoteDialog.createTitle() );
-
-        return note;
-    }
-
     @Override
     public void highlightText(
         final String text )
@@ -224,5 +205,13 @@ public class PDFPanel
     private ProgressBar getProgressBar()
     {
         return readerWindow.getReaderToolBar().getProgressBar();
+    }
+
+    @Override
+    protected float getPosition(
+        final Note note )
+    {
+        final float page = note.getPage();
+        return page / note.getPageCount();
     }
 }
