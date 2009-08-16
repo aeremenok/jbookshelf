@@ -183,7 +183,7 @@ public class UniqueActions
             {
                 final boolean manyUniques = mediator.getSelectedUniques().size() > 0;
                 removeAction.setEnabled( manyUniques );
-                googleAction.setEnabled( mediator.getSelectedUniques().size() == 1 );
+                googleAction.setEnabled( manyUniques );
                 renameAction.setEnabled( mediator.getSelectedUniques().size() == 1
                     && mediator.getSelectedBooks().size() == 0 );
             }

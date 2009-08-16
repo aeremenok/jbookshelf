@@ -16,10 +16,11 @@ public class IMG
 {
     public static final String CONFIGURE_PNG                  = "configure.png";
     public static final String DOCUMENT_REVERT_PNG            = "document-revert.png";
+    public static final String BOOK_NEW                       = "address-book-new.png";
+    public static final String LIST_ADD_PNG                   = "list-add.png";
     public static final String LIST_REMOVE_PNG                = "list-remove.png";
     public static final String DOCUMENT_OPEN_FOLDER_PNG       = "document-open-folder.png";
     public static final String DOCUMENT_PREVIEW_PNG           = "document-preview.png";
-    public static final String LIST_ADD_PNG                   = "list-add.png";
     public static final String HELP_ABOUT_PNG                 = "help-about.png";
     public static final String BUG_REPORT_PNG                 = "kbugbuster.png";
     public static final String DOCUMENT_SAVE_PNG              = "document-save.png";
@@ -54,6 +55,8 @@ public class IMG
     public static final String VIEW_PREVIEW_PNG               = "view-preview.png";
     public static final String TOC_PNG                        = "format-justify-left.png";
     public static final String FONT_PNG                       = "font.png";
+    public static final String EXTRACT_TEXT_PNG               = "edit-select-all.png";
+    public static final String CLIPBOARD_PNG                  = "klipper.png";
 
     public static Icon icon(
         final String fileName )

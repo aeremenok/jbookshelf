@@ -117,17 +117,16 @@ public class ReaderWindow<T>
         toolBar.getPaginator().setPageLayout( layout );
     }
 
-    /**
-     * @return the book
-     */
     public Book getBook()
     {
         return this.book;
     }
 
-    /**
-     * @return the toolBar
-     */
+    public BookContent<T> getBookContent()
+    {
+        return this.bookContent;
+    }
+
     public ReaderToolBar getReaderToolBar()
     {
         return this.toolBar;

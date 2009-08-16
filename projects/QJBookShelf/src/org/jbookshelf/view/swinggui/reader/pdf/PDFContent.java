@@ -47,51 +47,48 @@ public class PDFContent
     }
 
     @Override
-    public int findText(
+    public synchronized int findText(
         String text,
         final Boolean direction,
         int startPage )
     {
-        text = text.toLowerCase();
         try
         {
+            text = text.toLowerCase();
             final PDDocument doc = getPdDocument();
-            synchronized ( doc )
-            {
-                final PDFTextStripper stripper = new PDFTextStripper();
-                if ( Boolean.FALSE.equals( direction ) )
-                { // backward
-                    for ( int p = startPage - 1; p > -1; p-- )
+            final PDFTextStripper stripper = new PDFTextStripper();
+            if ( Boolean.FALSE.equals( direction ) )
+            { // backward
+                for ( int p = startPage - 1; p > -1; p-- )
+                {
+                    stripper.setStartPage( p );
+                    stripper.setEndPage( p );
+                    final String page = stripper.getText( doc ).toLowerCase();
+                    if ( page.contains( text ) )
                     {
-                        stripper.setStartPage( p );
-                        stripper.setEndPage( p );
-                        final String page = stripper.getText( doc ).toLowerCase();
-                        if ( page.contains( text ) )
-                        {
-                            return p;
-                        }
+                        return p;
                     }
                 }
-                else
-                { // forward
-                    if ( direction == null )
-                    { // forward from start
-                        startPage = -1;
-                    }
-
-                    for ( int p = startPage + 1; p < pageCount; p++ )
-                    {
-                        stripper.setStartPage( p );
-                        stripper.setEndPage( p );
-                        final String page = stripper.getText( doc ).toLowerCase();
-                        if ( page.contains( text ) )
-                        {
-                            return p;
-                        }
-                    }
-                }
-                return -1;
             }
+            else
+            { // forward
+                if ( direction == null )
+                { // forward from start
+                    startPage = -1;
+                }
+
+                for ( int p = startPage + 1; p < pageCount; p++ )
+                {
+                    stripper.setStartPage( p );
+                    stripper.setEndPage( p );
+                    final String page = stripper.getText( doc ).toLowerCase();
+                    if ( page.contains( text ) )
+                    {
+                        return p;
+                    }
+                }
+            }
+            return -1;
         }
         catch ( final Throwable e )
         {
@@ -108,6 +105,24 @@ public class PDFContent
         final PDFPage page = pdffile.getPage( pageNumber + 1 );
         log.debug( "page got" );
         return page;
+    }
+
+    public synchronized String getPageContent(
+        final int pageNum )
+    {
+        try
+        {
+            final PDDocument doc = getPdDocument();
+            final PDFTextStripper stripper = new PDFTextStripper();
+            stripper.setStartPage( pageNum );
+            stripper.setEndPage( pageNum );
+            return stripper.getText( doc );
+        }
+        catch ( final IOException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
     }
 
     @Override
@@ -138,9 +153,6 @@ public class PDFContent
         }
     }
 
-    /**
-     * @return the pdDocument
-     */
     private PDDocument getPdDocument()
     {
         if ( pdDocument == null )
