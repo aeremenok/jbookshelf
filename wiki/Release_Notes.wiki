@@ -24,7 +24,7 @@
 
 ==Known issues==
 
- * [http://code.google.com/p/jbookshelf/issues/list Issues]
+ * [http://code.google.com/p/jbookshelf/issues/list?can=2&q=&sort=milestone&colspec=ID%20Type%20Status%20Priority%20Milestone%20Owner%20Summary Issues]
 
 ----
 
