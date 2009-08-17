@@ -15,6 +15,7 @@ Java
     * http://sourceforge.net/projects/ebook-library/
     * http://sourceforge.net/projects/eblib/
 Python
+    * http://calibre.kovidgoyal.net/
     * http://code.google.com/p/pybookshelf/ (fb2)
     * http://code.google.com/p/shelfr/
     * http://code.google.com/p/bookmaster/
