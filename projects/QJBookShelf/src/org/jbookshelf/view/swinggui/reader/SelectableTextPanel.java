@@ -82,24 +82,33 @@ public abstract class SelectableTextPanel<PageType>
         }
     }
 
-    @SuppressWarnings( "unused" )
-    private static final Logger log           = Logger.getLogger( SelectableTextPanel.class );
+    protected class SelectionPopupListener
+        extends PopupListener
+    {
+        private SelectionPopupListener(
+            final JPopupMenu popup )
+        {
+            super( popup );
+        }
 
-    protected JPopupMenu        menu          = new JPopupMenu();
-    protected PopupListener     popupListener = new PopupListener( menu )
-                                              {
-                                                  @Override
-                                                  protected void showPopup(
-                                                      final Component source,
-                                                      final int x,
-                                                      final int y )
-                                                  {
-                                                      if ( getSelectedText().trim().length() > 0 )
-                                                      {
-                                                          super.showPopup( source, x, y );
-                                                      }
-                                                  }
-                                              };
+        @Override
+        public void showPopup(
+            final Component source,
+            final int x,
+            final int y )
+        {
+            if ( getSelectedText().trim().length() > 0 )
+            {
+                super.showPopup( source, x, y );
+            }
+        }
+    }
+
+    @SuppressWarnings( "unused" )
+    private static final Logger      log           = Logger.getLogger( SelectableTextPanel.class );
+
+    protected JPopupMenu             menu          = new JPopupMenu();
+    protected SelectionPopupListener popupListener = new SelectionPopupListener( menu );
 
     public SelectableTextPanel(
         final ReaderWindow<PageType> readerWindow )
