@@ -1,4 +1,33 @@
 #labels Featured
+=JBookShelf 0.6b2=
+
+[http://jbookshelf.googlecode.com/files/jbookshelf-0.6b2.zip Download for all platforms] 
+
+[http://code.google.com/p/jbookshelf/wiki/Screenshots Screenshots]
+
+==Changes==
+
+ * Viewer
+   * PDF page text extraction
+   * PDF page scaling
+   * Selected text actions implemented
+ * Collection
+   * Directories import
+   * Authors and categories renaming
+ * Misc
+   * E-mail feedback form
+   * Book info form displays book file info
+
+==Fixed==
+  
+   * Wrong path to database files under Windows
+
+==Known issues==
+
+ * [http://code.google.com/p/jbookshelf/issues/list Issues]
+
+----
+
 =JBookShelf 0.6b1=
 
 [http://jbookshelf.googlecode.com/files/jbookshelf-0.6b1.zip Download for all platforms] 
