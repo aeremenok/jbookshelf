@@ -6,6 +6,7 @@ package org.jbookshelf.view.swinggui.reader;
 import icons.IMG;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
@@ -15,7 +16,6 @@ import java.beans.PropertyChangeListener;
 import java.nio.charset.Charset;
 
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
@@ -24,7 +24,6 @@ import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
-import org.jbookshelf.view.swinggui.reader.pdf.PDFPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
@@ -42,18 +41,13 @@ public class ReaderWindow<T>
     implements
     PropertyChangeListener
 {
-    private final Book                  book;
+    private final Book              book;
+    private final ReaderToolBar     toolBar;
+    private final LayoutSwitcher<T> layoutSwitcher;
+    private final ReaderFactory<T>  factory;
+    private BookContent<T>          bookContent;
 
-    private final ReaderToolBar         toolBar;
-    private final ReaderContentPanel<T> leftContentPanel;
-    private final ReaderContentPanel<T> rightContentPanel;
-    private BookContent<T>              bookContent;
-
-    private final JSplitPane            splitPane = new JSplitPane();
-
-    private final ReaderFactory<T>      factory;
-
-    private static final Logger         log       = Logger.getLogger( ReaderWindow.class );
+    private static final Logger     log = Logger.getLogger( ReaderWindow.class );
 
     public ReaderWindow(
         final Book book,
@@ -64,18 +58,13 @@ public class ReaderWindow<T>
         this.factory = factory;
 
         toolBar = factory.createReaderToolBar( this );
-        leftContentPanel = factory.createReaderContentPanel( this );
-        rightContentPanel = factory.createReaderContentPanel( this );
+        layoutSwitcher = new LayoutSwitcher<T>( this, factory );
         bookContent = factory.createBookContent( book );
 
         setContentPane( new JPanel( new BorderLayout() ) );
 
         add( toolBar, BorderLayout.NORTH );
-
-        add( splitPane );
-        splitPane.setLeftComponent( leftContentPanel );
-        splitPane.setRightComponent( rightContentPanel );
-        splitPane.setResizeWeight( 0.5 );
+        add( layoutSwitcher, BorderLayout.CENTER );
 
         setTitle( book.getName() );
         setIconImage( IMG.img( IMG.LOGO_PNG, 64 ) );
@@ -102,19 +91,16 @@ public class ReaderWindow<T>
     public void changeLayout(
         final PageLayout layout )
     {
-        if ( leftContentPanel instanceof PDFPanel )
-        {
-            toolBar.getScalator().reset();
-            leftContentPanel.reset();
-        }
-        final boolean isTwo = layout == PageLayout.TWO_PAGES;
-        rightContentPanel.setVisible( isTwo );
-        if ( isTwo )
-        {
-            splitPane.setDividerLocation( 0.5 );
-            setPage( toolBar.getPaginator().getCurrentPage() );
-        }
+        layoutSwitcher.switchLayout( layout );
+        setPage( toolBar.getPaginator().getCurrentPage() );
         toolBar.getPaginator().setPageLayout( layout );
+        EventQueue.invokeLater( new Runnable()
+        {
+            public void run()
+            {
+                layoutSwitcher.getCurrentPanels().setScale( toolBar.getScalator().getScale() );
+            }
+        } );
     }
 
     public Book getBook()
@@ -146,7 +132,7 @@ public class ReaderWindow<T>
         }
         else if ( Features.SCALING.equals( propertyName ) )
         {
-            setScale( (Integer) newValue );
+            layoutSwitcher.getCurrentPanels().setScale( ((Integer) newValue) );
         }
         else if ( Features.LAYOUT.equals( propertyName ) )
         {
@@ -158,12 +144,16 @@ public class ReaderWindow<T>
         }
         else if ( Features.FONT.equals( propertyName ) )
         {
-            setReaderFont( (Font) newValue );
+            layoutSwitcher.getCurrentPanels().setReaderFont( ((Font) newValue) );
         }
         else if ( Features.CHARSET.equals( propertyName ) )
         {
             setCharset( (Charset) newValue );
         }
+        //        else if ( Features.BOOKMARKS.equals( propertyName ) )
+        //        {
+        //
+        //        }
     }
 
     /**
@@ -200,11 +190,7 @@ public class ReaderWindow<T>
                 if ( page > -1 )
                 {
                     paginator.setCurrentPage( page );
-                    leftContentPanel.highlightText( text );
-                    if ( toolBar.getLayouter().getPageLayout() == PageLayout.TWO_PAGES )
-                    {
-                        rightContentPanel.highlightText( text );
-                    }
+                    layoutSwitcher.getCurrentPanels().highlightText( text );
                 }
             }
         } );
@@ -225,38 +211,19 @@ public class ReaderWindow<T>
      * 
      * @param pageNumber a number of a page to display
      */
+    @SuppressWarnings( "unchecked" )
     public void setPage(
         final int pageNumber )
     {
         final T leftPage = bookContent.getPage( pageNumber );
-        leftContentPanel.setContent( leftPage );
-        if ( toolBar.getLayouter().getPageLayout() == PageLayout.TWO_PAGES )
+        if ( layoutSwitcher.getCurrentLayout() == PageLayout.TWO_PAGES )
         {
             final T rightPage = bookContent.getPage( pageNumber + 1 );
-            rightContentPanel.setContent( rightPage );
+            layoutSwitcher.getCurrentPanels().setContent( leftPage, rightPage );
         }
-    }
-
-    public void setReaderFont(
-        final Font font )
-    {
-        leftContentPanel.setReaderFont( font );
-        if ( toolBar.getLayouter().getPageLayout() == PageLayout.TWO_PAGES )
+        else
         {
-            rightContentPanel.setReaderFont( font );
-        }
-    }
-
-    /**
-     * @param scale new scale of displayed text
-     */
-    public void setScale(
-        final int scale )
-    {
-        leftContentPanel.setScale( scale );
-        if ( toolBar.getLayouter().getPageLayout() == PageLayout.TWO_PAGES )
-        {
-            rightContentPanel.setScale( scale );
+            layoutSwitcher.getCurrentPanels().setContent( leftPage );
         }
     }
 
@@ -265,11 +232,16 @@ public class ReaderWindow<T>
         final boolean visible )
     {
         super.setVisible( visible );
-        if ( visible )
-        { // render the content
-            // todo remember the starting page
-            changeLayout( PageLayout.ONE_PAGE );
-            toolBar.getPaginator().setPageCount( bookContent.getPageCount() );
-        }
+        EventQueue.invokeLater( new Runnable()
+        {
+            public void run()
+            {
+                if ( visible )
+                { // render the content
+                    // todo remember the starting page
+                    toolBar.getPaginator().setPageCount( bookContent.getPageCount() );
+                }
+            }
+        } );
     }
 }

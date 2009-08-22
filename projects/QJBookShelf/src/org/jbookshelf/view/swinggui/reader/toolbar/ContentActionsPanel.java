@@ -6,6 +6,7 @@ package org.jbookshelf.view.swinggui.reader.toolbar;
 import icons.IMG;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -89,15 +90,27 @@ public class ContentActionsPanel
     @SuppressWarnings( "unused" )
     private static final Logger log = Logger.getLogger( ContentActionsPanel.class );
 
-    public ContentActionsPanel()
+    public ContentActionsPanel(
+        final List<String> features )
     {
         super();
         setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
-
-        add( new JButton( new TOCAction() ) );
-        add( new JButton( new ThumbnailsAction() ) );
-        add( new JButton( new BookmarksAction() ) );
-        add( new JButton( new NotesAction() ) );
+        if ( features.contains( Features.THUMBNAILS ) )
+        {
+            add( new JButton( new ThumbnailsAction() ) );
+        }
+        if ( features.contains( Features.TOC ) )
+        {
+            add( new JButton( new TOCAction() ) );
+        }
+        if ( features.contains( Features.BOOKMARKS ) )
+        {
+            add( new JButton( new BookmarksAction() ) );
+        }
+        if ( features.contains( Features.NOTES ) )
+        {
+            add( new JButton( new NotesAction() ) );
+        }
     }
 
 }

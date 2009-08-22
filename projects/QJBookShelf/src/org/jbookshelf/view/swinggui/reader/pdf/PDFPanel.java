@@ -158,17 +158,17 @@ public class PDFPanel
     public void setContent(
         final PDFPage content )
     {
-        pagePanel.showPage( content );
-        if ( preferredSize == null )
+        EventQueue.invokeLater( new Runnable()
         {
-            EventQueue.invokeLater( new Runnable()
+            public void run()
             {
-                public void run()
+                pagePanel.showPage( content );
+                if ( preferredSize == null )
                 {
                     preferredSize = wrap.getSize();
                 }
-            } );
-        }
+            }
+        } );
     }
 
     @Override

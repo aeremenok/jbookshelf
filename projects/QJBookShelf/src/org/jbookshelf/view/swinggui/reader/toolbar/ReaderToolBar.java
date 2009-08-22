@@ -65,10 +65,10 @@ public class ReaderToolBar
     protected final ReaderWindow  readerWindow;
     protected final ProgressBar   progressBar = new ProgressBar();
 
-    protected ContentActionsPanel contentActionsPanel;
-    protected Scalator            scalator;
     protected Layouter            layouter    = new Layouter();
     protected Paginator           paginator   = new Paginator();
+    protected ContentActionsPanel contentActionsPanel;
+    protected Scalator            scalator;
     protected TextFinder          textFinder;
     protected CharsetChooser      charsetChooser;
     protected FontChooser         fontChooser;
@@ -147,7 +147,7 @@ public class ReaderToolBar
         if ( features.contains( Features.NOTES ) || features.contains( Features.BOOKMARKS )
             || features.contains( Features.THUMBNAILS ) )
         {
-            addComponent( contentActionsPanel = new ContentActionsPanel() );
+            addComponent( contentActionsPanel = new ContentActionsPanel( features ) );
             contentActionsPanel.addPropertyChangeListener( readerWindow );
         }
         if ( features.contains( Features.SCALING ) )
