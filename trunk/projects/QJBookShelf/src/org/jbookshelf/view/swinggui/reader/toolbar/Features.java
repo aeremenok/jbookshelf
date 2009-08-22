@@ -15,4 +15,5 @@ public interface Features
     String NOTES      = "NOTES";
     String THUMBNAILS = "THUMBNAILS";
     String BOOKMARKS  = "BOOKMARKS";
+    String TOC        = "TOC";
 }

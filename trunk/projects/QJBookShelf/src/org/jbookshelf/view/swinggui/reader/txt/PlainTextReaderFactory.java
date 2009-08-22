@@ -37,6 +37,6 @@ public class PlainTextReaderFactory
         final ReaderWindow readerWindow )
     {
         return new ReaderToolBar( readerWindow, Features.PAGING, Features.SCALING, Features.LAYOUT, Features.SEARCH,
-            Features.FONT, Features.CHARSET );
+            Features.FONT, Features.CHARSET, Features.BOOKMARKS, Features.NOTES );
     }
 }

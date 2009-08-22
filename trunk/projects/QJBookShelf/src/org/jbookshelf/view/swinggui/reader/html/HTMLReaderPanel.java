@@ -101,7 +101,7 @@ public class HTMLReaderPanel
         @Override
         protected HtmlBlockPanel createHtmlBlockPanel(
             final UserAgentContext ucontext,
-            @SuppressWarnings( "hiding" ) final HtmlRendererContext rcontext )
+            final HtmlRendererContext rcontext )
         {
             return new HTMLBlockPanel( java.awt.Color.WHITE, true, ucontext, rcontext, this );
         }

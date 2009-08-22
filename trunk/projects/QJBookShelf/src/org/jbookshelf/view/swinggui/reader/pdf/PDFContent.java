@@ -56,39 +56,42 @@ public class PDFContent
         {
             text = text.toLowerCase();
             final PDDocument doc = getPdDocument();
-            final PDFTextStripper stripper = new PDFTextStripper();
-            if ( Boolean.FALSE.equals( direction ) )
-            { // backward
-                for ( int p = startPage - 1; p > -1; p-- )
-                {
-                    stripper.setStartPage( p );
-                    stripper.setEndPage( p );
-                    final String page = stripper.getText( doc ).toLowerCase();
-                    if ( page.contains( text ) )
+            synchronized ( pdDocument )
+            {
+                final PDFTextStripper stripper = new PDFTextStripper();
+                if ( Boolean.FALSE.equals( direction ) )
+                { // backward
+                    for ( int p = startPage - 1; p > -1; p-- )
                     {
-                        return p;
+                        stripper.setStartPage( p );
+                        stripper.setEndPage( p );
+                        final String page = stripper.getText( doc ).toLowerCase();
+                        if ( page.contains( text ) )
+                        {
+                            return p;
+                        }
                     }
                 }
-            }
-            else
-            { // forward
-                if ( direction == null )
-                { // forward from start
-                    startPage = -1;
-                }
+                else
+                { // forward
+                    if ( direction == null )
+                    { // forward from start
+                        startPage = -1;
+                    }
 
-                for ( int p = startPage + 1; p < pageCount; p++ )
-                {
-                    stripper.setStartPage( p );
-                    stripper.setEndPage( p );
-                    final String page = stripper.getText( doc ).toLowerCase();
-                    if ( page.contains( text ) )
+                    for ( int p = startPage + 1; p < pageCount; p++ )
                     {
-                        return p;
+                        stripper.setStartPage( p );
+                        stripper.setEndPage( p );
+                        final String page = stripper.getText( doc ).toLowerCase();
+                        if ( page.contains( text ) )
+                        {
+                            return p;
+                        }
                     }
                 }
+                return -1;
             }
-            return -1;
         }
         catch ( final Throwable e )
         {
