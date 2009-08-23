@@ -50,7 +50,7 @@ public class Note
     private Integer page;
 
     /**
-     * todo allows to recalculate the position in case of format conversion
+     * xxx allows to recalculate the position in case of format conversion
      */
     @Column
     private Integer pageCount;

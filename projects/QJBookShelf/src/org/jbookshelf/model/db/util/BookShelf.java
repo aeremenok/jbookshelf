@@ -385,6 +385,12 @@ public class BookShelf
         session.merge( book );
         session.merge( book.getPhysicalBook() );
 
+        if ( book.getLastRead() != null )
+        {
+            book.getNotes().add( book.getLastRead() );
+            session.merge( book.getLastRead() );
+        }
+
         session.getTransaction().commit();
     }
 
@@ -395,12 +401,19 @@ public class BookShelf
         try
         {
             note.timestamp();
+
             session.beginTransaction();
+
             session.saveOrUpdate( note );
 
             final Book book = note.getBook();
+            final Note lastRead = book.getLastRead();
+
             session.load( book, book.getId() );
+
+            book.setLastRead( lastRead );
             book.getNotes().add( note );
+
             session.merge( book );
 
             session.getTransaction().commit();
@@ -629,21 +642,6 @@ public class BookShelf
         finally
         {
             session.close();
-        }
-    }
-
-    public static void updateIsRead(
-        final Book book )
-    {
-        try
-        {
-            runner.update( "update book set read=? where id=?", new Object[]
-            { book.getRead(), book.getId() } );
-        }
-        catch ( final SQLException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
         }
     }
 
