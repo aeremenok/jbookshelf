@@ -43,7 +43,7 @@ public abstract class CollectionView
         menu.addSeparator();
         menu.add( actions.googleAction );
         menu.addSeparator();
-        menu.add( new SetReadItem() );
+        menu.add( new SetReadItem( menu ) );
     }
 
     /**

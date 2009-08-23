@@ -7,17 +7,19 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+
+import org.jbookshelf.view.i18n.I18N;
 
 /**
  * @author eav
@@ -36,9 +38,6 @@ public class Book
     @Column( nullable = false )
     @org.hibernate.annotations.Index( name = "book_name_ind" )
     private String              name;
-
-    @Column
-    private Float               read         = 0f;
 
     @OneToMany( mappedBy = "book" )
     private final Set<Note>     notes        = new HashSet<Note>();
@@ -59,7 +58,10 @@ public class Book
     @OneToOne( mappedBy = "book" )
     private PhysicalBook        physicalBook;
 
-    public static final String  RELATED      = "related";
+    @OneToOne
+    @JoinColumn( name = "lastread_id" )
+    @org.hibernate.annotations.ForeignKey( name = "FK_LASTREAD_BOOK" )
+    private Note                lastRead;
 
     public Book()
     {
@@ -105,17 +107,6 @@ public class Book
         {
             return false;
         }
-        if ( this.read == null )
-        {
-            if ( other.read != null )
-            {
-                return false;
-            }
-        }
-        else if ( !this.read.equals( other.read ) )
-        {
-            return false;
-        }
         return true;
     }
 
@@ -141,6 +132,11 @@ public class Book
         return this.id;
     }
 
+    public Note getLastRead()
+    {
+        return this.lastRead;
+    }
+
     public String getName()
     {
         return this.name;
@@ -154,11 +150,6 @@ public class Book
     public PhysicalBook getPhysicalBook()
     {
         return this.physicalBook;
-    }
-
-    public Float getRead()
-    {
-        return this.read;
     }
 
     public Set<Book> getRelatedBooks()
@@ -175,9 +166,23 @@ public class Book
             ? 0 : this.id.hashCode());
         result = prime * result + (this.name == null
             ? 0 : this.name.hashCode());
-        result = prime * result + (this.read == null
-            ? 0 : this.read.hashCode());
         return result;
+    }
+
+    @Transient
+    public boolean isRead()
+    {
+        if ( lastRead == null )
+        {
+            return false;
+        }
+        return lastRead.getPosition() == 1f;
+    }
+
+    public void setLastRead(
+        final Note lastRead )
+    {
+        this.lastRead = lastRead;
     }
 
     public void setName(
@@ -194,9 +199,20 @@ public class Book
     }
 
     public void setRead(
-        @Nonnull @Nonnegative final Float read )
+        final boolean isRead )
     {
-        this.read = read;
+        if ( lastRead == null )
+        {
+            lastRead = new Note();
+            lastRead.setPage( 1 );
+            lastRead.setPageCount( 1 );
+
+            lastRead.setTitle( I18N.tr( "Last read position" ) );
+
+            lastRead.setBook( this );
+        }
+        lastRead.setPosition( isRead
+            ? 1f : 0f );
     }
 
     @Override

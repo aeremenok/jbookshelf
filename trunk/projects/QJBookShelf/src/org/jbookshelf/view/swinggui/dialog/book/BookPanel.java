@@ -62,8 +62,7 @@ public class BookPanel
         }
 
         book.setName( parameters.<String> get( Keys.BOOK_NAME ) );
-        book.setRead( parameters.<Boolean> get( Keys.BOOK_IS_READ )
-            ? 1f : 0f );
+        book.setRead( parameters.<Boolean> get( Keys.BOOK_IS_READ ) );
 
         final File file = parameters.get( Keys.BOOK_FILE );
         final PhysicalBook physical;
@@ -204,7 +203,7 @@ public class BookPanel
         fileChooserPanel.setFile( book.getPhysicalBook().getFile() );
 
         // display whether is read
-        isReadCheckBox.setSelected( book.getRead() == 1 );
+        isReadCheckBox.setSelected( book.isRead() );
 
         // display viewer
         final String viewer = book.getPhysicalBook().getViewer();
