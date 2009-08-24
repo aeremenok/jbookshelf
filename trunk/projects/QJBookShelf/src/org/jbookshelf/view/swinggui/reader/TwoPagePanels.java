@@ -6,6 +6,7 @@ package org.jbookshelf.view.swinggui.reader;
 import java.awt.BorderLayout;
 import java.awt.Font;
 
+import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import org.apache.log4j.Logger;
@@ -18,25 +19,43 @@ public class TwoPagePanels<PageType>
     extends ReaderContentPanels<PageType>
 {
     @SuppressWarnings( "unused" )
-    private static final Logger                log = Logger.getLogger( TwoPagePanels.class );
+    private static final Logger                log             = Logger.getLogger( TwoPagePanels.class );
     private final ReaderContentPanel<PageType> leftContentPanel;
     private final ReaderContentPanel<PageType> rightContentPanel;
 
-    public TwoPagePanels(
-        final ReaderWindow<PageType> readerWindow,
-        final ReaderFactory<PageType> factory )
-    {
-        super( readerWindow, factory );
+    private final NotesPanel                   leftNotesPanel  = new NotesPanel();
+    private final NotesPanel                   rightNotesPanel = new NotesPanel();
 
+    public TwoPagePanels(
+        final ReaderWindow<PageType> readerWindow )
+    {
+        super( readerWindow );
+
+        final ReaderFactory<PageType> factory = readerWindow.getFactory();
         leftContentPanel = factory.createReaderContentPanel( readerWindow );
         rightContentPanel = factory.createReaderContentPanel( readerWindow );
 
         final JSplitPane splitPane = new JSplitPane();
         add( splitPane, BorderLayout.CENTER );
 
-        splitPane.setLeftComponent( leftContentPanel );
-        splitPane.setRightComponent( rightContentPanel );
+        final JPanel left = new JPanel( new BorderLayout() );
+        left.add( leftContentPanel, BorderLayout.CENTER );
+        left.add( leftNotesPanel, BorderLayout.EAST );
+
+        final JPanel right = new JPanel( new BorderLayout() );
+        right.add( rightContentPanel, BorderLayout.CENTER );
+        right.add( rightNotesPanel, BorderLayout.EAST );
+
+        splitPane.setLeftComponent( left );
+        splitPane.setRightComponent( right );
         splitPane.setResizeWeight( 0.5 );
+    }
+
+    @Override
+    public void changeNotesVisibility()
+    {
+        leftNotesPanel.setVisible( !leftNotesPanel.isVisible() );
+        rightNotesPanel.setVisible( !rightNotesPanel.isVisible() );
     }
 
     @Override

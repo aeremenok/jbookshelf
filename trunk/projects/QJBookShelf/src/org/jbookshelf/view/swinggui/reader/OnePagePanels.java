@@ -16,16 +16,23 @@ public class OnePagePanels<PageType>
     extends ReaderContentPanels<PageType>
 {
     @SuppressWarnings( "unused" )
-    private static final Logger                log = Logger.getLogger( OnePagePanels.class );
+    private static final Logger                log        = Logger.getLogger( OnePagePanels.class );
     private final ReaderContentPanel<PageType> contentPanel;
+    private final NotesPanel                   notesPanel = new NotesPanel();
 
     public OnePagePanels(
-        final ReaderWindow<PageType> readerWindow,
-        final ReaderFactory<PageType> factory )
+        final ReaderWindow<PageType> readerWindow )
     {
-        super( readerWindow, factory );
-        contentPanel = factory.createReaderContentPanel( readerWindow );
+        super( readerWindow );
+        contentPanel = readerWindow.getFactory().createReaderContentPanel( readerWindow );
         add( contentPanel, BorderLayout.CENTER );
+        add( notesPanel, BorderLayout.EAST );
+    }
+
+    @Override
+    public void changeNotesVisibility()
+    {
+        notesPanel.setVisible( !notesPanel.isVisible() );
     }
 
     @Override

@@ -6,6 +6,7 @@ package org.jbookshelf.view.swinggui.reader.toolbar;
 import icons.IMG;
 
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -22,6 +23,8 @@ import org.jbookshelf.view.swinggui.actions.TranslatableAction;
  */
 public class ContentActionsPanel
     extends JPanel
+    implements
+    Features
 {
     private class BookmarksAction
         extends TranslatableAction
@@ -35,7 +38,7 @@ public class ContentActionsPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-        // todo
+            getPropertyChangeSupport().firePropertyChange( Features.BOOKMARKS, false, true );
         }
     }
 
@@ -51,7 +54,7 @@ public class ContentActionsPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-        // todo
+            getPropertyChangeSupport().firePropertyChange( Features.NOTES, false, true );
         }
     }
 
@@ -67,7 +70,7 @@ public class ContentActionsPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-        // todo
+            getPropertyChangeSupport().firePropertyChange( Features.THUMBNAILS, false, true );
         }
     }
 
@@ -83,12 +86,14 @@ public class ContentActionsPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-        // todo
+            getPropertyChangeSupport().firePropertyChange( Features.TOC, false, true );
         }
     }
 
     @SuppressWarnings( "unused" )
-    private static final Logger log = Logger.getLogger( ContentActionsPanel.class );
+    private static final Logger         log                   = Logger.getLogger( ContentActionsPanel.class );
+
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
 
     public ContentActionsPanel(
         final List<String> features )
@@ -113,4 +118,9 @@ public class ContentActionsPanel
         }
     }
 
+    @Override
+    public PropertyChangeSupport getPropertyChangeSupport()
+    {
+        return propertyChangeSupport;
+    }
 }

@@ -72,6 +72,7 @@ public class ReaderToolBar
     protected TextFinder          textFinder;
     protected CharsetChooser      charsetChooser;
     protected FontChooser         fontChooser;
+    private List<String>          features;
 
     public ReaderToolBar(
         final ReaderWindow readerWindow,
@@ -104,6 +105,11 @@ public class ReaderToolBar
     public ContentActionsPanel getContentActionsPanel()
     {
         return this.contentActionsPanel;
+    }
+
+    public List<String> getFeatures()
+    {
+        return this.features;
     }
 
     public FontChooser getFontChooser()
@@ -144,16 +150,17 @@ public class ReaderToolBar
     private void initFeatures(
         final List<String> features )
     {
+        this.features = features;
         if ( features.contains( Features.NOTES ) || features.contains( Features.BOOKMARKS )
             || features.contains( Features.THUMBNAILS ) )
         {
             addComponent( contentActionsPanel = new ContentActionsPanel( features ) );
-            contentActionsPanel.addPropertyChangeListener( readerWindow );
+            contentActionsPanel.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
         }
         if ( features.contains( Features.SCALING ) )
         {
             addComponent( scalator = new Scalator( 50, 200, 25, 100 ) );
-            scalator.addPropertyChangeListener( readerWindow );
+            scalator.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
         }
         if ( features.contains( Features.LAYOUT ) )
         {
@@ -166,22 +173,22 @@ public class ReaderToolBar
         if ( features.contains( Features.SEARCH ) )
         {
             addComponent( textFinder = new TextFinder() );
-            textFinder.addPropertyChangeListener( readerWindow );
+            textFinder.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
         }
         if ( features.contains( Features.CHARSET ) )
         {
             addComponent( charsetChooser = new CharsetChooser() );
             final String charsetName = readerWindow.getBook().getPhysicalBook().getCharsetName();
             charsetChooser.setCharset( charsetName );
-            charsetChooser.addPropertyChangeListener( readerWindow );
+            charsetChooser.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
         }
         if ( features.contains( Features.FONT ) )
         {
             addComponent( fontChooser = new FontChooser() );
-            fontChooser.addPropertyChangeListener( readerWindow );
+            fontChooser.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
         }
 
-        paginator.addPropertyChangeListener( readerWindow );
-        layouter.addPropertyChangeListener( readerWindow );
+        paginator.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
+        layouter.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
     }
 }

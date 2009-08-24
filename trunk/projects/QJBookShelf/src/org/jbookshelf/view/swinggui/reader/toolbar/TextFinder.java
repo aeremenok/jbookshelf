@@ -3,6 +3,7 @@ package org.jbookshelf.view.swinggui.reader.toolbar;
 import icons.IMG;
 
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeSupport;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,6 +22,8 @@ import org.jbookshelf.view.swinggui.widget.ChangeDocumentListener;
  */
 public class TextFinder
     extends JPanel
+    implements
+    Features
 {
     private class FindAction
         extends TranslatableAction
@@ -36,7 +39,7 @@ public class TextFinder
             final Parameters parameters = new Parameters();
             parameters.put( Keys.SEARCH_TEXT, searchTextField.getText() );
             parameters.put( Keys.SEARCH_DIRECTION, null );
-            TextFinder.this.firePropertyChange( Features.SEARCH, null, parameters );
+            getPropertyChangeSupport().firePropertyChange( SEARCH, null, parameters );
         }
     }
 
@@ -54,7 +57,7 @@ public class TextFinder
             final Parameters parameters = new Parameters();
             parameters.put( Keys.SEARCH_TEXT, searchTextField.getText() );
             parameters.put( Keys.SEARCH_DIRECTION, true );
-            TextFinder.this.firePropertyChange( Features.SEARCH, null, parameters );
+            getPropertyChangeSupport().firePropertyChange( SEARCH, null, parameters );
         }
     }
 
@@ -72,14 +75,16 @@ public class TextFinder
             final Parameters parameters = new Parameters();
             parameters.put( Keys.SEARCH_TEXT, searchTextField.getText() );
             parameters.put( Keys.SEARCH_DIRECTION, false );
-            TextFinder.this.firePropertyChange( Features.SEARCH, null, parameters );
+            getPropertyChangeSupport().firePropertyChange( SEARCH, null, parameters );
         }
     }
 
-    private final JTextField         searchTextField    = new JTextField( 20 );
-    private final FindNextAction     findNextAction     = new FindNextAction();
-    private final FindPreviousAction findPreviousAction = new FindPreviousAction();
-    private final FindAction         findAction         = new FindAction();
+    private final JTextField            searchTextField       = new JTextField( 20 );
+    private final FindNextAction        findNextAction        = new FindNextAction();
+    private final FindPreviousAction    findPreviousAction    = new FindPreviousAction();
+    private final FindAction            findAction            = new FindAction();
+
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
 
     public TextFinder()
     {
@@ -104,5 +109,11 @@ public class TextFinder
         };
         searchTextField.getDocument().addDocumentListener( listener );
         listener.onChange( searchTextField.getText() );
+    }
+
+    @Override
+    public PropertyChangeSupport getPropertyChangeSupport()
+    {
+        return propertyChangeSupport;
     }
 }

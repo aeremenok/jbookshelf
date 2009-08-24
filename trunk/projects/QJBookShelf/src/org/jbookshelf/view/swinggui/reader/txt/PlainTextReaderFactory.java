@@ -8,6 +8,7 @@ import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.reader.ThumbnailPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 
@@ -34,9 +35,17 @@ public class PlainTextReaderFactory
 
     @Override
     public ReaderToolBar createReaderToolBar(
-        final ReaderWindow readerWindow )
+        final ReaderWindow<String> readerWindow )
     {
         return new ReaderToolBar( readerWindow, Features.PAGING, Features.SCALING, Features.LAYOUT, Features.SEARCH,
             Features.FONT, Features.CHARSET, Features.BOOKMARKS, Features.NOTES );
+    }
+
+    @Override
+    public ThumbnailPanel<String> createThumbnailPanel(
+        final ReaderWindow<String> readerWindow )
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

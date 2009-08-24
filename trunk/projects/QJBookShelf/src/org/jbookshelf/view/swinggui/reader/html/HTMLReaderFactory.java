@@ -8,6 +8,7 @@ import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.reader.ThumbnailPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 
@@ -40,5 +41,13 @@ public class HTMLReaderFactory
         // todo implement
             //            Features.SCALING, Features.SEARCH,
             Features.CHARSET );
+    }
+
+    @Override
+    public ThumbnailPanel<HTMLContentContainer> createThumbnailPanel(
+        final ReaderWindow<HTMLContentContainer> readerWindow )
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
