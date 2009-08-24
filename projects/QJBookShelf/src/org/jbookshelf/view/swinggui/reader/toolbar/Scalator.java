@@ -8,6 +8,7 @@ import icons.IMG;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeSupport;
 
 import javax.swing.Action;
 import javax.swing.BoxLayout;
@@ -24,6 +25,8 @@ import org.jbookshelf.view.swinggui.actions.TranslatableAction;
  */
 public class Scalator
     extends JPanel
+    implements
+    Features
 {
     private class ZoomInAction
         extends TranslatableAction
@@ -65,18 +68,20 @@ public class Scalator
         }
     }
 
-    public final JComboBox scaleComboBox = new JComboBox();
+    public final JComboBox              scaleComboBox         = new JComboBox();
 
-    private int            scale;
+    private int                         scale;
 
-    private int            max;
-    private int            min;
-    private int            step;
+    private int                         max;
+    private int                         min;
+    private int                         step;
 
-    public final Action    zoomOutAction = new ZoomOutAction();
-    public final Action    zoomInAction  = new ZoomInAction();
+    public final Action                 zoomOutAction         = new ZoomOutAction();
+    public final Action                 zoomInAction          = new ZoomInAction();
 
-    private int            start;
+    private int                         start;
+
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
 
     public Scalator(
         final int min,
@@ -110,6 +115,12 @@ public class Scalator
                 }
             }
         } );
+    }
+
+    @Override
+    public PropertyChangeSupport getPropertyChangeSupport()
+    {
+        return propertyChangeSupport;
     }
 
     public int getScale()
@@ -155,7 +166,7 @@ public class Scalator
         }
 
         this.scale = scale;
-        firePropertyChange( Features.SCALING, null, scale );
+        getPropertyChangeSupport().firePropertyChange( SCALING, null, scale );
         zoomInAction.setEnabled( scale < max );
         zoomOutAction.setEnabled( scale > min );
     }

@@ -8,6 +8,7 @@ import icons.IMG;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeSupport;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -25,6 +26,8 @@ import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
  */
 public class Paginator
     extends JPanel
+    implements
+    Features
 {
     private class FirstAction
         extends TranslatableAction
@@ -94,17 +97,19 @@ public class Paginator
         }
     }
 
-    private int                  pageCount;
-    private int                  currentPage;
-    private final JTextField     pageSelector   = new JTextField( 3 );
-    private final JLabel         pageCountLabel = new JLabel();
+    private int                         pageCount;
+    private int                         currentPage;
+    private final JTextField            pageSelector          = new JTextField( 3 );
+    private final JLabel                pageCountLabel        = new JLabel();
 
-    private final FirstAction    firstAction    = new FirstAction();
-    private final PreviousAction previousAction = new PreviousAction();
-    private final NextAction     nextAction     = new NextAction();
-    private final LastAction     lastAction     = new LastAction();
+    private final FirstAction           firstAction           = new FirstAction();
+    private final PreviousAction        previousAction        = new PreviousAction();
+    private final NextAction            nextAction            = new NextAction();
+    private final LastAction            lastAction            = new LastAction();
 
-    private PageLayout           pageLayout     = PageLayout.DEFAULT_LAYOUT;
+    private PageLayout                  pageLayout            = PageLayout.DEFAULT_LAYOUT;
+
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
 
     public Paginator()
     {
@@ -142,6 +147,12 @@ public class Paginator
     public int getPageCount()
     {
         return this.pageCount;
+    }
+
+    @Override
+    public PropertyChangeSupport getPropertyChangeSupport()
+    {
+        return propertyChangeSupport;
     }
 
     /**
@@ -202,6 +213,6 @@ public class Paginator
         nextAction.setEnabled( this.currentPage < pageCount - 1 );
         lastAction.setEnabled( this.currentPage < pageCount - 1 );
 
-        firePropertyChange( Features.PAGING, -1, currentPage );
+        getPropertyChangeSupport().firePropertyChange( PAGING, -1, currentPage );
     }
 }

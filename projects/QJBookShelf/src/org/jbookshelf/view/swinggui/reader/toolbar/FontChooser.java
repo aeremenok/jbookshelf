@@ -8,6 +8,7 @@ import icons.IMG;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeSupport;
 
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -27,6 +28,8 @@ import com.connectina.swing.fontchooser.JFontChooser;
  */
 public class FontChooser
     extends JPanel
+    implements
+    Features
 {
     private static class FontChooserDialog
         extends DefaultDialog
@@ -82,7 +85,7 @@ public class FontChooser
                 public boolean apply()
                 {
                     selectedFont = fontChooser.getSelectedFont();
-                    FontChooser.this.firePropertyChange( Features.FONT, null, selectedFont );
+                    getPropertyChangeSupport().firePropertyChange( FONT, null, selectedFont );
                     return true;
                 }
             };
@@ -90,15 +93,17 @@ public class FontChooser
         }
     }
 
-    public final static int  INITIAL_SIZE = 20;
-    public final static Font DEFAULT_FONT;
+    public final static int             INITIAL_SIZE          = 20;
+    public final static Font            DEFAULT_FONT;
     static
     {
         final Font oldFont = new JEditorPane().getFont();
         DEFAULT_FONT = new Font( oldFont.getName(), oldFont.getStyle(), INITIAL_SIZE );
     }
 
-    private Font             selectedFont = DEFAULT_FONT;
+    private Font                        selectedFont          = DEFAULT_FONT;
+
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
 
     public FontChooser()
     {
@@ -107,17 +112,17 @@ public class FontChooser
         // todo remember font in settings files
     }
 
-    /**
-     * @return the selectedFont
-     */
+    @Override
+    public PropertyChangeSupport getPropertyChangeSupport()
+    {
+        return propertyChangeSupport;
+    }
+
     public Font getSelectedFont()
     {
         return this.selectedFont;
     }
 
-    /**
-     * @param selectedFont the selectedFont to set
-     */
     public void setSelectedFont(
         final Font selectedFont )
     {

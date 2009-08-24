@@ -3,13 +3,18 @@
  */
 package org.jbookshelf.view.swinggui.reader;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
+import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
 
 /**
@@ -18,6 +23,8 @@ import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
  */
 public class LayoutSwitcher<PageType>
     extends JPanel
+    implements
+    PropertyChangeListener
 {
     @SuppressWarnings( "unused" )
     private static final Logger                                  log           = Logger
@@ -25,17 +32,23 @@ public class LayoutSwitcher<PageType>
 
     private PageLayout                                           currentLayout = PageLayout.ONE_PAGE;
     private final ReaderWindow<PageType>                         readerWindow;
-    private final ReaderFactory<PageType>                        factory;
+    private final ContentNavigator<PageType>                     contentNavigator;
+
+    private final JPanel                                         cards         = new JPanel( new CardLayout() );
 
     private final Map<PageLayout, ReaderContentPanels<PageType>> panels        = new HashMap<PageLayout, ReaderContentPanels<PageType>>();
 
     public LayoutSwitcher(
-        final ReaderWindow<PageType> readerWindow,
-        final ReaderFactory<PageType> factory )
+        final ReaderWindow<PageType> readerWindow )
     {
-        super( new CardLayout() );
+        super( new BorderLayout() );
         this.readerWindow = readerWindow;
-        this.factory = factory;
+
+        final List<String> features = readerWindow.getReaderToolBar().getFeatures();
+        this.contentNavigator = new ContentNavigator<PageType>( readerWindow, features );
+
+        add( contentNavigator, BorderLayout.WEST );
+        add( cards, BorderLayout.CENTER );
     }
 
     public PageLayout getCurrentLayout()
@@ -49,18 +62,27 @@ public class LayoutSwitcher<PageType>
         if ( contentPanels == null )
         {
             contentPanels = this.currentLayout == PageLayout.ONE_PAGE
-                ? new OnePagePanels<PageType>( readerWindow, factory ) : new TwoPagePanels<PageType>( readerWindow,
-                    factory );
+                ? new OnePagePanels<PageType>( readerWindow ) : new TwoPagePanels<PageType>( readerWindow );
             panels.put( this.currentLayout, contentPanels );
-            add( contentPanels, this.currentLayout.name() );
+            cards.add( contentPanels, this.currentLayout.name() );
         }
         return contentPanels;
     }
 
     @Override
-    public CardLayout getLayout()
+    public void propertyChange(
+        final PropertyChangeEvent evt )
     {
-        return (CardLayout) super.getLayout();
+        final String propertyName = evt.getPropertyName();
+        if ( Features.BOOKMARKS.equals( propertyName ) || Features.TOC.equals( propertyName )
+            || Features.THUMBNAILS.equals( propertyName ) )
+        {
+            contentNavigator.show( propertyName );
+        }
+        else if ( Features.NOTES.equals( propertyName ) )
+        {
+            getCurrentPanels().changeNotesVisibility();
+        }
     }
 
     public void switchLayout(
@@ -68,6 +90,11 @@ public class LayoutSwitcher<PageType>
     {
         this.currentLayout = pageLayout;
         getCurrentPanels();
-        getLayout().show( this, pageLayout.name() );
+        getCardLayout().show( cards, pageLayout.name() );
+    }
+
+    private CardLayout getCardLayout()
+    {
+        return (CardLayout) cards.getLayout();
     }
 }

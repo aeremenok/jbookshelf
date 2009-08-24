@@ -40,4 +40,11 @@ public class PDFReaderFactory
     {
         return new ReaderToolBar( readerWindow, Features.PAGING, Features.LAYOUT, Features.SEARCH, Features.SCALING );
     }
+
+    @Override
+    public PDFThumbnailPanel createThumbnailPanel(
+        final ReaderWindow<PDFPage> readerWindow )
+    {
+        return new PDFThumbnailPanel( readerWindow );
+    }
 }

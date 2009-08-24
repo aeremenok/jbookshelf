@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeSupport;
 import java.nio.charset.Charset;
 
 import javax.swing.JComboBox;
@@ -20,9 +21,12 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 public class CharsetChooser
     extends JPanel
     implements
-    ItemListener
+    ItemListener,
+    Features
 {
-    private final JComboBox comboBox = new JComboBox();
+    private final JComboBox             comboBox              = new JComboBox();
+
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
 
     public CharsetChooser()
     {
@@ -45,6 +49,12 @@ public class CharsetChooser
     }
 
     @Override
+    public PropertyChangeSupport getPropertyChangeSupport()
+    {
+        return propertyChangeSupport;
+    }
+
+    @Override
     public void itemStateChanged(
         final ItemEvent e )
     {
@@ -55,7 +65,7 @@ public class CharsetChooser
                 @Override
                 public void run()
                 {
-                    firePropertyChange( Features.CHARSET, null, getCharset() );
+                    getPropertyChangeSupport().firePropertyChange( CHARSET, null, getCharset() );
                 }
             } );
         }

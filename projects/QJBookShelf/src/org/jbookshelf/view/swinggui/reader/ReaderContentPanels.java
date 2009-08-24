@@ -15,17 +15,16 @@ import javax.swing.JPanel;
 public abstract class ReaderContentPanels<PageType>
     extends JPanel
 {
-    protected final ReaderWindow<PageType>  readerWindow;
-    protected final ReaderFactory<PageType> factory;
+    protected final ReaderWindow<PageType> readerWindow;
 
     public ReaderContentPanels(
-        final ReaderWindow<PageType> readerWindow,
-        final ReaderFactory<PageType> factory )
+        final ReaderWindow<PageType> readerWindow )
     {
         super( new BorderLayout() );
         this.readerWindow = readerWindow;
-        this.factory = factory;
     }
+
+    public abstract void changeNotesVisibility();
 
     public abstract void highlightText(
         final String text );

@@ -7,6 +7,7 @@ import icons.IMG;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeSupport;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -18,6 +19,8 @@ import org.jbookshelf.view.swinggui.actions.TranslatableAction;
  */
 public class Layouter
     extends JPanel
+    implements
+    Features
 {
     public static enum PageLayout
     {
@@ -48,7 +51,9 @@ public class Layouter
         }
     }
 
-    private PageLayout pageLayout = PageLayout.DEFAULT_LAYOUT;
+    private PageLayout                  pageLayout            = PageLayout.DEFAULT_LAYOUT;
+
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
 
     public Layouter()
     {
@@ -57,21 +62,21 @@ public class Layouter
         add( new JButton( a ) );
     }
 
-    /**
-     * @return the pageLayout
-     */
     public PageLayout getPageLayout()
     {
         return this.pageLayout;
     }
 
-    /**
-     * @param pageLayout the pageLayout to set
-     */
+    @Override
+    public PropertyChangeSupport getPropertyChangeSupport()
+    {
+        return propertyChangeSupport;
+    }
+
     public void setPageLayout(
         final PageLayout pageLayout )
     {
         this.pageLayout = pageLayout;
-        firePropertyChange( Features.LAYOUT, null, pageLayout );
+        getPropertyChangeSupport().firePropertyChange( LAYOUT, null, pageLayout );
     }
 }

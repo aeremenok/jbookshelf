@@ -3,6 +3,8 @@
  */
 package org.jbookshelf.view.swinggui.reader.toolbar;
 
+import java.beans.PropertyChangeSupport;
+
 public interface Features
 {
     String PAGING     = "PAGING";
@@ -16,4 +18,6 @@ public interface Features
     String THUMBNAILS = "THUMBNAILS";
     String BOOKMARKS  = "BOOKMARKS";
     String TOC        = "TOC";
+
+    PropertyChangeSupport getPropertyChangeSupport();
 }

@@ -58,7 +58,7 @@ public class ReaderWindow<T>
         this.factory = factory;
 
         toolBar = factory.createReaderToolBar( this );
-        layoutSwitcher = new LayoutSwitcher<T>( this, factory );
+        layoutSwitcher = new LayoutSwitcher<T>( this );
         bookContent = factory.createBookContent( book );
 
         setContentPane( new JPanel( new BorderLayout() ) );
@@ -113,6 +113,11 @@ public class ReaderWindow<T>
         return this.bookContent;
     }
 
+    public ReaderFactory<T> getFactory()
+    {
+        return this.factory;
+    }
+
     public ReaderToolBar getReaderToolBar()
     {
         return this.toolBar;
@@ -150,10 +155,10 @@ public class ReaderWindow<T>
         {
             setCharset( (Charset) newValue );
         }
-        //        else if ( Features.BOOKMARKS.equals( propertyName ) )
-        //        {
-        //
-        //        }
+        else
+        {
+            layoutSwitcher.propertyChange( evt );
+        }
     }
 
     /**
