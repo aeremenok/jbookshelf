@@ -25,6 +25,8 @@ public class NotesPanel
         // todo 
         add( new JButton( "note1" ) );
         add( new JButton( "note2" ) );
+
+        setVisible( false );
     }
 
 }
