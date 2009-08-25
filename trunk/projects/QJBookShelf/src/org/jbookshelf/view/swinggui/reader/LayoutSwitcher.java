@@ -77,7 +77,12 @@ public class LayoutSwitcher<PageType>
         if ( Features.BOOKMARKS.equals( propertyName ) || Features.TOC.equals( propertyName )
             || Features.THUMBNAILS.equals( propertyName ) )
         {
-            contentNavigator.show( propertyName );
+            final Object newValue = evt.getNewValue();
+            contentNavigator.setVisible( newValue != null );
+            if ( newValue != null )
+            {
+                contentNavigator.show( propertyName );
+            }
         }
         else if ( Features.NOTES.equals( propertyName ) )
         {

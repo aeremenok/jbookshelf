@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -27,18 +28,11 @@ public class ContentActionsPanel
     Features
 {
     private class BookmarksAction
-        extends TranslatableAction
+        extends FeatureAction
     {
         public BookmarksAction()
         {
-            super( null, IMG.icon( IMG.BOOKMARKS_PNG ) );
-        }
-
-        @Override
-        public void actionPerformed(
-            final ActionEvent e )
-        {
-            getPropertyChangeSupport().firePropertyChange( Features.BOOKMARKS, false, true );
+            super( null, IMG.icon( IMG.BOOKMARKS_PNG ), Features.BOOKMARKS );
         }
     }
 
@@ -59,34 +53,51 @@ public class ContentActionsPanel
     }
 
     private class ThumbnailsAction
-        extends TranslatableAction
+        extends FeatureAction
     {
         public ThumbnailsAction()
         {
-            super( null, IMG.icon( IMG.VIEW_PREVIEW_PNG ) );
-        }
-
-        @Override
-        public void actionPerformed(
-            final ActionEvent e )
-        {
-            getPropertyChangeSupport().firePropertyChange( Features.THUMBNAILS, false, true );
+            super( null, IMG.icon( IMG.VIEW_PREVIEW_PNG ), Features.THUMBNAILS );
         }
     }
 
     private class TOCAction
-        extends TranslatableAction
+        extends FeatureAction
     {
         public TOCAction()
         {
-            super( null, IMG.icon( IMG.TOC_PNG ) );
+            super( null, IMG.icon( IMG.TOC_PNG ), Features.TOC );
+        }
+    }
+
+    protected abstract class FeatureAction
+        extends TranslatableAction
+    {
+        protected final String featureName;
+
+        public FeatureAction(
+            final String name,
+            final Icon icon,
+            final String featureName )
+        {
+            super( name, icon );
+            this.featureName = featureName;
         }
 
         @Override
         public void actionPerformed(
             final ActionEvent e )
         {
-            getPropertyChangeSupport().firePropertyChange( Features.TOC, false, true );
+            if ( featureName.equals( selectedFeature ) )
+            {
+                selectedFeature = null;
+                getPropertyChangeSupport().firePropertyChange( featureName, featureName, null );
+            }
+            else
+            {
+                selectedFeature = featureName;
+                getPropertyChangeSupport().firePropertyChange( featureName, false, true );
+            }
         }
     }
 
@@ -94,6 +105,7 @@ public class ContentActionsPanel
     private static final Logger         log                   = Logger.getLogger( ContentActionsPanel.class );
 
     private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
+    private String                      selectedFeature;
 
     public ContentActionsPanel(
         final List<String> features )

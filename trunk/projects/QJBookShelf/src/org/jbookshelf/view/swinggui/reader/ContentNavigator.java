@@ -33,6 +33,7 @@ public class ContentNavigator<PageType>
     {
         super( SwingConstants.VERTICAL );
         add( cards );
+
         if ( features.contains( Features.BOOKMARKS ) )
         {
             cards.add( bookmarkPanel = new BookmarkPanel(), Features.BOOKMARKS );
@@ -45,6 +46,8 @@ public class ContentNavigator<PageType>
             thumbnailPanel.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
         }
         // todo TOC
+
+        setVisible( false );
     }
 
     public void show(
