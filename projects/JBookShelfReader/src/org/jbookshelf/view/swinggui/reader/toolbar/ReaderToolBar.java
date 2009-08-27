@@ -17,7 +17,6 @@ import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
-import org.jbookshelf.view.swinggui.dialog.book.BookEditDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 
@@ -29,22 +28,6 @@ import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 public class ReaderToolBar
     extends JToolBar
 {
-    protected class EditBookAction
-        extends TranslatableAction
-    {
-        public EditBookAction()
-        {
-            super( null, IMG.icon( IMG.DOCUMENT_PROPERTIES_PNG ) );
-        }
-
-        @Override
-        public void actionPerformed(
-            final ActionEvent e )
-        {
-            new BookEditDialog( readerWindow.getBook() ).setVisible( true );
-        }
-    }
-
     protected class OpenDirAction
         extends TranslatableAction
     {
@@ -83,7 +66,6 @@ public class ReaderToolBar
 
         initFeatures( Arrays.asList( featureNames ) );
 
-        add( new WrapperPanel( new JButton( new EditBookAction() ) ) );
         add( new WrapperPanel( new JButton( new OpenDirAction() ) ) );
         addSeparator();
         add( new WrapperPanel( progressBar ) );

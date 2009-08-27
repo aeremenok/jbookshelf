@@ -62,7 +62,9 @@ public class BookShelf
         final Session session = HibernateUtil.getSession();
         try
         {
-            return (Book) session.get( Book.class, (Serializable) id );
+            final Book book = (Book) session.get( Book.class, (Serializable) id );
+            log.debug( "book returned " + book + " for id=" + id );
+            return book;
         }
         catch ( final Exception e )
         {

@@ -13,6 +13,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.nio.charset.Charset;
 
 import javax.swing.JPanel;
@@ -81,6 +82,14 @@ public class ReaderWindow<T>
                 bookContent.onClose();
             }
         } );
+    }
+
+    public ReaderWindow(
+        final Long id,
+        @SuppressWarnings( "unused" ) final File file,
+        final ReaderFactory<T> factory )
+    {
+        this( BookShelf.bookById( id ), factory );
     }
 
     /**
