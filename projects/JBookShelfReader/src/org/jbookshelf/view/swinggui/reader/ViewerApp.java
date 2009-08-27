@@ -14,10 +14,10 @@ import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.util.HibernateUtil;
 import org.jbookshelf.view.swinggui.main.MainWindow;
-import org.jbookshelf.view.swinggui.reader.html.HTMLReaderFactory;
-import org.jbookshelf.view.swinggui.reader.pdf.PDFReaderFactory;
-import org.jbookshelf.view.swinggui.reader.rtf.RTFReaderFactory;
-import org.jbookshelf.view.swinggui.reader.txt.PlainTextReaderFactory;
+import org.jbookshelf.view.swinggui.reader.types.html.HTMLReaderFactory;
+import org.jbookshelf.view.swinggui.reader.types.pdf.PDFReaderFactory;
+import org.jbookshelf.view.swinggui.reader.types.rtf.RTFReaderFactory;
+import org.jbookshelf.view.swinggui.reader.types.txt.PlainTextReaderFactory;
 import org.jbookshelf.view.swinggui.widget.LookAndFeelComboBoxModel;
 
 /**

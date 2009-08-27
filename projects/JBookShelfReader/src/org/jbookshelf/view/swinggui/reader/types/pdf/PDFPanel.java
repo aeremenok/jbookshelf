@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.pdf;
+package org.jbookshelf.view.swinggui.reader.types.pdf;
 
 import icons.IMG;
 
@@ -22,8 +22,8 @@ import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
-import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 import org.xnap.commons.gui.util.PopupListener;
 

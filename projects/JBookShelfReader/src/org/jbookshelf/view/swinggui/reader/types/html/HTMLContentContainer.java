@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.html;
+package org.jbookshelf.view.swinggui.reader.types.html;
 
 /**
  * @author eav 2009

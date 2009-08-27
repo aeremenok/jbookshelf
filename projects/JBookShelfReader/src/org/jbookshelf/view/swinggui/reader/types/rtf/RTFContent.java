@@ -1,4 +1,4 @@
-package org.jbookshelf.view.swinggui.reader.rtf;
+package org.jbookshelf.view.swinggui.reader.types.rtf;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.html;
+package org.jbookshelf.view.swinggui.reader.types.html;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
