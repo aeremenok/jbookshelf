@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
 import org.bushe.swing.event.EventBus;
 import org.bushe.swing.event.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
@@ -39,7 +40,9 @@ public class UniqueActions
         public void actionPerformed(
             final ActionEvent e )
         {
-            new BookEditDialog( mediator.getSelectedBooks().get( 0 ) ).setVisible( true );
+            final Book book = mediator.getSelectedBooks().get( 0 );
+            log.debug( "editing book " + book.getName() + ":" + book.getId() );
+            new BookEditDialog( book ).setVisible( true );
         }
     }
 
@@ -162,6 +165,8 @@ public class UniqueActions
             }
         }
     }
+
+    private static final Logger     log           = Logger.getLogger( UniqueActions.class );
 
     private final BookShelfMediator mediator      = Single.instance( BookShelfMediator.class );
     public final Action             removeAction  = new RemoveAction();

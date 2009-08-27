@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.bushe.swing.event.EventBus;
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
@@ -27,10 +28,13 @@ public class BookShelfMediator
         String UNIQUES_SELECTED    = "UNIQUES_SELECTED";
     }
 
-    private Set<Unique>    selectedUniques    = new HashSet<Unique>();
-    private List<Book>     selectedBooks      = new ArrayList<Book>();
-    private List<Author>   selectedAuthors    = new ArrayList<Author>();
-    private List<Category> selectedCategories = new ArrayList<Category>();
+    private Set<Unique>         selectedUniques    = new HashSet<Unique>();
+    private List<Book>          selectedBooks      = new ArrayList<Book>();
+    private List<Author>        selectedAuthors    = new ArrayList<Author>();
+    private List<Category>      selectedCategories = new ArrayList<Category>();
+
+    @SuppressWarnings( "unused" )
+    private static final Logger log                = Logger.getLogger( BookShelfMediator.class );
 
     public void authorsSelected(
         final List<Author> list )
@@ -86,9 +90,6 @@ public class BookShelfMediator
         return this.selectedCategories;
     }
 
-    /**
-     * @return the selectedUniques
-     */
     public Set<Unique> getSelectedUniques()
     {
         return this.selectedUniques;

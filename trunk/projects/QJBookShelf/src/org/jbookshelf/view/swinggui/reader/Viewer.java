@@ -18,55 +18,49 @@ import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
-import org.jbookshelf.view.swinggui.reader.html.HTMLReaderFactory;
-import org.jbookshelf.view.swinggui.reader.pdf.PDFReaderFactory;
-import org.jbookshelf.view.swinggui.reader.rtf.RTFReaderFactory;
-import org.jbookshelf.view.swinggui.reader.txt.PlainTextReaderFactory;
 
 /**
  * @author eav 2009
  */
 public class Viewer
 {
-    private static final Logger              log       = Logger.getLogger( Viewer.class );
+    private static final Logger       log       = Logger.getLogger( Viewer.class );
 
-    private final Map<String, ReaderFactory> factories = new HashMap<String, ReaderFactory>();
+    public static final String        TXT       = "txt";
+    public static final String        PDF       = "pdf";
+    public static final String        RTF       = "rtf";
+    public static final String        HTML      = "html";
+
+    private final Map<String, String> types = new HashMap<String, String>();
     {
-        final PlainTextReaderFactory txtFactory = new PlainTextReaderFactory();
-        final HTMLReaderFactory htmlFactory = new HTMLReaderFactory();
-        final RTFReaderFactory rtfFactory = new RTFReaderFactory();
-        final PDFReaderFactory pdfFactory = new PDFReaderFactory();
-
-        factories.put( "text/plain", txtFactory );
-        factories.put( "text/html", htmlFactory );
-        factories.put( "application/rtf", rtfFactory );
-        factories.put( "application/pdf", pdfFactory );
+        types.put( "text/plain", TXT );
+        types.put( "text/html", HTML );
+        types.put( "application/rtf", RTF );
+        types.put( "application/pdf", PDF );
 
         // try extensions if the mime is broken
-        factories.put( "txt", txtFactory );
-        factories.put( "html", htmlFactory );
-        factories.put( "htm", htmlFactory );
-        factories.put( "shtml", htmlFactory );
-        factories.put( "rtf", rtfFactory );
-        factories.put( "pdf", pdfFactory );
+        types.put( "txt", TXT );
+        types.put( "html", HTML );
+        types.put( "htm", HTML );
+        types.put( "shtml", HTML );
+        types.put( "rtf", RTF );
+        types.put( "pdf", PDF );
     }
 
     public void open(
         final Book book )
     {
-        Single.instance( ProgressBar.class ).invoke( new SafeWorker<ReaderWindow, Object>()
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<String, Object>()
         {
-            @SuppressWarnings( "unchecked" )
             @Override
-            protected ReaderWindow doInBackground()
+            protected String doInBackground()
             {
                 final PhysicalBook physical = book.getPhysicalBook();
                 initPhysicalBook( physical );
                 // define which viewer to use
                 if ( PhysicalBook.INTERNAL_VIEWER.equals( physical.getViewer() ) )
                 {
-                    final ReaderFactory factory = getReaderFactory( getFile( physical ) );
-                    return new ReaderWindow( book, factory );
+                    return getReaderType( getFile( physical ) );
                 }
 
                 return null;
@@ -81,7 +75,15 @@ public class Viewer
                 }
                 else
                 { // internal
-                    getQuiet().setVisible( true );
+                    try
+                    {
+                        Runtime.getRuntime().exec( "java -jar jbsreader " + book.getId() + " " + getQuiet() );
+                    }
+                    catch ( final Exception e )
+                    {
+                        log.error( e, e );
+                        throw new Error( e );
+                    }
                 }
             }
         } );
@@ -102,7 +104,7 @@ public class Viewer
         return physical.getFile();
     }
 
-    private ReaderFactory getReaderFactory(
+    private String getReaderType(
         final File file )
     {
         try
@@ -110,13 +112,13 @@ public class Viewer
             log.debug( "getting mimetype of file " + file.getAbsolutePath() );
             final String contentType = file.toURI().toURL().openConnection().getContentType();
             log.debug( "mimetype=" + contentType );
-            ReaderFactory factory = factories.get( contentType.toLowerCase() );
-            if ( factory == null )
+            String type = types.get( contentType.toLowerCase() );
+            if ( type == null )
             {
                 final String extension = FilenameUtils.getExtension( file.getName() );
-                factory = factories.get( extension );
+                type = types.get( extension );
             }
-            return factory;
+            return type;
         }
         catch ( final Exception e )
         {
@@ -138,8 +140,8 @@ public class Viewer
 
         if ( physical.getViewer() == null )
         { // viewer undefined
-            final ReaderFactory factory = getReaderFactory( file );
-            physical.setViewer( factory != null
+            final String type = getReaderType( file );
+            physical.setViewer( type != null
                 ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER );
         }
 
