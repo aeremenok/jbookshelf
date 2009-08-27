@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.pdf;
+package org.jbookshelf.view.swinggui.reader.types.pdf;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;

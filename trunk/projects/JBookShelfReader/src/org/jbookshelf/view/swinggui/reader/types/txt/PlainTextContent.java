@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.txt;
+package org.jbookshelf.view.swinggui.reader.types.txt;
 
 import java.io.IOException;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.html;
+package org.jbookshelf.view.swinggui.reader.types.html;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,7 +20,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.SelectableTextPanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
 import org.lobobrowser.html.HtmlRendererContext;
 import org.lobobrowser.html.UserAgentContext;
 import org.lobobrowser.html.domimpl.NodeImpl;

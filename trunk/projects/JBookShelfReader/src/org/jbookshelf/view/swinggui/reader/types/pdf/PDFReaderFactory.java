@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.pdf;
+package org.jbookshelf.view.swinggui.reader.types.pdf;
 
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.reader.BookContent;
-import org.jbookshelf.view.swinggui.reader.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 

@@ -1,11 +1,11 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.pdf;
+package org.jbookshelf.view.swinggui.reader.types.pdf;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.ThumbnailPanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.aux.ThumbnailPanel;
 
 import com.sun.pdfview.PDFPage;
 

@@ -1,12 +1,14 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader;
+package org.jbookshelf.view.swinggui.reader.textpanel;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
 
 import javax.swing.JPanel;
+
+import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 
 /**
  * @author eav 2009

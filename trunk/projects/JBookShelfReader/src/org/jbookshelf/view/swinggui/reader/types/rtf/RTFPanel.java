@@ -1,4 +1,4 @@
-package org.jbookshelf.view.swinggui.reader.rtf;
+package org.jbookshelf.view.swinggui.reader.types.rtf;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -10,7 +10,7 @@ import javax.swing.text.StyledDocument;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.SelectableTextPanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
 import org.jdesktop.swingx.JXEditorPane;
 
