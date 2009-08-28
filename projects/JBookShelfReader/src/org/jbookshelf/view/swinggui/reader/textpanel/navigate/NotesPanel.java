@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.textpanel.aux;
+package org.jbookshelf.view.swinggui.reader.textpanel.navigate;
 
 import javax.swing.JButton;
 import javax.swing.JToolBar;

@@ -5,7 +5,7 @@ package org.jbookshelf.view.swinggui.reader;
 
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
-import org.jbookshelf.view.swinggui.reader.textpanel.aux.ThumbnailPanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ThumbnailPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 
 /**
