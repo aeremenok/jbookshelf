@@ -94,6 +94,56 @@ public class SingletonContainer
     }
 
     /**
+     * create a new instance of the specified class without registering
+     * 
+     * @param <T> instance class literal
+     * @param clazz instance class
+     * @return new instance
+     */
+    @SuppressWarnings( "unchecked" )
+    public <T> T newInstance(
+        final Class<T> clazz )
+    {
+        Object newInstance;
+        try
+        {
+            final Class<?> impl = implementations.get( clazz );
+            if ( impl != null )
+            {
+                newInstance = impl.newInstance();
+            }
+            else
+            {
+                newInstance = clazz.newInstance();
+            }
+        }
+        catch ( final Exception e )
+        {
+            final String message = "cannot create " + clazz.getSimpleName();
+            logger.error( message, e );
+            throw new Error( message, e );
+        }
+
+        logger.debug( "created " + newInstance.getClass().getSimpleName() );
+
+        // initialize
+        try
+        {
+            initSingleton( newInstance );
+        }
+        catch ( final Exception e )
+        {
+            final String message = "cannot initialize " + newInstance.getClass().getSimpleName();
+            logger.error( message, e );
+            throw new Error( message, e );
+        }
+
+        logger.debug( "initialized " + newInstance.getClass().getSimpleName() );
+
+        return (T) newInstance;
+    }
+
+    /**
      * set implementation of a basic class
      * 
      * @param <B> basic class literal

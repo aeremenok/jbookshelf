@@ -8,8 +8,6 @@ import java.awt.Font;
 
 import javax.swing.JPanel;
 
-import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-
 /**
  * @author eav 2009
  * @param <PageType>
@@ -17,13 +15,9 @@ import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 public abstract class ReaderContentPanels<PageType>
     extends JPanel
 {
-    protected final ReaderWindow<PageType> readerWindow;
-
-    public ReaderContentPanels(
-        final ReaderWindow<PageType> readerWindow )
+    public ReaderContentPanels()
     {
         super( new BorderLayout() );
-        this.readerWindow = readerWindow;
     }
 
     public abstract void changeNotesVisibility();

@@ -7,11 +7,12 @@ import javax.swing.BoundedRangeModel;
 import javax.swing.JScrollPane;
 import javax.swing.text.StyledDocument;
 
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.logic.SafeWorker;
-import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
+import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 import org.jdesktop.swingx.JXEditorPane;
 
 public class RTFPanel
@@ -20,10 +21,9 @@ public class RTFPanel
     private final JXEditorPane editorPane = new JXEditorPane();
     private final JScrollPane  scroll     = new JScrollPane( editorPane );
 
-    public RTFPanel(
-        final ReaderWindow<StyledDocument> readerWindow )
+    public RTFPanel()
     {
-        super( readerWindow );
+        super();
         add( scroll, BorderLayout.CENTER );
         editorPane.setEditable( false );
         editorPane.getCaret().setSelectionVisible( true );
@@ -53,7 +53,7 @@ public class RTFPanel
                 return editorPane;
             }
         };
-        readerWindow.getReaderToolBar().getProgressBar().invoke( worker );
+        Single.instance( ReaderToolBar.class ).getProgressBar().invoke( worker );
     }
 
     @Override

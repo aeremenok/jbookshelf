@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPopupMenu;
 
 import org.apache.log4j.Logger;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
@@ -62,7 +63,7 @@ public abstract class SelectableTextPanel<PageType>
         {
             final String text = getSelectedText();
             final Note note = createNote( text );
-            new NoteDialog( readerWindow, note ).setVisible( true );
+            new NoteDialog( Single.instance( ReaderWindow.class ), note ).setVisible( true );
         }
     }
 
@@ -111,10 +112,9 @@ public abstract class SelectableTextPanel<PageType>
     protected JPopupMenu             menu          = new JPopupMenu();
     protected SelectionPopupListener popupListener = new SelectionPopupListener( menu );
 
-    public SelectableTextPanel(
-        final ReaderWindow<PageType> readerWindow )
+    public SelectableTextPanel()
     {
-        super( readerWindow );
+        super();
 
         menu.add( new CreateNoteAction() );
         menu.add( new GoogleTextAction() );

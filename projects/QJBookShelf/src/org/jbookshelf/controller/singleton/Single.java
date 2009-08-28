@@ -30,6 +30,12 @@ public abstract class Single
         return container.instance( clazz );
     }
 
+    public static <T> T newInstance(
+        final Class<T> clazz )
+    {
+        return Single.container.newInstance( clazz );
+    }
+
     public static <B, D extends B> void setImplementation(
         final Class<B> basicClass,
         final Class<D> derivedClass )

@@ -11,7 +11,6 @@ import javax.swing.JScrollPane;
 import javax.swing.text.PlainDocument;
 
 import org.jbookshelf.model.db.Note;
-import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
 import org.jdesktop.swingx.JXEditorPane;
@@ -26,10 +25,9 @@ public class PlaintTextPanel
     private final PlainDocument document   = new PlainDocument();
     private final JScrollPane   scrollPane = new JScrollPane( editorPane );
 
-    public PlaintTextPanel(
-        final ReaderWindow<String> readerWindow )
+    public PlaintTextPanel()
     {
-        super( readerWindow );
+        super();
         add( scrollPane, BorderLayout.CENTER );
         editorPane.setEditable( false );
         editorPane.setDocument( document );

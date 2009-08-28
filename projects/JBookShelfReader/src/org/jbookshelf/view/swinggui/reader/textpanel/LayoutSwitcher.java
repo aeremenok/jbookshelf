@@ -14,9 +14,10 @@ import java.util.Map;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
-import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ContentNavigator;
 import org.jbookshelf.view.swinggui.reader.toolbar.Features;
+import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
 
 /**
@@ -33,21 +34,18 @@ public class LayoutSwitcher<PageType>
                                                                                    .getLogger( LayoutSwitcher.class );
 
     private PageLayout                                           currentLayout = PageLayout.ONE_PAGE;
-    private final ReaderWindow<PageType>                         readerWindow;
     private final ContentNavigator<PageType>                     contentNavigator;
 
     private final JPanel                                         cards         = new JPanel( new CardLayout() );
 
     private final Map<PageLayout, ReaderContentPanels<PageType>> panels        = new HashMap<PageLayout, ReaderContentPanels<PageType>>();
 
-    public LayoutSwitcher(
-        final ReaderWindow<PageType> readerWindow )
+    public LayoutSwitcher()
     {
         super( new BorderLayout() );
-        this.readerWindow = readerWindow;
 
-        final List<String> features = readerWindow.getReaderToolBar().getFeatures();
-        this.contentNavigator = new ContentNavigator<PageType>( readerWindow, features );
+        final List<String> features = Single.instance( ReaderToolBar.class ).getFeatures();
+        this.contentNavigator = new ContentNavigator<PageType>( features );
 
         add( contentNavigator, BorderLayout.WEST );
         add( cards, BorderLayout.CENTER );
@@ -63,8 +61,9 @@ public class LayoutSwitcher<PageType>
         ReaderContentPanels<PageType> contentPanels = panels.get( this.currentLayout );
         if ( contentPanels == null )
         {
+            // xxx single
             contentPanels = this.currentLayout == PageLayout.ONE_PAGE
-                ? new OnePagePanels<PageType>( readerWindow ) : new TwoPagePanels<PageType>( readerWindow );
+                ? new OnePagePanels<PageType>() : new TwoPagePanels<PageType>();
             panels.put( this.currentLayout, contentPanels );
             cards.add( contentPanels, this.currentLayout.name() );
         }

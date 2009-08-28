@@ -8,9 +8,11 @@ import java.awt.Font;
 
 import javax.swing.JPanel;
 
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 
 /**
  * @author eav 2009
@@ -19,13 +21,9 @@ import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 public abstract class ReaderContentPanel<PageType>
     extends JPanel
 {
-    protected final ReaderWindow<PageType> readerWindow;
-
-    public ReaderContentPanel(
-        final ReaderWindow<PageType> readerWindow )
+    public ReaderContentPanel()
     {
         super( new BorderLayout() );
-        this.readerWindow = readerWindow;
     }
 
     public Note createNote(
@@ -35,7 +33,9 @@ public abstract class ReaderContentPanel<PageType>
 
         note.setCitation( text );
 
-        final int currentPage = readerWindow.getReaderToolBar().getPaginator().getCurrentPage();
+        final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
+
+        final int currentPage = Single.instance( ReaderToolBar.class ).getPaginator().getCurrentPage();
         note.setPage( currentPage + 1 );
         note.setPageCount( readerWindow.getBookContent().getPageCount() );
 

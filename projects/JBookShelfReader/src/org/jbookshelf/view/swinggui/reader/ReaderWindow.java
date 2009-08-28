@@ -13,12 +13,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.nio.charset.Charset;
 
+import javax.annotation.PostConstruct;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.util.BookShelf;
@@ -43,55 +44,10 @@ public class ReaderWindow<T>
     implements
     PropertyChangeListener
 {
-    private final Book              book;
-    private final ReaderToolBar     toolBar;
-    private final LayoutSwitcher<T> layoutSwitcher;
-    private final ReaderFactory<T>  factory;
-    private BookContent<T>          bookContent;
+    private Book                book;
+    private BookContent<T>      bookContent;
 
-    private static final Logger     log = Logger.getLogger( ReaderWindow.class );
-
-    public ReaderWindow(
-        final Book book,
-        final ReaderFactory<T> factory )
-    {
-        super();
-        this.book = book;
-        this.factory = factory;
-
-        toolBar = factory.createReaderToolBar( this );
-        layoutSwitcher = new LayoutSwitcher<T>( this );
-        bookContent = factory.createBookContent( book );
-
-        setContentPane( new JPanel( new BorderLayout() ) );
-
-        add( toolBar, BorderLayout.NORTH );
-        add( layoutSwitcher, BorderLayout.CENTER );
-
-        setTitle( book.getName() );
-        setIconImage( IMG.img( IMG.LOGO_PNG, 64 ) );
-
-        pack();
-        setExtendedState( Frame.MAXIMIZED_BOTH );
-
-        addWindowListener( new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(
-                final WindowEvent e )
-            { // clear content data, close streams, etc...  
-                bookContent.onClose();
-            }
-        } );
-    }
-
-    public ReaderWindow(
-        final Long id,
-        @SuppressWarnings( "unused" ) final File file,
-        final ReaderFactory<T> factory )
-    {
-        this( BookShelf.bookById( id ), factory );
-    }
+    private static final Logger log = Logger.getLogger( ReaderWindow.class );
 
     /**
      * change the layout between one and two pages
@@ -101,7 +57,10 @@ public class ReaderWindow<T>
     public void changeLayout(
         final PageLayout layout )
     {
+        final LayoutSwitcher layoutSwitcher = Single.instance( LayoutSwitcher.class );
         layoutSwitcher.switchLayout( layout );
+
+        final ReaderToolBar toolBar = Single.instance( ReaderToolBar.class );
         setPage( toolBar.getPaginator().getCurrentPage() );
         toolBar.getPaginator().setPageLayout( layout );
         EventQueue.invokeLater( new Runnable()
@@ -123,14 +82,28 @@ public class ReaderWindow<T>
         return this.bookContent;
     }
 
-    public ReaderFactory<T> getFactory()
+    @PostConstruct
+    public void init()
     {
-        return this.factory;
-    }
+        setContentPane( new JPanel( new BorderLayout() ) );
 
-    public ReaderToolBar getReaderToolBar()
-    {
-        return this.toolBar;
+        add( Single.instance( ReaderToolBar.class ), BorderLayout.NORTH );
+        add( Single.instance( LayoutSwitcher.class ), BorderLayout.CENTER );
+
+        setIconImage( IMG.img( IMG.LOGO_PNG, 64 ) );
+
+        pack();
+        setExtendedState( Frame.MAXIMIZED_BOTH );
+
+        addWindowListener( new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(
+                final WindowEvent e )
+            { // clear content data, close streams, etc...  
+                bookContent.onClose();
+            }
+        } );
     }
 
     @Override
@@ -145,29 +118,33 @@ public class ReaderWindow<T>
         {
             setPage( (Integer) newValue );
         }
-        else if ( Features.SCALING.equals( propertyName ) )
-        {
-            layoutSwitcher.getCurrentPanels().setScale( ((Integer) newValue) );
-        }
-        else if ( Features.LAYOUT.equals( propertyName ) )
-        {
-            changeLayout( (PageLayout) newValue );
-        }
-        else if ( Features.SEARCH.equals( propertyName ) )
-        {
-            searchText( (Parameters) newValue );
-        }
-        else if ( Features.FONT.equals( propertyName ) )
-        {
-            layoutSwitcher.getCurrentPanels().setReaderFont( ((Font) newValue) );
-        }
-        else if ( Features.CHARSET.equals( propertyName ) )
-        {
-            setCharset( (Charset) newValue );
-        }
         else
         {
-            layoutSwitcher.propertyChange( evt );
+            final LayoutSwitcher layoutSwitcher = Single.instance( LayoutSwitcher.class );
+            if ( Features.SCALING.equals( propertyName ) )
+            {
+                layoutSwitcher.getCurrentPanels().setScale( ((Integer) newValue) );
+            }
+            else if ( Features.LAYOUT.equals( propertyName ) )
+            {
+                changeLayout( (PageLayout) newValue );
+            }
+            else if ( Features.SEARCH.equals( propertyName ) )
+            {
+                searchText( (Parameters) newValue );
+            }
+            else if ( Features.FONT.equals( propertyName ) )
+            {
+                layoutSwitcher.getCurrentPanels().setReaderFont( ((Font) newValue) );
+            }
+            else if ( Features.CHARSET.equals( propertyName ) )
+            {
+                setCharset( (Charset) newValue );
+            }
+            else
+            {
+                layoutSwitcher.propertyChange( evt );
+            }
         }
     }
 
@@ -181,6 +158,7 @@ public class ReaderWindow<T>
         final Parameters parameters )
     {
         final String text = parameters.get( Keys.SEARCH_TEXT );
+        final ReaderToolBar toolBar = Single.instance( ReaderToolBar.class );
         final Paginator paginator = toolBar.getPaginator();
 
         toolBar.getProgressBar().invoke( new SafeWorker<Integer, Object>()
@@ -205,20 +183,47 @@ public class ReaderWindow<T>
                 if ( page > -1 )
                 {
                     paginator.setCurrentPage( page );
-                    layoutSwitcher.getCurrentPanels().highlightText( text );
+                    Single.instance( LayoutSwitcher.class ).getCurrentPanels().highlightText( text );
                 }
             }
         } );
     }
 
+    public void setBook(
+        final Long bookId )
+    {
+        final ReaderToolBar toolBar = Single.instance( ReaderToolBar.class );
+        toolBar.getProgressBar().invoke( new SafeWorker<Book, Object>()
+        {
+            @SuppressWarnings( "unchecked" )
+            @Override
+            protected Book doInBackground()
+            {
+                ReaderWindow.this.book = BookShelf.bookById( bookId );
+                ReaderWindow.this.bookContent = Single.instance( ReaderFactory.class ).createBookContent( book );
+                return book;
+            }
+
+            @Override
+            protected void doneSafe()
+            {
+                setTitle( book.getName() );
+                // render the content
+                // todo remember the starting page
+                toolBar.getPaginator().setPageCount( bookContent.getPageCount() );
+            }
+        } );
+    }
+
+    @SuppressWarnings( "unchecked" )
     public void setCharset(
         final Charset charset )
     {
         final PhysicalBook physicalBook = getBook().getPhysicalBook();
         physicalBook.setCharsetName( charset.name() );
         BookShelf.updatePhysical( physicalBook );
-        bookContent = factory.createBookContent( book );
-        setPage( toolBar.getPaginator().getCurrentPage() );
+        bookContent = Single.instance( ReaderFactory.class ).createBookContent( book );
+        setPage( Single.instance( ReaderToolBar.class ).getPaginator().getCurrentPage() );
     }
 
     /**
@@ -231,6 +236,7 @@ public class ReaderWindow<T>
         final int pageNumber )
     {
         final T leftPage = bookContent.getPage( pageNumber );
+        final LayoutSwitcher layoutSwitcher = Single.instance( LayoutSwitcher.class );
         if ( layoutSwitcher.getCurrentLayout() == PageLayout.TWO_PAGES )
         {
             final T rightPage = bookContent.getPage( pageNumber + 1 );
@@ -240,23 +246,5 @@ public class ReaderWindow<T>
         {
             layoutSwitcher.getCurrentPanels().setContent( leftPage );
         }
-    }
-
-    @Override
-    public void setVisible(
-        final boolean visible )
-    {
-        super.setVisible( visible );
-        EventQueue.invokeLater( new Runnable()
-        {
-            public void run()
-            {
-                if ( visible )
-                { // render the content
-                    // todo remember the starting page
-                    toolBar.getPaginator().setPageCount( bookContent.getPageCount() );
-                }
-            }
-        } );
     }
 }

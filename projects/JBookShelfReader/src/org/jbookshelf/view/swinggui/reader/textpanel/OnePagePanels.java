@@ -7,7 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 
 import org.apache.log4j.Logger;
-import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.NotesPanel;
 
 /**
@@ -22,11 +22,11 @@ public class OnePagePanels<PageType>
     private final ReaderContentPanel<PageType> contentPanel;
     private final NotesPanel                   notesPanel = new NotesPanel();
 
-    public OnePagePanels(
-        final ReaderWindow<PageType> readerWindow )
+    @SuppressWarnings( "unchecked" )
+    public OnePagePanels()
     {
-        super( readerWindow );
-        contentPanel = readerWindow.getFactory().createReaderContentPanel( readerWindow );
+        super();
+        contentPanel = Single.newInstance( ReaderContentPanel.class );
         add( contentPanel, BorderLayout.CENTER );
         add( notesPanel, BorderLayout.EAST );
     }
