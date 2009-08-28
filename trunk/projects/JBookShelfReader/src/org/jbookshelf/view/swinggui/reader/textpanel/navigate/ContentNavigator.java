@@ -11,6 +11,7 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
 import org.apache.log4j.Logger;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 
@@ -28,13 +29,14 @@ public class ContentNavigator<PageType>
     private BookmarkPanel            bookmarkPanel;
     private ThumbnailPanel<PageType> thumbnailPanel;
 
+    @SuppressWarnings( "unchecked" )
     public ContentNavigator(
-        final ReaderWindow<PageType> readerWindow,
         final List<String> features )
     {
         super( SwingConstants.VERTICAL );
         add( cards );
 
+        final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
         if ( features.contains( Features.BOOKMARKS ) )
         {
             cards.add( bookmarkPanel = new BookmarkPanel(), Features.BOOKMARKS );
@@ -42,8 +44,7 @@ public class ContentNavigator<PageType>
         }
         if ( features.contains( Features.THUMBNAILS ) )
         {
-            cards.add( thumbnailPanel = readerWindow.getFactory().createThumbnailPanel( readerWindow ),
-                Features.THUMBNAILS );
+            cards.add( thumbnailPanel = Single.instance( ThumbnailPanel.class ), Features.THUMBNAILS );
             thumbnailPanel.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
         }
         // todo TOC

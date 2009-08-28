@@ -6,10 +6,6 @@ package org.jbookshelf.view.swinggui.reader.types.pdf;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
-import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
-import org.jbookshelf.view.swinggui.reader.toolbar.Features;
-import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 
 import com.sun.pdfview.PDFPage;
 
@@ -25,26 +21,5 @@ public class PDFReaderFactory
         final Book book )
     {
         return new PDFContent( book );
-    }
-
-    @Override
-    public ReaderContentPanel<PDFPage> createReaderContentPanel(
-        final ReaderWindow<PDFPage> readerWindow )
-    {
-        return new PDFPanel( readerWindow );
-    }
-
-    @Override
-    public ReaderToolBar createReaderToolBar(
-        final ReaderWindow<PDFPage> readerWindow )
-    {
-        return new ReaderToolBar( readerWindow, Features.PAGING, Features.LAYOUT, Features.SEARCH, Features.SCALING );
-    }
-
-    @Override
-    public PDFThumbnailPanel createThumbnailPanel(
-        final ReaderWindow<PDFPage> readerWindow )
-    {
-        return new PDFThumbnailPanel( readerWindow );
     }
 }

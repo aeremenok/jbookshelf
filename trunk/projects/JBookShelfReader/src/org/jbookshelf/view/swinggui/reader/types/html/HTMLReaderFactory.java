@@ -6,11 +6,6 @@ package org.jbookshelf.view.swinggui.reader.types.html;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
-import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
-import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ThumbnailPanel;
-import org.jbookshelf.view.swinggui.reader.toolbar.Features;
-import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 
 /**
  * @author eav 2009
@@ -24,30 +19,5 @@ public class HTMLReaderFactory
         final Book book )
     {
         return new HTMLContent( book );
-    }
-
-    @Override
-    public ReaderContentPanel<HTMLContentContainer> createReaderContentPanel(
-        final ReaderWindow<HTMLContentContainer> readerWindow )
-    {
-        return new HTMLReaderPanel( readerWindow );
-    }
-
-    @Override
-    public ReaderToolBar createReaderToolBar(
-        final ReaderWindow<HTMLContentContainer> readerWindow )
-    {
-        return new ReaderToolBar( readerWindow,
-        // todo implement
-            //            Features.SCALING, Features.SEARCH,
-            Features.CHARSET );
-    }
-
-    @Override
-    public ThumbnailPanel<HTMLContentContainer> createThumbnailPanel(
-        final ReaderWindow<HTMLContentContainer> readerWindow )
-    {
-        // TODO Auto-generated method stub
-        return null;
     }
 }

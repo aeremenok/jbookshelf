@@ -18,9 +18,10 @@ import javax.xml.parsers.DocumentBuilder;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Note;
-import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
+import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 import org.lobobrowser.html.HtmlRendererContext;
 import org.lobobrowser.html.UserAgentContext;
 import org.lobobrowser.html.domimpl.NodeImpl;
@@ -38,6 +39,8 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 /**
+ * todo rename
+ * 
  * @author eav 2009
  */
 public class HTMLReaderPanel
@@ -140,10 +143,9 @@ public class HTMLReaderPanel
 
     private Document                        doc;
 
-    public HTMLReaderPanel(
-        final ReaderWindow<HTMLContentContainer> readerWindow )
+    public HTMLReaderPanel()
     {
-        super( readerWindow );
+        super();
         add( htmlPanel, BorderLayout.CENTER );
 
         final SimpleUserAgentContext ucontext = new SimpleUserAgentContext();
@@ -181,7 +183,7 @@ public class HTMLReaderPanel
     public void setContent(
         final HTMLContentContainer content )
     {
-        readerWindow.getReaderToolBar().getProgressBar().invoke( new Runnable()
+        Single.instance( ReaderToolBar.class ).getProgressBar().invoke( new Runnable()
         {
             @Override
             public void run()

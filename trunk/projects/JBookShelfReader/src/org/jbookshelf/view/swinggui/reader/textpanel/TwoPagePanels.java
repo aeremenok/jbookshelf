@@ -10,8 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import org.apache.log4j.Logger;
-import org.jbookshelf.view.swinggui.reader.ReaderFactory;
-import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.NotesPanel;
 
 /**
@@ -29,14 +28,13 @@ public class TwoPagePanels<PageType>
     private final NotesPanel                   leftNotesPanel  = new NotesPanel();
     private final NotesPanel                   rightNotesPanel = new NotesPanel();
 
-    public TwoPagePanels(
-        final ReaderWindow<PageType> readerWindow )
+    @SuppressWarnings( "unchecked" )
+    public TwoPagePanels()
     {
-        super( readerWindow );
+        super();
 
-        final ReaderFactory<PageType> factory = readerWindow.getFactory();
-        leftContentPanel = factory.createReaderContentPanel( readerWindow );
-        rightContentPanel = factory.createReaderContentPanel( readerWindow );
+        leftContentPanel = Single.newInstance( ReaderContentPanel.class );
+        rightContentPanel = Single.newInstance( ReaderContentPanel.class );
 
         final JSplitPane splitPane = new JSplitPane();
         add( splitPane, BorderLayout.CENTER );

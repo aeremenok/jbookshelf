@@ -17,6 +17,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 import org.apache.log4j.Logger;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
@@ -24,6 +25,7 @@ import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
+import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 import org.xnap.commons.gui.util.PopupListener;
 
@@ -84,7 +86,7 @@ public class PDFPanel
                 @Override
                 protected void doneSafe()
                 {
-                    new NoteDialog( readerWindow, getQuiet() ).setVisible( true );
+                    new NoteDialog( Single.instance( ReaderWindow.class ), getQuiet() ).setVisible( true );
                 }
             } );
         }
@@ -113,6 +115,7 @@ public class PDFPanel
                 @Override
                 protected void doneSafe()
                 {
+                    final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
                     new ExtractedTextDialog( readerWindow, getQuiet(), PDFPanel.this ).setVisible( true );
                 }
             } );
@@ -127,10 +130,9 @@ public class PDFPanel
     private final JScrollPane   scroll    = new JScrollPane( wrap );
     private Dimension           preferredSize;
 
-    public PDFPanel(
-        final ReaderWindow<PDFPage> readerWindow )
+    public PDFPanel()
     {
-        super( readerWindow );
+        super();
         add( scroll, BorderLayout.CENTER );
 
         final JPopupMenu menu = new JPopupMenu();
@@ -197,6 +199,7 @@ public class PDFPanel
 
     private String extractText()
     {
+        final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
         final PDFContent content = (PDFContent) readerWindow.getBookContent();
         final int pageNumber = pagePanel.getPage().getPageNumber();
         return content.getPageContent( pageNumber );
@@ -204,7 +207,7 @@ public class PDFPanel
 
     private ProgressBar getProgressBar()
     {
-        return readerWindow.getReaderToolBar().getProgressBar();
+        return Single.instance( ReaderToolBar.class ).getProgressBar();
     }
 
     @Override

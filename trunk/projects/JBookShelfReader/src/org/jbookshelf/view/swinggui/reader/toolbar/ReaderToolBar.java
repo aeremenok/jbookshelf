@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.ProgressBar;
@@ -40,12 +41,12 @@ public class ReaderToolBar
         public void actionPerformed(
             final ActionEvent e )
         {
+            final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
             final Book book = readerWindow.getBook();
             URIUtil.openDir( book.getPhysicalBook().getFile().getParentFile() );
         }
     }
 
-    protected final ReaderWindow  readerWindow;
     protected final ProgressBar   progressBar = new ProgressBar();
 
     protected Layouter            layouter    = new Layouter();
@@ -58,11 +59,9 @@ public class ReaderToolBar
     private List<String>          features;
 
     public ReaderToolBar(
-        final ReaderWindow readerWindow,
         final String... featureNames )
     {
         super();
-        this.readerWindow = readerWindow;
 
         initFeatures( Arrays.asList( featureNames ) );
 
@@ -114,11 +113,6 @@ public class ReaderToolBar
         return this.progressBar;
     }
 
-    public ReaderWindow getReaderWindow()
-    {
-        return this.readerWindow;
-    }
-
     public Scalator getScalator()
     {
         return scalator;
@@ -133,6 +127,8 @@ public class ReaderToolBar
         final List<String> features )
     {
         this.features = features;
+
+        final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
         if ( features.contains( Features.NOTES ) || features.contains( Features.BOOKMARKS )
             || features.contains( Features.THUMBNAILS ) )
         {
@@ -160,8 +156,9 @@ public class ReaderToolBar
         if ( features.contains( Features.CHARSET ) )
         {
             addComponent( charsetChooser = new CharsetChooser() );
-            final String charsetName = readerWindow.getBook().getPhysicalBook().getCharsetName();
-            charsetChooser.setCharset( charsetName );
+            // todo set after changing a book
+            //            final String charsetName = readerWindow.getBook().getPhysicalBook().getCharsetName();
+            //            charsetChooser.setCharset( charsetName );
             charsetChooser.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
         }
         if ( features.contains( Features.FONT ) )
