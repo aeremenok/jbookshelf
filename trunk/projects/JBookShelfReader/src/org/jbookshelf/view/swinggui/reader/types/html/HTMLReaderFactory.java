@@ -8,7 +8,7 @@ import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
-import org.jbookshelf.view.swinggui.reader.textpanel.aux.ThumbnailPanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ThumbnailPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 

@@ -12,7 +12,7 @@ import javax.swing.JSplitPane;
 import org.apache.log4j.Logger;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.textpanel.aux.NotesPanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.navigate.NotesPanel;
 
 /**
  * @author eav 2009

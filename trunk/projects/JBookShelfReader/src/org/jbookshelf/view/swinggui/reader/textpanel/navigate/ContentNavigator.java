@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.textpanel.aux;
+package org.jbookshelf.view.swinggui.reader.textpanel.navigate;
 
 import java.awt.CardLayout;
 import java.util.List;
