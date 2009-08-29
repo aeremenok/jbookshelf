@@ -14,30 +14,28 @@ import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ContentNavigator;
-import org.jbookshelf.view.swinggui.reader.toolbar.Features;
+import org.jbookshelf.view.swinggui.reader.toolbar.Layouter;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
 
 /**
  * @author eav 2009
  * @param <PageType>
  */
-public class LayoutSwitcher<PageType>
+public class LayoutablePanel<PageType>
     extends JPanel
     implements
     PropertyChangeListener
 {
     @SuppressWarnings( "unused" )
-    private static final Logger                                  log           = Logger
-                                                                                   .getLogger( LayoutSwitcher.class );
+    private static final Logger                                  log    = Logger.getLogger( LayoutablePanel.class );
 
-    private PageLayout                                           currentLayout = PageLayout.ONE_PAGE;
+    private final JPanel                                         cards  = new JPanel( new CardLayout() );
 
-    private final JPanel                                         cards         = new JPanel( new CardLayout() );
+    private final Map<PageLayout, ReaderContentPanels<PageType>> panels = new HashMap<PageLayout, ReaderContentPanels<PageType>>();
 
-    private final Map<PageLayout, ReaderContentPanels<PageType>> panels        = new HashMap<PageLayout, ReaderContentPanels<PageType>>();
-
-    public LayoutSwitcher()
+    public LayoutablePanel()
     {
         super( new BorderLayout() );
 
@@ -45,21 +43,18 @@ public class LayoutSwitcher<PageType>
         add( cards, BorderLayout.CENTER );
     }
 
-    public PageLayout getCurrentLayout()
-    {
-        return this.currentLayout;
-    }
-
     public ReaderContentPanels<PageType> getCurrentPanels()
     {
-        ReaderContentPanels<PageType> contentPanels = panels.get( this.currentLayout );
+        final PageLayout currentLayout = Single.instance( Layouter.class ).getCurrentLayout();
+
+        ReaderContentPanels<PageType> contentPanels = panels.get( currentLayout );
         if ( contentPanels == null )
         {
             // xxx single
-            contentPanels = this.currentLayout == PageLayout.ONE_PAGE
+            contentPanels = currentLayout == PageLayout.ONE_PAGE
                 ? new OnePagePanels<PageType>() : new TwoPagePanels<PageType>();
-            panels.put( this.currentLayout, contentPanels );
-            cards.add( contentPanels, this.currentLayout.name() );
+            panels.put( currentLayout, contentPanels );
+            cards.add( contentPanels, currentLayout.name() );
         }
         return contentPanels;
     }
@@ -69,8 +64,8 @@ public class LayoutSwitcher<PageType>
         final PropertyChangeEvent evt )
     {
         final String propertyName = evt.getPropertyName();
-        if ( Features.BOOKMARKS.equals( propertyName ) || Features.TOC.equals( propertyName )
-            || Features.THUMBNAILS.equals( propertyName ) )
+        if ( ReaderFactory.BOOKMARKS.equals( propertyName ) || ReaderFactory.TOC.equals( propertyName )
+            || ReaderFactory.THUMBNAILS.equals( propertyName ) )
         {
             final Object newValue = evt.getNewValue();
 
@@ -81,22 +76,17 @@ public class LayoutSwitcher<PageType>
                 contentNavigator.show( propertyName );
             }
         }
-        else if ( Features.NOTES.equals( propertyName ) )
+        else if ( ReaderFactory.NOTES.equals( propertyName ) )
         {
             getCurrentPanels().changeNotesVisibility();
         }
     }
 
-    public void switchLayout(
-        final PageLayout pageLayout )
+    public void switchLayout()
     {
-        this.currentLayout = pageLayout;
         getCurrentPanels();
-        getCardLayout().show( cards, pageLayout.name() );
-    }
 
-    private CardLayout getCardLayout()
-    {
-        return (CardLayout) cards.getLayout();
+        final CardLayout cardLayout = (CardLayout) cards.getLayout();
+        cardLayout.show( cards, Single.instance( Layouter.class ).getCurrentLayout().name() );
     }
 }

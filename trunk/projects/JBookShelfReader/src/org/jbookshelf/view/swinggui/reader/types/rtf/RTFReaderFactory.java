@@ -5,7 +5,6 @@ import javax.swing.text.StyledDocument;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
-import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 
 public class RTFReaderFactory
     extends ReaderFactory<StyledDocument>
@@ -13,9 +12,9 @@ public class RTFReaderFactory
     public RTFReaderFactory()
     {
         super();
-        features.add( Features.SCALING );
-        features.add( Features.SEARCH );
-        features.add( Features.CHARSET );
+        features.add( ReaderFactory.SCALING );
+        features.add( ReaderFactory.SEARCH );
+        features.add( ReaderFactory.CHARSET );
     }
 
     @Override

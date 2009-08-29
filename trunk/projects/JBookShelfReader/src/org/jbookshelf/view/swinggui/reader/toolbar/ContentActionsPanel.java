@@ -6,7 +6,6 @@ package org.jbookshelf.view.swinggui.reader.toolbar;
 import icons.IMG;
 
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeSupport;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -18,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
+import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
 
 /**
  * a panel for control basic content actions
@@ -26,15 +26,13 @@ import org.jbookshelf.view.swinggui.reader.ReaderFactory;
  */
 public class ContentActionsPanel
     extends JPanel
-    implements
-    Features
 {
     private class BookmarksAction
         extends FeatureAction
     {
         public BookmarksAction()
         {
-            super( null, IMG.icon( IMG.BOOKMARKS_PNG ), Features.BOOKMARKS );
+            super( null, IMG.icon( IMG.BOOKMARKS_PNG ), ReaderFactory.BOOKMARKS );
         }
     }
 
@@ -50,7 +48,7 @@ public class ContentActionsPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-            getPropertyChangeSupport().firePropertyChange( Features.NOTES, false, true );
+            Single.instance( LayoutablePanel.class ).getCurrentPanels().changeNotesVisibility();
         }
     }
 
@@ -59,7 +57,7 @@ public class ContentActionsPanel
     {
         public ThumbnailsAction()
         {
-            super( null, IMG.icon( IMG.VIEW_PREVIEW_PNG ), Features.THUMBNAILS );
+            super( null, IMG.icon( IMG.VIEW_PREVIEW_PNG ), ReaderFactory.THUMBNAILS );
         }
     }
 
@@ -68,7 +66,7 @@ public class ContentActionsPanel
     {
         public TOCAction()
         {
-            super( null, IMG.icon( IMG.TOC_PNG ), Features.TOC );
+            super( null, IMG.icon( IMG.TOC_PNG ), ReaderFactory.TOC );
         }
     }
 
@@ -93,21 +91,22 @@ public class ContentActionsPanel
             if ( featureName.equals( selectedFeature ) )
             {
                 selectedFeature = null;
-                getPropertyChangeSupport().firePropertyChange( featureName, featureName, null );
+                // todo
+                //                getPropertyChangeSupport().firePropertyChange( featureName, featureName, null );
             }
             else
             {
                 selectedFeature = featureName;
-                getPropertyChangeSupport().firePropertyChange( featureName, false, true );
+                // todo
+                //                getPropertyChangeSupport().firePropertyChange( featureName, false, true );
             }
         }
     }
 
     @SuppressWarnings( "unused" )
-    private static final Logger         log                   = Logger.getLogger( ContentActionsPanel.class );
+    private static final Logger log = Logger.getLogger( ContentActionsPanel.class );
 
-    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
-    private String                      selectedFeature;
+    private String              selectedFeature;
 
     public ContentActionsPanel()
     {
@@ -116,27 +115,21 @@ public class ContentActionsPanel
 
         final ReaderFactory<?> readerFactory = Single.instance( ReaderFactory.class );
         final List<String> features = readerFactory.getFeatures();
-        if ( features.contains( Features.THUMBNAILS ) )
+        if ( features.contains( ReaderFactory.THUMBNAILS ) )
         {
             add( new JButton( new ThumbnailsAction() ) );
         }
-        if ( features.contains( Features.TOC ) )
+        if ( features.contains( ReaderFactory.TOC ) )
         {
             add( new JButton( new TOCAction() ) );
         }
-        if ( features.contains( Features.BOOKMARKS ) )
+        if ( features.contains( ReaderFactory.BOOKMARKS ) )
         {
             add( new JButton( new BookmarksAction() ) );
         }
-        if ( features.contains( Features.NOTES ) )
+        if ( features.contains( ReaderFactory.NOTES ) )
         {
             add( new JButton( new NotesAction() ) );
         }
-    }
-
-    @Override
-    public PropertyChangeSupport getPropertyChangeSupport()
-    {
-        return propertyChangeSupport;
     }
 }

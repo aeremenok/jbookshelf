@@ -13,7 +13,6 @@ import javax.swing.SwingConstants;
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
-import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 
 /**
  * @author eav 2009
@@ -34,13 +33,13 @@ public class ContentNavigator<PageType>
 
         final ReaderFactory<?> readerFactory = Single.instance( ReaderFactory.class );
         final List<String> features = readerFactory.getFeatures();
-        if ( features.contains( Features.BOOKMARKS ) )
+        if ( features.contains( ReaderFactory.BOOKMARKS ) )
         {
-            cards.add( Single.instance( BookmarkPanel.class ), Features.BOOKMARKS );
+            cards.add( Single.instance( BookmarkPanel.class ), ReaderFactory.BOOKMARKS );
         }
-        if ( features.contains( Features.THUMBNAILS ) )
+        if ( features.contains( ReaderFactory.THUMBNAILS ) )
         {
-            cards.add( Single.instance( ThumbnailPanel.class ), Features.THUMBNAILS );
+            cards.add( Single.instance( ThumbnailPanel.class ), ReaderFactory.THUMBNAILS );
         }
         // todo TOC
 

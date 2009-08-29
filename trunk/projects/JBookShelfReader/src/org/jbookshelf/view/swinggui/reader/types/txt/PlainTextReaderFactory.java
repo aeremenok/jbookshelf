@@ -6,7 +6,6 @@ package org.jbookshelf.view.swinggui.reader.types.txt;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
-import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 
 /**
  * @author eav 2009
@@ -17,14 +16,14 @@ public class PlainTextReaderFactory
     public PlainTextReaderFactory()
     {
         super();
-        features.add( Features.PAGING );
-        features.add( Features.SCALING );
-        features.add( Features.LAYOUT );
-        features.add( Features.SEARCH );
-        features.add( Features.FONT );
-        features.add( Features.CHARSET );
-        features.add( Features.BOOKMARKS );
-        features.add( Features.NOTES );
+        features.add( ReaderFactory.PAGING );
+        features.add( ReaderFactory.SCALING );
+        features.add( ReaderFactory.LAYOUT );
+        features.add( ReaderFactory.SEARCH );
+        features.add( ReaderFactory.FONT );
+        features.add( ReaderFactory.CHARSET );
+        features.add( ReaderFactory.BOOKMARKS );
+        features.add( ReaderFactory.NOTES );
     }
 
     @Override

@@ -8,7 +8,6 @@ import icons.IMG;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeSupport;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,7 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
 
 /**
@@ -26,8 +27,6 @@ import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
  */
 public class Paginator
     extends JPanel
-    implements
-    Features
 {
     private class FirstAction
         extends TranslatableAction
@@ -41,7 +40,7 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            setCurrentPage( 0 );
+            setNewPage( 0 );
         }
     }
 
@@ -57,7 +56,7 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            setCurrentPage( pageCount - 1 );
+            setNewPage( pageCount - 1 );
         }
     }
 
@@ -73,9 +72,10 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            currentPage += pageLayout == PageLayout.ONE_PAGE
+            final PageLayout currentLayout = Single.instance( Layouter.class ).getCurrentLayout();
+            currentPage += currentLayout == PageLayout.ONE_PAGE
                 ? 1 : 2;
-            setCurrentPage( currentPage );
+            setNewPage( currentPage );
         }
     }
 
@@ -91,25 +91,22 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            currentPage -= pageLayout == PageLayout.ONE_PAGE
+            final PageLayout currentLayout = Single.instance( Layouter.class ).getCurrentLayout();
+            currentPage -= currentLayout == PageLayout.ONE_PAGE
                 ? 1 : 2;
-            setCurrentPage( currentPage );
+            setNewPage( currentPage );
         }
     }
 
-    private int                         pageCount;
-    private int                         currentPage;
-    private final JTextField            pageSelector          = new JTextField( 3 );
-    private final JLabel                pageCountLabel        = new JLabel();
+    private int                  pageCount;
+    private int                  currentPage;
+    private final JTextField     pageSelector   = new JTextField( 3 );
+    private final JLabel         pageCountLabel = new JLabel();
 
-    private final FirstAction           firstAction           = new FirstAction();
-    private final PreviousAction        previousAction        = new PreviousAction();
-    private final NextAction            nextAction            = new NextAction();
-    private final LastAction            lastAction            = new LastAction();
-
-    private PageLayout                  pageLayout            = PageLayout.DEFAULT_LAYOUT;
-
-    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
+    private final FirstAction    firstAction    = new FirstAction();
+    private final PreviousAction previousAction = new PreviousAction();
+    private final NextAction     nextAction     = new NextAction();
+    private final LastAction     lastAction     = new LastAction();
 
     public Paginator()
     {
@@ -149,21 +146,16 @@ public class Paginator
         return this.pageCount;
     }
 
-    @Override
-    public PropertyChangeSupport getPropertyChangeSupport()
-    {
-        return propertyChangeSupport;
-    }
-
     /**
      * set currentPage [0,pageCount-1] and the value of pageSelector [1,pageCount]
      * 
      * @param currentPage new currentPage
      */
-    public void setCurrentPage(
+    public void setNewPage(
         int currentPage )
     {
-        currentPage = pageLayout == PageLayout.ONE_PAGE
+        final PageLayout currentLayout = Single.instance( Layouter.class ).getCurrentLayout();
+        currentPage = currentLayout == PageLayout.ONE_PAGE
             ? currentPage : currentPage % 2 == 0
                 // odd page left, even page right 
                 ? currentPage : currentPage - 1;
@@ -180,14 +172,8 @@ public class Paginator
         this.pageCount = pageCount;
         this.pageCountLabel.setText( "/ " + pageCount );
 
-        setCurrentPage( oldCount > pageCount
+        setNewPage( oldCount > pageCount
             ? pageCount : 0 );
-    }
-
-    public void setPageLayout(
-        final PageLayout pageLayout )
-    {
-        this.pageLayout = pageLayout;
     }
 
     /**
@@ -213,6 +199,6 @@ public class Paginator
         nextAction.setEnabled( this.currentPage < pageCount - 1 );
         lastAction.setEnabled( this.currentPage < pageCount - 1 );
 
-        getPropertyChangeSupport().firePropertyChange( PAGING, -1, currentPage );
+        Single.instance( ReaderWindow.class ).updateCurrentPage();
     }
 }
