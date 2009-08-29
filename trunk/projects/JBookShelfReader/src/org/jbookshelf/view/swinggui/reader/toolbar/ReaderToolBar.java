@@ -7,7 +7,6 @@ import icons.IMG;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -18,6 +17,7 @@ import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 
@@ -41,133 +41,64 @@ public class ReaderToolBar
         public void actionPerformed(
             final ActionEvent e )
         {
-            final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
-            final Book book = readerWindow.getBook();
+            final Book book = Single.instance( ReaderWindow.class ).getBook();
             URIUtil.openDir( book.getPhysicalBook().getFile().getParentFile() );
         }
     }
 
-    protected final ProgressBar   progressBar = new ProgressBar();
+    protected Scalator scalator;
 
-    protected Layouter            layouter    = new Layouter();
-    protected Paginator           paginator   = new Paginator();
-    protected ContentActionsPanel contentActionsPanel;
-    protected Scalator            scalator;
-    protected TextFinder          textFinder;
-    protected CharsetChooser      charsetChooser;
-    protected FontChooser         fontChooser;
-    private List<String>          features;
-
-    public ReaderToolBar(
-        final String... featureNames )
+    public ReaderToolBar()
     {
         super();
 
-        initFeatures( Arrays.asList( featureNames ) );
+        initFeatures();
 
         add( new WrapperPanel( new JButton( new OpenDirAction() ) ) );
         addSeparator();
-        add( new WrapperPanel( progressBar ) );
-
+        add( new WrapperPanel( Single.instance( ProgressBar.class ) ) );
     }
 
-    public void addComponent(
+    private void addComponent(
         final Component comp )
     {
         add( comp );
         addSeparator();
     }
 
-    public CharsetChooser getCharsetChooser()
+    private void initFeatures()
     {
-        return this.charsetChooser;
-    }
+        final ReaderFactory<?> readerFactory = Single.instance( ReaderFactory.class );
+        final List<String> features = readerFactory.getFeatures();
 
-    public ContentActionsPanel getContentActionsPanel()
-    {
-        return this.contentActionsPanel;
-    }
-
-    public List<String> getFeatures()
-    {
-        return this.features;
-    }
-
-    public FontChooser getFontChooser()
-    {
-        return this.fontChooser;
-    }
-
-    public Layouter getLayouter()
-    {
-        return this.layouter;
-    }
-
-    public Paginator getPaginator()
-    {
-        return paginator;
-    }
-
-    public ProgressBar getProgressBar()
-    {
-        return this.progressBar;
-    }
-
-    public Scalator getScalator()
-    {
-        return scalator;
-    }
-
-    public TextFinder getTextFinder()
-    {
-        return textFinder;
-    }
-
-    private void initFeatures(
-        final List<String> features )
-    {
-        this.features = features;
-
-        final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
         if ( features.contains( Features.NOTES ) || features.contains( Features.BOOKMARKS )
             || features.contains( Features.THUMBNAILS ) )
         {
-            addComponent( contentActionsPanel = new ContentActionsPanel( features ) );
-            contentActionsPanel.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
+            addComponent( Single.instance( ContentActionsPanel.class ) );
         }
         if ( features.contains( Features.SCALING ) )
         {
-            addComponent( scalator = new Scalator( 50, 200, 25, 100 ) );
-            scalator.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
+            addComponent( Single.instance( Scalator.class ) );
         }
         if ( features.contains( Features.LAYOUT ) )
         {
-            addComponent( layouter );
+            addComponent( Single.instance( Layouter.class ) );
         }
         if ( features.contains( Features.PAGING ) )
         {
-            addComponent( paginator );
+            addComponent( Single.instance( Paginator.class ) );
         }
         if ( features.contains( Features.SEARCH ) )
         {
-            addComponent( textFinder = new TextFinder() );
-            textFinder.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
+            addComponent( Single.instance( TextFinder.class ) );
         }
         if ( features.contains( Features.CHARSET ) )
         {
-            addComponent( charsetChooser = new CharsetChooser() );
-            // todo set after changing a book
-            //            final String charsetName = readerWindow.getBook().getPhysicalBook().getCharsetName();
-            //            charsetChooser.setCharset( charsetName );
-            charsetChooser.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
+            addComponent( Single.instance( CharsetChooser.class ) );
         }
         if ( features.contains( Features.FONT ) )
         {
-            addComponent( fontChooser = new FontChooser() );
-            fontChooser.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
+            addComponent( Single.instance( FontChooser.class ) );
         }
-
-        paginator.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
-        layouter.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
     }
 }

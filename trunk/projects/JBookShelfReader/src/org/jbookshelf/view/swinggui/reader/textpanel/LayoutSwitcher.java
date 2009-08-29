@@ -8,7 +8,6 @@ import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JPanel;
@@ -17,7 +16,6 @@ import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ContentNavigator;
 import org.jbookshelf.view.swinggui.reader.toolbar.Features;
-import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
 
 /**
@@ -34,7 +32,6 @@ public class LayoutSwitcher<PageType>
                                                                                    .getLogger( LayoutSwitcher.class );
 
     private PageLayout                                           currentLayout = PageLayout.ONE_PAGE;
-    private final ContentNavigator<PageType>                     contentNavigator;
 
     private final JPanel                                         cards         = new JPanel( new CardLayout() );
 
@@ -44,10 +41,7 @@ public class LayoutSwitcher<PageType>
     {
         super( new BorderLayout() );
 
-        final List<String> features = Single.instance( ReaderToolBar.class ).getFeatures();
-        this.contentNavigator = new ContentNavigator<PageType>( features );
-
-        add( contentNavigator, BorderLayout.WEST );
+        add( Single.instance( ContentNavigator.class ), BorderLayout.WEST );
         add( cards, BorderLayout.CENTER );
     }
 
@@ -79,6 +73,8 @@ public class LayoutSwitcher<PageType>
             || Features.THUMBNAILS.equals( propertyName ) )
         {
             final Object newValue = evt.getNewValue();
+
+            final ContentNavigator contentNavigator = Single.instance( ContentNavigator.class );
             contentNavigator.setVisible( newValue != null );
             if ( newValue != null )
             {

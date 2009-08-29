@@ -12,7 +12,7 @@ import javax.swing.SwingConstants;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 
 /**
@@ -23,29 +23,24 @@ public class ContentNavigator<PageType>
     extends JToolBar
 {
     @SuppressWarnings( "unused" )
-    private static final Logger      log   = Logger.getLogger( ContentNavigator.class );
+    private static final Logger log   = Logger.getLogger( ContentNavigator.class );
 
-    private final JPanel             cards = new JPanel( new CardLayout() );
-    private BookmarkPanel            bookmarkPanel;
-    private ThumbnailPanel<PageType> thumbnailPanel;
+    private final JPanel        cards = new JPanel( new CardLayout() );
 
-    @SuppressWarnings( "unchecked" )
-    public ContentNavigator(
-        final List<String> features )
+    public ContentNavigator()
     {
         super( SwingConstants.VERTICAL );
         add( cards );
 
-        final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
+        final ReaderFactory<?> readerFactory = Single.instance( ReaderFactory.class );
+        final List<String> features = readerFactory.getFeatures();
         if ( features.contains( Features.BOOKMARKS ) )
         {
-            cards.add( bookmarkPanel = new BookmarkPanel(), Features.BOOKMARKS );
-            bookmarkPanel.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
+            cards.add( Single.instance( BookmarkPanel.class ), Features.BOOKMARKS );
         }
         if ( features.contains( Features.THUMBNAILS ) )
         {
-            cards.add( thumbnailPanel = Single.instance( ThumbnailPanel.class ), Features.THUMBNAILS );
-            thumbnailPanel.getPropertyChangeSupport().addPropertyChangeListener( readerWindow );
+            cards.add( Single.instance( ThumbnailPanel.class ), Features.THUMBNAILS );
         }
         // todo TOC
 

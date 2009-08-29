@@ -20,8 +20,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Note;
+import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
-import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 import org.lobobrowser.html.HtmlRendererContext;
 import org.lobobrowser.html.UserAgentContext;
 import org.lobobrowser.html.domimpl.NodeImpl;
@@ -183,7 +183,7 @@ public class HTMLReaderPanel
     public void setContent(
         final HTMLContentContainer content )
     {
-        Single.instance( ReaderToolBar.class ).getProgressBar().invoke( new Runnable()
+        Single.instance( ProgressBar.class ).invoke( new Runnable()
         {
             @Override
             public void run()

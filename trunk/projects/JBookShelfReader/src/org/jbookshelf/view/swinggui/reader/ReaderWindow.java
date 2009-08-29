@@ -26,10 +26,14 @@ import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
+import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.textpanel.LayoutSwitcher;
+import org.jbookshelf.view.swinggui.reader.toolbar.CharsetChooser;
 import org.jbookshelf.view.swinggui.reader.toolbar.Features;
+import org.jbookshelf.view.swinggui.reader.toolbar.Layouter;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
+import org.jbookshelf.view.swinggui.reader.toolbar.Scalator;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
 import org.jdesktop.swingx.JXFrame;
 
@@ -60,14 +64,13 @@ public class ReaderWindow<T>
         final LayoutSwitcher layoutSwitcher = Single.instance( LayoutSwitcher.class );
         layoutSwitcher.switchLayout( layout );
 
-        final ReaderToolBar toolBar = Single.instance( ReaderToolBar.class );
-        setPage( toolBar.getPaginator().getCurrentPage() );
-        toolBar.getPaginator().setPageLayout( layout );
+        setPage( Single.instance( Paginator.class ).getCurrentPage() );
+        Single.instance( Paginator.class ).setPageLayout( layout );
         EventQueue.invokeLater( new Runnable()
         {
             public void run()
             {
-                layoutSwitcher.getCurrentPanels().setScale( toolBar.getScalator().getScale() );
+                layoutSwitcher.getCurrentPanels().setScale( Single.instance( Scalator.class ).getScale() );
             }
         } );
     }
@@ -158,10 +161,9 @@ public class ReaderWindow<T>
         final Parameters parameters )
     {
         final String text = parameters.get( Keys.SEARCH_TEXT );
-        final ReaderToolBar toolBar = Single.instance( ReaderToolBar.class );
-        final Paginator paginator = toolBar.getPaginator();
+        final Paginator paginator = Single.instance( Paginator.class );
 
-        toolBar.getProgressBar().invoke( new SafeWorker<Integer, Object>()
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<Integer, Object>()
         {
             @Override
             protected Integer doInBackground()
@@ -169,7 +171,7 @@ public class ReaderWindow<T>
                 final Boolean direction = parameters.get( Keys.SEARCH_DIRECTION );
 
                 int startPage = paginator.getCurrentPage();
-                if ( toolBar.getLayouter().getPageLayout() == PageLayout.TWO_PAGES )
+                if ( Single.instance( Layouter.class ).getPageLayout() == PageLayout.TWO_PAGES )
                 { // skip one more page
                     startPage++;
                 }
@@ -192,8 +194,7 @@ public class ReaderWindow<T>
     public void setBook(
         final Long bookId )
     {
-        final ReaderToolBar toolBar = Single.instance( ReaderToolBar.class );
-        toolBar.getProgressBar().invoke( new SafeWorker<Book, Object>()
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<Book, Object>()
         {
             @SuppressWarnings( "unchecked" )
             @Override
@@ -210,7 +211,10 @@ public class ReaderWindow<T>
                 setTitle( book.getName() );
                 // render the content
                 // todo remember the starting page
-                toolBar.getPaginator().setPageCount( bookContent.getPageCount() );
+                Single.instance( Paginator.class ).setPageCount( bookContent.getPageCount() );
+
+                final String charsetName = book.getPhysicalBook().getCharsetName();
+                Single.instance( CharsetChooser.class ).setCharset( charsetName );
             }
         } );
     }
@@ -223,7 +227,7 @@ public class ReaderWindow<T>
         physicalBook.setCharsetName( charset.name() );
         BookShelf.updatePhysical( physicalBook );
         bookContent = Single.instance( ReaderFactory.class ).createBookContent( book );
-        setPage( Single.instance( ReaderToolBar.class ).getPaginator().getCurrentPage() );
+        setPage( Single.instance( Paginator.class ).getCurrentPage() );
     }
 
     /**
