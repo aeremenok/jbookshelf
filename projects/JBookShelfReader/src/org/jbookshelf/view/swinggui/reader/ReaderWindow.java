@@ -10,8 +10,6 @@ import java.awt.EventQueue;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.nio.charset.Charset;
 
 import javax.annotation.PostConstruct;
@@ -43,12 +41,11 @@ import org.jdesktop.swingx.JXFrame;
  */
 public class ReaderWindow<T>
     extends JXFrame
-    implements
-    PropertyChangeListener
 {
     private Book                book;
     private BookContent<T>      bookContent;
 
+    @SuppressWarnings( "unused" )
     private static final Logger log = Logger.getLogger( ReaderWindow.class );
 
     public Book getBook()
@@ -83,18 +80,6 @@ public class ReaderWindow<T>
                 bookContent.onClose();
             }
         } );
-    }
-
-    @Override
-    public void propertyChange(
-        final PropertyChangeEvent evt )
-    {
-        final String propertyName = evt.getPropertyName();
-        final Object newValue = evt.getNewValue();
-        log.debug( "property changed " + propertyName + "=" + newValue );
-
-        final LayoutablePanel layoutSwitcher = Single.instance( LayoutablePanel.class );
-        layoutSwitcher.propertyChange( evt );
     }
 
     /**
@@ -140,7 +125,7 @@ public class ReaderWindow<T>
         } );
     }
 
-    public void setBook(
+    public void setBookById(
         final Long bookId )
     {
         Single.instance( ProgressBar.class ).invoke( new SafeWorker<Book, Object>()

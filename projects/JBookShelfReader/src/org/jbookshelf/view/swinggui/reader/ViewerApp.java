@@ -80,7 +80,7 @@ public class ViewerApp
             {
                 final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
                 readerWindow.setVisible( true );
-                readerWindow.setBook( id );
+                readerWindow.setBookById( id );
             }
         } );
     }

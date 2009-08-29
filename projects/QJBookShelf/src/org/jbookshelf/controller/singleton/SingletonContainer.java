@@ -119,12 +119,12 @@ public class SingletonContainer
         }
         catch ( final Exception e )
         {
-            final String message = "cannot create " + clazz.getSimpleName();
+            final String message = "cannot create new " + clazz.getSimpleName();
             logger.error( message, e );
             throw new Error( message, e );
         }
 
-        logger.debug( "created " + newInstance.getClass().getSimpleName() );
+        logger.debug( "created new " + newInstance.getClass().getSimpleName() );
 
         // initialize
         try
@@ -133,12 +133,12 @@ public class SingletonContainer
         }
         catch ( final Exception e )
         {
-            final String message = "cannot initialize " + newInstance.getClass().getSimpleName();
+            final String message = "cannot initialize new " + newInstance.getClass().getSimpleName();
             logger.error( message, e );
             throw new Error( message, e );
         }
 
-        logger.debug( "initialized " + newInstance.getClass().getSimpleName() );
+        logger.debug( "initialized new " + newInstance.getClass().getSimpleName() );
 
         return (T) newInstance;
     }
