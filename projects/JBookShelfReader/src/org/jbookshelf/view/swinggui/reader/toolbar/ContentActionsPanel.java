@@ -15,7 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 
 /**
  * a panel for control basic content actions
@@ -107,11 +109,13 @@ public class ContentActionsPanel
     private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
     private String                      selectedFeature;
 
-    public ContentActionsPanel(
-        final List<String> features )
+    public ContentActionsPanel()
     {
         super();
         setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
+
+        final ReaderFactory<?> readerFactory = Single.instance( ReaderFactory.class );
+        final List<String> features = readerFactory.getFeatures();
         if ( features.contains( Features.THUMBNAILS ) )
         {
             add( new JButton( new ThumbnailsAction() ) );

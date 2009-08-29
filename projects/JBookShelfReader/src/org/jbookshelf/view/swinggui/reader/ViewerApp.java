@@ -14,19 +14,14 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ThumbnailPanel;
-import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 import org.jbookshelf.view.swinggui.reader.types.html.HTMLReaderFactory;
 import org.jbookshelf.view.swinggui.reader.types.html.HTMLReaderPanel;
-import org.jbookshelf.view.swinggui.reader.types.html.HTMLToolBar;
 import org.jbookshelf.view.swinggui.reader.types.pdf.PDFPanel;
 import org.jbookshelf.view.swinggui.reader.types.pdf.PDFReaderFactory;
 import org.jbookshelf.view.swinggui.reader.types.pdf.PDFThumbnailPanel;
-import org.jbookshelf.view.swinggui.reader.types.pdf.PDFToolBar;
 import org.jbookshelf.view.swinggui.reader.types.rtf.RTFPanel;
 import org.jbookshelf.view.swinggui.reader.types.rtf.RTFReaderFactory;
-import org.jbookshelf.view.swinggui.reader.types.rtf.RTFToolBar;
 import org.jbookshelf.view.swinggui.reader.types.txt.PlainTextReaderFactory;
-import org.jbookshelf.view.swinggui.reader.types.txt.PlainTextToolBar;
 import org.jbookshelf.view.swinggui.reader.types.txt.PlaintTextPanel;
 import org.jbookshelf.view.swinggui.widget.LookAndFeelComboBoxModel;
 
@@ -59,27 +54,23 @@ public class ViewerApp
         {
             Single.setImplementation( ReaderFactory.class, PlainTextReaderFactory.class );
             Single.setImplementation( ReaderContentPanel.class, PlaintTextPanel.class );
-            Single.setImplementation( ReaderToolBar.class, PlainTextToolBar.class );
         }
         else if ( Viewer.PDF.equals( type ) )
         {
             Single.setImplementation( ReaderFactory.class, PDFReaderFactory.class );
             Single.setImplementation( ReaderContentPanel.class, PDFPanel.class );
             Single.setImplementation( ThumbnailPanel.class, PDFThumbnailPanel.class );
-            Single.setImplementation( ReaderToolBar.class, PDFToolBar.class );
         }
         else if ( Viewer.RTF.equals( type ) )
         {
             Single.setImplementation( ReaderFactory.class, RTFReaderFactory.class );
             Single.setImplementation( ReaderContentPanel.class, RTFPanel.class );
-            Single.setImplementation( ReaderToolBar.class, RTFToolBar.class );
         }
         else
         //if ( Viewer.HTML.equals( type ) )
         {
             Single.setImplementation( ReaderFactory.class, HTMLReaderFactory.class );
             Single.setImplementation( ReaderContentPanel.class, HTMLReaderPanel.class );
-            Single.setImplementation( ReaderToolBar.class, HTMLToolBar.class );
         }
 
         EventQueue.invokeLater( new Runnable()

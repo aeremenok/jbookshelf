@@ -10,9 +10,9 @@ import javax.swing.text.StyledDocument;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.logic.SafeWorker;
+import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
-import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 import org.jdesktop.swingx.JXEditorPane;
 
 public class RTFPanel
@@ -53,7 +53,7 @@ public class RTFPanel
                 return editorPane;
             }
         };
-        Single.instance( ReaderToolBar.class ).getProgressBar().invoke( worker );
+        Single.instance( ProgressBar.class ).invoke( worker );
     }
 
     @Override

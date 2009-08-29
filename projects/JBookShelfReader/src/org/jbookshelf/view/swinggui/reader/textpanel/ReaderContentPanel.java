@@ -12,7 +12,7 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
+import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 
 /**
  * @author eav 2009
@@ -35,7 +35,7 @@ public abstract class ReaderContentPanel<PageType>
 
         final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
 
-        final int currentPage = Single.instance( ReaderToolBar.class ).getPaginator().getCurrentPage();
+        final int currentPage = Single.instance( Paginator.class ).getCurrentPage();
         note.setPage( currentPage + 1 );
         note.setPageCount( readerWindow.getBookContent().getPageCount() );
 

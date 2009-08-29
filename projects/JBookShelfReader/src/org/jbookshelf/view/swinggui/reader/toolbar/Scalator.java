@@ -74,14 +74,20 @@ public class Scalator
 
     private int                         max;
     private int                         min;
+    @SuppressWarnings( "unused" )
     private int                         step;
 
     public final Action                 zoomOutAction         = new ZoomOutAction();
     public final Action                 zoomInAction          = new ZoomInAction();
 
-    private int                         start;
+    private final int                   start;
 
     private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
+
+    public Scalator()
+    {
+        this( 50, 200, 25, 100 );
+    }
 
     public Scalator(
         final int min,
@@ -89,14 +95,7 @@ public class Scalator
         final int step,
         final int start )
     {
-        this();
-        this.start = start;
-        setScaleBounds( min, max, step );
-        reset();
-    }
-
-    private Scalator()
-    {
+        super();
         setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
 
         add( new JButton( zoomOutAction ) );
@@ -115,6 +114,9 @@ public class Scalator
                 }
             }
         } );
+        this.start = start;
+        setScaleBounds( min, max, step );
+        reset();
     }
 
     @Override

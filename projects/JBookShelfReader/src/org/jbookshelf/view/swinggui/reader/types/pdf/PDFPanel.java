@@ -25,7 +25,6 @@ import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
-import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 import org.xnap.commons.gui.util.PopupListener;
 
@@ -50,7 +49,7 @@ public class PDFPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-            getProgressBar().invoke( new Runnable()
+            Single.instance( ProgressBar.class ).invoke( new Runnable()
             {
                 public void run()
                 {
@@ -74,7 +73,7 @@ public class PDFPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-            getProgressBar().invoke( new SafeWorker<Note, Object>()
+            Single.instance( ProgressBar.class ).invoke( new SafeWorker<Note, Object>()
             {
                 @Override
                 protected Note doInBackground()
@@ -104,7 +103,7 @@ public class PDFPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-            getProgressBar().invoke( new SafeWorker<String, Object>()
+            Single.instance( ProgressBar.class ).invoke( new SafeWorker<String, Object>()
             {
                 @Override
                 protected String doInBackground()
@@ -147,7 +146,7 @@ public class PDFPanel
     public void highlightText(
         final String text )
     {
-    // todo wait for PDFRenderer updates
+    // todo wait for PDFRenderer lib updates
     }
 
     @Override
@@ -203,11 +202,6 @@ public class PDFPanel
         final PDFContent content = (PDFContent) readerWindow.getBookContent();
         final int pageNumber = pagePanel.getPage().getPageNumber();
         return content.getPageContent( pageNumber );
-    }
-
-    private ProgressBar getProgressBar()
-    {
-        return Single.instance( ReaderToolBar.class ).getProgressBar();
     }
 
     @Override
