@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
@@ -48,10 +49,9 @@ public class ReaderToolBar
 
     protected Scalator scalator;
 
-    public ReaderToolBar()
+    @PostConstruct
+    public void init()
     {
-        super();
-
         initFeatures();
 
         add( new WrapperPanel( new JButton( new OpenDirAction() ) ) );

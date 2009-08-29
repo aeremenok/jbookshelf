@@ -8,6 +8,7 @@ import icons.IMG;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ContentNavigator;
 
 /**
  * a panel for control basic content actions
@@ -88,18 +90,9 @@ public class ContentActionsPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-            if ( featureName.equals( selectedFeature ) )
-            {
-                selectedFeature = null;
-                // todo
-                //                getPropertyChangeSupport().firePropertyChange( featureName, featureName, null );
-            }
-            else
-            {
-                selectedFeature = featureName;
-                // todo
-                //                getPropertyChangeSupport().firePropertyChange( featureName, false, true );
-            }
+            selectedFeature = featureName.equals( selectedFeature )
+                ? null : featureName;
+            Single.instance( ContentNavigator.class ).show( selectedFeature );
         }
     }
 
@@ -108,9 +101,9 @@ public class ContentActionsPanel
 
     private String              selectedFeature;
 
-    public ContentActionsPanel()
+    @PostConstruct
+    public void init()
     {
-        super();
         setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
 
         final ReaderFactory<?> readerFactory = Single.instance( ReaderFactory.class );

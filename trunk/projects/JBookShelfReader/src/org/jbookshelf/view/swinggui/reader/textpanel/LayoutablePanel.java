@@ -5,16 +5,14 @@ package org.jbookshelf.view.swinggui.reader.textpanel;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ContentNavigator;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
@@ -25,8 +23,6 @@ import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
  */
 public class LayoutablePanel<PageType>
     extends JPanel
-    implements
-    PropertyChangeListener
 {
     @SuppressWarnings( "unused" )
     private static final Logger                                  log    = Logger.getLogger( LayoutablePanel.class );
@@ -34,14 +30,6 @@ public class LayoutablePanel<PageType>
     private final JPanel                                         cards  = new JPanel( new CardLayout() );
 
     private final Map<PageLayout, ReaderContentPanels<PageType>> panels = new HashMap<PageLayout, ReaderContentPanels<PageType>>();
-
-    public LayoutablePanel()
-    {
-        super( new BorderLayout() );
-
-        add( Single.instance( ContentNavigator.class ), BorderLayout.WEST );
-        add( cards, BorderLayout.CENTER );
-    }
 
     public ReaderContentPanels<PageType> getCurrentPanels()
     {
@@ -59,27 +47,13 @@ public class LayoutablePanel<PageType>
         return contentPanels;
     }
 
-    @Override
-    public void propertyChange(
-        final PropertyChangeEvent evt )
+    @PostConstruct
+    public void init()
     {
-        final String propertyName = evt.getPropertyName();
-        if ( ReaderFactory.BOOKMARKS.equals( propertyName ) || ReaderFactory.TOC.equals( propertyName )
-            || ReaderFactory.THUMBNAILS.equals( propertyName ) )
-        {
-            final Object newValue = evt.getNewValue();
+        setLayout( new BorderLayout() );
 
-            final ContentNavigator contentNavigator = Single.instance( ContentNavigator.class );
-            contentNavigator.setVisible( newValue != null );
-            if ( newValue != null )
-            {
-                contentNavigator.show( propertyName );
-            }
-        }
-        else if ( ReaderFactory.NOTES.equals( propertyName ) )
-        {
-            getCurrentPanels().changeNotesVisibility();
-        }
+        add( Single.instance( ContentNavigator.class ), BorderLayout.WEST );
+        add( cards, BorderLayout.CENTER );
     }
 
     public void switchLayout()
