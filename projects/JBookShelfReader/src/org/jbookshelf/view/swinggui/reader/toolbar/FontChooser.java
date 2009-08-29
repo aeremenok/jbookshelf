@@ -8,16 +8,17 @@ import icons.IMG;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeSupport;
 
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
 import org.xnap.commons.gui.DefaultDialog;
 import org.xnap.commons.i18n.I18n;
 
@@ -28,8 +29,6 @@ import com.connectina.swing.fontchooser.JFontChooser;
  */
 public class FontChooser
     extends JPanel
-    implements
-    Features
 {
     private static class FontChooserDialog
         extends DefaultDialog
@@ -85,7 +84,7 @@ public class FontChooser
                 public boolean apply()
                 {
                     selectedFont = fontChooser.getSelectedFont();
-                    getPropertyChangeSupport().firePropertyChange( FONT, null, selectedFont );
+                    Single.instance( LayoutablePanel.class ).getCurrentPanels().setReaderFont( selectedFont );
                     return true;
                 }
             };
@@ -93,29 +92,21 @@ public class FontChooser
         }
     }
 
-    public final static int             INITIAL_SIZE          = 20;
-    public final static Font            DEFAULT_FONT;
+    public final static int  INITIAL_SIZE = 20;
+    public final static Font DEFAULT_FONT;
     static
     {
         final Font oldFont = new JEditorPane().getFont();
         DEFAULT_FONT = new Font( oldFont.getName(), oldFont.getStyle(), INITIAL_SIZE );
     }
 
-    private Font                        selectedFont          = DEFAULT_FONT;
-
-    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
+    private Font             selectedFont = DEFAULT_FONT;
 
     public FontChooser()
     {
         super( new BorderLayout() );
         add( new JButton( new ShowChooserAction() ) );
         // todo remember font in settings files
-    }
-
-    @Override
-    public PropertyChangeSupport getPropertyChangeSupport()
-    {
-        return propertyChangeSupport;
     }
 
     public Font getSelectedFont()

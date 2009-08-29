@@ -8,7 +8,6 @@ import icons.IMG;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeSupport;
 
 import javax.swing.Action;
 import javax.swing.BoxLayout;
@@ -16,7 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
 
 /**
  * a panel for control scale and layout
@@ -25,8 +26,6 @@ import org.jbookshelf.view.swinggui.actions.TranslatableAction;
  */
 public class Scalator
     extends JPanel
-    implements
-    Features
 {
     private class ZoomInAction
         extends TranslatableAction
@@ -68,21 +67,19 @@ public class Scalator
         }
     }
 
-    public final JComboBox              scaleComboBox         = new JComboBox();
+    public final JComboBox scaleComboBox = new JComboBox();
 
-    private int                         scale;
+    private int            scale;
 
-    private int                         max;
-    private int                         min;
+    private int            max;
+    private int            min;
     @SuppressWarnings( "unused" )
-    private int                         step;
+    private int            step;
 
-    public final Action                 zoomOutAction         = new ZoomOutAction();
-    public final Action                 zoomInAction          = new ZoomInAction();
+    public final Action    zoomOutAction = new ZoomOutAction();
+    public final Action    zoomInAction  = new ZoomInAction();
 
-    private final int                   start;
-
-    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
+    private final int      start;
 
     public Scalator()
     {
@@ -117,12 +114,6 @@ public class Scalator
         this.start = start;
         setScaleBounds( min, max, step );
         reset();
-    }
-
-    @Override
-    public PropertyChangeSupport getPropertyChangeSupport()
-    {
-        return propertyChangeSupport;
     }
 
     public int getScale()
@@ -168,8 +159,9 @@ public class Scalator
         }
 
         this.scale = scale;
-        getPropertyChangeSupport().firePropertyChange( SCALING, null, scale );
         zoomInAction.setEnabled( scale < max );
         zoomOutAction.setEnabled( scale > min );
+
+        Single.instance( LayoutablePanel.class ).getCurrentPanels().setScale( scale );
     }
 }

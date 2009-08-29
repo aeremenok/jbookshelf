@@ -71,32 +71,32 @@ public class ReaderToolBar
         final ReaderFactory<?> readerFactory = Single.instance( ReaderFactory.class );
         final List<String> features = readerFactory.getFeatures();
 
-        if ( features.contains( Features.NOTES ) || features.contains( Features.BOOKMARKS )
-            || features.contains( Features.THUMBNAILS ) )
+        if ( features.contains( ReaderFactory.NOTES ) || features.contains( ReaderFactory.BOOKMARKS )
+            || features.contains( ReaderFactory.THUMBNAILS ) )
         {
             addComponent( Single.instance( ContentActionsPanel.class ) );
         }
-        if ( features.contains( Features.SCALING ) )
+        if ( features.contains( ReaderFactory.SCALING ) )
         {
             addComponent( Single.instance( Scalator.class ) );
         }
-        if ( features.contains( Features.LAYOUT ) )
+        if ( features.contains( ReaderFactory.LAYOUT ) )
         {
             addComponent( Single.instance( Layouter.class ) );
         }
-        if ( features.contains( Features.PAGING ) )
+        if ( features.contains( ReaderFactory.PAGING ) )
         {
             addComponent( Single.instance( Paginator.class ) );
         }
-        if ( features.contains( Features.SEARCH ) )
+        if ( features.contains( ReaderFactory.SEARCH ) )
         {
             addComponent( Single.instance( TextFinder.class ) );
         }
-        if ( features.contains( Features.CHARSET ) )
+        if ( features.contains( ReaderFactory.CHARSET ) )
         {
             addComponent( Single.instance( CharsetChooser.class ) );
         }
-        if ( features.contains( Features.FONT ) )
+        if ( features.contains( ReaderFactory.FONT ) )
         {
             addComponent( Single.instance( FontChooser.class ) );
         }

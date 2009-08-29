@@ -7,20 +7,19 @@ import icons.IMG;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeSupport;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 
 /**
  * @author eav 2009
  */
 public class Layouter
     extends JPanel
-    implements
-    Features
 {
     public static enum PageLayout
     {
@@ -43,7 +42,7 @@ public class Layouter
             final ActionEvent e )
         {
             // change the layout
-            final boolean isOne = getPageLayout() == PageLayout.ONE_PAGE;
+            final boolean isOne = getCurrentLayout() == PageLayout.ONE_PAGE;
             setPageLayout( isOne
                 ? PageLayout.TWO_PAGES : PageLayout.ONE_PAGE );
             putValue( SMALL_ICON, IMG.icon( isOne
@@ -51,32 +50,23 @@ public class Layouter
         }
     }
 
-    private PageLayout                  pageLayout            = PageLayout.DEFAULT_LAYOUT;
-
-    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
+    private PageLayout currentLayout = PageLayout.DEFAULT_LAYOUT;
 
     public Layouter()
     {
         super( new BorderLayout() );
-        final LayoutAction a = new LayoutAction();
-        add( new JButton( a ) );
+        add( new JButton( new LayoutAction() ) );
     }
 
-    public PageLayout getPageLayout()
+    public PageLayout getCurrentLayout()
     {
-        return this.pageLayout;
-    }
-
-    @Override
-    public PropertyChangeSupport getPropertyChangeSupport()
-    {
-        return propertyChangeSupport;
+        return this.currentLayout;
     }
 
     public void setPageLayout(
         final PageLayout pageLayout )
     {
-        this.pageLayout = pageLayout;
-        getPropertyChangeSupport().firePropertyChange( LAYOUT, null, pageLayout );
+        this.currentLayout = pageLayout;
+        Single.instance( ReaderWindow.class ).switchLayout();
     }
 }

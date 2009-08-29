@@ -14,7 +14,19 @@ import org.jbookshelf.model.db.Book;
  */
 public abstract class ReaderFactory<PageType>
 {
-    protected final List<String> features = new ArrayList<String>();
+    // todo enum?
+    public static final String   TOC        = "TOC";
+    public static final String   BOOKMARKS  = "BOOKMARKS";
+    public static final String   THUMBNAILS = "THUMBNAILS";
+    public static final String   NOTES      = "NOTES";
+    public static final String   CHARSET    = "CHARSET";
+    public static final String   FONT       = "FONT";
+    public static final String   SEARCH     = "SEARCH";
+    public static final String   LAYOUT     = "LAYOUT";
+    public static final String   SCALING    = "SCALING";
+    public static final String   PAGING     = "PAGING";
+
+    protected final List<String> features   = new ArrayList<String>();
 
     public abstract BookContent<PageType> createBookContent(
         Book book );

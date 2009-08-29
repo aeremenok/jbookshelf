@@ -7,7 +7,6 @@ import icons.IMG;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -27,9 +26,8 @@ import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.ProgressBar;
-import org.jbookshelf.view.swinggui.reader.textpanel.LayoutSwitcher;
+import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.CharsetChooser;
-import org.jbookshelf.view.swinggui.reader.toolbar.Features;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
@@ -53,28 +51,6 @@ public class ReaderWindow<T>
 
     private static final Logger log = Logger.getLogger( ReaderWindow.class );
 
-    /**
-     * change the layout between one and two pages
-     * 
-     * @param layout new {@link PageLayout}
-     */
-    public void changeLayout(
-        final PageLayout layout )
-    {
-        final LayoutSwitcher layoutSwitcher = Single.instance( LayoutSwitcher.class );
-        layoutSwitcher.switchLayout( layout );
-
-        setPage( Single.instance( Paginator.class ).getCurrentPage() );
-        Single.instance( Paginator.class ).setPageLayout( layout );
-        EventQueue.invokeLater( new Runnable()
-        {
-            public void run()
-            {
-                layoutSwitcher.getCurrentPanels().setScale( Single.instance( Scalator.class ).getScale() );
-            }
-        } );
-    }
-
     public Book getBook()
     {
         return this.book;
@@ -91,7 +67,7 @@ public class ReaderWindow<T>
         setContentPane( new JPanel( new BorderLayout() ) );
 
         add( Single.instance( ReaderToolBar.class ), BorderLayout.NORTH );
-        add( Single.instance( LayoutSwitcher.class ), BorderLayout.CENTER );
+        add( Single.instance( LayoutablePanel.class ), BorderLayout.CENTER );
 
         setIconImage( IMG.img( IMG.LOGO_PNG, 64 ) );
 
@@ -117,38 +93,8 @@ public class ReaderWindow<T>
         final Object newValue = evt.getNewValue();
         log.debug( "property changed " + propertyName + "=" + newValue );
 
-        if ( Features.PAGING.equals( propertyName ) )
-        {
-            setPage( (Integer) newValue );
-        }
-        else
-        {
-            final LayoutSwitcher layoutSwitcher = Single.instance( LayoutSwitcher.class );
-            if ( Features.SCALING.equals( propertyName ) )
-            {
-                layoutSwitcher.getCurrentPanels().setScale( ((Integer) newValue) );
-            }
-            else if ( Features.LAYOUT.equals( propertyName ) )
-            {
-                changeLayout( (PageLayout) newValue );
-            }
-            else if ( Features.SEARCH.equals( propertyName ) )
-            {
-                searchText( (Parameters) newValue );
-            }
-            else if ( Features.FONT.equals( propertyName ) )
-            {
-                layoutSwitcher.getCurrentPanels().setReaderFont( ((Font) newValue) );
-            }
-            else if ( Features.CHARSET.equals( propertyName ) )
-            {
-                setCharset( (Charset) newValue );
-            }
-            else
-            {
-                layoutSwitcher.propertyChange( evt );
-            }
-        }
+        final LayoutablePanel layoutSwitcher = Single.instance( LayoutablePanel.class );
+        layoutSwitcher.propertyChange( evt );
     }
 
     /**
@@ -161,7 +107,10 @@ public class ReaderWindow<T>
         final Parameters parameters )
     {
         final String text = parameters.get( Keys.SEARCH_TEXT );
+
+        final LayoutablePanel layoutable = Single.instance( LayoutablePanel.class );
         final Paginator paginator = Single.instance( Paginator.class );
+        final Layouter layouter = Single.instance( Layouter.class );
 
         Single.instance( ProgressBar.class ).invoke( new SafeWorker<Integer, Object>()
         {
@@ -171,7 +120,7 @@ public class ReaderWindow<T>
                 final Boolean direction = parameters.get( Keys.SEARCH_DIRECTION );
 
                 int startPage = paginator.getCurrentPage();
-                if ( Single.instance( Layouter.class ).getPageLayout() == PageLayout.TWO_PAGES )
+                if ( layouter.getCurrentLayout() == PageLayout.TWO_PAGES )
                 { // skip one more page
                     startPage++;
                 }
@@ -184,8 +133,8 @@ public class ReaderWindow<T>
                 final int page = getQuiet();
                 if ( page > -1 )
                 {
-                    paginator.setCurrentPage( page );
-                    Single.instance( LayoutSwitcher.class ).getCurrentPanels().highlightText( text );
+                    paginator.setNewPage( page );
+                    layoutable.getCurrentPanels().highlightText( text );
                 }
             }
         } );
@@ -225,30 +174,53 @@ public class ReaderWindow<T>
     {
         final PhysicalBook physicalBook = getBook().getPhysicalBook();
         physicalBook.setCharsetName( charset.name() );
+
         BookShelf.updatePhysical( physicalBook );
         bookContent = Single.instance( ReaderFactory.class ).createBookContent( book );
-        setPage( Single.instance( Paginator.class ).getCurrentPage() );
+
+        updateCurrentPage();
+    }
+
+    /**
+     * change the layout between one and two pages
+     */
+    public void switchLayout()
+    {
+        final LayoutablePanel layoutable = Single.instance( LayoutablePanel.class );
+        final Scalator scalator = Single.instance( Scalator.class );
+
+        layoutable.switchLayout();
+        updateCurrentPage();
+
+        EventQueue.invokeLater( new Runnable()
+        {
+            public void run()
+            {
+                layoutable.getCurrentPanels().setScale( scalator.getScale() );
+            }
+        } );
     }
 
     /**
      * display a page of the specified number
-     * 
-     * @param pageNumber a number of a page to display
      */
     @SuppressWarnings( "unchecked" )
-    public void setPage(
-        final int pageNumber )
+    public void updateCurrentPage()
     {
-        final T leftPage = bookContent.getPage( pageNumber );
-        final LayoutSwitcher layoutSwitcher = Single.instance( LayoutSwitcher.class );
-        if ( layoutSwitcher.getCurrentLayout() == PageLayout.TWO_PAGES )
+        final Paginator paginator = Single.instance( Paginator.class );
+        final LayoutablePanel layoutable = Single.instance( LayoutablePanel.class );
+
+        final int newCurrentPage = paginator.getCurrentPage();
+
+        final T leftPage = bookContent.getPage( newCurrentPage );
+        if ( Single.instance( Layouter.class ).getCurrentLayout() == PageLayout.TWO_PAGES )
         {
-            final T rightPage = bookContent.getPage( pageNumber + 1 );
-            layoutSwitcher.getCurrentPanels().setContent( leftPage, rightPage );
+            final T rightPage = bookContent.getPage( newCurrentPage + 1 );
+            layoutable.getCurrentPanels().setContent( leftPage, rightPage );
         }
         else
         {
-            layoutSwitcher.getCurrentPanels().setContent( leftPage );
+            layoutable.getCurrentPanels().setContent( leftPage );
         }
     }
 }

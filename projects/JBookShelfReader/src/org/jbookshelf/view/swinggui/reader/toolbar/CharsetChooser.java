@@ -7,12 +7,13 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeSupport;
 import java.nio.charset.Charset;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -21,12 +22,9 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 public class CharsetChooser
     extends JPanel
     implements
-    ItemListener,
-    Features
+    ItemListener
 {
-    private final JComboBox             comboBox              = new JComboBox();
-
-    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport( this );
+    private final JComboBox comboBox = new JComboBox();
 
     public CharsetChooser()
     {
@@ -49,12 +47,6 @@ public class CharsetChooser
     }
 
     @Override
-    public PropertyChangeSupport getPropertyChangeSupport()
-    {
-        return propertyChangeSupport;
-    }
-
-    @Override
     public void itemStateChanged(
         final ItemEvent e )
     {
@@ -65,7 +57,7 @@ public class CharsetChooser
                 @Override
                 public void run()
                 {
-                    getPropertyChangeSupport().firePropertyChange( CHARSET, null, getCharset() );
+                    Single.instance( ReaderWindow.class ).setCharset( getCharset() );
                 }
             } );
         }
