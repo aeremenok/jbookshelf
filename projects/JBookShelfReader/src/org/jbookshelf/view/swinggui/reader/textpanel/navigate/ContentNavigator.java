@@ -3,14 +3,13 @@
  */
 package org.jbookshelf.view.swinggui.reader.textpanel.navigate;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
@@ -21,7 +20,7 @@ import org.jbookshelf.view.swinggui.reader.ReaderFactory;
  * @param <PageType>
  */
 public class ContentNavigator<PageType>
-    extends JToolBar
+    extends JPanel
 {
     @SuppressWarnings( "unused" )
     private static final Logger                            log     = Logger.getLogger( ContentNavigator.class );
@@ -31,8 +30,8 @@ public class ContentNavigator<PageType>
 
     public ContentNavigator()
     {
-        super( SwingConstants.VERTICAL );
-        add( cards );
+        super();
+        add( cards, BorderLayout.CENTER );
         setVisible( false );
         classes.put( ReaderFactory.BOOKMARKS, BookmarkPanel.class );
         classes.put( ReaderFactory.THUMBNAILS, ThumbnailPanel.class );
