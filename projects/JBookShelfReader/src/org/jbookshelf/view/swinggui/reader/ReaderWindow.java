@@ -13,6 +13,7 @@ import java.awt.event.WindowEvent;
 import java.nio.charset.Charset;
 
 import javax.annotation.PostConstruct;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
@@ -61,6 +62,8 @@ public class ReaderWindow<T>
     @PostConstruct
     public void init()
     {
+        setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+
         setContentPane( new JPanel( new BorderLayout() ) );
 
         add( Single.instance( ReaderToolBar.class ), BorderLayout.NORTH );

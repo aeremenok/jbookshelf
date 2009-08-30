@@ -24,12 +24,12 @@ import org.jbookshelf.view.swinggui.ProgressBar;
  */
 public class Viewer
 {
-    private static final Logger       log       = Logger.getLogger( Viewer.class );
+    private static final Logger       log   = Logger.getLogger( Viewer.class );
 
-    public static final String        TXT       = "txt";
-    public static final String        PDF       = "pdf";
-    public static final String        RTF       = "rtf";
-    public static final String        HTML      = "html";
+    public static final String        TXT   = "txt";
+    public static final String        PDF   = "pdf";
+    public static final String        RTF   = "rtf";
+    public static final String        HTML  = "html";
 
     private final Map<String, String> types = new HashMap<String, String>();
     {
@@ -77,7 +77,8 @@ public class Viewer
                 { // internal
                     try
                     {
-                        Runtime.getRuntime().exec( "java -jar jbsreader " + book.getId() + " " + getQuiet() );
+                        final String command = "java -jar jbsreader.jar " + book.getId() + " " + getQuiet();
+                        Runtime.getRuntime().exec( command );
                     }
                     catch ( final Exception e )
                     {
