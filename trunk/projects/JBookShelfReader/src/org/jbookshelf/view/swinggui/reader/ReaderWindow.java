@@ -17,6 +17,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
+import org.bushe.swing.event.ObjectEvent;
+import org.bushe.swing.event.annotation.AnnotationProcessor;
+import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.PhysicalBook;
@@ -83,6 +86,16 @@ public class ReaderWindow<T>
                 bookContent.onClose();
             }
         } );
+
+        AnnotationProcessor.process( this );
+    }
+
+    @EventTopicSubscriber( topic = ReaderFactory.PAGING )
+    public void onPageChanged(
+        @SuppressWarnings( "unused" ) final String topic,
+        @SuppressWarnings( "unused" ) final ObjectEvent objectEvent )
+    {
+        updateCurrentPage();
     }
 
     /**

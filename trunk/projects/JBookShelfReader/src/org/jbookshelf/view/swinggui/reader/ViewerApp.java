@@ -13,12 +13,12 @@ import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
-import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ThumbnailPanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.navigate.Thumbnail;
 import org.jbookshelf.view.swinggui.reader.types.html.HTMLReaderFactory;
 import org.jbookshelf.view.swinggui.reader.types.html.HTMLReaderPanel;
 import org.jbookshelf.view.swinggui.reader.types.pdf.PDFPanel;
 import org.jbookshelf.view.swinggui.reader.types.pdf.PDFReaderFactory;
-import org.jbookshelf.view.swinggui.reader.types.pdf.PDFThumbnailPanel;
+import org.jbookshelf.view.swinggui.reader.types.pdf.PDFThumbnail;
 import org.jbookshelf.view.swinggui.reader.types.rtf.RTFPanel;
 import org.jbookshelf.view.swinggui.reader.types.rtf.RTFReaderFactory;
 import org.jbookshelf.view.swinggui.reader.types.txt.PlainTextReaderFactory;
@@ -59,7 +59,7 @@ public class ViewerApp
         {
             Single.setImplementation( ReaderFactory.class, PDFReaderFactory.class );
             Single.setImplementation( ReaderContentPanel.class, PDFPanel.class );
-            Single.setImplementation( ThumbnailPanel.class, PDFThumbnailPanel.class );
+            Single.setImplementation( Thumbnail.class, PDFThumbnail.class );
         }
         else if ( Viewer.RTF.equals( type ) )
         {

@@ -22,6 +22,7 @@ public class PDFReaderFactory
         features.add( ReaderFactory.LAYOUT );
         features.add( ReaderFactory.SEARCH );
         features.add( ReaderFactory.SCALING );
+        features.add( ReaderFactory.THUMBNAILS );
     }
 
     @Override

@@ -15,9 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.bushe.swing.event.EventBus;
+import org.bushe.swing.event.ObjectEvent;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
-import org.jbookshelf.view.swinggui.reader.ReaderWindow;
+import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
 
 /**
@@ -199,6 +201,6 @@ public class Paginator
         nextAction.setEnabled( this.currentPage < pageCount - 1 );
         lastAction.setEnabled( this.currentPage < pageCount - 1 );
 
-        Single.instance( ReaderWindow.class ).updateCurrentPage();
+        EventBus.publish( ReaderFactory.PAGING, new ObjectEvent( this, currentPage ) );
     }
 }
