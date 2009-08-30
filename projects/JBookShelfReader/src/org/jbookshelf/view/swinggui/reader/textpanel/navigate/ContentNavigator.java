@@ -4,9 +4,10 @@
 package org.jbookshelf.view.swinggui.reader.textpanel.navigate;
 
 import java.awt.CardLayout;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
@@ -23,31 +24,18 @@ public class ContentNavigator<PageType>
     extends JToolBar
 {
     @SuppressWarnings( "unused" )
-    private static final Logger log   = Logger.getLogger( ContentNavigator.class );
+    private static final Logger                            log     = Logger.getLogger( ContentNavigator.class );
 
-    private final JPanel        cards = new JPanel( new CardLayout() );
+    private final JPanel                                   cards   = new JPanel( new CardLayout() );
+    private final Map<String, Class<? extends JComponent>> classes = new HashMap<String, Class<? extends JComponent>>();
 
     public ContentNavigator()
     {
         super( SwingConstants.VERTICAL );
         add( cards );
         setVisible( false );
-        init();
-    }
-
-    @PostConstruct
-    public void init()
-    {
-        final ReaderFactory<?> readerFactory = Single.instance( ReaderFactory.class );
-        final List<String> features = readerFactory.getFeatures();
-        if ( features.contains( ReaderFactory.BOOKMARKS ) )
-        {
-            cards.add( Single.instance( BookmarkPanel.class ), ReaderFactory.BOOKMARKS );
-        }
-        if ( features.contains( ReaderFactory.THUMBNAILS ) )
-        {
-            cards.add( Single.instance( ThumbnailPanel.class ), ReaderFactory.THUMBNAILS );
-        }
+        classes.put( ReaderFactory.BOOKMARKS, BookmarkPanel.class );
+        classes.put( ReaderFactory.THUMBNAILS, ThumbnailPanel.class );
         // todo TOC
     }
 
@@ -57,6 +45,14 @@ public class ContentNavigator<PageType>
         setVisible( feature != null );
         if ( isVisible() )
         {
+            final Class<? extends JComponent> clazz = classes.get( feature );
+            if ( clazz != null )
+            {
+                final JComponent jComponent = Single.instance( clazz );
+                cards.add( jComponent, feature );
+                classes.remove( feature );
+            }
+
             final CardLayout cardLayout = (CardLayout) cards.getLayout();
             cardLayout.show( cards, feature );
         }
