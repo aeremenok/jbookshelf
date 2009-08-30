@@ -29,7 +29,7 @@
 
     <target name="create_run_jar" depends="clean, copyfiles">
 
-        <pathconvert property="libpath" pathsep=" ">
+        <pathconvert property="libpath" pathsep=" " dirsep="/">
             <fileset dir="${target.dir}/lib" />
             <map from="${target.dir}/lib" to="lib" />
         </pathconvert>
