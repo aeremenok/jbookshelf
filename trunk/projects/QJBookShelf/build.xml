@@ -4,34 +4,37 @@
     
     ${builddir} - where to build
     ${version}  - release version
-    
  -->
 <project default="create_run_jar" name="Create Runnable Jar for Project QJBookShelf" basedir=".">
 
-    <property name="libdir" value="${basedir}/lib" />
-    <property name="targetdir" value="${builddir}/jbookshelf-${version}" />
+    <property name="lib.dir" value="${basedir}/lib" />
+    <property name="target.dir" value="${builddir}/jbookshelf-${version}" />
+    
+    <property name="reader.dir" value="${basedir}/../JBookShelfReader"/>
+    <property name="reader.lib.dir" value="${reader.dir}/lib"/>
 
     <target name="clean">
-        <mkdir dir="${targetdir}" />
+        <mkdir dir="${target.dir}" />
         <delete>
-            <fileset dir="${targetdir}" />
+            <fileset dir="${target.dir}" />
         </delete>
     </target>
 
     <target name="copyfiles">
-        <copy todir="${targetdir}/lib">
-            <fileset dir="${libdir}" />
+        <copy todir="${target.dir}/lib">
+            <fileset dir="${lib.dir}" />
+            <fileset dir="${reader.lib.dir}" />
         </copy>
     </target>
 
     <target name="create_run_jar" depends="clean, copyfiles">
 
         <pathconvert property="libpath" pathsep=" ">
-            <fileset dir="${targetdir}/lib" />
-            <map from="${targetdir}/lib" to="lib" />
+            <fileset dir="${target.dir}/lib" />
+            <map from="${target.dir}/lib" to="lib" />
         </pathconvert>
 
-        <jar destfile="${targetdir}/jbookshelf.jar">
+        <jar destfile="${target.dir}/jbookshelf.jar">
             <manifest>
                 <attribute name="Built-By" value="${user.name}" />
                 <attribute name="Main-Class" value="org.jbookshelf.view.swinggui.main.MainWindow" />
@@ -41,67 +44,29 @@
 
             <fileset dir="${basedir}/bin" />
         </jar>
+        
+        <jar destfile="${target.dir}/jbsreader.jar">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Main-Class" value="org.jbookshelf.view.swinggui.reader.ViewerApp" />
+                <attribute name="Class-Path" value="${libpath} jbookshelf.jar" />
+                <attribute name="Manifest-Version" value="${version}" /> 
+            </manifest>
 
-        <copy todir="${targetdir}" overwrite="true">
+            <fileset dir="${reader.dir}/bin" />
+        </jar>
+
+        <copy todir="${target.dir}" overwrite="true">
             <fileset dir="${basedir}/../../build/misc">
                 <exclude name=".svn" />
             </fileset>
         </copy>
 
-        <chmod perm="+x" file="${targetdir}/run.sh" />
+        <chmod perm="+x" file="${target.dir}/run.sh" />
 
-        <zip destfile="${targetdir}.zip">
-            <zipfileset dir="${targetdir}" prefix="jbookshelf" />
+        <zip destfile="${target.dir}.zip">
+            <zipfileset dir="${target.dir}" prefix="jbookshelf" />
         </zip>
     </target>
-
-    <!-- translation -->
-    <path id="antlib.cp">
-        <fileset dir="${basedir}/antlib" />
-    </path>
-
-    <!-- collect words -->
-    <target name="gettext">
-        <taskdef name="extract" classname="org.xnap.commons.ant.gettext.GettextExtractKeysTask">
-            <classpath refid="antlib.cp" />
-        </taskdef>
-
-        <extract keysFile="messages.pot" poDirectory="i18n" keywords="-ktr">
-            <fileset dir="src" includes="**/*.java" />
-        </extract>
-    </target>
-
-    <!-- prepare files -->
-    <target name="merge">
-        <taskdef name="gettext-merge"
-                 classname="org.xnap.commons.ant.gettext.GettextMergeKeysTask"
-                 classpathref="antlib.cp" />
-        <gettext-merge keysFile="messages.pot" poDirectory="i18n" />
-    </target>
-
-    <target name="translate" depends="gettext, merge" />
-    <!-- use poedit to translate -->
-
-    <!-- create bundle .class files and assemble jar-->
-    <target name="bundle">
-        <taskdef name="gettext-generate-default"
-                 classname="org.xnap.commons.ant.gettext.GenerateDefaultBundleTask"
-                 classpathref="antlib.cp" />
-        <gettext-generate-default targetBundle="org.jbookshelf.view.i18n.Messages"
-                                  outputDirectory="i18n/bin"
-                                  potfile="i18n/messages.pot" />
-
-        <taskdef name="gettext-dist" 
-                 classname="org.xnap.commons.ant.gettext.GettextDistTask"
-                 classpathref="antlib.cp" />
-        <gettext-dist targetBundle="org.jbookshelf.view.i18n.Messages" poDirectory="i18n" outputDirectory="i18n/bin" />
-
-        <jar destfile="${libdir}/jbs-i18n.jar">
-            <fileset dir="i18n/bin" />
-        </jar>
-
-        <delete dir="i18n/bin/org" />
-    </target>
-
-
+    
 </project>
