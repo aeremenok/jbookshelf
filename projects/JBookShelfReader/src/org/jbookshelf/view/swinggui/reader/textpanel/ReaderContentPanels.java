@@ -24,6 +24,8 @@ public abstract class ReaderContentPanels<PageType>
 
     public abstract void changeNotesVisibility();
 
+    public abstract Bookmark createBookmark();
+
     public abstract void goTo(
         final Bookmark bookmark );
 

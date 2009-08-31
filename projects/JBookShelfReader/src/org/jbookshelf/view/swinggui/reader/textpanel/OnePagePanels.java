@@ -39,6 +39,12 @@ public class OnePagePanels<PageType>
     }
 
     @Override
+    public Bookmark createBookmark()
+    {
+        return contentPanel.createNote( null );
+    }
+
+    @Override
     public void goTo(
         final Bookmark bookmark )
     {

@@ -62,6 +62,12 @@ public class TwoPagePanels<PageType>
     }
 
     @Override
+    public Bookmark createBookmark()
+    {
+        return leftContentPanel.createNote( null );
+    }
+
+    @Override
     public void goTo(
         final Bookmark bookmark )
     {

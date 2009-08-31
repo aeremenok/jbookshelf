@@ -15,6 +15,9 @@ public class RTFReaderFactory
         features.add( ReaderFactory.SCALING );
         features.add( ReaderFactory.SEARCH );
         features.add( ReaderFactory.CHARSET );
+
+        features.add( ReaderFactory.BOOKMARKS );
+        features.add( ReaderFactory.NOTES );
     }
 
     @Override

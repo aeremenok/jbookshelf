@@ -13,7 +13,6 @@ import java.awt.event.WindowEvent;
 import java.nio.charset.Charset;
 
 import javax.annotation.PostConstruct;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
@@ -22,6 +21,8 @@ import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.Bookmark;
+import org.jbookshelf.model.db.Note;
 import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.Parameters;
@@ -49,7 +50,6 @@ public class ReaderWindow<T>
     private Book                book;
     private BookContent<T>      bookContent;
 
-    @SuppressWarnings( "unused" )
     private static final Logger log = Logger.getLogger( ReaderWindow.class );
 
     public Book getBook()
@@ -65,8 +65,6 @@ public class ReaderWindow<T>
     @PostConstruct
     public void init()
     {
-        setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-
         setContentPane( new JPanel( new BorderLayout() ) );
 
         add( Single.instance( ReaderToolBar.class ), BorderLayout.NORTH );
@@ -82,8 +80,17 @@ public class ReaderWindow<T>
             @Override
             public void windowClosing(
                 final WindowEvent e )
-            { // clear content data, close streams, etc...  
-                bookContent.onClose();
+            { // clear content data, close streams, etc...
+                // leave a thread to wait until the clearing is done
+                new Thread( new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        updateLastRead();
+                        System.exit( 0 );
+                    }
+                } ).start();
             }
         } );
 
@@ -159,12 +166,19 @@ public class ReaderWindow<T>
             protected void doneSafe()
             {
                 setTitle( book.getName() );
+
+                final String charsetName = book.getPhysicalBook().getCharsetName();
+                Single.instance( CharsetChooser.class ).setCharset( charsetName );
+
                 // render the content
                 // todo remember the starting page
                 Single.instance( Paginator.class ).setPageCount( bookContent.getPageCount() );
 
-                final String charsetName = book.getPhysicalBook().getCharsetName();
-                Single.instance( CharsetChooser.class ).setCharset( charsetName );
+                final Note lastRead = book.getLastRead();
+                if ( lastRead != null )
+                {
+                    Single.instance( LayoutablePanel.class ).getCurrentPanels().goTo( lastRead );
+                }
             }
         } );
     }
@@ -223,5 +237,20 @@ public class ReaderWindow<T>
         {
             layoutable.getCurrentPanels().setContent( leftPage );
         }
+    }
+
+    private void updateLastRead()
+    {
+        log.debug( "updating last read position of " + book.getName() );
+        final Bookmark bookmark = Single.instance( LayoutablePanel.class ).getCurrentPanels().createBookmark();
+        this.book.setRead( true );
+
+        final Note lastRead = this.book.getLastRead();
+        lastRead.setPage( bookmark.getPage() );
+        lastRead.setPageCount( bookmark.getPageCount() );
+        lastRead.setPosition( bookmark.getPosition() );
+
+        BookShelf.mergeNote( lastRead );
+        log.debug( "last read position updated: " + lastRead.getPosition() );
     }
 }
