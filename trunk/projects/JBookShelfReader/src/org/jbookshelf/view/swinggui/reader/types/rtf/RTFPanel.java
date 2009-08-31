@@ -1,15 +1,20 @@
 package org.jbookshelf.view.swinggui.reader.types.rtf;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.Font;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.swing.BoundedRangeModel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.text.StyledDocument;
 
+import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
-import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
@@ -18,8 +23,12 @@ import org.jdesktop.swingx.JXEditorPane;
 public class RTFPanel
     extends SelectableTextPanel<StyledDocument>
 {
-    private final JXEditorPane editorPane = new JXEditorPane();
-    private final JScrollPane  scroll     = new JScrollPane( editorPane );
+    private final JXEditorPane    editorPane = new JXEditorPane();
+    private final JScrollPane     scroll     = new JScrollPane( editorPane );
+
+    private final Queue<Runnable> runnables  = new ConcurrentLinkedQueue<Runnable>();
+
+    private static final Logger   log        = Logger.getLogger( RTFPanel.class );
 
     public RTFPanel()
     {
@@ -29,6 +38,25 @@ public class RTFPanel
         editorPane.getCaret().setSelectionVisible( true );
         editorPane.setFont( FontChooser.DEFAULT_FONT );
         editorPane.addMouseListener( popupListener );
+
+        final BoundedRangeModel model = scroll.getVerticalScrollBar().getModel();
+        model.addChangeListener( new ChangeListener()
+        {
+            @Override
+            public void stateChanged(
+                final ChangeEvent e )
+            {
+                if ( !model.getValueIsAdjusting() && model.getMaximum() > 0 )
+                { // xxx invoke events from queue after initializing
+                    while ( runnables.size() > 0 )
+                    {
+                        final Runnable runnable = runnables.poll();
+                        log.debug( "queue size=" + runnables.size() );
+                        EventQueue.invokeLater( runnable );
+                    }
+                }
+            }
+        } );
     }
 
     @Override
@@ -36,9 +64,19 @@ public class RTFPanel
         final Bookmark bookmark )
     {
         final BoundedRangeModel model = scroll.getVerticalScrollBar().getModel();
-        final float max = model.getMaximum() - model.getExtent();
-        final float value = bookmark.getPosition() * max;
-        model.setValue( (int) value );
+        final Runnable runnable = new Runnable()
+        {
+            public void run()
+            {
+                final float max = model.getMaximum() - model.getExtent();
+                final float value = bookmark.getPosition() * max;
+                model.setValue( (int) value );
+            }
+        };
+        // xxx in case editorPane is still initializing - add a task to local queue
+        EventQueue.invokeLater( runnable );
+        runnables.add( runnable );
+        log.debug( "queue size=" + runnables.size() );
     }
 
     @Override
@@ -52,18 +90,14 @@ public class RTFPanel
     public void setContent(
         final StyledDocument content )
     {
-        final SafeWorker<JXEditorPane, Object> worker = new SafeWorker<JXEditorPane, Object>()
+        Single.instance( ProgressBar.class ).invoke( new Runnable()
         {
             @Override
-            protected JXEditorPane doInBackground()
+            public void run()
             {
                 editorPane.setDocument( content );
-                // todo remember position
-                scroll.getVerticalScrollBar().setValue( 0 );
-                return editorPane;
             }
-        };
-        Single.instance( ProgressBar.class ).invoke( worker );
+        } );
     }
 
     @Override

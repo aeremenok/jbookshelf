@@ -174,13 +174,22 @@ public class HTMLReaderPanel
     }
 
     @Override
-    public void goTo(
+    public synchronized void goTo(
         final Bookmark bookmark )
     {
-        final BoundedRangeModel model = htmlPanel.getBlockPanel().getVScrollBar().getModel();
-        final float max = model.getMaximum() - model.getExtent();
-        final float value = bookmark.getPosition() * max;
-        model.setValue( (int) value );
+        synchronized ( htmlPanel )
+        { // xxx wait until htmlPanel puts setDocumentImpl task into EventQueue
+            EventQueue.invokeLater( new Runnable()
+            {
+                public void run()
+                {
+                    final BoundedRangeModel model = htmlPanel.getBlockPanel().getVScrollBar().getModel();
+                    final float max = model.getMaximum() - model.getExtent();
+                    final float value = bookmark.getPosition() * max;
+                    model.setValue( (int) value );
+                }
+            } );
+        }
     }
 
     @Override
@@ -190,7 +199,7 @@ public class HTMLReaderPanel
     }
 
     @Override
-    public void setContent(
+    public synchronized void setContent(
         final HTMLContentContainer content )
     {
         Single.instance( ProgressBar.class ).invoke( new Runnable()
@@ -198,22 +207,25 @@ public class HTMLReaderPanel
             @Override
             public void run()
             {
-                Reader reader = null;
-                try
-                {
-                    reader = new StringReader( content.getContent() );
-                    final InputSource source = new InputSource( reader );
+                synchronized ( htmlPanel )
+                { // xxx let others wait until htmlPanel puts setDocumentImpl task into EventQueue
+                    Reader reader = null;
+                    try
+                    {
+                        reader = new StringReader( content.getContent() );
+                        final InputSource source = new InputSource( reader );
 
-                    doc = documentBuilder.parse( source );
-                    htmlPanel.setDocument( doc, rcontext );
-                }
-                catch ( final Exception e )
-                {
-                    log.error( e, e );
-                }
-                finally
-                {
-                    IOUtils.closeQuietly( reader );
+                        doc = documentBuilder.parse( source );
+                        htmlPanel.setDocument( doc, rcontext );
+                    }
+                    catch ( final Exception e )
+                    {
+                        log.error( e, e );
+                    }
+                    finally
+                    {
+                        IOUtils.closeQuietly( reader );
+                    }
                 }
             }
         } );

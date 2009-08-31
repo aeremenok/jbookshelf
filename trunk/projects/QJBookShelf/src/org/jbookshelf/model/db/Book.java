@@ -204,9 +204,6 @@ public class Book
         if ( lastRead == null )
         {
             lastRead = new Note();
-            lastRead.setPage( 1 );
-            lastRead.setPageCount( 1 );
-
             lastRead.setTitle( I18N.tr( "Last read position" ) );
 
             lastRead.setBook( this );

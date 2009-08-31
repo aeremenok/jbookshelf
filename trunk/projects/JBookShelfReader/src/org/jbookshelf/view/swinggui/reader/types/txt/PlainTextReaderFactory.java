@@ -22,6 +22,7 @@ public class PlainTextReaderFactory
         features.add( ReaderFactory.SEARCH );
         features.add( ReaderFactory.FONT );
         features.add( ReaderFactory.CHARSET );
+
         features.add( ReaderFactory.BOOKMARKS );
         features.add( ReaderFactory.NOTES );
     }
