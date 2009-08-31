@@ -20,14 +20,15 @@ import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
-import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.SortOrder;
 
@@ -40,10 +41,10 @@ public class BookmarkPanel
     public static class BoookmarkTableModel
         extends DefaultTableModel
     {
-        private static String[]  names =
-                                       { "#", I18N.tr( "Title" ), I18N.tr( "Pos" ) };
+        private static String[]      names     =
+                                               { "#", I18N.tr( "Page" ), I18N.tr( "Pos" ) };
 
-        private final List<Note> notes = new ArrayList<Note>();
+        private final List<Bookmark> bookmarks = new ArrayList<Bookmark>();
 
         public BoookmarkTableModel()
         {
@@ -51,17 +52,17 @@ public class BookmarkPanel
             AnnotationProcessor.process( this );
         }
 
-        public Note getNote(
+        public Bookmark getBookmark(
             final int row )
         {
-            return notes.get( row );
+            return bookmarks.get( row );
         }
 
         @Override
         public int getRowCount()
         {
-            return notes != null
-                ? notes.size() : 0;
+            return bookmarks != null
+                ? bookmarks.size() : 0;
         }
 
         @Override
@@ -69,15 +70,16 @@ public class BookmarkPanel
             final int row,
             final int column )
         {
-            final Note note = notes.get( row );
+            final Bookmark bookmark = bookmarks.get( row );
             switch ( column )
             {
                 case 0:
-                    return note.getId();
+                    return bookmark.getId();
                 case 1:
-                    return note.getTitle();
+                    return bookmark.getPage() != null
+                        ? bookmark.getPage() + "/" + bookmark.getPageCount() : "";
                 case 2:
-                    final String pos = note.getPosition().toString();
+                    final String pos = bookmark.getPosition().toString();
                     if ( pos.length() > 4 )
                     {
                         return pos.substring( 0, 4 );
@@ -97,7 +99,7 @@ public class BookmarkPanel
 
         @EventSubscriber( eventClass = Note.class )
         public void update(
-            @SuppressWarnings( "unused" ) final Note note )
+            @SuppressWarnings( "unused" ) final Bookmark note )
         {
             Single.instance( ProgressBar.class ).invoke( new SafeWorker<Object, Object>()
             {
@@ -105,8 +107,8 @@ public class BookmarkPanel
                 protected Object doInBackground()
                 {
                     final Book book = Single.instance( ReaderWindow.class ).getBook();
-                    notes.clear();
-                    notes.addAll( BookShelf.getNotes( book ) );
+                    bookmarks.clear();
+                    bookmarks.addAll( BookShelf.getNotes( book ) );
                     return null;
                 }
 
@@ -131,11 +133,15 @@ public class BookmarkPanel
         model.update( null );
 
         table.setSortOrder( 0, SortOrder.ASCENDING );
+        if ( !Single.instance( ReaderFactory.class ).getFeatures().contains( ReaderFactory.PAGING ) )
+        {
+            table.removeColumn( table.getColumn( 1 ) );
+        }
 
         // todo resize automatically
         final Dimension mainSize = Single.instance( LayoutablePanel.class ).getCurrentPanels().getSize();
         final Dimension preferredScrollableViewportSize = table.getPreferredScrollableViewportSize();
-        final Dimension size = new Dimension( preferredScrollableViewportSize.width + 30, mainSize.height - 45 );
+        final Dimension size = new Dimension( preferredScrollableViewportSize.width, mainSize.height - 45 );
         table.setPreferredScrollableViewportSize( size );
 
         table.packAll();
@@ -153,17 +159,8 @@ public class BookmarkPanel
                     if ( rowAtPoint > -1 )
                     {
                         final int selectedRow = table.convertRowIndexToModel( rowAtPoint );
-                        final Note note = model.getNote( selectedRow );
-                        final Integer page = note.getPage();
-                        if ( page != null && note.getPageCount() > 1 )
-                        {
-                            Single.instance( Paginator.class ).setNewPage( page );
-                        }
-                        else
-                        {
-                            @SuppressWarnings( "unused" ) final Float position = note.getPosition();
-                            // todo
-                        }
+                        final Bookmark bookmark = model.getBookmark( selectedRow );
+                        Single.instance( LayoutablePanel.class ).getCurrentPanels().goTo( bookmark );
                     }
                 }
             }

@@ -19,7 +19,7 @@ import javax.xml.parsers.DocumentBuilder;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
 import org.lobobrowser.html.HtmlRendererContext;
@@ -174,6 +174,16 @@ public class HTMLReaderPanel
     }
 
     @Override
+    public void goTo(
+        final Bookmark bookmark )
+    {
+        final BoundedRangeModel model = htmlPanel.getBlockPanel().getVScrollBar().getModel();
+        final float max = model.getMaximum() - model.getExtent();
+        final float value = bookmark.getPosition() * max;
+        model.setValue( (int) value );
+    }
+
+    @Override
     public void highlightText(
         final String text )
     { // todo 
@@ -211,7 +221,7 @@ public class HTMLReaderPanel
 
     @Override
     protected float getPosition(
-        final Note note )
+        final Bookmark note )
     {
         final BoundedRangeModel model = htmlPanel.getBlockPanel().getVScrollBar().getModel();
         final float value = model.getValue();

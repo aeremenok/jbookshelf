@@ -10,9 +10,11 @@ import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.text.PlainDocument;
 
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
+import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jdesktop.swingx.JXEditorPane;
 
 /**
@@ -34,6 +36,13 @@ public class PlaintTextPanel
         editorPane.getCaret().setSelectionVisible( true );
         editorPane.setFont( FontChooser.DEFAULT_FONT );
         editorPane.addMouseListener( popupListener );
+    }
+
+    @Override
+    public void goTo(
+        final Bookmark bookmark )
+    {
+        Single.instance( Paginator.class ).setNewPage( bookmark.getPage() - 1 );
     }
 
     @Override
@@ -75,7 +84,7 @@ public class PlaintTextPanel
 
     @Override
     protected float getPosition(
-        final Note note )
+        final Bookmark note )
     {
         final float page = note.getPage();
         return page / note.getPageCount();
