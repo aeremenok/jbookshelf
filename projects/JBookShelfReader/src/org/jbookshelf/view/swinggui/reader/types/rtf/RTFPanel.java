@@ -8,7 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.text.StyledDocument;
 
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
@@ -29,6 +29,16 @@ public class RTFPanel
         editorPane.getCaret().setSelectionVisible( true );
         editorPane.setFont( FontChooser.DEFAULT_FONT );
         editorPane.addMouseListener( popupListener );
+    }
+
+    @Override
+    public void goTo(
+        final Bookmark bookmark )
+    {
+        final BoundedRangeModel model = scroll.getVerticalScrollBar().getModel();
+        final float max = model.getMaximum() - model.getExtent();
+        final float value = bookmark.getPosition() * max;
+        model.setValue( (int) value );
     }
 
     @Override
@@ -74,7 +84,7 @@ public class RTFPanel
 
     @Override
     protected float getPosition(
-        final Note note )
+        final Bookmark note )
     {
         final BoundedRangeModel model = scroll.getVerticalScrollBar().getModel();
         final float value = model.getValue();

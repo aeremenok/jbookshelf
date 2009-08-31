@@ -17,6 +17,8 @@ public class HTMLReaderFactory
     {
         super();
         features.add( ReaderFactory.CHARSET );
+        features.add( ReaderFactory.BOOKMARKS );
+        features.add( ReaderFactory.NOTES );
     }
 
     @Override

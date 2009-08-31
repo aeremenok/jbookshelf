@@ -8,6 +8,7 @@ import java.awt.Font;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.NotesPanel;
 
 /**
@@ -35,6 +36,13 @@ public class OnePagePanels<PageType>
     public void changeNotesVisibility()
     {
         notesPanel.setVisible( !notesPanel.isVisible() );
+    }
+
+    @Override
+    public void goTo(
+        final Bookmark bookmark )
+    {
+        contentPanel.goTo( bookmark );
     }
 
     @Override

@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
@@ -25,6 +26,7 @@ import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
+import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 import org.xnap.commons.gui.util.PopupListener;
 
@@ -143,6 +145,13 @@ public class PDFPanel
     }
 
     @Override
+    public void goTo(
+        final Bookmark bookmark )
+    {
+        Single.instance( Paginator.class ).setNewPage( bookmark.getPage() - 1 );
+    }
+
+    @Override
     public void highlightText(
         final String text )
     {
@@ -206,7 +215,7 @@ public class PDFPanel
 
     @Override
     protected float getPosition(
-        final Note note )
+        final Bookmark note )
     {
         final float page = note.getPage();
         return page / note.getPageCount();

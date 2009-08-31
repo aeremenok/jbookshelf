@@ -11,7 +11,9 @@ import javax.swing.JSplitPane;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.NotesPanel;
+import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 
 /**
  * @author eav 2009
@@ -57,6 +59,13 @@ public class TwoPagePanels<PageType>
     {
         leftNotesPanel.setVisible( !leftNotesPanel.isVisible() );
         rightNotesPanel.setVisible( !rightNotesPanel.isVisible() );
+    }
+
+    @Override
+    public void goTo(
+        final Bookmark bookmark )
+    {
+        Single.instance( Paginator.class ).setNewPage( bookmark.getPage() - 1 );
     }
 
     @Override

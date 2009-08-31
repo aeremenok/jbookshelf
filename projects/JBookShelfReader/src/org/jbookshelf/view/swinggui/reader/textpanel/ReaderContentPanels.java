@@ -8,6 +8,8 @@ import java.awt.Font;
 
 import javax.swing.JPanel;
 
+import org.jbookshelf.model.db.Bookmark;
+
 /**
  * @author eav 2009
  * @param <PageType>
@@ -21,6 +23,9 @@ public abstract class ReaderContentPanels<PageType>
     }
 
     public abstract void changeNotesVisibility();
+
+    public abstract void goTo(
+        final Bookmark bookmark );
 
     public abstract void highlightText(
         final String text );

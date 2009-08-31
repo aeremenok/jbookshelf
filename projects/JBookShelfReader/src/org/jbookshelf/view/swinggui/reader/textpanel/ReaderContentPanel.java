@@ -9,6 +9,7 @@ import java.awt.Font;
 import javax.swing.JPanel;
 
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
@@ -47,6 +48,9 @@ public abstract class ReaderContentPanel<PageType>
         return note;
     }
 
+    public abstract void goTo(
+        final Bookmark bookmark );
+
     public abstract void highlightText(
         String text );
 
@@ -65,5 +69,5 @@ public abstract class ReaderContentPanel<PageType>
     {}
 
     protected abstract float getPosition(
-        Note note );
+        Bookmark note );
 }

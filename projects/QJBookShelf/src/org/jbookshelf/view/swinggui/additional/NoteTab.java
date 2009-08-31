@@ -21,6 +21,7 @@ import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
@@ -107,7 +108,7 @@ public class NoteTab
 
         @EventSubscriber( eventClass = Note.class )
         public void noteChanged(
-            @SuppressWarnings( "unused" ) final Note note )
+            @SuppressWarnings( "unused" ) final Bookmark note )
         { // todo for lots of notes can be optimized by adding, removing or changing the exact row 
             onEvent( Properties.BOOKS_SELECTED, Single.instance( BookShelfMediator.class ) );
         }

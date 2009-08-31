@@ -21,6 +21,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Category;
 import org.jbookshelf.model.db.HasBooks;
 import org.jbookshelf.model.db.Note;
@@ -555,7 +556,7 @@ public class BookShelf
     }
 
     public static void removeNote(
-        final Note note )
+        final Bookmark note )
     {
         final Session session = HibernateUtil.getSession();
         try
