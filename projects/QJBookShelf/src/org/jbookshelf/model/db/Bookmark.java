@@ -11,6 +11,9 @@ import javax.annotation.Nonnull;
  */
 public interface Bookmark
 {
+    String POSITION = "POSITION";
+    String PAGE     = "PAGE";
+
     Book getBook();
 
     Long getId();
@@ -20,6 +23,8 @@ public interface Bookmark
     Integer getPageCount();
 
     Float getPosition();
+
+    Float getRelativePageSize();
 
     void setBook(
         @Nonnull final Book book );
@@ -32,4 +37,7 @@ public interface Bookmark
 
     void setPosition(
         @Nonnull @Nonnegative final Float position );
+
+    void setRelativePageSize(
+        Float pageSize );
 }
