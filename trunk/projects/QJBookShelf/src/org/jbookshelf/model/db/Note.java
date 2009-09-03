@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * @author eav
@@ -60,6 +61,9 @@ public class Note
     @JoinColumn( name = "BOOK_ID", nullable = false )
     @org.hibernate.annotations.ForeignKey( name = "FK_NOTE_BOOK" )
     private Book    book;
+
+    @Transient
+    private Float   relativePageSize;
 
     @Override
     public boolean equals(
@@ -200,6 +204,13 @@ public class Note
         return this.position;
     }
 
+    @Transient
+    @Override
+    public Float getRelativePageSize()
+    {
+        return relativePageSize;
+    }
+
     public String getTitle()
     {
         return this.title;
@@ -261,6 +272,13 @@ public class Note
         @Nonnull @Nonnegative final Float position )
     {
         this.position = position;
+    }
+
+    @Override
+    public void setRelativePageSize(
+        final Float pageSize )
+    {
+        this.relativePageSize = pageSize;
     }
 
     public void setTitle(

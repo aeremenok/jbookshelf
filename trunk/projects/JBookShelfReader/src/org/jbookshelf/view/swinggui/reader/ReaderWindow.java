@@ -16,7 +16,6 @@ import javax.annotation.PostConstruct;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
-import org.bushe.swing.event.ObjectEvent;
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
@@ -97,10 +96,10 @@ public class ReaderWindow<T>
         AnnotationProcessor.process( this );
     }
 
-    @EventTopicSubscriber( topic = ReaderFactory.PAGING )
+    @EventTopicSubscriber( topic = Bookmark.PAGE )
     public void onPageChanged(
         @SuppressWarnings( "unused" ) final String topic,
-        @SuppressWarnings( "unused" ) final ObjectEvent objectEvent )
+        @SuppressWarnings( "unused" ) final Bookmark bookmark )
     {
         updateCurrentPage();
     }

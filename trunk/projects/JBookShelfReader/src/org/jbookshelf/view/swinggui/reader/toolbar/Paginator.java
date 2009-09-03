@@ -16,10 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.bushe.swing.event.EventBus;
-import org.bushe.swing.event.ObjectEvent;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.model.db.Bookmark;
+import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
-import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
 
 /**
@@ -201,6 +201,11 @@ public class Paginator
         nextAction.setEnabled( this.currentPage < pageCount - 1 );
         lastAction.setEnabled( this.currentPage < pageCount - 1 );
 
-        EventBus.publish( ReaderFactory.PAGING, new ObjectEvent( this, currentPage ) );
+        final Bookmark bookmark = new Note();
+        bookmark.setPage( currentPage );
+        bookmark.setPageCount( pageCount );
+        final float i = (currentPage + 1) / pageCount;
+        bookmark.setPosition( i );
+        EventBus.publish( Bookmark.PAGE, bookmark );
     }
 }

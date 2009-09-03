@@ -13,13 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
-import org.bushe.swing.event.ObjectEvent;
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
-import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.Thumbnail;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
@@ -69,10 +68,10 @@ public class PDFThumbnail
         AnnotationProcessor.process( this );
     }
 
-    @EventTopicSubscriber( topic = ReaderFactory.PAGING )
+    @EventTopicSubscriber( topic = Bookmark.PAGE )
     public void onPageChanged(
         @SuppressWarnings( "unused" ) final String topic,
-        @SuppressWarnings( "unused" ) final ObjectEvent objectEvent )
+        @SuppressWarnings( "unused" ) final Bookmark bookmark )
     {
         final int currentPage = Single.instance( Paginator.class ).getCurrentPage();
         setBorder( currentPage == pageNumber

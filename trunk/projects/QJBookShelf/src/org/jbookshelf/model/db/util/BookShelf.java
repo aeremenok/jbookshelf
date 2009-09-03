@@ -78,6 +78,7 @@ public class BookShelf
         }
     }
 
+    @SuppressWarnings( "unchecked" )
     public static Book bookByName(
         final String name )
     {
@@ -86,9 +87,9 @@ public class BookShelf
         {
             final Query query = session.createQuery( "from Book b where b.name=:p" );
             query.setString( "p", name );
-            final List list = query.list();
+            final List<Book> list = query.list();
             return list.size() > 0
-                ? (Book) list.get( 0 ) : null;
+                ? list.get( 0 ) : null;
         }
         catch ( final HibernateException e )
         {
@@ -255,6 +256,56 @@ public class BookShelf
             }
         }
         return book.getNotes();
+    }
+
+    @SuppressWarnings( "unchecked" )
+    public static List<Note> getNotesByPage(
+        final Bookmark bookmark )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            final Criteria criteria = session.createCriteria( Note.class );
+            criteria.add( Restrictions.eq( "book", bookmark.getBook() ) );
+            criteria.add( Restrictions.eq( "page", bookmark.getPage() ) );
+
+            return criteria.list();
+        }
+        catch ( final Exception e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+
+    @SuppressWarnings( "unchecked" )
+    public static List<Note> getNotesByPosition(
+        final Bookmark bookmark )
+    {
+        final Session session = HibernateUtil.getSession();
+        try
+        {
+            final Criteria criteria = session.createCriteria( Note.class );
+            criteria.add( Restrictions.eq( "book", bookmark.getBook() ) );
+            final Float position = bookmark.getPosition();
+            final Float pageSize = bookmark.getRelativePageSize();
+            criteria.add( Restrictions.between( "position", position - pageSize / 2, position + pageSize / 2 ) );
+
+            return criteria.list();
+        }
+        catch ( final Exception e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+        finally
+        {
+            session.close();
+        }
     }
 
     public static Category getOrAddCategory(
