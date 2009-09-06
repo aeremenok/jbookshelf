@@ -267,7 +267,8 @@ public class BookShelf
         {
             final Criteria criteria = session.createCriteria( Note.class );
             criteria.add( Restrictions.eq( "book", bookmark.getBook() ) );
-            criteria.add( Restrictions.eq( "page", bookmark.getPage() ) );
+            criteria.add( Restrictions.eq( "page", bookmark.getPage() + 1 ) );
+            criteria.add( Restrictions.ne( "id", bookmark.getBook().getLastRead().getId() ) );
 
             return criteria.list();
         }
@@ -294,6 +295,7 @@ public class BookShelf
             final Float position = bookmark.getPosition();
             final Float pageSize = bookmark.getRelativePageSize();
             criteria.add( Restrictions.between( "position", position - pageSize / 2, position + pageSize / 2 ) );
+            criteria.add( Restrictions.ne( "id", bookmark.getBook().getLastRead().getId() ) );
 
             return criteria.list();
         }
