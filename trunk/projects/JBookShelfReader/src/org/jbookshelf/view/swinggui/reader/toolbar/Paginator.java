@@ -20,6 +20,7 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
 
 /**
@@ -201,7 +202,9 @@ public class Paginator
         nextAction.setEnabled( this.currentPage < pageCount - 1 );
         lastAction.setEnabled( this.currentPage < pageCount - 1 );
 
+        // todo use template pattern
         final Bookmark bookmark = new Note();
+        bookmark.setBook( Single.instance( ReaderWindow.class ).getBook() );
         bookmark.setPage( currentPage );
         bookmark.setPageCount( pageCount );
         final float i = (currentPage + 1) / pageCount;
