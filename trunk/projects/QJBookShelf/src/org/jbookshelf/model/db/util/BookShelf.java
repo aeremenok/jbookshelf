@@ -267,7 +267,7 @@ public class BookShelf
         {
             final Criteria criteria = session.createCriteria( Note.class );
             criteria.add( Restrictions.eq( "book", bookmark.getBook() ) );
-            criteria.add( Restrictions.eq( "page", bookmark.getPage() + 1 ) );
+            criteria.add( Restrictions.eq( "page", bookmark.getPage() ) );
             criteria.add( Restrictions.ne( "id", bookmark.getBook().getLastRead().getId() ) );
 
             return criteria.list();

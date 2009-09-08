@@ -71,7 +71,7 @@ public class TwoPagePanels<PageType>
     public void goTo(
         final Bookmark bookmark )
     {
-        Single.instance( Paginator.class ).setNewPage( bookmark.getPage() - 1 );
+        Single.instance( Paginator.class ).setNewPage( bookmark.getPage() );
     }
 
     @Override
