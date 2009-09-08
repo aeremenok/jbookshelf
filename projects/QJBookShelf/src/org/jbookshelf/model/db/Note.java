@@ -291,4 +291,11 @@ public class Note
     {
         changeDate = new Date();
     }
+
+    @Override
+    public String toString()
+    {
+        return "Note [book=" + this.book + ", page=" + this.page + ", pageCount=" + this.pageCount + ", position="
+            + this.position + "]";
+    }
 }

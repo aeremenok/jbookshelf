@@ -148,7 +148,7 @@ public class PDFPanel
     public void goTo(
         final Bookmark bookmark )
     {
-        Single.instance( Paginator.class ).setNewPage( bookmark.getPage() - 1 );
+        Single.instance( Paginator.class ).setNewPage( bookmark.getPage() );
     }
 
     @Override
@@ -217,7 +217,7 @@ public class PDFPanel
     protected float getPosition(
         final Bookmark note )
     {
-        final float page = note.getPage();
+        final float page = note.getPage() + 1;
         return page / note.getPageCount();
     }
 }

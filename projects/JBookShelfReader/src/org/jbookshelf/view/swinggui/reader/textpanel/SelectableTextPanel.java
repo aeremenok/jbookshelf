@@ -99,7 +99,8 @@ public abstract class SelectableTextPanel<PageType>
             final int x,
             final int y )
         {
-            if ( getSelectedText().trim().length() > 0 )
+            final String text = getSelectedText();
+            if ( text != null && text.trim().length() > 0 )
             {
                 super.showPopup( source, x, y );
             }

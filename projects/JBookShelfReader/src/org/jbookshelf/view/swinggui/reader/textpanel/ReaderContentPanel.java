@@ -37,7 +37,7 @@ public abstract class ReaderContentPanel<PageType>
         final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
 
         final int currentPage = Single.instance( Paginator.class ).getCurrentPage();
-        note.setPage( currentPage + 1 );
+        note.setPage( currentPage );
         note.setPageCount( readerWindow.getBookContent().getPageCount() );
 
         note.setPosition( getPosition( note ) );
