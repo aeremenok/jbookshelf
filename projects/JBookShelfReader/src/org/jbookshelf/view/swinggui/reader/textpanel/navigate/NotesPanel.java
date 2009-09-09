@@ -113,9 +113,10 @@ public class NotesPanel
     }
 
     @SuppressWarnings( "unused" )
-    private static final Logger log       = Logger.getLogger( NotesPanel.class );
+    private static final Logger log        = Logger.getLogger( NotesPanel.class );
     private final boolean       isPageable;
-    private final NoteTable     noteTable = new NoteTable();
+    private final NoteTable     noteTable  = new NoteTable();
+    private int                 pageOffset = 0;
 
     public NotesPanel()
     {
@@ -154,6 +155,7 @@ public class NotesPanel
                 @Override
                 protected List<Note> doInBackground()
                 {
+                    bookmark.setPage( bookmark.getPage() + pageOffset );
                     return BookShelf.getNotesByPage( bookmark );
                 }
 
@@ -190,5 +192,11 @@ public class NotesPanel
                 }
             } );
         }
+    }
+
+    public void setPageOffset(
+        final int pageOffset )
+    {
+        this.pageOffset = pageOffset;
     }
 }

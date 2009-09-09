@@ -52,6 +52,8 @@ public class TwoPagePanels<PageType>
         splitPane.setLeftComponent( left );
         splitPane.setRightComponent( right );
         splitPane.setResizeWeight( 0.5 );
+
+        rightNotesPanel.setPageOffset( 1 );
     }
 
     @Override
