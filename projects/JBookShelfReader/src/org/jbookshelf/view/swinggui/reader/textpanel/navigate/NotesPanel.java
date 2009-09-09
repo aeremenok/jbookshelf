@@ -6,8 +6,8 @@ package org.jbookshelf.view.swinggui.reader.textpanel.navigate;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Point;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -40,52 +40,17 @@ public class NotesPanel
 {
     public static class NoteTable
         extends JXTable
+        implements
+        MouseListener
     {
         public NoteTable()
         {
             super( new NoteTableModel() );
 
-            final NoteTable noteTable = this;
-            noteTable.setDefaultRenderer( Note.class, new NoteArea() );
-            noteTable.getColumn( 0 ).setMinWidth( 300 );
-            noteTable.setRowHeight( noteTable.getRowHeight() * 7 );
-            noteTable.addMouseListener( new MouseAdapter()
-            {
-                @Override
-                public void mouseClicked(
-                    final MouseEvent e )
-                {
-                    final ReaderWindow window = Single.instance( ReaderWindow.class );
-                    final Point point = e.getPoint();
-
-                    final int column = noteTable.columnAtPoint( point );
-                    final int row = noteTable.rowAtPoint( point );
-
-                    final Note note = getModel().getNotes().get( noteTable.convertRowIndexToModel( row ) );
-
-                    switch ( column )
-                    {
-                        case 0:
-                            new NoteDialog( window, note ).setVisible( true );
-                            break;
-                        case 1:
-                            if ( JOptionPane.showConfirmDialog( window, I18N.tr( "Remove?" ), "",
-                                JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION )
-                            {
-                                BookShelf.removeNote( note );
-                                EventBus.publish( note );
-                            }
-                            break;
-                    }
-                }
-
-                @Override
-                public void mouseEntered(
-                    final MouseEvent e )
-                {
-                    noteTable.setCursor( new Cursor( Cursor.HAND_CURSOR ) );
-                }
-            } );
+            this.setDefaultRenderer( Note.class, new NoteArea() );
+            this.getColumn( 0 ).setMinWidth( 150 );
+            this.setRowHeight( this.getRowHeight() * 7 );
+            this.addMouseListener( this );
         }
 
         @Override
@@ -93,6 +58,58 @@ public class NotesPanel
         {
             return (NoteTableModel) super.getModel();
         }
+
+        @Override
+        public void mouseClicked(
+            final MouseEvent e )
+        {
+            final ReaderWindow window = Single.instance( ReaderWindow.class );
+            final Point point = e.getPoint();
+
+            final int column = this.columnAtPoint( point );
+            final int row = this.rowAtPoint( point );
+            if ( row > -1 )
+            {
+                final Note note = getModel().getNotes().get( this.convertRowIndexToModel( row ) );
+
+                switch ( column )
+                {
+                    case 0:
+                        new NoteDialog( window, note ).setVisible( true );
+                        break;
+                    case 1:
+                        if ( JOptionPane
+                            .showConfirmDialog( window, I18N.tr( "Remove?" ), "", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION )
+                        {
+                            BookShelf.removeNote( note );
+                            EventBus.publish( note );
+                        }
+                        break;
+                }
+            }
+        }
+
+        @Override
+        public void mouseEntered(
+            final MouseEvent e )
+        {
+            setCursor( new Cursor( Cursor.HAND_CURSOR ) );
+        }
+
+        @Override
+        public void mouseExited(
+            final MouseEvent e )
+        {}
+
+        @Override
+        public void mousePressed(
+            final MouseEvent e )
+        {}
+
+        @Override
+        public void mouseReleased(
+            final MouseEvent e )
+        {}
     }
 
     @SuppressWarnings( "unused" )
@@ -130,20 +147,24 @@ public class NotesPanel
         @SuppressWarnings( "unused" ) final String topic,
         final Bookmark bookmark )
     {
-        Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Note>, Note>()
+        if ( isVisible() )
         {
-            @Override
-            protected List<Note> doInBackground()
+            Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Note>, Note>()
             {
-                return BookShelf.getNotesByPage( bookmark );
-            }
+                @Override
+                protected List<Note> doInBackground()
+                {
+                    return BookShelf.getNotesByPage( bookmark );
+                }
 
-            @Override
-            protected void doneSafe()
-            {
-                noteTable.getModel().setNotes( getQuiet() );
-            }
-        } );
+                @Override
+                protected void doneSafe()
+                {
+                    noteTable.getModel().setNotes( getQuiet() );
+                    noteTable.packAll();
+                }
+            } );
+        }
     }
 
     @EventTopicSubscriber( topic = Bookmark.POSITION )
@@ -151,19 +172,23 @@ public class NotesPanel
         @SuppressWarnings( "unused" ) final String topic,
         final Bookmark bookmark )
     {
-        Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Note>, Note>()
+        if ( isVisible() )
         {
-            @Override
-            protected List<Note> doInBackground()
+            Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Note>, Note>()
             {
-                return BookShelf.getNotesByPosition( bookmark );
-            }
+                @Override
+                protected List<Note> doInBackground()
+                {
+                    return BookShelf.getNotesByPosition( bookmark );
+                }
 
-            @Override
-            protected void doneSafe()
-            {
-                noteTable.getModel().setNotes( getQuiet() );
-            }
-        } );
+                @Override
+                protected void doneSafe()
+                {
+                    noteTable.getModel().setNotes( getQuiet() );
+                    noteTable.packAll();
+                }
+            } );
+        }
     }
 }

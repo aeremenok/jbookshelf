@@ -294,7 +294,9 @@ public class BookShelf
             criteria.add( Restrictions.eq( "book", bookmark.getBook() ) );
             final Float position = bookmark.getPosition();
             final Float pageSize = bookmark.getRelativePageSize();
-            criteria.add( Restrictions.between( "position", position - pageSize / 2, position + pageSize / 2 ) );
+            final float lo = position - pageSize;
+            final float hi = position + pageSize;
+            criteria.add( Restrictions.between( "position", lo, hi ) );
             criteria.add( Restrictions.ne( "id", bookmark.getBook().getLastRead().getId() ) );
 
             return criteria.list();

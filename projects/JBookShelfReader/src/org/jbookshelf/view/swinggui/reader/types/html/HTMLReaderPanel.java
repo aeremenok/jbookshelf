@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.reader.BookmarkChangeListener;
 import org.jbookshelf.view.swinggui.reader.TaskQueue;
 import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
 import org.lobobrowser.html.HtmlRendererContext;
@@ -132,7 +133,9 @@ public class HTMLReaderPanel
         {
             if ( component == this.vScrollBar )
             {
-                this.vScrollBar.getModel().addChangeListener( taskQueue );
+                final BoundedRangeModel model = this.vScrollBar.getModel();
+                model.addChangeListener( taskQueue );
+                model.addChangeListener( new BookmarkChangeListener() );
             }
             return super.addComponent( component );
         }
@@ -248,11 +251,13 @@ public class HTMLReaderPanel
 
     @Override
     protected float getPosition(
-        final Bookmark note )
+        final Bookmark bookmark )
     {
         final BoundedRangeModel model = htmlPanel.getBlockPanel().getVScrollBar().getModel();
         final float value = model.getValue();
         final float max = model.getMaximum() - model.getExtent();
+        final float pageSize = model.getExtent() / max;
+        bookmark.setRelativePageSize( pageSize );
         return value / max;
     }
 

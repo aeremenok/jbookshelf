@@ -22,7 +22,7 @@ public class NoteArea
     implements
     TableCellRenderer
 {
-    private static final int MAX_LEN  = 150;
+    private static final int MAX_LEN  = 200;
 
     private final JTextArea  textArea = new JTextArea( 3, 20 );
     private final JLabel     label    = new JLabel();
@@ -33,13 +33,14 @@ public class NoteArea
         super( new BorderLayout() );
         setBorder( new DropShadowBorder() );
 
-        //        add( new JScrollPane( textArea ), BorderLayout.CENTER );
         add( textArea, BorderLayout.CENTER );
         add( label, BorderLayout.NORTH );
 
         textArea.setEditable( false );
         textArea.setFont( textArea.getFont().deriveFont( Font.ITALIC, 10f ) );
         textArea.setBackground( Color.ORANGE );
+        textArea.setLineWrap( true );
+        textArea.setWrapStyleWord( true );
     }
 
     @Override
