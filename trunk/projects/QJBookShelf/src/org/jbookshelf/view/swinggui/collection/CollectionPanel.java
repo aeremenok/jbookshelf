@@ -48,7 +48,7 @@ public class CollectionPanel
     {
         public SearchAction()
         {
-            super( "Search", IMG.icon( IMG.EDIT_FIND_PNG, 16 ) );
+            super( tr( "Search" ), IMG.icon( IMG.EDIT_FIND_PNG, 16 ) );
         }
 
         public void actionPerformed(
