@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.reader.BookmarkChangeListener;
 import org.jbookshelf.view.swinggui.reader.TaskQueue;
 import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
@@ -36,7 +37,9 @@ public class RTFPanel
         editorPane.setFont( FontChooser.DEFAULT_FONT );
         editorPane.addMouseListener( popupListener );
 
-        scroll.getVerticalScrollBar().getModel().addChangeListener( taskQueue );
+        final BoundedRangeModel model = scroll.getVerticalScrollBar().getModel();
+        model.addChangeListener( taskQueue );
+        model.addChangeListener( new BookmarkChangeListener() );
     }
 
     @Override
@@ -97,11 +100,13 @@ public class RTFPanel
 
     @Override
     protected float getPosition(
-        final Bookmark note )
+        final Bookmark bookmark )
     {
         final BoundedRangeModel model = scroll.getVerticalScrollBar().getModel();
         final float value = model.getValue();
         final float max = model.getMaximum() - model.getExtent();
+        final float pageSize = model.getExtent() / max;
+        bookmark.setRelativePageSize( pageSize );
         return value / max;
     }
 
