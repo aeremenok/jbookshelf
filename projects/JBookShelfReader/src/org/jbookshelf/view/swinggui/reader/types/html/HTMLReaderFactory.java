@@ -19,6 +19,7 @@ public class HTMLReaderFactory
         features.add( ReaderFactory.CHARSET );
         features.add( ReaderFactory.BOOKMARKS );
         features.add( ReaderFactory.NOTES );
+        features.add( ReaderFactory.BROWSER );
     }
 
     @Override

@@ -100,5 +100,9 @@ public class ReaderToolBar
         {
             addComponent( Single.instance( FontChooser.class ) );
         }
+        if ( features.contains( ReaderFactory.BROWSER ) )
+        {
+            addComponent( Single.instance( BrowserNavigator.class ) );
+        }
     }
 }

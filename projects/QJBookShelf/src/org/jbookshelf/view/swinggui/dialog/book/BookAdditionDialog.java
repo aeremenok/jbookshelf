@@ -3,6 +3,8 @@ package org.jbookshelf.view.swinggui.dialog.book;
 import java.io.File;
 
 import javax.swing.Action;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.border.TitledBorder;
 
 import org.jbookshelf.controller.singleton.Single;
@@ -44,10 +46,19 @@ public class BookAdditionDialog
     }
 
     public BookAdditionDialog(
-        final FileImportDialog dialog,
+        final JDialog parent,
         final File file )
     {
-        super( dialog, BUTTON_OKAY | BUTTON_CANCEL );
+        super( parent, BUTTON_OKAY | BUTTON_CANCEL );
+        init();
+        bookPanel.setFile( file );
+    }
+
+    public BookAdditionDialog(
+        final JFrame parent,
+        final File file )
+    {
+        super( parent, BUTTON_OKAY | BUTTON_CANCEL );
         init();
         bookPanel.setFile( file );
     }
@@ -74,9 +85,6 @@ public class BookAdditionDialog
         return false;
     }
 
-    /**
-     * @return the result
-     */
     @Nullable
     public Book getResult()
     {
