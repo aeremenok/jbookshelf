@@ -44,6 +44,11 @@ public class OnePagePanels<PageType>
         return contentPanel.createNote( null );
     }
 
+    public ReaderContentPanel<PageType> getContentPanel()
+    {
+        return this.contentPanel;
+    }
+
     @Override
     public void goTo(
         final Bookmark bookmark )

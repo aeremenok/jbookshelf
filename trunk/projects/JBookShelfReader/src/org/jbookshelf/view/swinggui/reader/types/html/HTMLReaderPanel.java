@@ -167,7 +167,7 @@ public class HTMLReaderPanel
 
         final SimpleUserAgentContext ucontext = new SimpleUserAgentContext();
         ucontext.setScriptingEnabled( false );
-        rcontext = new SimpleHtmlRendererContext( htmlPanel, ucontext );
+        rcontext = new EventRendererContext( htmlPanel, ucontext );
         documentBuilder = new DocumentBuilderImpl( ucontext, rcontext );
 
         htmlPanel.addSelectionChangeListener( new SelectionChangeListener()

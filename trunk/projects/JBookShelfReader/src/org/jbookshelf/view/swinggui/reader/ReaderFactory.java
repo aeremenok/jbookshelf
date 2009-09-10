@@ -25,6 +25,7 @@ public abstract class ReaderFactory<PageType>
     public static final String   LAYOUT     = "LAYOUT";
     public static final String   SCALING    = "SCALING";
     public static final String   PAGING     = "PAGING";
+    public static final String   BROWSER    = "BROWSER";
 
     protected final List<String> features   = new ArrayList<String>();
 
