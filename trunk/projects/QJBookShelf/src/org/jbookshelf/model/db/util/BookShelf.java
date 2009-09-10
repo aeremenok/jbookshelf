@@ -565,6 +565,12 @@ public class BookShelf
 
             session.persist( book );
             session.persist( book.getPhysicalBook() );
+            final Note lastRead = book.getLastRead();
+            if ( lastRead != null )
+            {
+                lastRead.timestamp();
+                session.persist( lastRead );
+            }
 
             session.getTransaction().commit();
         }

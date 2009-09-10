@@ -6,10 +6,13 @@ package org.jbookshelf.view.swinggui.reader.toolbar;
 import icons.IMG;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.bushe.swing.event.EventBus;
 import org.bushe.swing.event.ObjectEvent;
@@ -24,7 +27,12 @@ public class BrowserNavigator
 {
     public static enum BrowserCommand
     {
-        HOME, BACK, FORWARD, GOOGLE, SAVE
+        HOME,
+        BACK,
+        FORWARD,
+        GOOGLE,
+        SAVE,
+        ADDRESS
     }
 
     private class BackAction
@@ -33,6 +41,7 @@ public class BrowserNavigator
         public BackAction()
         {
             super( null, IMG.icon( IMG.PREVIOUS_PNG ) );
+            setEnabled( false );
         }
 
         @Override
@@ -49,6 +58,7 @@ public class BrowserNavigator
         public FwdAction()
         {
             super( null, IMG.icon( IMG.NEXT_PNG ) );
+            setEnabled( false );
         }
 
         @Override
@@ -71,7 +81,7 @@ public class BrowserNavigator
         public void actionPerformed(
             final ActionEvent e )
         {
-            EventBus.publish( ReaderFactory.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.HOME ) );
+            EventBus.publish( ReaderFactory.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.GOOGLE ) );
         }
     }
 
@@ -80,7 +90,8 @@ public class BrowserNavigator
     {
         public HomeAction()
         {
-            super( null, IMG.icon( IMG.NEXT_PNG ) );
+            super( null, IMG.icon( IMG.HOME_PNG ) );
+            setEnabled( false );
         }
 
         @Override
@@ -103,21 +114,49 @@ public class BrowserNavigator
         public void actionPerformed(
             final ActionEvent e )
         {
-            EventBus.publish( ReaderFactory.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.HOME ) );
+            EventBus.publish( ReaderFactory.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.SAVE ) );
         }
     }
+
+    private final JTextField address = new JTextField( 25 );
 
     public BrowserNavigator()
     {
         super();
         setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
 
-        add( new JButton( new FwdAction() ) );
         add( new JButton( new BackAction() ) );
+        add( new JButton( new FwdAction() ) );
         add( new JButton( new HomeAction() ) );
         add( new JButton( new GoogleAction() ) );
         add( new JButton( new SaveAction() ) );
 
-        // todo address
+        add( address );
+        address.addKeyListener( new KeyAdapter()
+        {
+            @Override
+            public void keyPressed(
+                final KeyEvent e )
+            {
+                final char keyChar = e.getKeyChar();
+                switch ( keyChar )
+                {
+                    case '\n':
+                    case '\r':
+                    case '\t':
+                        final ObjectEvent event = new ObjectEvent( BrowserNavigator.this, BrowserCommand.ADDRESS );
+                        EventBus.publish( ReaderFactory.BROWSER, event );
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        } );
+    }
+
+    public JTextField getAddress()
+    {
+        return this.address;
     }
 }
