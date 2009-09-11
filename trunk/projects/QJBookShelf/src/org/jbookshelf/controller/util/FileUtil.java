@@ -85,18 +85,27 @@ public class FileUtil
             }
             detector.dataEnd();
 
-            return detector.getDetectedCharset();
+            final String detectedCharset = detector.getDetectedCharset();
+            log.debug( "detected charset = " + detectedCharset );
+            return detectedCharset;
         }
         catch ( final Exception e )
         {
             log.error( e, e );
+            final String defaultCharset = Charset.defaultCharset().name();
+            log.debug( "returning defaultCharset = " + defaultCharset );
+            return defaultCharset;
         }
         finally
         {
             detector.reset();
             IOUtils.closeQuietly( is );
         }
+    }
 
-        return Charset.defaultCharset().name();
+    public static String guessStringEncoding(
+        final String string )
+    {
+        return guessByteArrayEncoding( string.getBytes() );
     }
 }

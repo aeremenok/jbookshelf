@@ -238,7 +238,7 @@ public class ReaderWindow<T>
         }
     }
 
-    private void updateLastRead()
+    public void updateLastRead()
     {
         log.debug( "updating last read position of " + book.getName() );
         final Bookmark bookmark = Single.instance( LayoutablePanel.class ).getCurrentPanels().createBookmark();
