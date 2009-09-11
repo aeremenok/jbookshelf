@@ -16,8 +16,11 @@ import javax.swing.JTextField;
 
 import org.bushe.swing.event.EventBus;
 import org.bushe.swing.event.ObjectEvent;
+import org.bushe.swing.event.annotation.AnnotationProcessor;
+import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
+import org.jbookshelf.view.swinggui.reader.types.html.EventRendererContext;
 
 /**
  * @author eav
@@ -91,7 +94,6 @@ public class BrowserNavigator
         public HomeAction()
         {
             super( null, IMG.icon( IMG.HOME_PNG ) );
-            setEnabled( false );
         }
 
         @Override
@@ -118,15 +120,18 @@ public class BrowserNavigator
         }
     }
 
-    private final JTextField address = new JTextField( 25 );
+    private final JTextField address    = new JTextField( 25 );
+
+    private final BackAction backAction = new BackAction();
+    private final FwdAction  fwdAction  = new FwdAction();
 
     public BrowserNavigator()
     {
         super();
         setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
 
-        add( new JButton( new BackAction() ) );
-        add( new JButton( new FwdAction() ) );
+        add( new JButton( backAction ) );
+        add( new JButton( fwdAction ) );
         add( new JButton( new HomeAction() ) );
         add( new JButton( new GoogleAction() ) );
         add( new JButton( new SaveAction() ) );
@@ -153,10 +158,28 @@ public class BrowserNavigator
                 }
             }
         } );
+
+        AnnotationProcessor.process( this );
     }
 
     public JTextField getAddress()
     {
         return this.address;
+    }
+
+    @EventTopicSubscriber( topic = EventRendererContext.BACK_AVAILABLE )
+    public void onBackAvailable(
+        @SuppressWarnings( "unused" ) final String topic,
+        final ObjectEvent event )
+    {
+        backAction.setEnabled( (Boolean) event.getEventObject() );
+    }
+
+    @EventTopicSubscriber( topic = EventRendererContext.FORWARD_AVAILABLE )
+    public void onFwdAvailable(
+        @SuppressWarnings( "unused" ) final String topic,
+        final ObjectEvent event )
+    {
+        fwdAction.setEnabled( (Boolean) event.getEventObject() );
     }
 }
