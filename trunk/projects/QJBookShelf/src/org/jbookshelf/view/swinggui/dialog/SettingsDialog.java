@@ -1,10 +1,15 @@
 package org.jbookshelf.view.swinggui.dialog;
 
+import java.net.Proxy.Type;
+
 import javax.swing.Action;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 
 import org.jbookshelf.controller.settings.Settings;
@@ -37,10 +42,18 @@ public class SettingsDialog
     private final JComboBox            lafComboBox        = new JComboBox( new LookAndFeelComboBoxModel() );
     private final FileChooserPanel     wspDirChooserPanel = new FileChooserPanelExt( 50, "wsp.dir.chooser" );
 
+    // todo add proxy checking
+    private final JComboBox            proxyTypeComboBox  = new JComboBox();
+    private final JTextField           proxyHostField     = new JTextField();
+    private final JSpinner             proxyPortField     = new JSpinner( new SpinnerNumberModel( 0, 0, 99999, 1 ) );
+
     private final JLabel               langLabel          = new JLabel();
     private final JLabel               lafLabel           = new JLabel();
     private final JLabel               wspDirLabel        = new JLabel();
     private final JLabel               infoLabel          = new JLabel();
+    private final JLabel               proxyTypeLabel     = new JLabel();
+    private final JLabel               proxyHostLabel     = new JLabel();
+    private final JLabel               proxyPortLabel     = new JLabel();
 
     public SettingsDialog()
     {
@@ -83,12 +96,20 @@ public class SettingsDialog
             langComboBox.addItem( lang );
         }
 
+        proxyTypeComboBox.addItem( Type.DIRECT );
+        proxyTypeComboBox.addItem( Type.HTTP );
+        proxyTypeComboBox.addItem( Type.SOCKS );
+
         getCancelAction().putValue( Action.NAME, i18n.tr( "Cancel" ) );
         getDefaultsAction().putValue( Action.NAME, i18n.tr( "Defaults" ) );
 
         langLabel.setText( i18n.tr( "Language" ) + " *" );
         lafLabel.setText( i18n.tr( "Look and feel" ) );
         wspDirLabel.setText( i18n.tr( "Workspace directory" ) );
+
+        proxyTypeLabel.setText( i18n.tr( "Proxy Type" ) );
+        proxyHostLabel.setText( i18n.tr( "Proxy Host" ) );
+        proxyPortLabel.setText( i18n.tr( "Proxy Port" ) );
 
         infoLabel.setText( i18n.tr( " * - Requires restart" ) );
 
@@ -102,6 +123,9 @@ public class SettingsDialog
         mediator.add( settings.LANGUAGE, langComboBox.getModel() );
         mediator.add( settings.LAF, lafComboBox.getModel() );
         mediator.add( settings.WORKSPACE_DIR, wspDirChooserPanel.getTextField() );
+        mediator.add( settings.PROXY_TYPE, proxyTypeComboBox.getModel() );
+        mediator.add( settings.PROXY_HOST, proxyHostField );
+        mediator.add( settings.PROXY_PORT, (SpinnerNumberModel) proxyPortField.getModel() );
 
         wspDirChooserPanel.getFileChooser().setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
 
@@ -117,7 +141,16 @@ public class SettingsDialog
         panel.add( wspDirLabel, 2, 0 );
         panel.add( wspDirChooserPanel, 2, 1 );
 
-        panel.add( infoLabel, 3, 1, 1, 2 );
+        panel.add( proxyTypeLabel, 3, 0 );
+        panel.add( proxyTypeComboBox, 3, 1 );
+
+        panel.add( proxyHostLabel, 4, 0 );
+        panel.add( proxyHostField, 4, 1 );
+
+        panel.add( proxyPortLabel, 5, 0 );
+        panel.add( proxyPortField, 5, 1 );
+
+        panel.add( infoLabel, 6, 1, 1, 2 );
     }
 
     @Override
