@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="translate" name="Create Runnable Jar for Project QJBookShelf" basedir=".">
+<project default="translate" name="Translate" basedir=".">
 
     <property name="libdir" value="${basedir}/lib" />
+    <property name="readerdir" value="${basedir}/../JBookShelfReader" />
 
     <path id="antlib.cp">
         <fileset dir="${basedir}/antlib" />
@@ -14,7 +15,8 @@
         </taskdef>
 
         <extract keysFile="messages.pot" poDirectory="i18n" keywords="-ktr">
-            <fileset dir="src" includes="**/*.java" />
+            <fileset dir="${basedir}/src" includes="**/*.java" />
+            <fileset dir="${readerdir}/src" includes="**/*.java" />
         </extract>
     </target>
 

@@ -42,7 +42,7 @@ public class BookmarkPanel
         extends DefaultTableModel
     {
         private static String[]      names     =
-                                               { "#", I18N.tr( "Page" ), I18N.tr( "Pos" ) };
+                                               { "#", I18N.tr( "Page" ), I18N.tr( "Position" ) };
 
         private final List<Bookmark> bookmarks = new ArrayList<Bookmark>();
 
