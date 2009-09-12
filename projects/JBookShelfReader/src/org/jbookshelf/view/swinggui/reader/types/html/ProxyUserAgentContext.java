@@ -41,11 +41,12 @@ public class ProxyUserAgentContext
             {
                 final CheckCredentialsService service = new CheckCredentialsService();
                 final JXLoginDialog dialog = new JXLoginDialog( Single.instance( ReaderWindow.class ), true );
-                dialog.setTitle( I18N.tr( "Credentials are not stored anywhere" ) );
 
                 final JXLoginPane panel = dialog.getPanel();
                 panel.setLoginService( service );
                 panel.setUserName( user );
+                panel.setBannerText( getRequestingPrompt() );
+                panel.setMessage( I18N.tr( "Proxy credentials are not stored by JBookShelf" ) );
 
                 dialog.setVisible( true );
 
