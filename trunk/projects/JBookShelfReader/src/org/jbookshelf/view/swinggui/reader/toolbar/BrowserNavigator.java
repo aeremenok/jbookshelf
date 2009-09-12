@@ -8,6 +8,7 @@ import icons.IMG;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Collection;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,9 +19,12 @@ import org.bushe.swing.event.EventBus;
 import org.bushe.swing.event.ObjectEvent;
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventTopicSubscriber;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.ReaderFactory;
 import org.jbookshelf.view.swinggui.reader.types.html.EventRendererContext;
+import org.jbookshelf.view.swinggui.reader.types.html.History;
+import org.xnap.commons.gui.Builder;
 
 /**
  * @author eav
@@ -94,6 +98,7 @@ public class BrowserNavigator
         public HomeAction()
         {
             super( null, IMG.icon( IMG.HOME_PNG ) );
+            setEnabled( false );
         }
 
         @Override
@@ -110,6 +115,7 @@ public class BrowserNavigator
         public SaveAction()
         {
             super( null, IMG.icon( IMG.DOCUMENT_SAVE_PNG ) );
+            setEnabled( false );
         }
 
         @Override
@@ -124,6 +130,8 @@ public class BrowserNavigator
 
     private final BackAction backAction = new BackAction();
     private final FwdAction  fwdAction  = new FwdAction();
+    private final HomeAction homeAction = new HomeAction();
+    private final SaveAction saveAction = new SaveAction();
 
     public BrowserNavigator()
     {
@@ -132,9 +140,9 @@ public class BrowserNavigator
 
         add( new JButton( backAction ) );
         add( new JButton( fwdAction ) );
-        add( new JButton( new HomeAction() ) );
+        add( new JButton( homeAction ) );
         add( new JButton( new GoogleAction() ) );
-        add( new JButton( new SaveAction() ) );
+        add( new JButton( saveAction ) );
 
         add( address );
         address.addKeyListener( new KeyAdapter()
@@ -159,6 +167,9 @@ public class BrowserNavigator
             }
         } );
 
+        final Collection c = Single.instance( History.class ).getUrls();
+        Builder.addCompletion( address, new IngoreCaseCollectionCompletionModel( c ) );
+
         AnnotationProcessor.process( this );
     }
 
@@ -167,19 +178,22 @@ public class BrowserNavigator
         return this.address;
     }
 
-    @EventTopicSubscriber( topic = EventRendererContext.BACK_AVAILABLE )
-    public void onBackAvailable(
+    @EventTopicSubscriber( topic = History.NAVIGATION )
+    public void onNavigation(
         @SuppressWarnings( "unused" ) final String topic,
         final ObjectEvent event )
     {
-        backAction.setEnabled( (Boolean) event.getEventObject() );
-    }
+        final History history = Single.instance( History.class );
+        fwdAction.setEnabled( history.hasNext() );
+        backAction.setEnabled( history.hasPrevious() );
 
-    @EventTopicSubscriber( topic = EventRendererContext.FORWARD_AVAILABLE )
-    public void onFwdAvailable(
-        @SuppressWarnings( "unused" ) final String topic,
-        final ObjectEvent event )
-    {
-        fwdAction.setEnabled( (Boolean) event.getEventObject() );
+        final Object source = event.getSource();
+        if ( source instanceof EventRendererContext )
+        {
+            final EventRendererContext context = (EventRendererContext) source;
+            final boolean bookDisplayed = context.isBookDisplayed();
+            homeAction.setEnabled( !bookDisplayed );
+            saveAction.setEnabled( !bookDisplayed );
+        }
     }
 }

@@ -17,12 +17,15 @@ package org.jbookshelf.controller.settings;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.Proxy;
 
 import javax.annotation.PostConstruct;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 
 import org.jbookshelf.view.i18n.I18N;
+import org.xnap.commons.settings.EnumSetting;
+import org.xnap.commons.settings.IntSetting;
 import org.xnap.commons.settings.PropertyResource;
 import org.xnap.commons.settings.StringSetting;
 
@@ -36,11 +39,15 @@ import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 public class Settings
     extends PropertyResource
 {
-    public StringSetting     LANGUAGE;
-    public StringSetting     LAF;
-    public StringSetting     JBS_DIR;
-    public StringSetting     WORKSPACE_DIR;
-    public StringListSetting IMPORT_MASKS;
+    public StringSetting           LANGUAGE;
+    public StringSetting           LAF;
+    public StringSetting           JBS_DIR;
+    public StringSetting           WORKSPACE_DIR;
+    public StringListSetting       IMPORT_MASKS;
+
+    public EnumSetting<Proxy.Type> PROXY_TYPE;
+    public StringSetting           PROXY_HOST;
+    public IntSetting              PROXY_PORT;
 
     @PostConstruct
     public void initSingleton()
@@ -84,6 +91,7 @@ public class Settings
     /**
      * creates default values
      */
+    @SuppressWarnings( "unchecked" )
     private void initDefaults()
     {
         LANGUAGE = new StringSetting( this, "language", I18N.defaultLanguage() );
@@ -94,6 +102,10 @@ public class Settings
         final String jbsDir = home + "/.jbookshelf/";
         JBS_DIR = new StringSetting( this, "jbs_dir", jbsDir );
         WORKSPACE_DIR = new StringSetting( this, "workspace_dir", home );
+
+        PROXY_TYPE = new EnumSetting( this, "PROXY_TYPE", Proxy.Type.DIRECT );
+        PROXY_HOST = new StringSetting( this, "PROXY_HOST", "proxy" );
+        PROXY_PORT = new IntSetting( this, "PROXY_PORT", 3128 );
 
         String lafName;
         try

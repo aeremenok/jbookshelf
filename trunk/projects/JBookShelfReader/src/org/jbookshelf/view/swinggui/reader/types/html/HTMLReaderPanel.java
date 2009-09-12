@@ -165,8 +165,7 @@ public class HTMLReaderPanel
         super();
         add( htmlPanel, BorderLayout.CENTER );
 
-        final SimpleUserAgentContext ucontext = new SimpleUserAgentContext();
-        ucontext.setScriptingEnabled( false );
+        final SimpleUserAgentContext ucontext = new ProxyUserAgentContext();
         rcontext = new EventRendererContext( htmlPanel, ucontext );
         documentBuilder = new DocumentBuilderImpl( ucontext, rcontext );
 
