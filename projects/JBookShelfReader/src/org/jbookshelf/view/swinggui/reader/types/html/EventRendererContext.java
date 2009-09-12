@@ -38,7 +38,7 @@ import org.w3c.dom.html2.HTMLLinkElement;
 public class EventRendererContext
     extends SimpleHtmlRendererContext
 {
-    private static final String GOOGLE_URL      = "http://www.google.com";
+    public static final String  GOOGLE_URL      = "http://www.google.com";
 
     private static final Logger log             = Logger.getLogger( HTMLReaderPanel.class );
 
@@ -204,15 +204,18 @@ public class EventRendererContext
                     final File file = new File( parent + "/" + name + ".html" );
                     file.createNewFile();
 
-                    // fixme wrong encoding!
-                    FileUtils.writeStringToFile( file, getSourceCode(), "utf8" );
+                    FileUtils.copyURLToFile( new URL( getHistory().current() ), file );
 
                     return new BookAdditionDialog( window, file )
                     {
                         @Override
                         protected void cancelled()
                         {
-                            file.deleteOnExit();
+                            final boolean delete = file.delete();
+                            if ( !delete )
+                            {
+                                file.deleteOnExit();
+                            }
                         }
                     };
                 }

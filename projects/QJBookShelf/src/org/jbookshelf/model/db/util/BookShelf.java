@@ -748,17 +748,23 @@ public class BookShelf
         throws SQLException
     {
         final String q1 = "delete from author_book where books_id=?";
-        final String q3 = "delete from category_book where books_id=?";
-        final String q5 = "delete from book where id=?";
-        final String q8 = "delete from physical_book where book_id=?";
+        final String q2 = "delete from category_book where books_id=?";
+        final String q3 = "delete from physical_book where book_id=?";
+        final String q4 = "update book set LASTREAD_ID=null where id=?";
+        final String q5 = "delete from note where book_id=?";
+        final String q6 = "delete from book where id=?";
 
         runner.update( q1, new Object[]
         { unique.getId() } );
+        runner.update( q2, new Object[]
+        { unique.getId() } );
         runner.update( q3, new Object[]
         { unique.getId() } );
-        runner.update( q8, new Object[]
+        runner.update( q4, new Object[]
         { unique.getId() } );
         runner.update( q5, new Object[]
+        { unique.getId() } );
+        runner.update( q6, new Object[]
         { unique.getId() } );
     }
 
