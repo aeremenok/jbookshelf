@@ -101,7 +101,7 @@ public class NoteDialog
         citationWrapper.setBorder( new TitledBorder( i18n.tr( "Citation" ) ) );
         contentWrapper.setBorder( new TitledBorder( i18n.tr( "Note" ) ) );
         getCancelAction().putValue( Action.NAME, i18n.tr( "Cancel" ) );
-        pageLabel.setText( i18n.tr( "Page: " ) + note.getPage() + "/" + note.getPageCount() + " " );
+        pageLabel.setText( i18n.tr( "Page: " ) + (note.getPage() + 1) + "/" + note.getPageCount() + " " );
         posLabel.setText( i18n.tr( "Position: " ) + note.getPosition() );
     }
 
@@ -123,7 +123,9 @@ public class NoteDialog
 
         final Box horizontalBox = Box.createHorizontalBox();
         horizontalBox.add( title );
+        horizontalBox.add( Box.createRigidArea( new Dimension( 10, 0 ) ) );
         horizontalBox.add( pageLabel );
+        horizontalBox.add( Box.createRigidArea( new Dimension( 10, 0 ) ) );
         horizontalBox.add( posLabel );
 
         panel.add( horizontalBox, BorderLayout.NORTH );

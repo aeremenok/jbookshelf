@@ -67,7 +67,7 @@ public class ToolBar
         public void actionPerformed(
             final ActionEvent e )
         {
-            new BugReportDialog( null ).setVisible( true );
+            new BugReportDialog().setVisible( true );
         }
     }
 
