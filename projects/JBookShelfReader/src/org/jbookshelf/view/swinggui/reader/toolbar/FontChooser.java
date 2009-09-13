@@ -71,7 +71,7 @@ public class FontChooser
     {
         public ShowChooserAction()
         {
-            super( null, IMG.icon( IMG.FONT_PNG ) );
+            super( IMG.icon( IMG.FONT_PNG ), tr( "Choose font" ) );
         }
 
         @Override

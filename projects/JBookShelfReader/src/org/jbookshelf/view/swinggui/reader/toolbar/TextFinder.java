@@ -29,7 +29,7 @@ public class TextFinder
     {
         public FindAction()
         {
-            super( null, IMG.icon( IMG.EDIT_FIND_PNG ) );
+            super( IMG.icon( IMG.EDIT_FIND_PNG ), tr( "Find text" ) );
         }
 
         public void actionPerformed(
@@ -47,7 +47,7 @@ public class TextFinder
     {
         public FindNextAction()
         {
-            super( null, IMG.icon( IMG.ARROW_DOWN_PNG ) );
+            super( IMG.icon( IMG.ARROW_DOWN_PNG ), tr( "Find next occurence" ) );
         }
 
         public void actionPerformed(
@@ -65,7 +65,7 @@ public class TextFinder
     {
         public FindPreviousAction()
         {
-            super( null, IMG.icon( IMG.ARROW_UP_PNG ) );
+            super( IMG.icon( IMG.ARROW_UP_PNG ), tr( "Find previous occurence" ) );
         }
 
         public void actionPerformed(

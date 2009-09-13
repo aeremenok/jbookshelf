@@ -34,7 +34,7 @@ public class Layouter
     {
         public LayoutAction()
         {
-            super( null, IMG.icon( IMG.RIGHT_NEW_PNG ) );
+            super( IMG.icon( IMG.RIGHT_NEW_PNG ), tr( "Switch page layout" ) );
         }
 
         @Override

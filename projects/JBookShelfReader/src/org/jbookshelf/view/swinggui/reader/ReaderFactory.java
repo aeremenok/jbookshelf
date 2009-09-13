@@ -15,7 +15,6 @@ import org.jbookshelf.model.db.Book;
 public abstract class ReaderFactory<PageType>
 {
     // todo enum?
-    public static final String   TOC        = "TOC";
     public static final String   BOOKMARKS  = "BOOKMARKS";
     public static final String   THUMBNAILS = "THUMBNAILS";
     public static final String   NOTES      = "NOTES";

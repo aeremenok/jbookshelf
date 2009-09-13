@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JBookShelf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-12 23:22+0400\n"
+"POT-Creation-Date: 2009-09-13 17:59+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: eav <eav1986@gmail.com>\n"
 "Language-Team: eav <eav1986@gmail.com>\n"
@@ -181,15 +181,15 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:102
+#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:93
 msgid "Describe an issue"
 msgstr ""
 
-#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:104
+#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:95
 msgid "Send..."
 msgstr ""
 
-#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:105
+#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:96
 #: src/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:103
 #: src/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:103
 #: src/org/jbookshelf/view/swinggui/dialog/book/BookEditDialog.java:99
@@ -197,19 +197,19 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:107
+#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:98
 msgid "What steps will reproduce the problem?"
 msgstr ""
 
-#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:108
+#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:99
 msgid "What is the expected output?"
 msgstr ""
 
-#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:109
+#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:100
 msgid "What do you see instead?"
 msgstr ""
 
-#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:113
+#: src/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:104
 msgid ""
 "<html><i>Please describe a bug or a suggestion. Click 'Send...' to send a "
 "report via e-mail.</i></html>"
@@ -455,8 +455,93 @@ msgstr ""
 msgid "Remove?"
 msgstr ""
 
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/textpanel/navigate/ThumbnailPanel.java:35
+msgid "Down"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/textpanel/navigate/ThumbnailPanel.java:55
+msgid "Up"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/BrowserNavigator.java:50
+msgid "Back"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/BrowserNavigator.java:67
+msgid "Forward"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/BrowserNavigator.java:84
+msgid "Open google"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/BrowserNavigator.java:100
+msgid "Back to book"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/BrowserNavigator.java:117
+msgid "Save as new book"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/ContentActionsPanel.java:37
+msgid "Show global bookmarks"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/ContentActionsPanel.java:46
+msgid "Show local notes"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/ContentActionsPanel.java:62
+msgid "Show thumbnails"
+msgstr ""
+
 #: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/FontChooser.java:56
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/FontChooser.java:74
 msgid "Choose font"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/Layouter.java:37
+msgid "Switch page layout"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/Paginator.java:39
+msgid "First page"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/Paginator.java:55
+msgid "Last page"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/Paginator.java:71
+msgid "Next page"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/Paginator.java:90
+msgid "Previous page"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/ReaderToolBar.java:38
+msgid "Open book directory"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/Scalator.java:35
+msgid "Zoom in"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/Scalator.java:55
+msgid "Zoom out"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/TextFinder.java:32
+msgid "Find text"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/TextFinder.java:50
+msgid "Find next occurence"
+msgstr ""
+
+#: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/toolbar/TextFinder.java:68
+msgid "Find previous occurence"
 msgstr ""
 
 #: ../JBookShelfReader/src/org/jbookshelf/view/swinggui/reader/types/html/EventRendererContext.java:194

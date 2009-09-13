@@ -47,7 +47,7 @@ public class BrowserNavigator
     {
         public BackAction()
         {
-            super( null, IMG.icon( IMG.PREVIOUS_PNG ) );
+            super( IMG.icon( IMG.PREVIOUS_PNG ), tr( "Back" ) );
             setEnabled( false );
         }
 
@@ -64,7 +64,7 @@ public class BrowserNavigator
     {
         public FwdAction()
         {
-            super( null, IMG.icon( IMG.NEXT_PNG ) );
+            super( IMG.icon( IMG.NEXT_PNG ), tr( "Forward" ) );
             setEnabled( false );
         }
 
@@ -81,7 +81,7 @@ public class BrowserNavigator
     {
         public GoogleAction()
         {
-            super( null, IMG.icon( IMG.GOOGLE_PNG ) );
+            super( IMG.icon( IMG.GOOGLE_PNG ), tr( "Open google" ) );
         }
 
         @Override
@@ -97,7 +97,7 @@ public class BrowserNavigator
     {
         public HomeAction()
         {
-            super( null, IMG.icon( IMG.HOME_PNG ) );
+            super( IMG.icon( IMG.HOME_PNG ), tr( "Back to book" ) );
             setEnabled( false );
         }
 
@@ -114,7 +114,7 @@ public class BrowserNavigator
     {
         public SaveAction()
         {
-            super( null, IMG.icon( IMG.DOCUMENT_SAVE_PNG ) );
+            super( IMG.icon( IMG.DOCUMENT_SAVE_PNG ), tr( "Save as new book" ) );
             setEnabled( false );
         }
 

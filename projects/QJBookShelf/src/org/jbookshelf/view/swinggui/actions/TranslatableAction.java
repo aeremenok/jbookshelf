@@ -1,6 +1,7 @@
 package org.jbookshelf.view.swinggui.actions;
 
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.Icon;
 
 import org.jbookshelf.view.i18n.I18N;
@@ -22,6 +23,14 @@ public abstract class TranslatableAction
     public TranslatableAction()
     {
         super();
+    }
+
+    public TranslatableAction(
+        final Icon icon,
+        final String desc )
+    {
+        super( null, icon );
+        putValue( Action.SHORT_DESCRIPTION, desc );
     }
 
     public TranslatableAction(
