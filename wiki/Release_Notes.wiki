@@ -1,4 +1,30 @@
 #labels Featured
+=JBookShelf 0.6b3=
+
+[http://jbookshelf.googlecode.com/files/jbookshelf-0.6b3.zip Download for all platforms] 
+
+[http://code.google.com/p/jbookshelf/wiki/Screenshots Screenshots]
+
+==Changes==
+
+ * Viewer
+   * Every viewer is opened in a separate process
+   * Viewer remembers the last opened position
+   * Notes can be displayed 
+     * locally - near position they belong to
+     * globally - table with all notes allows navigation to their positions
+   * PDF-viewer provides page thumbnails
+
+==Fixed==
+  
+   * [http://code.google.com/p/jbookshelf/issues/detail?id=133 Syncronized scaling in two-page layout]
+
+==Known issues==
+
+ * [http://code.google.com/p/jbookshelf/issues/list?can=2&q=&sort=milestone&colspec=ID%20Type%20Status%20Priority%20Milestone%20Owner%20Summary Issues]
+
+----
+
 =JBookShelf 0.6b2=
 
 [http://jbookshelf.googlecode.com/files/jbookshelf-0.6b2.zip Download for all platforms] 
