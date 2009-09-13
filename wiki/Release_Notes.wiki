@@ -14,6 +14,8 @@
      * locally - near position they belong to
      * globally - table with all notes allows navigation to their positions
    * PDF-viewer provides page thumbnails
+   * HTML-viewer can browse external links
+   * External page can be saved as new book while browsing
 
 ==Fixed==
   
