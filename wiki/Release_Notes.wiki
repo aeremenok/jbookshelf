@@ -11,7 +11,7 @@
    * Every viewer is opened in a separate process
    * Viewer remembers the last opened position
    * Notes can be displayed 
-     * locally - near position they belong to
+     * locally - near positions they belong to
      * globally - table with all notes allows navigation to their positions
    * PDF-viewer provides page thumbnails
    * HTML-viewer can browse external links
