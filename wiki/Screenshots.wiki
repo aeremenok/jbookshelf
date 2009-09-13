@@ -2,8 +2,8 @@
 =main window / book collection=
    http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/main.png
 
-=main window / authors=
-   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/main-authors.png
+=main window / categories=
+   http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/main-categories.png
 
 =plain text viewer=
    http://jbookshelf.googlecode.com/svn/trunk/doc/screenshots/viewer-txt.png
