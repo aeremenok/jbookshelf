@@ -174,7 +174,8 @@ public class ReaderWindow<T>
                 Single.instance( Paginator.class ).setPageCount( bookContent.getPageCount() );
 
                 final Note lastRead = book.getLastRead();
-                if ( lastRead != null )
+                // todo avoid NPE
+                if ( lastRead != null && lastRead.getPage() != null )
                 {
                     Single.instance( LayoutablePanel.class ).getCurrentPanels().goTo( lastRead );
                 }
