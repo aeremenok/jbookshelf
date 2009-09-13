@@ -32,7 +32,7 @@ public class Scalator
     {
         public ZoomInAction()
         {
-            super( null, IMG.icon( IMG.ZOOM_IN_PNG ) );
+            super( IMG.icon( IMG.ZOOM_IN_PNG ), tr( "Zoom in" ) );
         }
 
         @Override
@@ -52,7 +52,7 @@ public class Scalator
     {
         public ZoomOutAction()
         {
-            super( null, IMG.icon( IMG.ZOOM_OUT_PNG ) );
+            super( IMG.icon( IMG.ZOOM_OUT_PNG ), tr( "Zoom out" ) );
         }
 
         @Override

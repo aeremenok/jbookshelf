@@ -32,7 +32,7 @@ public class ThumbnailPanel
     {
         public DownAction()
         {
-            super( null, IMG.icon( IMG.ARROW_DOWN_PNG ) );
+            super( IMG.icon( IMG.ARROW_DOWN_PNG ), tr( "Down" ) );
         }
 
         @Override
@@ -52,7 +52,7 @@ public class ThumbnailPanel
     {
         public UpAction()
         {
-            super( null, IMG.icon( IMG.ARROW_UP_PNG ) );
+            super( IMG.icon( IMG.ARROW_UP_PNG ), tr( "Up" ) );
         }
 
         @Override

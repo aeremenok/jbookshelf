@@ -36,7 +36,7 @@ public class Paginator
     {
         public FirstAction()
         {
-            super( null, IMG.icon( IMG.FIRST_PNG ) );
+            super( IMG.icon( IMG.FIRST_PNG ), tr( "First page" ) );
         }
 
         @Override
@@ -52,7 +52,7 @@ public class Paginator
     {
         public LastAction()
         {
-            super( null, IMG.icon( IMG.LAST_PNG ) );
+            super( IMG.icon( IMG.LAST_PNG ), tr( "Last page" ) );
         }
 
         @Override
@@ -68,7 +68,7 @@ public class Paginator
     {
         public NextAction()
         {
-            super( null, IMG.icon( IMG.NEXT_PNG ) );
+            super( IMG.icon( IMG.NEXT_PNG ), tr( "Next page" ) );
         }
 
         @Override
@@ -87,7 +87,7 @@ public class Paginator
     {
         public PreviousAction()
         {
-            super( null, IMG.icon( IMG.PREVIOUS_PNG ) );
+            super( IMG.icon( IMG.PREVIOUS_PNG ), tr( "Previous page" ) );
         }
 
         @Override

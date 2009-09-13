@@ -34,7 +34,7 @@ public class ContentActionsPanel
     {
         public BookmarksAction()
         {
-            super( null, IMG.icon( IMG.BOOKMARKS_PNG ), ReaderFactory.BOOKMARKS );
+            super( IMG.icon( IMG.BOOKMARKS_PNG ), ReaderFactory.BOOKMARKS, tr( "Show global bookmarks" ) );
         }
     }
 
@@ -43,7 +43,7 @@ public class ContentActionsPanel
     {
         public NotesAction()
         {
-            super( null, IMG.icon( IMG.KNOTES_PNG ) );
+            super( IMG.icon( IMG.KNOTES_PNG ), tr( "Show local notes" ) );
         }
 
         @Override
@@ -59,16 +59,7 @@ public class ContentActionsPanel
     {
         public ThumbnailsAction()
         {
-            super( null, IMG.icon( IMG.VIEW_PREVIEW_PNG ), ReaderFactory.THUMBNAILS );
-        }
-    }
-
-    private class TOCAction
-        extends FeatureAction
-    {
-        public TOCAction()
-        {
-            super( null, IMG.icon( IMG.TOC_PNG ), ReaderFactory.TOC );
+            super( IMG.icon( IMG.VIEW_PREVIEW_PNG ), ReaderFactory.THUMBNAILS, tr( "Show thumbnails" ) );
         }
     }
 
@@ -78,11 +69,11 @@ public class ContentActionsPanel
         protected final String featureName;
 
         public FeatureAction(
-            final String name,
             final Icon icon,
-            final String featureName )
+            final String featureName,
+            final String desc )
         {
-            super( name, icon );
+            super( icon, desc );
             this.featureName = featureName;
         }
 
@@ -111,10 +102,6 @@ public class ContentActionsPanel
         if ( features.contains( ReaderFactory.THUMBNAILS ) )
         {
             add( new JButton( new ThumbnailsAction() ) );
-        }
-        if ( features.contains( ReaderFactory.TOC ) )
-        {
-            add( new JButton( new TOCAction() ) );
         }
         if ( features.contains( ReaderFactory.BOOKMARKS ) )
         {

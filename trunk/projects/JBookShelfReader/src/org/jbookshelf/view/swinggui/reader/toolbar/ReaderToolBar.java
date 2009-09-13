@@ -35,7 +35,7 @@ public class ReaderToolBar
     {
         public OpenDirAction()
         {
-            super( null, IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG ) );
+            super( IMG.icon( IMG.DOCUMENT_OPEN_FOLDER_PNG ), tr( "Open book directory" ) );
         }
 
         @Override
