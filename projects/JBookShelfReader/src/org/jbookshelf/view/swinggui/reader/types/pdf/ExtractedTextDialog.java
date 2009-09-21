@@ -14,7 +14,6 @@ import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
 
-import org.apache.log4j.Logger;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.i18n.I18N;
@@ -28,6 +27,8 @@ import org.xnap.commons.gui.util.PopupListener;
 import org.xnap.commons.i18n.I18n;
 
 /**
+ * displays text, extracted from pdf, with ability of selecting it
+ * 
  * @author eav 2009
  */
 public class ExtractedTextDialog
@@ -88,15 +89,13 @@ public class ExtractedTextDialog
         }
     }
 
-    @SuppressWarnings( "unused" )
-    private static final Logger log        = Logger.getLogger( ExtractedTextDialog.class );
-    private final JXEditorPane  editorPane = new JXEditorPane();
-    private final PDFPanel      pdfPanel;
+    private final JXEditorPane editorPane = new JXEditorPane();
+    private final PDFRenderer     pdfPanel;
 
     public ExtractedTextDialog(
         final JFrame parent,
         final String text,
-        final PDFPanel pdfPanel )
+        final PDFRenderer pdfPanel )
     {
         super( parent, BUTTON_CLOSE );
         this.pdfPanel = pdfPanel;
@@ -127,6 +126,7 @@ public class ExtractedTextDialog
         menu.add( new CreateNoteAction() );
         menu.add( new ClipboardTextAction() );
         menu.add( new GoogleTextAction() );
+
         editorPane.addMouseListener( new PopupListener( menu )
         {
             @Override

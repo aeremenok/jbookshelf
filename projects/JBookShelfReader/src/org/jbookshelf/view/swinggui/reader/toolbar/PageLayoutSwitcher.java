@@ -18,7 +18,7 @@ import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 /**
  * @author eav 2009
  */
-public class Layouter
+public class PageLayoutSwitcher
     extends JPanel
 {
     public static enum PageLayoutType
@@ -52,7 +52,7 @@ public class Layouter
 
     private PageLayoutType currentLayout = PageLayoutType.DEFAULT_LAYOUT;
 
-    public Layouter()
+    public PageLayoutSwitcher()
     {
         super( new BorderLayout() );
         add( new JButton( new LayoutAction() ) );

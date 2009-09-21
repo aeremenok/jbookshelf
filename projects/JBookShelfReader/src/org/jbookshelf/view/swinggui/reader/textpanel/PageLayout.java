@@ -11,8 +11,10 @@ import javax.swing.JPanel;
 import org.jbookshelf.model.db.Bookmark;
 
 /**
+ * displays pages using specific layout
+ * 
  * @author eav 2009
- * @param <PageType>
+ * @param <PageType> displayed page type
  */
 public abstract class PageLayout<PageType>
     extends JPanel
@@ -26,17 +28,17 @@ public abstract class PageLayout<PageType>
 
     public abstract Bookmark createBookmark();
 
+    public abstract void displayPages(
+        final PageType... pages );
+
     public abstract void goTo(
         final Bookmark bookmark );
 
     public abstract void highlightText(
         final String text );
 
-    public abstract void setContent(
-        final PageType... pages );
-
-    public abstract void setScale(
-        final int scale );
+    public abstract void scale(
+        final int scalePercentage );
 
     public abstract void useReaderFont(
         final Font font );

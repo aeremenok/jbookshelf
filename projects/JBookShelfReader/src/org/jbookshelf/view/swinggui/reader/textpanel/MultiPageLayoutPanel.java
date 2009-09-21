@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ContentNavigator;
-import org.jbookshelf.view.swinggui.reader.toolbar.Layouter;
-import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayoutType;
+import org.jbookshelf.view.swinggui.reader.toolbar.PageLayoutSwitcher;
+import org.jbookshelf.view.swinggui.reader.toolbar.PageLayoutSwitcher.PageLayoutType;
 
 /**
  * displays different page layouts
@@ -40,7 +40,7 @@ public class MultiPageLayoutPanel<PageType>
     public PageLayout<PageType> followLayouter()
     {
         final CardLayoutExt cardLayout = (CardLayoutExt) cards.getLayout();
-        final String layoutName = Single.instance( Layouter.class ).getCurrentLayout().name();
+        final String layoutName = Single.instance( PageLayoutSwitcher.class ).getCurrentLayout().name();
 
         // initialize if needed
         final PageLayout layoutPanel = (PageLayout) Single.instance( availableLayouts.get( layoutName ) );

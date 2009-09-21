@@ -24,7 +24,7 @@ import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
  * 
  * @author eav 2009
  */
-public class Scalator
+public class ScaleTuner
     extends JPanel
 {
     private class ZoomInAction
@@ -76,17 +76,17 @@ public class Scalator
     @SuppressWarnings( "unused" )
     private int            step;
 
+    private final int      start;
+
     public final Action    zoomOutAction = new ZoomOutAction();
     public final Action    zoomInAction  = new ZoomInAction();
 
-    private final int      start;
-
-    public Scalator()
+    public ScaleTuner()
     {
         this( 50, 200, 25, 100 );
     }
 
-    public Scalator(
+    public ScaleTuner(
         final int min,
         final int max,
         final int step,
@@ -162,6 +162,6 @@ public class Scalator
         zoomInAction.setEnabled( scale < max );
         zoomOutAction.setEnabled( scale > min );
 
-        Single.instance( MultiPageLayoutPanel.class ).followLayouter().setScale( scale );
+        Single.instance( MultiPageLayoutPanel.class ).followLayouter().scale( scale );
     }
 }

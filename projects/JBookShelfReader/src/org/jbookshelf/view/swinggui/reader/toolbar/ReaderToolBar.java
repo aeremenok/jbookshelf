@@ -76,11 +76,11 @@ public class ReaderToolBar
         }
         if ( features.contains( ReaderSpecific.SCALING ) )
         {
-            addComponent( Single.instance( Scalator.class ) );
+            addComponent( Single.instance( ScaleTuner.class ) );
         }
         if ( features.contains( ReaderSpecific.LAYOUT ) )
         {
-            addComponent( Single.instance( Layouter.class ) );
+            addComponent( Single.instance( PageLayoutSwitcher.class ) );
         }
         if ( features.contains( ReaderSpecific.PAGING ) )
         {
@@ -88,7 +88,7 @@ public class ReaderToolBar
         }
         if ( features.contains( ReaderSpecific.SEARCH ) )
         {
-            addComponent( Single.instance( TextFinder.class ) );
+            addComponent( Single.instance( TextSearchControlPanel.class ) );
         }
         if ( features.contains( ReaderSpecific.CHARSET ) )
         {

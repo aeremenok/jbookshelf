@@ -12,22 +12,24 @@ import javax.swing.text.PlainDocument;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
-import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextRenderer;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jdesktop.swingx.JXEditorPane;
 
 /**
+ * displays plain text
+ * 
  * @author eav 2009
  */
-public class PlaintTextPanel
-    extends SelectableTextPanel<String>
+public class TXTRenderer
+    extends SelectableTextRenderer<String>
 {
     private final JXEditorPane  editorPane = new JXEditorPane();
     private final PlainDocument document   = new PlainDocument();
     private final JScrollPane   scrollPane = new JScrollPane( editorPane );
 
-    public PlaintTextPanel()
+    public TXTRenderer()
     {
         super();
         add( scrollPane, BorderLayout.CENTER );
@@ -36,6 +38,21 @@ public class PlaintTextPanel
         editorPane.getCaret().setSelectionVisible( true );
         editorPane.setFont( FontChooser.DEFAULT_FONT );
         editorPane.addMouseListener( popupListener );
+    }
+
+    @Override
+    public void displayContent(
+        final String content )
+    {
+        editorPane.setText( content );
+        EventQueue.invokeLater( new Runnable()
+        {
+            public void run()
+            {
+                // todo better break into pages and don't do this 
+                scrollPane.getVerticalScrollBar().setValue( 0 );
+            }
+        } );
     }
 
     @Override
@@ -53,37 +70,23 @@ public class PlaintTextPanel
     }
 
     @Override
-    public void setContent(
-        final String content )
+    public void scale(
+        final int scalePercentage )
     {
-        editorPane.setText( content );
-        EventQueue.invokeLater( new Runnable()
-        {
-            public void run()
-            {
-                scrollPane.getVerticalScrollBar().setValue( 0 );
-            }
-        } );
+        final Font oldFont = editorPane.getFont();
+        final float newSize = FontChooser.INITIAL_SIZE * scalePercentage / 100;
+        editorPane.setFont( oldFont.deriveFont( newSize ) );
     }
 
     @Override
-    public void setReaderFont(
+    public void useFont(
         final Font font )
     {
         editorPane.setFont( font );
     }
 
     @Override
-    public void setScale(
-        final int scalePercentage )
-    {
-        final Font oldFont = editorPane.getFont();
-        editorPane.setFont( new Font( oldFont.getName(), oldFont.getStyle(), FontChooser.INITIAL_SIZE * scalePercentage
-            / 100 ) );
-    }
-
-    @Override
-    protected float getPosition(
+    protected float calcRelativePosition(
         final Bookmark note )
     {
         final float page = note.getPage() + 1;

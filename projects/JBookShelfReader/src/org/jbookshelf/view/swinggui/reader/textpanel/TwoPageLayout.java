@@ -15,14 +15,16 @@ import org.jbookshelf.view.swinggui.reader.textpanel.navigate.NotesPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 
 /**
+ * displays two pages: left and right
+ * 
  * @author eav 2009
- * @param <PageType>
+ * @param <PageType> displayed page type
  */
 public class TwoPageLayout<PageType>
     extends PageLayout<PageType>
 {
-    private final ReaderContentPanel<PageType> leftContentPanel;
-    private final ReaderContentPanel<PageType> rightContentPanel;
+    private final ContentRenderer<PageType> leftContentPanel;
+    private final ContentRenderer<PageType> rightContentPanel;
 
     private final NotesPanel                   leftNotesPanel  = new NotesPanel();
     private final NotesPanel                   rightNotesPanel = new NotesPanel();
@@ -32,8 +34,8 @@ public class TwoPageLayout<PageType>
     {
         super();
 
-        leftContentPanel = Single.newInstance( ReaderContentPanel.class );
-        rightContentPanel = Single.newInstance( ReaderContentPanel.class );
+        leftContentPanel = Single.newInstance( ContentRenderer.class );
+        rightContentPanel = Single.newInstance( ContentRenderer.class );
 
         final JSplitPane splitPane = new JSplitPane();
         add( splitPane, BorderLayout.CENTER );
@@ -67,6 +69,14 @@ public class TwoPageLayout<PageType>
     }
 
     @Override
+    public void displayPages(
+        final PageType... pages )
+    {
+        leftContentPanel.displayContent( pages[0] );
+        rightContentPanel.displayContent( pages[1] );
+    }
+
+    @Override
     public void goTo(
         final Bookmark bookmark )
     {
@@ -82,26 +92,18 @@ public class TwoPageLayout<PageType>
     }
 
     @Override
-    public void setContent(
-        final PageType... pages )
+    public void scale(
+        final int scalePercentage )
     {
-        leftContentPanel.setContent( pages[0] );
-        rightContentPanel.setContent( pages[1] );
-    }
-
-    @Override
-    public void setScale(
-        final int scale )
-    {
-        leftContentPanel.setScale( scale );
-        rightContentPanel.setScale( scale );
+        leftContentPanel.scale( scalePercentage );
+        rightContentPanel.scale( scalePercentage );
     }
 
     @Override
     public void useReaderFont(
         final Font font )
     {
-        leftContentPanel.setReaderFont( font );
-        rightContentPanel.setReaderFont( font );
+        leftContentPanel.useFont( font );
+        rightContentPanel.useFont( font );
     }
 }

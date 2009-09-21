@@ -106,7 +106,7 @@ public class ThumbnailPanel
 
         for ( int i = 0; i < thumbnails.size(); i++ )
         {
-            thumbnails.get( i ).setPageNumber( pageNumbers[i] );
+            thumbnails.get( i ).displayPage( pageNumbers[i] );
         }
     }
 }

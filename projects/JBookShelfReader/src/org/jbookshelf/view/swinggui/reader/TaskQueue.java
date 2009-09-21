@@ -8,20 +8,20 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.swing.BoundedRangeModel;
+import javax.swing.JScrollBar;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.apache.log4j.Logger;
-
 /**
+ * an event queue diven by {@link JScrollBar} events<br>
+ * is used to postpone tasks after content loading
+ * 
  * @author eav 2009
  */
 public class TaskQueue
     implements
     ChangeListener
 {
-    private static final Logger   log       = Logger.getLogger( TaskQueue.class );
-
     private final Queue<Runnable> runnables = new ConcurrentLinkedQueue<Runnable>();
 
     public void enqueue(
@@ -40,7 +40,6 @@ public class TaskQueue
             while ( runnables.size() > 0 )
             {
                 final Runnable runnable = runnables.poll();
-                log.debug( "queue size=" + runnables.size() );
                 EventQueue.invokeLater( runnable );
             }
         }

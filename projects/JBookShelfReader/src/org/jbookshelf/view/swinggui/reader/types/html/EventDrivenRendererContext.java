@@ -33,18 +33,20 @@ import org.lobobrowser.html.test.SimpleHtmlRendererContext;
 import org.w3c.dom.html2.HTMLLinkElement;
 
 /**
- * @author eav
+ * follows the events of {@link BrowserNavigator}
+ * 
+ * @author eav 2009
  */
-public class EventRendererContext
+public class EventDrivenRendererContext
     extends SimpleHtmlRendererContext
 {
     public static final String  GOOGLE_URL      = "http://www.google.com";
 
-    private static final Logger log             = Logger.getLogger( HTMLReaderPanel.class );
+    private static final Logger log             = Logger.getLogger( HTMLRenderer.class );
 
     private boolean             isBookDisplayed = true;
 
-    public EventRendererContext(
+    public EventDrivenRendererContext(
         final HtmlPanel contextComponent,
         final UserAgentContext ucontext )
     {
@@ -74,6 +76,7 @@ public class EventRendererContext
         final HTMLLinkElement link )
     {
         final String href = link.getHref();
+        final History history = getHistory();
 
         URL url;
         try
@@ -84,7 +87,7 @@ public class EventRendererContext
         {
             try
             {
-                final URL context = new URL( getHistory().current() );
+                final URL context = new URL( history.current() );
                 url = new URL( context, href );
             }
             catch ( final MalformedURLException e1 )
@@ -94,7 +97,7 @@ public class EventRendererContext
             }
         }
 
-        return getHistory().contains( url.toString() );
+        return history.contains( url.toString() );
     }
 
     @Override
@@ -113,7 +116,7 @@ public class EventRendererContext
     }
 
     @EventTopicSubscriber( topic = ReaderSpecific.BROWSER )
-    public void onNavigation(
+    public void onBrowserNavigatorEvent(
         @SuppressWarnings( "unused" ) final String topic,
         final ObjectEvent event )
     {
@@ -140,7 +143,7 @@ public class EventRendererContext
                 break;
 
             case SAVE:
-                savePage();
+                savePageAsBook();
                 break;
 
             case ADDRESS:
@@ -171,13 +174,15 @@ public class EventRendererContext
             @Override
             public void run()
             {
-                if ( getHistory().size() == 0 )
+                final History history = getHistory();
+
+                if ( history.size() == 0 )
                 { // first navigation
                     Single.instance( ReaderWindow.class ).saveLastReadPosition();
                 }
 
-                EventRendererContext.super.submitForm( method, action, target, enctype, formInputs );
-                getHistory().add( action.toString() );
+                EventDrivenRendererContext.super.submitForm( method, action, target, enctype, formInputs );
+                history.add( action.toString() );
                 setBookDisplayed( false );
             }
         } );
@@ -188,7 +193,7 @@ public class EventRendererContext
         return Single.instance( History.class );
     }
 
-    private void savePage()
+    private void savePageAsBook()
     {
         final ReaderWindow window = Single.instance( ReaderWindow.class );
         final String name = JOptionPane.showInputDialog( window, I18N.tr( "Enter new file name" ) );

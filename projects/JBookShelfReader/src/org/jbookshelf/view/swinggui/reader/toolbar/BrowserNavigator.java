@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Collection;
 
+import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -22,12 +23,14 @@ import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
-import org.jbookshelf.view.swinggui.reader.types.html.EventRendererContext;
+import org.jbookshelf.view.swinggui.reader.types.html.EventDrivenRendererContext;
 import org.jbookshelf.view.swinggui.reader.types.html.History;
 import org.xnap.commons.gui.Builder;
 
 /**
- * @author eav
+ * browser navigation buttons and address bar
+ * 
+ * @author eav 2009
  */
 public class BrowserNavigator
     extends JPanel
@@ -128,10 +131,10 @@ public class BrowserNavigator
 
     private final JTextField address    = new JTextField( 25 );
 
-    private final BackAction backAction = new BackAction();
-    private final FwdAction  fwdAction  = new FwdAction();
-    private final HomeAction homeAction = new HomeAction();
-    private final SaveAction saveAction = new SaveAction();
+    private final Action     backAction = new BackAction();
+    private final Action     fwdAction  = new FwdAction();
+    private final Action     homeAction = new HomeAction();
+    private final Action     saveAction = new SaveAction();
 
     public BrowserNavigator()
     {
@@ -167,8 +170,8 @@ public class BrowserNavigator
             }
         } );
 
-        final Collection c = Single.instance( History.class ).getUrls();
-        Builder.addCompletion( address, new IngoreCaseCollectionCompletionModel( c ) );
+        final Collection urls = Single.instance( History.class ).getUrls();
+        Builder.addCompletion( address, new IngoreCaseCollectionCompletionModel( urls ) );
 
         AnnotationProcessor.process( this );
     }
@@ -179,7 +182,7 @@ public class BrowserNavigator
     }
 
     @EventTopicSubscriber( topic = History.NAVIGATION )
-    public void onNavigation(
+    public void onHistoryNavigation(
         @SuppressWarnings( "unused" ) final String topic,
         final ObjectEvent event )
     {
@@ -188,12 +191,14 @@ public class BrowserNavigator
         backAction.setEnabled( history.hasPrevious() );
 
         final Object source = event.getSource();
-        if ( source instanceof EventRendererContext )
+        if ( source instanceof EventDrivenRendererContext )
         {
-            final EventRendererContext context = (EventRendererContext) source;
+            final EventDrivenRendererContext context = (EventDrivenRendererContext) source;
             final boolean bookDisplayed = context.isBookDisplayed();
             homeAction.setEnabled( !bookDisplayed );
             saveAction.setEnabled( !bookDisplayed );
         }
+
+        address.setText( history.current() );
     }
 }

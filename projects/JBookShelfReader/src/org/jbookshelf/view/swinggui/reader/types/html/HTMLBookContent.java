@@ -12,11 +12,11 @@ import org.jbookshelf.view.swinggui.reader.BookContent;
  * @author eav 2009
  */
 public class HTMLBookContent
-    extends BookContent<HTMLContentContainer>
+    extends BookContent<HTMLContentWrapper>
 {
     private static final Logger        log = Logger.getLogger( HTMLBookContent.class );
 
-    private final HTMLContentContainer onlyPageContainer;
+    private final HTMLContentWrapper onlyPageContainer;
 
     public HTMLBookContent(
         final Book book )
@@ -26,7 +26,7 @@ public class HTMLBookContent
         {
             final String encoding = book.getPhysicalBook().getCharsetName();
             final String fileContent = FileUtils.readFileToString( file, encoding );
-            onlyPageContainer = new HTMLContentContainer( fileContent );
+            onlyPageContainer = new HTMLContentWrapper( fileContent );
 
             pageCount = 1;
         }
@@ -47,7 +47,7 @@ public class HTMLBookContent
     }
 
     @Override
-    public HTMLContentContainer getPageContent(
+    public HTMLContentWrapper getPageContent(
         final int pageNumber )
     {
         return onlyPageContainer;
