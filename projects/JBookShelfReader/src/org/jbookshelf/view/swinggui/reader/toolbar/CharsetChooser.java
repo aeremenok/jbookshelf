@@ -57,7 +57,7 @@ public class CharsetChooser
                 @Override
                 public void run()
                 {
-                    Single.instance( ReaderWindow.class ).setCharset( getCharset() );
+                    Single.instance( ReaderWindow.class ).useCharset( getCharset() );
                 }
             } );
         }

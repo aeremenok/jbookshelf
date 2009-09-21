@@ -6,7 +6,6 @@ package org.jbookshelf.view.swinggui.reader.textpanel;
 import java.awt.BorderLayout;
 import java.awt.Font;
 
-import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.NotesPanel;
@@ -15,16 +14,14 @@ import org.jbookshelf.view.swinggui.reader.textpanel.navigate.NotesPanel;
  * @author eav 2009
  * @param <PageType>
  */
-public class OnePagePanels<PageType>
-    extends ReaderContentPanels<PageType>
+public class OnePageLayout<PageType>
+    extends PageLayout<PageType>
 {
-    @SuppressWarnings( "unused" )
-    private static final Logger                log        = Logger.getLogger( OnePagePanels.class );
     private final ReaderContentPanel<PageType> contentPanel;
     private final NotesPanel                   notesPanel = new NotesPanel();
 
     @SuppressWarnings( "unchecked" )
-    public OnePagePanels()
+    public OnePageLayout()
     {
         super();
         contentPanel = Single.newInstance( ReaderContentPanel.class );
@@ -71,17 +68,17 @@ public class OnePagePanels<PageType>
     }
 
     @Override
-    public void setReaderFont(
-        final Font font )
-    {
-        contentPanel.setReaderFont( font );
-    }
-
-    @Override
     public void setScale(
         final int scale )
     {
         contentPanel.setScale( scale );
+    }
+
+    @Override
+    public void useReaderFont(
+        final Font font )
+    {
+        contentPanel.setReaderFont( font );
     }
 
 }

@@ -18,7 +18,7 @@ import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
-import org.jbookshelf.view.swinggui.reader.ReaderFactory;
+import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 
@@ -30,7 +30,7 @@ import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 public class ReaderToolBar
     extends JToolBar
 {
-    protected class OpenDirAction
+    private class OpenDirAction
         extends TranslatableAction
     {
         public OpenDirAction()
@@ -46,8 +46,6 @@ public class ReaderToolBar
             URIUtil.openDir( book.getPhysicalBook().getFile().getParentFile() );
         }
     }
-
-    protected Scalator scalator;
 
     @PostConstruct
     public void init()
@@ -68,39 +66,39 @@ public class ReaderToolBar
 
     private void initFeatures()
     {
-        final ReaderFactory<?> readerFactory = Single.instance( ReaderFactory.class );
-        final List<String> features = readerFactory.getFeatures();
+        final ReaderSpecific<?> readerFactory = Single.instance( ReaderSpecific.class );
+        final List<String> features = readerFactory.getSupportedFeatures();
 
-        if ( features.contains( ReaderFactory.NOTES ) || features.contains( ReaderFactory.BOOKMARKS )
-            || features.contains( ReaderFactory.THUMBNAILS ) )
+        if ( features.contains( ReaderSpecific.NOTES ) || features.contains( ReaderSpecific.BOOKMARKS )
+            || features.contains( ReaderSpecific.THUMBNAILS ) )
         {
             addComponent( Single.instance( ContentActionsPanel.class ) );
         }
-        if ( features.contains( ReaderFactory.SCALING ) )
+        if ( features.contains( ReaderSpecific.SCALING ) )
         {
             addComponent( Single.instance( Scalator.class ) );
         }
-        if ( features.contains( ReaderFactory.LAYOUT ) )
+        if ( features.contains( ReaderSpecific.LAYOUT ) )
         {
             addComponent( Single.instance( Layouter.class ) );
         }
-        if ( features.contains( ReaderFactory.PAGING ) )
+        if ( features.contains( ReaderSpecific.PAGING ) )
         {
             addComponent( Single.instance( Paginator.class ) );
         }
-        if ( features.contains( ReaderFactory.SEARCH ) )
+        if ( features.contains( ReaderSpecific.SEARCH ) )
         {
             addComponent( Single.instance( TextFinder.class ) );
         }
-        if ( features.contains( ReaderFactory.CHARSET ) )
+        if ( features.contains( ReaderSpecific.CHARSET ) )
         {
             addComponent( Single.instance( CharsetChooser.class ) );
         }
-        if ( features.contains( ReaderFactory.FONT ) )
+        if ( features.contains( ReaderSpecific.FONT ) )
         {
             addComponent( Single.instance( FontChooser.class ) );
         }
-        if ( features.contains( ReaderFactory.BROWSER ) )
+        if ( features.contains( ReaderSpecific.BROWSER ) )
         {
             addComponent( Single.instance( BrowserNavigator.class ) );
         }

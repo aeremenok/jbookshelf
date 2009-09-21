@@ -28,13 +28,14 @@ import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.ProgressBar;
-import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.PageLayout;
 import org.jbookshelf.view.swinggui.reader.toolbar.CharsetChooser;
 import org.jbookshelf.view.swinggui.reader.toolbar.Layouter;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
 import org.jbookshelf.view.swinggui.reader.toolbar.Scalator;
-import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
+import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayoutType;
 import org.jdesktop.swingx.JXFrame;
 
 /**
@@ -46,10 +47,30 @@ import org.jdesktop.swingx.JXFrame;
 public class ReaderWindow<T>
     extends JXFrame
 {
+    private static final Logger log = Logger.getLogger( ReaderWindow.class );
+
     private Book                book;
     private BookContent<T>      bookContent;
 
-    private static final Logger log = Logger.getLogger( ReaderWindow.class );
+    @SuppressWarnings( "unchecked" )
+    public void followPaginator()
+    {
+        final Paginator paginator = Single.instance( Paginator.class );
+        final MultiPageLayoutPanel layoutable = Single.instance( MultiPageLayoutPanel.class );
+
+        final int newCurrentPage = paginator.getCurrentPage();
+
+        final T leftPage = bookContent.getPageContent( newCurrentPage );
+        if ( Single.instance( Layouter.class ).getCurrentLayout() == PageLayoutType.TWO_PAGES )
+        {
+            final T rightPage = bookContent.getPageContent( newCurrentPage + 1 );
+            layoutable.followLayouter().setContent( leftPage, rightPage );
+        }
+        else
+        {
+            layoutable.followLayouter().setContent( leftPage );
+        }
+    }
 
     public Book getBook()
     {
@@ -61,13 +82,56 @@ public class ReaderWindow<T>
         return this.bookContent;
     }
 
+    /**
+     * search text in the displayed book and go to its position if its found
+     * 
+     * @param searchParameters text and direction to search ( {@link Boolean#TRUE} - forward, {@link Boolean#FALSE} -
+     *            backward, null - forward from start )
+     */
+    public void goToText(
+        final Parameters searchParameters )
+    {
+        final String text = searchParameters.get( Keys.SEARCH_TEXT );
+
+        final MultiPageLayoutPanel layoutable = Single.instance( MultiPageLayoutPanel.class );
+        final Paginator paginator = Single.instance( Paginator.class );
+        final Layouter layouter = Single.instance( Layouter.class );
+
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<Integer, Object>()
+        {
+            @Override
+            protected Integer doInBackground()
+            {
+                final Boolean direction = searchParameters.get( Keys.SEARCH_DIRECTION );
+
+                int startPage = paginator.getCurrentPage();
+                if ( layouter.getCurrentLayout() == PageLayoutType.TWO_PAGES )
+                { // skip one more page
+                    startPage++;
+                }
+                return bookContent.findTextPage( text, direction, startPage );
+            }
+
+            @Override
+            protected void doneSafe()
+            {
+                final int page = getQuiet();
+                if ( page > -1 )
+                {
+                    paginator.setNewPage( page );
+                    layoutable.followLayouter().highlightText( text );
+                }
+            }
+        } );
+    }
+
     @PostConstruct
     public void init()
     {
         setContentPane( new JPanel( new BorderLayout() ) );
 
         add( Single.instance( ReaderToolBar.class ), BorderLayout.NORTH );
-        add( Single.instance( LayoutablePanel.class ), BorderLayout.CENTER );
+        add( Single.instance( MultiPageLayoutPanel.class ), BorderLayout.CENTER );
 
         setIconImage( IMG.img( IMG.LOGO_PNG, 64 ) );
 
@@ -86,7 +150,7 @@ public class ReaderWindow<T>
                     @Override
                     public void run()
                     {
-                        updateLastRead();
+                        saveLastReadPosition();
                         System.exit( 0 );
                     }
                 } ).start();
@@ -96,58 +160,7 @@ public class ReaderWindow<T>
         AnnotationProcessor.process( this );
     }
 
-    @EventTopicSubscriber( topic = Bookmark.PAGE )
-    public void onPageChanged(
-        @SuppressWarnings( "unused" ) final String topic,
-        @SuppressWarnings( "unused" ) final Bookmark bookmark )
-    {
-        updateCurrentPage();
-    }
-
-    /**
-     * search text in the displayed book and go to its position if its found
-     * 
-     * @param parameters text and direction to search ( {@link Boolean#TRUE} - forward, {@link Boolean#FALSE} -
-     *            backward, null - forward from start )
-     */
-    public void searchText(
-        final Parameters parameters )
-    {
-        final String text = parameters.get( Keys.SEARCH_TEXT );
-
-        final LayoutablePanel layoutable = Single.instance( LayoutablePanel.class );
-        final Paginator paginator = Single.instance( Paginator.class );
-        final Layouter layouter = Single.instance( Layouter.class );
-
-        Single.instance( ProgressBar.class ).invoke( new SafeWorker<Integer, Object>()
-        {
-            @Override
-            protected Integer doInBackground()
-            {
-                final Boolean direction = parameters.get( Keys.SEARCH_DIRECTION );
-
-                int startPage = paginator.getCurrentPage();
-                if ( layouter.getCurrentLayout() == PageLayout.TWO_PAGES )
-                { // skip one more page
-                    startPage++;
-                }
-                return bookContent.findText( text, direction, startPage );
-            }
-
-            @Override
-            protected void doneSafe()
-            {
-                final int page = getQuiet();
-                if ( page > -1 )
-                {
-                    paginator.setNewPage( page );
-                    layoutable.getCurrentPanels().highlightText( text );
-                }
-            }
-        } );
-    }
-
-    public void setBookById(
+    public void loadAndDisplayBook(
         final Long bookId )
     {
         Single.instance( ProgressBar.class ).invoke( new SafeWorker<Book, Object>()
@@ -156,8 +169,8 @@ public class ReaderWindow<T>
             @Override
             protected Book doInBackground()
             {
-                ReaderWindow.this.book = BookShelf.bookById( bookId );
-                ReaderWindow.this.bookContent = Single.instance( ReaderFactory.class ).createBookContent( book );
+                book = BookShelf.bookById( bookId );
+                bookContent = Single.instance( ReaderSpecific.class ).createBookContent( book );
                 return book;
             }
 
@@ -169,80 +182,37 @@ public class ReaderWindow<T>
                 final String charsetName = book.getPhysicalBook().getCharsetName();
                 Single.instance( CharsetChooser.class ).setCharset( charsetName );
 
-                // render the content
-                // todo remember the starting page
+                // setting page count causes rendering of content
                 Single.instance( Paginator.class ).setPageCount( bookContent.getPageCount() );
 
                 final Note lastRead = book.getLastRead();
                 // todo avoid NPE
                 if ( lastRead != null && lastRead.getPage() != null )
                 {
-                    Single.instance( LayoutablePanel.class ).getCurrentPanels().goTo( lastRead );
+                    Single.instance( MultiPageLayoutPanel.class ).followLayouter().goTo( lastRead );
                 }
             }
         } );
     }
 
-    @SuppressWarnings( "unchecked" )
-    public void setCharset(
-        final Charset charset )
-    {
-        final PhysicalBook physicalBook = getBook().getPhysicalBook();
-        physicalBook.setCharsetName( charset.name() );
-
-        BookShelf.updatePhysical( physicalBook );
-        bookContent = Single.instance( ReaderFactory.class ).createBookContent( book );
-
-        updateCurrentPage();
-    }
-
     /**
-     * change the layout between one and two pages
+     * fired when a page is over
+     * 
+     * @param topic {@link Bookmark#PAGE}
+     * @param bookmark contains current page info
      */
-    public void switchLayout()
+    @EventTopicSubscriber( topic = Bookmark.PAGE )
+    public void onPageChanged(
+        @SuppressWarnings( "unused" ) final String topic,
+        @SuppressWarnings( "unused" ) final Bookmark bookmark )
     {
-        final LayoutablePanel layoutable = Single.instance( LayoutablePanel.class );
-        final Scalator scalator = Single.instance( Scalator.class );
-
-        layoutable.switchLayout();
-        updateCurrentPage();
-
-        EventQueue.invokeLater( new Runnable()
-        {
-            public void run()
-            {
-                layoutable.getCurrentPanels().setScale( scalator.getScale() );
-            }
-        } );
+        followPaginator();
     }
 
-    /**
-     * display a page of the specified number
-     */
-    @SuppressWarnings( "unchecked" )
-    public void updateCurrentPage()
+    public void saveLastReadPosition()
     {
-        final Paginator paginator = Single.instance( Paginator.class );
-        final LayoutablePanel layoutable = Single.instance( LayoutablePanel.class );
-
-        final int newCurrentPage = paginator.getCurrentPage();
-
-        final T leftPage = bookContent.getPage( newCurrentPage );
-        if ( Single.instance( Layouter.class ).getCurrentLayout() == PageLayout.TWO_PAGES )
-        {
-            final T rightPage = bookContent.getPage( newCurrentPage + 1 );
-            layoutable.getCurrentPanels().setContent( leftPage, rightPage );
-        }
-        else
-        {
-            layoutable.getCurrentPanels().setContent( leftPage );
-        }
-    }
-
-    public void updateLastRead()
-    {
-        log.debug( "updating last read position of " + book.getName() );
-        final Bookmark bookmark = Single.instance( LayoutablePanel.class ).getCurrentPanels().createBookmark();
+        log.debug( "saving last read position of " + book.getName() );
+        final Bookmark bookmark = Single.instance( MultiPageLayoutPanel.class ).followLayouter().createBookmark();
         this.book.setRead( true );
 
         final Note lastRead = this.book.getLastRead();
@@ -251,6 +221,37 @@ public class ReaderWindow<T>
         lastRead.setPosition( bookmark.getPosition() );
 
         BookShelf.mergeNote( lastRead );
-        log.debug( "last read position updated: " + lastRead.getPosition() );
+        log.debug( "last read position saved: " + lastRead.getPosition() );
+    }
+
+    public void switchPageLayout()
+    {
+        EventQueue.invokeLater( new Runnable()
+        {
+            public void run()
+            {
+                final PageLayout pageLayout = Single.instance( MultiPageLayoutPanel.class ).followLayouter();
+                pageLayout.setScale( Single.instance( Scalator.class ).getScale() );
+                followPaginator();
+            }
+        } );
+    }
+
+    /**
+     * reload book content with a specified charset
+     * 
+     * @param charset a {@link Charset} to load with
+     */
+    @SuppressWarnings( "unchecked" )
+    public void useCharset(
+        final Charset charset )
+    {
+        final PhysicalBook physicalBook = getBook().getPhysicalBook();
+        physicalBook.setCharsetName( charset.name() );
+
+        BookShelf.updatePhysical( physicalBook );
+        bookContent = Single.instance( ReaderSpecific.class ).createBookContent( book );
+
+        followPaginator();
     }
 }

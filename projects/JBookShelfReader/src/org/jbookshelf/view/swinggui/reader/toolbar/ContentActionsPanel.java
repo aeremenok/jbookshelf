@@ -17,8 +17,8 @@ import javax.swing.JPanel;
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
-import org.jbookshelf.view.swinggui.reader.ReaderFactory;
-import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
+import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
+import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ContentNavigator;
 
 /**
@@ -34,7 +34,7 @@ public class ContentActionsPanel
     {
         public BookmarksAction()
         {
-            super( IMG.icon( IMG.BOOKMARKS_PNG ), ReaderFactory.BOOKMARKS, tr( "Show global bookmarks" ) );
+            super( IMG.icon( IMG.BOOKMARKS_PNG ), ReaderSpecific.BOOKMARKS, tr( "Show global bookmarks" ) );
         }
     }
 
@@ -50,7 +50,7 @@ public class ContentActionsPanel
         public void actionPerformed(
             final ActionEvent e )
         {
-            Single.instance( LayoutablePanel.class ).getCurrentPanels().changeNotesVisibility();
+            Single.instance( MultiPageLayoutPanel.class ).followLayouter().changeNotesVisibility();
         }
     }
 
@@ -59,7 +59,7 @@ public class ContentActionsPanel
     {
         public ThumbnailsAction()
         {
-            super( IMG.icon( IMG.VIEW_PREVIEW_PNG ), ReaderFactory.THUMBNAILS, tr( "Show thumbnails" ) );
+            super( IMG.icon( IMG.VIEW_PREVIEW_PNG ), ReaderSpecific.THUMBNAILS, tr( "Show thumbnails" ) );
         }
     }
 
@@ -97,17 +97,17 @@ public class ContentActionsPanel
     {
         setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
 
-        final ReaderFactory<?> readerFactory = Single.instance( ReaderFactory.class );
-        final List<String> features = readerFactory.getFeatures();
-        if ( features.contains( ReaderFactory.THUMBNAILS ) )
+        final ReaderSpecific<?> readerFactory = Single.instance( ReaderSpecific.class );
+        final List<String> features = readerFactory.getSupportedFeatures();
+        if ( features.contains( ReaderSpecific.THUMBNAILS ) )
         {
             add( new JButton( new ThumbnailsAction() ) );
         }
-        if ( features.contains( ReaderFactory.BOOKMARKS ) )
+        if ( features.contains( ReaderSpecific.BOOKMARKS ) )
         {
             add( new JButton( new BookmarksAction() ) );
         }
-        if ( features.contains( ReaderFactory.NOTES ) )
+        if ( features.contains( ReaderSpecific.NOTES ) )
         {
             add( new JButton( new NotesAction() ) );
         }

@@ -21,9 +21,9 @@ import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.dialog.book.BookAdditionDialog;
-import org.jbookshelf.view.swinggui.reader.ReaderFactory;
+import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
 import org.jbookshelf.view.swinggui.reader.toolbar.BrowserNavigator;
 import org.jbookshelf.view.swinggui.reader.toolbar.BrowserNavigator.BrowserCommand;
 import org.lobobrowser.html.FormInput;
@@ -112,7 +112,7 @@ public class EventRendererContext
         }
     }
 
-    @EventTopicSubscriber( topic = ReaderFactory.BROWSER )
+    @EventTopicSubscriber( topic = ReaderSpecific.BROWSER )
     public void onNavigation(
         @SuppressWarnings( "unused" ) final String topic,
         final ObjectEvent event )
@@ -134,8 +134,8 @@ public class EventRendererContext
 
             case HOME:
                 final ReaderWindow window = Single.instance( ReaderWindow.class );
-                window.updateCurrentPage();
-                Single.instance( LayoutablePanel.class ).getCurrentPanels().goTo( window.getBook().getLastRead() );
+                window.followPaginator();
+                Single.instance( MultiPageLayoutPanel.class ).followLayouter().goTo( window.getBook().getLastRead() );
                 setBookDisplayed( true );
                 break;
 
@@ -173,7 +173,7 @@ public class EventRendererContext
             {
                 if ( getHistory().size() == 0 )
                 { // first navigation
-                    Single.instance( ReaderWindow.class ).updateLastRead();
+                    Single.instance( ReaderWindow.class ).saveLastReadPosition();
                 }
 
                 EventRendererContext.super.submitForm( method, action, target, enctype, formInputs );

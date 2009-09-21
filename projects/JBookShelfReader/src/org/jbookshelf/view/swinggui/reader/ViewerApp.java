@@ -14,18 +14,20 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.Thumbnail;
-import org.jbookshelf.view.swinggui.reader.types.html.HTMLReaderFactory;
+import org.jbookshelf.view.swinggui.reader.types.html.HTMLReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.types.html.HTMLReaderPanel;
 import org.jbookshelf.view.swinggui.reader.types.pdf.PDFPanel;
-import org.jbookshelf.view.swinggui.reader.types.pdf.PDFReaderFactory;
+import org.jbookshelf.view.swinggui.reader.types.pdf.PDFReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.types.pdf.PDFThumbnail;
 import org.jbookshelf.view.swinggui.reader.types.rtf.RTFPanel;
-import org.jbookshelf.view.swinggui.reader.types.rtf.RTFReaderFactory;
-import org.jbookshelf.view.swinggui.reader.types.txt.PlainTextReaderFactory;
+import org.jbookshelf.view.swinggui.reader.types.rtf.RTFReaderSpecific;
+import org.jbookshelf.view.swinggui.reader.types.txt.TXTReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.types.txt.PlaintTextPanel;
 import org.jbookshelf.view.swinggui.widget.LookAndFeelComboBoxModel;
 
 /**
+ * properly initializes and starts the reader
+ * 
  * @author eav 2009
  */
 public class ViewerApp
@@ -52,24 +54,24 @@ public class ViewerApp
 
         if ( Viewer.TXT.equals( type ) )
         {
-            Single.setImplementation( ReaderFactory.class, PlainTextReaderFactory.class );
+            Single.setImplementation( ReaderSpecific.class, TXTReaderSpecific.class );
             Single.setImplementation( ReaderContentPanel.class, PlaintTextPanel.class );
         }
         else if ( Viewer.PDF.equals( type ) )
         {
-            Single.setImplementation( ReaderFactory.class, PDFReaderFactory.class );
+            Single.setImplementation( ReaderSpecific.class, PDFReaderSpecific.class );
             Single.setImplementation( ReaderContentPanel.class, PDFPanel.class );
             Single.setImplementation( Thumbnail.class, PDFThumbnail.class );
         }
         else if ( Viewer.RTF.equals( type ) )
         {
-            Single.setImplementation( ReaderFactory.class, RTFReaderFactory.class );
+            Single.setImplementation( ReaderSpecific.class, RTFReaderSpecific.class );
             Single.setImplementation( ReaderContentPanel.class, RTFPanel.class );
         }
         else
         //if ( Viewer.HTML.equals( type ) )
         {
-            Single.setImplementation( ReaderFactory.class, HTMLReaderFactory.class );
+            Single.setImplementation( ReaderSpecific.class, HTMLReaderSpecific.class );
             Single.setImplementation( ReaderContentPanel.class, HTMLReaderPanel.class );
         }
 
@@ -80,7 +82,7 @@ public class ViewerApp
             {
                 final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
                 readerWindow.setVisible( true );
-                readerWindow.setBookById( id );
+                readerWindow.loadAndDisplayBook( id );
             }
         } );
     }

@@ -27,9 +27,9 @@ import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
-import org.jbookshelf.view.swinggui.reader.ReaderFactory;
+import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
 import org.jdesktop.swingx.JXTable;
 
 /**
@@ -125,14 +125,14 @@ public class NotesPanel
         setVisible( false );
         AnnotationProcessor.process( this );
 
-        isPageable = Single.instance( ReaderFactory.class ).getFeatures().contains( ReaderFactory.PAGING );
+        isPageable = Single.instance( ReaderSpecific.class ).getSupportedFeatures().contains( ReaderSpecific.PAGING );
     }
 
     @EventSubscriber( eventClass = Note.class )
     public void onChangeNote(
         @SuppressWarnings( "unused" ) final Note note )
     {
-        final Bookmark bookmark = Single.instance( LayoutablePanel.class ).getCurrentPanels().createBookmark();
+        final Bookmark bookmark = Single.instance( MultiPageLayoutPanel.class ).followLayouter().createBookmark();
         if ( isPageable )
         {
             onChangePage( Bookmark.PAGE, bookmark );

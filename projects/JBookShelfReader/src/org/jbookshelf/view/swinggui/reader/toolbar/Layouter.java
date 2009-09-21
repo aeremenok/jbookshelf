@@ -21,12 +21,12 @@ import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 public class Layouter
     extends JPanel
 {
-    public static enum PageLayout
+    public static enum PageLayoutType
     {
         ONE_PAGE,
         TWO_PAGES;
 
-        public static final PageLayout DEFAULT_LAYOUT = ONE_PAGE;
+        public static final PageLayoutType DEFAULT_LAYOUT = ONE_PAGE;
     }
 
     private class LayoutAction
@@ -42,15 +42,15 @@ public class Layouter
             final ActionEvent e )
         {
             // change the layout
-            final boolean isOne = getCurrentLayout() == PageLayout.ONE_PAGE;
+            final boolean isOne = getCurrentLayout() == PageLayoutType.ONE_PAGE;
             setPageLayout( isOne
-                ? PageLayout.TWO_PAGES : PageLayout.ONE_PAGE );
+                ? PageLayoutType.TWO_PAGES : PageLayoutType.ONE_PAGE );
             putValue( SMALL_ICON, IMG.icon( isOne
                 ? IMG.RIGHT_CLOSE_PNG : IMG.RIGHT_NEW_PNG ) );
         }
     }
 
-    private PageLayout currentLayout = PageLayout.DEFAULT_LAYOUT;
+    private PageLayoutType currentLayout = PageLayoutType.DEFAULT_LAYOUT;
 
     public Layouter()
     {
@@ -58,15 +58,15 @@ public class Layouter
         add( new JButton( new LayoutAction() ) );
     }
 
-    public PageLayout getCurrentLayout()
+    public PageLayoutType getCurrentLayout()
     {
         return this.currentLayout;
     }
 
     public void setPageLayout(
-        final PageLayout pageLayout )
+        final PageLayoutType pageLayout )
     {
         this.currentLayout = pageLayout;
-        Single.instance( ReaderWindow.class ).switchLayout();
+        Single.instance( ReaderWindow.class ).switchPageLayout();
     }
 }

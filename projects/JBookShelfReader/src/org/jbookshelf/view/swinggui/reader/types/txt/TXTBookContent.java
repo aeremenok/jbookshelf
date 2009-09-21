@@ -11,25 +11,26 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 
 /**
- * stores plain text
- * 
  * @author eav 2009
  */
-public class PlainTextContent
+public class TXTBookContent
     extends BookContent<String>
 {
+    private static final Logger log           = Logger.getLogger( TXTBookContent.class );
+    /**
+     * fixme divide by rows, not by character count
+     */
     private final static int    CHARS_IN_PAGE = 2700;
-    private static final Logger log           = Logger.getLogger( PlainTextContent.class );
     private final String        plainText;
 
-    public PlainTextContent(
+    public TXTBookContent(
         final Book book )
     {
         super( book );
         try
         {
-            // todo lazy loading
-            plainText = FileUtils.readFileToString( file, book.getPhysicalBook().getCharsetName() );
+            final String encoding = book.getPhysicalBook().getCharsetName();
+            plainText = FileUtils.readFileToString( file, encoding );
             pageCount = plainText.length() / CHARS_IN_PAGE + 1;
         }
         catch ( final IOException e )
@@ -40,7 +41,7 @@ public class PlainTextContent
     }
 
     @Override
-    public int findText(
+    public int findTextPage(
         String text,
         final Boolean direction,
         int startPage )
@@ -51,7 +52,7 @@ public class PlainTextContent
         { // backward
             for ( int p = startPage - 1; p > -1; p-- )
             {
-                final String page = getPage( p ).toLowerCase();
+                final String page = getPageContent( p ).toLowerCase();
                 if ( page.contains( text ) )
                 {
                     return p;
@@ -67,7 +68,7 @@ public class PlainTextContent
 
             for ( int p = startPage + 1; p < pageCount; p++ )
             {
-                final String page = getPage( p ).toLowerCase();
+                final String page = getPageContent( p ).toLowerCase();
                 if ( page.contains( text ) )
                 {
                     return p;
@@ -79,7 +80,7 @@ public class PlainTextContent
     }
 
     @Override
-    public String getPage(
+    public String getPageContent(
         int pageNumber )
     { // todo cache?
         if ( pageNumber > pageCount - 1 )

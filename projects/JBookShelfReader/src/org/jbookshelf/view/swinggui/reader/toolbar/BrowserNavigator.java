@@ -21,7 +21,7 @@ import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
-import org.jbookshelf.view.swinggui.reader.ReaderFactory;
+import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.types.html.EventRendererContext;
 import org.jbookshelf.view.swinggui.reader.types.html.History;
 import org.xnap.commons.gui.Builder;
@@ -55,7 +55,7 @@ public class BrowserNavigator
         public void actionPerformed(
             final ActionEvent e )
         {
-            EventBus.publish( ReaderFactory.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.BACK ) );
+            EventBus.publish( ReaderSpecific.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.BACK ) );
         }
     }
 
@@ -72,7 +72,7 @@ public class BrowserNavigator
         public void actionPerformed(
             final ActionEvent e )
         {
-            EventBus.publish( ReaderFactory.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.FORWARD ) );
+            EventBus.publish( ReaderSpecific.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.FORWARD ) );
         }
     }
 
@@ -88,7 +88,7 @@ public class BrowserNavigator
         public void actionPerformed(
             final ActionEvent e )
         {
-            EventBus.publish( ReaderFactory.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.GOOGLE ) );
+            EventBus.publish( ReaderSpecific.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.GOOGLE ) );
         }
     }
 
@@ -105,7 +105,7 @@ public class BrowserNavigator
         public void actionPerformed(
             final ActionEvent e )
         {
-            EventBus.publish( ReaderFactory.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.HOME ) );
+            EventBus.publish( ReaderSpecific.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.HOME ) );
         }
     }
 
@@ -122,7 +122,7 @@ public class BrowserNavigator
         public void actionPerformed(
             final ActionEvent e )
         {
-            EventBus.publish( ReaderFactory.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.SAVE ) );
+            EventBus.publish( ReaderSpecific.BROWSER, new ObjectEvent( BrowserNavigator.this, BrowserCommand.SAVE ) );
         }
     }
 
@@ -158,7 +158,7 @@ public class BrowserNavigator
                     case '\r':
                     case '\t':
                         final ObjectEvent event = new ObjectEvent( BrowserNavigator.this, BrowserCommand.ADDRESS );
-                        EventBus.publish( ReaderFactory.BROWSER, event );
+                        EventBus.publish( ReaderSpecific.BROWSER, event );
                         break;
 
                     default:

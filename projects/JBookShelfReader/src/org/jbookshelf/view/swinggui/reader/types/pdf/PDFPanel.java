@@ -208,9 +208,9 @@ public class PDFPanel
     private String extractText()
     {
         final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
-        final PDFContent content = (PDFContent) readerWindow.getBookContent();
+        final PDFBookContent content = (PDFBookContent) readerWindow.getBookContent();
         final int pageNumber = pagePanel.getPage().getPageNumber();
-        return content.getPageContent( pageNumber );
+        return content.pageToString( pageNumber );
     }
 
     @Override

@@ -11,22 +11,22 @@ import org.jbookshelf.view.swinggui.reader.BookContent;
 /**
  * @author eav 2009
  */
-public class HTMLContent
+public class HTMLBookContent
     extends BookContent<HTMLContentContainer>
 {
-    private static final Logger        log = Logger.getLogger( HTMLContent.class );
+    private static final Logger        log = Logger.getLogger( HTMLBookContent.class );
 
-    private final HTMLContentContainer container;
+    private final HTMLContentContainer onlyPageContainer;
 
-    public HTMLContent(
+    public HTMLBookContent(
         final Book book )
     {
         super( book );
         try
         {
             final String encoding = book.getPhysicalBook().getCharsetName();
-            final String string = FileUtils.readFileToString( file, encoding );
-            container = new HTMLContentContainer( string );
+            final String fileContent = FileUtils.readFileToString( file, encoding );
+            onlyPageContainer = new HTMLContentContainer( fileContent );
 
             pageCount = 1;
         }
@@ -38,18 +38,18 @@ public class HTMLContent
     }
 
     @Override
-    public int findText(
+    public int findTextPage(
         final String text,
         final Boolean direction,
         final int currentPage )
-    {
+    { // just let the panel highlight the text
         return 0;
     }
 
     @Override
-    public HTMLContentContainer getPage(
+    public HTMLContentContainer getPageContent(
         final int pageNumber )
     {
-        return container;
+        return onlyPageContainer;
     }
 }
