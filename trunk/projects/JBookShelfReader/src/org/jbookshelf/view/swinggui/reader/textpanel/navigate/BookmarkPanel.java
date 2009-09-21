@@ -26,9 +26,9 @@ import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
-import org.jbookshelf.view.swinggui.reader.ReaderFactory;
+import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.SortOrder;
 
@@ -133,13 +133,13 @@ public class BookmarkPanel
         model.update( null );
 
         table.setSortOrder( 0, SortOrder.ASCENDING );
-        if ( !Single.instance( ReaderFactory.class ).getFeatures().contains( ReaderFactory.PAGING ) )
+        if ( !Single.instance( ReaderSpecific.class ).getSupportedFeatures().contains( ReaderSpecific.PAGING ) )
         {
             table.removeColumn( table.getColumn( 1 ) );
         }
 
         // todo resize automatically
-        final Dimension mainSize = Single.instance( LayoutablePanel.class ).getCurrentPanels().getSize();
+        final Dimension mainSize = Single.instance( MultiPageLayoutPanel.class ).followLayouter().getSize();
         final Dimension preferredScrollableViewportSize = table.getPreferredScrollableViewportSize();
         final Dimension size = new Dimension( preferredScrollableViewportSize.width, mainSize.height - 45 );
         table.setPreferredScrollableViewportSize( size );
@@ -160,7 +160,7 @@ public class BookmarkPanel
                     {
                         final int selectedRow = table.convertRowIndexToModel( rowAtPoint );
                         final Bookmark bookmark = model.getBookmark( selectedRow );
-                        Single.instance( LayoutablePanel.class ).getCurrentPanels().goTo( bookmark );
+                        Single.instance( MultiPageLayoutPanel.class ).followLayouter().goTo( bookmark );
                     }
                 }
             }

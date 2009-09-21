@@ -13,26 +13,31 @@ import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 
-public class RTFContent
+/**
+ * @author eav 2009
+ */
+public class RTFBookContent
     extends BookContent<StyledDocument>
 {
-    private final static Logger  log      = Logger.getLogger( RTFContent.class );
-    private final StyledDocument document = new DefaultStyledDocument();
-    private final RTFEditorKit   kit      = new RTFEditorKit();
+    private final static Logger  log      = Logger.getLogger( RTFBookContent.class );
 
-    public RTFContent(
+    private final StyledDocument document = new DefaultStyledDocument();
+
+    public RTFBookContent(
         final Book book )
     {
         super( book );
-        log.debug( "parsing file " + file );
+
+        pageCount = 1;
+        final String encoding = book.getPhysicalBook().getCharsetName();
+
         Reader reader = null;
         FileInputStream fis = null;
         try
         {
             fis = new FileInputStream( file );
-            reader = new InputStreamReader( fis, book.getPhysicalBook().getCharsetName() );
-            kit.read( reader, document, 0 );
-            pageCount = 1;
+            reader = new InputStreamReader( fis, encoding );
+            new RTFEditorKit().read( reader, document, 0 );
         }
         catch ( final Exception e )
         {
@@ -44,11 +49,10 @@ public class RTFContent
             IOUtils.closeQuietly( fis );
             IOUtils.closeQuietly( reader );
         }
-        log.debug( "file parsed" );
     }
 
     @Override
-    public int findText(
+    public int findTextPage(
         final String text,
         final Boolean direction,
         final int currentPage )
@@ -57,7 +61,7 @@ public class RTFContent
     }
 
     @Override
-    public StyledDocument getPage(
+    public StyledDocument getPageContent(
         final int pageNumber )
     {
         return document;

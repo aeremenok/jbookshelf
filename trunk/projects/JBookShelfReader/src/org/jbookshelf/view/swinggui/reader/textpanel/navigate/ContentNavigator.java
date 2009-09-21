@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.view.swinggui.reader.ReaderFactory;
+import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 
 /**
  * @author eav 2009
@@ -33,8 +33,8 @@ public class ContentNavigator<PageType>
         super();
         add( cards, BorderLayout.CENTER );
         setVisible( false );
-        classes.put( ReaderFactory.BOOKMARKS, BookmarkPanel.class );
-        classes.put( ReaderFactory.THUMBNAILS, ThumbnailPanel.class );
+        classes.put( ReaderSpecific.BOOKMARKS, BookmarkPanel.class );
+        classes.put( ReaderSpecific.THUMBNAILS, ThumbnailPanel.class );
         // todo TOC
     }
 

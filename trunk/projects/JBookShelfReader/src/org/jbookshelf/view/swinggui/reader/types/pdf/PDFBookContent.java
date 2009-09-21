@@ -20,14 +20,19 @@ import com.sun.pdfview.PDFPage;
 /**
  * @author eav 2009
  */
-public class PDFContent
+public class PDFBookContent
     extends BookContent<PDFPage>
 {
-    private static final Logger log = Logger.getLogger( PDFContent.class );
-    private final PDFFile       pdffile;
+    private static final Logger log = Logger.getLogger( PDFBookContent.class );
+
+    /**
+     * apache pdfbox document for text extraction, loaded on demand
+     */
     private PDDocument          pdDocument;
 
-    public PDFContent(
+    private final PDFFile       pdffile;
+
+    public PDFBookContent(
         final Book book )
     {
         super( book );
@@ -47,7 +52,7 @@ public class PDFContent
     }
 
     @Override
-    public synchronized int findText(
+    public synchronized int findTextPage(
         String text,
         final Boolean direction,
         int startPage )
@@ -55,7 +60,7 @@ public class PDFContent
         try
         {
             text = text.toLowerCase();
-            final PDDocument doc = getPdDocument();
+            final PDDocument doc = getPdfBoxDocument();
             final PDFTextStripper stripper = new PDFTextStripper();
             if ( Boolean.FALSE.equals( direction ) )
             { // backward
@@ -98,21 +103,18 @@ public class PDFContent
     }
 
     @Override
-    public PDFPage getPage(
+    public PDFPage getPageContent(
         final int pageNumber )
     {
-        log.debug( "getting page " + pageNumber );
-        final PDFPage page = pdffile.getPage( pageNumber + 1 );
-        log.debug( "page got" );
-        return page;
+        return pdffile.getPage( pageNumber + 1 );
     }
 
-    public synchronized String getPageContent(
+    public synchronized String pageToString(
         final int pageNum )
     {
         try
         {
-            final PDDocument doc = getPdDocument();
+            final PDDocument doc = getPdfBoxDocument();
             final PDFTextStripper stripper = new PDFTextStripper();
             stripper.setStartPage( pageNum );
             stripper.setEndPage( pageNum );
@@ -125,7 +127,7 @@ public class PDFContent
         }
     }
 
-    private PDDocument getPdDocument()
+    private PDDocument getPdfBoxDocument()
     {
         if ( pdDocument == null )
         {

@@ -111,6 +111,6 @@ public class TextFinder
     private void searchText(
         final Parameters parameters )
     {
-        Single.instance( ReaderWindow.class ).searchText( parameters );
+        Single.instance( ReaderWindow.class ).goToText( parameters );
     }
 }

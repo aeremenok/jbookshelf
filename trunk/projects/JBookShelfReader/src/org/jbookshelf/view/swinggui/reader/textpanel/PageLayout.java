@@ -14,10 +14,10 @@ import org.jbookshelf.model.db.Bookmark;
  * @author eav 2009
  * @param <PageType>
  */
-public abstract class ReaderContentPanels<PageType>
+public abstract class PageLayout<PageType>
     extends JPanel
 {
-    public ReaderContentPanels()
+    public PageLayout()
     {
         super( new BorderLayout() );
     }
@@ -35,9 +35,9 @@ public abstract class ReaderContentPanels<PageType>
     public abstract void setContent(
         final PageType... pages );
 
-    public abstract void setReaderFont(
-        final Font font );
-
     public abstract void setScale(
         final int scale );
+
+    public abstract void useReaderFont(
+        final Font font );
 }

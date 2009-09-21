@@ -21,7 +21,7 @@ import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayout;
+import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayoutType;
 
 /**
  * a panel for page navigation
@@ -75,8 +75,8 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            final PageLayout currentLayout = Single.instance( Layouter.class ).getCurrentLayout();
-            currentPage += currentLayout == PageLayout.ONE_PAGE
+            final PageLayoutType currentLayout = Single.instance( Layouter.class ).getCurrentLayout();
+            currentPage += currentLayout == PageLayoutType.ONE_PAGE
                 ? 1 : 2;
             setNewPage( currentPage );
         }
@@ -94,8 +94,8 @@ public class Paginator
         public void actionPerformed(
             final ActionEvent e )
         {
-            final PageLayout currentLayout = Single.instance( Layouter.class ).getCurrentLayout();
-            currentPage -= currentLayout == PageLayout.ONE_PAGE
+            final PageLayoutType currentLayout = Single.instance( Layouter.class ).getCurrentLayout();
+            currentPage -= currentLayout == PageLayoutType.ONE_PAGE
                 ? 1 : 2;
             setNewPage( currentPage );
         }
@@ -157,8 +157,8 @@ public class Paginator
     public void setNewPage(
         int currentPage )
     {
-        final PageLayout currentLayout = Single.instance( Layouter.class ).getCurrentLayout();
-        currentPage = currentLayout == PageLayout.ONE_PAGE
+        final PageLayoutType currentLayout = Single.instance( Layouter.class ).getCurrentLayout();
+        currentPage = currentLayout == PageLayoutType.ONE_PAGE
             ? currentPage : currentPage % 2 == 0
                 // odd page left, even page right 
                 ? currentPage : currentPage - 1;

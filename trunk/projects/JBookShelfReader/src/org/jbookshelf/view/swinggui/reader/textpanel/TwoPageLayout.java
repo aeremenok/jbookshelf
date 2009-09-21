@@ -9,7 +9,6 @@ import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.NotesPanel;
@@ -19,11 +18,9 @@ import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
  * @author eav 2009
  * @param <PageType>
  */
-public class TwoPagePanels<PageType>
-    extends ReaderContentPanels<PageType>
+public class TwoPageLayout<PageType>
+    extends PageLayout<PageType>
 {
-    @SuppressWarnings( "unused" )
-    private static final Logger                log             = Logger.getLogger( TwoPagePanels.class );
     private final ReaderContentPanel<PageType> leftContentPanel;
     private final ReaderContentPanel<PageType> rightContentPanel;
 
@@ -31,7 +28,7 @@ public class TwoPagePanels<PageType>
     private final NotesPanel                   rightNotesPanel = new NotesPanel();
 
     @SuppressWarnings( "unchecked" )
-    public TwoPagePanels()
+    public TwoPageLayout()
     {
         super();
 
@@ -93,18 +90,18 @@ public class TwoPagePanels<PageType>
     }
 
     @Override
-    public void setReaderFont(
-        final Font font )
-    {
-        leftContentPanel.setReaderFont( font );
-        rightContentPanel.setReaderFont( font );
-    }
-
-    @Override
     public void setScale(
         final int scale )
     {
         leftContentPanel.setScale( scale );
         rightContentPanel.setScale( scale );
+    }
+
+    @Override
+    public void useReaderFont(
+        final Font font )
+    {
+        leftContentPanel.setReaderFont( font );
+        rightContentPanel.setReaderFont( font );
     }
 }

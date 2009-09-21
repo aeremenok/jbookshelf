@@ -10,7 +10,7 @@ import javax.swing.event.ChangeListener;
 import org.bushe.swing.event.EventBus;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
-import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
 
 public class BookmarkChangeListener
     implements
@@ -26,7 +26,7 @@ public class BookmarkChangeListener
         final int newValue = model.getValue();
         if ( !model.getValueIsAdjusting() && Math.abs( newValue - oldValue ) > model.getExtent() )
         {
-            final Bookmark bookmark = Single.instance( LayoutablePanel.class ).getCurrentPanels().createBookmark();
+            final Bookmark bookmark = Single.instance( MultiPageLayoutPanel.class ).followLayouter().createBookmark();
             EventBus.publish( Bookmark.POSITION, bookmark );
             oldValue = newValue;
         }

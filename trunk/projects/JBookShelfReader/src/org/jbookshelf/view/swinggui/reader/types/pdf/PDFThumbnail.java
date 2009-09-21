@@ -83,7 +83,7 @@ public class PDFThumbnail
         final int pageNumber )
     {
         this.pageNumber = pageNumber;
-        final PDFContent bookContent = (PDFContent) Single.instance( ReaderWindow.class ).getBookContent();
+        final PDFBookContent bookContent = (PDFBookContent) Single.instance( ReaderWindow.class ).getBookContent();
         if ( pageNumber > bookContent.getPageCount() - 1 )
         {
             setVisible( false );
@@ -96,7 +96,7 @@ public class PDFThumbnail
                 @Override
                 protected PDFPage doInBackground()
                 {
-                    return bookContent.getPage( pageNumber );
+                    return bookContent.getPageContent( pageNumber );
                 }
 
                 @Override

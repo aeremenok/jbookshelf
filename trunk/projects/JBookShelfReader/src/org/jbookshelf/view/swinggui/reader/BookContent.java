@@ -9,10 +9,10 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.PhysicalBook;
 
 /**
- * stores the content, performs search, divides it into pages
+ * stores the content, performs search, divides it into pages if possible
  * 
  * @author eav 2009
- * @param <PageType> type of divided pages
+ * @param <PageType> type of displayed pages
  */
 public abstract class BookContent<PageType>
 {
@@ -33,9 +33,9 @@ public abstract class BookContent<PageType>
      * @param text text to find
      * @param direction null - forward from page 0, TRUE - forward from currentPage, FALSE - backward from currentPage
      * @param currentPage page to start search
-     * @return first page containing the specified text in the specified direction
+     * @return first page containing the specified text in the specified direction (-1 if not found)
      */
-    public abstract int findText(
+    public abstract int findTextPage(
         final String text,
         final Boolean direction,
         final int currentPage );
@@ -44,12 +44,9 @@ public abstract class BookContent<PageType>
      * @param pageNumber page number in the content [0, getPageCount()-1]
      * @return page content
      */
-    public abstract PageType getPage(
+    public abstract PageType getPageContent(
         int pageNumber );
 
-    /**
-     * @return the pageCount
-     */
     public int getPageCount()
     {
         return this.pageCount;

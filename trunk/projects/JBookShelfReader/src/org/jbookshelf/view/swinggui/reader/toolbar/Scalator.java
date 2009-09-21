@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
-import org.jbookshelf.view.swinggui.reader.textpanel.LayoutablePanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
 
 /**
  * a panel for control scale and layout
@@ -162,6 +162,6 @@ public class Scalator
         zoomInAction.setEnabled( scale < max );
         zoomOutAction.setEnabled( scale > min );
 
-        Single.instance( LayoutablePanel.class ).getCurrentPanels().setScale( scale );
+        Single.instance( MultiPageLayoutPanel.class ).followLayouter().setScale( scale );
     }
 }
