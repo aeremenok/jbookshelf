@@ -16,23 +16,25 @@ import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 
 /**
+ * displays book content
+ * 
  * @author eav 2009
- * @param <PageType>
+ * @param <PageType> displayed page type
  */
-public abstract class ReaderContentPanel<PageType>
+public abstract class ContentRenderer<PageType>
     extends JPanel
 {
-    public ReaderContentPanel()
+    public ContentRenderer()
     {
         super( new BorderLayout() );
     }
 
     public Note createNote(
-        final String text )
+        final String citationText )
     {
         final Note note = new Note();
 
-        note.setCitation( text );
+        note.setCitation( citationText );
 
         final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
 
@@ -40,7 +42,7 @@ public abstract class ReaderContentPanel<PageType>
         note.setPage( currentPage );
         note.setPageCount( readerWindow.getBookContent().getPageCount() );
 
-        note.setPosition( getPosition( note ) );
+        note.setPosition( calcRelativePosition( note ) );
 
         note.setBook( readerWindow.getBook() );
         note.setTitle( NoteDialog.createTitle() );
@@ -48,26 +50,30 @@ public abstract class ReaderContentPanel<PageType>
         return note;
     }
 
+    public abstract void displayContent(
+        PageType content );
+
     public abstract void goTo(
         final Bookmark bookmark );
 
     public abstract void highlightText(
         String text );
 
-    public void reset()
-    {}
-
-    public abstract void setContent(
-        PageType content );
-
-    public void setReaderFont(
-        @SuppressWarnings( "unused" ) final Font font )
-    {}
-
-    public void setScale(
+    public void scale(
         @SuppressWarnings( "unused" ) final int scalePercentage )
     {}
 
-    protected abstract float getPosition(
-        Bookmark note );
+    public void useFont(
+        @SuppressWarnings( "unused" ) final Font font )
+    {}
+
+    /**
+     * pageable viewers calculate relative position (page/pageCount)<br>
+     * non-pageable get it from vertical scrollbar
+     * 
+     * @param bookmark page and page count
+     * @return relative position of the bookmark
+     */
+    protected abstract float calcRelativePosition(
+        Bookmark bookmark );
 }

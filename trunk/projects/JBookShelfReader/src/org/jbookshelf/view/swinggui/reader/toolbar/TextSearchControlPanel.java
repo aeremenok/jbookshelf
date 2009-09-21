@@ -4,6 +4,7 @@ import icons.IMG;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -21,7 +22,7 @@ import org.jbookshelf.view.swinggui.widget.ChangeDocumentListener;
  * 
  * @author eav 2009
  */
-public class TextFinder
+public class TextSearchControlPanel
     extends JPanel
 {
     private class FindAction
@@ -78,12 +79,12 @@ public class TextFinder
         }
     }
 
-    private final JTextField         searchTextField    = new JTextField( 20 );
-    private final FindNextAction     findNextAction     = new FindNextAction();
-    private final FindPreviousAction findPreviousAction = new FindPreviousAction();
-    private final FindAction         findAction         = new FindAction();
+    private final JTextField searchTextField    = new JTextField( 20 );
+    private final Action     findNextAction     = new FindNextAction();
+    private final Action     findPreviousAction = new FindPreviousAction();
+    private final Action     findAction         = new FindAction();
 
-    public TextFinder()
+    public TextSearchControlPanel()
     {
         super();
         setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );

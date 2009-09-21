@@ -23,11 +23,18 @@ import org.jdesktop.swingx.auth.LoginService;
 import org.lobobrowser.html.test.SimpleUserAgentContext;
 
 /**
+ * reads settings of a {@link Proxy} and enables it todo refactor
+ * 
  * @author eav 2009
  */
 public class ProxyUserAgentContext
     extends SimpleUserAgentContext
 {
+    /**
+     * asks user's credentials first time using {@link JXLoginDialog}
+     * 
+     * @author eav 2009
+     */
     private class AskUserAuthenticator
         extends Authenticator
     {
@@ -61,6 +68,11 @@ public class ProxyUserAgentContext
         }
     }
 
+    /**
+     * checks connection with given credentials and saves them if connection was successful
+     * 
+     * @author eav 2009
+     */
     private class CheckCredentialsService
         extends LoginService
     {
@@ -79,11 +91,13 @@ public class ProxyUserAgentContext
                 {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication()
-                    {
+                    { // fixme will this work while another auth is not complete?
                         return new PasswordAuthentication( name, password );
                     }
                 } );
-                final URLConnection connection = new URL( EventRendererContext.GOOGLE_URL ).openConnection( getProxy() );
+
+                final URL url = new URL( EventDrivenRendererContext.GOOGLE_URL );
+                final URLConnection connection = url.openConnection( getProxy() );
                 connection.connect();
 
                 this.name = name;
@@ -127,9 +141,9 @@ public class ProxyUserAgentContext
             final Integer port = settings.PROXY_PORT.getValue();
             final SocketAddress sa = new InetSocketAddress( host, port );
             this.setProxy( new Proxy( type, sa ) );
-        }
 
-        Authenticator.setDefault( askUserAuthenticator );
+            Authenticator.setDefault( askUserAuthenticator );
+        }
     }
 
 }

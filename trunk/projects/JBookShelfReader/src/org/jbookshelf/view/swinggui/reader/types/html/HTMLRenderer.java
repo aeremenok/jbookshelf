@@ -24,7 +24,7 @@ import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.BookmarkChangeListener;
 import org.jbookshelf.view.swinggui.reader.TaskQueue;
-import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextRenderer;
 import org.lobobrowser.html.HtmlRendererContext;
 import org.lobobrowser.html.UserAgentContext;
 import org.lobobrowser.html.domimpl.NodeImpl;
@@ -42,14 +42,19 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 /**
- * todo rename
+ * displays html content
  * 
  * @author eav 2009
  */
-public class HTMLReaderPanel
-    extends SelectableTextPanel<HTMLContentContainer>
+public class HTMLRenderer
+    extends SelectableTextRenderer<HTMLContentWrapper>
 {
     // todo avoid dirty hacks!
+    /**
+     * {@link HTMLBlockPanel#getVScrollBar()} made public
+     * 
+     * @author eav 2009
+     */
     protected class HTMLBlockPanel
         extends HtmlBlockPanel
     {
@@ -96,6 +101,11 @@ public class HTMLReaderPanel
         }
     }
 
+    /**
+     * creates {@link HTMLBlockPanel} instead of {@link HtmlBlockPanel}
+     * 
+     * @author eav 2009
+     */
     protected class HTMLPanel
         extends HtmlPanel
     {
@@ -113,6 +123,11 @@ public class HTMLReaderPanel
         }
     }
 
+    /**
+     * {@link RBLOCK#getVerticalScrollBar()} made public
+     * 
+     * @author eav 2009
+     */
     protected class RBLOCK
         extends RBlock
     {
@@ -146,7 +161,7 @@ public class HTMLReaderPanel
         }
     }
 
-    private static final Logger             log       = Logger.getLogger( HTMLReaderPanel.class );
+    private static final Logger             log       = Logger.getLogger( HTMLRenderer.class );
 
     static
     {
@@ -160,13 +175,13 @@ public class HTMLReaderPanel
 
     private Document                        doc;
 
-    public HTMLReaderPanel()
+    public HTMLRenderer()
     {
         super();
         add( htmlPanel, BorderLayout.CENTER );
 
         final SimpleUserAgentContext ucontext = new ProxyUserAgentContext();
-        rcontext = new EventRendererContext( htmlPanel, ucontext );
+        rcontext = new EventDrivenRendererContext( htmlPanel, ucontext );
         documentBuilder = new DocumentBuilderImpl( ucontext, rcontext );
 
         htmlPanel.addSelectionChangeListener( new SelectionChangeListener()
@@ -176,6 +191,7 @@ public class HTMLReaderPanel
             {
                 EventQueue.invokeLater( new Runnable()
                 {
+                    // todo timer
                     public void run()
                     {
                         if ( event.isSelectionAvailable() )
@@ -185,6 +201,36 @@ public class HTMLReaderPanel
                         }
                     }
                 } );
+            }
+        } );
+    }
+
+    @Override
+    public synchronized void displayContent(
+        final HTMLContentWrapper content )
+    {
+        Single.instance( ProgressBar.class ).invoke( new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Reader reader = null;
+                try
+                {
+                    reader = new StringReader( content.getContent() );
+                    final InputSource source = new InputSource( reader );
+
+                    doc = documentBuilder.parse( source );
+                    htmlPanel.setDocument( doc, rcontext );
+                }
+                catch ( final Exception e )
+                {
+                    log.error( e, e );
+                }
+                finally
+                {
+                    IOUtils.closeQuietly( reader );
+                }
             }
         } );
     }
@@ -215,41 +261,12 @@ public class HTMLReaderPanel
     @Override
     public void highlightText(
         final String text )
-    { // todo 
-    }
-
-    @Override
-    public synchronized void setContent(
-        final HTMLContentContainer content )
     {
-        Single.instance( ProgressBar.class ).invoke( new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                Reader reader = null;
-                try
-                {
-                    reader = new StringReader( content.getContent() );
-                    final InputSource source = new InputSource( reader );
-
-                    doc = documentBuilder.parse( source );
-                    htmlPanel.setDocument( doc, rcontext );
-                }
-                catch ( final Exception e )
-                {
-                    log.error( e, e );
-                }
-                finally
-                {
-                    IOUtils.closeQuietly( reader );
-                }
-            }
-        } );
+    // todo dig into Cobra library 
     }
 
     @Override
-    protected float getPosition(
+    protected float calcRelativePosition(
         final Bookmark bookmark )
     {
         final BoundedRangeModel model = htmlPanel.getBlockPanel().getVScrollBar().getModel();

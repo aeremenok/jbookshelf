@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JPopupMenu;
 
-import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Note;
@@ -19,17 +18,18 @@ import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.types.pdf.ExtractedTextDialog;
-import org.jbookshelf.view.swinggui.reader.types.pdf.PDFPanel;
+import org.jbookshelf.view.swinggui.reader.types.pdf.PDFRenderer;
 import org.xnap.commons.gui.util.PopupListener;
 
 /**
- * todo merge with {@link ExtractedTextDialog} or make {@link PDFPanel} text-selectable =)
+ * allows text selection and provides popup menu for selected text<br>
+ * todo merge with {@link ExtractedTextDialog} or make {@link PDFRenderer} text-selectable =)
  * 
  * @author eav 2009
- * @param <PageType>
+ * @param <PageType> displayed page type
  */
-public abstract class SelectableTextPanel<PageType>
-    extends ReaderContentPanel<PageType>
+public abstract class SelectableTextRenderer<PageType>
+    extends ContentRenderer<PageType>
 {
     private class ClipboardTextAction
         extends TranslatableAction
@@ -107,13 +107,10 @@ public abstract class SelectableTextPanel<PageType>
         }
     }
 
-    @SuppressWarnings( "unused" )
-    private static final Logger      log           = Logger.getLogger( SelectableTextPanel.class );
-
     protected JPopupMenu             menu          = new JPopupMenu();
     protected SelectionPopupListener popupListener = new SelectionPopupListener( menu );
 
-    public SelectableTextPanel()
+    public SelectableTextRenderer()
     {
         super();
 

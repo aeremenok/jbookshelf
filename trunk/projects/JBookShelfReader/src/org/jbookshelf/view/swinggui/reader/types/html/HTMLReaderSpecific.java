@@ -11,7 +11,7 @@ import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
  * @author eav 2009
  */
 public class HTMLReaderSpecific
-    extends ReaderSpecific<HTMLContentContainer>
+    extends ReaderSpecific<HTMLContentWrapper>
 {
     public HTMLReaderSpecific()
     {
@@ -23,7 +23,7 @@ public class HTMLReaderSpecific
     }
 
     @Override
-    public BookContent<HTMLContentContainer> createBookContent(
+    public BookContent<HTMLContentWrapper> createBookContent(
         final Book book )
     {
         return new HTMLBookContent( book );

@@ -16,7 +16,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
-import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
@@ -25,7 +24,7 @@ import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.textpanel.ReaderContentPanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.ContentRenderer;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jbookshelf.view.swinggui.widget.WrapperPanel;
 import org.xnap.commons.gui.util.PopupListener;
@@ -34,10 +33,12 @@ import com.sun.pdfview.PDFPage;
 import com.sun.pdfview.PagePanel;
 
 /**
+ * displays pdf pages
+ * 
  * @author eav 2009
  */
-public class PDFPanel
-    extends ReaderContentPanel<PDFPage>
+public class PDFRenderer
+    extends ContentRenderer<PDFPage>
 {
     private class ExtractAndCopyAction
         extends TranslatableAction
@@ -55,7 +56,7 @@ public class PDFPanel
             {
                 public void run()
                 {
-                    final String text = extractText();
+                    final String text = currentPageToString();
                     final StringSelection clipString = new StringSelection( text );
                     getToolkit().getSystemClipboard().setContents( clipString, clipString );
                 }
@@ -80,7 +81,7 @@ public class PDFPanel
                 @Override
                 protected Note doInBackground()
                 {
-                    final String text = extractText();
+                    final String text = currentPageToString();
                     return createNote( text );
                 }
 
@@ -110,28 +111,26 @@ public class PDFPanel
                 @Override
                 protected String doInBackground()
                 {
-                    return extractText();
+                    return currentPageToString();
                 }
 
                 @Override
                 protected void doneSafe()
                 {
                     final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
-                    new ExtractedTextDialog( readerWindow, getQuiet(), PDFPanel.this ).setVisible( true );
+                    new ExtractedTextDialog( readerWindow, getQuiet(), PDFRenderer.this ).setVisible( true );
                 }
             } );
         }
     }
 
-    @SuppressWarnings( "unused" )
-    private static final Logger log       = Logger.getLogger( PDFPanel.class );
+    private final PagePanel    pagePanel = new PagePanel();
+    private final WrapperPanel wrap      = new WrapperPanel( pagePanel );
+    private final JScrollPane  scroll    = new JScrollPane( wrap );
 
-    private final PagePanel     pagePanel = new PagePanel();
-    private final WrapperPanel  wrap      = new WrapperPanel( pagePanel );
-    private final JScrollPane   scroll    = new JScrollPane( wrap );
-    private Dimension           preferredSize;
+    private Dimension          preferredSize;
 
-    public PDFPanel()
+    public PDFRenderer()
     {
         super();
         add( scroll, BorderLayout.CENTER );
@@ -142,6 +141,23 @@ public class PDFPanel
         menu.add( new ExtractAndCopyAction() );
 
         pagePanel.addMouseListener( new PopupListener( menu ) );
+    }
+
+    @Override
+    public void displayContent(
+        final PDFPage content )
+    {
+        EventQueue.invokeLater( new Runnable()
+        {
+            public void run()
+            {
+                pagePanel.showPage( content );
+                if ( preferredSize == null )
+                {
+                    preferredSize = wrap.getSize();
+                }
+            }
+        } );
     }
 
     @Override
@@ -159,30 +175,7 @@ public class PDFPanel
     }
 
     @Override
-    public void reset()
-    {
-        preferredSize = null;
-    }
-
-    @Override
-    public void setContent(
-        final PDFPage content )
-    {
-        EventQueue.invokeLater( new Runnable()
-        {
-            public void run()
-            {
-                pagePanel.showPage( content );
-                if ( preferredSize == null )
-                {
-                    preferredSize = wrap.getSize();
-                }
-            }
-        } );
-    }
-
-    @Override
-    public void setScale(
+    public void scale(
         final int scalePercentage )
     {
         if ( preferredSize != null )
@@ -205,7 +198,7 @@ public class PDFPanel
         }
     }
 
-    private String extractText()
+    private String currentPageToString()
     {
         final ReaderWindow readerWindow = Single.instance( ReaderWindow.class );
         final PDFBookContent content = (PDFBookContent) readerWindow.getBookContent();
@@ -214,10 +207,10 @@ public class PDFPanel
     }
 
     @Override
-    protected float getPosition(
-        final Bookmark note )
+    protected float calcRelativePosition(
+        final Bookmark bookmark )
     {
-        final float page = note.getPage() + 1;
-        return page / note.getPageCount();
+        final float page = bookmark.getPage() + 1;
+        return page / bookmark.getPageCount();
     }
 }

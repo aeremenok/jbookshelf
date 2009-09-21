@@ -31,11 +31,11 @@ import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
 import org.jbookshelf.view.swinggui.reader.textpanel.PageLayout;
 import org.jbookshelf.view.swinggui.reader.toolbar.CharsetChooser;
-import org.jbookshelf.view.swinggui.reader.toolbar.Layouter;
+import org.jbookshelf.view.swinggui.reader.toolbar.PageLayoutSwitcher;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jbookshelf.view.swinggui.reader.toolbar.ReaderToolBar;
-import org.jbookshelf.view.swinggui.reader.toolbar.Scalator;
-import org.jbookshelf.view.swinggui.reader.toolbar.Layouter.PageLayoutType;
+import org.jbookshelf.view.swinggui.reader.toolbar.ScaleTuner;
+import org.jbookshelf.view.swinggui.reader.toolbar.PageLayoutSwitcher.PageLayoutType;
 import org.jdesktop.swingx.JXFrame;
 
 /**
@@ -61,14 +61,14 @@ public class ReaderWindow<T>
         final int newCurrentPage = paginator.getCurrentPage();
 
         final T leftPage = bookContent.getPageContent( newCurrentPage );
-        if ( Single.instance( Layouter.class ).getCurrentLayout() == PageLayoutType.TWO_PAGES )
+        if ( Single.instance( PageLayoutSwitcher.class ).getCurrentLayout() == PageLayoutType.TWO_PAGES )
         {
             final T rightPage = bookContent.getPageContent( newCurrentPage + 1 );
-            layoutable.followLayouter().setContent( leftPage, rightPage );
+            layoutable.followLayouter().displayPages( leftPage, rightPage );
         }
         else
         {
-            layoutable.followLayouter().setContent( leftPage );
+            layoutable.followLayouter().displayPages( leftPage );
         }
     }
 
@@ -92,10 +92,7 @@ public class ReaderWindow<T>
         final Parameters searchParameters )
     {
         final String text = searchParameters.get( Keys.SEARCH_TEXT );
-
-        final MultiPageLayoutPanel layoutable = Single.instance( MultiPageLayoutPanel.class );
         final Paginator paginator = Single.instance( Paginator.class );
-        final Layouter layouter = Single.instance( Layouter.class );
 
         Single.instance( ProgressBar.class ).invoke( new SafeWorker<Integer, Object>()
         {
@@ -105,7 +102,7 @@ public class ReaderWindow<T>
                 final Boolean direction = searchParameters.get( Keys.SEARCH_DIRECTION );
 
                 int startPage = paginator.getCurrentPage();
-                if ( layouter.getCurrentLayout() == PageLayoutType.TWO_PAGES )
+                if ( Single.instance( PageLayoutSwitcher.class ).getCurrentLayout() == PageLayoutType.TWO_PAGES )
                 { // skip one more page
                     startPage++;
                 }
@@ -119,7 +116,9 @@ public class ReaderWindow<T>
                 if ( page > -1 )
                 {
                     paginator.setNewPage( page );
-                    layoutable.followLayouter().highlightText( text );
+
+                    final PageLayout pageLayout = Single.instance( MultiPageLayoutPanel.class ).followLayouter();
+                    pageLayout.highlightText( text );
                 }
             }
         } );
@@ -231,7 +230,7 @@ public class ReaderWindow<T>
             public void run()
             {
                 final PageLayout pageLayout = Single.instance( MultiPageLayoutPanel.class ).followLayouter();
-                pageLayout.setScale( Single.instance( Scalator.class ).getScale() );
+                pageLayout.scale( Single.instance( ScaleTuner.class ).getScale() );
                 followPaginator();
             }
         } );

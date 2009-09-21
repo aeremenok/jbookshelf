@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 import org.xnap.commons.gui.completion.CompletionModel;
 
 /**
+ * builds completions from the {@link Collection} of any objects by ignorecase comparing {@link Object#toString()}
+ * 
  * @author eav 2009
  */
 public class IngoreCaseCollectionCompletionModel

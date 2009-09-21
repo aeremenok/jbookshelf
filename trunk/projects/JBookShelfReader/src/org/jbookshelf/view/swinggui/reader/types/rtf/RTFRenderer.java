@@ -8,27 +8,28 @@ import javax.swing.BoundedRangeModel;
 import javax.swing.JScrollPane;
 import javax.swing.text.StyledDocument;
 
-import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.BookmarkChangeListener;
 import org.jbookshelf.view.swinggui.reader.TaskQueue;
-import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextPanel;
+import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextRenderer;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
 import org.jdesktop.swingx.JXEditorPane;
 
-public class RTFPanel
-    extends SelectableTextPanel<StyledDocument>
+/**
+ * displays pdf content
+ * 
+ * @author eav 2009
+ */
+public class RTFRenderer
+    extends SelectableTextRenderer<StyledDocument>
 {
-    private final JXEditorPane  editorPane = new JXEditorPane();
-    private final JScrollPane   scroll     = new JScrollPane( editorPane );
-    private final TaskQueue     taskQueue  = new TaskQueue();
+    private final JXEditorPane editorPane = new JXEditorPane();
+    private final JScrollPane  scroll     = new JScrollPane( editorPane );
+    private final TaskQueue    taskQueue  = new TaskQueue();
 
-    @SuppressWarnings( "unused" )
-    private static final Logger log        = Logger.getLogger( RTFPanel.class );
-
-    public RTFPanel()
+    public RTFRenderer()
     {
         super();
         add( scroll, BorderLayout.CENTER );
@@ -40,6 +41,20 @@ public class RTFPanel
         final BoundedRangeModel model = scroll.getVerticalScrollBar().getModel();
         model.addChangeListener( taskQueue );
         model.addChangeListener( new BookmarkChangeListener() );
+    }
+
+    @Override
+    public void displayContent(
+        final StyledDocument content )
+    {
+        Single.instance( ProgressBar.class ).invoke( new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                editorPane.setDocument( content );
+            }
+        } );
     }
 
     @Override
@@ -69,37 +84,23 @@ public class RTFPanel
     }
 
     @Override
-    public void setContent(
-        final StyledDocument content )
+    public void scale(
+        final int scalePercentage )
     {
-        Single.instance( ProgressBar.class ).invoke( new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                editorPane.setDocument( content );
-            }
-        } );
+        final Font oldFont = editorPane.getFont();
+        final float newSize = FontChooser.INITIAL_SIZE * scalePercentage / 100;
+        editorPane.setFont( oldFont.deriveFont( newSize ) );
     }
 
     @Override
-    public void setReaderFont(
+    public void useFont(
         final Font font )
     {
         editorPane.setFont( font );
     }
 
     @Override
-    public void setScale(
-        final int scalePercentage )
-    {
-        final Font oldFont = editorPane.getFont();
-        editorPane.setFont( new Font( oldFont.getName(), oldFont.getStyle(), FontChooser.INITIAL_SIZE * scalePercentage
-            / 100 ) );
-    }
-
-    @Override
-    protected float getPosition(
+    protected float calcRelativePosition(
         final Bookmark bookmark )
     {
         final BoundedRangeModel model = scroll.getVerticalScrollBar().getModel();

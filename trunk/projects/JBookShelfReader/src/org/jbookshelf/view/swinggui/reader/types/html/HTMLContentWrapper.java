@@ -6,11 +6,11 @@ package org.jbookshelf.view.swinggui.reader.types.html;
 /**
  * @author eav 2009
  */
-public class HTMLContentContainer
+public class HTMLContentWrapper
 {
     private final String content;
 
-    public HTMLContentContainer(
+    public HTMLContentWrapper(
         final String content )
     {
         super();

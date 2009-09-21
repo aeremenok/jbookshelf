@@ -11,20 +11,22 @@ import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.reader.textpanel.navigate.NotesPanel;
 
 /**
+ * displays a single page
+ * 
  * @author eav 2009
- * @param <PageType>
+ * @param <PageType> displayed page type
  */
 public class OnePageLayout<PageType>
     extends PageLayout<PageType>
 {
-    private final ReaderContentPanel<PageType> contentPanel;
+    private final ContentRenderer<PageType> contentPanel;
     private final NotesPanel                   notesPanel = new NotesPanel();
 
     @SuppressWarnings( "unchecked" )
     public OnePageLayout()
     {
         super();
-        contentPanel = Single.newInstance( ReaderContentPanel.class );
+        contentPanel = Single.newInstance( ContentRenderer.class );
         add( contentPanel, BorderLayout.CENTER );
         add( notesPanel, BorderLayout.EAST );
     }
@@ -41,7 +43,14 @@ public class OnePageLayout<PageType>
         return contentPanel.createNote( null );
     }
 
-    public ReaderContentPanel<PageType> getContentPanel()
+    @Override
+    public void displayPages(
+        final PageType... pages )
+    {
+        contentPanel.displayContent( pages[0] );
+    }
+
+    public ContentRenderer<PageType> getContentPanel()
     {
         return this.contentPanel;
     }
@@ -61,24 +70,17 @@ public class OnePageLayout<PageType>
     }
 
     @Override
-    public void setContent(
-        final PageType... pages )
+    public void scale(
+        final int scalePercentage )
     {
-        contentPanel.setContent( pages[0] );
-    }
-
-    @Override
-    public void setScale(
-        final int scale )
-    {
-        contentPanel.setScale( scale );
+        contentPanel.scale( scalePercentage );
     }
 
     @Override
     public void useReaderFont(
         final Font font )
     {
-        contentPanel.setReaderFont( font );
+        contentPanel.useFont( font );
     }
 
 }
