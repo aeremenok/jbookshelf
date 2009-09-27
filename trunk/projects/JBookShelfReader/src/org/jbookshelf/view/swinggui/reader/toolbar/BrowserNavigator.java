@@ -25,6 +25,7 @@ import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.types.html.EventDrivenRendererContext;
 import org.jbookshelf.view.swinggui.reader.types.html.History;
+import org.jbookshelf.view.swinggui.widget.IngoreCaseCollectionCompletionModel;
 import org.xnap.commons.gui.Builder;
 
 /**

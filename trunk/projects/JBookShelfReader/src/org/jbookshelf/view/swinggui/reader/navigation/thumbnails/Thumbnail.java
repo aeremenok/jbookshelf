@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.textpanel.navigate;
+package org.jbookshelf.view.swinggui.reader.navigation.thumbnails;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

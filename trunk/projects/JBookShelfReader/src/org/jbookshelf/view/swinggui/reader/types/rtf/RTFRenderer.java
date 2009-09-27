@@ -11,10 +11,10 @@ import javax.swing.text.StyledDocument;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.ProgressBar;
-import org.jbookshelf.view.swinggui.reader.BookmarkChangeListener;
-import org.jbookshelf.view.swinggui.reader.TaskQueue;
-import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextRenderer;
+import org.jbookshelf.view.swinggui.reader.navigation.bookmarks.BookmarkChangeListener;
+import org.jbookshelf.view.swinggui.reader.textview.SelectableTextRenderer;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
+import org.jbookshelf.view.swinggui.widget.ScrollBarTaskQueue;
 import org.jdesktop.swingx.JXEditorPane;
 
 /**
@@ -27,7 +27,7 @@ public class RTFRenderer
 {
     private final JXEditorPane editorPane = new JXEditorPane();
     private final JScrollPane  scroll     = new JScrollPane( editorPane );
-    private final TaskQueue    taskQueue  = new TaskQueue();
+    private final ScrollBarTaskQueue    taskQueue  = new ScrollBarTaskQueue();
 
     public RTFRenderer()
     {

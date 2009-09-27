@@ -22,9 +22,9 @@ import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.view.swinggui.ProgressBar;
-import org.jbookshelf.view.swinggui.reader.BookmarkChangeListener;
-import org.jbookshelf.view.swinggui.reader.TaskQueue;
-import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextRenderer;
+import org.jbookshelf.view.swinggui.reader.navigation.bookmarks.BookmarkChangeListener;
+import org.jbookshelf.view.swinggui.reader.textview.SelectableTextRenderer;
+import org.jbookshelf.view.swinggui.widget.ScrollBarTaskQueue;
 import org.lobobrowser.html.HtmlRendererContext;
 import org.lobobrowser.html.UserAgentContext;
 import org.lobobrowser.html.domimpl.NodeImpl;
@@ -168,7 +168,7 @@ public class HTMLRenderer
         java.util.logging.Logger.getLogger( "org.lobobrowser" ).setLevel( Level.OFF );
     }
 
-    private final TaskQueue                 taskQueue = new TaskQueue();
+    private final ScrollBarTaskQueue                 taskQueue = new ScrollBarTaskQueue();
     private final HTMLPanel                 htmlPanel = new HTMLPanel();
     private final SimpleHtmlRendererContext rcontext;
     private final DocumentBuilder           documentBuilder;

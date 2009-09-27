@@ -18,15 +18,15 @@ import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
-import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
-import org.jbookshelf.view.swinggui.reader.textpanel.navigate.ContentNavigator;
+import org.jbookshelf.view.swinggui.reader.navigation.ContentNavigators;
+import org.jbookshelf.view.swinggui.reader.textview.MultiPageLayoutPanel;
 
 /**
  * a panel for control basic content actions
  * 
  * @author eav 2009
  */
-public class ContentActionsPanel
+public class ContentNavigatorSwitcher
     extends JPanel
 {
     private class BookmarksAction
@@ -83,12 +83,12 @@ public class ContentActionsPanel
         {
             selectedFeature = featureName.equals( selectedFeature )
                 ? null : featureName;
-            Single.instance( ContentNavigator.class ).show( selectedFeature );
+            Single.instance( ContentNavigators.class ).show( selectedFeature );
         }
     }
 
     @SuppressWarnings( "unused" )
-    private static final Logger log = Logger.getLogger( ContentActionsPanel.class );
+    private static final Logger log = Logger.getLogger( ContentNavigatorSwitcher.class );
 
     private String              selectedFeature;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.textpanel.navigate;
+package org.jbookshelf.view.swinggui.reader.navigation.thumbnails;
 
 import icons.IMG;
 
@@ -15,13 +15,14 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 
 /**
+ * displays book thumbnails
+ * 
  * @author eav 2009
  */
 public class ThumbnailPanel
@@ -43,7 +44,7 @@ public class ThumbnailPanel
             {
                 pageNumbers[i] += pageNumbers.length;
             }
-            updatePageNumbers();
+            followPageNumbers();
         }
     }
 
@@ -63,18 +64,16 @@ public class ThumbnailPanel
             {
                 pageNumbers[i] -= pageNumbers.length;
             }
-            updatePageNumbers();
+            followPageNumbers();
         }
     }
 
-    @SuppressWarnings( "unused" )
-    private static final Logger     log         = Logger.getLogger( ThumbnailPanel.class );
     protected final Action          upAction    = new UpAction();
     protected final Action          downAction  = new DownAction();
 
     protected final List<Thumbnail> thumbnails  = new ArrayList<Thumbnail>();
 
-    protected Integer[]             pageNumbers =
+    protected int[]                 pageNumbers =
                                                 { 0, 1, 2, 3 };
 
     public ThumbnailPanel()
@@ -94,10 +93,10 @@ public class ThumbnailPanel
 
         add( new JButton( downAction ), BorderLayout.SOUTH );
 
-        updatePageNumbers();
+        followPageNumbers();
     }
 
-    protected void updatePageNumbers()
+    protected void followPageNumbers()
     {
         final BookContent bookContent = Single.instance( ReaderWindow.class ).getBookContent();
 
@@ -106,7 +105,8 @@ public class ThumbnailPanel
 
         for ( int i = 0; i < thumbnails.size(); i++ )
         {
-            thumbnails.get( i ).displayPage( pageNumbers[i] );
+            final Thumbnail thumbnail = thumbnails.get( i );
+            thumbnail.displayPage( pageNumbers[i] );
         }
     }
 }
