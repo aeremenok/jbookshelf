@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.textpanel;
+package org.jbookshelf.view.swinggui.reader.textview;
 
 import icons.IMG;
 

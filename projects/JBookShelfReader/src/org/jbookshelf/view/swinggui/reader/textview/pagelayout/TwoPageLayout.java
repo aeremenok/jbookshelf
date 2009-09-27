@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.textpanel;
+package org.jbookshelf.view.swinggui.reader.textview.pagelayout;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -11,7 +11,8 @@ import javax.swing.JSplitPane;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
-import org.jbookshelf.view.swinggui.reader.textpanel.navigate.NotesPanel;
+import org.jbookshelf.view.swinggui.reader.navigation.notes.NotesPanel;
+import org.jbookshelf.view.swinggui.reader.textview.ContentRenderer;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 
 /**

@@ -18,7 +18,7 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
-import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
+import org.jbookshelf.view.swinggui.reader.textview.MultiPageLayoutPanel;
 import org.xnap.commons.gui.DefaultDialog;
 import org.xnap.commons.i18n.I18n;
 

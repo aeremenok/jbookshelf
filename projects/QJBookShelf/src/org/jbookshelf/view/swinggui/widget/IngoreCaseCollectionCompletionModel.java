@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.toolbar;
+package org.jbookshelf.view.swinggui.widget;
 
 import java.util.Collection;
 

@@ -72,7 +72,7 @@ public class ReaderToolBar
         if ( features.contains( ReaderSpecific.NOTES ) || features.contains( ReaderSpecific.BOOKMARKS )
             || features.contains( ReaderSpecific.THUMBNAILS ) )
         {
-            addComponent( Single.instance( ContentActionsPanel.class ) );
+            addComponent( Single.instance( ContentNavigatorSwitcher.class ) );
         }
         if ( features.contains( ReaderSpecific.SCALING ) )
         {

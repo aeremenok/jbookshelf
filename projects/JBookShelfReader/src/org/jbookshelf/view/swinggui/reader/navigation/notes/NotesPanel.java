@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.textpanel.navigate;
+package org.jbookshelf.view.swinggui.reader.navigation.notes;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -29,7 +29,7 @@ import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
+import org.jbookshelf.view.swinggui.reader.textview.MultiPageLayoutPanel;
 import org.jdesktop.swingx.JXTable;
 
 /**

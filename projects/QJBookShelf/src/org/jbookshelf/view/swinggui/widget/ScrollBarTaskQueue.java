@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader;
+package org.jbookshelf.view.swinggui.widget;
 
 import java.awt.EventQueue;
 import java.util.Queue;
@@ -18,7 +18,7 @@ import javax.swing.event.ChangeListener;
  * 
  * @author eav 2009
  */
-public class TaskQueue
+public class ScrollBarTaskQueue
     implements
     ChangeListener
 {

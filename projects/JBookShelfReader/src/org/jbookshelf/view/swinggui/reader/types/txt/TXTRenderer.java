@@ -12,7 +12,7 @@ import javax.swing.text.PlainDocument;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
-import org.jbookshelf.view.swinggui.reader.textpanel.SelectableTextRenderer;
+import org.jbookshelf.view.swinggui.reader.textview.SelectableTextRenderer;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jdesktop.swingx.JXEditorPane;

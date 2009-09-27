@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader;
+package org.jbookshelf.view.swinggui.reader.navigation.bookmarks;
 
 import javax.swing.BoundedRangeModel;
 import javax.swing.JScrollBar;
@@ -12,8 +12,8 @@ import org.bushe.swing.event.EventBus;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
-import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
-import org.jbookshelf.view.swinggui.reader.textpanel.PageLayout;
+import org.jbookshelf.view.swinggui.reader.textview.MultiPageLayoutPanel;
+import org.jbookshelf.view.swinggui.reader.textview.pagelayout.PageLayout;
 
 /**
  * monitors {@link JScrollBar} scrolling and fires events for {@link Note} reloading

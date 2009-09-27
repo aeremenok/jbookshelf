@@ -15,7 +15,7 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.reader.textpanel.navigate.Thumbnail;
+import org.jbookshelf.view.swinggui.reader.navigation.thumbnails.Thumbnail;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 
 import com.sun.pdfview.PDFPage;
@@ -23,7 +23,7 @@ import com.sun.pdfview.PagePanel;
 
 /**
  * displays a single pdf page in a small panel<br>
- * double click navigates to page in a main viewer
+ * double click navigates to page in a main viewer todo pull up to {@link Thumbnail}
  * 
  * @author eav 2009
  */

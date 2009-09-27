@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
-import org.jbookshelf.view.swinggui.reader.textpanel.MultiPageLayoutPanel;
+import org.jbookshelf.view.swinggui.reader.textview.MultiPageLayoutPanel;
 
 /**
  * a panel for control scale and layout

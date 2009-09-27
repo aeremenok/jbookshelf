@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.textpanel.navigate;
+package org.jbookshelf.view.swinggui.reader.navigation.notes;
 
 import icons.IMG;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader.textpanel;
+package org.jbookshelf.view.swinggui.reader.textview.pagelayout;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
