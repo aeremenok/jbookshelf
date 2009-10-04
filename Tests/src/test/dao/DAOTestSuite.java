@@ -3,6 +3,9 @@
  */
 package test.dao;
 
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.PropertyConfigurator;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.util.DBUtil;
@@ -24,8 +27,18 @@ public class DAOTestSuite
     @BeforeClass
     public static void setUp()
     {
-        PropertyConfigurator.configure( MainWindow.class.getResource( "log4j.properties" ) );
-        Single.instance( DBUtil.class ).startup();
+        try
+        {
+            PropertyConfigurator.configure( MainWindow.class.getResource( "log4j.properties" ) );
+            final String dirName = "/opt/jbookshelf";
+            FileUtils.deleteDirectory( new File( dirName ) );
+            Single.instance( DBUtil.class ).startup( dirName );
+        }
+        catch ( final Exception e )
+        {
+            e.printStackTrace();
+            throw new Error( e );
+        }
     }
 
     @AfterClass
