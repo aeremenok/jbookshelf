@@ -1,0 +1,45 @@
+--- ideas ---
+
+- monitor new files in specified directory while being minimized to tray
+
+- reorganize existing file structure according to specified filename masks
+
+--- pending ---
+
+- navigate between units, authors, categories, comments etc.
+
+- FictionBook converter
+
+- creation and view of notes
+
+- citations ( comment + citation text + link to book text )
+
+- hierarchical categories 
+
+--- implemented in 0.3 ---
+
+- reader
+
+- neccesary context menus
+
+- autocomplete in author, category field (based on existing list)
+
+- autocomplete in comment and citation textarea (based on vocabulary)
+
+- mass import process visualization (success/failure, add manually)
+
+--- implemented in 0.1-0.2 ---
+
+- show query results
+
+- open selected unit in a default system browser (allow further extensions for other external programs)
+
+- store unit authors, tags (=genre?), comments, related unit links
+
+- store author tags, comments, related author links
+
+- add/remove reading unit from collection
+
+- register units from file structure according to specified filename masks
+
+- backup/restore existing metadata
