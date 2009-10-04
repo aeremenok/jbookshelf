@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="translate" name="Translate" basedir=".">
+
+    <property name="libdir" value="${basedir}/lib" />
+    <property name="readerdir" value="${basedir}/../JBookShelfReader" />
+
+    <path id="antlib.cp">
+        <fileset dir="${basedir}/antlib" />
+    </path>
+
+    <!-- collect words -->
+    <target name="gettext">
+        <taskdef name="extract" classname="org.xnap.commons.ant.gettext.GettextExtractKeysTask">
+            <classpath refid="antlib.cp" />
+        </taskdef>
+
+        <extract keysFile="messages.pot" poDirectory="i18n" keywords="-ktr">
+            <fileset dir="${basedir}/src" includes="**/*.java" />
+            <fileset dir="${readerdir}/src" includes="**/*.java" />
+        </extract>
+    </target>
+
+    <!-- prepare files -->
+    <target name="merge">
+        <taskdef name="gettext-merge"
+                 classname="org.xnap.commons.ant.gettext.GettextMergeKeysTask"
+                 classpathref="antlib.cp" />
+        <gettext-merge keysFile="messages.pot" poDirectory="i18n" />
+    </target>
+
+    <target name="translate" depends="gettext, merge" />
+    <!-- use poedit to translate -->
+
+    <!-- create bundle .class files and assemble jar-->
+    <target name="bundle">
+        <taskdef name="gettext-generate-default"
+                 classname="org.xnap.commons.ant.gettext.GenerateDefaultBundleTask"
+                 classpathref="antlib.cp" />
+        <gettext-generate-default targetBundle="org.jbookshelf.view.i18n.Messages"
+                                  outputDirectory="i18n/bin"
+                                  potfile="i18n/messages.pot" />
+
+        <taskdef name="gettext-dist" 
+                 classname="org.xnap.commons.ant.gettext.GettextDistTask"
+                 classpathref="antlib.cp" />
+        <gettext-dist targetBundle="org.jbookshelf.view.i18n.Messages" poDirectory="i18n" outputDirectory="i18n/bin" />
+
+        <jar destfile="${libdir}/jbs-i18n.jar">
+            <fileset dir="i18n/bin" />
+        </jar>
+
+        <delete dir="i18n/bin/org" />
+    </target>
+
+
+</project>
