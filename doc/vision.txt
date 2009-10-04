@@ -1,0 +1,19 @@
+1. domain: electronic books and articles reading
+operation units:
+a) archive, containing one of units, listed below
+b) file, readable by any viewer or browser
+c) folder, containing a file and a folder with any related files (pictures, music, video,...)
+d) folder, containing index.html, index.htm, ...
+possible extensions (future iterations): 
+e) audiobook - folder, containing music files (we are not able to do any operations with content, only to read/write tags and store comments of unit)
+ 
+2. target: help reading, bind related information, keep metadata, help getting books
+
+3. user: single, probable cooperation of equitable users (rethink on substage "web integration")
+
+4. app type: desktop, crossplatform, easily portable to pda (primary winmobile, then consider openmoko, google andriod, iphone)
+that makes java the primary platform
+
+5. iterations:
+ - implement main features of desktop-app, pda-app, note-making reader
+ - refine their functionality
