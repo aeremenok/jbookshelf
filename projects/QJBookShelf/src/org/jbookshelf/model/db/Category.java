@@ -147,6 +147,13 @@ public class Category
         return result;
     }
 
+    @Override
+    public void setId(
+        final Long id )
+    {
+        this.id = id;
+    }
+
     public void setName(
         @Nonnull final String name )
     {

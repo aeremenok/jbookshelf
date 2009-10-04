@@ -4,6 +4,7 @@
     <property name="src.dir" value="${basedir}/src" />
     <property name="lib.dir" value="${basedir}/lib" />
     <property name="antlib.dir" value="${basedir}/antlib" />
+    <property name="hiberlib.dir" value="${basedir}/hibernate-lib" />
     <property name="tempjar.file" value="${java.io.tmpdir}/jbs.jar" />
 
     <target name="tempjar">
@@ -14,6 +15,7 @@
 
     <path id="project.classpath">
         <fileset dir="${lib.dir}" />
+        <fileset dir="${hiberlib.dir}" />
         <fileset dir="${antlib.dir}" />
         <fileset file="${tempjar.file}" />
     </path>

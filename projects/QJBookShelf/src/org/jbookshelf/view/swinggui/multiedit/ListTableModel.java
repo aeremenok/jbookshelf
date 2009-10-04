@@ -12,7 +12,6 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.commons.collections.list.SetUniqueList;
 import org.jbookshelf.view.i18n.I18N;
 
 /**
@@ -27,8 +26,7 @@ public class ListTableModel<V>
     /**
      * model values, contains no duplicates
      */
-    @SuppressWarnings( "unchecked" )
-    private final List<V>         values = SetUniqueList.decorate( new ArrayList<V>() );
+    private final List<V>         values = new ArrayList<V>();
 
     /**
      * column names
@@ -44,8 +42,11 @@ public class ListTableModel<V>
     public void addValue(
         final V value )
     {
-        values.add( value );
-        fireTableDataChanged();
+        if ( !values.contains( value ) )
+        {
+            values.add( value );
+            fireTableDataChanged();
+        }
     }
 
     public void clear()

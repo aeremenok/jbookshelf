@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.log4j.Logger;
+import org.jbookshelf.controller.singleton.Single;
 
 /**
  * performs native SQL queries
@@ -34,14 +35,6 @@ public class LogRunner
             builder.append( i + 1 ).append( " > " ).append( params[i] ).append( "\n" );
         }
         return builder.toString();
-    }
-
-    private final boolean showSql;
-
-    public LogRunner()
-    {
-        super();
-        showSql = "true".equalsIgnoreCase( HibernateUtil.getProperties().getProperty( "show_sql" ) );
     }
 
     @Override
@@ -73,7 +66,7 @@ public class LogRunner
         final String sql,
         final Object[] params )
     {
-        if ( showSql )
+        if ( Single.instance( DBUtil.class ).showSql() )
         {
             log.debug( sql + "\n" + toString( params ) );
         }
@@ -82,7 +75,7 @@ public class LogRunner
     @Override
     protected Connection prepareConnection()
     {
-        return HibernateUtil.connection();
+        return Single.instance( DBUtil.class ).openConnection();
     }
 
 }
