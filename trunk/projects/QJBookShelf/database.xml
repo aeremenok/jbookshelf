@@ -20,20 +20,15 @@
         <fileset file="${tempjar.file}" />
     </path>
 
-    <taskdef name="hibernatetool"
-             classname="org.hibernate.tool.ant.HibernateToolTask">
+    <taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask">
         <classpath refid="project.classpath" />
     </taskdef>
 
     <target name="tool">
-        <hibernatetool destdir="${basedir}">
+        <hibernatetool destdir="${src.dir}/org/jbookshelf/model/db/util">
             <classpath refid="project.classpath" />
             <annotationconfiguration configurationfile="${src.dir}/hibernate.cfg.xml" />
-            <hbm2ddl drop="true"
-                     create="true"
-                     outputfilename="jbs-ddl.sql"
-                     delimiter=";"
-                     format="true" />
+            <hbm2ddl create="true" outputfilename="jbs-ddl.sql" delimiter=";" format="true" />
         </hibernatetool>
     </target>
 

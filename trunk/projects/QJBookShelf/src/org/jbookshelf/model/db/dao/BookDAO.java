@@ -3,8 +3,10 @@
  */
 package org.jbookshelf.model.db.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
 
@@ -29,15 +31,26 @@ public class BookDAO
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.model.db.dao.GenericDAO#makePersistent(java.io.Serializable)
-     */
     @Override
     public Book makePersistent(
         final Book entity )
     {
-        log.debug( "makePersistent" );
-        // TODO Auto-generated method stub
-        return null;
+        try
+        {
+            final Object res = runner.query( "select hibernate_sequence.nextval", new ScalarHandler() );
+            final Long id = Long.valueOf( res.toString() );
+
+            runner.update( "insert into Book (id,name) values(?,?)", new Object[]
+            { id, entity.getName() } );
+
+            entity.setId( id );
+
+            return entity;
+        }
+        catch ( final SQLException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
     }
 }

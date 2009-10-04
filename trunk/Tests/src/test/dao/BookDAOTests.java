@@ -20,4 +20,12 @@ public class BookDAOTests
     {
         super( new BookDAO() );
     }
+
+    @Override
+    public Book randomUnique()
+    {
+        final Book book = new Book();
+        book.setName( "Book" + System.currentTimeMillis() );
+        return book;
+    }
 }
