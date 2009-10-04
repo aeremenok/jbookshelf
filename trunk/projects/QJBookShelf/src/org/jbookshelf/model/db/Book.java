@@ -179,6 +179,13 @@ public class Book
         return lastRead.getPosition() == 1f;
     }
 
+    @Override
+    public void setId(
+        final Long id )
+    {
+        this.id = id;
+    }
+
     public void setLastRead(
         final Note lastRead )
     {

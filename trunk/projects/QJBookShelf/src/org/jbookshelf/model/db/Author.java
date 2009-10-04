@@ -120,6 +120,13 @@ public class Author
         return result;
     }
 
+    @Override
+    public void setId(
+        final Long id )
+    {
+        this.id = id;
+    }
+
     /**
      * @param name the name to set
      */

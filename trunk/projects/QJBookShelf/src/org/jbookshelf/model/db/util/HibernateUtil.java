@@ -61,9 +61,6 @@ public class HibernateUtil
         }
     }
 
-    /**
-     * @return the properties
-     */
     public static Properties getProperties()
     {
         return properties;
