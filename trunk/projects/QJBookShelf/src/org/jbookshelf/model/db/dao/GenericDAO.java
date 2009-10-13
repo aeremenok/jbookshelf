@@ -13,15 +13,7 @@ import java.util.List;
  */
 public interface GenericDAO<T extends Serializable, ID extends Serializable>
 {
-    void clear();
-
     List<T> findAll();
-
-    List<T> findByExample(
-        T example,
-        String... excludeProperties );
-
-    void flush();
 
     T getById(
         ID id );

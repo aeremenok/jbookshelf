@@ -3,21 +3,14 @@
  */
 package org.jbookshelf.model.db;
 
-import java.io.Serializable;
-
 /**
  * @author eav
  */
-public interface Unique
+public interface Named
     extends
-    Serializable
+    Identifiable
 {
-    Long getId();
-
     String getName();
-
-    void setId(
-        Long id );
 
     void setName(
         String name );

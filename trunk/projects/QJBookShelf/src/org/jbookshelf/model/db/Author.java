@@ -37,9 +37,6 @@ public class Author
     @OrderBy( "name DESC" )
     private final Set<Book> books = new HashSet<Book>();
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(
         final Object obj )
@@ -82,33 +79,21 @@ public class Author
         return true;
     }
 
-    /**
-     * @return the books
-     */
     public Set<Book> getBooks()
     {
         return this.books;
     }
 
-    /**
-     * @return the id
-     */
     public Long getId()
     {
         return this.id;
     }
 
-    /**
-     * @return the name
-     */
     public String getName()
     {
         return this.name;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode()
     {
@@ -128,9 +113,6 @@ public class Author
         this.id = id;
     }
 
-    /**
-     * @param name the name to set
-     */
     public void setName(
         @Nonnull final String name )
     {

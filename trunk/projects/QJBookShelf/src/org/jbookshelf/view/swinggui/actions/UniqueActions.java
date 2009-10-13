@@ -15,7 +15,7 @@ import org.bushe.swing.event.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Unique;
+import org.jbookshelf.model.db.Named;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
@@ -57,7 +57,7 @@ public class UniqueActions
         public void actionPerformed(
             final ActionEvent e )
         {
-            for ( final Unique unique : mediator.getSelectedUniques() )
+            for ( final Named unique : mediator.getSelectedUniques() )
             {
                 URIUtil.google( unique.getName() );
             }
@@ -145,13 +145,13 @@ public class UniqueActions
         public void actionPerformed(
             final ActionEvent e )
         {
-            final Set<Unique> selectedUniques = mediator.getSelectedUniques();
-            final Unique unique = selectedUniques.iterator().next();
+            final Set<Named> selectedUniques = mediator.getSelectedUniques();
+            final Named unique = selectedUniques.iterator().next();
             final String newName = JOptionPane.showInputDialog( Single.instance( MainWindow.class ),
                 tr( "Enter new name" ), unique.getName() );
             if ( newName != null && !"".equals( newName ) && !newName.equals( unique.getName() ) )
             {
-                final Unique candidate = BookShelf.getUnique( unique.getClass(), newName );
+                final Named candidate = BookShelf.getUnique( unique.getClass(), newName );
                 if ( candidate != null )
                 {
                     final String message = newName + " " + I18N.tr( " already exists" );

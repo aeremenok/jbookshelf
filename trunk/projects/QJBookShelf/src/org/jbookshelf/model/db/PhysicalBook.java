@@ -4,7 +4,6 @@
 package org.jbookshelf.model.db;
 
 import java.io.File;
-import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,7 +25,7 @@ import org.jbookshelf.controller.singleton.Single;
 @Table( name = "PHYSICAL_BOOK" )
 public class PhysicalBook
     implements
-    Serializable
+    Identifiable
 {
     // todo enum
     public static final String INTERNAL_VIEWER = "internal";
@@ -52,9 +51,6 @@ public class PhysicalBook
     @Column
     private String             unpackedFileName;
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(
         final Object obj )
@@ -130,26 +126,17 @@ public class PhysicalBook
         return true;
     }
 
-    /**
-     * @return the book
-     */
     public Book getBook()
     {
         return this.book;
     }
 
-    /**
-     * @return the charsetName
-     */
     @Nullable
     public String getCharsetName()
     {
         return this.charsetName;
     }
 
-    /**
-     * @return file from the relative pathname
-     */
     @Transient
     public File getFile()
     {
@@ -157,25 +144,16 @@ public class PhysicalBook
         return new File( fullPath );
     }
 
-    /**
-     * @return the fileName
-     */
     public String getFileName()
     {
         return this.fileName;
     }
 
-    /**
-     * @return the id
-     */
     public Long getId()
     {
         return this.id;
     }
 
-    /**
-     * @return the unpackedFile
-     */
     @Transient
     @Nullable
     public File getUnpackedFile()
@@ -197,18 +175,12 @@ public class PhysicalBook
         return this.unpackedFileName;
     }
 
-    /**
-     * @return the viewer
-     */
     @Nullable
     public String getViewer()
     {
         return this.viewer;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode()
     {
@@ -227,18 +199,12 @@ public class PhysicalBook
         return result;
     }
 
-    /**
-     * @param book the book to set
-     */
     public void setBook(
         @Nonnull final Book book )
     {
         this.book = book;
     }
 
-    /**
-     * @param charsetName the charsetName to set
-     */
     public void setCharsetName(
         @Nonnull final String charsetName )
     {
@@ -258,13 +224,17 @@ public class PhysicalBook
         setFileName( wsp.toURI().relativize( file.toURI() ).getPath() );
     }
 
-    /**
-     * @param fileName the fileName to set
-     */
     public void setFileName(
         @Nonnull final String fileName )
     {
         this.fileName = fileName;
+    }
+
+    @Override
+    public void setId(
+        final Long id )
+    {
+        this.id = id;
     }
 
     @Transient
@@ -275,18 +245,12 @@ public class PhysicalBook
         setUnpackedFileName( tmp.toURI().relativize( unpackedFile.toURI() ).getPath() );
     }
 
-    /**
-     * @param unpackedFileName the unpackedFileName to set
-     */
     public void setUnpackedFileName(
         @Nonnull final String unpackedFileName )
     {
         this.unpackedFileName = unpackedFileName;
     }
 
-    /**
-     * @param viewer the viewer to set
-     */
     public void setViewer(
         @Nonnull final String viewer )
     {

@@ -3,20 +3,15 @@
  */
 package org.jbookshelf.model.db.util;
 
-import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.jbookshelf.model.db.Author;
@@ -24,9 +19,12 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Category;
 import org.jbookshelf.model.db.HasBooks;
+import org.jbookshelf.model.db.Named;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.model.db.PhysicalBook;
-import org.jbookshelf.model.db.Unique;
+import org.jbookshelf.model.db.dao.AuthorDAO;
+import org.jbookshelf.model.db.dao.BookDAO;
+import org.jbookshelf.model.db.dao.CategoryDAO;
 
 /**
  * performs operations with database todo should be refactored
@@ -35,85 +33,32 @@ import org.jbookshelf.model.db.Unique;
  */
 public class BookShelf
 {
-    private static final Logger    log    = Logger.getLogger( BookShelf.class );
-    private static final LogRunner runner = new LogRunner();
+    private static final Logger      log         = Logger.getLogger( BookShelf.class );
 
-    @SuppressWarnings( "unchecked" )
+    private static final BookDAO     bookDAO     = new BookDAO();
+    private static final AuthorDAO   authorDAO   = new AuthorDAO();
+    private static final CategoryDAO categoryDAO = new CategoryDAO();
+
     public static List<Book> allBooks()
     {
-        final Session session = HibernateUtil.getSession();
-        try
-        {
-            return session.createQuery( "from Book" ).list();
-        }
-        catch ( final Exception e2 )
-        {
-            log.error( e2, e2 );
-            throw new Error( e2 );
-        }
-        finally
-        {
-            session.close();
-        }
+        return bookDAO.findAll();
     }
 
     public static Book bookById(
         @Nonnull final Object id )
     {
-        final Session session = HibernateUtil.getSession();
-        try
-        {
-            final Book book = (Book) session.get( Book.class, (Serializable) id );
-            log.debug( "book returned " + book + " for id=" + id );
-            return book;
-        }
-        catch ( final Exception e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-        finally
-        {
-            session.close();
-        }
+        return bookDAO.getById( (Long) id );
     }
 
-    @SuppressWarnings( "unchecked" )
     public static Book bookByName(
         final String name )
     {
-        final Session session = HibernateUtil.getSession();
-        try
-        {
-            final Query query = session.createQuery( "from Book b where b.name=:p" );
-            query.setString( "p", name );
-            final List<Book> list = query.list();
-            return list.size() > 0
-                ? list.get( 0 ) : null;
-        }
-        catch ( final HibernateException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-        finally
-        {
-            session.close();
-        }
+        return bookDAO.getByName( name );
     }
 
     public static int bookCount()
     {
-        try
-        {
-            final Object object = runner.query( "select count(*) from book", new ScalarHandler() );
-            return Integer.valueOf( object.toString() );
-        }
-        catch ( final SQLException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
+        return bookDAO.totalCount();
     }
 
     @Nullable
@@ -142,120 +87,31 @@ public class BookShelf
     public static Set<Author> getAuthors(
         final Book book )
     {
-        if ( book.getId() != null )
-        {
-            final Session session = HibernateUtil.getSession();
-            try
-            {
-                // todo remove obsolete query
-                session.load( book, book.getId() );
-                Hibernate.initialize( book.getAuthors() );
-            }
-            catch ( final HibernateException e )
-            {
-                log.error( e, e );
-                throw new Error( e );
-            }
-            finally
-            {
-                session.close();
-            }
-        }
-        return book.getAuthors();
+        return bookDAO.getAuthors( book );
     }
 
     public static Set<Book> getBooks(
         final HasBooks hasBooks )
     {
-        final Session session = HibernateUtil.getSession();
-        try
-        {
-            // todo remove obsolete query
-            session.load( hasBooks, hasBooks.getId() );
-            Hibernate.initialize( hasBooks.getBooks() );
-            return hasBooks.getBooks();
-        }
-        catch ( final HibernateException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-        finally
-        {
-            session.close();
-        }
+        return hasBooks.getBooks();
     }
 
     public static Set<Category> getCategories(
         final Book book )
     {
-        if ( book.getId() != null )
-        {
-            final Session session = HibernateUtil.getSession();
-            try
-            {
-                // todo remove obsolete query
-                session.load( book, book.getId() );
-                Hibernate.initialize( book.getCategories() );
-            }
-            catch ( final HibernateException e )
-            {
-                log.error( e, e );
-                throw new Error( e );
-            }
-            finally
-            {
-                session.close();
-            }
-        }
-        return book.getCategories();
+        return bookDAO.getCategories( book );
     }
 
     public static Set<Category> getChildren(
         final Category category )
     {
-        final Session session = HibernateUtil.getSession();
-        try
-        {
-            // todo remove obsolete query
-            session.load( category, category.getId() );
-            Hibernate.initialize( category.getChildren() );
-            return category.getChildren();
-        }
-        catch ( final HibernateException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-        finally
-        {
-            session.close();
-        }
+        return category.getChildren();
     }
 
     public static Set<Note> getNotes(
         final Book book )
     {
-        if ( book.getId() != null )
-        {
-            final Session session = HibernateUtil.getSession();
-            try
-            {
-                // todo remove obsolete query
-                session.load( book, book.getId() );
-                Hibernate.initialize( book.getNotes() );
-            }
-            catch ( final HibernateException e )
-            {
-                log.error( e, e );
-                throw new Error( e );
-            }
-            finally
-            {
-                session.close();
-            }
-        }
-        return book.getNotes();
+        return bookDAO.getNotes( book );
     }
 
     @SuppressWarnings( "unchecked" )
@@ -351,7 +207,7 @@ public class BookShelf
 
     @SuppressWarnings( "unchecked" )
     @Nonnull
-    public static <T extends Unique> T getOrAddUnique(
+    public static <T extends Named> T getOrAddUnique(
         @Nonnull final Class<T> class1,
         @Nonnull final String name )
     {
@@ -394,7 +250,7 @@ public class BookShelf
     }
 
     @SuppressWarnings( "unchecked" )
-    public static <T extends Unique> T getUnique(
+    public static <T extends Named> T getUnique(
         final Class<T> clazz,
         final String name )
     {
@@ -585,34 +441,23 @@ public class BookShelf
         }
     }
 
-    /**
-     * @param selectedUniques
-     */
     public static void remove(
-        final Set<Unique> selectedUniques )
+        final Set<Named> selectedUniques )
     {
-        try
+        for ( final Named unique : selectedUniques )
         {
-            for ( final Unique unique : selectedUniques )
+            if ( unique instanceof Book )
             {
-                if ( unique instanceof Book )
-                {
-                    removeBook( (Book) unique );
-                }
-                else if ( unique instanceof Author )
-                {
-                    removeAuthor( (Author) unique );
-                }
-                else
-                {
-                    removeCategory( (Category) unique );
-                }
+                removeBook( (Book) unique );
             }
-        }
-        catch ( final SQLException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
+            else if ( unique instanceof Author )
+            {
+                removeAuthor( (Author) unique );
+            }
+            else
+            {
+                removeCategory( (Category) unique );
+            }
         }
     }
 
@@ -644,7 +489,7 @@ public class BookShelf
     }
 
     public static void rename(
-        final Unique unique,
+        final Named unique,
         final String newName )
     {
         final Session session = HibernateUtil.getSession();
@@ -732,56 +577,19 @@ public class BookShelf
 
     private static void removeAuthor(
         final Author author )
-        throws SQLException
     {
-        final String q2 = "delete from author_book where authors_id=?";
-        final String q6 = "delete from author where id=?";
-
-        runner.update( q2, new Object[]
-        { author.getId() } );
-        runner.update( q6, new Object[]
-        { author.getId() } );
+        authorDAO.makeTransient( author );
     }
 
     private static void removeBook(
         final Book unique )
-        throws SQLException
     {
-        final String q1 = "delete from author_book where books_id=?";
-        final String q2 = "delete from category_book where books_id=?";
-        final String q3 = "delete from physical_book where book_id=?";
-        final String q4 = "update book set LASTREAD_ID=null where id=?";
-        final String q5 = "delete from note where book_id=?";
-        final String q6 = "delete from book where id=?";
-
-        runner.update( q1, new Object[]
-        { unique.getId() } );
-        runner.update( q2, new Object[]
-        { unique.getId() } );
-        runner.update( q3, new Object[]
-        { unique.getId() } );
-        runner.update( q4, new Object[]
-        { unique.getId() } );
-        runner.update( q5, new Object[]
-        { unique.getId() } );
-        runner.update( q6, new Object[]
-        { unique.getId() } );
+        bookDAO.makeTransient( unique );
     }
 
     private static void removeCategory(
         final Category category )
-        throws SQLException
     {
-        final String q4 = "delete from category_book where categories_id=?";
-        // move all children up
-        final String q9 = "update category set parent_id=(select parent_id from category where id=?) where parent_id=?";
-        final String q7 = "delete from category where id=?";
-
-        runner.update( q4, new Object[]
-        { category.getId() } );
-        runner.update( q9, new Object[]
-        { category.getId(), category.getId() } );
-        runner.update( q7, new Object[]
-        { category.getId() } );
+        categoryDAO.makeTransient( category );
     }
 }

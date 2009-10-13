@@ -4,7 +4,7 @@
 package org.jbookshelf.view.swinggui.multiedit;
 
 import org.jbookshelf.model.db.Category;
-import org.jbookshelf.model.db.Unique;
+import org.jbookshelf.model.db.Named;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.xnap.commons.gui.completion.CompletionModel;
 
@@ -23,8 +23,8 @@ public class CategoryMultipleField
         extends UniqueCompletionModel
     {
         private CategoryCompletionModel(
-            final Class<? extends Unique> clazz,
-            final ListTableModel<? extends Unique> model )
+            final Class<? extends Named> clazz,
+            final ListTableModel<? extends Named> model )
         {
             super( clazz, model );
         }

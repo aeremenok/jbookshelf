@@ -3,18 +3,18 @@
  */
 package org.jbookshelf.view.swinggui.multiedit;
 
-import org.jbookshelf.model.db.Unique;
+import org.jbookshelf.model.db.Named;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.xnap.commons.gui.Builder;
 import org.xnap.commons.gui.completion.CompletionModel;
 
 /**
- * allows to specify multiple {@link Unique}s
+ * allows to specify multiple {@link Named}s
  * 
  * @author eav 2009
- * @param <T> {@link Unique} type
+ * @param <T> {@link Named} type
  */
-public class MultipleUniqueField<T extends Unique>
+public class MultipleUniqueField<T extends Named>
     extends MultipleField<T>
 {
     protected final Class<T> clazz;

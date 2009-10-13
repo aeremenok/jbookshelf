@@ -10,13 +10,13 @@ import javax.annotation.Nonnull;
  * @author eav 2009
  */
 public interface Bookmark
+    extends
+    Identifiable
 {
     String POSITION = "POSITION";
     String PAGE     = "PAGE";
 
     Book getBook();
-
-    Long getId();
 
     Integer getPage();
 
