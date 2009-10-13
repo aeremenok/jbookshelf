@@ -50,8 +50,11 @@ public class BookDAO
         final Long id )
     {
         final Book byId = super.getById( id );
-        final PhysicalDAO physicalDAO = new PhysicalDAO();
-        byId.setPhysicalBook( physicalDAO.getByBook( byId ) );
+        if ( byId != null )
+        {
+            final PhysicalDAO physicalDAO = new PhysicalDAO();
+            byId.setPhysicalBook( physicalDAO.getByBook( byId ) );
+        }
         return byId;
     }
 
@@ -124,6 +127,9 @@ public class BookDAO
             {
                 noteDAO.makePersistent( note );
             }
+
+            final PhysicalDAO physicalDAO = new PhysicalDAO();
+            physicalDAO.makePersistent( entity.getPhysicalBook() );
         }
         return entity;
     }

@@ -21,7 +21,8 @@ public class PhysicalDAO
         final Book byId )
     {
         final BeanHandler handler = new BeanHandler( entityClass );
-        return (PhysicalBook) runner.query( "select * from PHYSICAL_BOOK where book_id=?", handler, new Object[]
+        final String sql = "select * from PHYSICAL_BOOK where book_id=?";
+        return (PhysicalBook) runner.query( sql, handler, new Object[]
         { byId.getId() } );
     }
 
@@ -29,7 +30,19 @@ public class PhysicalDAO
     public PhysicalBook makePersistent(
         final PhysicalBook entity )
     {
-        // TODO Auto-generated method stub
-        return null;
+        if ( !checkIfPersistent( entity ) )
+        {
+            final Long id = generateId();
+            final StringBuilder q = new StringBuilder( "insert into PHYSICAL_BOOK (" );
+            q.append( "id,charsetName,fileName,unpackedFileName,viewer,book_id" );
+            q.append( ") values (?,?,?,?,?,?)" );
+
+            runner.update( q.toString(), new Object[]
+            { id, entity.getCharsetName(), entity.getFileName(), entity.getUnpackedFileName(), entity.getViewer(),
+                            entity.getBook().getId() } );
+
+            entity.setId( id );
+        }
+        return entity;
     }
 }
