@@ -61,6 +61,11 @@ public class HibernateUtil
         }
     }
 
+    public static Session getCurrentSession()
+    {
+        return HibernateUtil.factory.getCurrentSession();
+    }
+
     public static Properties getProperties()
     {
         return properties;

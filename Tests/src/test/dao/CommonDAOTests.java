@@ -10,8 +10,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.jbookshelf.model.db.Unique;
-import org.jbookshelf.model.db.dao.BookShelfDAO;
+import org.jbookshelf.model.db.Named;
+import org.jbookshelf.model.db.dao.UniqueDAO;
 import org.junit.Test;
 
 /**
@@ -19,7 +19,7 @@ import org.junit.Test;
  * @param <U>
  * @param <D>
  */
-public abstract class CommonDAOTests<U extends Unique, D extends BookShelfDAO<U>>
+public abstract class CommonDAOTests<U extends Named, D extends UniqueDAO<U>>
 {
     protected final D dao;
 
@@ -34,15 +34,11 @@ public abstract class CommonDAOTests<U extends Unique, D extends BookShelfDAO<U>
     public void _makePersistent()
     {
         final U randomUnique = randomUnique();
+        assertNull( randomUnique.getId() );
+
         final U persistent = dao.makePersistent( randomUnique );
         assertNotNull( persistent );
-
-        final Long id = persistent.getId();
-        assertNotNull( id );
-        final U byId = dao.getById( id );
-        assertNotNull( byId );
-        assertEquals( randomUnique, byId );
-        assertEquals( randomUnique, persistent );
+        assertNotNull( persistent.getId() );
     }
 
     @Test

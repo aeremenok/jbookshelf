@@ -3,7 +3,6 @@
  */
 package org.jbookshelf.view.swinggui.multiedit;
 
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,8 +10,7 @@ import javax.annotation.Nonnull;
 import javax.swing.DefaultComboBoxModel;
 
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
-import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Unique;
+import org.jbookshelf.model.db.Named;
 import org.jbookshelf.model.db.util.LogRunner;
 import org.xnap.commons.gui.completion.CompletionModel;
 
@@ -26,15 +24,13 @@ public class UniqueCompletionModel
     implements
     CompletionModel
 {
-    private static final Logger                    log = Logger.getLogger( UniqueCompletionModel.class );
+    private final Class<? extends Named>          clazz;
 
-    private final Class<? extends Unique>          clazz;
-
-    private final ListTableModel<? extends Unique> model;
+    private final ListTableModel<? extends Named> model;
 
     public UniqueCompletionModel(
-        @Nonnull final Class<? extends Unique> clazz,
-        final ListTableModel<? extends Unique> model )
+        @Nonnull final Class<? extends Named> clazz,
+        final ListTableModel<? extends Named> model )
     {
         super();
         this.clazz = clazz;
@@ -56,11 +52,11 @@ public class UniqueCompletionModel
         q.append( " from " ).append( clazz.getSimpleName() );
         q.append( " where upper(name) like '" ).append( prefix.toUpperCase() ).append( "%'" );
 
-        final Collection<? extends Unique> uniques = model.getValues();
+        final Collection<? extends Named> uniques = model.getValues();
         if ( uniques.size() > 0 )
         {
             q.append( " and upper(name) not in (" );
-            for ( final Unique unique : uniques )
+            for ( final Named unique : uniques )
             {
                 q.append( "'" ).append( unique.getName().toUpperCase() ).append( "'," );
             }
@@ -70,24 +66,16 @@ public class UniqueCompletionModel
 
         // run it
         final LogRunner runner = new LogRunner();
-        try
-        {
-            final ArrayListHandler handler = new ArrayListHandler();
-            final List<Object[]> items = (List<Object[]>) runner.query( q.toString(), handler );
+        final ArrayListHandler handler = new ArrayListHandler();
+        final List<Object[]> items = (List<Object[]>) runner.query( q.toString(), handler );
 
-            // fill the completion popup 
-            removeAllElements();
-            for ( final Object[] object : items )
-            {
-                addElement( object[0] );
-            }
-            return getSize() > 0;
-        }
-        catch ( final SQLException e )
+        // fill the completion popup 
+        removeAllElements();
+        for ( final Object[] object : items )
         {
-            log.error( e, e );
-            return false;
+            addElement( object[0] );
         }
+        return getSize() > 0;
     }
 
     @Override

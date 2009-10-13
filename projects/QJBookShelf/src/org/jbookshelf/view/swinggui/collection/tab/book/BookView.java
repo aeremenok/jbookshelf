@@ -64,13 +64,9 @@ public class BookView
         table.addMouseListener( new PopupListener( menu ) );
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.widget.tables.RecordFactory#createRecord(int)
-     */
     @Override
     public BookRecord createRecord(
         final int i )
-        throws Exception
     {
         final StringBuilder q1 = new StringBuilder( "select a.name from author a " );
         q1.append( "left join author_book ab on a.id=ab.authors_id " );
@@ -121,7 +117,6 @@ public class BookView
         {
             @Override
             protected List<Object[]> doInBackground()
-                throws Exception
             {
                 books = (List<Object[]>) runner.query( buildQuery( p ), new ArrayListHandler() );
                 model.reset();

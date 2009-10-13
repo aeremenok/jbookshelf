@@ -27,7 +27,7 @@ import org.hibernate.Session;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Unique;
+import org.jbookshelf.model.db.Named;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.model.db.util.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
@@ -186,7 +186,7 @@ public class AuthorView
             public void valueChanged(
                 final TreeSelectionEvent e )
             {
-                final List<Unique> list = new ArrayList<Unique>();
+                final List<Named> list = new ArrayList<Named>();
                 for ( final TreePath treePath : tree.getSelectionPaths() )
                 {
                     final Object object = treePath.getLastPathComponent();

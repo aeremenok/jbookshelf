@@ -5,6 +5,7 @@ package org.jbookshelf.model.db.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
@@ -43,10 +44,67 @@ public class LogRunner
         final String sql,
         final ResultSetHandler rh,
         final Object[] params )
-        throws SQLException
     {
-        log( sql, params );
-        return super.query( conn, sql, rh, params );
+        try
+        {
+            log( sql, params );
+            return super.query( conn, sql, rh, params );
+        }
+        catch ( final SQLException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+    }
+
+    @Override
+    public Object query(
+        final String sql,
+        final ResultSetHandler rsh )
+    {
+        try
+        {
+            return super.query( sql, rsh );
+        }
+        catch ( final SQLException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+    }
+
+    @Override
+    public Object query(
+        final String sql,
+        final ResultSetHandler rsh,
+        final Object[] params )
+    {
+        try
+        {
+            return super.query( sql, rsh, params );
+        }
+        catch ( final SQLException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+    }
+
+    @SuppressWarnings( "unchecked" )
+    public <T> List<T> query(
+        final String sql,
+        final TBeanListHandler<T> rsh,
+        final Object[] params )
+    {
+        try
+        {
+            return (List<T>) super.query( sql, rsh, params );
+        }
+        catch ( final SQLException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
     }
 
     @Override
@@ -54,12 +112,49 @@ public class LogRunner
         final Connection conn,
         final String sql,
         final Object[] params )
-        throws SQLException
     {
-        log( sql, params );
-        final int update = super.update( conn, sql, params );
-        conn.commit();
-        return update;
+        try
+        {
+            log( sql, params );
+            final int update = super.update( conn, sql, params );
+            return update;
+        }
+        catch ( final SQLException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+    }
+
+    @Override
+    public int update(
+        final String sql )
+    {
+        try
+        {
+            return super.update( sql );
+        }
+        catch ( final SQLException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+    }
+
+    @Override
+    public int update(
+        final String sql,
+        final Object[] params )
+    {
+        try
+        {
+            return super.update( sql, params );
+        }
+        catch ( final SQLException e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
     }
 
     private void log(
@@ -74,8 +169,11 @@ public class LogRunner
 
     @Override
     protected Connection prepareConnection()
+        throws SQLException
     {
-        return Single.instance( DBUtil.class ).openConnection();
+        final Connection connection = Single.instance( DBUtil.class ).openConnection();
+        connection.setAutoCommit( true );
+        return connection;
     }
 
 }

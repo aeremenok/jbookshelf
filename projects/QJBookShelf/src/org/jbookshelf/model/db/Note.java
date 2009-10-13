@@ -256,6 +256,13 @@ public class Note
         this.content = content;
     }
 
+    @Override
+    public void setId(
+        final Long id )
+    {
+        this.id = id;
+    }
+
     public void setPage(
         @Nonnull @Nonnegative final Integer page )
     {

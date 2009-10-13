@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public interface HasBooks
     extends
-    Unique
+    Named
 {
     Set<Book> getBooks();
 }

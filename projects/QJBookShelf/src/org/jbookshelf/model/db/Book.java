@@ -29,7 +29,7 @@ import org.jbookshelf.view.i18n.I18N;
 public class Book
     implements
     Serializable,
-    Unique,
+    Named,
     HasBooks
 {
     @Id

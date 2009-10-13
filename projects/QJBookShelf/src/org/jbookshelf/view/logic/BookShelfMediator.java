@@ -11,7 +11,7 @@ import org.bushe.swing.event.EventBus;
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Category;
-import org.jbookshelf.model.db.Unique;
+import org.jbookshelf.model.db.Named;
 
 /**
  * manages the selection of bookshelf objects todo simplify
@@ -28,7 +28,7 @@ public class BookShelfMediator
         String UNIQUES_SELECTED    = "UNIQUES_SELECTED";
     }
 
-    private Set<Unique>         selectedUniques    = new HashSet<Unique>();
+    private Set<Named>         selectedUniques    = new HashSet<Named>();
     private List<Book>          selectedBooks      = new ArrayList<Book>();
     private List<Author>        selectedAuthors    = new ArrayList<Author>();
     private List<Category>      selectedCategories = new ArrayList<Category>();
@@ -43,7 +43,7 @@ public class BookShelfMediator
         selectedAuthors = list;
         selectedCategories = new ArrayList<Category>();
 
-        selectedUniques = new HashSet<Unique>();
+        selectedUniques = new HashSet<Named>();
         selectedUniques.addAll( list );
 
         fireSelectionChanged();
@@ -56,7 +56,7 @@ public class BookShelfMediator
         selectedAuthors = new ArrayList<Author>();
         selectedCategories = new ArrayList<Category>();
 
-        selectedUniques = new HashSet<Unique>();
+        selectedUniques = new HashSet<Named>();
         selectedUniques.addAll( list );
 
         fireSelectionChanged();
@@ -69,7 +69,7 @@ public class BookShelfMediator
         selectedAuthors = new ArrayList<Author>();
         selectedCategories = list;
 
-        selectedUniques = new HashSet<Unique>();
+        selectedUniques = new HashSet<Named>();
         selectedUniques.addAll( list );
 
         fireSelectionChanged();
@@ -90,7 +90,7 @@ public class BookShelfMediator
         return this.selectedCategories;
     }
 
-    public Set<Unique> getSelectedUniques()
+    public Set<Named> getSelectedUniques()
     {
         return this.selectedUniques;
     }
@@ -100,21 +100,21 @@ public class BookShelfMediator
         selectedBooks = new ArrayList<Book>();
         selectedAuthors = new ArrayList<Author>();
         selectedCategories = new ArrayList<Category>();
-        selectedUniques = new HashSet<Unique>();
+        selectedUniques = new HashSet<Named>();
         fireSelectionChanged();
     }
 
     public void uniquesSelected(
-        final Collection<Unique> list )
+        final Collection<Named> list )
     {
         selectedBooks = new ArrayList<Book>();
         selectedAuthors = new ArrayList<Author>();
         selectedCategories = new ArrayList<Category>();
 
-        selectedUniques = new HashSet<Unique>();
+        selectedUniques = new HashSet<Named>();
         selectedUniques.addAll( list );
 
-        for ( final Unique unique : list )
+        for ( final Named unique : list )
         {
             if ( unique instanceof Author )
             {
