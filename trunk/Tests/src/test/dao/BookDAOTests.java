@@ -7,10 +7,12 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.File;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.dao.BookDAO;
 
 /**
@@ -48,7 +50,10 @@ public class BookDAOTests
         assertNotNull( byId );
         assertEquals( u, byId );
 
-        assertNotNull( byId.getPhysicalBook() );
+        final PhysicalBook physicalBook = byId.getPhysicalBook();
+        assertNotNull( physicalBook );
+        assertNotNull( physicalBook.getFileName() );
+        assertNotNull( physicalBook.getFile() );
     }
 
     @Override
@@ -79,6 +84,9 @@ public class BookDAOTests
     {
         final Book book = new Book();
         book.setName( "Book" + System.currentTimeMillis() );
+        final PhysicalBook physicalBook = new PhysicalBook();
+        physicalBook.setFile( new File( System.getProperty( "user.home" ) ) );
+        book.setPhysicalBook( physicalBook );
         return book;
     }
 
