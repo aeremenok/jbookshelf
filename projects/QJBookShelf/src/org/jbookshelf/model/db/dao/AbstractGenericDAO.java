@@ -54,6 +54,11 @@ public abstract class AbstractGenericDAO<T extends Identifiable>
         { id } );
     }
 
+    public Class<T> getEntityClass()
+    {
+        return this.entityClass;
+    }
+
     @Override
     public void makeTransient(
         final T entity )
@@ -92,5 +97,4 @@ public abstract class AbstractGenericDAO<T extends Identifiable>
         final Object res = runner.query( "select hibernate_sequence.nextval", new ScalarHandler() );
         return Long.valueOf( res.toString() );
     }
-
 }

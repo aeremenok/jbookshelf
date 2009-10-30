@@ -10,16 +10,16 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.jbookshelf.model.db.Named;
-import org.jbookshelf.model.db.dao.UniqueDAO;
+import org.jbookshelf.model.db.Identifiable;
+import org.jbookshelf.model.db.dao.AbstractGenericDAO;
 import org.junit.Test;
 
 /**
  * @author eav 2009
- * @param <U>
+ * @param <I>
  * @param <D>
  */
-public abstract class CommonDAOTests<U extends Named, D extends UniqueDAO<U>>
+public abstract class CommonDAOTests<I extends Identifiable, D extends AbstractGenericDAO<I>>
 {
     protected final D dao;
 
@@ -28,23 +28,13 @@ public abstract class CommonDAOTests<U extends Named, D extends UniqueDAO<U>>
     {
         super();
         this.dao = dao;
-    }
-
-    @Test
-    public void _makePersistent()
-    {
-        final U randomUnique = randomUnique();
-        assertNull( randomUnique.getId() );
-
-        final U persistent = dao.makePersistent( randomUnique );
-        assertNotNull( persistent );
-        assertNotNull( persistent.getId() );
+        makePersistent();
     }
 
     @Test
     public void findAll()
     {
-        final List<U> all = dao.findAll();
+        final List<I> all = dao.findAll();
         assertNotNull( all );
         assertTrue( all.size() > 0 );
     }
@@ -52,27 +42,40 @@ public abstract class CommonDAOTests<U extends Named, D extends UniqueDAO<U>>
     @Test
     public void getById()
     {
-        final List<U> all = dao.findAll();
-        final U u = all.get( 0 );
-        final U byId = dao.getById( u.getId() );
+        final List<I> all = dao.findAll();
+        final I u = all.get( 0 );
+        final I byId = dao.getById( u.getId() );
         assertNotNull( byId );
         assertEquals( u, byId );
     }
 
     @Test
+    public void makePersistent()
+    {
+        final I randomIdentifiable = randomIdentifiable();
+        assertNull( randomIdentifiable.getId() );
+
+        final I persistent = dao.makePersistent( randomIdentifiable );
+        assertNotNull( persistent );
+        assertNotNull( persistent.getId() );
+
+        assertEquals( randomIdentifiable, persistent );
+    }
+
+    @Test
     public void makeTransient()
     {
-        final List<U> all = dao.findAll();
-        final U u = all.get( 0 );
+        final List<I> all = dao.findAll();
+        final I u = all.get( 0 );
 
         final Long id = u.getId();
 
         dao.makeTransient( u );
         assertNull( u.getId() );
 
-        final U byId = dao.getById( id );
+        final I byId = dao.getById( id );
         assertNull( byId );
     }
 
-    public abstract U randomUnique();
+    public abstract I randomIdentifiable();
 }

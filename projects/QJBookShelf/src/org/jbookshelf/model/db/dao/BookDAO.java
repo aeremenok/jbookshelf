@@ -63,7 +63,7 @@ public class BookDAO
     {
         if ( book.getId() != null )
         {
-            final StringBuilder q = new StringBuilder( "select * from Author where id in " );
+            final StringBuilder q = new StringBuilder( "select * from category where id in " );
             q.append( "(select categories_id from Category_Book where books_id=?)" );
 
             final TBeanListHandler<Category> handler = new TBeanListHandler<Category>( Category.class );
@@ -93,45 +93,49 @@ public class BookDAO
 
     @Override
     public Book makePersistent(
-        final Book entity )
+        final Book book )
     {
-        if ( !checkIfPersistent( entity ) )
+        if ( !checkIfPersistent( book ) )
         {
             final NoteDAO noteDAO = new NoteDAO();
-            if ( entity.getLastRead() != null )
+            if ( book.getLastRead() != null )
             {
-                noteDAO.makePersistent( entity.getLastRead() );
+                noteDAO.makePersistent( book.getLastRead() );
             }
 
             final Long id = generateId();
-            final Long lastReadId = entity.getLastRead() != null
-                ? entity.getLastRead().getId() : null;
+            final Long lastReadId = book.getLastRead() != null
+                ? book.getLastRead().getId() : null;
 
             runner.update( "insert into Book (id,name,lastread_id) values(?,?,?)", new Object[]
-            { id, entity.getName(), lastReadId } );
-            entity.setId( id );
+            { id, book.getName(), lastReadId } );
+            book.setId( id );
 
             final AuthorDAO authorDAO = new AuthorDAO();
-            for ( final Author author : entity.getAuthors() )
+            for ( final Author author : book.getAuthors() )
             {
                 authorDAO.makePersistent( author );
+                runner.update( "insert into author_book (authors_id,books_id) values (?,?)", new Object[]
+                { author.getId(), book.getId() } );
             }
 
             final CategoryDAO categoryDAO = new CategoryDAO();
-            for ( final Category category : entity.getCategories() )
+            for ( final Category category : book.getCategories() )
             {
                 categoryDAO.makePersistent( category );
+                runner.update( "insert into category_book (categories_id,books_id) values (?,?)", new Object[]
+                { category.getId(), book.getId() } );
             }
 
-            for ( final Note note : entity.getNotes() )
+            for ( final Note note : book.getNotes() )
             {
                 noteDAO.makePersistent( note );
             }
 
             final PhysicalDAO physicalDAO = new PhysicalDAO();
-            physicalDAO.makePersistent( entity.getPhysicalBook() );
+            physicalDAO.makePersistent( book.getPhysicalBook() );
         }
-        return entity;
+        return book;
     }
 
     @Override
@@ -143,12 +147,14 @@ public class BookDAO
         final Connection c = Single.instance( DBUtil.class ).openConnection();
         try
         {
-            runner.update( c, "delete from author_book where books_id=?; ", unique.getId() );
-            runner.update( c, "delete from category_book where books_id=?; ", unique.getId() );
-            runner.update( c, "delete from physical_book where book_id=?; ", unique.getId() );
-            runner.update( c, "update book set LASTREAD_ID=null where id=?; ", unique.getId() );
-            runner.update( c, "delete from note where book_id=?; ", unique.getId() );
-            runner.update( c, "delete from book where id=?; ", unique.getId() );
+            final Long id = unique.getId();
+
+            runner.update( c, "delete from author_book where books_id=?; ", id );
+            runner.update( c, "delete from category_book where books_id=?; ", id );
+            runner.update( c, "delete from physical_book where book_id=?; ", id );
+            runner.update( c, "update book set LASTREAD_ID=null where id=?; ", id );
+            runner.update( c, "delete from note where book_id=?; ", id );
+            runner.update( c, "delete from book where id=?; ", id );
 
             c.commit();
 
