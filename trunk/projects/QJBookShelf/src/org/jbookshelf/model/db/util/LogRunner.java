@@ -53,7 +53,7 @@ public class LogRunner
         catch ( final SQLException e )
         {
             log.error( e, e );
-            throw new Error( e );
+            throw new SQLError( e );
         }
     }
 
@@ -69,7 +69,7 @@ public class LogRunner
         catch ( final SQLException e )
         {
             log.error( e, e );
-            throw new Error( e );
+            throw new SQLError( e );
         }
     }
 
@@ -86,7 +86,7 @@ public class LogRunner
         catch ( final SQLException e )
         {
             log.error( e, e );
-            throw new Error( e );
+            throw new SQLError( e );
         }
     }
 
@@ -103,7 +103,7 @@ public class LogRunner
         catch ( final SQLException e )
         {
             log.error( e, e );
-            throw new Error( e );
+            throw new SQLError( e );
         }
     }
 
@@ -116,13 +116,12 @@ public class LogRunner
         try
         {
             log( sql, params );
-            final int update = super.update( conn, sql, params );
-            return update;
+            return super.update( conn, sql, params );
         }
         catch ( final SQLException e )
         {
             log.error( e, e );
-            throw new Error( e );
+            throw new SQLError( e );
         }
     }
 
@@ -137,7 +136,7 @@ public class LogRunner
         catch ( final SQLException e )
         {
             log.error( e, e );
-            throw new Error( e );
+            throw new SQLError( e );
         }
     }
 
@@ -153,7 +152,7 @@ public class LogRunner
         catch ( final SQLException e )
         {
             log.error( e, e );
-            throw new Error( e );
+            throw new SQLError( e );
         }
     }
 
