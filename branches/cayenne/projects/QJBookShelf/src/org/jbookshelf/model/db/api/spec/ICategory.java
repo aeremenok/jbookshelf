@@ -9,14 +9,16 @@ import org.jbookshelf.model.db.api.HasBooks;
 
 /**
  * @author eav
+ * @param <C>
+ * @param <B>
  */
-public interface ICategory
+public interface ICategory<C extends ICategory, B extends IBook>
     extends
-    HasBooks
+    HasBooks<B>
 {
     String ROOT = "!ROOT!";
 
-    Set<ICategory> getChildren();
+    Set<C> getChildren();
 
     ICategory getParent();
 

@@ -13,6 +13,7 @@ public class DirCategoriesStrategy
     private static final Logger   log             = Logger.getLogger( DirCategoriesStrategy.class );
     private final UseDirsStrategy useDirsStrategy = new UseDirsStrategy();
 
+    @SuppressWarnings( "unchecked" )
     @Override
     public IBook importBook(
         final IPhysicalBook physicalBook )

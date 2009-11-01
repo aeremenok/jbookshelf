@@ -7,10 +7,9 @@ import org.jbookshelf.model.db.api.HasBooks;
 
 /**
  * @author eav
+ * @param <B>
  */
-public interface IAuthor
+public interface IAuthor<B extends IBook>
     extends
-    HasBooks
-{
-
-}
+    HasBooks<B>
+{}

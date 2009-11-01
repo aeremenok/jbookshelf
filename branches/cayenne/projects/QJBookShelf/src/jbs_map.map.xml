@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-map xmlns="http://cayenne.apache.org/schema/3.0/modelMap"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://cayenne.apache.org/schema/3.0/modelMap http://cayenne.apache.org/schema/3.0/modelMap"
+  project-version="3.0">
+	<property name="defaultPackage" value="org.jbookshelf.model.db.cayenne"/>
+	<property name="defaultSchema" value="PUBLIC"/>
+	<db-entity name="AUTHOR" schema="PUBLIC" catalog="JBS">
+		<db-attribute name="ID" type="BIGINT" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="19"/>
+		<db-attribute name="NAME" type="VARCHAR" isMandatory="true" length="255"/>
+	</db-entity>
+	<db-entity name="AUTHOR_BOOK" schema="PUBLIC" catalog="JBS">
+		<db-attribute name="AUTHORS_ID" type="BIGINT" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="19"/>
+		<db-attribute name="BOOKS_ID" type="BIGINT" isPrimaryKey="true" isMandatory="true" length="19"/>
+	</db-entity>
+	<db-entity name="BOOK" schema="PUBLIC" catalog="JBS">
+		<db-attribute name="ID" type="BIGINT" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="19"/>
+		<db-attribute name="LASTREAD_ID" type="BIGINT" length="19"/>
+		<db-attribute name="NAME" type="VARCHAR" isMandatory="true" length="255"/>
+	</db-entity>
+	<db-entity name="CATEGORY" schema="PUBLIC" catalog="JBS">
+		<db-attribute name="ID" type="BIGINT" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="19"/>
+		<db-attribute name="NAME" type="VARCHAR" isMandatory="true" length="255"/>
+		<db-attribute name="PARENT_ID" type="BIGINT" length="19"/>
+	</db-entity>
+	<db-entity name="CATEGORY_BOOK" schema="PUBLIC" catalog="JBS">
+		<db-attribute name="BOOKS_ID" type="BIGINT" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="19"/>
+		<db-attribute name="CATEGORIES_ID" type="BIGINT" isPrimaryKey="true" isMandatory="true" length="19"/>
+	</db-entity>
+	<db-entity name="NOTE" schema="PUBLIC" catalog="JBS">
+		<db-attribute name="BOOK_ID" type="BIGINT" isMandatory="true" length="19"/>
+		<db-attribute name="CHANGEDATE" type="TIMESTAMP" isMandatory="true" length="23"/>
+		<db-attribute name="CITATION" type="VARCHAR" length="32767"/>
+		<db-attribute name="CONTENT" type="VARCHAR" length="32767"/>
+		<db-attribute name="ID" type="BIGINT" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="19"/>
+		<db-attribute name="PAGE" type="INTEGER" length="10"/>
+		<db-attribute name="PAGECOUNT" type="INTEGER" length="10"/>
+		<db-attribute name="POSITION" type="FLOAT" length="17"/>
+		<db-attribute name="TITLE" type="VARCHAR" isMandatory="true" length="255"/>
+	</db-entity>
+	<db-entity name="PHYSICAL_BOOK" schema="PUBLIC" catalog="JBS">
+		<db-attribute name="BOOK_ID" type="BIGINT" isMandatory="true" length="19"/>
+		<db-attribute name="CHARSETNAME" type="VARCHAR" length="255"/>
+		<db-attribute name="FILENAME" type="VARCHAR" isMandatory="true" length="255"/>
+		<db-attribute name="ID" type="BIGINT" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="19"/>
+		<db-attribute name="UNPACKEDFILENAME" type="VARCHAR" length="255"/>
+		<db-attribute name="VIEWER" type="VARCHAR" length="255"/>
+	</db-entity>
+	<db-entity name="RELATED_BOOKS" schema="PUBLIC" catalog="JBS">
+		<db-attribute name="BOOK_ID" type="BIGINT" isPrimaryKey="true" isGenerated="true" isMandatory="true" length="19"/>
+		<db-attribute name="RELATEDBOOKS_ID" type="BIGINT" isPrimaryKey="true" isMandatory="true" length="19"/>
+	</db-entity>
+	<obj-entity name="Author" className="org.jbookshelf.model.db.cayenne.Author" dbEntityName="AUTHOR">
+		<obj-attribute name="name" type="java.lang.String" db-attribute-path="NAME"/>
+	</obj-entity>
+	<obj-entity name="Book" className="org.jbookshelf.model.db.cayenne.Book" dbEntityName="BOOK">
+		<obj-attribute name="name" type="java.lang.String" db-attribute-path="NAME"/>
+	</obj-entity>
+	<obj-entity name="Category" className="org.jbookshelf.model.db.cayenne.Category" dbEntityName="CATEGORY">
+		<obj-attribute name="name" type="java.lang.String" db-attribute-path="NAME"/>
+	</obj-entity>
+	<obj-entity name="Note" className="org.jbookshelf.model.db.cayenne.Note" dbEntityName="NOTE">
+		<obj-attribute name="changeDate" type="java.util.Date" db-attribute-path="CHANGEDATE"/>
+		<obj-attribute name="citation" type="java.lang.String" db-attribute-path="CITATION"/>
+		<obj-attribute name="content" type="java.lang.String" db-attribute-path="CONTENT"/>
+		<obj-attribute name="page" type="java.lang.Integer" db-attribute-path="PAGE"/>
+		<obj-attribute name="pageCount" type="java.lang.Integer" db-attribute-path="PAGECOUNT"/>
+		<obj-attribute name="position" type="java.lang.Float" db-attribute-path="POSITION"/>
+		<obj-attribute name="title" type="java.lang.String" db-attribute-path="TITLE"/>
+	</obj-entity>
+	<obj-entity name="PhysicalBook" className="org.jbookshelf.model.db.cayenne.PhysicalBook" dbEntityName="PHYSICAL_BOOK">
+		<obj-attribute name="charsetName" type="java.lang.String" db-attribute-path="CHARSETNAME"/>
+		<obj-attribute name="fileName" type="java.lang.String" db-attribute-path="FILENAME"/>
+		<obj-attribute name="unpackedFileName" type="java.lang.String" db-attribute-path="UNPACKEDFILENAME"/>
+		<obj-attribute name="viewer" type="java.lang.String" db-attribute-path="VIEWER"/>
+	</obj-entity>
+	<db-relationship name="authorBooks" source="AUTHOR" target="AUTHOR_BOOK" toDependentPK="true" toMany="true">
+		<db-attribute-pair source="ID" target="AUTHORS_ID"/>
+	</db-relationship>
+	<db-relationship name="authors" source="AUTHOR_BOOK" target="AUTHOR" toMany="false">
+		<db-attribute-pair source="AUTHORS_ID" target="ID"/>
+	</db-relationship>
+	<db-relationship name="books" source="AUTHOR_BOOK" target="BOOK" toMany="false">
+		<db-attribute-pair source="BOOKS_ID" target="ID"/>
+	</db-relationship>
+	<db-relationship name="authorBooks" source="BOOK" target="AUTHOR_BOOK" toDependentPK="true" toMany="true">
+		<db-attribute-pair source="ID" target="BOOKS_ID"/>
+	</db-relationship>
+	<db-relationship name="categoryBooks" source="BOOK" target="CATEGORY_BOOK" toDependentPK="true" toMany="true">
+		<db-attribute-pair source="ID" target="BOOKS_ID"/>
+	</db-relationship>
+	<db-relationship name="lastread" source="BOOK" target="NOTE" toMany="false">
+		<db-attribute-pair source="LASTREAD_ID" target="ID"/>
+	</db-relationship>
+	<db-relationship name="notes" source="BOOK" target="NOTE" toMany="true">
+		<db-attribute-pair source="ID" target="BOOK_ID"/>
+	</db-relationship>
+	<db-relationship name="physicalBooks" source="BOOK" target="PHYSICAL_BOOK" toMany="true">
+		<db-attribute-pair source="ID" target="BOOK_ID"/>
+	</db-relationship>
+	<db-relationship name="relatedBookss" source="BOOK" target="RELATED_BOOKS" toDependentPK="true" toMany="true">
+		<db-attribute-pair source="ID" target="BOOK_ID"/>
+	</db-relationship>
+	<db-relationship name="relatedBookss1" source="BOOK" target="RELATED_BOOKS" toDependentPK="true" toMany="true">
+		<db-attribute-pair source="ID" target="RELATEDBOOKS_ID"/>
+	</db-relationship>
+	<db-relationship name="categories" source="CATEGORY" target="CATEGORY" toMany="true">
+		<db-attribute-pair source="ID" target="PARENT_ID"/>
+	</db-relationship>
+	<db-relationship name="categoryBooks" source="CATEGORY" target="CATEGORY_BOOK" toDependentPK="true" toMany="true">
+		<db-attribute-pair source="ID" target="CATEGORIES_ID"/>
+	</db-relationship>
+	<db-relationship name="parent" source="CATEGORY" target="CATEGORY" toMany="false">
+		<db-attribute-pair source="PARENT_ID" target="ID"/>
+	</db-relationship>
+	<db-relationship name="books" source="CATEGORY_BOOK" target="BOOK" toMany="false">
+		<db-attribute-pair source="BOOKS_ID" target="ID"/>
+	</db-relationship>
+	<db-relationship name="categories" source="CATEGORY_BOOK" target="CATEGORY" toMany="false">
+		<db-attribute-pair source="CATEGORIES_ID" target="ID"/>
+	</db-relationship>
+	<db-relationship name="book" source="NOTE" target="BOOK" toMany="false">
+		<db-attribute-pair source="BOOK_ID" target="ID"/>
+	</db-relationship>
+	<db-relationship name="books" source="NOTE" target="BOOK" toMany="true">
+		<db-attribute-pair source="ID" target="LASTREAD_ID"/>
+	</db-relationship>
+	<db-relationship name="book" source="PHYSICAL_BOOK" target="BOOK" toMany="false">
+		<db-attribute-pair source="BOOK_ID" target="ID"/>
+	</db-relationship>
+	<db-relationship name="book" source="RELATED_BOOKS" target="BOOK" toMany="false">
+		<db-attribute-pair source="BOOK_ID" target="ID"/>
+	</db-relationship>
+	<db-relationship name="relatedbooks" source="RELATED_BOOKS" target="BOOK" toMany="false">
+		<db-attribute-pair source="RELATEDBOOKS_ID" target="ID"/>
+	</db-relationship>
+	<obj-relationship name="books" source="Author" target="Book" collection-type="java.util.Set" deleteRule="Deny" db-relationship-path="authorBooks.books"/>
+	<obj-relationship name="authors" source="Book" target="Author" collection-type="java.util.Set" deleteRule="Deny" db-relationship-path="authorBooks.authors"/>
+	<obj-relationship name="categories" source="Book" target="Category" collection-type="java.util.Set" deleteRule="Deny" db-relationship-path="categoryBooks.categories"/>
+	<obj-relationship name="lastRead" source="Book" target="Note" deleteRule="Nullify" db-relationship-path="lastread"/>
+	<obj-relationship name="notes" source="Book" target="Note" collection-type="java.util.Set" deleteRule="Deny" db-relationship-path="notes"/>
+	<obj-relationship name="physicalBooks" source="Book" target="PhysicalBook" collection-type="java.util.Set" deleteRule="Cascade" db-relationship-path="physicalBooks"/>
+	<obj-relationship name="relatedBooks" source="Book" target="Book" collection-type="java.util.Set" deleteRule="Deny" db-relationship-path="relatedBookss.relatedbooks"/>
+	<obj-relationship name="books" source="Category" target="Book" collection-type="java.util.Set" deleteRule="Deny" db-relationship-path="categoryBooks.books"/>
+	<obj-relationship name="children" source="Category" target="Category" collection-type="java.util.Set" deleteRule="Cascade" db-relationship-path="categories"/>
+	<obj-relationship name="parent" source="Category" target="Category" deleteRule="Nullify" db-relationship-path="parent"/>
+	<obj-relationship name="book" source="Note" target="Book" deleteRule="Nullify" db-relationship-path="book"/>
+	<obj-relationship name="book" source="PhysicalBook" target="Book" deleteRule="Nullify" db-relationship-path="book"/>
+</data-map>

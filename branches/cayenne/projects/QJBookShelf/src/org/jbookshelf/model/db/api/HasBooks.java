@@ -9,10 +9,11 @@ import org.jbookshelf.model.db.api.spec.IBook;
 
 /**
  * @author eav 2009
+ * @param <B>
  */
-public interface HasBooks
+public interface HasBooks<B extends IBook>
     extends
     Named
 {
-    Set<IBook> getBooks();
+    Set<B> getBooks();
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<domains project-version="3.0">
+<domain name="jbs">
+	<map name="jbs_map" location="jbs_map.map.xml"/>
+
+	<node name="jbsNode"
+		 datasource="jbsNode.driver.xml"
+		 factory="org.apache.cayenne.conf.DriverDataSourceFactory"
+		 schema-update-strategy="org.apache.cayenne.access.dbsync.ThrowOnPartialOrCreateSchemaStrategy">
+			<map-ref name="jbs_map"/>
+	 </node>
+</domain>
+</domains>
