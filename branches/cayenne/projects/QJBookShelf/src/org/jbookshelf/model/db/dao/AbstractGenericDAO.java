@@ -3,13 +3,14 @@
  */
 package org.jbookshelf.model.db.dao;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Identifiable;
+import org.jbookshelf.model.db.api.Identifiable;
 import org.jbookshelf.model.db.util.LogRunner;
 import org.jbookshelf.model.db.util.TBeanListHandler;
 
@@ -19,7 +20,7 @@ import org.jbookshelf.model.db.util.TBeanListHandler;
  */
 public abstract class AbstractGenericDAO<T extends Identifiable>
     implements
-    GenericDAO<T, Long>
+    GenericDAO<T, Serializable>
 {
     @SuppressWarnings( "unused" )
     private static final Logger log    = Logger.getLogger( AbstractGenericDAO.class );
@@ -46,7 +47,7 @@ public abstract class AbstractGenericDAO<T extends Identifiable>
     @SuppressWarnings( "unchecked" )
     @Override
     public T getById(
-        final Long id )
+        final Serializable id )
     {
         final BeanHandler handler = new BeanHandler( entityClass );
         final String sql = "select * from " + entityClass.getSimpleName() + " where id=?";

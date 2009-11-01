@@ -3,8 +3,6 @@ package org.jbookshelf.controller.importer;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Author;
@@ -48,7 +46,6 @@ public class UseDirsStrategy
         return book;
     }
 
-    @Nullable
     public Category lastCategory(
         final String[] dirNames )
     {

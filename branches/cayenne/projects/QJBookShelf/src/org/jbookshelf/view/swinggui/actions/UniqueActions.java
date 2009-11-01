@@ -15,7 +15,7 @@ import org.bushe.swing.event.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Named;
+import org.jbookshelf.model.db.api.Named;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;

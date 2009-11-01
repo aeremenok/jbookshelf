@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Bookmark;
+import org.jbookshelf.model.db.api.Bookmark;
 import org.jbookshelf.view.swinggui.reader.navigation.notes.NotesPanel;
 import org.jbookshelf.view.swinggui.reader.textview.ContentRenderer;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;

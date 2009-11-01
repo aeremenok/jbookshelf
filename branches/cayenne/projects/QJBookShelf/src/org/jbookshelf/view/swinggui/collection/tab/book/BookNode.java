@@ -3,8 +3,6 @@
  */
 package org.jbookshelf.view.swinggui.collection.tab.book;
 
-import javax.annotation.Nonnull;
-
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.view.swinggui.collection.tab.DefaultLazyNode;
 
@@ -25,7 +23,7 @@ public class BookNode
     }
 
     public BookNode(
-        @Nonnull final Book book )
+        final Book book )
     {
         super( book.getName() );
         this.book = book;

@@ -17,8 +17,8 @@ import javax.swing.JTextField;
 
 import org.bushe.swing.event.EventBus;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.api.Bookmark;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.toolbar.PageLayoutSwitcher.PageLayoutType;

@@ -4,7 +4,7 @@
 package org.jbookshelf.view.swinggui.multiedit;
 
 import org.jbookshelf.model.db.Category;
-import org.jbookshelf.model.db.Named;
+import org.jbookshelf.model.db.api.Named;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.xnap.commons.gui.completion.CompletionModel;
 

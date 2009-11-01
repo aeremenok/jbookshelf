@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Bookmark;
+import org.jbookshelf.model.db.api.Bookmark;
 import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.textview.MultiPageLayoutPanel;
 import org.jbookshelf.view.swinggui.reader.textview.pagelayout.PageLayout;

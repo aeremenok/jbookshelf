@@ -5,7 +5,7 @@ package org.jbookshelf.model.db.dao;
 
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Named;
+import org.jbookshelf.model.db.api.Named;
 
 /**
  * @author eav 2009

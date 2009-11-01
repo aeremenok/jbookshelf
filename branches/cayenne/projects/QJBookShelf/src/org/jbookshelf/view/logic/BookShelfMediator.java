@@ -11,7 +11,7 @@ import org.bushe.swing.event.EventBus;
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Category;
-import org.jbookshelf.model.db.Named;
+import org.jbookshelf.model.db.api.Named;
 
 /**
  * manages the selection of bookshelf objects todo simplify

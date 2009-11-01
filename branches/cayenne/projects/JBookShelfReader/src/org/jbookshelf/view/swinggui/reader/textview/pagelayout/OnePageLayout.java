@@ -7,7 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Bookmark;
+import org.jbookshelf.model.db.api.Bookmark;
 import org.jbookshelf.view.swinggui.reader.navigation.notes.NotesPanel;
 import org.jbookshelf.view.swinggui.reader.textview.ContentRenderer;
 
