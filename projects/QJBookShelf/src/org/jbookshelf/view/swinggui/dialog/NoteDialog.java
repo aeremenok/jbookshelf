@@ -19,8 +19,8 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import org.bushe.swing.event.EventBus;
-import org.jbookshelf.model.db.Note;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.INote;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.swinggui.widget.WrapperPanel;
@@ -55,11 +55,11 @@ public class NoteDialog
     private final JLabel       pageLabel       = new JLabel();
     private final JLabel       posLabel        = new JLabel();
 
-    private final Note         note;
+    private final INote         note;
 
     public NoteDialog(
         final JDialog parent,
-        final Note note )
+        final INote note )
     {
         super( parent, BUTTON_OKAY | BUTTON_CANCEL );
         this.note = note;
@@ -68,7 +68,7 @@ public class NoteDialog
 
     public NoteDialog(
         final JFrame parent,
-        final Note note )
+        final INote note )
     {
         super( parent, BUTTON_OKAY | BUTTON_CANCEL );
         this.note = note;

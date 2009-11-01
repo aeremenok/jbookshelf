@@ -3,12 +3,12 @@
  */
 package org.jbookshelf.view.swinggui.collection.tab.book;
 
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.swinggui.widget.tables.ExpandTableModel;
 import org.jbookshelf.view.swinggui.widget.tables.Record;
 
 /**
- * a row of {@link ExpandTableModel}, representing a {@link Book}
+ * a row of {@link ExpandTableModel}, representing a {@link IBook}
  * 
  * @author eav 2009
  */

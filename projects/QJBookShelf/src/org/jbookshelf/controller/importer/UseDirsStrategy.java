@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Author;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Category;
-import org.jbookshelf.model.db.PhysicalBook;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IAuthor;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.ICategory;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 import org.jbookshelf.view.i18n.I18N;
 
 public class UseDirsStrategy
@@ -20,24 +20,24 @@ public class UseDirsStrategy
     private static final Logger log = Logger.getLogger( UseDirsStrategy.class );
 
     public String[] dirNames(
-        final PhysicalBook physicalBook )
+        final IPhysicalBook physicalBook )
     {
         return physicalBook.getFileName().split( "/" );
     }
 
-    public Book importBook(
-        final PhysicalBook physicalBook )
+    public IBook importBook(
+        final IPhysicalBook physicalBook )
     {
-        final Book book = new Book();
+        final IBook book = BookShelf.createBook();
 
         book.setName( FilenameUtils.getBaseName( physicalBook.getFile().getName() ) );
         book.setPhysicalBook( physicalBook );
 
         final String[] dirNames = dirNames( physicalBook );
-        final Author author = BookShelf.getOrAddUnique( Author.class, dirNames[dirNames.length - 2] );
+        final IAuthor author = BookShelf.getOrAddUnique( IAuthor.class, dirNames[dirNames.length - 2] );
         book.getAuthors().add( author );
 
-        final Category category = lastCategory( dirNames );
+        final ICategory category = lastCategory( dirNames );
         if ( category != null )
         {
             book.getCategories().add( category );
@@ -46,13 +46,13 @@ public class UseDirsStrategy
         return book;
     }
 
-    public Category lastCategory(
+    public ICategory lastCategory(
         final String[] dirNames )
     {
-        final List<Category> categories = new ArrayList<Category>();
+        final List<ICategory> categories = new ArrayList<ICategory>();
         categories.add( BookShelf.rootCategory() );
 
-        Category category = null;
+        ICategory category = null;
         for ( int i = 0; i < dirNames.length - 2; i++ )
         {
             final String dirName = dirNames[i];

@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.api.Named;
-import org.jbookshelf.model.db.dao.UniqueDAO;
+import org.jbookshelf.model.db.dao.NamedDAO;
 import org.junit.Test;
 
 /**
@@ -18,7 +18,7 @@ import org.junit.Test;
  * @param <U>
  * @param <D>
  */
-public abstract class UniqueDAOTests<U extends Named, D extends UniqueDAO<U>>
+public abstract class UniqueDAOTests<U extends Named, D extends NamedDAO<U>>
     extends CommonDAOTests<U, D>
 {
     private static final Logger log = Logger.getLogger( UniqueDAOTests.class );

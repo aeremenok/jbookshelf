@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 
 /**
@@ -24,7 +24,7 @@ public class TXTBookContent
     private final String        plainText;
 
     public TXTBookContent(
-        final Book book )
+        final IBook book )
     {
         super( book );
         try

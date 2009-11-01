@@ -9,20 +9,22 @@ import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Author;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Category;
-import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IAuthor;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.ICategory;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 import org.jbookshelf.model.db.dao.BookDAO;
 
 /**
  * @author eav 2009
  */
 public class BookDAOTests
-    extends UniqueDAOTests<Book, BookDAO>
+    extends UniqueDAOTests<IBook, BookDAO>
 {
     @SuppressWarnings( "unused" )
     private static final Logger log = Logger.getLogger( BookDAOTests.class );
@@ -35,42 +37,42 @@ public class BookDAOTests
     @Override
     public void getById()
     {
-        final List<Book> all = dao.findAll();
-        final Book expected = all.get( 0 );
-        final Book book = dao.getById( expected.getId() );
+        final List<IBook> all = dao.findAll();
+        final IBook expected = all.get( 0 );
+        final IBook book = dao.getById( expected.getId() );
         assertBook( expected, book );
     }
 
     @Override
     public void getByName()
     {
-        final List<Book> all = dao.findAll();
-        final Book expected = all.get( 0 );
-        final Book book = dao.getByName( expected.getName() );
+        final List<IBook> all = dao.findAll();
+        final IBook expected = all.get( 0 );
+        final IBook book = dao.getByName( expected.getName() );
         assertBook( expected, book );
     }
 
     @Override
     public void makePersistent()
     {
-        final Book random = randomIdentifiable();
+        final IBook random = randomIdentifiable();
         assertNull( random.getId() );
 
         final AuthorDAOTests authorDAOTests = new AuthorDAOTests();
         final CategoryDAOTests categoryDAOTests = new CategoryDAOTests();
 
-        final Author a = authorDAOTests.randomIdentifiable();
+        final IAuthor a = authorDAOTests.randomIdentifiable();
         random.getAuthors().add( a );
 
-        final Category c = categoryDAOTests.randomIdentifiable();
+        final ICategory c = categoryDAOTests.randomIdentifiable();
         random.getCategories().add( c );
 
-        final Book persistent = dao.makePersistent( random );
+        final IBook persistent = dao.makePersistent( random );
         assertNotNull( persistent );
         assertNotNull( persistent.getId() );
         assertEquals( random, persistent );
 
-        final Book byId = dao.getById( persistent.getId() );
+        final IBook byId = dao.getById( persistent.getId() );
 
         assertEquals( byId.getAuthors().size(), 0 );
         dao.getAuthors( byId );
@@ -86,10 +88,10 @@ public class BookDAOTests
     @Override
     public void makeTransient()
     {
-        final List<Book> all = dao.findAll();
-        final Book u = all.get( 0 );
+        final List<IBook> all = dao.findAll();
+        final IBook u = all.get( 0 );
 
-        final Long id = u.getId();
+        final Serializable id = u.getId();
 
         dao.makeTransient( u );
         assertNull( u.getId() );
@@ -101,28 +103,28 @@ public class BookDAOTests
         assertNull( u.getLastRead() );
         assertNull( u.getPhysicalBook() );
 
-        final Book byId = dao.getById( id );
+        final IBook byId = dao.getById( id );
         assertNull( byId );
     }
 
     @Override
-    public Book randomIdentifiable()
+    public IBook randomIdentifiable()
     {
-        final Book book = super.randomIdentifiable();
-        final PhysicalBook physicalBook = new PhysicalBook();
+        final IBook book = super.randomIdentifiable();
+        final IPhysicalBook physicalBook = BookShelf.createPhysicalBook();
         physicalBook.setFile( new File( System.getProperty( "user.home" ) ) );
         book.setPhysicalBook( physicalBook );
         return book;
     }
 
     protected void assertBook(
-        final Book expected,
-        final Book book )
+        final IBook expected,
+        final IBook book )
     {
         assertNotNull( book );
         assertEquals( expected, book );
 
-        final PhysicalBook physicalBook = book.getPhysicalBook();
+        final IPhysicalBook physicalBook = book.getPhysicalBook();
         assertNotNull( physicalBook );
         assertNotNull( physicalBook.getFileName() );
         assertNotNull( physicalBook.getFile() );

@@ -15,7 +15,7 @@ import javax.swing.JToolBar;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
@@ -42,7 +42,7 @@ public class ReaderToolBar
         public void actionPerformed(
             final ActionEvent e )
         {
-            final Book book = Single.instance( ReaderWindow.class ).getBook();
+            final IBook book = Single.instance( ReaderWindow.class ).getBook();
             URIUtil.openDir( book.getPhysicalBook().getFile().getParentFile() );
         }
     }

@@ -5,17 +5,17 @@ package org.jbookshelf.view.swinggui.dialog.importer;
 
 import icons.IMG;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.table.DefaultTableModel;
 
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.i18n.I18N;
 
 /**
- * contains successfully imported {@link Book}s
+ * contains successfully imported {@link IBook}s
  * 
  * @author eav 2009
  */
@@ -25,7 +25,7 @@ public class SuccessTableModel
     private static final String[] names =
                                         { I18N.tr( "Book" ), "" };
 
-    private List<Book>            books = new LinkedList<Book>();
+    private List<IBook>           books = new ArrayList<IBook>();
 
     public SuccessTableModel()
     {
@@ -33,7 +33,7 @@ public class SuccessTableModel
     }
 
     public void addBook(
-        final Book book )
+        final IBook book )
     {
         books.add( book );
         final int row = books.size() - 1;
@@ -43,7 +43,7 @@ public class SuccessTableModel
     /**
      * @return the books
      */
-    public List<Book> getBooks()
+    public List<IBook> getBooks()
     {
         return this.books;
     }
@@ -93,7 +93,7 @@ public class SuccessTableModel
      * @param books the books to set
      */
     public void setBooks(
-        final List<Book> books )
+        final List<IBook> books )
     {
         this.books = books;
         fireTableDataChanged();

@@ -2,7 +2,7 @@ package org.jbookshelf.view.swinggui.reader.types.rtf;
 
 import javax.swing.text.StyledDocument;
 
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 
@@ -25,7 +25,7 @@ public class RTFReaderSpecific
 
     @Override
     public BookContent<StyledDocument> createBookContent(
-        final Book book )
+        final IBook book )
     {
         return new RTFBookContent( book );
     }

@@ -15,11 +15,11 @@ import org.jbookshelf.controller.importer.FileImporter;
 import org.jbookshelf.controller.importer.UseMasksStrategy;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Author;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Category;
-import org.jbookshelf.model.db.PhysicalBook;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IAuthor;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.ICategory;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.logic.Parameters;
@@ -42,20 +42,20 @@ public class BookPanel
     implements
     Translatable
 {
-    public static Book changeBook(
-        final Book book,
+    public static IBook changeBook(
+        final IBook book,
         final Parameters parameters )
     {
         book.getAuthors().clear();
-        final List<Author> authors = parameters.get( Keys.BOOK_AUTHORS );
-        for ( final Author author : authors )
+        final List<IAuthor> authors = parameters.get( Keys.BOOK_AUTHORS );
+        for ( final IAuthor author : authors )
         {
             book.getAuthors().add( author );
         }
 
         book.getCategories().clear();
-        final List<Category> categories = parameters.get( Keys.BOOK_CATEGORIES );
-        for ( final Category category : categories )
+        final List<ICategory> categories = parameters.get( Keys.BOOK_CATEGORIES );
+        for ( final ICategory category : categories )
         {
             book.getCategories().add( category );
         }
@@ -64,7 +64,7 @@ public class BookPanel
         book.setRead( parameters.<Boolean> get( Keys.BOOK_IS_READ ) );
 
         final File file = parameters.get( Keys.BOOK_FILE );
-        final PhysicalBook physical;
+        final IPhysicalBook physical;
         if ( book.getPhysicalBook() == null )
         {
             physical = FileImporter.createPhysicalBook( file );
@@ -80,58 +80,58 @@ public class BookPanel
         return book;
     }
 
-    private final JLabel                  bookLabel        = new JLabel();
-    private final JLabel                  authorLabel      = new JLabel();
-    private final JLabel                  categoryLabel    = new JLabel();
-    private final JLabel                  viewerLabel      = new JLabel();
-    private final JLabel                  fileLabel        = new JLabel();
+    private final JLabel                   bookLabel        = new JLabel();
+    private final JLabel                   authorLabel      = new JLabel();
+    private final JLabel                   categoryLabel    = new JLabel();
+    private final JLabel                   viewerLabel      = new JLabel();
+    private final JLabel                   fileLabel        = new JLabel();
 
-    private final JLabel                  typeField        = new JLabel();
-    private final JLabel                  sizeField        = new JLabel();
+    private final JLabel                   typeField        = new JLabel();
+    private final JLabel                   sizeField        = new JLabel();
 
-    private final JTextField              bookTextField    = new JTextField( 50 );
-    private final JCheckBox               isReadCheckBox   = new JCheckBox();
-    private final JComboBox               viewerComboBox   = new JComboBox();
+    private final JTextField               bookTextField    = new JTextField( 50 );
+    private final JCheckBox                isReadCheckBox   = new JCheckBox();
+    private final JComboBox                viewerComboBox   = new JComboBox();
 
-    private final MultipleField<Author>   authorField      = new MultipleUniqueField<Author>( Author.class );
-    private final MultipleField<Category> categoryField    = new CategoryMultipleField();
+    private final MultipleField<IAuthor>   authorField      = new MultipleUniqueField<IAuthor>( IAuthor.class );
+    private final MultipleField<ICategory> categoryField    = new CategoryMultipleField();
 
-    private final FileChooserPanel        fileChooserPanel = new FileChooserPanelExt( 50, "book.file.chooser" )
-                                                           {
-                                                               @Override
-                                                               public void setFile(
-                                                                   final File file )
-                                                               {
-                                                                   super.setFile( file );
-                                                                   onSetFile( file );
-                                                               }
+    private final FileChooserPanel         fileChooserPanel = new FileChooserPanelExt( 50, "book.file.chooser" )
+                                                            {
+                                                                @Override
+                                                                public void setFile(
+                                                                    final File file )
+                                                                {
+                                                                    super.setFile( file );
+                                                                    onSetFile( file );
+                                                                }
 
-                                                               @Override
-                                                               protected void fileSelected(
-                                                                   final File file )
-                                                               {
-                                                                   super.fileSelected( file );
-                                                                   onFileSelected( file );
-                                                               }
-                                                           };
+                                                                @Override
+                                                                protected void fileSelected(
+                                                                    final File file )
+                                                                {
+                                                                    super.fileSelected( file );
+                                                                    onFileSelected( file );
+                                                                }
+                                                            };
 
-    private final FileImporter            fileImporter     = new FileImporter()
-                                                           {
-                                                               @Override
-                                                               protected void onImportFailure(
-                                                                   final File file,
-                                                                   final Exception e )
-                                                               {
-                                                               // let user enters the data
-                                                               }
+    private final FileImporter             fileImporter     = new FileImporter()
+                                                            {
+                                                                @Override
+                                                                protected void onImportFailure(
+                                                                    final File file,
+                                                                    final Exception e )
+                                                                {
+                                                                // let user enters the data
+                                                                }
 
-                                                               @Override
-                                                               protected void onImportSuccess(
-                                                                   final Book book )
-                                                               {
-                                                                   setBook( book );
-                                                               }
-                                                           };
+                                                                @Override
+                                                                protected void onImportSuccess(
+                                                                    final IBook book )
+                                                                {
+                                                                    setBook( book );
+                                                                }
+                                                            };
 
     public BookPanel()
     {
@@ -170,7 +170,7 @@ public class BookPanel
         final int viewerIndex = viewerComboBox.getSelectedIndex();
         final String viewer = viewerIndex == 0
             ? null : viewerIndex == 1
-                ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER;
+                ? IPhysicalBook.INTERNAL_VIEWER : IPhysicalBook.SYSTEM_VIEWER;
 
         final Parameters parameters = new Parameters();
 
@@ -190,7 +190,7 @@ public class BookPanel
      * @param book a book to edit
      */
     public void setBook(
-        final Book book )
+        final IBook book )
     {
         // display book name
         bookTextField.setText( book.getName() );
@@ -206,7 +206,7 @@ public class BookPanel
         // display viewer
         final String viewer = book.getPhysicalBook().getViewer();
         final int index = viewer == null
-            ? 0 : PhysicalBook.INTERNAL_VIEWER.equals( viewer )
+            ? 0 : IPhysicalBook.INTERNAL_VIEWER.equals( viewer )
                 ? 1 : 2;
         viewerComboBox.setSelectedIndex( index );
     }

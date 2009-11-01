@@ -20,14 +20,15 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import org.apache.log4j.Category;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Category;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.Named;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.ICategory;
 import org.jbookshelf.model.db.util.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
@@ -54,7 +55,7 @@ public class CategoryView
     public static class CategoryNode
         extends DefaultLazyNode
     {
-        private final Category category;
+        private final ICategory category;
 
         public CategoryNode()
         {
@@ -63,17 +64,14 @@ public class CategoryView
         }
 
         private CategoryNode(
-            final Category category )
+            final ICategory category )
         {
             super( category.equals( BookShelf.rootCategory() )
                 ? I18N.tr( "All categories" ) : category.getName() );
             this.category = category;
         }
 
-        /**
-         * @return the category
-         */
-        public Category getCategory()
+        public ICategory getCategory()
         {
             return this.category;
         }
@@ -142,20 +140,20 @@ public class CategoryView
         final Parameters p )
     {
         root.removeAllChildren();
-        Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Category>, CategoryNode>()
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<ICategory>, CategoryNode>()
         {
             @Override
-            protected List<Category> doInBackground()
+            protected List<ICategory> doInBackground()
             {
                 final Session session = HibernateUtil.getSession();
                 try
                 {
-                    final List<Category> list = session.createQuery( buildQuery( p ) ).list();
+                    final List<ICategory> list = session.createQuery( buildQuery( p ) ).list();
 
                     model.reload( root );
-                    for ( final Category category : list )
+                    for ( final ICategory category : list )
                     {
-                        final Category rootCategory = BookShelf.rootCategory();
+                        final ICategory rootCategory = BookShelf.rootCategory();
                         if ( !rootCategory.equals( category ) && rootCategory.equals( category.getParent() ) )
                         {
                             publish( new CategoryNode( category ) );
@@ -198,19 +196,19 @@ public class CategoryView
         final DefaultMutableTreeNode parent,
         final DefaultMutableTreeNode node )
     {
-        final Category parentCategory = ((CategoryNode) parent).getCategory();
+        final ICategory parentCategory = ((CategoryNode) parent).getCategory();
         if ( node instanceof CategoryNode )
         {
-            final Category childCategory = ((CategoryNode) node).getCategory();
+            final ICategory childCategory = ((CategoryNode) node).getCategory();
             BookShelf.setParent( parentCategory, childCategory );
         }
         else
         {
             final BookNode bookNode = (BookNode) node;
-            final Book book = bookNode.getBook();
+            final IBook book = bookNode.getBook();
 
             final CategoryNode oldCategoryNode = (CategoryNode) node.getParent();
-            final Category oldCategory = oldCategoryNode.getCategory();
+            final ICategory oldCategory = oldCategoryNode.getCategory();
             BookShelf.moveBook( book, oldCategory, parentCategory );
         }
     }
@@ -251,7 +249,7 @@ public class CategoryView
 
                     if ( object instanceof CategoryNode )
                     {
-                        final Category category = ((CategoryNode) object).getCategory();
+                        final ICategory category = ((CategoryNode) object).getCategory();
                         if ( !BookShelf.rootCategory().equals( category ) )
                         {
                             list.add( category );
@@ -277,16 +275,16 @@ public class CategoryView
     {
         if ( !categoryNode.isInitialized() )
         { // not loaded yet
-            final Category category = categoryNode.getCategory();
+            final ICategory category = categoryNode.getCategory();
 
-            final Set<Book> books = BookShelf.getBooks( category );
-            for ( final Book book : books )
+            final Set<IBook> books = BookShelf.getBooks( category );
+            for ( final IBook book : books )
             {
                 model.insertNodeInto( new BookNode( book ), categoryNode, 0 );
             }
 
-            final Set<Category> children = BookShelf.getChildren( category );
-            for ( final Category child : children )
+            final Set<ICategory> children = BookShelf.getChildren( category );
+            for ( final ICategory child : children )
             {
                 model.insertNodeInto( new CategoryNode( child ), categoryNode, 0 );
             }

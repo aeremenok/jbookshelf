@@ -13,10 +13,10 @@ import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Author;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Category;
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.api.spec.IAuthor;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.ICategory;
+import org.jbookshelf.model.db.api.spec.INote;
 import org.jbookshelf.model.db.util.DBUtil;
 import org.jbookshelf.model.db.util.TBeanListHandler;
 
@@ -24,20 +24,20 @@ import org.jbookshelf.model.db.util.TBeanListHandler;
  * @author eav 2009
  */
 public class BookDAO
-    extends UniqueDAO<Book>
+    extends NamedDAO<IBook>
 {
     private static final Logger log = Logger.getLogger( BookDAO.class );
 
-    public Set<Author> getAuthors(
-        final Book book )
+    public Set<IAuthor> getAuthors(
+        final IBook book )
     {
         if ( book.getId() != null )
         {
             final StringBuilder q = new StringBuilder( "select * from Author where id in " );
             q.append( "(select authors_id from Author_Book where books_id=?)" );
 
-            final TBeanListHandler<Author> handler = new TBeanListHandler<Author>( Author.class );
-            final List<Author> authors = runner.query( q.toString(), handler, new Object[]
+            final TBeanListHandler<IAuthor> handler = new TBeanListHandler<IAuthor>( IAuthor.class );
+            final List<IAuthor> authors = runner.query( q.toString(), handler, new Object[]
             { book.getId() } );
 
             book.getAuthors().clear();
@@ -47,10 +47,10 @@ public class BookDAO
     }
 
     @Override
-    public Book getById(
+    public IBook getById(
         final Serializable id )
     {
-        final Book byId = super.getById( id );
+        final IBook byId = super.getById( id );
         if ( byId != null )
         {
             final PhysicalDAO physicalDAO = new PhysicalDAO();
@@ -59,16 +59,16 @@ public class BookDAO
         return byId;
     }
 
-    public Set<Category> getCategories(
-        final Book book )
+    public Set<ICategory> getCategories(
+        final IBook book )
     {
         if ( book.getId() != null )
         {
             final StringBuilder q = new StringBuilder( "select * from category where id in " );
             q.append( "(select categories_id from Category_Book where books_id=?)" );
 
-            final TBeanListHandler<Category> handler = new TBeanListHandler<Category>( Category.class );
-            final List<Category> categories = runner.query( q.toString(), handler, new Object[]
+            final TBeanListHandler<ICategory> handler = new TBeanListHandler<ICategory>( ICategory.class );
+            final List<ICategory> categories = runner.query( q.toString(), handler, new Object[]
             { book.getId() } );
 
             book.getCategories().clear();
@@ -77,13 +77,13 @@ public class BookDAO
         return book.getCategories();
     }
 
-    public Set<Note> getNotes(
-        final Book book )
+    public Set<INote> getNotes(
+        final IBook book )
     {
         if ( book.getId() != null )
         {
-            final TBeanListHandler<Note> handler = new TBeanListHandler<Note>( Note.class );
-            final List<Note> notes = runner.query( "select * from Note where BOOK_ID=?", handler, new Object[]
+            final TBeanListHandler<INote> handler = new TBeanListHandler<INote>( INote.class );
+            final List<INote> notes = runner.query( "select * from Note where BOOK_ID=?", handler, new Object[]
             { book.getId() } );
 
             book.getNotes().clear();
@@ -93,8 +93,8 @@ public class BookDAO
     }
 
     @Override
-    public Book makePersistent(
-        final Book book )
+    public IBook makePersistent(
+        final IBook book )
     {
         if ( !checkIfPersistent( book ) )
         {
@@ -104,8 +104,8 @@ public class BookDAO
                 noteDAO.makePersistent( book.getLastRead() );
             }
 
-            final Long id = generateId();
-            final Long lastReadId = book.getLastRead() != null
+            final Serializable id = generateId();
+            final Serializable lastReadId = book.getLastRead() != null
                 ? book.getLastRead().getId() : null;
 
             runner.update( "insert into Book (id,name,lastread_id) values(?,?,?)", new Object[]
@@ -113,7 +113,7 @@ public class BookDAO
             book.setId( id );
 
             final AuthorDAO authorDAO = new AuthorDAO();
-            for ( final Author author : book.getAuthors() )
+            for ( final IAuthor author : book.getAuthors() )
             {
                 authorDAO.makePersistent( author );
                 runner.update( "insert into author_book (authors_id,books_id) values (?,?)", new Object[]
@@ -121,14 +121,14 @@ public class BookDAO
             }
 
             final CategoryDAO categoryDAO = new CategoryDAO();
-            for ( final Category category : book.getCategories() )
+            for ( final ICategory category : book.getCategories() )
             {
                 categoryDAO.makePersistent( category );
                 runner.update( "insert into category_book (categories_id,books_id) values (?,?)", new Object[]
                 { category.getId(), book.getId() } );
             }
 
-            for ( final Note note : book.getNotes() )
+            for ( final INote note : book.getNotes() )
             {
                 noteDAO.makePersistent( note );
             }
@@ -141,14 +141,14 @@ public class BookDAO
 
     @Override
     public void makeTransient(
-        final Book unique )
+        final IBook unique )
     {
         checkIfTransient( unique );
 
         final Connection c = Single.instance( DBUtil.class ).openConnection();
         try
         {
-            final Long id = unique.getId();
+            final Serializable id = unique.getId();
 
             runner.update( c, "delete from author_book where books_id=?; ", id );
             runner.update( c, "delete from category_book where books_id=?; ", id );

@@ -11,8 +11,8 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.model.db.util.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
@@ -23,7 +23,7 @@ import org.xnap.commons.gui.DefaultDialog;
 import org.xnap.commons.i18n.I18n;
 
 /**
- * a dialog to edit existing {@link Book}s
+ * a dialog to edit existing {@link IBook}s
  * 
  * @author eav 2009
  */
@@ -33,12 +33,12 @@ public class BookEditDialog
     Translatable
 {
     private final BookPanel     bookPanel = new BookPanel();
-    private final Book          book;
+    private final IBook         book;
 
     private static final Logger log       = Logger.getLogger( BookEditDialog.class );
 
     public BookEditDialog(
-        final Book book )
+        final IBook book )
     {
         super( Single.instance( MainWindow.class ), BUTTON_OKAY | BUTTON_CANCEL );
         this.book = book;
@@ -47,7 +47,7 @@ public class BookEditDialog
 
     public BookEditDialog(
         final JDialog dialog,
-        final Book book )
+        final IBook book )
     {
         super( dialog, BUTTON_OKAY | BUTTON_CANCEL );
         this.book = book;

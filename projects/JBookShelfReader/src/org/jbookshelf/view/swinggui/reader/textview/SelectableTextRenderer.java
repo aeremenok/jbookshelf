@@ -13,7 +13,7 @@ import javax.swing.JPopupMenu;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.api.spec.INote;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
@@ -62,7 +62,7 @@ public abstract class SelectableTextRenderer<PageType>
             final ActionEvent e )
         {
             final String text = getSelectedText();
-            final Note note = createNote( text );
+            final INote note = createNote( text );
             new NoteDialog( Single.instance( ReaderWindow.class ), note ).setVisible( true );
         }
     }

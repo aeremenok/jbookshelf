@@ -9,8 +9,9 @@ import java.awt.Font;
 import javax.swing.JPanel;
 
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.Bookmark;
+import org.jbookshelf.model.db.api.spec.INote;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
@@ -29,10 +30,10 @@ public abstract class ContentRenderer<PageType>
         super( new BorderLayout() );
     }
 
-    public Note createNote(
+    public INote createNote(
         final String citationText )
     {
-        final Note note = new Note();
+        final INote note = BookShelf.createNote();
 
         note.setCitation( citationText );
 

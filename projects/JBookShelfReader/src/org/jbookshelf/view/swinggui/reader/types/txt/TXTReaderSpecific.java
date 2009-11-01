@@ -3,7 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.reader.types.txt;
 
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 
@@ -29,7 +29,7 @@ public class TXTReaderSpecific
 
     @Override
     public BookContent<String> createBookContent(
-        final Book book )
+        final IBook book )
     {
         return new TXTBookContent( book );
     }

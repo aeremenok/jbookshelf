@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jbookshelf.model.db.api.Identifiable;
-import org.jbookshelf.model.db.dao.AbstractGenericDAO;
+import org.jbookshelf.model.db.dao.AbstractDAO;
 import org.junit.Test;
 
 /**
@@ -20,7 +20,7 @@ import org.junit.Test;
  * @param <I>
  * @param <D>
  */
-public abstract class CommonDAOTests<I extends Identifiable, D extends AbstractGenericDAO<I>>
+public abstract class CommonDAOTests<I extends Identifiable, D extends AbstractDAO<I>>
 {
     protected final D dao;
 

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
 
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jdesktop.swingx.decorator.PatternFilter;
 
 /**
@@ -26,7 +26,7 @@ public abstract class AdditionalTab
      * @param book a book to add entry
      */
     public abstract void onAdd(
-        final Book book );
+        final IBook book );
 
     public void onSearch(
         final String text )

@@ -20,10 +20,10 @@ import org.bushe.swing.event.EventTopicSubscriber;
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventSubscriber;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.Bookmark;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.INote;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
@@ -34,7 +34,7 @@ import org.jdesktop.swingx.decorator.FilterPipeline;
 import org.xnap.commons.i18n.I18n;
 
 /**
- * displays {@link Note}s
+ * displays {@link INote}s
  * 
  * @author eav 2009
  */
@@ -49,7 +49,7 @@ public class NoteTab
         private static final I18n     i18n  = I18N.i18n();
         private static final String[] names =
                                             { i18n.tr( "Title" ), i18n.tr( "Date" ), "" };
-        private List<Note>            notes;
+        private List<INote>           notes;
 
         public NoteTableModel()
         {
@@ -69,7 +69,7 @@ public class NoteTab
             return super.getColumnClass( columnIndex );
         }
 
-        public List<Note> getNotes()
+        public List<INote> getNotes()
         {
             return this.notes;
         }
@@ -106,7 +106,7 @@ public class NoteTab
             return false;
         }
 
-        @EventSubscriber( eventClass = Note.class )
+        @EventSubscriber( eventClass = INote.class )
         public void noteChanged(
             @SuppressWarnings( "unused" ) final Bookmark note )
         { // todo for lots of notes can be optimized by adding, removing or changing the exact row 
@@ -118,11 +118,11 @@ public class NoteTab
             final String string,
             final BookShelfMediator mediator )
         {
-            final List<Book> selectedBooks = mediator.getSelectedBooks();
-            notes = new ArrayList<Note>();
+            final List<IBook> selectedBooks = mediator.getSelectedBooks();
+            notes = new ArrayList<INote>();
             if ( selectedBooks.size() == 1 )
             {
-                final Book book = selectedBooks.get( 0 );
+                final IBook book = selectedBooks.get( 0 );
                 notes.addAll( BookShelf.getNotes( book ) );
             }
             fireTableDataChanged();
@@ -151,7 +151,7 @@ public class NoteTab
                 final MouseEvent e )
             {
                 final int row = table.rowAtPoint( e.getPoint() );
-                final Note note = model.getNotes().get( table.convertRowIndexToModel( row ) );
+                final INote note = model.getNotes().get( table.convertRowIndexToModel( row ) );
                 if ( e.getClickCount() == 2 )
                 {
                     new NoteDialog( Single.instance( MainWindow.class ), note ).setVisible( true );
@@ -167,9 +167,9 @@ public class NoteTab
 
     @Override
     public void onAdd(
-        final Book book )
+        final IBook book )
     {
-        final Note note = new Note();
+        final INote note = BookShelf.createNote();
         note.setBook( book );
         note.setTitle( NoteDialog.createTitle() );
         new NoteDialog( Single.instance( MainWindow.class ), note ).setVisible( true );

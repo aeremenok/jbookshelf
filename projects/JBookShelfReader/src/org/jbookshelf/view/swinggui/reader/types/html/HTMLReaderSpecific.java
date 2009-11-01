@@ -3,7 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.reader.types.html;
 
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 
@@ -24,7 +24,7 @@ public class HTMLReaderSpecific
 
     @Override
     public BookContent<HTMLContentWrapper> createBookContent(
-        final Book book )
+        final IBook book )
     {
         return new HTMLBookContent( book );
     }

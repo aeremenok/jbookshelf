@@ -5,8 +5,8 @@ package org.jbookshelf.view.swinggui.reader;
 
 import java.io.File;
 
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 
 /**
  * stores the content, performs search, divides it into pages if possible
@@ -16,15 +16,15 @@ import org.jbookshelf.model.db.PhysicalBook;
  */
 public abstract class BookContent<PageType>
 {
-    protected int        pageCount;
-    protected final File file;
-    protected final Book book;
+    protected int         pageCount;
+    protected final File  file;
+    protected final IBook book;
 
     public BookContent(
-        final Book book )
+        final IBook book )
     {
         this.book = book;
-        final PhysicalBook physical = book.getPhysicalBook();
+        final IPhysicalBook physical = book.getPhysicalBook();
         file = physical.getUnpackedFile() != null
             ? physical.getUnpackedFile() : physical.getFile();
     }

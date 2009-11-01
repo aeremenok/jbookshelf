@@ -5,7 +5,8 @@ package org.jbookshelf.controller.importer;
 
 import java.io.File;
 
-import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 
 /**
  * imports directories with single non-zip files
@@ -42,10 +43,10 @@ public class SingleFileDirImporter
     }
 
     @Override
-    public PhysicalBook create(
+    public IPhysicalBook create(
         final File file )
     {
-        final PhysicalBook book = new PhysicalBook();
+        final IPhysicalBook book = BookShelf.createPhysicalBook();
         assert currentFile != null;
         book.setFile( currentFile );
         return book;

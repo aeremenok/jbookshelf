@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,8 +21,8 @@ import javax.swing.border.TitledBorder;
 
 import org.jbookshelf.controller.importer.FileImporter;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.logic.Parameters;
@@ -75,7 +76,7 @@ public class FileImportDialog
 
                                                           @Override
                                                           protected void onImportSuccess(
-                                                              final Book book )
+                                                              final IBook book )
                                                           {
                                                               successModel.addBook( book );
                                                           }
@@ -103,7 +104,7 @@ public class FileImportDialog
     @Override
     public boolean apply()
     {
-        final List<Book> successBooks = successModel.getBooks();
+        final List<IBook> successBooks = successModel.getBooks();
         // close dialog immediately
         // general progressbar will do this job in a new thread 
         Single.instance( ProgressBar.class ).invoke( new Runnable()
@@ -114,7 +115,7 @@ public class FileImportDialog
                 // persist all successfully imported books
                 while ( successBooks.size() > 0 )
                 {
-                    final Book book = successBooks.get( 0 );
+                    final IBook book = successBooks.get( 0 );
                     BookShelf.persistBook( book );
                     // surrender a book to GC
                     successBooks.remove( book );
@@ -190,7 +191,7 @@ public class FileImportDialog
                     if ( col == 1 || e.getClickCount() == 2 )
                     {
                         final int row = successTable.rowAtPoint( e.getPoint() );
-                        final Book book = successModel.getBooks().get( row );
+                        final IBook book = successModel.getBooks().get( row );
 
                         new BookEditDialog( FileImportDialog.this, book ).setVisible( true );
                     }
@@ -214,7 +215,7 @@ public class FileImportDialog
                         final BookAdditionDialog dialog = new BookAdditionDialog( FileImportDialog.this, file );
                         dialog.setVisible( true );
 
-                        final Book result = dialog.getResult();
+                        final IBook result = dialog.getResult();
                         if ( result != null )
                         {
                             successModel.addBook( result );
@@ -240,7 +241,7 @@ public class FileImportDialog
                 @Override
                 public void run()
                 {
-                    successModel.setBooks( new LinkedList<Book>() );
+                    successModel.setBooks( new ArrayList<IBook>() );
                     failModel.setFiles( new LinkedList<File>() );
                     importer.importFiles( parameters );
                     translate( I18N.i18n() );

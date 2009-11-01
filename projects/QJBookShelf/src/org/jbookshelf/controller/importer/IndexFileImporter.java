@@ -6,7 +6,8 @@ package org.jbookshelf.controller.importer;
 import java.io.File;
 import java.io.FileFilter;
 
-import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 
 import com.sun.istack.internal.Nullable;
 
@@ -22,9 +23,6 @@ public class IndexFileImporter
     @Nullable
     private File currentIndexFile;
 
-    /* (non-Javadoc)
-     * @see java.io.FileFilter#accept(java.io.File)
-     */
     @Override
     public boolean accept(
         final File pathname )
@@ -54,10 +52,10 @@ public class IndexFileImporter
     }
 
     @Override
-    public PhysicalBook create(
+    public IPhysicalBook create(
         final File file )
     {
-        final PhysicalBook book = new PhysicalBook();
+        final IPhysicalBook book = BookShelf.createPhysicalBook();
         assert currentIndexFile != null;
         book.setFile( currentIndexFile );
         return book;

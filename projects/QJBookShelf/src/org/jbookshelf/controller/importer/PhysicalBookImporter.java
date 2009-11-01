@@ -5,7 +5,7 @@ package org.jbookshelf.controller.importer;
 
 import java.io.File;
 
-import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 
 /**
  * imports certain types of files
@@ -25,6 +25,6 @@ public interface PhysicalBookImporter
      * @param file a file to import
      * @return imported book implementation
      */
-    PhysicalBook create(
+    IPhysicalBook create(
         File file );
 }

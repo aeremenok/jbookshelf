@@ -20,9 +20,9 @@ import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventSubscriber;
 import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.Bookmark;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.api.spec.INote;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
@@ -47,7 +47,7 @@ public class NotesPanel
         {
             super( new NoteTableModel() );
 
-            this.setDefaultRenderer( Note.class, new NoteArea() );
+            this.setDefaultRenderer( INote.class, new NoteArea() );
             this.getColumn( 0 ).setMinWidth( 150 );
             this.setRowHeight( this.getRowHeight() * 7 );
             this.addMouseListener( this );
@@ -70,7 +70,7 @@ public class NotesPanel
             final int row = this.rowAtPoint( point );
             if ( row > -1 )
             {
-                final Note note = getModel().getNotes().get( this.convertRowIndexToModel( row ) );
+                final INote note = getModel().getNotes().get( this.convertRowIndexToModel( row ) );
 
                 switch ( column )
                 {
@@ -128,9 +128,9 @@ public class NotesPanel
         isPageable = Single.instance( ReaderSpecific.class ).getSupportedFeatures().contains( ReaderSpecific.PAGING );
     }
 
-    @EventSubscriber( eventClass = Note.class )
+    @EventSubscriber( eventClass = INote.class )
     public void onChangeNote(
-        @SuppressWarnings( "unused" ) final Note note )
+        @SuppressWarnings( "unused" ) final INote note )
     {
         final Bookmark bookmark = Single.instance( MultiPageLayoutPanel.class ).followLayouter().createBookmark();
         if ( isPageable )
@@ -150,10 +150,10 @@ public class NotesPanel
     {
         if ( isVisible() )
         {
-            Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Note>, Note>()
+            Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<INote>, INote>()
             {
                 @Override
-                protected List<Note> doInBackground()
+                protected List<INote> doInBackground()
                 {
                     bookmark.setPage( bookmark.getPage() + pageOffset );
                     return BookShelf.getNotesByPage( bookmark );
@@ -176,10 +176,10 @@ public class NotesPanel
     {
         if ( isVisible() )
         {
-            Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Note>, Note>()
+            Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<INote>, INote>()
             {
                 @Override
-                protected List<Note> doInBackground()
+                protected List<INote> doInBackground()
                 {
                     return BookShelf.getNotesByPosition( bookmark );
                 }

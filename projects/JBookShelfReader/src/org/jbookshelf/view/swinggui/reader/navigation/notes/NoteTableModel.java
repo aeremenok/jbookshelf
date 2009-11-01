@@ -10,7 +10,7 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.table.DefaultTableModel;
 
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.api.spec.INote;
 import org.jbookshelf.view.i18n.I18N;
 
 public class NoteTableModel
@@ -18,7 +18,7 @@ public class NoteTableModel
 {
     private static final String[] names = new String[]
                                         { I18N.tr( "Note" ), "" };
-    private List<Note>            notes;
+    private List<INote>           notes;
 
     public NoteTableModel()
     {
@@ -32,14 +32,14 @@ public class NoteTableModel
         switch ( columnIndex )
         {
             case 0:
-                return Note.class;
+                return INote.class;
             case 1:
                 return Icon.class;
         }
         return super.getColumnClass( columnIndex );
     }
 
-    public List<Note> getNotes()
+    public List<INote> getNotes()
     {
         return this.notes;
     }
@@ -75,7 +75,7 @@ public class NoteTableModel
     }
 
     public void setNotes(
-        final List<Note> notes )
+        final List<INote> notes )
     {
         this.notes = notes;
         fireTableDataChanged();

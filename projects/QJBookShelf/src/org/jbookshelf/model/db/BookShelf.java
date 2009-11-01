@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.model.db.util;
+package org.jbookshelf.model.db;
 
 import java.util.List;
 import java.util.Set;
@@ -11,17 +11,18 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.jbookshelf.model.db.Author;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Category;
-import org.jbookshelf.model.db.Note;
-import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.api.Bookmark;
 import org.jbookshelf.model.db.api.HasBooks;
 import org.jbookshelf.model.db.api.Named;
+import org.jbookshelf.model.db.api.spec.IAuthor;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.ICategory;
+import org.jbookshelf.model.db.api.spec.INote;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 import org.jbookshelf.model.db.dao.AuthorDAO;
 import org.jbookshelf.model.db.dao.BookDAO;
 import org.jbookshelf.model.db.dao.CategoryDAO;
+import org.jbookshelf.model.db.util.HibernateUtil;
 
 /**
  * performs operations with database todo should be refactored
@@ -36,18 +37,18 @@ public class BookShelf
     private static final AuthorDAO   authorDAO   = new AuthorDAO();
     private static final CategoryDAO categoryDAO = new CategoryDAO();
 
-    public static List<Book> allBooks()
+    public static List<IBook> allBooks()
     {
         return bookDAO.findAll();
     }
 
-    public static Book bookById(
+    public static IBook bookById(
         final Object id )
     {
         return bookDAO.getById( (Long) id );
     }
 
-    public static Book bookByName(
+    public static IBook bookByName(
         final String name )
     {
         return bookDAO.getByName( name );
@@ -58,11 +59,16 @@ public class BookShelf
         return bookDAO.totalCount();
     }
 
+    public static IBook createBook()
+    {
+        return new Book();
+    }
+
     public static Book createBook(
         final String bookName,
         final String authorName,
         final String categoryName,
-        final PhysicalBook physicalUnit )
+        final IPhysicalBook physicalUnit )
     {
         final Book book = new Book();
         book.setName( bookName );
@@ -80,38 +86,48 @@ public class BookShelf
         return book;
     }
 
-    public static Set<Author> getAuthors(
-        final Book book )
+    public static INote createNote()
+    {
+        return new Note();
+    }
+
+    public static IPhysicalBook createPhysicalBook()
+    {
+        return new PhysicalBook();
+    }
+
+    public static Set<IAuthor> getAuthors(
+        final IBook book )
     {
         return bookDAO.getAuthors( book );
     }
 
-    public static Set<Book> getBooks(
+    public static Set<IBook> getBooks(
         final HasBooks hasBooks )
     {
         return hasBooks.getBooks();
     }
 
-    public static Set<Category> getCategories(
-        final Book book )
+    public static Set<ICategory> getCategories(
+        final IBook book )
     {
         return bookDAO.getCategories( book );
     }
 
-    public static Set<Category> getChildren(
-        final Category category )
+    public static Set<ICategory> getChildren(
+        final ICategory category )
     {
         return category.getChildren();
     }
 
-    public static Set<Note> getNotes(
-        final Book book )
+    public static Set<INote> getNotes(
+        final IBook book )
     {
         return bookDAO.getNotes( book );
     }
 
     @SuppressWarnings( "unchecked" )
-    public static List<Note> getNotesByPage(
+    public static List<INote> getNotesByPage(
         final Bookmark bookmark )
     {
         final Session session = HibernateUtil.getSession();
@@ -136,7 +152,7 @@ public class BookShelf
     }
 
     @SuppressWarnings( "unchecked" )
-    public static List<Note> getNotesByPosition(
+    public static List<INote> getNotesByPosition(
         final Bookmark bookmark )
     {
         final Session session = HibernateUtil.getSession();
@@ -164,9 +180,9 @@ public class BookShelf
         }
     }
 
-    public static Category getOrAddCategory(
+    public static ICategory getOrAddCategory(
         final String name,
-        final Category parent )
+        final ICategory parent )
     {
         final Session session = HibernateUtil.getSession();
         try
@@ -177,10 +193,10 @@ public class BookShelf
             final List list = criteria.list();
             if ( list.size() == 1 )
             {
-                return (Category) list.get( 0 );
+                return (ICategory) list.get( 0 );
             }
 
-            final Category category = new Category();
+            final ICategory category = new Category();
             category.setName( name );
 
             session.beginTransaction();
@@ -224,10 +240,10 @@ public class BookShelf
             session.persist( unique );
             session.getTransaction().commit();
 
-            if ( unique instanceof Category && !Category.ROOT.equals( unique.getName() ) )
+            if ( unique instanceof ICategory && !ICategory.ROOT.equals( unique.getName() ) )
             {
-                final Category category = (Category) unique;
-                final Category rootCategory = rootCategory();
+                final ICategory category = (ICategory) unique;
+                final ICategory rootCategory = rootCategory();
                 setParent( rootCategory, category );
             }
 
@@ -269,12 +285,12 @@ public class BookShelf
     }
 
     public static void mergeBook(
-        final Book book,
+        final IBook book,
         final Session session )
     {
         session.beginTransaction();
 
-        for ( final Author author : book.getAuthors() )
+        for ( final IAuthor author : book.getAuthors() )
         {
             if ( !session.contains( author ) )
             {
@@ -283,7 +299,7 @@ public class BookShelf
             author.getBooks().add( book );
         }
 
-        for ( final Category category : book.getCategories() )
+        for ( final ICategory category : book.getCategories() )
         {
             if ( !session.contains( category ) )
             {
@@ -304,7 +320,7 @@ public class BookShelf
     }
 
     public static void mergeNote(
-        final Note note )
+        final INote note )
     {
         final Session session = HibernateUtil.getSession();
         try
@@ -315,8 +331,8 @@ public class BookShelf
 
             session.saveOrUpdate( note );
 
-            final Book book = note.getBook();
-            final Note lastRead = book.getLastRead();
+            final IBook book = note.getBook();
+            final INote lastRead = book.getLastRead();
 
             session.load( book, book.getId() );
 
@@ -339,8 +355,8 @@ public class BookShelf
     }
 
     public static void mergeRelatedBooks(
-        final Book book,
-        final List<Book> relatedBooks )
+        final IBook book,
+        final List<IBook> relatedBooks )
     {
         final Session session = HibernateUtil.getSession();
         try
@@ -366,9 +382,9 @@ public class BookShelf
     }
 
     public static void moveBook(
-        final Book book,
-        final Category oldCategory,
-        final Category newCategory )
+        final IBook book,
+        final ICategory oldCategory,
+        final ICategory newCategory )
     {
         final Session session = HibernateUtil.getSession();
         try
@@ -396,19 +412,19 @@ public class BookShelf
     }
 
     public static void persistBook(
-        final Book book )
+        final IBook book )
     {
         final Session session = HibernateUtil.getSession();
         try
         {
             session.beginTransaction();
-            for ( final Author author : book.getAuthors() )
+            for ( final IAuthor author : book.getAuthors() )
             {
                 session.load( author, author.getId() );
                 author.getBooks().add( book );
             }
 
-            for ( final Category category : book.getCategories() )
+            for ( final ICategory category : book.getCategories() )
             {
                 session.load( category, category.getId() );
                 category.getBooks().add( book );
@@ -416,7 +432,7 @@ public class BookShelf
 
             session.persist( book );
             session.persist( book.getPhysicalBook() );
-            final Note lastRead = book.getLastRead();
+            final INote lastRead = book.getLastRead();
             if ( lastRead != null )
             {
                 lastRead.timestamp();
@@ -441,9 +457,9 @@ public class BookShelf
     {
         for ( final Named unique : selectedUniques )
         {
-            if ( unique instanceof Book )
+            if ( unique instanceof IBook )
             {
-                removeBook( (Book) unique );
+                removeBook( (IBook) unique );
             }
             else if ( unique instanceof Author )
             {
@@ -451,7 +467,7 @@ public class BookShelf
             }
             else
             {
-                removeCategory( (Category) unique );
+                removeCategory( (ICategory) unique );
             }
         }
     }
@@ -465,7 +481,7 @@ public class BookShelf
             session.beginTransaction();
             session.load( note, note.getId() );
 
-            final Book book = note.getBook();
+            final IBook book = note.getBook();
             book.getNotes().remove( note );
             session.merge( book );
 
@@ -506,22 +522,22 @@ public class BookShelf
         }
     }
 
-    public static Category rootCategory()
+    public static ICategory rootCategory()
     { // todo cache?
         // todo name confilct is possible 
-        return getOrAddUnique( Category.class, Category.ROOT );
+        return getOrAddUnique( ICategory.class, ICategory.ROOT );
     }
 
     public static void setParent(
-        final Category parentCategory,
-        final Category childCategory )
+        final ICategory parentCategory,
+        final ICategory childCategory )
     {
         log.debug( "addChild" );
         final Session session = HibernateUtil.getSession();
         try
         {
             session.load( childCategory, childCategory.getId() );
-            final Category oldParent = childCategory.getParent();
+            final ICategory oldParent = childCategory.getParent();
             childCategory.setParent( parentCategory );
 
             if ( oldParent != null )
@@ -550,7 +566,7 @@ public class BookShelf
     }
 
     public static void updatePhysical(
-        final PhysicalBook physical )
+        final IPhysicalBook physical )
     {
         final Session session = HibernateUtil.getSession();
         try
@@ -577,13 +593,13 @@ public class BookShelf
     }
 
     private static void removeBook(
-        final Book unique )
+        final IBook unique )
     {
         bookDAO.makeTransient( unique );
     }
 
     private static void removeCategory(
-        final Category category )
+        final ICategory category )
     {
         categoryDAO.makeTransient( category );
     }

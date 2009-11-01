@@ -17,8 +17,8 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Note;
 import org.jbookshelf.model.db.api.Bookmark;
+import org.jbookshelf.model.db.api.spec.INote;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
@@ -76,10 +76,10 @@ public class PDFRenderer
         public void actionPerformed(
             final ActionEvent e )
         {
-            Single.instance( ProgressBar.class ).invoke( new SafeWorker<Note, Object>()
+            Single.instance( ProgressBar.class ).invoke( new SafeWorker<INote, Object>()
             {
                 @Override
-                protected Note doInBackground()
+                protected INote doInBackground()
                 {
                     final String text = currentPageToString();
                     return createNote( text );

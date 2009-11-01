@@ -8,8 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.border.TitledBorder;
 
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.logic.Parameters;
@@ -19,10 +19,8 @@ import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.xnap.commons.gui.DefaultDialog;
 import org.xnap.commons.i18n.I18n;
 
-import com.sun.istack.internal.Nullable;
-
 /**
- * a dialog to create new {@link Book}s
+ * a dialog to create new {@link IBook}s
  * 
  * @author eav 2009
  */
@@ -36,8 +34,7 @@ public class BookAdditionDialog
     /**
      * created book
      */
-    @Nullable
-    private Book            result;
+    private IBook           result;
 
     public BookAdditionDialog()
     {
@@ -69,7 +66,7 @@ public class BookAdditionDialog
         final Parameters parameters = bookPanel.extractParameters();
         if ( parameters != null )
         {
-            final Book book = BookPanel.changeBook( new Book(), parameters );
+            final IBook book = BookPanel.changeBook( BookShelf.createBook(), parameters );
             if ( getParent() instanceof FileImportDialog )
             { // let the dialog deal with result
                 result = book;
@@ -85,8 +82,7 @@ public class BookAdditionDialog
         return false;
     }
 
-    @Nullable
-    public Book getResult()
+    public IBook getResult()
     {
         return this.result;
     }

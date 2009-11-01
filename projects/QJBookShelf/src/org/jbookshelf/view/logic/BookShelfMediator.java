@@ -8,10 +8,10 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.bushe.swing.event.EventBus;
-import org.jbookshelf.model.db.Author;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Category;
 import org.jbookshelf.model.db.api.Named;
+import org.jbookshelf.model.db.api.spec.IAuthor;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.ICategory;
 
 /**
  * manages the selection of bookshelf objects todo simplify
@@ -28,20 +28,20 @@ public class BookShelfMediator
         String UNIQUES_SELECTED    = "UNIQUES_SELECTED";
     }
 
-    private Set<Named>         selectedUniques    = new HashSet<Named>();
-    private List<Book>          selectedBooks      = new ArrayList<Book>();
-    private List<Author>        selectedAuthors    = new ArrayList<Author>();
-    private List<Category>      selectedCategories = new ArrayList<Category>();
+    private Set<Named>          selectedUniques    = new HashSet<Named>();
+    private List<IBook>         selectedBooks      = new ArrayList<IBook>();
+    private List<IAuthor>       selectedAuthors    = new ArrayList<IAuthor>();
+    private List<ICategory>     selectedCategories = new ArrayList<ICategory>();
 
     @SuppressWarnings( "unused" )
     private static final Logger log                = Logger.getLogger( BookShelfMediator.class );
 
     public void authorsSelected(
-        final List<Author> list )
+        final List<IAuthor> list )
     {
-        selectedBooks = new ArrayList<Book>();
+        selectedBooks = new ArrayList<IBook>();
         selectedAuthors = list;
-        selectedCategories = new ArrayList<Category>();
+        selectedCategories = new ArrayList<ICategory>();
 
         selectedUniques = new HashSet<Named>();
         selectedUniques.addAll( list );
@@ -50,11 +50,11 @@ public class BookShelfMediator
     }
 
     public void booksSelected(
-        final List<Book> list )
+        final List<IBook> list )
     {
         selectedBooks = list;
-        selectedAuthors = new ArrayList<Author>();
-        selectedCategories = new ArrayList<Category>();
+        selectedAuthors = new ArrayList<IAuthor>();
+        selectedCategories = new ArrayList<ICategory>();
 
         selectedUniques = new HashSet<Named>();
         selectedUniques.addAll( list );
@@ -63,10 +63,10 @@ public class BookShelfMediator
     }
 
     public void categoriesSelected(
-        final List<Category> list )
+        final List<ICategory> list )
     {
-        selectedBooks = new ArrayList<Book>();
-        selectedAuthors = new ArrayList<Author>();
+        selectedBooks = new ArrayList<IBook>();
+        selectedAuthors = new ArrayList<IAuthor>();
         selectedCategories = list;
 
         selectedUniques = new HashSet<Named>();
@@ -75,17 +75,17 @@ public class BookShelfMediator
         fireSelectionChanged();
     }
 
-    public List<Author> getSelectedAuthors()
+    public List<IAuthor> getSelectedAuthors()
     {
         return this.selectedAuthors;
     }
 
-    public List<Book> getSelectedBooks()
+    public List<IBook> getSelectedBooks()
     {
         return selectedBooks;
     }
 
-    public List<Category> getSelectedCategories()
+    public List<ICategory> getSelectedCategories()
     {
         return this.selectedCategories;
     }
@@ -97,9 +97,9 @@ public class BookShelfMediator
 
     public void nothingSelected()
     {
-        selectedBooks = new ArrayList<Book>();
-        selectedAuthors = new ArrayList<Author>();
-        selectedCategories = new ArrayList<Category>();
+        selectedBooks = new ArrayList<IBook>();
+        selectedAuthors = new ArrayList<IAuthor>();
+        selectedCategories = new ArrayList<ICategory>();
         selectedUniques = new HashSet<Named>();
         fireSelectionChanged();
     }
@@ -107,26 +107,26 @@ public class BookShelfMediator
     public void uniquesSelected(
         final Collection<Named> list )
     {
-        selectedBooks = new ArrayList<Book>();
-        selectedAuthors = new ArrayList<Author>();
-        selectedCategories = new ArrayList<Category>();
+        selectedBooks = new ArrayList<IBook>();
+        selectedAuthors = new ArrayList<IAuthor>();
+        selectedCategories = new ArrayList<ICategory>();
 
         selectedUniques = new HashSet<Named>();
         selectedUniques.addAll( list );
 
         for ( final Named unique : list )
         {
-            if ( unique instanceof Author )
+            if ( unique instanceof IAuthor )
             {
-                selectedAuthors.add( (Author) unique );
+                selectedAuthors.add( (IAuthor) unique );
             }
-            else if ( unique instanceof Book )
+            else if ( unique instanceof IBook )
             {
-                selectedBooks.add( (Book) unique );
+                selectedBooks.add( (IBook) unique );
             }
             else
             {
-                selectedCategories.add( (Category) unique );
+                selectedCategories.add( (ICategory) unique );
             }
         }
 

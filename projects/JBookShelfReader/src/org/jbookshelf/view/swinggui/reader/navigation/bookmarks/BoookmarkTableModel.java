@@ -11,17 +11,17 @@ import javax.swing.table.DefaultTableModel;
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventSubscriber;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.Bookmark;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.INote;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 
 /**
- * contains all {@link Bookmark}s for a displayed {@link Book}
+ * contains all {@link Bookmark}s for a displayed {@link IBook}
  * 
  * @author eav 2009
  */
@@ -89,16 +89,16 @@ public class BoookmarkTableModel
      * 
      * @param note changed note
      */
-    @EventSubscriber( eventClass = Note.class )
+    @EventSubscriber( eventClass = INote.class )
     public void reloadNotes(
-        @SuppressWarnings( "unused" ) final Note note )
+        @SuppressWarnings( "unused" ) final INote note )
     {
         Single.instance( ProgressBar.class ).invoke( new SafeWorker<Object, Object>()
         {
             @Override
             protected Object doInBackground()
             {
-                final Book book = Single.instance( ReaderWindow.class ).getBook();
+                final IBook book = Single.instance( ReaderWindow.class ).getBook();
                 bookmarks.clear();
                 bookmarks.addAll( BookShelf.getNotes( book ) );
                 return null;

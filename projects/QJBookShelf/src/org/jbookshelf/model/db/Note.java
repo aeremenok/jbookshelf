@@ -16,16 +16,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.jbookshelf.model.db.api.Bookmark;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.INote;
 
 /**
  * @author eav
  */
 @Entity
-public class Note
+class Note
     implements
-    Bookmark,
-    Serializable
+    INote
 {
     @Id
     @GeneratedValue
@@ -42,7 +42,7 @@ public class Note
     private String  citation;
 
     @Column( nullable = false )
-    private String  title;
+    public String   title;
 
     @Column
     private Float   position = 0f;
@@ -161,7 +161,7 @@ public class Note
         return true;
     }
 
-    public Book getBook()
+    public IBook getBook()
     {
         return this.book;
     }
@@ -236,9 +236,9 @@ public class Note
     }
 
     public void setBook(
-        final Book book )
+        final IBook book )
     {
-        this.book = book;
+        this.book = (Book) book;
     }
 
     public void setCitation(
