@@ -18,12 +18,13 @@ import org.junit.Test;
  * @param <U>
  * @param <D>
  */
-public abstract class UniqueDAOTests<U extends Named, D extends NamedDAO<U>>
+public abstract class NamedDAOTests<U extends Named, D extends NamedDAO<U>>
     extends CommonDAOTests<U, D>
 {
-    private static final Logger log = Logger.getLogger( UniqueDAOTests.class );
+    @SuppressWarnings( "unused" )
+    private static final Logger log = Logger.getLogger( NamedDAOTests.class );
 
-    public UniqueDAOTests(
+    public NamedDAOTests(
         final D dao )
     {
         super( dao );
@@ -42,18 +43,9 @@ public abstract class UniqueDAOTests<U extends Named, D extends NamedDAO<U>>
     @Override
     public U randomIdentifiable()
     {
-        try
-        {
-            final Class<U> entityClass = dao.getEntityClass();
-            final U u = entityClass.newInstance();
-            u.setName( entityClass.getSimpleName() + System.currentTimeMillis() );
-            return u;
-        }
-        catch ( final Exception e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
+        final U u = dao.create();
+        u.setName( u.getClass().getSimpleName() + System.currentTimeMillis() );
+        return u;
     }
 
 }

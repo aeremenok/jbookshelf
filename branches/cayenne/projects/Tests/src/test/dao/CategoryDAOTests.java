@@ -11,7 +11,7 @@ import org.jbookshelf.model.db.api.spec.dao.ICategoryDAO;
  * @author eav 2009
  */
 public class CategoryDAOTests
-    extends UniqueDAOTests<ICategory, ICategoryDAO>
+    extends NamedDAOTests<ICategory, ICategoryDAO>
 {
     @SuppressWarnings( "unused" )
     private static final Logger log = Logger.getLogger( CategoryDAOTests.class );

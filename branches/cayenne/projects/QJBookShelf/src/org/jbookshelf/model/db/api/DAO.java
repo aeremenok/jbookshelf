@@ -21,7 +21,7 @@ public interface DAO<T extends Identifiable>
     T getById(
         Serializable id );
 
-    Class<T> getEntityClass();
+    Class<? extends T> getEntityClass();
 
     T makePersistent(
         T entity );

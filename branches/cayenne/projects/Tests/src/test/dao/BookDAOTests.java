@@ -24,7 +24,7 @@ import org.jbookshelf.model.db.api.spec.dao.IBookDAO;
  * @author eav 2009
  */
 public class BookDAOTests
-    extends UniqueDAOTests<IBook, IBookDAO>
+    extends NamedDAOTests<IBook, IBookDAO>
 {
     @SuppressWarnings( "unused" )
     private static final Logger log = Logger.getLogger( BookDAOTests.class );
