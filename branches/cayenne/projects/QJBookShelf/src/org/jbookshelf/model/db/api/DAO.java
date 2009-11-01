@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface DAO<T extends Identifiable>
 {
+    T create();
+
     List<T> findAll();
 
     T getById(

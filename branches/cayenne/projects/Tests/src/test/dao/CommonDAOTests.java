@@ -11,8 +11,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jbookshelf.model.db.api.DAO;
 import org.jbookshelf.model.db.api.Identifiable;
-import org.jbookshelf.model.db.dao.AbstractDAO;
 import org.junit.Test;
 
 /**
@@ -20,7 +20,7 @@ import org.junit.Test;
  * @param <I>
  * @param <D>
  */
-public abstract class CommonDAOTests<I extends Identifiable, D extends AbstractDAO<I>>
+public abstract class CommonDAOTests<I extends Identifiable, D extends DAO<I>>
 {
     protected final D dao;
 
