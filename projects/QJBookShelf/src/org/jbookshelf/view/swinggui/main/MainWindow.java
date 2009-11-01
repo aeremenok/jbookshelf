@@ -27,7 +27,6 @@ import org.apache.log4j.PropertyConfigurator;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.util.DBUtil;
-import org.jbookshelf.model.db.util.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.additional.AdditionalPanel;
@@ -69,7 +68,6 @@ public class MainWindow
         log = Logger.getLogger( MainWindow.class );
         SplashScreenManager.setProgress( 20 );
 
-        HibernateUtil.main( args );
         final String jbsDir = Single.instance( Settings.class ).JBS_DIR.getValue();
         Single.instance( DBUtil.class ).startup( jbsDir );
         SplashScreenManager.setProgress( 75 );

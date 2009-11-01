@@ -5,8 +5,6 @@ package org.jbookshelf.model.db.api.spec;
 
 import java.util.Set;
 
-import javax.persistence.Transient;
-
 import org.jbookshelf.model.db.api.HasBooks;
 
 /**
@@ -28,7 +26,6 @@ public interface IBook
 
     Set<IBook> getRelatedBooks();
 
-    @Transient
     boolean isRead();
 
     void setLastRead(

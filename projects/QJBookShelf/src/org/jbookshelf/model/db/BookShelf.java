@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 import org.jbookshelf.model.db.api.Bookmark;
 import org.jbookshelf.model.db.api.DAO;
 import org.jbookshelf.model.db.api.HasBooks;
@@ -24,6 +23,7 @@ import org.jbookshelf.model.db.api.spec.dao.IBookDAO;
 import org.jbookshelf.model.db.api.spec.dao.ICategoryDAO;
 import org.jbookshelf.model.db.api.spec.dao.INoteDAO;
 import org.jbookshelf.model.db.api.spec.dao.IPhusicalBookDAO;
+import org.jbookshelf.view.logic.Parameters;
 
 /**
  * performs operations with database todo should be refactored
@@ -304,8 +304,7 @@ public class BookShelf
     }
 
     public static void mergeBook(
-        final IBook book,
-        final Session session )
+        final IBook book )
     {
         bookDAO.update( book );
         //        session.beginTransaction();
@@ -474,6 +473,14 @@ public class BookShelf
         //        {
         //            session.close();
         //        }
+    }
+
+    @SuppressWarnings( "unchecked" )
+    public static <T extends Identifiable> List<T> query(
+        final Class<T> class1,
+        final Parameters p )
+    {
+        return getDAO( class1 ).query( p );
     }
 
     @SuppressWarnings( "unchecked" )

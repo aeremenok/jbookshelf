@@ -7,13 +7,9 @@ import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.border.TitledBorder;
 
-import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.spec.IBook;
-import org.jbookshelf.model.db.util.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.logic.Parameters;
@@ -32,10 +28,8 @@ public class BookEditDialog
     implements
     Translatable
 {
-    private final BookPanel     bookPanel = new BookPanel();
-    private final IBook         book;
-
-    private static final Logger log       = Logger.getLogger( BookEditDialog.class );
+    private final BookPanel bookPanel = new BookPanel();
+    private final IBook     book;
 
     public BookEditDialog(
         final IBook book )
@@ -66,24 +60,10 @@ public class BookEditDialog
             }
             else
             { // general addition, merge a book
-                final Session session = HibernateUtil.getSession();
-                try
-                {
-                    session.load( book, book.getId() );
-                    BookPanel.changeBook( book, parameters );
-                    BookShelf.mergeBook( book, session );
-                    // todo if BookView is active update only one row 
-                    Single.instance( CollectionPanel.class ).updateActiveView();
-                }
-                catch ( final HibernateException e )
-                {
-                    log.error( e, e );
-                    throw new Error( e );
-                }
-                finally
-                {
-                    session.close();
-                }
+                BookPanel.changeBook( book, parameters );
+                BookShelf.mergeBook( book );
+                // todo if BookView is active update only one row 
+                Single.instance( CollectionPanel.class ).updateActiveView();
             }
             return true;
         }

@@ -5,8 +5,6 @@ package org.jbookshelf.model.db.api.spec;
 
 import java.io.File;
 
-import javax.persistence.Transient;
-
 import org.jbookshelf.model.db.api.Identifiable;
 
 /**
@@ -23,12 +21,10 @@ public interface IPhysicalBook
 
     String getCharsetName();
 
-    @Transient
     File getFile();
 
     String getFileName();
 
-    @Transient
     File getUnpackedFile();
 
     String getUnpackedFileName();
@@ -46,14 +42,12 @@ public interface IPhysicalBook
      * 
      * @param file a file to relativize
      */
-    @Transient
     void setFile(
         final File file );
 
     void setFileName(
         final String fileName );
 
-    @Transient
     void setUnpackedFile(
         final File unpackedFile );
 

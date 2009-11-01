@@ -20,15 +20,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.Named;
 import org.jbookshelf.model.db.api.spec.IAuthor;
 import org.jbookshelf.model.db.api.spec.IBook;
-import org.jbookshelf.model.db.util.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
@@ -77,8 +73,6 @@ public class AuthorView
     private final DefaultTreeModel       model = new DefaultTreeModel( root );
     private final JXTree                 tree  = new JXTree( model );
 
-    private static final Logger          log   = Logger.getLogger( AuthorView.class );
-
     public AuthorView()
     {
         super();
@@ -104,7 +98,6 @@ public class AuthorView
         menu.add( actions.renameAction );
     }
 
-    @SuppressWarnings( "unchecked" )
     @Override
     public void search(
         final Parameters p )
@@ -115,27 +108,14 @@ public class AuthorView
             @Override
             protected List<IAuthor> doInBackground()
             {
-                final Session session = HibernateUtil.getSession();
-                try
-                {
-                    final List<IAuthor> list = session.createQuery( buildQuery( p ) ).list();
+                final List<IAuthor> list = BookShelf.query( IAuthor.class, p );
 
-                    model.reload( root );
-                    for ( final IAuthor author : list )
-                    {
-                        publish( new AuthorNode( author ) );
-                    }
-                    return list;
-                }
-                catch ( final HibernateException e )
+                model.reload( root );
+                for ( final IAuthor author : list )
                 {
-                    log.error( e, e );
-                    throw new Error( e );
+                    publish( new AuthorNode( author ) );
                 }
-                finally
-                {
-                    session.close();
-                }
+                return list;
             }
 
             @Override
