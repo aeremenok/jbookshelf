@@ -21,15 +21,11 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import org.apache.log4j.Category;
-import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.Named;
 import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.model.db.api.spec.ICategory;
-import org.jbookshelf.model.db.util.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
@@ -104,7 +100,6 @@ public class CategoryView
                                                       }
                                                   }
                                               };
-    private static final Logger    log        = Logger.getLogger( CategoryView.class );
 
     public CategoryView()
     {
@@ -131,10 +126,6 @@ public class CategoryView
         menu.add( actions.renameAction );
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.widgets.panel.CollectionTab#search(org.jbookshelf.view.swinggui.widgets.panel.SearchParameters)
-     */
-    @SuppressWarnings( "unchecked" )
     @Override
     public void search(
         final Parameters p )
@@ -145,32 +136,19 @@ public class CategoryView
             @Override
             protected List<ICategory> doInBackground()
             {
-                final Session session = HibernateUtil.getSession();
-                try
-                {
-                    final List<ICategory> list = session.createQuery( buildQuery( p ) ).list();
+                final List<ICategory> list = BookShelf.query( ICategory.class, p );
 
-                    model.reload( root );
-                    for ( final ICategory category : list )
+                model.reload( root );
+                for ( final ICategory category : list )
+                {
+                    final ICategory rootCategory = BookShelf.rootCategory();
+                    if ( !rootCategory.equals( category ) && rootCategory.equals( category.getParent() ) )
                     {
-                        final ICategory rootCategory = BookShelf.rootCategory();
-                        if ( !rootCategory.equals( category ) && rootCategory.equals( category.getParent() ) )
-                        {
-                            publish( new CategoryNode( category ) );
-                        }
+                        publish( new CategoryNode( category ) );
                     }
+                }
 
-                    return list;
-                }
-                catch ( final HibernateException e )
-                {
-                    log.error( e, e );
-                    throw new Error( e );
-                }
-                finally
-                {
-                    session.close();
-                }
+                return list;
             }
 
             @Override
