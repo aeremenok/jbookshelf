@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.spec.IAuthor;
 import org.jbookshelf.model.db.api.spec.IBook;
@@ -16,15 +15,13 @@ public class UseDirsStrategy
     implements
     FileImportStrategy
 {
-    @SuppressWarnings( "unused" )
-    private static final Logger log = Logger.getLogger( UseDirsStrategy.class );
-
     public String[] dirNames(
         final IPhysicalBook physicalBook )
     {
         return physicalBook.getFileName().split( "/" );
     }
 
+    @SuppressWarnings( "unchecked" )
     public IBook importBook(
         final IPhysicalBook physicalBook )
     {

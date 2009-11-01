@@ -83,6 +83,7 @@ public class RelatedBookDialog
         setLocationRelativeTo( null );
     }
 
+    @SuppressWarnings( "unchecked" )
     @Override
     public boolean apply()
     {

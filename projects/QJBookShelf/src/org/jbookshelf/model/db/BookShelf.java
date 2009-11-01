@@ -116,6 +116,7 @@ public class BookShelf
         return bookDAO.getAuthors( book );
     }
 
+    @SuppressWarnings( "unchecked" )
     public static Set<IBook> getBooks(
         final HasBooks hasBooks )
     {
@@ -128,6 +129,7 @@ public class BookShelf
         return bookDAO.getCategories( book );
     }
 
+    @SuppressWarnings( "unchecked" )
     public static Set<ICategory> getChildren(
         final ICategory category )
     {

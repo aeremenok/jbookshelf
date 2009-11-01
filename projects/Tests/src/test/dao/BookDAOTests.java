@@ -52,6 +52,7 @@ public class BookDAOTests
         assertBook( expected, book );
     }
 
+    @SuppressWarnings( "unchecked" )
     @Override
     public void makePersistent()
     {

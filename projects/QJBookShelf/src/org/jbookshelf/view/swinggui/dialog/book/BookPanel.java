@@ -42,6 +42,7 @@ public class BookPanel
     implements
     Translatable
 {
+    @SuppressWarnings( "unchecked" )
     public static IBook changeBook(
         final IBook book,
         final Parameters parameters )

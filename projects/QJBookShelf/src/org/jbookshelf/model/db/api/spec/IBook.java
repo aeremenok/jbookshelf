@@ -9,22 +9,26 @@ import org.jbookshelf.model.db.api.HasBooks;
 
 /**
  * @author eav
+ * @param <B>
+ * @param <A>
+ * @param <C>
+ * @param <N>
  */
-public interface IBook
+public interface IBook<B extends IBook, A extends IAuthor, C extends ICategory, N extends INote>
     extends
     HasBooks
 {
-    public Set<IAuthor> getAuthors();
+    Set<A> getAuthors();
 
-    Set<ICategory> getCategories();
+    Set<C> getCategories();
 
     INote getLastRead();
 
-    Set<INote> getNotes();
+    Set<N> getNotes();
 
     IPhysicalBook getPhysicalBook();
 
-    Set<IBook> getRelatedBooks();
+    Set<B> getRelatedBooks();
 
     boolean isRead();
 
