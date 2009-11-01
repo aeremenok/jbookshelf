@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.api.Named;
-import org.jbookshelf.model.db.dao.NamedDAO;
+import org.jbookshelf.model.db.api.NamedDAO;
 import org.junit.Test;
 
 /**
