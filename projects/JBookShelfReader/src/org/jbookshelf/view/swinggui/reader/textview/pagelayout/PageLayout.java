@@ -8,7 +8,7 @@ import java.awt.Font;
 
 import javax.swing.JPanel;
 
-import org.jbookshelf.model.db.Bookmark;
+import org.jbookshelf.model.db.api.Bookmark;
 
 /**
  * displays pages using specific layout

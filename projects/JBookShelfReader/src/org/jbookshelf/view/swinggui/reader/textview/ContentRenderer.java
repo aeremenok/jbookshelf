@@ -9,8 +9,8 @@ import java.awt.Font;
 import javax.swing.JPanel;
 
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.api.Bookmark;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;

@@ -5,8 +5,6 @@ package org.jbookshelf.controller.importer;
 
 import java.io.File;
 
-import javax.annotation.Nullable;
-
 import org.jbookshelf.model.db.PhysicalBook;
 
 /**
@@ -18,12 +16,8 @@ public class SingleFileDirImporter
     implements
     PhysicalBookImporter
 {
-    @Nullable
     private File currentFile;
 
-    /* (non-Javadoc)
-     * @see java.io.FileFilter#accept(java.io.File)
-     */
     @Override
     public boolean accept(
         final File pathname )
@@ -47,9 +41,6 @@ public class SingleFileDirImporter
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.controller.importer.PhysicalBookImporter#create(java.io.File)
-     */
     @Override
     public PhysicalBook create(
         final File file )
@@ -59,5 +50,4 @@ public class SingleFileDirImporter
         book.setFile( currentFile );
         return book;
     }
-
 }

@@ -1,7 +1,8 @@
 /**
  * 
  */
-package org.jbookshelf.model.db;
+package org.jbookshelf.model.db.api;
+
 
 /**
  * @author eav

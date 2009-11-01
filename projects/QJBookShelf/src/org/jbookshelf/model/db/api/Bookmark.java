@@ -1,10 +1,9 @@
 /**
  * 
  */
-package org.jbookshelf.model.db;
+package org.jbookshelf.model.db.api;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
+import org.jbookshelf.model.db.Book;
 
 /**
  * @author eav 2009
@@ -27,16 +26,16 @@ public interface Bookmark
     Float getRelativePageSize();
 
     void setBook(
-        @Nonnull final Book book );
+        Book book );
 
     void setPage(
-        @Nonnull @Nonnegative final Integer page );
+        final Integer page );
 
     void setPageCount(
         final Integer pageCount );
 
     void setPosition(
-        @Nonnull @Nonnegative final Float position );
+        final Float position );
 
     void setRelativePageSize(
         Float pageSize );

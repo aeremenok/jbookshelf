@@ -6,10 +6,9 @@ package org.jbookshelf.controller.importer;
 import java.io.File;
 import java.io.FileFilter;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.jbookshelf.model.db.PhysicalBook;
+
+import com.sun.istack.internal.Nullable;
 
 /**
  * imports directories with index.html
@@ -54,12 +53,9 @@ public class IndexFileImporter
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.controller.importer.PhysicalBookImporter#create(java.io.File)
-     */
     @Override
     public PhysicalBook create(
-        @Nonnull final File file )
+        final File file )
     {
         final PhysicalBook book = new PhysicalBook();
         assert currentIndexFile != null;

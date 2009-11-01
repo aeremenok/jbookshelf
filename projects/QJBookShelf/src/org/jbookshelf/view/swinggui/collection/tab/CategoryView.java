@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 import javax.swing.JScrollPane;
 import javax.swing.event.TreeExpansionEvent;
@@ -27,7 +26,7 @@ import org.hibernate.Session;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Category;
-import org.jbookshelf.model.db.Named;
+import org.jbookshelf.model.db.api.Named;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.model.db.util.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
@@ -64,7 +63,7 @@ public class CategoryView
         }
 
         private CategoryNode(
-            @Nonnull final Category category )
+            final Category category )
         {
             super( category.equals( BookShelf.rootCategory() )
                 ? I18N.tr( "All categories" ) : category.getName() );

@@ -6,11 +6,10 @@ package org.jbookshelf.view.swinggui.multiedit;
 import java.util.Collection;
 import java.util.List;
 
-import javax.annotation.Nonnull;
 import javax.swing.DefaultComboBoxModel;
 
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
-import org.jbookshelf.model.db.Named;
+import org.jbookshelf.model.db.api.Named;
 import org.jbookshelf.model.db.util.LogRunner;
 import org.xnap.commons.gui.completion.CompletionModel;
 
@@ -29,7 +28,7 @@ public class UniqueCompletionModel
     private final ListTableModel<? extends Named> model;
 
     public UniqueCompletionModel(
-        @Nonnull final Class<? extends Named> clazz,
+        final Class<? extends Named> clazz,
         final ListTableModel<? extends Named> model )
     {
         super();

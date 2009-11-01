@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import org.jbookshelf.model.db.api.HasBooks;
+import org.jbookshelf.model.db.api.Named;
 import org.jbookshelf.view.i18n.I18N;
 
 /**
@@ -182,9 +183,9 @@ public class Book
 
     @Override
     public void setId(
-        final Long id )
+        final Serializable id )
     {
-        this.id = id;
+        this.id = (Long) id;
     }
 
     public void setLastRead(
@@ -194,13 +195,13 @@ public class Book
     }
 
     public void setName(
-        @Nonnull final String name )
+        final String name )
     {
         this.name = name;
     }
 
     public void setPhysicalBook(
-        @Nonnull final PhysicalBook physicalBook )
+        final PhysicalBook physicalBook )
     {
         this.physicalBook = physicalBook;
         physicalBook.setBook( this );

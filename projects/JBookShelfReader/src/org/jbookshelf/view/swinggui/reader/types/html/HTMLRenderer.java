@@ -20,7 +20,7 @@ import javax.xml.parsers.DocumentBuilder;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Bookmark;
+import org.jbookshelf.model.db.api.Bookmark;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.navigation.bookmarks.BookmarkChangeListener;
 import org.jbookshelf.view.swinggui.reader.textview.SelectableTextRenderer;

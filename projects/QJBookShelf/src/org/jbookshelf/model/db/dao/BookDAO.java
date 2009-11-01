@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.model.db.dao;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -47,7 +48,7 @@ public class BookDAO
 
     @Override
     public Book getById(
-        final Long id )
+        final Serializable id )
     {
         final Book byId = super.getById( id );
         if ( byId != null )

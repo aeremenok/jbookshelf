@@ -4,10 +4,8 @@
 	<classpathentry exported="true" kind="lib" path="lib/swingx-0.9.7.jar" sourcepath="libsrc/swingx-0.9.7-src.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/swingx-beaninfo-0.9.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xnap-commons-0.9.6.jar" sourcepath="libsrc/xnap-commons-0.9.6-src.zip"/>
-	<classpathentry exported="true" kind="lib" path="lib/annotations.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ejb3-persistence.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate-annotations.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jsr305.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/h2-1.1.113.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/log4j-1.2.15.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-dbutils-1.2.jar"/>

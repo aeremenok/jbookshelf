@@ -17,8 +17,8 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.api.Bookmark;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;

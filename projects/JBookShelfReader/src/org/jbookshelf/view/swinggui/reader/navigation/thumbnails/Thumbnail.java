@@ -12,7 +12,7 @@ import javax.swing.border.Border;
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Bookmark;
+import org.jbookshelf.model.db.api.Bookmark;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
 import org.jdesktop.swingx.border.DropShadowBorder;
 

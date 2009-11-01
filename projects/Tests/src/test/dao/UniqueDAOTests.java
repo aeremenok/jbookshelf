@@ -9,7 +9,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Named;
+import org.jbookshelf.model.db.api.Named;
 import org.jbookshelf.model.db.dao.UniqueDAO;
 import org.junit.Test;
 

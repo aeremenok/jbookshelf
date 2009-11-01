@@ -7,8 +7,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +16,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+
+import org.jbookshelf.model.db.api.HasBooks;
+
+import com.sun.istack.internal.Nullable;
 
 /**
  * @author eav
@@ -150,19 +152,19 @@ public class Category
 
     @Override
     public void setId(
-        final Long id )
+        final Serializable id )
     {
-        this.id = id;
+        this.id = (Long) id;
     }
 
     public void setName(
-        @Nonnull final String name )
+        final String name )
     {
         this.name = name;
     }
 
     public void setParent(
-        @Nullable final Category parent )
+        final Category parent )
     {
         this.parent = parent;
     }

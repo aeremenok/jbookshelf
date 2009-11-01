@@ -8,9 +8,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.Serializable;
 import java.util.List;
 
-import org.jbookshelf.model.db.Identifiable;
+import org.jbookshelf.model.db.api.Identifiable;
 import org.jbookshelf.model.db.dao.AbstractGenericDAO;
 import org.junit.Test;
 
@@ -68,7 +69,7 @@ public abstract class CommonDAOTests<I extends Identifiable, D extends AbstractG
         final List<I> all = dao.findAll();
         final I u = all.get( 0 );
 
-        final Long id = u.getId();
+        final Serializable id = u.getId();
 
         dao.makeTransient( u );
         assertNull( u.getId() );

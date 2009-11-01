@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.model.db;
+package org.jbookshelf.model.db.api;
 
 import java.io.Serializable;
 
@@ -12,8 +12,8 @@ public interface Identifiable
     extends
     Serializable
 {
-    Long getId();
+    Serializable getId();
 
     void setId(
-        Long id );
+        Serializable id );
 }

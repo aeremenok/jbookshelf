@@ -6,10 +6,9 @@ package org.jbookshelf.controller.importer;
 import java.io.File;
 import java.io.FileFilter;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.jbookshelf.model.db.PhysicalBook;
+
+import com.sun.istack.internal.Nullable;
 
 /**
  * imports html-files
@@ -29,9 +28,7 @@ public class HtmlFileImporter
         implements
         FileFilter
     {
-        @Nonnull
         File mainFolder;
-        @Nonnull
         File mainFile;
 
         public boolean accept(
