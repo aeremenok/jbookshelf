@@ -44,8 +44,8 @@ public class AuthorDAO
     {
         final ObjectContext context = context();
         final String text = parameters.get( Keys.SEARCH_TEXT );
-        final EJBQLQuery query = new EJBQLQuery( "select a from author where lower(a.name) like lower(:n%) " );
-        query.setParameter( 0, text );
+        final EJBQLQuery query = new EJBQLQuery( "select a from author a where lower(a.name) like lower(:n%) " );
+        query.setParameter( "n", text );
         return context.performQuery( query );
     }
 }

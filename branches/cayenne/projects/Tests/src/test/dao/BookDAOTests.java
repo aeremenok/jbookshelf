@@ -8,17 +8,16 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.spec.IAuthor;
 import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.model.db.api.spec.ICategory;
 import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 import org.jbookshelf.model.db.api.spec.dao.IBookDAO;
+import org.jbookshelf.model.db.dao.BookDAO;
 
 /**
  * @author eav 2009
@@ -31,7 +30,7 @@ public class BookDAOTests
 
     public BookDAOTests()
     {
-        super( null );
+        super( new BookDAO() );
     }
 
     @Override
@@ -106,16 +105,6 @@ public class BookDAOTests
 
         final IBook byId = dao.getById( id );
         assertNull( byId );
-    }
-
-    @Override
-    public IBook randomIdentifiable()
-    {
-        final IBook book = super.randomIdentifiable();
-        final IPhysicalBook physicalBook = BookShelf.createPhysicalBook();
-        physicalBook.setFile( new File( System.getProperty( "user.home" ) ) );
-        book.setPhysicalBook( physicalBook );
-        return book;
     }
 
     protected void assertBook(
