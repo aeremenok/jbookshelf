@@ -18,18 +18,18 @@ package org.jbookshelf.controller.importer;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jbookshelf.model.db.Author;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Category;
+import org.jbookshelf.model.db.api.spec.IAuthor;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.ICategory;
 
 import com.sun.istack.internal.Nullable;
 
 /**
  * pasres strings, described as wildcards, where<br>
  * <br>
- * %a - name of {@link Author} <br>
- * %b - name of {@link Book} <br>
- * %c - name of {@link Category} <br>
+ * %a - name of {@link IAuthor} <br>
+ * %b - name of {@link IBook} <br>
+ * %c - name of {@link ICategory} <br>
  * todo treat filenames more softly, now any mismatch to wildcard causes an error<br>
  * todo optimize parsing
  * 

@@ -24,10 +24,10 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Author;
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.Named;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.api.spec.IAuthor;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.model.db.util.HibernateUtil;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
@@ -42,7 +42,7 @@ import org.jdesktop.swingx.JXTree;
 import org.xnap.commons.gui.util.PopupListener;
 
 /**
- * displays {@link Author}s in a tree
+ * displays {@link IAuthor}s in a tree
  * 
  * @author eav
  */
@@ -52,16 +52,16 @@ public class AuthorView
     private class AuthorNode
         extends DefaultLazyNode
     {
-        private final Author author;
+        private final IAuthor author;
 
         private AuthorNode(
-            final Author author )
+            final IAuthor author )
         {
             super( author.getName() );
             this.author = author;
         }
 
-        public Author getAuthor()
+        public IAuthor getAuthor()
         {
             return this.author;
         }
@@ -110,18 +110,18 @@ public class AuthorView
         final Parameters p )
     {
         root.removeAllChildren();
-        Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Author>, AuthorNode>()
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<IAuthor>, AuthorNode>()
         {
             @Override
-            protected List<Author> doInBackground()
+            protected List<IAuthor> doInBackground()
             {
                 final Session session = HibernateUtil.getSession();
                 try
                 {
-                    final List<Author> list = session.createQuery( buildQuery( p ) ).list();
+                    final List<IAuthor> list = session.createQuery( buildQuery( p ) ).list();
 
                     model.reload( root );
-                    for ( final Author author : list )
+                    for ( final IAuthor author : list )
                     {
                         publish( new AuthorNode( author ) );
                     }
@@ -214,10 +214,10 @@ public class AuthorView
     {
         if ( !authorNode.isInitialized() )
         { // not loaded yet
-            final Author author = authorNode.getAuthor();
+            final IAuthor author = authorNode.getAuthor();
 
-            final Set<Book> books = BookShelf.getBooks( author );
-            for ( final Book book : books )
+            final Set<IBook> books = BookShelf.getBooks( author );
+            for ( final IBook book : books )
             {
                 model.insertNodeInto( new BookNode( book ), authorNode, 0 );
             }

@@ -3,7 +3,7 @@
  */
 package org.jbookshelf.model.db.api;
 
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 
 /**
  * @author eav 2009
@@ -15,7 +15,7 @@ public interface Bookmark
     String POSITION = "POSITION";
     String PAGE     = "PAGE";
 
-    Book getBook();
+    IBook getBook();
 
     Integer getPage();
 
@@ -26,7 +26,7 @@ public interface Bookmark
     Float getRelativePageSize();
 
     void setBook(
-        Book book );
+        IBook book );
 
     void setPage(
         final Integer page );

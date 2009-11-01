@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.PhysicalBook;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 import org.jbookshelf.view.i18n.I18N;
 
 public class UseMasksStrategy
@@ -18,12 +18,12 @@ public class UseMasksStrategy
 
     private final List<NameParser> parsers = new ArrayList<NameParser>();
 
-    public Book importBook(
-        final PhysicalBook physicalUnit )
+    public IBook importBook(
+        final IPhysicalBook physicalUnit )
     {
         for ( final NameParser parser : parsers )
         {
-            final Book book = bookFromName( parser, physicalUnit );
+            final IBook book = bookFromName( parser, physicalUnit );
             if ( book != null )
             {
                 return book;
@@ -62,9 +62,9 @@ public class UseMasksStrategy
      * @param physicalUnit physical book implementation
      * @return logical book
      */
-    private Book bookFromName(
+    private IBook bookFromName(
         final NameParser parser,
-        final PhysicalBook physicalUnit )
+        final IPhysicalBook physicalUnit )
     {
         try
         {

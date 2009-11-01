@@ -13,8 +13,8 @@ import javax.swing.border.TitledBorder;
 
 import org.bushe.swing.event.EventBus;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.swinggui.main.MainWindow;
@@ -35,37 +35,37 @@ public class RelatedBookDialog
 {
     public static class RelatedBookEvent
     {
-        private final Set<Book> books;
+        private final Set<IBook> books;
 
         public RelatedBookEvent(
-            final Set<Book> books )
+            final Set<IBook> books )
         {
             super();
             this.books = books;
         }
 
-        public Set<Book> getBooks()
+        public Set<IBook> getBooks()
         {
             return this.books;
         }
     }
 
-    private final MultipleField<Book> books = new MultipleUniqueField<Book>( Book.class )
-                                            {
-                                                @Override
-                                                protected Book fromString(
-                                                    final String text )
-                                                {
-                                                    final Book bookByName = BookShelf.bookByName( text );
-                                                    return book.equals( bookByName )
-                                                        ? null : bookByName;
-                                                }
-                                            };
+    private final MultipleField<IBook> books = new MultipleUniqueField<IBook>( IBook.class )
+                                             {
+                                                 @Override
+                                                 protected IBook fromString(
+                                                     final String text )
+                                                 {
+                                                     final IBook bookByName = BookShelf.bookByName( text );
+                                                     return book.equals( bookByName )
+                                                         ? null : bookByName;
+                                                 }
+                                             };
 
-    private final Book                book;
+    private final IBook                book;
 
     public RelatedBookDialog(
-        final Book book )
+        final IBook book )
     {
         super( Single.instance( MainWindow.class ), BUTTON_OKAY | BUTTON_CANCEL );
         this.book = book;

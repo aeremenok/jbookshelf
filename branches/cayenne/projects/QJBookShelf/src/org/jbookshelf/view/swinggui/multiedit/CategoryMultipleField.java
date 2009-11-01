@@ -3,9 +3,10 @@
  */
 package org.jbookshelf.view.swinggui.multiedit;
 
-import org.jbookshelf.model.db.Category;
+import org.apache.log4j.Category;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.Named;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.api.spec.ICategory;
 import org.xnap.commons.gui.completion.CompletionModel;
 
 /**
@@ -14,7 +15,7 @@ import org.xnap.commons.gui.completion.CompletionModel;
  * @author eav 2009
  */
 public class CategoryMultipleField
-    extends MultipleUniqueField<Category>
+    extends MultipleUniqueField<ICategory>
 {
     /**
      * @author eav 2009
@@ -33,7 +34,7 @@ public class CategoryMultipleField
         public void addElement(
             final Object anObject )
         {
-            if ( !Category.ROOT.equals( anObject.toString() ) )
+            if ( !ICategory.ROOT.equals( anObject.toString() ) )
             {
                 super.addElement( anObject );
             }
@@ -42,21 +43,21 @@ public class CategoryMultipleField
 
     public CategoryMultipleField()
     {
-        super( Category.class );
+        super( ICategory.class );
     }
 
     @Override
     protected CompletionModel createCompletionModel(
-        final Class<Category> clazz )
+        final Class<ICategory> clazz )
     { // block completion
         return new CategoryCompletionModel( clazz, model );
     }
 
     @Override
-    protected Category fromString(
+    protected ICategory fromString(
         final String text )
     { // block addition
-        final Category category = BookShelf.getOrAddUnique( Category.class, text );
+        final ICategory category = BookShelf.getOrAddUnique( ICategory.class, text );
         return BookShelf.rootCategory().equals( category )
             ? null : category;
     }

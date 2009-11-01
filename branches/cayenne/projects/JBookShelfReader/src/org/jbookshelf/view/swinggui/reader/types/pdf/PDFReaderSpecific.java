@@ -3,7 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.reader.types.pdf;
 
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 
@@ -30,7 +30,7 @@ public class PDFReaderSpecific
 
     @Override
     public BookContent<PDFPage> createBookContent(
-        final Book book )
+        final IBook book )
     {
         return new PDFBookContent( book );
     }

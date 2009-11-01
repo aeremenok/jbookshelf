@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.model.db.dao;
+package org.jbookshelf.model.db.api;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,14 +9,15 @@ import java.util.List;
 /**
  * @author eav 2009
  * @param <T>
- * @param <ID>
  */
-public interface GenericDAO<T extends Serializable, ID extends Serializable>
+public interface DAO<T extends Identifiable>
 {
     List<T> findAll();
 
     T getById(
-        ID id );
+        Serializable id );
+
+    Class<T> getEntityClass();
 
     T makePersistent(
         T entity );

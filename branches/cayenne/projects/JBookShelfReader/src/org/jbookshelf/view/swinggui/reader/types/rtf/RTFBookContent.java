@@ -10,7 +10,7 @@ import javax.swing.text.rtf.RTFEditorKit;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 
 /**
@@ -24,7 +24,7 @@ public class RTFBookContent
     private final StyledDocument document = new DefaultStyledDocument();
 
     public RTFBookContent(
-        final Book book )
+        final IBook book )
     {
         super( book );
 

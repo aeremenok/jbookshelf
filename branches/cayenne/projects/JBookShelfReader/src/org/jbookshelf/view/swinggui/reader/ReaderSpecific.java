@@ -6,7 +6,7 @@ package org.jbookshelf.view.swinggui.reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 
 /**
  * knows which features are supported and (re)creates a specific {@link BookContent}
@@ -31,7 +31,7 @@ public abstract class ReaderSpecific<PageType>
     protected final List<String> supportedFeatures = new ArrayList<String>();
 
     public abstract BookContent<PageType> createBookContent(
-        Book book );
+        IBook book );
 
     public List<String> getSupportedFeatures()
     {

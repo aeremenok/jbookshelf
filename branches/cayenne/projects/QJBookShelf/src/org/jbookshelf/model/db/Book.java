@@ -19,19 +19,20 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import org.jbookshelf.model.db.api.HasBooks;
-import org.jbookshelf.model.db.api.Named;
+import org.jbookshelf.model.db.api.spec.IAuthor;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.ICategory;
+import org.jbookshelf.model.db.api.spec.INote;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 import org.jbookshelf.view.i18n.I18N;
 
 /**
  * @author eav
  */
 @Entity
-public class Book
+class Book
     implements
-    Serializable,
-    Named,
-    HasBooks
+    IBook
 {
     @Id
     @GeneratedValue( strategy = GenerationType.SEQUENCE )
@@ -42,20 +43,20 @@ public class Book
     private String              name;
 
     @OneToMany( mappedBy = "book" )
-    private final Set<Note>     notes        = new HashSet<Note>();
+    private final Set<Note>     notesImpl        = new HashSet<Note>();
 
     @ManyToMany
     @JoinTable( name = "RELATED_BOOKS" )
     @org.hibernate.annotations.ForeignKey( name = "FK_MAIN_BOOK", inverseName = "FK_RELATED_BOOK" )
-    private final Set<Book>     relatedBooks = new HashSet<Book>();
+    private final Set<Book>     relatedBooksImpl = new HashSet<Book>();
 
-    @ManyToMany( mappedBy = "books" )
+    @ManyToMany( mappedBy = "booksImpl" )
     @org.hibernate.annotations.ForeignKey( name = "FK_AUTHOR_BOOK", inverseName = "FK_BOOK_AUTHOR" )
-    private final Set<Author>   authors      = new HashSet<Author>();
+    private final Set<Author>   authorsImpl      = new HashSet<Author>();
 
-    @ManyToMany( mappedBy = "books" )
+    @ManyToMany( mappedBy = "booksImpl" )
     @org.hibernate.annotations.ForeignKey( name = "FK_CATEGORY_BOOK", inverseName = "FK_BOOK_CATEGORY" )
-    private final Set<Category> categories   = new HashSet<Category>();
+    private final Set<Category> categoriesImpl   = new HashSet<Category>();
 
     @OneToOne( mappedBy = "book" )
     private PhysicalBook        physicalBook;
@@ -63,7 +64,7 @@ public class Book
     @OneToOne
     @JoinColumn( name = "lastread_id" )
     @org.hibernate.annotations.ForeignKey( name = "FK_LASTREAD_BOOK" )
-    private Note                lastRead;
+    public Note                 lastRead;
 
     public Book()
     {
@@ -112,21 +113,33 @@ public class Book
         return true;
     }
 
-    public Set<Author> getAuthors()
+    @Transient
+    public Set<IAuthor> getAuthors()
     {
-        return this.authors;
+        return new HashSet<IAuthor>( authorsImpl );
+    }
+
+    public Set<Author> getAuthorsImpl()
+    {
+        return this.authorsImpl;
     }
 
     @Override
     @Transient
-    public Set<Book> getBooks()
+    public Set<IBook> getBooks()
     {
         return getRelatedBooks();
     }
 
-    public Set<Category> getCategories()
+    @Transient
+    public Set<ICategory> getCategories()
     {
-        return this.categories;
+        return new HashSet<ICategory>( this.categoriesImpl );
+    }
+
+    public Set<Category> getCategoriesImpl()
+    {
+        return this.categoriesImpl;
     }
 
     public Long getId()
@@ -144,19 +157,31 @@ public class Book
         return this.name;
     }
 
-    public Set<Note> getNotes()
+    @Transient
+    public Set<INote> getNotes()
     {
-        return this.notes;
+        return new HashSet<INote>( notesImpl );
     }
 
-    public PhysicalBook getPhysicalBook()
+    public Set<Note> getNotesImpl()
+    {
+        return this.notesImpl;
+    }
+
+    public IPhysicalBook getPhysicalBook()
     {
         return this.physicalBook;
     }
 
-    public Set<Book> getRelatedBooks()
+    @Transient
+    public Set<IBook> getRelatedBooks()
     {
-        return this.relatedBooks;
+        return new HashSet<IBook>( relatedBooksImpl );
+    }
+
+    public Set<Book> getRelatedBooksImpl()
+    {
+        return this.relatedBooksImpl;
     }
 
     @Override
@@ -189,9 +214,9 @@ public class Book
     }
 
     public void setLastRead(
-        final Note lastRead )
+        final INote lastRead )
     {
-        this.lastRead = lastRead;
+        this.lastRead = (Note) lastRead;
     }
 
     public void setName(
@@ -201,9 +226,9 @@ public class Book
     }
 
     public void setPhysicalBook(
-        final PhysicalBook physicalBook )
+        final IPhysicalBook physicalBook )
     {
-        this.physicalBook = physicalBook;
+        this.physicalBook = (PhysicalBook) physicalBook;
         physicalBook.setBook( this );
     }
 

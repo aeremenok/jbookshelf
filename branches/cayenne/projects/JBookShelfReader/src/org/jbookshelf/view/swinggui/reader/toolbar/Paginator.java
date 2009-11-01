@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 
 import org.bushe.swing.event.EventBus;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.Bookmark;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
@@ -203,7 +203,7 @@ public class Paginator
         lastAction.setEnabled( this.currentPage < pageCount - 1 );
 
         // todo use template pattern
-        final Bookmark bookmark = new Note();
+        final Bookmark bookmark = BookShelf.createNote();
         bookmark.setBook( Single.instance( ReaderWindow.class ).getBook() );
         bookmark.setPage( currentPage );
         bookmark.setPageCount( pageCount );

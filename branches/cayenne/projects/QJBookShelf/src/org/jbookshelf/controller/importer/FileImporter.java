@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
 
@@ -87,12 +87,12 @@ public class FileImporter
     }
 
     /**
-     * guess the type of the file and create a {@link Book} implementation
+     * guess the type of the file and create a {@link IBook} implementation
      * 
      * @param file a file to import
      * @return a book implementation
      */
-    public static PhysicalBook createPhysicalBook(
+    public static IPhysicalBook createPhysicalBook(
         final File file )
     {
         for ( final PhysicalBookImporter importer : importers )
@@ -119,10 +119,10 @@ public class FileImporter
     {
         for ( final File file : roots )
         {
-            final PhysicalBook physicalUnit = createPhysicalBook( file );
+            final IPhysicalBook physicalUnit = createPhysicalBook( file );
             if ( physicalUnit != null )
             {
-                final Book book = strategy.importBook( physicalUnit );
+                final IBook book = strategy.importBook( physicalUnit );
                 if ( book != null )
                 {
                     onImportSuccess( book );
@@ -162,7 +162,7 @@ public class FileImporter
      * @param book an imported book
      */
     protected void onImportSuccess(
-        @SuppressWarnings( "unused" ) final Book book )
+        @SuppressWarnings( "unused" ) final IBook book )
     {
     // override if needed
     }

@@ -15,16 +15,16 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 
-import org.jbookshelf.model.db.api.HasBooks;
+import org.jbookshelf.model.db.api.spec.IAuthor;
+import org.jbookshelf.model.db.api.spec.IBook;
 
 /**
  * @author eav
  */
 @Entity
-public class Author
+class Author
     implements
-    Serializable,
-    HasBooks
+    IAuthor
 {
     @Id
     @GeneratedValue( strategy = GenerationType.SEQUENCE )
@@ -36,7 +36,7 @@ public class Author
 
     @ManyToMany
     @OrderBy( "name DESC" )
-    private final Set<Book> books = new HashSet<Book>();
+    private final Set<Book> booksImpl = new HashSet<Book>();
 
     @Override
     public boolean equals(
@@ -80,9 +80,14 @@ public class Author
         return true;
     }
 
-    public Set<Book> getBooks()
+    public Set<IBook> getBooks()
     {
-        return this.books;
+        return new HashSet<IBook>( booksImpl );
+    }
+
+    public Set<Book> getBooksImpl()
+    {
+        return this.booksImpl;
     }
 
     public Long getId()

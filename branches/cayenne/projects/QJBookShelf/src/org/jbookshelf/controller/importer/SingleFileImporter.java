@@ -5,7 +5,8 @@ package org.jbookshelf.controller.importer;
 
 import java.io.File;
 
-import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 
 /**
  * imports single files
@@ -24,10 +25,10 @@ public class SingleFileImporter
     }
 
     @Override
-    public PhysicalBook create(
+    public IPhysicalBook create(
         final File file )
     {
-        final PhysicalBook book = new PhysicalBook();
+        final IPhysicalBook book = BookShelf.createPhysicalBook();
         book.setFile( file );
         return book;
     }

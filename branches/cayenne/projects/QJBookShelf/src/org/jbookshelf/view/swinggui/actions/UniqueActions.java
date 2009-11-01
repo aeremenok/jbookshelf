@@ -14,9 +14,9 @@ import org.bushe.swing.event.EventBus;
 import org.bushe.swing.event.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.Named;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.SafeWorker;
@@ -40,7 +40,7 @@ public class UniqueActions
         public void actionPerformed(
             final ActionEvent e )
         {
-            final Book book = mediator.getSelectedBooks().get( 0 );
+            final IBook book = mediator.getSelectedBooks().get( 0 );
             log.debug( "editing book " + book.getName() + ":" + book.getId() );
             new BookEditDialog( book ).setVisible( true );
         }
@@ -75,7 +75,7 @@ public class UniqueActions
         public void actionPerformed(
             final ActionEvent e )
         {
-            for ( final Book book : mediator.getSelectedBooks() )
+            for ( final IBook book : mediator.getSelectedBooks() )
             {
                 Single.instance( Viewer.class ).open( book );
             }
@@ -93,7 +93,7 @@ public class UniqueActions
         public void actionPerformed(
             final ActionEvent e )
         {
-            for ( final Book book : mediator.getSelectedBooks() )
+            for ( final IBook book : mediator.getSelectedBooks() )
             {
                 URIUtil.openDir( book.getPhysicalBook().getFile().getParentFile() );
             }

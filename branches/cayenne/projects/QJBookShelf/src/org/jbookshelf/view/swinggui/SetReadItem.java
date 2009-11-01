@@ -16,20 +16,20 @@ import javax.swing.event.PopupMenuListener;
 
 import org.bushe.swing.event.EventBus;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 
 /**
- * a menu item to edit {@link Book#getLastRead()} property
+ * a menu item to edit {@link IBook#getLastRead()} property
  * 
  * @author eav 2009
  */
 public class SetReadItem
     extends JCheckBox
 {
-    private List<Book> selectedBooks = new ArrayList<Book>();
+    private List<IBook> selectedBooks = new ArrayList<IBook>();
 
     public SetReadItem(
         final JPopupMenu menu )
@@ -74,10 +74,10 @@ public class SetReadItem
         setEnabled( selectedBooks.size() > 0 );
 
         boolean allRead = true;
-        final Iterator<Book> iterator = selectedBooks.iterator();
+        final Iterator<IBook> iterator = selectedBooks.iterator();
         while ( iterator.hasNext() && allRead )
         {
-            final Book book = iterator.next();
+            final IBook book = iterator.next();
             allRead &= book.isRead();
         }
         setSelected( allRead && isEnabled() );
@@ -90,7 +90,7 @@ public class SetReadItem
             @Override
             public void run()
             {
-                for ( final Book book : selectedBooks )
+                for ( final IBook book : selectedBooks )
                 {
                     book.setRead( isSelected() );
                     BookShelf.mergeNote( book.getLastRead() );

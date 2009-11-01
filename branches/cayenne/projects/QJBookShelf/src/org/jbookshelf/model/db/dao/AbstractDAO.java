@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
+import org.jbookshelf.model.db.api.DAO;
 import org.jbookshelf.model.db.api.Identifiable;
 import org.jbookshelf.model.db.util.LogRunner;
 import org.jbookshelf.model.db.util.TBeanListHandler;
@@ -18,18 +19,18 @@ import org.jbookshelf.model.db.util.TBeanListHandler;
  * @author eav 2009
  * @param <T>
  */
-public abstract class AbstractGenericDAO<T extends Identifiable>
+public abstract class AbstractDAO<T extends Identifiable>
     implements
-    GenericDAO<T, Serializable>
+    DAO<T>
 {
     @SuppressWarnings( "unused" )
-    private static final Logger log    = Logger.getLogger( AbstractGenericDAO.class );
+    private static final Logger log    = Logger.getLogger( AbstractDAO.class );
 
     protected final LogRunner   runner = new LogRunner();
     protected final Class<T>    entityClass;
 
     @SuppressWarnings( "unchecked" )
-    public AbstractGenericDAO()
+    public AbstractDAO()
     {
         super();
         final ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();

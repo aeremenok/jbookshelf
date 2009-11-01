@@ -15,8 +15,8 @@ import javax.swing.event.ListSelectionListener;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.model.db.util.LogRunner;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
@@ -139,10 +139,10 @@ public class BookView
         if ( !e.getValueIsAdjusting() )
         {
             final int[] selectedRows = table.getSelectedRows();
-            Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<Book>, Object>()
+            Single.instance( ProgressBar.class ).invoke( new SafeWorker<List<IBook>, Object>()
             {
                 @Override
-                protected List<Book> doInBackground()
+                protected List<IBook> doInBackground()
                 {
                     // todo optimize and catch ctrl+a
                     if ( selectedRows.length == BookShelf.bookCount() )
@@ -168,10 +168,10 @@ public class BookView
         }
     }
 
-    private List<Book> getBooks(
+    private List<IBook> getBooks(
         final int[] selectedRows )
     {
-        final List<Book> list = new ArrayList<Book>();
+        final List<IBook> list = new ArrayList<IBook>();
         for ( final int i : selectedRows )
         {
             final Object id = books.get( i )[1];

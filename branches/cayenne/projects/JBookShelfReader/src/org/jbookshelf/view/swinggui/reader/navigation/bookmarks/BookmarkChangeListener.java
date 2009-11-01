@@ -10,13 +10,13 @@ import javax.swing.event.ChangeListener;
 
 import org.bushe.swing.event.EventBus;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Note;
 import org.jbookshelf.model.db.api.Bookmark;
+import org.jbookshelf.model.db.api.spec.INote;
 import org.jbookshelf.view.swinggui.reader.textview.MultiPageLayoutPanel;
 import org.jbookshelf.view.swinggui.reader.textview.pagelayout.PageLayout;
 
 /**
- * monitors {@link JScrollBar} scrolling and fires events for {@link Note} reloading
+ * monitors {@link JScrollBar} scrolling and fires events for {@link INote} reloading
  * 
  * @author eav 2009
  */

@@ -1,12 +1,12 @@
 package org.jbookshelf.controller.importer;
 
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 
 public interface FileImportStrategy
 {
-    Book importBook(
-        PhysicalBook physicalBook );
+    IBook importBook(
+        IPhysicalBook physicalBook );
 
     String longDescription();
 }

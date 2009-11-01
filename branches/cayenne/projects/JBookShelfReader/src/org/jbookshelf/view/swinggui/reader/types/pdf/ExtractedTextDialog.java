@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
 
 import org.jbookshelf.controller.util.URIUtil;
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.api.spec.INote;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
@@ -67,7 +67,7 @@ public class ExtractedTextDialog
             final ActionEvent e )
         {
             final String text = editorPane.getSelectedText();
-            final Note note = pdfPanel.createNote( text );
+            final INote note = pdfPanel.createNote( text );
             new NoteDialog( ExtractedTextDialog.this, note ).setVisible( true );
         }
     }

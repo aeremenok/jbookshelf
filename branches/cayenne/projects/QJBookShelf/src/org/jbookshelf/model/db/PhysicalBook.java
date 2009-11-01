@@ -16,40 +16,37 @@ import javax.persistence.Transient;
 
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.api.Identifiable;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 
 /**
  * @author eav
  */
 @Entity
 @Table( name = "PHYSICAL_BOOK" )
-public class PhysicalBook
+class PhysicalBook
     implements
-    Identifiable
+    IPhysicalBook
 {
-    // todo enum
-    public static final String INTERNAL_VIEWER = "internal";
-    public static final String SYSTEM_VIEWER   = "system";
-
     @Id
     @GeneratedValue
-    private Long               id;
+    private Long  id;
 
     @OneToOne( optional = false )
     @org.hibernate.annotations.ForeignKey( name = "FK_PHYSICAL_BOOK" )
-    private Book               book;
+    private Book  book;
 
     @Column( nullable = false )
-    private String             fileName;
+    public String fileName;
 
     @Column
-    private String             viewer;
+    public String viewer;
 
     @Column
-    private String             charsetName;
+    public String charsetName;
 
     @Column
-    private String             unpackedFileName;
+    public String unpackedFileName;
 
     @Override
     public boolean equals(
@@ -126,7 +123,7 @@ public class PhysicalBook
         return true;
     }
 
-    public Book getBook()
+    public IBook getBook()
     {
         return this.book;
     }
@@ -193,9 +190,9 @@ public class PhysicalBook
     }
 
     public void setBook(
-        final Book book )
+        final IBook book )
     {
-        this.book = book;
+        this.book = (Book) book;
     }
 
     public void setCharsetName(

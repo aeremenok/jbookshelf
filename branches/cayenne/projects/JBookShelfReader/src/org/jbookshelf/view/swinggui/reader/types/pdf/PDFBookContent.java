@@ -9,7 +9,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 import org.pdfbox.pdmodel.PDDocument;
 import org.pdfbox.util.PDFTextStripper;
@@ -33,7 +33,7 @@ public class PDFBookContent
     private final PDFFile       pdffile;
 
     public PDFBookContent(
-        final Book book )
+        final IBook book )
     {
         super( book );
         try

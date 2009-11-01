@@ -16,8 +16,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Transient;
 
-import org.jbookshelf.model.db.api.HasBooks;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.ICategory;
 
 import com.sun.istack.internal.Nullable;
 
@@ -25,10 +27,9 @@ import com.sun.istack.internal.Nullable;
  * @author eav
  */
 @Entity
-public class Category
+class Category
     implements
-    Serializable,
-    HasBooks
+    ICategory
 {
     @Id
     @GeneratedValue( strategy = GenerationType.SEQUENCE )
@@ -44,13 +45,11 @@ public class Category
     @OneToMany( mappedBy = "parent" )
     @OrderBy( "name desc" )
     @org.hibernate.annotations.ForeignKey( name = "FK_PARENT_CATEGORY" )
-    private final Set<Category> children = new HashSet<Category>();
+    private final Set<Category> childrenImpl = new HashSet<Category>();
 
     @ManyToMany
     @OrderBy( "name desc" )
-    private final Set<Book>     books    = new HashSet<Book>();
-
-    public static final String  ROOT     = "!ROOT!";
+    private final Set<Book>     booksImpl    = new HashSet<Book>();
 
     public Category()
     {
@@ -110,14 +109,26 @@ public class Category
         return true;
     }
 
-    public Set<Book> getBooks()
+    @Transient
+    public Set<IBook> getBooks()
     {
-        return this.books;
+        return new HashSet<IBook>( booksImpl );
     }
 
-    public Set<Category> getChildren()
+    public Set<Book> getBooksImpl()
     {
-        return this.children;
+        return this.booksImpl;
+    }
+
+    @Transient
+    public Set<ICategory> getChildren()
+    {
+        return new HashSet<ICategory>( childrenImpl );
+    }
+
+    public Set<Category> getChildrenImpl()
+    {
+        return this.childrenImpl;
     }
 
     public Long getId()
@@ -131,7 +142,7 @@ public class Category
     }
 
     @Nullable
-    public Category getParent()
+    public ICategory getParent()
     {
         return this.parent;
     }
@@ -164,9 +175,9 @@ public class Category
     }
 
     public void setParent(
-        final Category parent )
+        final ICategory parent )
     {
-        this.parent = parent;
+        this.parent = (Category) parent;
     }
 
     @Override

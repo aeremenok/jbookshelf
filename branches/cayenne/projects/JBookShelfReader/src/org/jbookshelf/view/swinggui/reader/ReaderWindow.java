@@ -19,11 +19,11 @@ import org.apache.log4j.Logger;
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.Note;
-import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.model.db.BookShelf;
 import org.jbookshelf.model.db.api.Bookmark;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.INote;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
@@ -49,7 +49,7 @@ public class ReaderWindow<T>
 {
     private static final Logger log = Logger.getLogger( ReaderWindow.class );
 
-    private Book                book;
+    private IBook               book;
     private BookContent<T>      bookContent;
 
     @SuppressWarnings( "unchecked" )
@@ -72,7 +72,7 @@ public class ReaderWindow<T>
         }
     }
 
-    public Book getBook()
+    public IBook getBook()
     {
         return this.book;
     }
@@ -162,11 +162,11 @@ public class ReaderWindow<T>
     public void loadAndDisplayBook(
         final Long bookId )
     {
-        Single.instance( ProgressBar.class ).invoke( new SafeWorker<Book, Object>()
+        Single.instance( ProgressBar.class ).invoke( new SafeWorker<IBook, Object>()
         {
             @SuppressWarnings( "unchecked" )
             @Override
-            protected Book doInBackground()
+            protected IBook doInBackground()
             {
                 book = BookShelf.bookById( bookId );
                 bookContent = Single.instance( ReaderSpecific.class ).createBookContent( book );
@@ -184,7 +184,7 @@ public class ReaderWindow<T>
                 // setting page count causes rendering of content
                 Single.instance( Paginator.class ).setPageCount( bookContent.getPageCount() );
 
-                final Note lastRead = book.getLastRead();
+                final INote lastRead = book.getLastRead();
                 // todo avoid NPE
                 if ( lastRead != null && lastRead.getPage() != null )
                 {
@@ -214,7 +214,7 @@ public class ReaderWindow<T>
         final Bookmark bookmark = Single.instance( MultiPageLayoutPanel.class ).followLayouter().createBookmark();
         this.book.setRead( true );
 
-        final Note lastRead = this.book.getLastRead();
+        final INote lastRead = this.book.getLastRead();
         lastRead.setPage( bookmark.getPage() );
         lastRead.setPageCount( bookmark.getPageCount() );
         lastRead.setPosition( bookmark.getPosition() );
@@ -245,7 +245,7 @@ public class ReaderWindow<T>
     public void useCharset(
         final Charset charset )
     {
-        final PhysicalBook physicalBook = getBook().getPhysicalBook();
+        final IPhysicalBook physicalBook = getBook().getPhysicalBook();
         physicalBook.setCharsetName( charset.name() );
 
         BookShelf.updatePhysical( physicalBook );

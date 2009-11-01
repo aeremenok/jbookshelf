@@ -14,7 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableCellRenderer;
 
-import org.jbookshelf.model.db.Note;
+import org.jbookshelf.model.db.api.spec.INote;
 import org.jdesktop.swingx.border.DropShadowBorder;
 
 public class NoteArea
@@ -26,7 +26,7 @@ public class NoteArea
 
     private final JTextArea  textArea = new JTextArea( 3, 20 );
     private final JLabel     label    = new JLabel();
-    private Note             note;
+    private INote             note;
 
     public NoteArea()
     {
@@ -52,7 +52,7 @@ public class NoteArea
         final int row,
         final int column )
     {
-        this.note = (Note) value;
+        this.note = (INote) value;
 
         final String content = note.getContent().trim();
         textArea.setText( content.length() > MAX_LEN

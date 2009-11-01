@@ -5,7 +5,7 @@ package org.jbookshelf.view.swinggui.reader.types.html;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.swinggui.reader.BookContent;
 
 /**
@@ -14,12 +14,12 @@ import org.jbookshelf.view.swinggui.reader.BookContent;
 public class HTMLBookContent
     extends BookContent<HTMLContentWrapper>
 {
-    private static final Logger        log = Logger.getLogger( HTMLBookContent.class );
+    private static final Logger      log = Logger.getLogger( HTMLBookContent.class );
 
     private final HTMLContentWrapper onlyPageContainer;
 
     public HTMLBookContent(
-        final Book book )
+        final IBook book )
     {
         super( book );
         try

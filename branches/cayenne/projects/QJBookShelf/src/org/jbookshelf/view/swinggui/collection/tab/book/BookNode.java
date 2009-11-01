@@ -3,18 +3,18 @@
  */
 package org.jbookshelf.view.swinggui.collection.tab.book;
 
-import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.swinggui.collection.tab.DefaultLazyNode;
 
 /**
- * tree node representing a {@link Book}
+ * tree node representing a {@link IBook}
  * 
  * @author eav 2009
  */
 public class BookNode
     extends DefaultLazyNode
 {
-    private final Book book;
+    private final IBook book;
 
     public BookNode()
     {
@@ -23,16 +23,13 @@ public class BookNode
     }
 
     public BookNode(
-        final Book book )
+        final IBook book )
     {
         super( book.getName() );
         this.book = book;
     }
 
-    /**
-     * @return the book
-     */
-    public Book getBook()
+    public IBook getBook()
     {
         return this.book;
     }

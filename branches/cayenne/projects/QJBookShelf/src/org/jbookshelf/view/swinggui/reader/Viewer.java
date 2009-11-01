@@ -13,9 +13,9 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.FileUtil;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.controller.util.ZIPUtil;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.PhysicalBook;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
+import org.jbookshelf.model.db.api.spec.IPhysicalBook;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.swinggui.ProgressBar;
 
@@ -48,17 +48,17 @@ public class Viewer
     }
 
     public void open(
-        final Book book )
+        final IBook book )
     {
         Single.instance( ProgressBar.class ).invoke( new SafeWorker<String, Object>()
         {
             @Override
             protected String doInBackground()
             {
-                final PhysicalBook physical = book.getPhysicalBook();
+                final IPhysicalBook physical = book.getPhysicalBook();
                 initPhysicalBook( physical );
                 // define which viewer to use
-                if ( PhysicalBook.INTERNAL_VIEWER.equals( physical.getViewer() ) )
+                if ( IPhysicalBook.INTERNAL_VIEWER.equals( physical.getViewer() ) )
                 {
                     return getReaderType( getFile( physical ) );
                 }
@@ -91,7 +91,7 @@ public class Viewer
     }
 
     private File getFile(
-        final PhysicalBook physical )
+        final IPhysicalBook physical )
     {
         if ( physical.getUnpackedFileName() != null )
         {
@@ -129,7 +129,7 @@ public class Viewer
     }
 
     private void initPhysicalBook(
-        final PhysicalBook physical )
+        final IPhysicalBook physical )
     {
         File file = physical.getFile();
         if ( ZIPUtil.isZip( file ) && (physical.getUnpackedFile() == null || !physical.getUnpackedFile().exists()) )
@@ -143,10 +143,10 @@ public class Viewer
         { // viewer undefined
             final String type = getReaderType( file );
             physical.setViewer( type != null
-                ? PhysicalBook.INTERNAL_VIEWER : PhysicalBook.SYSTEM_VIEWER );
+                ? IPhysicalBook.INTERNAL_VIEWER : IPhysicalBook.SYSTEM_VIEWER );
         }
 
-        if ( PhysicalBook.INTERNAL_VIEWER.equals( physical.getViewer() ) && physical.getCharsetName() == null )
+        if ( IPhysicalBook.INTERNAL_VIEWER.equals( physical.getViewer() ) && physical.getCharsetName() == null )
         { // encoding for the internal viewer undefined
             final String encoding = FileUtil.guessFileEncoding( file );
             physical.setCharsetName( encoding );

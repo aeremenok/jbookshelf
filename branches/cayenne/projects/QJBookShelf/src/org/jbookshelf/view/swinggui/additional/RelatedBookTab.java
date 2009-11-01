@@ -17,8 +17,8 @@ import org.bushe.swing.event.EventTopicSubscriber;
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventSubscriber;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.util.BookShelf;
+import org.jbookshelf.model.db.BookShelf;
+import org.jbookshelf.model.db.api.spec.IBook;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
@@ -28,7 +28,7 @@ import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.FilterPipeline;
 
 /**
- * displays {@link Book#getRelatedBooks()}
+ * displays {@link IBook#getRelatedBooks()}
  * 
  * @author eav 2009
  */
@@ -42,7 +42,7 @@ public class RelatedBookTab
     {
         private static String[] names =
                                       { I18N.tr( "Name" ) };
-        private List<Book>      books;
+        private List<IBook>     books;
 
         public RelatedBookTableModel()
         {
@@ -86,11 +86,11 @@ public class RelatedBookTab
             final String string,
             final BookShelfMediator mediator )
         {
-            final List<Book> selectedBooks = mediator.getSelectedBooks();
-            books = new ArrayList<Book>();
+            final List<IBook> selectedBooks = mediator.getSelectedBooks();
+            books = new ArrayList<IBook>();
             if ( selectedBooks.size() == 1 )
             {
-                final Book book = selectedBooks.get( 0 );
+                final IBook book = selectedBooks.get( 0 );
                 books.addAll( BookShelf.getBooks( book ) );
             }
             fireTableDataChanged();
@@ -125,7 +125,7 @@ public class RelatedBookTab
 
     @Override
     public void onAdd(
-        final Book book )
+        final IBook book )
     {
         new RelatedBookDialog( book ).setVisible( true );
     }
