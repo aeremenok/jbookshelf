@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="schema-export" name="database" basedir=".">
+
+    <property name="src.dir" value="${basedir}/src" />
+    <property name="lib.dir" value="${basedir}/lib" />
+    <property name="antlib.dir" value="${basedir}/antlib" />
+    <property name="hiberlib.dir" value="${basedir}/hibernate-lib" />
+    <property name="tempjar.file" value="${java.io.tmpdir}/jbs.jar" />
+
+    <target name="tempjar">
+        <jar destfile="${tempjar.file}">
+            <fileset dir="${basedir}/bin" />
+        </jar>
+    </target>
+
+    <path id="project.classpath">
+        <fileset dir="${lib.dir}" />
+        <fileset dir="${hiberlib.dir}" />
+        <fileset dir="${antlib.dir}" />
+        <fileset file="${tempjar.file}" />
+    </path>
+
+    <taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask">
+        <classpath refid="project.classpath" />
+    </taskdef>
+
+    <target name="tool">
+        <hibernatetool destdir="${src.dir}/org/jbookshelf/model/db/util">
+            <classpath refid="project.classpath" />
+            <annotationconfiguration configurationfile="${src.dir}/hibernate.cfg.xml" />
+            <hbm2ddl create="true" outputfilename="jbs-ddl.sql" delimiter=";" format="true" />
+        </hibernatetool>
+    </target>
+
+    <target name="schema-export" depends="tempjar, tool, clean-post" />
+
+    <target name="clean-post">
+        <delete file="${tempjar.file}" />
+    </target>
+</project>
