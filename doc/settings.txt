@@ -1,6 +1,0 @@
-1. language
-2. look and feel =)
-3. temp folder (usage of default temp folder in windows can be buggy - has "~" in path)
-4. jbookshelf folder (settings and collection files)
-5. default import mask
-6. integration: paths to third party programs
