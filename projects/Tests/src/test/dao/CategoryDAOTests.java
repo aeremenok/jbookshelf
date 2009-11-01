@@ -6,6 +6,7 @@ package test.dao;
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.api.spec.ICategory;
 import org.jbookshelf.model.db.api.spec.dao.ICategoryDAO;
+import org.jbookshelf.model.db.dao.CategoryDAO;
 
 /**
  * @author eav 2009
@@ -18,6 +19,6 @@ public class CategoryDAOTests
 
     public CategoryDAOTests()
     {
-        super( null );
+        super( new CategoryDAO() );
     }
 }

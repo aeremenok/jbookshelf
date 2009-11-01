@@ -16,7 +16,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith( Suite.class )
 @SuiteClasses(
-{ AuthorDAOTests.class } )
+{ BookDAOTests.class } )
 public class DAOTestSuite
 {
     @BeforeClass

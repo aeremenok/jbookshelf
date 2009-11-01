@@ -87,9 +87,6 @@ public class BookView
         return new BookRecord( id, name, aname, cname );
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.widget.tables.RecordFactory#getColumnNames()
-     */
     @Override
     public String[] getColumnNames()
     {
@@ -97,9 +94,6 @@ public class BookView
         { I18N.tr( "Name" ), I18N.tr( "Author" ), I18N.tr( "Category" ) };
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.widget.tables.RecordFactory#recordCount()
-     */
     @Override
     public int recordCount()
     {
