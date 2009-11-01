@@ -72,7 +72,6 @@ public abstract class CommonDAOTests<I extends Identifiable, D extends DAO<I>>
         final Serializable id = u.getId();
 
         dao.makeTransient( u );
-        assertNull( u.getId() );
 
         final I byId = dao.getById( id );
         assertNull( byId );
