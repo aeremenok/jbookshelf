@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<parent>
+		<artifactId>jbs-parent</artifactId>
+		<groupId>org.jbookshelf</groupId>
+		<version>0.7.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jbookshelf</groupId>
+	<artifactId>jbs-main</artifactId>
+	<packaging>jar</packaging>
+	<name>jbs-main</name>
+	<version>0.7.1-SNAPSHOT</version>
+	<url>http://maven.apache.org</url>
+</project>
