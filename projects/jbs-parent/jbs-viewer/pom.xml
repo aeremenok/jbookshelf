@@ -1,28 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
+	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>jbs-parent</artifactId>
 		<groupId>org.jbookshelf</groupId>
 		<version>0.7.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>org.jbookshelf</groupId>
 	<artifactId>jbs-viewer</artifactId>
-	<packaging>jar</packaging>
-	<name>jbs-viewer</name>
 	<version>0.7.1-SNAPSHOT</version>
-	<url>http://maven.apache.org</url>
+	<packaging>jar</packaging>
+
+	<name>jbs-viewer</name>
+	<description>JBookShelf internal book viewer</description>
+
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>jbs-main</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.swinglabs</groupId>
 			<artifactId>pdf-renderer</artifactId>
 			<version>1.0.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.xnap</groupId>
+			<artifactId>xnap-commons</artifactId>
+			<version>0.9.6</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../lib/xnap-commons-0.9.6.jar
+			</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.xnap</groupId>
+			<artifactId>xnap-gettext</artifactId>
+			<version>0.9.6</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../lib/gettext-commons-0.9.6.jar
+			</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.jbookshelf</groupId>
+			<artifactId>jbs-i18n</artifactId>
+			<version>${project.version}</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../lib/jbs-i18n.jar
+            </systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.connectina</groupId>
+			<artifactId>fontchooser</artifactId>
+			<version>1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../lib/FontChooser.jar
+            </systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>org.lobobrowser</groupId>
+			<artifactId>cobra</artifactId>
+			<version>0.98.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mozilla</groupId>
+			<artifactId>juniversalchardet</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>rhino</groupId>
+			<artifactId>js</artifactId>
+			<version>1.7R2</version>
 		</dependency>
 	</dependencies>
 </project>
