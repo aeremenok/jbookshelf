@@ -7,14 +7,39 @@
 		<version>0.7.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	
+
 	<groupId>org.jbookshelf</groupId>
 	<artifactId>jbs-main</artifactId>
 	<version>0.7.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	
+
 	<name>jbs-main</name>
 	<description>JBookShelf main application</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>org.jbookshelf.main.App</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>${project.basedir}/asm.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
 		<dependency>
@@ -38,8 +63,7 @@
 			<artifactId>jbs-i18n</artifactId>
 			<version>${project.version}</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/../lib/jbs-i18n.jar
-            </systemPath>
+			<systemPath>${project.basedir}/../lib/jbs-i18n.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>
