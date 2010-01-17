@@ -113,7 +113,6 @@ public class MainWindow
 
         final JXStatusBar statusBar = new JXStatusBar();
         statusBar.add( Single.instance( ProgressBar.class ) );
-        statusBar.setResizeHandleEnabled( false );
         setStatusBar( statusBar );
 
         pack();

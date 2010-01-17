@@ -2,6 +2,7 @@ package org.jbookshelf.view.swinggui.dialog.book;
 
 import java.io.File;
 
+import javax.annotation.Nullable;
 import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -18,8 +19,6 @@ import org.jbookshelf.view.swinggui.dialog.importer.FileImportDialog;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.xnap.commons.gui.DefaultDialog;
 import org.xnap.commons.i18n.I18n;
-
-import com.sun.istack.internal.Nullable;
 
 /**
  * a dialog to create new {@link Book}s
