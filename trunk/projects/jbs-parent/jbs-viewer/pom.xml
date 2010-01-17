@@ -16,52 +16,55 @@
 	<name>jbs-viewer</name>
 	<description>JBookShelf internal book viewer</description>
 
+	<build>
+		<finalName>jbsreader</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>org.jbookshelf.view.swinggui.reader.ViewerApp
+							</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<finalName>jbookshelf-${project.version}</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
+					<outputDirectory>../../../../builds</outputDirectory>
+					
+					<descriptors>
+						<descriptor>${project.basedir}/asm.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>simple-command</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attached</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>jbs-main</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.swinglabs</groupId>
-			<artifactId>pdf-renderer</artifactId>
-			<version>1.0.5</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.xnap</groupId>
-			<artifactId>xnap-commons</artifactId>
-			<version>0.9.6</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/../lib/xnap-commons-0.9.6.jar
-			</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>org.xnap</groupId>
-			<artifactId>xnap-gettext</artifactId>
-			<version>0.9.6</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/../lib/gettext-commons-0.9.6.jar
-			</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>org.jbookshelf</groupId>
-			<artifactId>jbs-i18n</artifactId>
-			<version>${project.version}</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/../lib/jbs-i18n.jar
-            </systemPath>
-		</dependency>
-		<dependency>
-			<groupId>com.connectina</groupId>
-			<artifactId>fontchooser</artifactId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/../lib/FontChooser.jar
-            </systemPath>
-		</dependency>
-
+		<!-- 
+		compile
+		-->
 		<dependency>
 			<groupId>org.lobobrowser</groupId>
 			<artifactId>cobra</artifactId>
@@ -76,6 +79,37 @@
 			<groupId>rhino</groupId>
 			<artifactId>js</artifactId>
 			<version>1.7R2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.swinglabs</groupId>
+			<artifactId>pdf-renderer</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+		<!-- 
+        system 
+        -->
+		<!--
+			<dependency> <groupId>org.xnap</groupId>
+			<artifactId>xnap-commons</artifactId> <version>0.9.6</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../lib/xnap-commons-0.9.6.jar
+			</systemPath> </dependency> <dependency> <groupId>org.xnap</groupId>
+			<artifactId>xnap-gettext</artifactId> <version>0.9.6</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../lib/gettext-commons-0.9.6.jar
+			</systemPath> </dependency> <dependency>
+			<groupId>org.jbookshelf</groupId> <artifactId>jbs-i18n</artifactId>
+			<version>${project.version}</version> <scope>system</scope>
+			<systemPath>${project.basedir}/../lib/jbs-i18n.jar </systemPath>
+			</dependency>
+		-->
+		<dependency>
+			<groupId>com.connectina</groupId>
+			<artifactId>fontchooser</artifactId>
+			<version>1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../lib/FontChooser.jar
+            </systemPath>
 		</dependency>
 	</dependencies>
 </project>
