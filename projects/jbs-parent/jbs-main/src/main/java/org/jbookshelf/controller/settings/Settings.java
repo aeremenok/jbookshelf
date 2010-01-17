@@ -29,8 +29,6 @@ import org.xnap.commons.settings.IntSetting;
 import org.xnap.commons.settings.PropertyResource;
 import org.xnap.commons.settings.StringSetting;
 
-import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
-
 /**
  * stores settings
  * 
@@ -110,7 +108,7 @@ public class Settings
         String lafName;
         try
         {
-            lafName = new NimbusLookAndFeel().getName();
+            lafName = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
         }
         catch ( final Throwable e )
         { // NimbusLookAndFeel does not exist, jre < 1.6.10

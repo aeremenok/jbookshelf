@@ -66,16 +66,6 @@
 		compile
 		-->
 		<dependency>
-			<groupId>org.lobobrowser</groupId>
-			<artifactId>cobra</artifactId>
-			<version>0.98.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mozilla</groupId>
-			<artifactId>juniversalchardet</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
 			<groupId>rhino</groupId>
 			<artifactId>js</artifactId>
 			<version>1.7R2</version>
@@ -104,12 +94,18 @@
 			</dependency>
 		-->
 		<dependency>
+            <groupId>org.lobobrowser</groupId>
+            <artifactId>cobra</artifactId>
+            <version>0.98.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../lib/cobra.jar</systemPath>
+        </dependency>
+		<dependency>
 			<groupId>com.connectina</groupId>
 			<artifactId>fontchooser</artifactId>
 			<version>1</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/../lib/FontChooser.jar
-            </systemPath>
+			<systemPath>${project.basedir}/../lib/FontChooser.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>
