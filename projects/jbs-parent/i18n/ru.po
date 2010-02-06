@@ -1,0 +1,598 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: JBookShelf\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-06 20:24+0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: eav <eav1986@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: jbs-main/src/main/java/org/jbookshelf/controller/importer/DirCategoriesStrategy.java:34
+msgid ""
+"<html>File names will be parsed using these masks: <b>%a</b> = author, <b>%"
+"b</b> = book, <b>%c</b> = category<br>Directories will be imported as "
+"categories</html>"
+msgstr ""
+"<html><i>Имена файлов будут разобраны с использованием этих масок. <b>%a</b> "
+"= автор, <b>%b</b> = книга, <b>%c</b> = категория</i><br>Папки будут "
+"импортированы как категории</html>"
+
+#: jbs-main/src/main/java/org/jbookshelf/controller/importer/DirCategoriesStrategy.java:40
+msgid "Use masks and import directories as categroies"
+msgstr "Использовать маски и импортировать папки как категории"
+
+#: jbs-main/src/main/java/org/jbookshelf/controller/importer/UseDirsStrategy.java:72
+msgid ""
+"<html>Directory, where a book resides, will be imported as the author's "
+"name<br>Its parents will be imported as categories</html>"
+msgstr ""
+"<html>Папка с книгой будет импортирована как имя автора<br>Содержащие её "
+"папки будут импортированы как категории</html>"
+
+#: jbs-main/src/main/java/org/jbookshelf/controller/importer/UseDirsStrategy.java:78
+msgid "Import directories only, the deepest one is author"
+msgstr "Импортировать только папки, самая младшая - автор"
+
+#: jbs-main/src/main/java/org/jbookshelf/controller/importer/UseMasksStrategy.java:39
+msgid ""
+"<html>File names will be parsed using these masks: <b>%a</b> = author, <b>%"
+"b</b> = book, <b>%c</b> = category</html>"
+msgstr ""
+"<html><i>Имена файлов будут разобраны с использованием этих масок. <b>%a</b> "
+"= автор, <b>%b</b> = книга, <b>%c</b> = категория</i></html>"
+
+#: jbs-main/src/main/java/org/jbookshelf/controller/importer/UseMasksStrategy.java:55
+msgid "Use masks only"
+msgstr "Использовать только маски"
+
+#: jbs-main/src/main/java/org/jbookshelf/model/db/Book.java:215
+msgid "Last read position"
+msgstr "Место окончания чтения"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/SetReadItem.java:37
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:228
+msgid "Is read"
+msgstr "Прочитана"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/actions/BookShelfActions.java:23
+msgid "Backup"
+msgstr "Сохранить"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/actions/BookShelfActions.java:37
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:142
+msgid "Import"
+msgstr "Импорт"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/actions/BookShelfActions.java:52
+msgid "Restore"
+msgstr "Восстановить"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/actions/UniqueActions.java:37
+msgid "Edit"
+msgstr "Правка"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/actions/UniqueActions.java:54
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/textview/SelectableTextRenderer.java:75
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/types/pdf/ExtractedTextDialog.java:80
+msgid "Google"
+msgstr "Гуглить"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/actions/UniqueActions.java:72
+msgid "Open"
+msgstr "Открыть"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/actions/UniqueActions.java:90
+msgid "Open Directory"
+msgstr "Открыть папку"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/actions/UniqueActions.java:108
+msgid "Remove"
+msgstr "Удалить"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/actions/UniqueActions.java:115
+msgid "Remove selected?"
+msgstr "Удалить выбранное?"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/actions/UniqueActions.java:142
+msgid "Rename"
+msgstr "Переименовать"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/actions/UniqueActions.java:151
+msgid "Enter new name"
+msgstr "Укажите новое имя"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/actions/UniqueActions.java:157
+msgid " already exists"
+msgstr " уже существует"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/additional/AdditionalPanel.java:124
+msgid "Start typing to filter"
+msgstr "Начните печатать для фильтрации"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/additional/NoteTab.java:51
+msgid "Title"
+msgstr "Заголовок"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/additional/NoteTab.java:51
+msgid "Date"
+msgstr "Дата"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/additional/NoteTab.java:139
+msgid "Notes"
+msgstr "Заметки"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/additional/RelatedBookTab.java:44
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/tab/book/BookView.java:97
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/multiedit/ListTableModel.java:35
+msgid "Name"
+msgstr "Имя"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/additional/RelatedBookTab.java:105
+msgid "Related Books"
+msgstr "Связанные книги"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:51
+msgid "Search"
+msgstr "Поиск"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:112
+msgid "All"
+msgstr "Все"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:113
+msgid "Read"
+msgstr "Прочитанные"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:114
+msgid "Unread"
+msgstr "Непрочитанные"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:116
+msgid "Type here your search query"
+msgstr "Введите поисковый запрос"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/CollectionPanel.java:117
+msgid "Search content"
+msgstr "Поиск по содержимому"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/tab/AuthorView.java:86
+msgid "Authors"
+msgstr "Авторы"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/tab/CategoryView.java:70
+msgid "All categories"
+msgstr "Все категории"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/tab/CategoryView.java:115
+msgid "Categories"
+msgstr "Категории"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/tab/book/BookView.java:58
+msgid "Books"
+msgstr "Книги"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/tab/book/BookView.java:97
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:76
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:230
+msgid "Author"
+msgstr "Автор"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/collection/tab/book/BookView.java:97
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:231
+msgid "Category"
+msgstr "Категория"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:93
+msgid "Describe an issue"
+msgstr "Опишите проблему"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:95
+msgid "Send..."
+msgstr "Отправить..."
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:96
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:103
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:103
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookEditDialog.java:99
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/FontChooser.java:57
+msgid "Cancel"
+msgstr "Отмена"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:98
+msgid "What steps will reproduce the problem?"
+msgstr "Как воспроизвести проблему?"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:99
+msgid "What is the expected output?"
+msgstr "Что ожидалось на выходе?"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:100
+msgid "What do you see instead?"
+msgstr "Что вы видите вместо этого?"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/BugReportDialog.java:104
+msgid ""
+"<html><i>Please describe a bug or a suggestion. Click 'Send...' to send a "
+"report via e-mail.</i></html>"
+msgstr ""
+"<html><i>Пожалуйста, опишите ошибку или предложение. Нажмите 'Отправить...' "
+"чтобы отправить письмо по электронной почте.</i></html>"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:70
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/main/ToolBar.java:34
+msgid "About"
+msgstr "О программе"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:77
+msgid "License"
+msgstr "Лицензия"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:78
+msgid "Version"
+msgstr "Версия"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:80
+msgid "Andrey Yeremenok (eav1986_at_gmail_com)"
+msgstr "Андрей Ерёменок (eav1986_at_gmail_com)"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/JBSAboutDialog.java:85
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:99
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:141
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/types/pdf/ExtractedTextDialog.java:120
+msgid "Close"
+msgstr "Закрыть"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:45
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:102
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/navigation/notes/NoteTableModel.java:20
+msgid "Note"
+msgstr "Заметка"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:101
+msgid "Citation"
+msgstr "Цитата"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:104
+msgid "Page: "
+msgstr "Страница: "
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/NoteDialog.java:105
+msgid "Position: "
+msgstr "Место: "
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/RelatedBookDialog.java:106
+msgid "Select books to be related"
+msgstr "Выберите связанные книги"
+
+#. restart
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:77
+msgid "Restart needed in order changes to take effect. Restart now?"
+msgstr ""
+"Нужен перезапуск, чтобы изменения вступили в силу. Перезапустить сейчас?"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:91
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/main/ToolBar.java:79
+msgid "Settings"
+msgstr "Настройки"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:104
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/FontChooser.java:58
+msgid "Defaults"
+msgstr "По умолчанию"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:106
+msgid "Language"
+msgstr "Язык"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:107
+msgid "Look and feel"
+msgstr "Внешний вид"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:108
+msgid "Workspace directory"
+msgstr "Рабочая папка"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:110
+msgid "Proxy Type"
+msgstr "Тип прокси"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:111
+msgid "Proxy Host"
+msgstr "Адрес прокси"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:112
+msgid "Proxy Port"
+msgstr "Порт прокси"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:114
+msgid " * - Requires restart"
+msgstr "* - Требует перезапуска"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/SettingsDialog.java:116
+msgid "JBookShelf settings"
+msgstr "Настройки JBookShelf"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:96
+msgid "Add Book"
+msgstr "Добавить книгу"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:97
+msgid "Add and close"
+msgstr "Добавить и закрыть"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:98
+msgid "Add and continue"
+msgstr "Добавить и продолжить"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookAdditionDialog.java:100
+msgid "Add book to collection"
+msgstr "Добавление книги в коллекцию"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookEditDialog.java:97
+msgid "Edit book"
+msgstr "Править книгу"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookEditDialog.java:98
+msgid "Edit book properties"
+msgstr "Правка свойств книги"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:159
+msgid "Book name not specified"
+msgstr "Название книги не указано"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:160
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:168
+msgid "Error"
+msgstr "Ошибка"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:167
+msgid "File does not exist: "
+msgstr "Файл не существует:"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:229
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/importer/SuccessTableModel.java:26
+msgid "Book"
+msgstr "Книга"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:232
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/importer/FailTableModel.java:27
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/importer/ImportParameterPanel.java:125
+msgid "File"
+msgstr "Файл"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:233
+msgid "Viewer"
+msgstr "Программа просмотра"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:236
+msgid "Auto"
+msgstr "Автоматически"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:237
+msgid "Internal"
+msgstr "Внутренняя"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:238
+msgid "System"
+msgstr "Системная"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:288
+msgid "Size"
+msgstr "Размер"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:289
+msgid "Type"
+msgstr "Тип"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/book/BookPanel.java:292
+msgid " kb"
+msgstr " кБ"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:140
+msgid "Import Files"
+msgstr "Импортировать файлы"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:144
+msgid "Successfully imported books"
+msgstr "Успешно импортированные книги"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/importer/FileImportDialog.java:148
+msgid "Unimported files"
+msgstr "Неимпортированные файлы"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/importer/ImportParameterPanel.java:88
+msgid "File not found: "
+msgstr "Файл не найден:"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/importer/ImportParameterPanel.java:99
+msgid "Specify at least one mask"
+msgstr "Укажите хотя бы одну маску"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/importer/ImportParameterPanel.java:126
+msgid "Mask"
+msgstr "Маска"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/dialog/importer/ImportParameterPanel.java:128
+msgid "Strategy"
+msgstr "Стратегия"
+
+#. probably debugging with an IDE
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/main/MainWindow.java:181
+msgid "Unable to restart automatically. Please restart manually."
+msgstr ""
+"Невозможно перезапустить автоматически. Пожалуйста, перезапустите вручную."
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/main/MainWindow.java:192
+msgid "Unexpected error"
+msgstr "Непредвиденная ошибка"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/main/ToolBar.java:49
+msgid "Add"
+msgstr "Добавить"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/main/ToolBar.java:64
+msgid "Report a bug"
+msgstr "Сообщить об ошибке"
+
+#: jbs-main/src/main/java/org/jbookshelf/view/swinggui/multiedit/MultipleField.java:96
+msgid "Type here to begin addition"
+msgstr "Введите текст, чтобы начать добавление"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/navigation/bookmarks/BoookmarkTableModel.java:32
+msgid "Page"
+msgstr "Страница"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/navigation/bookmarks/BoookmarkTableModel.java:32
+msgid "Position"
+msgstr "Место"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/navigation/notes/NotesPanel.java:82
+msgid "Remove?"
+msgstr "Удалить?"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/navigation/thumbnails/ThumbnailPanel.java:36
+msgid "Down"
+msgstr "Вниз"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/navigation/thumbnails/ThumbnailPanel.java:56
+msgid "Up"
+msgstr "Вверх"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/textview/SelectableTextRenderer.java:39
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/types/pdf/ExtractedTextDialog.java:44
+msgid "To clipboard"
+msgstr "В буфер обмена"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/textview/SelectableTextRenderer.java:57
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/types/pdf/ExtractedTextDialog.java:62
+msgid "Create note"
+msgstr "Создать примечание"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/BrowserNavigator.java:54
+msgid "Back"
+msgstr "Назад"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/BrowserNavigator.java:71
+msgid "Forward"
+msgstr "Вперед"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/BrowserNavigator.java:88
+msgid "Open google"
+msgstr "Открыть google"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/BrowserNavigator.java:104
+msgid "Back to book"
+msgstr "Назад к книге"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/BrowserNavigator.java:121
+msgid "Save as new book"
+msgstr "Сохранить как новую книгу"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/ContentNavigatorSwitcher.java:37
+msgid "Show global bookmarks"
+msgstr "Показать глобальные закладки"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/ContentNavigatorSwitcher.java:46
+msgid "Show local notes"
+msgstr "Показать локальные заметки"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/ContentNavigatorSwitcher.java:62
+msgid "Show thumbnails"
+msgstr "Показать миниатюры"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/FontChooser.java:56
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/FontChooser.java:74
+msgid "Choose font"
+msgstr "Выберите шрифт"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/PageLayoutSwitcher.java:37
+msgid "Switch page layout"
+msgstr "Переключить раскладку страниц"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/Paginator.java:39
+msgid "First page"
+msgstr "Первая страница"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/Paginator.java:55
+msgid "Last page"
+msgstr "Последняя страница"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/Paginator.java:71
+msgid "Next page"
+msgstr "Следующая страница"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/Paginator.java:90
+msgid "Previous page"
+msgstr "Предыдущая страница"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/ReaderToolBar.java:38
+msgid "Open book directory"
+msgstr "Открыть папку книги"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/ScaleTuner.java:35
+msgid "Zoom in"
+msgstr "Приблизить"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/ScaleTuner.java:55
+msgid "Zoom out"
+msgstr "Отдалить"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/TextSearchControlPanel.java:33
+msgid "Find text"
+msgstr "Найти текст"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/TextSearchControlPanel.java:51
+msgid "Find next occurence"
+msgstr "Найти далее по тексту"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/toolbar/TextSearchControlPanel.java:69
+msgid "Find previous occurence"
+msgstr "Найти ранее по тексту"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/types/html/EventDrivenRendererContext.java:199
+msgid "Enter new file name"
+msgstr "Укажите имя нового файла"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/types/html/ProxyUserAgentContext.java:56
+msgid "Proxy credentials are not stored by JBookShelf"
+msgstr "Параметры доступа к прокси не хранятся JBookShelf"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/types/pdf/ExtractedTextDialog.java:119
+msgid "Extracted text from PDF"
+msgstr "Извлеченный текст из PDF "
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/types/pdf/PDFRenderer.java:48
+msgid "Extracted page to clipboard"
+msgstr "Извлеченный текст в буфер"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/types/pdf/PDFRenderer.java:72
+msgid "Extracted page to note"
+msgstr "Извлеченный текст в заметку"
+
+#: jbs-viewer/src/main/java/org/jbookshelf/view/swinggui/reader/types/pdf/PDFRenderer.java:102
+msgid "Extract page text"
+msgstr "Извлечь текст страницы"
+
+#~ msgid "Pos"
+#~ msgstr "Поз"
+
+#~ msgid "Citations"
+#~ msgstr "Цитаты"
+
+#~ msgid "Add citation"
+#~ msgstr "Добавить цитату"
+
+#~ msgid "View bookmarks and citations"
+#~ msgstr "Показать закладки и цитаты"
+
+#~ msgid "Error displaying file "
+#~ msgstr "Ошибка отображения файла"
+
+#~ msgid "JBookShelf directory"
+#~ msgstr "Папка JBookShelf"
