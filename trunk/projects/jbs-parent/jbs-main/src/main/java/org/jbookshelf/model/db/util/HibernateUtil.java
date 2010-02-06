@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.model.db.util;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -24,29 +25,24 @@ import org.jbookshelf.controller.singleton.Single;
  */
 public class HibernateUtil
 {
-    private static final Logger             log = Logger.getLogger( HibernateUtil.class );
+    private static final Logger       log = Logger.getLogger( HibernateUtil.class );
 
-    private static final SessionFactory     factory;
-    private static final Properties         properties;
-    private static final ConnectionProvider connectionProvider;
+    private static SessionFactory     factory;
+    private static Properties         properties;
+    private static ConnectionProvider connectionProvider;
 
-    static
+    private static Session            singleSession;
+
+    public static void close()
     {
-        try
+        if ( singleSession != null )
         {
-            final Configuration cfg = new AnnotationConfiguration().configure();
-            properties = cfg.getProperties();
-
-            setupStorageDir();
-            cfg.addProperties( properties );
-
-            factory = cfg.buildSessionFactory();
-            connectionProvider = cfg.buildSettings().getConnectionProvider();
+            singleSession.close();
+            singleSession = null;
         }
-        catch ( final Exception e )
-        {
-            throw new ExceptionInInitializerError( e );
-        }
+        factory.close();
+        connectionProvider.close();
+        log.debug( "db closed" );
     }
 
     public static Connection connection()
@@ -64,7 +60,7 @@ public class HibernateUtil
 
     public static Session getCurrentSession()
     {
-        return HibernateUtil.factory.getCurrentSession();
+        return factory.getCurrentSession();
     }
 
     public static Properties getProperties()
@@ -77,15 +73,49 @@ public class HibernateUtil
         return factory.openSession();
     }
 
-    public static void main(
-        final String[] args )
+    public static void open(
+        final File dbDir )
     {
-        log.debug( "db initialized" );
+        try
+        {
+            final Configuration cfg = new AnnotationConfiguration().configure();
+            properties = cfg.getProperties();
+
+            setupStorageDir( dbDir );
+            cfg.addProperties( properties );
+
+            factory = cfg.buildSessionFactory();
+            connectionProvider = cfg.buildSettings().getConnectionProvider();
+
+            log.debug( "db opened" );
+        }
+        catch ( final Exception e )
+        {
+            throw new ExceptionInInitializerError( e );
+        }
     }
 
-    private static void setupStorageDir()
+    public static Session singleSession()
     {
-        final String dir = Single.instance( Settings.class ).JBS_DIR.getValue() + "/db";
+        if ( singleSession == null )
+        {
+            singleSession = getSession();
+        }
+        return singleSession;
+    }
+
+    private static void setupStorageDir(
+        final File dbDir )
+    {
+        final String dir;
+        if ( dbDir != null )
+        {
+            dir = dbDir.getAbsolutePath();
+        }
+        else
+        {
+            dir = Single.instance( Settings.class ).JBS_DIR.getValue() + "/db";
+        }
         String url = properties.getProperty( Environment.URL );
         url = url.replaceFirst( "/opt/jbookshelf/db", dir );
         log.debug( "db storage url: " + url );

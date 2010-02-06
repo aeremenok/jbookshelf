@@ -69,7 +69,7 @@ public class MainWindow
         log = Logger.getLogger( MainWindow.class );
         SplashScreenManager.setProgress( 20 );
 
-        HibernateUtil.main( args );
+        HibernateUtil.open( null );
         final String jbsDir = Single.instance( Settings.class ).JBS_DIR.getValue();
         Single.instance( DBUtil.class ).startup( jbsDir );
         SplashScreenManager.setProgress( 75 );
