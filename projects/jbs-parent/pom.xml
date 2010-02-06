@@ -46,17 +46,93 @@
 
 	<repositories>
 		<repository>
+			<id>central</id>
+			<url>http://repo1.maven.org/maven2</url>
+		</repository>
+		<repository>
+			<id>java.net</id>
+			<url>http://download.java.net/maven/2/</url>
+		</repository>
+		<repository>
+			<id>jboss.repo</id>
+			<url>http://repository.jboss.com/maven2/</url>
+		</repository>
+		<repository>
 			<id>builds.archive.org</id>
-			<name>builds.archive.org</name>
 			<url>http://builds.archive.org:8080/maven2/</url>
 		</repository>
 	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>pdfbox</groupId>
+				<artifactId>pdfbox</artifactId>
+				<version>0.7.3</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.fontbox</groupId>
+						<artifactId>fontbox</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.jempbox</groupId>
+						<artifactId>jempbox</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>bouncycastle</groupId>
+						<artifactId>bcmail-jdk14</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>bouncycastle</groupId>
+						<artifactId>bcprov-jdk14</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.xnap</groupId>
+				<artifactId>xnap-commons</artifactId>
+				<version>0.9.6</version>
+				<scope>system</scope>
+				<systemPath>${project.basedir}/../lib/xnap-commons-0.9.6.jar
+            </systemPath>
+			</dependency>
+			<dependency>
+				<groupId>org.xnap</groupId>
+				<artifactId>xnap-gettext</artifactId>
+				<version>0.9.6</version>
+				<scope>system</scope>
+				<systemPath>${project.basedir}/../lib/gettext-commons-0.9.6.jar
+            </systemPath>
+			</dependency>
+			<dependency>
+				<groupId>org.jbookshelf</groupId>
+				<artifactId>jbs-i18n</artifactId>
+				<version>${project.version}</version>
+				<scope>system</scope>
+				<systemPath>${project.basedir}/../lib/jbs-i18n.jar</systemPath>
+			</dependency>
+			<dependency>
+				<groupId>org.lobobrowser</groupId>
+				<artifactId>cobra</artifactId>
+				<version>0.98.4</version>
+				<scope>system</scope>
+				<systemPath>${project.basedir}/../lib/cobra.jar</systemPath>
+			</dependency>
+			<dependency>
+				<groupId>com.connectina</groupId>
+				<artifactId>fontchooser</artifactId>
+				<version>1</version>
+				<scope>system</scope>
+				<systemPath>${project.basedir}/../lib/FontChooser.jar</systemPath>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>5.9</version>
+			<version>5.11</version>
 			<classifier>jdk15</classifier>
 			<scope>test</scope>
 		</dependency>
