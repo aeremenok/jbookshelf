@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<properties>
+		<out.dir>../../../../builds</out.dir>
+	</properties>
+
 	<parent>
 		<artifactId>jbs-parent</artifactId>
 		<groupId>org.jbookshelf</groupId>
@@ -20,15 +25,29 @@
 		<finalName>jbsreader</finalName>
 		<plugins>
 			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>build-classpath</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<fileSeparator>/</fileSeparator>
+					<outputAbsoluteArtifactFilename>false</outputAbsoluteArtifactFilename>
+					<prefix>lib</prefix>
+					<outputFilterFile>true</outputFilterFile>
+					<outputFile>${project.build.directory}/classpath.properties</outputFile>
+					<pathSeparator>\t</pathSeparator>
+				</configuration>
+			</plugin>
+			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
 					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>org.jbookshelf.view.swinggui.reader.ViewerApp
-							</mainClass>
-						</manifest>
+						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
 				</configuration>
 			</plugin>
@@ -37,23 +56,26 @@
 				<configuration>
 					<finalName>jbookshelf-${project.version}</finalName>
 					<appendAssemblyId>false</appendAssemblyId>
-					<outputDirectory>../../../../builds</outputDirectory>
-					
+					<outputDirectory>${out.dir}</outputDirectory>
 					<descriptors>
-						<descriptor>${project.basedir}/asm.xml</descriptor>
+						<descriptor>assembly/full-asm.xml</descriptor>
 					</descriptors>
 				</configuration>
-				<executions>
-					<execution>
-						<id>simple-command</id>
-						<phase>package</phase>
-						<goals>
-							<goal>attached</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<excludes>
+					<exclude>.svn</exclude>
+					<exclude>**/*.java</exclude>
+				</excludes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<filters>
+			<filter>${project.build.directory}/classpath.properties</filter>
+		</filters>
 	</build>
 
 	<dependencies>
@@ -75,37 +97,33 @@
 			<artifactId>pdf-renderer</artifactId>
 			<version>1.0.5</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 		<!-- 
         system 
         -->
-		<!--
-			<dependency> <groupId>org.xnap</groupId>
-			<artifactId>xnap-commons</artifactId> <version>0.9.6</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/../lib/xnap-commons-0.9.6.jar
-			</systemPath> </dependency> <dependency> <groupId>org.xnap</groupId>
-			<artifactId>xnap-gettext</artifactId> <version>0.9.6</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/../lib/gettext-commons-0.9.6.jar
-			</systemPath> </dependency> <dependency>
-			<groupId>org.jbookshelf</groupId> <artifactId>jbs-i18n</artifactId>
-			<version>${project.version}</version> <scope>system</scope>
-			<systemPath>${project.basedir}/../lib/jbs-i18n.jar </systemPath>
-			</dependency>
-		-->
 		<dependency>
-            <groupId>org.lobobrowser</groupId>
-            <artifactId>cobra</artifactId>
-            <version>0.98.4</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/../lib/cobra.jar</systemPath>
-        </dependency>
+			<groupId>org.lobobrowser</groupId>
+			<artifactId>cobra</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.connectina</groupId>
 			<artifactId>fontchooser</artifactId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/../lib/FontChooser.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.xnap</groupId>
+			<artifactId>xnap-commons</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.xnap</groupId>
+			<artifactId>xnap-gettext</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jbookshelf</groupId>
+			<artifactId>jbs-i18n</artifactId>
 		</dependency>
 	</dependencies>
 </project>

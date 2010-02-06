@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">org.h2.Driver</property>
+		<!-- todo parametrize url -->
+		<property name="hibernate.connection.url">jdbc:h2:nio:/opt/jbookshelf/db/jbs;TRACE_LEVEL_FILE=1;TRACE_LEVEL_SYSTEM_OUT=0;TRACE_MAX_FILE_SIZE=1;AUTO_SERVER=TRUE</property>
+		<property name="hibernate.connection.username">sa</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
+
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.c3p0.max_size">5</property>
+		<property name="hibernate.c3p0.max_statements">100</property>
+		<property name="hibernate.c3p0.min_size">1</property>
+
+
+		<property name="hbm2ddl.auto">update</property>
+
+		<property name="show_sql">false</property>
+		<property name="format_sql">false</property>
+
+		<mapping class="org.jbookshelf.model.db.Book" />
+		<mapping class="org.jbookshelf.model.db.Note" />
+		<mapping class="org.jbookshelf.model.db.Author" />
+		<mapping class="org.jbookshelf.model.db.Category" />
+		<mapping class="org.jbookshelf.model.db.PhysicalBook" />
+	</session-factory>
+</hibernate-configuration>

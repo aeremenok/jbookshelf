@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.connection.ConnectionProvider;
 import org.jbookshelf.controller.settings.Settings;
@@ -33,7 +34,7 @@ public class HibernateUtil
     {
         try
         {
-            final AnnotationConfiguration cfg = new AnnotationConfiguration().configure();
+            final Configuration cfg = new AnnotationConfiguration().configure();
             properties = cfg.getProperties();
 
             setupStorageDir();
