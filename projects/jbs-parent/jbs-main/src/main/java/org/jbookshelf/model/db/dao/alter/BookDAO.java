@@ -3,12 +3,12 @@
  */
 package org.jbookshelf.model.db.dao.alter;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.util.HibernateUtil;
 
 /**
  * @author eav 2010
@@ -16,12 +16,13 @@ import org.jbookshelf.model.db.util.HibernateUtil;
 public class BookDAO
     extends AbstractDAO<Book>
 {
+    @SuppressWarnings( "unused" )
     private static final Logger log = Logger.getLogger( BookDAO.class );
 
     public void delete(
-        final Long id )
+        final Serializable id )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = openSession();
         try
         {
             session.beginTransaction();
@@ -31,49 +32,48 @@ public class BookDAO
         }
         catch ( final Exception e )
         {
-            log.error( e, e );
-            session.getTransaction().rollback();
+            logAndRollback( session, e );
             throw new Error( e );
         }
         finally
         {
-            session.close();
+            closeSession( session );
         }
     }
 
     @SuppressWarnings( "unchecked" )
     @Override
-    public List<Book> find()
+    public List<Book> findAll()
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = openSession();
         try
         {
             return session.createCriteria( Book.class ).list();
         }
         finally
         {
-            session.close();
+            closeSession( session );
         }
     }
 
     public Book getById(
-        final Long id )
+        final Serializable id )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = openSession();
         try
         {
             return (Book) session.get( Book.class, id );
         }
         finally
         {
-            session.close();
+            closeSession( session );
         }
     }
 
     public Book persist(
         final Book book )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = openSession();
         try
         {
             session.beginTransaction();
@@ -84,20 +84,19 @@ public class BookDAO
         }
         catch ( final Exception e )
         {
-            log.error( e, e );
-            session.getTransaction().rollback();
+            logAndRollback( session, e );
             throw new Error( e );
         }
         finally
         {
-            session.close();
+            closeSession( session );
         }
     }
 
     public void update(
         final Book book )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = openSession();
         try
         {
             session.beginTransaction();
@@ -106,13 +105,12 @@ public class BookDAO
         }
         catch ( final Exception e )
         {
-            log.error( e, e );
-            session.getTransaction().rollback();
+            logAndRollback( session, e );
             throw new Error( e );
         }
         finally
         {
-            session.close();
+            closeSession( session );
         }
     }
 }

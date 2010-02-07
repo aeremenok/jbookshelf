@@ -134,6 +134,8 @@ public class CollectionPanel
 
     private void initComponents()
     {
+        viewTabbedPane.setName( "collectionViewTabbedPane" );
+
         setLayout( new BorderLayout() );
 
         final Box searchBox = Box.createHorizontalBox();
