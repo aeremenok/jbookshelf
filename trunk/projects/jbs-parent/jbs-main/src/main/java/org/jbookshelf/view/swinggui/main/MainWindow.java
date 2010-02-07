@@ -66,7 +66,6 @@ public class MainWindow
         PropertyConfigurator.configure( MainWindow.class.getResource( "log4j.properties" ) );
         SplashScreenManager.setProgress( 10 );
 
-        log = Logger.getLogger( MainWindow.class );
         SplashScreenManager.setProgress( 20 );
 
         HibernateUtil.open( null );
@@ -90,6 +89,8 @@ public class MainWindow
     @PostConstruct
     public void initSingleton()
     {
+        log = Logger.getLogger( MainWindow.class );
+
         Thread.setDefaultUncaughtExceptionHandler( this );
         AWTExceptionHandler.install();
 

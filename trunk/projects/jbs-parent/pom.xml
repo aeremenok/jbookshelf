@@ -136,5 +136,11 @@
 			<classifier>jdk15</classifier>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-swing-testng</artifactId>
+			<version>1.2a4</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>

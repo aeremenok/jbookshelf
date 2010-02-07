@@ -102,6 +102,7 @@ public class BookAdditionDialog
 
     private void init()
     {
+        setName( "BookAdditionDialog" );
         I18N.translate( this );
 
         setModal( true );
@@ -109,7 +110,7 @@ public class BookAdditionDialog
         setButtonSeparatorVisible( false );
 
         pack();
-        setLocationRelativeTo( null );
+        setLocationByPlatform( true );
     }
 
     @Override

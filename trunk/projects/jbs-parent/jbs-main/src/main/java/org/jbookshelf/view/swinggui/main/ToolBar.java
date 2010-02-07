@@ -103,6 +103,7 @@ public class ToolBar
     @PostConstruct
     public void initSingleton()
     {
+        setName( "mainToolBar" );
         final UniqueActions uniqueActions = Single.instance( UniqueActions.class );
         add( addAction );
         add( uniqueActions.removeAction );
