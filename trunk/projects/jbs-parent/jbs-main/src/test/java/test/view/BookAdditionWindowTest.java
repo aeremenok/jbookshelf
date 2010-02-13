@@ -6,6 +6,8 @@ package test.view;
 import static org.jbookshelf.controller.singleton.Single.instance;
 import static org.testng.Assert.assertEquals;
 
+import javax.swing.JTable;
+
 import org.apache.log4j.Logger;
 import org.fest.swing.annotation.GUITest;
 import org.fest.swing.edt.GuiActionRunner;
@@ -14,15 +16,12 @@ import org.fest.swing.fixture.DialogFixture;
 import org.fest.swing.fixture.JButtonFixture;
 import org.fest.swing.fixture.JTabbedPaneFixture;
 import org.fest.swing.fixture.JTableFixture;
-import org.fest.swing.fixture.JToolBarFixture;
-import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.util.DBUtil;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import test.model.db.BasicTest;
+import test.BasicTest;
 
 /**
  * @author eav 2010
@@ -34,23 +33,26 @@ public class BookAdditionWindowTest
     @SuppressWarnings( "unused" )
     private static final Logger log = Logger.getLogger( BookAdditionWindowTest.class );
 
-    JbsFrameFixture             window;
+    private JbsFrameFixture     window;
 
-    @Test( dependsOnMethods =
-    { "showBooksTable" } )
+    @Test( dependsOnMethods = "showBooksTable" )
     public void addBook()
     {
-        final JToolBarFixture toolBar = window.toolBar( "mainToolBar" );
-        final JButtonFixture showAddDialogButton = toolBar.button( new ButtonTextMatcher( "Add" ) );
+        final JButtonFixture showAddDialogButton = window.button( new ButtonTextMatcher( "Add" ) );
         showAddDialogButton.click();
 
         final DialogFixture dialog = window.dialog();
-        // todo
-        final JButtonFixture closeButton = dialog.button( new ButtonTextMatcher( "Close" ) );
+
+        final String bookName = "book1";
+        dialog.textBox( "bookTextField" ).setText( bookName );
+
+        final JButtonFixture closeButton = dialog.button( new ButtonTextMatcher( "Add and close" ) );
         closeButton.click();
 
-        assert !dialog.target.isVisible();
-        dialog.cleanUp();
+        final JTableFixture table = window.table( "bookTable" );
+        final JTable targetTable = table.target;
+        assertEquals( targetTable.getRowCount(), 1 );
+        assertEquals( targetTable.getValueAt( 0, 0 ), bookName );
     }
 
     @Override
@@ -58,7 +60,6 @@ public class BookAdditionWindowTest
     public void setUp()
     {
         super.setUp();
-        Single.instance( DBUtil.class ).startup( testDbDir.getAbsolutePath() );
         final MainWindow mainWindow = GuiActionRunner.execute( new GuiQuery<MainWindow>()
         {
             @Override

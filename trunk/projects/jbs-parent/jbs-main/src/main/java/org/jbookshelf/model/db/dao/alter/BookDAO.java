@@ -20,14 +20,15 @@ public class BookDAO
     private static final Logger log = Logger.getLogger( BookDAO.class );
 
     public void delete(
-        final Serializable id )
+        final Book book )
     {
         final Session session = openSession();
         try
         {
             session.beginTransaction();
-            final Object proxy = session.load( Book.class, id );
-            session.delete( proxy );
+            session.delete( book.getPhysicalBook() );
+            session.delete( book.getLastRead() );
+            session.delete( book );
             session.getTransaction().commit();
         }
         catch ( final Exception e )
@@ -77,7 +78,10 @@ public class BookDAO
         try
         {
             session.beginTransaction();
+            book.getLastRead().timestamp();
             session.save( book );
+            session.save( book.getLastRead() );
+            session.save( book.getPhysicalBook() );
             session.getTransaction().commit();
 
             return book;

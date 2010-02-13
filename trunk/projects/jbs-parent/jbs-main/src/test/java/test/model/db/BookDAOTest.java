@@ -7,10 +7,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
+import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.dao.alter.BookDAO;
 import org.jbookshelf.model.db.dao.alter.DAO;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import test.BasicTest;
 
 /**
  * @author eav 2010
@@ -21,12 +25,10 @@ public class BookDAOTest
     @SuppressWarnings( "unused" )
     private static final Logger log = Logger.getLogger( BookDAOTest.class );
 
-    DAO<Book>                   dao = new BookDAO();
+    private final DAO<Book>     dao = new BookDAO();
+    private Book                book1;
 
-    Book                        book1;
-
-    @Test( dependsOnMethods =
-    { "listCreatedBook" } )
+    @Test( dependsOnMethods = "listCreatedBook" )
     public void changeBook1Name()
     {
         final Book toRename = dao.getById( book1.getId() );
@@ -39,23 +41,19 @@ public class BookDAOTest
         Assert.assertEquals( expectedToChange, toRename );
     }
 
-    @Test( dependsOnMethods =
-    { "firstListBooks" } )
+    @Test( dependsOnMethods = "firstListBooks" )
     public void createBook1()
     {
-        book1 = new Book();
-        book1.setName( "book1" );
         final Book persistent = dao.persist( book1 );
 
         assert persistent.getId() != null;
         Assert.assertEquals( persistent, book1 );
     }
 
-    @Test( dependsOnMethods =
-    { "changeBook1Name" } )
+    @Test( dependsOnMethods = "changeBook1Name" )
     public void deleteBook1()
     {
-        dao.delete( book1.getId() );
+        dao.delete( book1 );
         assert dao.getById( book1.getId() ) == null;
         assert dao.findAll().isEmpty();
     }
@@ -67,12 +65,30 @@ public class BookDAOTest
         assert find.isEmpty();
     }
 
-    @Test( dependsOnMethods =
-    { "createBook1" } )
+    @Test( dependsOnMethods = "createBook1" )
     public void listCreatedBook()
     {
         final List<Book> find = dao.findAll();
         assert find.size() == 1;
-        Assert.assertEquals( find.get( 0 ), book1 );
+
+        final Book foundBook = find.get( 0 );
+        Assert.assertEquals( foundBook, book1 );
+        Assert.assertEquals( foundBook.getPhysicalBook(), book1.getPhysicalBook() );
+    }
+
+    @Override
+    @BeforeTest
+    public void setUp()
+    {
+        super.setUp();
+
+        book1 = new Book();
+        book1.setName( "book1" );
+
+        final PhysicalBook physicalBook1 = new PhysicalBook();
+        physicalBook1.setFileName( "filename1" );
+
+        book1.setPhysicalBook( physicalBook1 );
+        book1.setRead( false );
     }
 }

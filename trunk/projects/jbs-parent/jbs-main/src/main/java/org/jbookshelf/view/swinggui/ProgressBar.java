@@ -25,6 +25,7 @@ import org.jbookshelf.view.logic.SafeWorker;
 public class ProgressBar
     extends Box
 {
+    @SuppressWarnings( "unused" )
     private static final Logger     log         = Logger.getLogger( ProgressBar.class );
 
     private final JProgressBar      progressBar = new JProgressBar();
@@ -80,21 +81,5 @@ public class ProgressBar
             }
         } );
         worker.execute();
-    }
-
-    public void invokeSync(
-        final Runnable runnable )
-    {
-        setVisible( true );
-        try
-        {
-            runnable.run();
-        }
-        catch ( final Throwable e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-        setVisible( false );
     }
 }

@@ -15,7 +15,7 @@ import org.jbookshelf.model.db.Identifiable;
 public interface DAO<I extends Identifiable>
 {
     void delete(
-        final Serializable id );
+        final I entity );
 
     List<I> findAll();
 
@@ -23,8 +23,8 @@ public interface DAO<I extends Identifiable>
         final Serializable id );
 
     I persist(
-        final I book );
+        final I entity );
 
     void update(
-        final I book );
+        final I entity );
 }

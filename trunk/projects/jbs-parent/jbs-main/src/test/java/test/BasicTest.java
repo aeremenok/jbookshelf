@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test.model.db;
+package test;
 
 import java.io.File;
 

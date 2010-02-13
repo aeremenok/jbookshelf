@@ -5,8 +5,6 @@ package org.jbookshelf.model.db;
 
 import java.io.File;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -131,7 +129,6 @@ public class PhysicalBook
         return this.book;
     }
 
-    @Nullable
     public String getCharsetName()
     {
         return this.charsetName;
@@ -155,7 +152,6 @@ public class PhysicalBook
     }
 
     @Transient
-    @Nullable
     public File getUnpackedFile()
     {
         if ( unpackedFileName == null )
@@ -166,16 +162,11 @@ public class PhysicalBook
         return new File( fullPath );
     }
 
-    /**
-     * @return the unpackedFileName
-     */
-    @Nullable
     public String getUnpackedFileName()
     {
         return this.unpackedFileName;
     }
 
-    @Nullable
     public String getViewer()
     {
         return this.viewer;
@@ -200,13 +191,13 @@ public class PhysicalBook
     }
 
     public void setBook(
-        @Nonnull final Book book )
+        final Book book )
     {
         this.book = book;
     }
 
     public void setCharsetName(
-        @Nonnull final String charsetName )
+        final String charsetName )
     {
         this.charsetName = charsetName;
     }
@@ -218,14 +209,14 @@ public class PhysicalBook
      */
     @Transient
     public void setFile(
-        @Nonnull final File file )
+        final File file )
     {
         final File wsp = new File( Single.instance( Settings.class ).WORKSPACE_DIR.getValue() );
         setFileName( wsp.toURI().relativize( file.toURI() ).getPath() );
     }
 
     public void setFileName(
-        @Nonnull final String fileName )
+        final String fileName )
     {
         this.fileName = fileName;
     }
@@ -239,20 +230,20 @@ public class PhysicalBook
 
     @Transient
     public void setUnpackedFile(
-        @Nonnull final File unpackedFile )
+        final File unpackedFile )
     {
         final File tmp = new File( System.getProperty( "java.io.tmpdir" ) );
         setUnpackedFileName( tmp.toURI().relativize( unpackedFile.toURI() ).getPath() );
     }
 
     public void setUnpackedFileName(
-        @Nonnull final String unpackedFileName )
+        final String unpackedFileName )
     {
         this.unpackedFileName = unpackedFileName;
     }
 
     public void setViewer(
-        @Nonnull final String viewer )
+        final String viewer )
     {
         this.viewer = viewer;
     }
