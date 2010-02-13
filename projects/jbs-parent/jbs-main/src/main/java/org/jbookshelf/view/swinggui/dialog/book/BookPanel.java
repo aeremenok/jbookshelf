@@ -240,6 +240,8 @@ public class BookPanel
 
     private void initComponents()
     {
+        bookTextField.setName( "bookTextField" );
+
         add( bookLabel, 0, 0 );
         add( bookTextField, 0, 1, 1, 2 );
 

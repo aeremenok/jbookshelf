@@ -20,9 +20,6 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;
@@ -95,9 +92,8 @@ public class FileImporter
      * @param file a file to import
      * @return a book implementation
      */
-    @Nullable
     public static PhysicalBook createPhysicalBook(
-        @Nonnull final File file )
+        final File file )
     {
         for ( final PhysicalBookImporter importer : importers )
         {
@@ -154,8 +150,8 @@ public class FileImporter
      * @param cause a failure cause
      */
     protected void onImportFailure(
-        @SuppressWarnings( "unused" ) @Nonnull final File file,
-        @SuppressWarnings( "unused" ) @Nonnull final Exception cause )
+        @SuppressWarnings( "unused" ) final File file,
+        @SuppressWarnings( "unused" ) final Exception cause )
     {
     // override if needed
     }
@@ -166,7 +162,7 @@ public class FileImporter
      * @param book an imported book
      */
     protected void onImportSuccess(
-        @SuppressWarnings( "unused" ) @Nonnull final Book book )
+        @SuppressWarnings( "unused" ) final Book book )
     {
     // override if needed
     }

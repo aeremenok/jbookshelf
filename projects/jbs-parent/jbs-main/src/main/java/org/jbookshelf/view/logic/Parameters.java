@@ -5,7 +5,6 @@ package org.jbookshelf.view.logic;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * universal parameter container to pass between objects
@@ -21,21 +20,13 @@ public class Parameters
      */
     public enum Keys
     {
-        SEARCH_TEXT,
-        SEARCH_IS_READ,
-        SEARCH_CONTENT,
+        SEARCH_TEXT, SEARCH_IS_READ, SEARCH_CONTENT,
 
-        BOOK_NAME,
-        BOOK_IS_READ,
-        BOOK_FILE,
-        BOOK_AUTHORS,
-        BOOK_CATEGORIES,
-        BOOK_VIEWER,
+        BOOK_NAME, BOOK_IS_READ, BOOK_FILE, BOOK_AUTHORS, BOOK_CATEGORIES, BOOK_VIEWER,
 
         SEARCH_DIRECTION,
 
-        IMPORT_ROOTS,
-        IMPORT_STRATEGY
+        IMPORT_ROOTS, IMPORT_STRATEGY
     }
 
     private final Map<String, Object> map = new HashMap<String, Object>();
@@ -71,11 +62,6 @@ public class Parameters
     @Override
     public String toString()
     {
-        final StringBuilder builder = new StringBuilder();
-        for ( final Entry<String, Object> entry : map.entrySet() )
-        {
-            builder.append( entry.getKey() ).append( " -> " ).append( entry.getValue() ).append( "\n" );
-        }
-        return builder.toString();
+        return map.toString();
     }
 }

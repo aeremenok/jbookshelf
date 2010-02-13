@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -194,13 +193,13 @@ public class Book
     }
 
     public void setName(
-        @Nonnull final String name )
+        final String name )
     {
         this.name = name;
     }
 
     public void setPhysicalBook(
-        @Nonnull final PhysicalBook physicalBook )
+        final PhysicalBook physicalBook )
     {
         this.physicalBook = physicalBook;
         physicalBook.setBook( this );

@@ -170,7 +170,7 @@ public class LogRunner
     protected Connection prepareConnection()
         throws SQLException
     {
-        final Connection connection = Single.instance( DBUtil.class ).openConnection();
+        final Connection connection = HibernateUtil.connection();
         connection.setAutoCommit( true );
         return connection;
     }

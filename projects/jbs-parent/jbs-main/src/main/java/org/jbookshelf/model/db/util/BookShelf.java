@@ -403,42 +403,7 @@ public class BookShelf
     public static void persistBook(
         @Nonnull final Book book )
     {
-        final Session session = HibernateUtil.getSession();
-        try
-        {
-            session.beginTransaction();
-            for ( final Author author : book.getAuthors() )
-            {
-                session.load( author, author.getId() );
-                author.getBooks().add( book );
-            }
-
-            for ( final Category category : book.getCategories() )
-            {
-                session.load( category, category.getId() );
-                category.getBooks().add( book );
-            }
-
-            session.persist( book );
-            session.persist( book.getPhysicalBook() );
-            final Note lastRead = book.getLastRead();
-            if ( lastRead != null )
-            {
-                lastRead.timestamp();
-                session.persist( lastRead );
-            }
-
-            session.getTransaction().commit();
-        }
-        catch ( final HibernateException e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-        finally
-        {
-            session.close();
-        }
+        new org.jbookshelf.model.db.dao.alter.BookDAO().persist( book );
     }
 
     public static void remove(
