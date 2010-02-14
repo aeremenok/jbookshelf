@@ -37,7 +37,6 @@ public class UniqueCompletionModel
         this.model = model;
     }
 
-    @SuppressWarnings( "unchecked" )
     @Override
     public boolean complete(
         final String prefix )
@@ -66,8 +65,7 @@ public class UniqueCompletionModel
 
         // run it
         final LogRunner runner = new LogRunner();
-        final ArrayListHandler handler = new ArrayListHandler();
-        final List<Object[]> items = (List<Object[]>) runner.query( q.toString(), handler );
+        final List<Object[]> items = runner.query( q.toString(), new ArrayListHandler() );
 
         // fill the completion popup 
         removeAllElements();

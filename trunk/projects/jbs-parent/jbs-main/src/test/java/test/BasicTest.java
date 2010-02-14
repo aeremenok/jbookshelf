@@ -3,12 +3,14 @@
  */
 package test;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
+
 import java.io.File;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.jbookshelf.model.db.util.HibernateUtil;
+import org.jbookshelf.model.db.util.HibernateConnector;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -31,15 +33,15 @@ public class BasicTest
     public void setUp()
     {
         testDbDir = new File( System.getProperty( "java.io.tmpdir" ) + "/testdb" );
-        FileUtils.deleteQuietly( testDbDir );
         testDbDir.mkdir();
-        HibernateUtil.open( testDbDir );
+        instance( HibernateConnector.class ).start( testDbDir );
         log.debug( "test set up" );
     }
 
     @AfterTest
     public void tearDown()
     {
-        HibernateUtil.close();
+        instance( HibernateConnector.class ).stop();
+        FileUtils.deleteQuietly( testDbDir );
     }
 }

@@ -3,6 +3,8 @@
  */
 package org.jbookshelf.view.swinggui.dialog.book;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
+
 import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.border.TitledBorder;
@@ -13,7 +15,7 @@ import org.hibernate.Session;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.util.BookShelf;
-import org.jbookshelf.model.db.util.HibernateUtil;
+import org.jbookshelf.model.db.util.HibernateConnector;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.logic.Parameters;
@@ -66,7 +68,7 @@ public class BookEditDialog
             }
             else
             { // general addition, merge a book
-                final Session session = HibernateUtil.getSession();
+                final Session session = instance( HibernateConnector.class ).openSession();
                 try
                 {
                     session.load( book, book.getId() );
