@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.collection.tab;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
 import icons.IMG;
 
 import java.awt.BorderLayout;
@@ -29,7 +30,7 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Category;
 import org.jbookshelf.model.db.Named;
 import org.jbookshelf.model.db.util.BookShelf;
-import org.jbookshelf.model.db.util.HibernateUtil;
+import org.jbookshelf.model.db.util.HibernateConnector;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
@@ -148,7 +149,7 @@ public class CategoryView
             @Override
             protected List<Category> doInBackground()
             {
-                final Session session = HibernateUtil.getSession();
+                final Session session = instance( HibernateConnector.class ).openSession();
                 try
                 {
                     final List<Category> list = session.createQuery( buildQuery( p ) ).list();

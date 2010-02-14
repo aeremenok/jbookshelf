@@ -102,7 +102,6 @@ public class BookView
             ? books.size() : 0;
     }
 
-    @SuppressWarnings( "unchecked" )
     @Override
     public void search(
         final Parameters p )
@@ -113,7 +112,7 @@ public class BookView
             @Override
             protected List<Object[]> doInBackground()
             {
-                books = (List<Object[]>) runner.query( buildQuery( p ), new ArrayListHandler() );
+                books = runner.query( buildQuery( p ), new ArrayListHandler() );
                 model.reset();
                 return books;
             }

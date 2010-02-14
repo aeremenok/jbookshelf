@@ -20,9 +20,9 @@ public class PhysicalDAO
     public PhysicalBook getByBook(
         final Book byId )
     {
-        final BeanHandler handler = new BeanHandler( entityClass );
+        final BeanHandler<PhysicalBook> handler = new BeanHandler<PhysicalBook>( entityClass );
         final String sql = "select * from PHYSICAL_BOOK where book_id=?";
-        return (PhysicalBook) runner.query( sql, handler, new Object[]
+        return runner.query( sql, handler, new Object[]
         { byId.getId() } );
     }
 

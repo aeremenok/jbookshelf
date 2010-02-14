@@ -3,12 +3,14 @@
  */
 package org.jbookshelf.model.db.dao.alter;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
+
 import java.sql.Connection;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.jbookshelf.model.db.Identifiable;
-import org.jbookshelf.model.db.util.HibernateUtil;
+import org.jbookshelf.model.db.util.HibernateConnector;
 
 /**
  * @author eav
@@ -36,6 +38,6 @@ public abstract class AbstractDAO<I extends Identifiable>
 
     protected Session openSession()
     {
-        return HibernateUtil.getSession();
+        return instance( HibernateConnector.class ).openSession();
     }
 }

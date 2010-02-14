@@ -4,11 +4,13 @@
 package org.jbookshelf.model.db.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -19,33 +21,16 @@ import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 
 /**
- * loads the database using hibernate
- * 
- * @author eav
+ * @author eav 2010
  */
-public class HibernateUtil
+public class HibernateConnector
 {
-    private static final Logger       log = Logger.getLogger( HibernateUtil.class );
+    private static final Logger log     = Logger.getLogger( HibernateConnector.class );
+    private SessionFactory      factory;
+    private ConnectionProvider  connectionProvider;
+    private boolean             showSql = false;
 
-    private static SessionFactory     factory;
-    private static Properties         properties;
-    private static ConnectionProvider connectionProvider;
-
-    private static Session            singleSession;
-
-    public static void close()
-    {
-        if ( singleSession != null )
-        {
-            singleSession.close();
-            singleSession = null;
-        }
-        factory.close();
-        connectionProvider.close();
-        log.debug( "db closed" );
-    }
-
-    public static Connection connection()
+    public Connection getConnection()
     {
         try
         {
@@ -54,68 +39,67 @@ public class HibernateUtil
         catch ( final SQLException e )
         {
             log.error( e, e );
-            throw new Error( e );
+            throw new SQLError( e );
         }
     }
 
-    public static Session getCurrentSession()
-    {
-        return factory.getCurrentSession();
-    }
-
-    public static Properties getProperties()
-    {
-        return properties;
-    }
-
-    public static Session getSession()
+    public Session openSession()
     {
         return factory.openSession();
     }
 
-    public static void open(
+    public boolean showSql()
+    {
+        return this.showSql;
+    }
+
+    public void start(
         final File dbDir )
     {
         try
         {
             final Configuration cfg = new AnnotationConfiguration().configure();
-            properties = cfg.getProperties();
+            final Properties properties = cfg.getProperties();
 
-            setupStorageDir( dbDir );
+            setupStorageDir( dbDir, properties );
             cfg.addProperties( properties );
 
             factory = cfg.buildSessionFactory();
             connectionProvider = cfg.buildSettings().getConnectionProvider();
 
+            showSql = "true".equalsIgnoreCase( properties.getProperty( Environment.SHOW_SQL ) );
+
             log.debug( "db opened" );
         }
         catch ( final Exception e )
         {
-            throw new ExceptionInInitializerError( e );
+            log.error( e, e );
+            throw new HibernateException( e );
         }
     }
 
-    public static Session singleSession()
+    public void stop()
     {
-        if ( singleSession == null )
-        {
-            singleSession = getSession();
-        }
-        return singleSession;
+        factory.close();
+        factory = null;
+        connectionProvider = null;
     }
 
-    private static void setupStorageDir(
-        final File dbDir )
+    private void setupStorageDir(
+        final File dbDir,
+        final Properties properties )
+        throws IOException
     {
         final String dir;
         if ( dbDir != null )
         {
-            dir = dbDir.getAbsolutePath();
+            dir = dbDir.getCanonicalPath();
         }
         else
         {
             dir = Single.instance( Settings.class ).JBS_DIR.getValue() + "/db";
         }
+
         String url = properties.getProperty( Environment.URL );
         url = url.replaceFirst( "/opt/jbookshelf/db", dir );
         log.debug( "db storage url: " + url );

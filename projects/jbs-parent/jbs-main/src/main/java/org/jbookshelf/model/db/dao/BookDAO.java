@@ -3,21 +3,22 @@
  */
 package org.jbookshelf.model.db.dao;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.dbutils.DbUtils;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
-import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Category;
 import org.jbookshelf.model.db.Note;
-import org.jbookshelf.model.db.util.DBUtil;
-import org.jbookshelf.model.db.util.TBeanListHandler;
+import org.jbookshelf.model.db.util.HibernateConnector;
 
 /**
  * @author eav 2009
@@ -35,7 +36,7 @@ public class BookDAO
             final StringBuilder q = new StringBuilder( "select * from Author where id in " );
             q.append( "(select authors_id from Author_Book where books_id=?)" );
 
-            final TBeanListHandler<Author> handler = new TBeanListHandler<Author>( Author.class );
+            final BeanListHandler<Author> handler = new BeanListHandler<Author>( Author.class );
             final List<Author> authors = runner.query( q.toString(), handler, new Object[]
             { book.getId() } );
 
@@ -66,7 +67,7 @@ public class BookDAO
             final StringBuilder q = new StringBuilder( "select * from category where id in " );
             q.append( "(select categories_id from Category_Book where books_id=?)" );
 
-            final TBeanListHandler<Category> handler = new TBeanListHandler<Category>( Category.class );
+            final BeanListHandler<Category> handler = new BeanListHandler<Category>( Category.class );
             final List<Category> categories = runner.query( q.toString(), handler, new Object[]
             { book.getId() } );
 
@@ -81,7 +82,7 @@ public class BookDAO
     {
         if ( book.getId() != null )
         {
-            final TBeanListHandler<Note> handler = new TBeanListHandler<Note>( Note.class );
+            final BeanListHandler<Note> handler = new BeanListHandler<Note>( Note.class );
             final List<Note> notes = runner.query( "select * from Note where BOOK_ID=?", handler, new Object[]
             { book.getId() } );
 
@@ -144,7 +145,7 @@ public class BookDAO
     {
         checkIfTransient( unique );
 
-        final Connection c = Single.instance( DBUtil.class ).openConnection();
+        final Connection c = instance( HibernateConnector.class ).getConnection();
         try
         {
             final Long id = unique.getId();

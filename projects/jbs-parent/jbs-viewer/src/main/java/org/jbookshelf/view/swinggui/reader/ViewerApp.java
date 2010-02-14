@@ -11,7 +11,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.apache.log4j.PropertyConfigurator;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.util.DBUtil;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jbookshelf.view.swinggui.reader.navigation.thumbnails.Thumbnail;
 import org.jbookshelf.view.swinggui.reader.textview.ContentRenderer;
@@ -37,8 +36,6 @@ public class ViewerApp
         final String[] args )
     {
         PropertyConfigurator.configure( MainWindow.class.getResource( "log4j.properties" ) );
-        final String jbsDir = Single.instance( Settings.class ).JBS_DIR.getValue();
-        Single.instance( DBUtil.class ).startup( jbsDir );
         try
         {
             final String laf = Single.instance( Settings.class ).LAF.getValue();

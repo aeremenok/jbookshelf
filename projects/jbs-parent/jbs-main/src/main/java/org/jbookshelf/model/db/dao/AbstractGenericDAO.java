@@ -7,11 +7,11 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Identifiable;
 import org.jbookshelf.model.db.util.LogRunner;
-import org.jbookshelf.model.db.util.TBeanListHandler;
 
 /**
  * @author eav 2009
@@ -38,7 +38,7 @@ public abstract class AbstractGenericDAO<T extends Identifiable>
     @Override
     public List<T> findAll()
     {
-        final TBeanListHandler<T> handler = new TBeanListHandler<T>( entityClass );
+        final BeanListHandler<T> handler = new BeanListHandler<T>( entityClass );
         final String sql = "select * from " + entityClass.getSimpleName();
         return runner.query( sql, handler, new Object[] {} );
     }

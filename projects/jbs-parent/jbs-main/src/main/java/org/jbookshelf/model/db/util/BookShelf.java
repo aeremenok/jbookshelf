@@ -3,6 +3,8 @@
  */
 package org.jbookshelf.model.db.util;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
+
 import java.util.List;
 import java.util.Set;
 
@@ -118,7 +120,7 @@ public class BookShelf
     public static List<Note> getNotesByPage(
         final Bookmark bookmark )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = instance( HibernateConnector.class ).openSession();
         try
         {
             final Criteria criteria = session.createCriteria( Note.class );
@@ -143,7 +145,7 @@ public class BookShelf
     public static List<Note> getNotesByPosition(
         final Bookmark bookmark )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = instance( HibernateConnector.class ).openSession();
         try
         {
             final Criteria criteria = session.createCriteria( Note.class );
@@ -172,7 +174,7 @@ public class BookShelf
         final String name,
         final Category parent )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = instance( HibernateConnector.class ).openSession();
         try
         {
             final Criteria criteria = session.createCriteria( Category.class );
@@ -211,7 +213,7 @@ public class BookShelf
         @Nonnull final Class<T> class1,
         @Nonnull final String name )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = instance( HibernateConnector.class ).openSession();
         try
         {
             final Criteria criteria = session.createCriteria( class1 ).add( Restrictions.eq( "name", name ) );
@@ -254,7 +256,7 @@ public class BookShelf
         final Class<T> clazz,
         final String name )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = instance( HibernateConnector.class ).openSession();
         try
         {
             final Criteria criteria = session.createCriteria( clazz ).add( Restrictions.eq( "name", name ) );
@@ -311,7 +313,7 @@ public class BookShelf
     public static void mergeNote(
         final Note note )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = instance( HibernateConnector.class ).openSession();
         try
         {
             note.timestamp();
@@ -347,7 +349,7 @@ public class BookShelf
         final Book book,
         final List<Book> relatedBooks )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = instance( HibernateConnector.class ).openSession();
         try
         {
             session.beginTransaction();
@@ -375,7 +377,7 @@ public class BookShelf
         final Category oldCategory,
         final Category newCategory )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = instance( HibernateConnector.class ).openSession();
         try
         {
             getBooks( oldCategory ).remove( book );
@@ -429,7 +431,7 @@ public class BookShelf
     public static void removeNote(
         final Bookmark note )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = instance( HibernateConnector.class ).openSession();
         try
         {
             session.beginTransaction();
@@ -457,7 +459,7 @@ public class BookShelf
         final Named unique,
         final String newName )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = instance( HibernateConnector.class ).openSession();
         try
         {
             session.beginTransaction();
@@ -487,7 +489,7 @@ public class BookShelf
         @Nonnull final Category childCategory )
     {
         log.debug( "addChild" );
-        final Session session = HibernateUtil.getSession();
+        final Session session = instance( HibernateConnector.class ).openSession();
         try
         {
             session.load( childCategory, childCategory.getId() );
@@ -522,7 +524,7 @@ public class BookShelf
     public static void updatePhysical(
         final PhysicalBook physical )
     {
-        final Session session = HibernateUtil.getSession();
+        final Session session = instance( HibernateConnector.class ).openSession();
         try
         {
             session.beginTransaction();

@@ -1,5 +1,6 @@
 package org.jbookshelf.view.swinggui.main;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
 import icons.IMG;
 
 import java.awt.BorderLayout;
@@ -26,8 +27,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.model.db.util.DBUtil;
-import org.jbookshelf.model.db.util.HibernateUtil;
+import org.jbookshelf.model.db.util.HibernateConnector;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.additional.AdditionalPanel;
@@ -68,9 +68,7 @@ public class MainWindow
 
         SplashScreenManager.setProgress( 20 );
 
-        HibernateUtil.open( null );
-        final String jbsDir = Single.instance( Settings.class ).JBS_DIR.getValue();
-        Single.instance( DBUtil.class ).startup( jbsDir );
+        instance( HibernateConnector.class ).start( null );
         SplashScreenManager.setProgress( 75 );
 
         final MainWindow instance = Single.instance( MainWindow.class );

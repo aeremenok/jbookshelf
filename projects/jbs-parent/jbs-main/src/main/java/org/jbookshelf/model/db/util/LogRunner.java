@@ -3,14 +3,14 @@
  */
 package org.jbookshelf.model.db.util;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
+
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.log4j.Logger;
-import org.jbookshelf.controller.singleton.Single;
 
 /**
  * performs native SQL queries
@@ -39,11 +39,11 @@ public class LogRunner
     }
 
     @Override
-    public Object query(
+    public <T> T query(
         final Connection conn,
         final String sql,
-        final ResultSetHandler rh,
-        final Object[] params )
+        final ResultSetHandler<T> rh,
+        final Object... params )
     {
         try
         {
@@ -58,9 +58,9 @@ public class LogRunner
     }
 
     @Override
-    public Object query(
+    public <T> T query(
         final String sql,
-        final ResultSetHandler rsh )
+        final ResultSetHandler<T> rsh )
     {
         try
         {
@@ -74,10 +74,10 @@ public class LogRunner
     }
 
     @Override
-    public Object query(
+    public <T> T query(
         final String sql,
-        final ResultSetHandler rsh,
-        final Object[] params )
+        final ResultSetHandler<T> rsh,
+        final Object... params )
     {
         try
         {
@@ -90,28 +90,11 @@ public class LogRunner
         }
     }
 
-    @SuppressWarnings( "unchecked" )
-    public <T> List<T> query(
-        final String sql,
-        final TBeanListHandler<T> rsh,
-        final Object[] params )
-    {
-        try
-        {
-            return (List<T>) super.query( sql, rsh, params );
-        }
-        catch ( final SQLException e )
-        {
-            log.error( e, e );
-            throw new SQLError( e );
-        }
-    }
-
     @Override
     public int update(
         final Connection conn,
         final String sql,
-        final Object[] params )
+        final Object... params )
     {
         try
         {
@@ -143,7 +126,7 @@ public class LogRunner
     @Override
     public int update(
         final String sql,
-        final Object[] params )
+        final Object... params )
     {
         try
         {
@@ -160,7 +143,7 @@ public class LogRunner
         final String sql,
         final Object[] params )
     {
-        if ( Single.instance( DBUtil.class ).showSql() )
+        if ( instance( HibernateConnector.class ).showSql() )
         {
             log.debug( sql + "\n" + toString( params ) );
         }
@@ -168,11 +151,8 @@ public class LogRunner
 
     @Override
     protected Connection prepareConnection()
-        throws SQLException
     {
-        final Connection connection = HibernateUtil.connection();
-        connection.setAutoCommit( true );
-        return connection;
+        return instance( HibernateConnector.class ).getConnection();
     }
 
 }
