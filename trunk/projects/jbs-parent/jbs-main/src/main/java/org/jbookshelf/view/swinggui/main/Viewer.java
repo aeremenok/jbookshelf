@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.reader;
+package org.jbookshelf.view.swinggui.main;
 
 import java.io.File;
 import java.util.HashMap;
@@ -17,7 +17,6 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.SafeWorker;
-import org.jbookshelf.view.swinggui.ProgressBar;
 
 /**
  * @author eav 2009

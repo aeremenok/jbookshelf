@@ -41,9 +41,6 @@ public class StringListSetting
         super( backstore, key, Arrays.asList( defaultValue ), validator );
     }
 
-    /* (non-Javadoc)
-     * @see org.xnap.commons.settings.AbstractSetting#fromString(java.lang.String)
-     */
     @Override
     protected List<String> fromString(
         final String string )
@@ -55,9 +52,6 @@ public class StringListSetting
         return Arrays.asList( string.split( SEPARATOR ) );
     }
 
-    /* (non-Javadoc)
-     * @see org.xnap.commons.settings.AbstractSetting#toString(java.lang.Object)
-     */
     @Override
     protected String toString(
         final List<String> strings )

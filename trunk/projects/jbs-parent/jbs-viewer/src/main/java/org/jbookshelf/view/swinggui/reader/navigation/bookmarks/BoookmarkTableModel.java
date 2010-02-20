@@ -17,7 +17,7 @@ import org.jbookshelf.model.db.Note;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.SafeWorker;
-import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.main.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 
 /**

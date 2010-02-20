@@ -20,7 +20,7 @@ import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
-import org.jbookshelf.view.swinggui.widget.WrapperPanel;
+import org.jbookshelf.view.swinggui.widget.panel.WrapperPanel;
 import org.jdesktop.swingx.JXEditorPane;
 import org.xnap.commons.gui.DefaultDialog;
 import org.xnap.commons.gui.util.PopupListener;

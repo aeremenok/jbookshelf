@@ -1,4 +1,4 @@
-package org.jbookshelf.controller.importer;
+package org.jbookshelf.controller.importer.strategy;
 
 import java.util.ArrayList;
 import java.util.List;

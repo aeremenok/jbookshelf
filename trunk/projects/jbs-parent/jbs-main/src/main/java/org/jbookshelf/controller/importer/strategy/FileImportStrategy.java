@@ -1,4 +1,4 @@
-package org.jbookshelf.controller.importer;
+package org.jbookshelf.controller.importer.strategy;
 
 import javax.annotation.Nullable;
 

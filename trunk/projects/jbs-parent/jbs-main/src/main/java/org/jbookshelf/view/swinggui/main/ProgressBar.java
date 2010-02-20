@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui;
+package org.jbookshelf.view.swinggui.main;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

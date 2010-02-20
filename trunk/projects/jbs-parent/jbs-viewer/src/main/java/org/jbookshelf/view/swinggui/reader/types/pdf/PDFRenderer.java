@@ -20,13 +20,13 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
 import org.jbookshelf.view.logic.SafeWorker;
-import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
 import org.jbookshelf.view.swinggui.dialog.NoteDialog;
+import org.jbookshelf.view.swinggui.main.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.textview.ContentRenderer;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;
-import org.jbookshelf.view.swinggui.widget.WrapperPanel;
+import org.jbookshelf.view.swinggui.widget.panel.WrapperPanel;
 import org.xnap.commons.gui.util.PopupListener;
 
 import com.sun.pdfview.PDFPage;

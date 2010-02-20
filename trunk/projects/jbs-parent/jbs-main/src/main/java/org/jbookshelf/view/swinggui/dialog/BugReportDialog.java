@@ -21,7 +21,7 @@ import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.swinggui.main.MainWindow;
-import org.jbookshelf.view.swinggui.widget.WrapperPanel;
+import org.jbookshelf.view.swinggui.widget.panel.WrapperPanel;
 import org.jdesktop.swingx.JXEditorPane;
 import org.jdesktop.swingx.error.ErrorInfo;
 import org.xnap.commons.gui.DefaultDialog;

@@ -11,8 +11,8 @@ import javax.swing.JPopupMenu;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.logic.Parameters;
-import org.jbookshelf.view.swinggui.SetReadItem;
-import org.jbookshelf.view.swinggui.actions.UniqueActions;
+import org.jbookshelf.view.swinggui.actions.NamedIdentifieableActions;
+import org.jbookshelf.view.swinggui.actions.SetReadItem;
 
 /**
  * displays some view of collection
@@ -34,7 +34,7 @@ public abstract class CollectionView
     @PostConstruct
     public void initMenu()
     {
-        final UniqueActions actions = Single.instance( UniqueActions.class );
+        final NamedIdentifieableActions actions = Single.instance( NamedIdentifieableActions.class );
         menu.add( actions.openAction );
         menu.add( actions.openDirAction );
         menu.addSeparator();

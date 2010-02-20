@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui;
+package org.jbookshelf.view.swinggui.actions;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -20,6 +20,7 @@ import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
+import org.jbookshelf.view.swinggui.main.ProgressBar;
 
 /**
  * a menu item to edit {@link Book#getLastRead()} property

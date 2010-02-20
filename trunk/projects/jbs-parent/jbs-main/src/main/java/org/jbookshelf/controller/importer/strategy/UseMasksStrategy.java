@@ -1,10 +1,12 @@
-package org.jbookshelf.controller.importer;
+package org.jbookshelf.controller.importer.strategy;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
+import org.jbookshelf.controller.importer.FileImporter;
+import org.jbookshelf.controller.importer.NameParser;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.model.db.util.BookShelf;

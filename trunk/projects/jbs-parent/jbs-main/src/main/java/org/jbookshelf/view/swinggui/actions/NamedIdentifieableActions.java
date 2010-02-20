@@ -21,13 +21,13 @@ import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.BookShelfMediator.Properties;
-import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.collection.CollectionPanel;
 import org.jbookshelf.view.swinggui.dialog.book.BookEditDialog;
 import org.jbookshelf.view.swinggui.main.MainWindow;
-import org.jbookshelf.view.swinggui.reader.Viewer;
+import org.jbookshelf.view.swinggui.main.ProgressBar;
+import org.jbookshelf.view.swinggui.main.Viewer;
 
-public class UniqueActions
+public class NamedIdentifieableActions
 {
     private class EditAction
         extends TranslatableAction
@@ -128,7 +128,6 @@ public class UniqueActions
                     {
                         Single.instance( CollectionPanel.class ).updateActiveView();
                     }
-
                 } );
             }
         }
@@ -166,7 +165,7 @@ public class UniqueActions
         }
     }
 
-    private static final Logger     log           = Logger.getLogger( UniqueActions.class );
+    private static final Logger     log           = Logger.getLogger( NamedIdentifieableActions.class );
 
     private final BookShelfMediator mediator      = Single.instance( BookShelfMediator.class );
     public final Action             removeAction  = new RemoveAction();

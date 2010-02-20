@@ -17,7 +17,7 @@ import org.jbookshelf.view.swinggui.reader.textview.pagelayout.PageLayout;
 import org.jbookshelf.view.swinggui.reader.textview.pagelayout.TwoPageLayout;
 import org.jbookshelf.view.swinggui.reader.toolbar.PageLayoutSwitcher;
 import org.jbookshelf.view.swinggui.reader.toolbar.PageLayoutSwitcher.PageLayoutType;
-import org.jbookshelf.view.swinggui.widget.CardLayoutExt;
+import org.jbookshelf.view.swinggui.reader.widget.CardLayoutExt;
 
 /**
  * displays different page layouts

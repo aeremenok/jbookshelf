@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.widget;
+package org.jbookshelf.view.swinggui.reader.widget;
 
 import java.awt.EventQueue;
 import java.util.Queue;
