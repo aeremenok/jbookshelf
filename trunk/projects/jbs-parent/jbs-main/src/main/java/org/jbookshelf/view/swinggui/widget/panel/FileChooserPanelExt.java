@@ -1,5 +1,6 @@
 package org.jbookshelf.view.swinggui.widget.panel;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
 import icons.IMG;
 
 import java.awt.Dimension;
@@ -10,6 +11,7 @@ import javax.swing.JFileChooser;
 
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.controller.util.JBSSystem;
 import org.xnap.commons.gui.FileChooserPanel;
 
 /**
@@ -37,7 +39,9 @@ public class FileChooserPanelExt
         this( null, columns );
         key = name;
 
-        final String pathname = Single.instance( Settings.class ).get( getKey(), System.getProperty( "user.home" ) );
+        final String userHome = instance( JBSSystem.class ).userHome();
+        final Settings settings = instance( Settings.class );
+        final String pathname = settings.get( getKey(), userHome );
         final File file = new File( pathname );
         if ( file.exists() )
         {

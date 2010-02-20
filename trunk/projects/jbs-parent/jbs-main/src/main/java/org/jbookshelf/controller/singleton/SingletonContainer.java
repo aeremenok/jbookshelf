@@ -15,12 +15,14 @@
  */
 package org.jbookshelf.controller.singleton;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Hashtable;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.apache.log4j.Logger;
 
@@ -31,7 +33,7 @@ import org.apache.log4j.Logger;
  */
 public class SingletonContainer
 {
-    private static final Logger           logger          = Logger.getLogger( SingletonContainer.class );
+    private static final Logger           log             = Logger.getLogger( SingletonContainer.class );
 
     private final Map<Class<?>, Object>   instances       = new Hashtable<Class<?>, Object>();
 
@@ -69,11 +71,11 @@ public class SingletonContainer
             catch ( final Exception e )
             {
                 final String message = "cannot create " + clazz.getSimpleName();
-                logger.error( message, e );
+                log.error( message, e );
                 throw new Error( message, e );
             }
 
-            logger.debug( "created " + singleton.getClass().getSimpleName() );
+            log.debug( "created " + singleton.getClass().getSimpleName() );
 
             // initialize
             try
@@ -83,11 +85,11 @@ public class SingletonContainer
             catch ( final Exception e )
             {
                 final String message = "cannot initialize " + singleton.getClass().getSimpleName();
-                logger.error( message, e );
+                log.error( message, e );
                 throw new Error( message, e );
             }
 
-            logger.debug( "initialized " + singleton.getClass().getSimpleName() );
+            log.debug( "initialized " + singleton.getClass().getSimpleName() );
         }
 
         return (T) singleton;
@@ -120,11 +122,11 @@ public class SingletonContainer
         catch ( final Exception e )
         {
             final String message = "cannot create new " + clazz.getSimpleName();
-            logger.error( message, e );
+            log.error( message, e );
             throw new Error( message, e );
         }
 
-        logger.debug( "created new " + newInstance.getClass().getSimpleName() );
+        log.debug( "created new " + newInstance.getClass().getSimpleName() );
 
         // initialize
         try
@@ -134,11 +136,11 @@ public class SingletonContainer
         catch ( final Exception e )
         {
             final String message = "cannot initialize new " + newInstance.getClass().getSimpleName();
-            logger.error( message, e );
+            log.error( message, e );
             throw new Error( message, e );
         }
 
-        logger.debug( "initialized new " + newInstance.getClass().getSimpleName() );
+        log.debug( "initialized new " + newInstance.getClass().getSimpleName() );
 
         return (T) newInstance;
     }
@@ -164,15 +166,44 @@ public class SingletonContainer
             IllegalAccessException,
             InvocationTargetException
     {
-        final Method[] methods = singleton.getClass().getMethods();
-        for ( final Method method : methods )
+        final Method postConstruct = findByAnnotation( singleton.getClass(), PostConstruct.class );
+        if ( postConstruct != null )
         {
-            if ( method.getAnnotation( PostConstruct.class ) != null )
-            {
-                method.invoke( singleton );
-                return;
-            }
+            postConstruct.invoke( singleton );
         }
     }
 
+    private Method findByAnnotation(
+        final Class<?> whereToFind,
+        final Class<? extends Annotation> annotation )
+    {
+        for ( final Method method : whereToFind.getMethods() )
+        {
+            if ( method.getAnnotation( annotation ) != null )
+            {
+                return method;
+            }
+        }
+        return null;
+    }
+
+    public void destroy(
+        final Class<?> singletonClass )
+    {
+        final Object singleton = instances.remove( singletonClass );
+        try
+        {
+            final Method postConstruct = findByAnnotation( singleton.getClass(), PreDestroy.class );
+            if ( postConstruct != null )
+            {
+                postConstruct.invoke( singleton );
+            }
+        }
+        catch ( final Exception e )
+        {
+            final String message = "cannot destroy " + singletonClass.getSimpleName();
+            log.error( message, e );
+            throw new Error( message, e );
+        }
+    }
 }

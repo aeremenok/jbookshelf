@@ -42,4 +42,11 @@ public abstract class Single
     {
         container.setImplementation( basicClass, derivedClass );
     }
+
+    public static void destroy(
+        final Class<?> singletonClass )
+    {
+        container.destroy( singletonClass );
+    }
+
 }

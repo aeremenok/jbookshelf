@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test.view;
+package org.jbookshelf.view;
 
 import java.awt.Frame;
 

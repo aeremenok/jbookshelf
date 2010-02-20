@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="jbs-main suite">
+	<test name="settings" >
+		<packages>
+			<package name="org.jbookshelf.controller.settings" />
+		</packages>
+	</test>
+</suite>

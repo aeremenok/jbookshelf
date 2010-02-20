@@ -3,6 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.reader;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
 import icons.IMG;
 
 import java.awt.BorderLayout;
@@ -19,6 +20,7 @@ import org.apache.log4j.Logger;
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.controller.util.JBSSystem;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Bookmark;
 import org.jbookshelf.model.db.Note;
@@ -150,7 +152,7 @@ public class ReaderWindow<T>
                     public void run()
                     {
                         saveLastReadPosition();
-                        System.exit( 0 );
+                        instance( JBSSystem.class ).exit( 0 );
                     }
                 } ).start();
             }

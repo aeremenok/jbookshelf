@@ -3,6 +3,8 @@
  */
 package org.jbookshelf.view.swinggui.reader.types.html;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
+
 import java.net.Authenticator;
 import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
@@ -15,6 +17,7 @@ import java.net.Proxy.Type;
 import org.apache.log4j.Logger;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.controller.util.JBSSystem;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jdesktop.swingx.JXLoginDialog;
@@ -38,7 +41,7 @@ public class ProxyUserAgentContext
     private class AskUserAuthenticator
         extends Authenticator
     {
-        private String user = System.getProperty( "user.name" );
+        private String user = instance( JBSSystem.class ).userHome();
         private char[] pass = null;
 
         @Override

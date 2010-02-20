@@ -32,27 +32,6 @@ public class URIUtil
 {
     private static final Logger log = Logger.getLogger( URIUtil.class );
 
-    /**
-     * @param url <b>must start with protocol under KDE</b>
-     *            {@link "http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6486393"}
-     * @deprecated use {@link URIUtil#browseFile(File)} or {@link URIUtil#browseHTTP(String)}
-     */
-    @Deprecated
-    public static void browse(
-        final String url )
-    {
-        try
-        {
-            final java.net.URI uri = new java.net.URI( url );
-            Desktop.getDesktop().browse( uri );
-        }
-        catch ( final Exception e )
-        {
-            log.error( e, e );
-            throw new Error( e );
-        }
-    }
-
     public static void browseFile(
         final File file )
     {
@@ -121,6 +100,25 @@ public class URIUtil
         try
         {
             Desktop.getDesktop().open( directory );
+        }
+        catch ( final Exception e )
+        {
+            log.error( e, e );
+            throw new Error( e );
+        }
+    }
+
+    /**
+     * @param url <b>must start with protocol under KDE</b>
+     *            {@link "http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6486393"}
+     */
+    private static void browse(
+        final String url )
+    {
+        try
+        {
+            final java.net.URI uri = new java.net.URI( url );
+            Desktop.getDesktop().browse( uri );
         }
         catch ( final Exception e )
         {

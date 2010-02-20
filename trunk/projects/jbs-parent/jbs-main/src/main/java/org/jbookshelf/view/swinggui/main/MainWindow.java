@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.controller.util.JBSSystem;
 import org.jbookshelf.model.db.util.HibernateConnector;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.swinggui.additional.AdditionalPanel;
@@ -147,7 +148,7 @@ public class MainWindow
      */
     public boolean restartApplication()
     {
-        final String javaBin = System.getProperty( "java.home" ) + "/bin/java";
+        final String javaBin = instance( JBSSystem.class ).javaHome() + "/bin/java";
         try
         {
             final URI uri = getClass().getProtectionDomain().getCodeSource().getLocation().toURI();
@@ -166,7 +167,7 @@ public class MainWindow
 
                 Runtime.getRuntime().exec( toExec.toArray( new String[toExec.size()] ) );
 
-                System.exit( 0 );
+                instance( JBSSystem.class ).exit( 0 );
                 // not reachable - here the app dies
             }
         }

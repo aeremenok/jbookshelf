@@ -1,26 +1,24 @@
 /**
  * 
  */
-package test.model.db;
+package org.jbookshelf.model.db;
+
+import static org.jbookshelf.controller.singleton.Single.instance;
 
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.jbookshelf.model.db.Book;
-import org.jbookshelf.model.db.PhysicalBook;
+import org.jbookshelf.TestDBEnvironment;
 import org.jbookshelf.model.db.dao.alter.BookDAO;
 import org.jbookshelf.model.db.dao.alter.DAO;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import test.BasicTest;
-
 /**
  * @author eav 2010
  */
 public class BookDAOTest
-    extends BasicTest
 {
     @SuppressWarnings( "unused" )
     private static final Logger log = Logger.getLogger( BookDAOTest.class );
@@ -76,11 +74,10 @@ public class BookDAOTest
         Assert.assertEquals( foundBook.getPhysicalBook(), book1.getPhysicalBook() );
     }
 
-    @Override
     @BeforeTest
     public void setUp()
     {
-        super.setUp();
+        instance( TestDBEnvironment.class ).setUp();
 
         book1 = new Book();
         book1.setName( "book1" );
