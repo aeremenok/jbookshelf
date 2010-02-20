@@ -1,4 +1,4 @@
-package org.jbookshelf.view.swinggui.widget;
+package org.jbookshelf.view.swinggui.widget.panel;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf.view.swinggui.widget;
+package org.jbookshelf.view.swinggui.reader.widget;
 
 import java.awt.CardLayout;
 import java.awt.Component;

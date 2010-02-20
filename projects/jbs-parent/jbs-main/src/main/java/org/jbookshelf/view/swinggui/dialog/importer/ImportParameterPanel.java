@@ -17,10 +17,10 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import org.apache.log4j.Logger;
-import org.jbookshelf.controller.importer.DirCategoriesStrategy;
-import org.jbookshelf.controller.importer.FileImportStrategy;
-import org.jbookshelf.controller.importer.UseDirsStrategy;
-import org.jbookshelf.controller.importer.UseMasksStrategy;
+import org.jbookshelf.controller.importer.strategy.DirCategoriesStrategy;
+import org.jbookshelf.controller.importer.strategy.FileImportStrategy;
+import org.jbookshelf.controller.importer.strategy.UseDirsStrategy;
+import org.jbookshelf.controller.importer.strategy.UseMasksStrategy;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
@@ -28,8 +28,8 @@ import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.multiedit.MultipleField;
-import org.jbookshelf.view.swinggui.widget.FileChooserPanelExt;
-import org.jbookshelf.view.swinggui.widget.GridBagPanel;
+import org.jbookshelf.view.swinggui.widget.panel.FileChooserPanelExt;
+import org.jbookshelf.view.swinggui.widget.panel.GridBagPanel;
 import org.xnap.commons.i18n.I18n;
 
 /**

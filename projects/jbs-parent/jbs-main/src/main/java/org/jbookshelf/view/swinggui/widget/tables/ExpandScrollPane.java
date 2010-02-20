@@ -10,7 +10,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.main.ProgressBar;
 
 /**
  * listens for the vertical scrollbar changes. if its position reaches TRESHOLD - expands the table model

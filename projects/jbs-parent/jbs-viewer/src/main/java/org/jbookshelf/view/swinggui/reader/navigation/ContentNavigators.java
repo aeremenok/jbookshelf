@@ -14,7 +14,7 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.navigation.bookmarks.BookmarkPanel;
 import org.jbookshelf.view.swinggui.reader.navigation.thumbnails.ThumbnailPanel;
-import org.jbookshelf.view.swinggui.widget.CardLayoutExt;
+import org.jbookshelf.view.swinggui.reader.widget.CardLayoutExt;
 
 /**
  * displays components that provide content navigation

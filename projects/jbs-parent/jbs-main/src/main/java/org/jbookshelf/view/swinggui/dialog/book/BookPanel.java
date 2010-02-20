@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 
 import org.apache.commons.io.FilenameUtils;
 import org.jbookshelf.controller.importer.FileImporter;
-import org.jbookshelf.controller.importer.UseMasksStrategy;
+import org.jbookshelf.controller.importer.strategy.UseMasksStrategy;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Author;
@@ -28,8 +28,8 @@ import org.jbookshelf.view.logic.Parameters.Keys;
 import org.jbookshelf.view.swinggui.multiedit.CategoryMultipleField;
 import org.jbookshelf.view.swinggui.multiedit.MultipleField;
 import org.jbookshelf.view.swinggui.multiedit.MultipleUniqueField;
-import org.jbookshelf.view.swinggui.widget.FileChooserPanelExt;
-import org.jbookshelf.view.swinggui.widget.GridBagPanel;
+import org.jbookshelf.view.swinggui.widget.panel.FileChooserPanelExt;
+import org.jbookshelf.view.swinggui.widget.panel.GridBagPanel;
 import org.xnap.commons.gui.FileChooserPanel;
 import org.xnap.commons.i18n.I18n;
 

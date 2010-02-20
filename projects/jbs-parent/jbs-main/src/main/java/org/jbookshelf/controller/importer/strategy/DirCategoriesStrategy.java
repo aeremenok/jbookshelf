@@ -1,4 +1,4 @@
-package org.jbookshelf.controller.importer;
+package org.jbookshelf.controller.importer.strategy;
 
 import org.apache.log4j.Logger;
 import org.jbookshelf.model.db.Book;

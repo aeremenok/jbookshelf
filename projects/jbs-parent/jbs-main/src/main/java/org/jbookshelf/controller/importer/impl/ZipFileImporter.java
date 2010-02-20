@@ -1,20 +1,21 @@
 /**
  * 
  */
-package org.jbookshelf.controller.importer;
+package org.jbookshelf.controller.importer.impl;
 
 import java.io.File;
 
 import javax.annotation.Nonnull;
 
+import org.jbookshelf.controller.importer.PhysicalBookImporter;
 import org.jbookshelf.model.db.PhysicalBook;
 
 /**
- * imports single files
+ * imports zip files
  * 
  * @author eav
  */
-public class SingleFileImporter
+public class ZipFileImporter
     implements
     PhysicalBookImporter
 {
@@ -26,7 +27,8 @@ public class SingleFileImporter
     public boolean accept(
         final File pathname )
     {
-        return !pathname.isDirectory();
+        // todo mime-type?
+        return !pathname.isDirectory() && pathname.getName().toLowerCase().endsWith( ".zip" );
     }
 
     /* (non-Javadoc)
@@ -38,6 +40,7 @@ public class SingleFileImporter
     {
         final PhysicalBook book = new PhysicalBook();
         book.setFile( file );
+        // todo add archive properties
         return book;
     }
 

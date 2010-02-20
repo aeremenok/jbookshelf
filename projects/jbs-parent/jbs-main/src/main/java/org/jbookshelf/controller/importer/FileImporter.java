@@ -22,6 +22,12 @@ import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
+import org.jbookshelf.controller.importer.impl.HtmlFileImporter;
+import org.jbookshelf.controller.importer.impl.IndexFileImporter;
+import org.jbookshelf.controller.importer.impl.SingleFileDirImporter;
+import org.jbookshelf.controller.importer.impl.SingleFileImporter;
+import org.jbookshelf.controller.importer.impl.ZipFileImporter;
+import org.jbookshelf.controller.importer.strategy.FileImportStrategy;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.PhysicalBook;
 import org.jbookshelf.view.logic.Parameters;

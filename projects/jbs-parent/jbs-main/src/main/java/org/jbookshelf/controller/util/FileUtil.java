@@ -16,7 +16,6 @@
 package org.jbookshelf.controller.util;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,16 +34,6 @@ import org.mozilla.universalchardet.UniversalDetector;
 public class FileUtil
 {
     private static final Logger log = Logger.getLogger( FileUtil.class );
-
-    /**
-     * @param content a byte array to check
-     * @return its possible encoding
-     */
-    public static String guessByteArrayEncoding(
-        final byte[] content )
-    {
-        return guessStreamEncoding( new ByteArrayInputStream( content ) );
-    }
 
     /**
      * @param file a file to check
@@ -101,11 +90,5 @@ public class FileUtil
             detector.reset();
             IOUtils.closeQuietly( is );
         }
-    }
-
-    public static String guessStringEncoding(
-        final String string )
-    {
-        return guessByteArrayEncoding( string.getBytes() );
     }
 }

@@ -13,7 +13,7 @@ import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
 import org.jbookshelf.view.swinggui.main.MainWindow;
-import org.jbookshelf.view.swinggui.widget.GridBagPanel;
+import org.jbookshelf.view.swinggui.widget.panel.GridBagPanel;
 import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.action.OpenBrowserAction;
 import org.xnap.commons.gui.DefaultDialog;

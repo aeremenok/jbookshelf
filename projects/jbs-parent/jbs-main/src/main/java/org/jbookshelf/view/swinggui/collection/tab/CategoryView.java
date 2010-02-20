@@ -36,12 +36,12 @@ import org.jbookshelf.view.logic.BookShelfMediator;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
-import org.jbookshelf.view.swinggui.ProgressBar;
-import org.jbookshelf.view.swinggui.actions.UniqueActions;
+import org.jbookshelf.view.swinggui.actions.NamedIdentifieableActions;
 import org.jbookshelf.view.swinggui.collection.CollectionPanel;
 import org.jbookshelf.view.swinggui.collection.tab.book.BookNode;
 import org.jbookshelf.view.swinggui.dnd.TreeDragSource;
 import org.jbookshelf.view.swinggui.dnd.TreeDropTarget;
+import org.jbookshelf.view.swinggui.main.ProgressBar;
 import org.jdesktop.swingx.JXTree;
 import org.xnap.commons.gui.util.PopupListener;
 
@@ -131,7 +131,7 @@ public class CategoryView
     public void initMenu()
     {
         super.initMenu();
-        final UniqueActions actions = Single.instance( UniqueActions.class );
+        final NamedIdentifieableActions actions = Single.instance( NamedIdentifieableActions.class );
         menu.add( actions.renameAction );
     }
 

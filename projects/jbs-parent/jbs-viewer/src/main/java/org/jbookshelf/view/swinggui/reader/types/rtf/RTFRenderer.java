@@ -10,11 +10,11 @@ import javax.swing.text.StyledDocument;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.model.db.Bookmark;
-import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.main.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.navigation.bookmarks.BookmarkChangeListener;
 import org.jbookshelf.view.swinggui.reader.textview.SelectableTextRenderer;
 import org.jbookshelf.view.swinggui.reader.toolbar.FontChooser;
-import org.jbookshelf.view.swinggui.widget.ScrollBarTaskQueue;
+import org.jbookshelf.view.swinggui.reader.widget.ScrollBarTaskQueue;
 import org.jdesktop.swingx.JXEditorPane;
 
 /**

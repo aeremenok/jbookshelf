@@ -16,11 +16,11 @@ import javax.swing.JToolBar;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.URIUtil;
 import org.jbookshelf.model.db.Book;
-import org.jbookshelf.view.swinggui.ProgressBar;
 import org.jbookshelf.view.swinggui.actions.TranslatableAction;
+import org.jbookshelf.view.swinggui.main.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.ReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
-import org.jbookshelf.view.swinggui.widget.WrapperPanel;
+import org.jbookshelf.view.swinggui.widget.panel.WrapperPanel;
 
 /**
  * reader window toolbar, dispatches viewer actions

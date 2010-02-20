@@ -35,18 +35,12 @@ public class DefaultLazyNode
         super( userObject, allowsChildren );
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.collection.tab.LazyNode#isInitialized()
-     */
     @Override
     public boolean isInitialized()
     {
         return initalized;
     }
 
-    /* (non-Javadoc)
-     * @see org.jbookshelf.view.swinggui.collection.tab.LazyNode#setInitialized(boolean)
-     */
     @Override
     public void setInitialized(
         final boolean initalized )

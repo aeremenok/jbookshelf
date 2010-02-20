@@ -13,7 +13,7 @@ import javax.swing.SwingConstants;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.logic.SafeWorker;
-import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.main.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.ReaderWindow;
 import org.jbookshelf.view.swinggui.reader.navigation.thumbnails.Thumbnail;
 import org.jbookshelf.view.swinggui.reader.toolbar.Paginator;

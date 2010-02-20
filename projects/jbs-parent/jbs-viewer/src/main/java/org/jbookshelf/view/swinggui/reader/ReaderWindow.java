@@ -27,7 +27,7 @@ import org.jbookshelf.model.db.util.BookShelf;
 import org.jbookshelf.view.logic.Parameters;
 import org.jbookshelf.view.logic.SafeWorker;
 import org.jbookshelf.view.logic.Parameters.Keys;
-import org.jbookshelf.view.swinggui.ProgressBar;
+import org.jbookshelf.view.swinggui.main.ProgressBar;
 import org.jbookshelf.view.swinggui.reader.textview.MultiPageLayoutPanel;
 import org.jbookshelf.view.swinggui.reader.textview.pagelayout.PageLayout;
 import org.jbookshelf.view.swinggui.reader.toolbar.CharsetChooser;

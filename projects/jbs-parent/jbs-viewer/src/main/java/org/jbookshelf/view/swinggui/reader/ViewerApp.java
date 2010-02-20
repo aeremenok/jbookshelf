@@ -12,6 +12,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.swinggui.main.MainWindow;
+import org.jbookshelf.view.swinggui.main.Viewer;
 import org.jbookshelf.view.swinggui.reader.navigation.thumbnails.Thumbnail;
 import org.jbookshelf.view.swinggui.reader.textview.ContentRenderer;
 import org.jbookshelf.view.swinggui.reader.types.html.HTMLReaderSpecific;
@@ -23,7 +24,7 @@ import org.jbookshelf.view.swinggui.reader.types.rtf.RTFReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.types.rtf.RTFRenderer;
 import org.jbookshelf.view.swinggui.reader.types.txt.TXTReaderSpecific;
 import org.jbookshelf.view.swinggui.reader.types.txt.TXTRenderer;
-import org.jbookshelf.view.swinggui.widget.LookAndFeelComboBoxModel;
+import org.jbookshelf.view.swinggui.widget.model.LookAndFeelComboBoxModel;
 
 /**
  * properly initializes and starts the reader
