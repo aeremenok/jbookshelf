@@ -37,6 +37,11 @@ public class LookAndFeelComboBoxModel
         }
     }
 
+    public static String pickFirstLAFName()
+    {
+        return lafs[0].getName();
+    }
+
     private static int indexOf(
         final Object anItem )
     {

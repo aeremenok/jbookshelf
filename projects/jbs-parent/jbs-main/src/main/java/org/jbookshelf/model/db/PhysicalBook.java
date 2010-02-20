@@ -3,6 +3,8 @@
  */
 package org.jbookshelf.model.db;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
+
 import java.io.File;
 
 import javax.persistence.Column;
@@ -15,6 +17,7 @@ import javax.persistence.Transient;
 
 import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
+import org.jbookshelf.controller.util.JBSSystem;
 
 /**
  * @author eav
@@ -158,7 +161,7 @@ public class PhysicalBook
         {
             return null;
         }
-        final String fullPath = System.getProperty( "java.io.tmpdir" ) + "/" + unpackedFileName;
+        final String fullPath = instance( JBSSystem.class ).tempDir() + "/" + unpackedFileName;
         return new File( fullPath );
     }
 
@@ -232,7 +235,7 @@ public class PhysicalBook
     public void setUnpackedFile(
         final File unpackedFile )
     {
-        final File tmp = new File( System.getProperty( "java.io.tmpdir" ) );
+        final File tmp = new File( instance( JBSSystem.class ).tempDir() );
         setUnpackedFileName( tmp.toURI().relativize( unpackedFile.toURI() ).getPath() );
     }
 

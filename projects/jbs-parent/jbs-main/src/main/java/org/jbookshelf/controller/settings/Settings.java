@@ -15,15 +15,18 @@
  */
 package org.jbookshelf.controller.settings;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.Proxy;
 
 import javax.annotation.PostConstruct;
-import javax.swing.LookAndFeel;
-import javax.swing.UIManager;
 
+import org.apache.log4j.Logger;
+import org.jbookshelf.controller.util.JBSSystem;
 import org.jbookshelf.view.i18n.I18N;
+import org.jbookshelf.view.swinggui.widget.model.LookAndFeelComboBoxModel;
 import org.xnap.commons.settings.EnumSetting;
 import org.xnap.commons.settings.IntSetting;
 import org.xnap.commons.settings.PropertyResource;
@@ -37,6 +40,8 @@ import org.xnap.commons.settings.StringSetting;
 public class Settings
     extends PropertyResource
 {
+    private static final Logger    log = Logger.getLogger( Settings.class );
+
     public StringSetting           LANGUAGE;
     public StringSetting           LAF;
     public StringSetting           JBS_DIR;
@@ -93,36 +98,20 @@ public class Settings
     private void initDefaults()
     {
         LANGUAGE = new StringSetting( this, "language", I18N.defaultLanguage() );
-        IMPORT_MASKS = new StringListSetting( this, "import_masks", new String[]
-        { "%a. %b", "%b" } );
+        IMPORT_MASKS = new StringListSetting( this, "import_masks", "%a. %b", "%b" );
 
-        final String home = System.getProperty( "user.home" ).replaceAll( "\\\\", "/" );
+        final JBSSystem system = instance( JBSSystem.class );
+
+        final String home = system.userHome().replaceAll( "\\\\", "/" );
         final String jbsDir = home + "/.jbookshelf/";
         JBS_DIR = new StringSetting( this, "jbs_dir", jbsDir );
-        WORKSPACE_DIR = new StringSetting( this, "workspace_dir", home );
+        WORKSPACE_DIR = new StringSetting( this, "workspace_dir", system.myDocs() );
 
         PROXY_TYPE = new EnumSetting( this, "PROXY_TYPE", Proxy.Type.DIRECT );
         PROXY_HOST = new StringSetting( this, "PROXY_HOST", "proxy" );
         PROXY_PORT = new IntSetting( this, "PROXY_PORT", 3128 );
 
-        String lafName;
-        try
-        {
-            lafName = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
-        }
-        catch ( final Throwable e )
-        { // NimbusLookAndFeel does not exist, jre < 1.6.10
-            try
-            {
-                final Object laf = Class.forName( UIManager.getSystemLookAndFeelClassName() ).newInstance();
-                lafName = ((LookAndFeel) laf).getName();
-            }
-            catch ( final Exception e1 )
-            {
-                throw new Error( e1 );
-            }
-        }
-        LAF = new StringSetting( this, "laf", lafName );
+        LAF = new StringSetting( this, "laf", LookAndFeelComboBoxModel.pickFirstLAFName() );
     }
 
     /**
@@ -144,9 +133,11 @@ public class Settings
                 if ( !dir.exists() )
                 { // create directory
                     dir.mkdir();
+                    log.debug( "created dir " + dir );
                 }
                 // create new file
                 store( settingsFile );
+                log.debug( "settings saved to " + settingsFile );
             }
         }
         catch ( final IOException e )

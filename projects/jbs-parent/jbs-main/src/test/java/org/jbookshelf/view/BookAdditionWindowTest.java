@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test.view;
+package org.jbookshelf.view;
 
 import static org.jbookshelf.controller.singleton.Single.instance;
 import static org.testng.Assert.assertEquals;
@@ -16,19 +16,17 @@ import org.fest.swing.fixture.DialogFixture;
 import org.fest.swing.fixture.JButtonFixture;
 import org.fest.swing.fixture.JTabbedPaneFixture;
 import org.fest.swing.fixture.JTableFixture;
+import org.jbookshelf.TestDBEnvironment;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
-import test.BasicTest;
 
 /**
  * @author eav 2010
  */
 @GUITest
 public class BookAdditionWindowTest
-    extends BasicTest
 {
     @SuppressWarnings( "unused" )
     private static final Logger log = Logger.getLogger( BookAdditionWindowTest.class );
@@ -55,11 +53,10 @@ public class BookAdditionWindowTest
         assertEquals( targetTable.getValueAt( 0, 0 ), bookName );
     }
 
-    @Override
     @BeforeTest
     public void setUp()
     {
-        super.setUp();
+        instance( TestDBEnvironment.class ).setUp();
         final MainWindow mainWindow = GuiActionRunner.execute( new GuiQuery<MainWindow>()
         {
             @Override
@@ -82,11 +79,10 @@ public class BookAdditionWindowTest
         assertEquals( table.target.getRowCount(), 0 );
     }
 
-    @Override
     @AfterTest
     public void tearDown()
     {
         window.cleanUp();
-        super.tearDown();
+        instance( TestDBEnvironment.class ).tearDown();
     }
 }

@@ -27,7 +27,7 @@ public class StringListSetting
     public StringListSetting(
         final SettingResource backstore,
         final String key,
-        final String[] defaultValue )
+        final String... defaultValue )
     {
         super( backstore, key, Arrays.asList( defaultValue ), null );
     }

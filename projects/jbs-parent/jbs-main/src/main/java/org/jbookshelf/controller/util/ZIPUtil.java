@@ -15,6 +15,8 @@
  */
 package org.jbookshelf.controller.util;
 
+import static org.jbookshelf.controller.singleton.Single.instance;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -156,7 +158,7 @@ public class ZIPUtil
     public static File getZippedFileToOpen(
         final File zipFile )
     {
-        final String destDirName = System.getProperty( "java.io.tmpdir" ) + File.separator + zipFile.getName();
+        final String destDirName = instance( JBSSystem.class ).tempDir() + File.separator + zipFile.getName();
 
         final SortedMap<String, Charset> availableCharsets = Charset.availableCharsets();
         final Iterator<String> iterator = availableCharsets.keySet().iterator();
