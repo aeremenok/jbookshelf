@@ -78,7 +78,6 @@ public class SettingsDialog
             final String msg = I18N.tr( "Restart needed in order changes to take effect. Restart now?" );
             if ( JOptionPane.showConfirmDialog( this, msg, "", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION )
             {
-                MainWindow r = Single.instance( MainWindow.class );
                 Application.INSTANCE.restart();
             }
         }
