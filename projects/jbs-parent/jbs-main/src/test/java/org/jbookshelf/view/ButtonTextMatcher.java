@@ -5,7 +5,6 @@ package org.jbookshelf.view;
 
 import javax.swing.JButton;
 
-import org.apache.log4j.Logger;
 import org.fest.swing.core.GenericTypeMatcher;
 import org.jbookshelf.view.i18n.I18N;
 
@@ -15,21 +14,22 @@ import org.jbookshelf.view.i18n.I18N;
 public class ButtonTextMatcher
     extends GenericTypeMatcher<JButton>
 {
-    @SuppressWarnings( "unused" )
-    private static final Logger log = Logger.getLogger( ButtonTextMatcher.class );
-    private final String        translated;
+    private final String translatedText;
+    private final String originalText;
 
     public ButtonTextMatcher(
-        final String text )
+        final String orgginalText )
     {
         super( JButton.class );
-        this.translated = I18N.tr( text );
+        this.originalText = orgginalText;
+        this.translatedText = I18N.tr( orgginalText );
     }
 
     @Override
     protected boolean isMatching(
         final JButton component )
     {
-        return translated.equals( component.getText() );
+        final String text = component.getText();
+        return translatedText.equals( text ) || originalText.equals( text );
     }
 }

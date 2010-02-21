@@ -26,54 +26,6 @@ public class BookDAOTest
     private final DAO<Book>     dao = new BookDAO();
     private Book                book1;
 
-    @Test( dependsOnMethods = "listCreatedBook" )
-    public void changeBook1Name()
-    {
-        final Book toRename = dao.getById( book1.getId() );
-        Assert.assertEquals( toRename, book1 );
-
-        toRename.setName( "book01" );
-        dao.update( toRename );
-
-        final Book expectedToChange = dao.getById( book1.getId() );
-        Assert.assertEquals( expectedToChange, toRename );
-    }
-
-    @Test( dependsOnMethods = "firstListBooks" )
-    public void createBook1()
-    {
-        final Book persistent = dao.persist( book1 );
-
-        assert persistent.getId() != null;
-        Assert.assertEquals( persistent, book1 );
-    }
-
-    @Test( dependsOnMethods = "changeBook1Name" )
-    public void deleteBook1()
-    {
-        dao.delete( book1 );
-        assert dao.getById( book1.getId() ) == null;
-        assert dao.findAll().isEmpty();
-    }
-
-    @Test
-    public void firstListBooks()
-    {
-        final List<Book> find = dao.findAll();
-        assert find.isEmpty();
-    }
-
-    @Test( dependsOnMethods = "createBook1" )
-    public void listCreatedBook()
-    {
-        final List<Book> find = dao.findAll();
-        assert find.size() == 1;
-
-        final Book foundBook = find.get( 0 );
-        Assert.assertEquals( foundBook, book1 );
-        Assert.assertEquals( foundBook.getPhysicalBook(), book1.getPhysicalBook() );
-    }
-
     @BeforeTest
     public void setUp()
     {
@@ -88,4 +40,53 @@ public class BookDAOTest
         book1.setPhysicalBook( physicalBook1 );
         book1.setRead( false );
     }
+
+    @Test
+    public void firstListBooks()
+    {
+        final List<Book> find = dao.findAll();
+        assert find.isEmpty();
+    }
+
+    @Test( dependsOnMethods = "firstListBooks" )
+    public void createBook1()
+    {
+        final Book persistent = dao.persist( book1 );
+
+        assert persistent.getId() != null;
+        Assert.assertEquals( persistent, book1 );
+    }
+
+    @Test( dependsOnMethods = "createBook1" )
+    public void listCreatedBook()
+    {
+        final List<Book> find = dao.findAll();
+        assert find.size() == 1;
+
+        final Book foundBook = find.get( 0 );
+        Assert.assertEquals( foundBook, book1 );
+        Assert.assertEquals( foundBook.getPhysicalBook(), book1.getPhysicalBook() );
+    }
+
+    @Test( dependsOnMethods = "listCreatedBook" )
+    public void changeBook1Name()
+    {
+        final Book toRename = dao.getById( book1.getId() );
+        Assert.assertEquals( toRename, book1 );
+
+        toRename.setName( "book01" );
+        dao.update( toRename );
+
+        final Book expectedToChange = dao.getById( book1.getId() );
+        Assert.assertEquals( expectedToChange, toRename );
+    }
+
+    @Test( dependsOnMethods = "changeBook1Name" )
+    public void deleteBook1()
+    {
+        dao.delete( book1 );
+        assert dao.getById( book1.getId() ) == null;
+        assert dao.findAll().isEmpty();
+    }
+
 }

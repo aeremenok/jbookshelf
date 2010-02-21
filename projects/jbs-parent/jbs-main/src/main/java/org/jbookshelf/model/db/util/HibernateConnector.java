@@ -3,8 +3,6 @@
  */
 package org.jbookshelf.model.db.util;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -53,15 +51,14 @@ public class HibernateConnector
         return this.showSql;
     }
 
-    public void start(
-        final File dbDir )
+    public void start()
     {
         try
         {
             final Configuration cfg = new AnnotationConfiguration().configure();
             final Properties properties = cfg.getProperties();
 
-            setupStorageDir( dbDir, properties );
+            setupStorageDir( properties );
             cfg.addProperties( properties );
 
             factory = cfg.buildSessionFactory();
@@ -86,20 +83,9 @@ public class HibernateConnector
     }
 
     private void setupStorageDir(
-        final File dbDir,
         final Properties properties )
-        throws IOException
     {
-        final String dir;
-        if ( dbDir != null )
-        {
-            dir = dbDir.getCanonicalPath();
-        }
-        else
-        {
-            dir = Single.instance( Settings.class ).JBS_DIR.getValue() + "/db";
-        }
-
+        final String dir = Single.instance( Settings.class ).JBS_DIR.getValue() + "/db";
         String url = properties.getProperty( Environment.URL );
         url = url.replaceFirst( "/opt/jbookshelf/db", dir );
         log.debug( "db storage url: " + url );

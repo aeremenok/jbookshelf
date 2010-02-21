@@ -12,7 +12,7 @@ import org.jbookshelf.FakeJBSSystem;
 import org.jbookshelf.TestEnvironment;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.JBSSystem;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 /**
@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
  */
 public class SettingsTest
 {
-    @BeforeTest
+    @BeforeClass
     public void setUp()
     {
         instance( TestEnvironment.class ).setUp();

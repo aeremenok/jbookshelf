@@ -10,13 +10,11 @@ import javax.swing.JTable;
 
 import org.apache.log4j.Logger;
 import org.fest.swing.annotation.GUITest;
-import org.fest.swing.edt.GuiActionRunner;
-import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.fixture.DialogFixture;
 import org.fest.swing.fixture.JButtonFixture;
 import org.fest.swing.fixture.JTabbedPaneFixture;
 import org.fest.swing.fixture.JTableFixture;
-import org.jbookshelf.TestDBEnvironment;
+import org.jbookshelf.TestAppEnvironment;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -32,6 +30,24 @@ public class BookAdditionWindowTest
     private static final Logger log = Logger.getLogger( BookAdditionWindowTest.class );
 
     private JbsFrameFixture     window;
+
+    @BeforeTest
+    public void setUp()
+    {
+        instance( TestAppEnvironment.class ).setUp();
+        window = new JbsFrameFixture( instance( MainWindow.class ) );
+        window.show();
+    }
+
+    @Test
+    public void showBooksTable()
+    {
+        final JTabbedPaneFixture tabbedPane = window.tabbedPane( "collectionViewTabbedPane" );
+        assertEquals( tabbedPane.target.getSelectedIndex(), 0 );
+
+        final JTableFixture table = window.table( "bookTable" );
+        assertEquals( table.target.getRowCount(), 0 );
+    }
 
     @Test( dependsOnMethods = "showBooksTable" )
     public void addBook()
@@ -53,36 +69,10 @@ public class BookAdditionWindowTest
         assertEquals( targetTable.getValueAt( 0, 0 ), bookName );
     }
 
-    @BeforeTest
-    public void setUp()
-    {
-        instance( TestDBEnvironment.class ).setUp();
-        final MainWindow mainWindow = GuiActionRunner.execute( new GuiQuery<MainWindow>()
-        {
-            @Override
-            protected MainWindow executeInEDT()
-            {
-                return instance( MainWindow.class );
-            }
-        } );
-        window = new JbsFrameFixture( mainWindow );
-        window.show();
-    }
-
-    @Test
-    public void showBooksTable()
-    {
-        final JTabbedPaneFixture tabbedPane = window.tabbedPane( "collectionViewTabbedPane" );
-        assertEquals( tabbedPane.target.getSelectedIndex(), 0 );
-
-        final JTableFixture table = window.table( "bookTable" );
-        assertEquals( table.target.getRowCount(), 0 );
-    }
-
     @AfterTest
     public void tearDown()
     {
         window.cleanUp();
-        instance( TestDBEnvironment.class ).tearDown();
+        instance( TestAppEnvironment.class ).tearDown();
     }
 }

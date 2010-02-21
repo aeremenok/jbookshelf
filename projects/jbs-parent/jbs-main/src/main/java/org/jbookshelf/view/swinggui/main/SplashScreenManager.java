@@ -31,8 +31,16 @@ public class SplashScreenManager
             UIManager.setLookAndFeel( "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel" );
         }
         catch ( final Exception e )
-        {}
-        final String title = MainWindow.APP_NAME + " " + MainWindow.VERSION;
+        {
+            try
+            {
+                UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
+            }
+            catch ( final Exception e1 )
+            {}
+        }
+
+        final String title = Application.INSTANCE.appName() + " " + Application.INSTANCE.appVersion();
         instance = SplashWindow.createInstance( title, IMG.icon( IMG.SPLASH_PNG, 256 ) );
         instance.setVisible( true );
     }

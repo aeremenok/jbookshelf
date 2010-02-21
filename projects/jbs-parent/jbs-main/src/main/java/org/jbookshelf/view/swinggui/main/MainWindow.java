@@ -4,19 +4,13 @@ import static org.jbookshelf.controller.singleton.Single.instance;
 import icons.IMG;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.lang.Thread.UncaughtExceptionHandler;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
@@ -24,11 +18,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.jbookshelf.controller.settings.Settings;
-import org.jbookshelf.controller.singleton.Single;
-import org.jbookshelf.controller.util.JBSSystem;
-import org.jbookshelf.model.db.util.HibernateConnector;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.swinggui.additional.AdditionalPanel;
 import org.jbookshelf.view.swinggui.collection.CollectionPanel;
@@ -49,136 +39,71 @@ import org.xnap.commons.util.AWTExceptionHandler;
 public class MainWindow
     extends JXFrame
     implements
-    PropertyChangeListener,
     UncaughtExceptionHandler
 {
-    public static final String APP_NAME = "JBookShelf";
-    public static final String VERSION  = "0.6b3";
-    private static Logger      log;
-    public static String[]     args;
-
-    public static void main(
-        final String[] args )
-    {
-        SplashScreenManager.start();
-
-        MainWindow.args = args;
-        PropertyConfigurator.configure( MainWindow.class.getResource( "log4j.properties" ) );
-        SplashScreenManager.setProgress( 10 );
-
-        SplashScreenManager.setProgress( 20 );
-
-        instance( HibernateConnector.class ).start( null );
-        SplashScreenManager.setProgress( 75 );
-
-        final MainWindow instance = Single.instance( MainWindow.class );
-        SplashScreenManager.setProgress( 99 );
-        SplashScreenManager.stop();
-
-        EventQueue.invokeLater( new Runnable()
-        {
-            public void run()
-            {
-                instance.setVisible( true );
-            }
-        } );
-    }
+    private static final Logger log = Logger.getLogger( MainWindow.class );
 
     @PostConstruct
     public void initSingleton()
     {
-        log = Logger.getLogger( MainWindow.class );
-
         Thread.setDefaultUncaughtExceptionHandler( this );
         AWTExceptionHandler.install();
 
-        setTitle( APP_NAME );
+        setTitle( Application.INSTANCE.appName() );
         setIconImage( IMG.img( IMG.LOGO_PNG, 64 ) );
         setDefaultCloseOperation( EXIT_ON_CLOSE );
 
         setContentPane( new JPanel( new BorderLayout() ) );
 
-        final Settings settings = Single.instance( Settings.class );
-        settings.addPropertyChangeListener( settings.LAF.getKey(), this );
-        propertyChange( null );
+        listenLAFChangeEvents();
 
-        add( Single.instance( ToolBar.class ), BorderLayout.NORTH );
+        add( instance( ToolBar.class ), BorderLayout.NORTH );
 
         final JSplitPane split = new JSplitPane();
         add( split, BorderLayout.CENTER );
         split.setOneTouchExpandable( true );
-        split.setLeftComponent( Single.instance( CollectionPanel.class ) );
-        split.setRightComponent( Single.instance( AdditionalPanel.class ) );
+        split.setLeftComponent( instance( CollectionPanel.class ) );
+        split.setRightComponent( instance( AdditionalPanel.class ) );
 
         final JXStatusBar statusBar = new JXStatusBar();
-        statusBar.add( Single.instance( ProgressBar.class ) );
+        statusBar.add( instance( ProgressBar.class ) );
         setStatusBar( statusBar );
 
         pack();
         setExtendedState( MAXIMIZED_BOTH );
-
-        //        split.setDividerLocation( 0.8 );
     }
 
-    public void propertyChange(
-        final PropertyChangeEvent evt )
+    private void listenLAFChangeEvents()
     {
-        try
+        final PropertyChangeListener listener = new PropertyChangeListener()
         {
-            final String laf = Single.instance( Settings.class ).LAF.getValue();
-            UIManager.setLookAndFeel( LookAndFeelComboBoxModel.fromName( laf ) );
-            SwingUtilities.updateComponentTreeUI( this );
-            for ( final Window window : getOwnedWindows() )
+            @Override
+            public void propertyChange(
+                final PropertyChangeEvent evt )
             {
-                SwingUtilities.updateComponentTreeUI( window );
-                window.pack();
-            }
-        }
-        catch ( final UnsupportedLookAndFeelException e )
-        {
-            throw new Error( e );
-        }
-    }
-
-    /**
-     * restarts the app. restart can only be performed from the jar-file<br>
-     * copied from {@link "http://cplusadd.blogspot.com/2009/04/java-application-and-self-restart.html"}
-     * 
-     * @return false if not restarted
-     */
-    public boolean restartApplication()
-    {
-        final String javaBin = instance( JBSSystem.class ).javaHome() + "/bin/java";
-        try
-        {
-            final URI uri = getClass().getProtectionDomain().getCodeSource().getLocation().toURI();
-            final File jarFile = new File( uri );
-            if ( jarFile.getName().endsWith( ".jar" ) )
-            { // not debugging with an IDE
-                final List<String> toExec = new ArrayList<String>();
-                toExec.add( javaBin );
-                toExec.add( "-jar" );
-                toExec.add( jarFile.getPath() );
-
-                for ( final String arg : args )
+                try
                 {
-                    toExec.add( arg );
+                    final String laf = instance( Settings.class ).LAF.getValue();
+                    UIManager.setLookAndFeel( LookAndFeelComboBoxModel.fromName( laf ) );
+                    if ( evt != null )
+                    {
+                        SwingUtilities.updateComponentTreeUI( MainWindow.this );
+                        for ( final Window window : getOwnedWindows() )
+                        {
+                            SwingUtilities.updateComponentTreeUI( window );
+                            window.pack();
+                        }
+                    }
                 }
-
-                Runtime.getRuntime().exec( toExec.toArray( new String[toExec.size()] ) );
-
-                instance( JBSSystem.class ).exit( 0 );
-                // not reachable - here the app dies
+                catch ( final UnsupportedLookAndFeelException e )
+                {
+                    log.error( e, e );
+                    throw new Error( e );
+                }
             }
-        }
-        catch ( final Throwable e )
-        {
-            log.error( e, e );
-        }
-
-        // probably debugging with an IDE
-        JOptionPane.showMessageDialog( null, I18N.tr( "Unable to restart automatically. Please restart manually." ) );
-        return false;
+        };
+        instance( Settings.class ).LAF.addPropertyChangeListener( listener );
+        listener.propertyChange( null );
     }
 
     @Override

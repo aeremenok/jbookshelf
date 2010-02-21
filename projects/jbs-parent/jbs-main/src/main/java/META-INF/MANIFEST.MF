@@ -3,6 +3,6 @@ Archiver-Version: Plexus Archiver
 Created-By: Apache Maven
 Built-By: eav
 Build-Jdk: 1.6.0_16
-Main-Class: org.jbookshelf.view.swinggui.main.MainWindow
+Main-Class: org.jbookshelf.view.swinggui.main.Application
 Class-Path: ${classpath}
 
