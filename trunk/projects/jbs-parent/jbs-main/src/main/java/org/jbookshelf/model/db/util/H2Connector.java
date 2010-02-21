@@ -13,6 +13,7 @@ import org.h2.jdbcx.JdbcConnectionPool;
 import org.hibernate.HibernateException;
 import org.hibernate.cfg.Environment;
 import org.hibernate.connection.ConnectionProvider;
+import org.hibernate.exception.JDBCConnectionException;
 
 /**
  * @author eav 2010
@@ -40,7 +41,7 @@ public class H2Connector
         catch ( final SQLException e )
         {
             log.error( e, e );
-            throw new HibernateException( e );
+            throw new JDBCConnectionException( e.getMessage(), e );
         }
     }
 

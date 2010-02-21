@@ -16,6 +16,7 @@ import org.jbookshelf.controller.settings.Settings;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
+import org.jbookshelf.view.swinggui.main.Application;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jbookshelf.view.swinggui.widget.ChangeDetectMediator;
 import org.jbookshelf.view.swinggui.widget.model.LookAndFeelComboBoxModel;
@@ -77,7 +78,8 @@ public class SettingsDialog
             final String msg = I18N.tr( "Restart needed in order changes to take effect. Restart now?" );
             if ( JOptionPane.showConfirmDialog( this, msg, "", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION )
             {
-                Single.instance( MainWindow.class ).restartApplication();
+                MainWindow r = Single.instance( MainWindow.class );
+                Application.INSTANCE.restart();
             }
         }
 

@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.view.i18n.I18N;
 import org.jbookshelf.view.i18n.Translatable;
+import org.jbookshelf.view.swinggui.main.Application;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.jbookshelf.view.swinggui.widget.panel.GridBagPanel;
 import org.jdesktop.swingx.JXHyperlink;
@@ -70,7 +71,7 @@ public class JBSAboutDialog
         setTitle( i18n.tr( "About" ) );
 
         header.setIcon( IMG.icon( IMG.LOGO_PNG, 128 ) );
-        header.setText( MainWindow.APP_NAME );
+        header.setText( Application.INSTANCE.appName() );
         header.setFont( new Font( Font.SERIF, Font.BOLD | Font.ITALIC, 32 ) );
 
         authorLabel.setText( i18n.tr( "Author" ) );
@@ -80,7 +81,7 @@ public class JBSAboutDialog
         authorValueLabel.setText( i18n.tr( "Andrey Yeremenok (eav1986_at_gmail_com)" ) );
         licenseValueHyperLink.setAction( GPL_ACTION );
         licenseValueHyperLink.setText( "GPL v.3" );
-        versionValueLabel.setText( MainWindow.VERSION );
+        versionValueLabel.setText( Application.INSTANCE.appVersion() );
 
         getCloseAction().putValue( Action.NAME, i18n.tr( "Close" ) );
     }

@@ -1,8 +1,23 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="jbs-main suite">
-	<test name="settings" >
+	<test name="settings">
 		<packages>
 			<package name="org.jbookshelf.controller.settings" />
 		</packages>
 	</test>
+	<test name="dao">
+		<packages>
+			<package name="org.jbookshelf.model.db" />
+		</packages>
+	</test>
+	<test name="view" parallel="false" thread-count="1">
+		<packages>
+			<package name="org.jbookshelf.view.*" />
+		</packages>
+	</test>
+	<listeners>
+		<listener class-name="org.fest.swing.testng.listener.ScreenshotOnFailureListener">
+			<package name="org.jbookshelf.view.*"></package>
+		</listener>
+	</listeners>
 </suite>

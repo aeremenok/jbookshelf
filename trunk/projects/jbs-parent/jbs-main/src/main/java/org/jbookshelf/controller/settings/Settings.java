@@ -133,11 +133,16 @@ public class Settings
                 if ( !dir.exists() )
                 { // create directory
                     dir.mkdir();
+
                     log.debug( "created dir " + dir );
+                    assert dir.exists() : dir.toString();
                 }
                 // create new file
+                settingsFile.createNewFile();
                 store( settingsFile );
+
                 log.debug( "settings saved to " + settingsFile );
+                assert settingsFile.exists() : settingsFile.toString();
             }
         }
         catch ( final IOException e )

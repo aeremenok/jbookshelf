@@ -4,7 +4,6 @@
 package org.jbookshelf;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -19,8 +18,7 @@ public class FakeJBSSystem
     public FakeJBSSystem()
     {
         super();
-        final String tempDir = tempDir();
-        fakeUserHome = new File( tempDir + "/jbs-test" );
+        fakeUserHome = new File( tempDir() + "/jbs-test" );
         cleanUserHome();
     }
 
@@ -30,8 +28,9 @@ public class FakeJBSSystem
         {
             FileUtils.deleteDirectory( fakeUserHome );
             fakeUserHome.mkdir();
+            log.debug( "cleansed " + fakeUserHome );
         }
-        catch ( final IOException e )
+        catch ( final Exception e )
         {
             log.error( e, e );
             throw new Error( e );

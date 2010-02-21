@@ -7,8 +7,8 @@ import static org.jbookshelf.controller.singleton.Single.instance;
 
 import java.io.File;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.JBSSystem;
 import org.jbookshelf.model.db.util.HibernateConnector;
 
@@ -24,9 +24,8 @@ public class TestDBEnvironment
     @Override
     public void setUp()
     {
-        testDbDir = new File( instance( JBSSystem.class ).tempDir() + "/testdb" );
-        testDbDir.mkdir();
-        instance( HibernateConnector.class ).start( testDbDir );
+        Single.setImplementation( JBSSystem.class, FakeJBSSystem.class );
+        instance( HibernateConnector.class ).start();
         log.debug( "env set up" );
     }
 
@@ -34,6 +33,5 @@ public class TestDBEnvironment
     public void tearDown()
     {
         instance( HibernateConnector.class ).stop();
-        FileUtils.deleteQuietly( testDbDir );
     }
 }
