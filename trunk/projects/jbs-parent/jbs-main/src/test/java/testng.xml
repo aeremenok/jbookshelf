@@ -5,12 +5,17 @@
 			<package name="org.jbookshelf.controller.settings" />
 		</packages>
 	</test>
+	<test name="utils">
+		<packages>
+			<package name="org.jbookshelf.controller.util" />
+		</packages>
+	</test>
 	<test name="dao">
 		<packages>
 			<package name="org.jbookshelf.model.db" />
 		</packages>
 	</test>
-	<test name="view" parallel="false" thread-count="1">
+	<test name="view" parallel="false" thread-count="1" enabled="false">
 		<packages>
 			<package name="org.jbookshelf.view.*" />
 		</packages>
