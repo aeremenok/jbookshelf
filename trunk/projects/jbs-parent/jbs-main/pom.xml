@@ -191,5 +191,14 @@
 			<groupId>org.jbookshelf</groupId>
 			<artifactId>jbs-i18n</artifactId>
 		</dependency>
+		<!-- 
+		test 
+		-->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>
