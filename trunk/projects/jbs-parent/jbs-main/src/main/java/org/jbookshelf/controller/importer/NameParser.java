@@ -18,9 +18,6 @@ package org.jbookshelf.controller.importer;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.jbookshelf.model.db.Author;
 import org.jbookshelf.model.db.Book;
 import org.jbookshelf.model.db.Category;
@@ -38,35 +35,30 @@ import org.jbookshelf.model.db.Category;
  */
 public class NameParser
 {
-    @Nonnull
     private final String[]               delims;
 
     private final Map<Character, String> values = new HashMap<Character, String>();
 
-    @Nonnull
     private final String                 pattern;
 
     public NameParser(
-        @Nonnull final String pattern )
+        final String pattern )
     {
         this.pattern = pattern;
         // prepare delimiters
         delims = pattern.split( "%" );
     }
 
-    @Nullable
     public String getAuthorName()
     {
         return values.get( 'a' );
     }
 
-    @Nullable
     public String getBookName()
     {
         return values.get( 'b' );
     }
 
-    @Nullable
     public String getCategoryName()
     {
         return values.get( 'c' );
@@ -85,12 +77,11 @@ public class NameParser
      */
     @SuppressWarnings( "unused" )
     public void parse(
-        @Nonnull final String name )
+        final String name )
         throws Exception
     {
         // cut delimiters at edges
-        @Nonnull String right = name.substring( delims[0].length(), name.length() - delims[delims.length - 1].length()
-            + 1 );
+        String right = name.substring( delims[0].length(), name.length() - delims[delims.length - 1].length() + 1 );
 
         for ( int i = 1; i < delims.length - 1; i++ )
         {
@@ -111,10 +102,10 @@ public class NameParser
      * @param delim delimiter
      * @return array from string's left and right
      */
-    @Nonnull
+
     private String[] split(
-        @Nonnull final String string,
-        @Nonnull final String delim )
+        final String string,
+        final String delim )
     {
         final String left = string.substring( 0, string.indexOf( delim ) );
         final String right = string.substring( string.indexOf( delim ) + delim.length() );

@@ -3,7 +3,7 @@
  */
 package org.jbookshelf.view.swinggui.collection.tab;
 
-import javax.annotation.Nonnull;
+
 import javax.annotation.PostConstruct;
 import javax.swing.Icon;
 import javax.swing.JPanel;
@@ -52,7 +52,7 @@ public abstract class CollectionView
      * @param p search parameters
      */
     public abstract void search(
-        @Nonnull Parameters p );
+         Parameters p );
 
     public void setIcon(
         final Icon icon )
@@ -66,7 +66,7 @@ public abstract class CollectionView
      * @param p search parameters
      * @return query text
      */
-    @Nonnull
+    
     protected abstract String buildQuery(
-        @Nonnull Parameters p );
+         Parameters p );
 }

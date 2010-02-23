@@ -7,8 +7,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -128,7 +126,6 @@ public class Category
         return this.name;
     }
 
-    @Nullable
     public Category getParent()
     {
         return this.parent;
@@ -156,13 +153,13 @@ public class Category
     }
 
     public void setName(
-        @Nonnull final String name )
+        final String name )
     {
         this.name = name;
     }
 
     public void setParent(
-        @Nullable final Category parent )
+        final Category parent )
     {
         this.parent = parent;
     }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf;
+package test.env;
 
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.JBSSystem;

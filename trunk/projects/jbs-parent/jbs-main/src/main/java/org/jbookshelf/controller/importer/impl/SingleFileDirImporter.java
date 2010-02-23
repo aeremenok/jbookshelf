@@ -5,7 +5,7 @@ package org.jbookshelf.controller.importer.impl;
 
 import java.io.File;
 
-import javax.annotation.Nullable;
+
 
 import org.jbookshelf.controller.importer.PhysicalBookImporter;
 import org.jbookshelf.model.db.PhysicalBook;
@@ -19,7 +19,7 @@ public class SingleFileDirImporter
     implements
     PhysicalBookImporter
 {
-    @Nullable
+    
     private File currentFile;
 
     /* (non-Javadoc)

@@ -3,7 +3,7 @@ package org.jbookshelf.view.swinggui.dialog.book;
 import java.io.File;
 import java.util.List;
 
-import javax.annotation.Nonnull;
+
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -150,7 +150,7 @@ public class BookPanel
         isReadCheckBox.setSelected( false );
     }
 
-    @Nonnull
+    
     public Parameters extractParameters()
     {
         final String bookName = bookTextField.getText();
@@ -268,7 +268,7 @@ public class BookPanel
     }
 
     protected void onFileSelected(
-        @Nonnull final File file )
+         final File file )
     {
         if ( bookTextField.getText().equals( "" ) )
         {

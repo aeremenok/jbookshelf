@@ -2,7 +2,7 @@ package org.jbookshelf.view.swinggui.dialog.book;
 
 import java.io.File;
 
-import javax.annotation.Nullable;
+
 import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -35,7 +35,7 @@ public class BookAdditionDialog
     /**
      * created book
      */
-    @Nullable
+    
     private Book            result;
 
     public BookAdditionDialog()
@@ -84,7 +84,7 @@ public class BookAdditionDialog
         return false;
     }
 
-    @Nullable
+    
     public Book getResult()
     {
         return this.result;

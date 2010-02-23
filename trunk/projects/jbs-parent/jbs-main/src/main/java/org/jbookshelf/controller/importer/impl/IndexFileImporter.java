@@ -6,8 +6,8 @@ package org.jbookshelf.controller.importer.impl;
 import java.io.File;
 import java.io.FileFilter;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 
 import org.jbookshelf.controller.importer.PhysicalBookImporter;
 import org.jbookshelf.model.db.PhysicalBook;
@@ -21,7 +21,7 @@ public class IndexFileImporter
     implements
     PhysicalBookImporter
 {
-    @Nullable
+    
     private File currentIndexFile;
 
     /* (non-Javadoc)
@@ -60,7 +60,7 @@ public class IndexFileImporter
      */
     @Override
     public PhysicalBook create(
-        @Nonnull final File file )
+         final File file )
     {
         final PhysicalBook book = new PhysicalBook();
         assert currentIndexFile != null;

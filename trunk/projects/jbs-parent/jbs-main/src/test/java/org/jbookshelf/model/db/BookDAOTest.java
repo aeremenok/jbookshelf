@@ -8,12 +8,13 @@ import static org.jbookshelf.controller.singleton.Single.instance;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.jbookshelf.TestDBEnvironment;
 import org.jbookshelf.model.db.dao.alter.BookDAO;
 import org.jbookshelf.model.db.dao.alter.DAO;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import test.env.TestDBEnvironment;
 
 /**
  * @author eav 2010
