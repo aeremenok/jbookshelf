@@ -6,9 +6,6 @@ package org.jbookshelf.model.db;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -172,13 +169,11 @@ public class Note
         return this.changeDate;
     }
 
-    @Nullable
     public String getCitation()
     {
         return this.citation;
     }
 
-    @Nullable
     public String getContent()
     {
         return this.content;
@@ -239,19 +234,19 @@ public class Note
     }
 
     public void setBook(
-        @Nonnull final Book book )
+        final Book book )
     {
         this.book = book;
     }
 
     public void setCitation(
-        @Nonnull final String citation )
+        final String citation )
     {
         this.citation = citation;
     }
 
     public void setContent(
-        @Nonnull final String content )
+        final String content )
     {
         this.content = content;
     }
@@ -264,7 +259,7 @@ public class Note
     }
 
     public void setPage(
-        @Nonnull @Nonnegative final Integer page )
+        final Integer page )
     {
         this.page = page;
     }
@@ -276,7 +271,7 @@ public class Note
     }
 
     public void setPosition(
-        @Nonnull @Nonnegative final Float position )
+        final Float position )
     {
         this.position = position;
     }
@@ -289,7 +284,7 @@ public class Note
     }
 
     public void setTitle(
-        @Nonnull final String title )
+        final String title )
     {
         this.title = title;
     }

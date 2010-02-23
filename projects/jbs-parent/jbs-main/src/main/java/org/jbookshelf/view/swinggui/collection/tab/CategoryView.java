@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 import javax.swing.JScrollPane;
 import javax.swing.event.TreeExpansionEvent;
@@ -65,7 +64,7 @@ public class CategoryView
         }
 
         private CategoryNode(
-            @Nonnull final Category category )
+            final Category category )
         {
             super( category.equals( BookShelf.rootCategory() )
                 ? I18N.tr( "All categories" ) : category.getName() );

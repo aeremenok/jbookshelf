@@ -5,7 +5,7 @@ package org.jbookshelf.controller.importer;
 
 import java.io.File;
 
-import javax.annotation.Nonnull;
+
 
 import org.jbookshelf.model.db.PhysicalBook;
 
@@ -21,13 +21,13 @@ public interface PhysicalBookImporter
      * @return file can be imported
      */
     boolean accept(
-        @Nonnull File pathname );
+         File pathname );
 
     /**
      * @param file a file to import
      * @return imported book implementation
      */
-    @Nonnull
+    
     PhysicalBook create(
-        @Nonnull File file );
+         File file );
 }

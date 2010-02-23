@@ -8,9 +8,6 @@ import static org.jbookshelf.controller.singleton.Single.instance;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -47,7 +44,7 @@ public class BookShelf
     }
 
     public static Book bookById(
-        @Nonnull final Object id )
+        final Object id )
     {
         return bookDAO.getById( (Long) id );
     }
@@ -63,12 +60,11 @@ public class BookShelf
         return bookDAO.totalCount();
     }
 
-    @Nullable
     public static Book createBook(
-        @Nonnull final String bookName,
-        @Nullable final String authorName,
-        @Nullable final String categoryName,
-        @Nonnull final PhysicalBook physicalUnit )
+        final String bookName,
+        final String authorName,
+        final String categoryName,
+        final PhysicalBook physicalUnit )
     {
         final Book book = new Book();
         book.setName( bookName );
@@ -208,10 +204,9 @@ public class BookShelf
     }
 
     @SuppressWarnings( "unchecked" )
-    @Nonnull
     public static <T extends Named> T getOrAddUnique(
-        @Nonnull final Class<T> class1,
-        @Nonnull final String name )
+        final Class<T> class1,
+        final String name )
     {
         final Session session = instance( HibernateConnector.class ).openSession();
         try
@@ -276,8 +271,8 @@ public class BookShelf
     }
 
     public static void mergeBook(
-        @Nonnull final Book book,
-        @Nonnull final Session session )
+        final Book book,
+        final Session session )
     {
         session.beginTransaction();
 
@@ -403,7 +398,7 @@ public class BookShelf
     }
 
     public static void persistBook(
-        @Nonnull final Book book )
+        final Book book )
     {
         new org.jbookshelf.model.db.dao.alter.BookDAO().persist( book );
     }
@@ -485,8 +480,8 @@ public class BookShelf
     }
 
     public static void setParent(
-        @Nonnull final Category parentCategory,
-        @Nonnull final Category childCategory )
+        final Category parentCategory,
+        final Category childCategory )
     {
         log.debug( "addChild" );
         final Session session = instance( HibernateConnector.class ).openSession();

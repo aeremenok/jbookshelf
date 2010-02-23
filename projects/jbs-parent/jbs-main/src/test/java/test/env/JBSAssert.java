@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf;
+package test.env;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotSame;

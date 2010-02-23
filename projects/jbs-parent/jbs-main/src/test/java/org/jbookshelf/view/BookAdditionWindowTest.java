@@ -14,11 +14,12 @@ import org.fest.swing.fixture.DialogFixture;
 import org.fest.swing.fixture.JButtonFixture;
 import org.fest.swing.fixture.JTabbedPaneFixture;
 import org.fest.swing.fixture.JTableFixture;
-import org.jbookshelf.TestAppEnvironment;
 import org.jbookshelf.view.swinggui.main.MainWindow;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import test.env.TestAppEnvironment;
 
 /**
  * @author eav 2010

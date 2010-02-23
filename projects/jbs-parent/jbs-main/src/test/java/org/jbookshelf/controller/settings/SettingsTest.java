@@ -3,17 +3,18 @@
  */
 package org.jbookshelf.controller.settings;
 
-import static org.jbookshelf.JBSAssert.assertFileEquals;
-import static org.jbookshelf.JBSAssert.assertFileNotSame;
 import static org.jbookshelf.controller.singleton.Single.destroy;
 import static org.jbookshelf.controller.singleton.Single.instance;
+import static test.env.JBSAssert.assertFileEquals;
+import static test.env.JBSAssert.assertFileNotSame;
 
-import org.jbookshelf.FakeJBSSystem;
-import org.jbookshelf.TestEnvironment;
 import org.jbookshelf.controller.singleton.Single;
 import org.jbookshelf.controller.util.JBSSystem;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import test.env.FakeJBSSystem;
+import test.env.TestEnvironment;
 
 /**
  * @author eav 2010

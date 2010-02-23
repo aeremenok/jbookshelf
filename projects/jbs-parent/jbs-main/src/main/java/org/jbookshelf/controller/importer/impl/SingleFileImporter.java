@@ -5,7 +5,7 @@ package org.jbookshelf.controller.importer.impl;
 
 import java.io.File;
 
-import javax.annotation.Nonnull;
+
 
 import org.jbookshelf.controller.importer.PhysicalBookImporter;
 import org.jbookshelf.model.db.PhysicalBook;
@@ -35,7 +35,7 @@ public class SingleFileImporter
      */
     @Override
     public PhysicalBook create(
-        @Nonnull final File file )
+         final File file )
     {
         final PhysicalBook book = new PhysicalBook();
         book.setFile( file );

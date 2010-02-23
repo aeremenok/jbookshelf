@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.List;
 
-import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -151,7 +150,7 @@ public class MultipleField<T>
      */
     @SuppressWarnings( "unchecked" )
     protected T fromString(
-        @Nonnull final String text )
+        final String text )
     { // can be overriden
         return (T) text;
     }

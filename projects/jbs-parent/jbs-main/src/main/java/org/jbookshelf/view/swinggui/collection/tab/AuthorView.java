@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 import javax.swing.JScrollPane;
 import javax.swing.event.TreeExpansionEvent;
@@ -57,7 +56,7 @@ public class AuthorView
         private final Author author;
 
         private AuthorNode(
-            @Nonnull final Author author )
+            final Author author )
         {
             super( author.getName() );
             this.author = author;

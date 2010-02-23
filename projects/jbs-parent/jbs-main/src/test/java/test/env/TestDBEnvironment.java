@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jbookshelf;
+package test.env;
 
 import static org.jbookshelf.controller.singleton.Single.instance;
 

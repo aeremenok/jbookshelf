@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nonnull;
+
 import javax.swing.Icon;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,7 +33,7 @@ public class FailTableModel
     }
 
     public void addFile(
-        @Nonnull final File file )
+         final File file )
     {
         files.add( file );
         final int row = files.size() - 1;
@@ -93,7 +93,7 @@ public class FailTableModel
      * @param file file to remove
      */
     public void removeFile(
-        @Nonnull final File file )
+         final File file )
     {
         final int indexOf = files.indexOf( file );
         files.remove( indexOf );
@@ -104,7 +104,7 @@ public class FailTableModel
      * @param files the files to set
      */
     public void setFiles(
-        @Nonnull final List<File> files )
+         final List<File> files )
     {
         this.files = files;
         fireTableDataChanged();
